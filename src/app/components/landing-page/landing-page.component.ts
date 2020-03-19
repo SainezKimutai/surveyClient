@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
+
 
 @Component({
   selector: 'app-landing-page',
@@ -9,6 +11,14 @@ export class LandingPageComponent implements OnInit {
 
   constructor(
   ) { }
+
+
+  // icon 
+  faEnvelope = faEnvelope;
+  faKey = faKey;
+
+
+
 
   ngOnInit() {
 
