@@ -1,0 +1,73 @@
+<article *ngIf="ImprintLoader" class="imprint-loader home">
+    <div class="imprint-loader-wrap">
+      <div class="imprint-loader-main">
+        <div class="imprint-loader-ball ball-one"></div>
+        <div class="imprint-loader-ball ball-two"></div>
+        <div class="imprint-loader-ball ball-three"></div>
+        <div class="imprint-loader-ball ball-four"></div>
+      </div>
+    </div>
+</article>
+
+
+<header [ngClass]="sideBarStatus ? '' : 'hide'">
+    <div class="logo-wrap d-flex" >
+      <img [hidden]="!sideBarStatus" src="/../../../assets/images/logo3.jpg">
+      <fa-icon id="sideBarToggler" class="ml-auto" (click)="toggleSideBar()" [icon]="sideBarStatus ? faArrowLeft : faBars"></fa-icon>
+
+    </div>
+
+    
+</header>
+
+
+
+
+<!-- Sidebar -->
+<nav id="sidebar" class="" [ngClass]="sideBarStatus ? '' : 'hide'">
+
+
+
+
+
+    <ul class="navbar-nav nav-pills">
+
+
+
+      <li [ngClass]="dashboardNavBarActive ? 'nav-item active' : 'nav-item'" >
+          <a routerLink="/home/dashboard" [ngClass]=" salesNavBarActive ? 'nav-link active' : 'nav-link'">
+            <fa-icon [icon]="faChartLine"></fa-icon> <span>Dashboard</span>
+          </a>
+        </li>
+    
+
+        <li [ngClass]="surveyNavBarActive ? 'nav-item active' : 'nav-item'" >
+          <a routerLink="/home/survey" [ngClass]=" salesNavBarActive ? 'nav-link active' : 'nav-link'">
+            <fa-icon [icon]="faListAlt"></fa-icon> <span>Survey</span>
+          </a>
+        </li>
+
+
+        <li [ngClass]="profileNavBarActive ? 'nav-item active' : 'nav-item'" >
+          <a routerLink="/home/profile" [ngClass]=" salesNavBarActive ? 'nav-link active' : 'nav-link'">
+            <fa-icon [icon]="faUser"></fa-icon> <span>Profile</span>
+          </a>
+        </li>
+    
+    
+    </ul>
+
+
+</nav>
+
+
+
+<!--  Main Section -->
+
+<main id="main" class="" [ngClass]="sideBarStatus ? '' : 'expand'">
+
+    <router-outlet></router-outlet>
+
+</main>
+
+

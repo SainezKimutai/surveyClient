@@ -1,1 +1,129 @@
-/* You can add global styles to this file, and also import other style files */
+// Global Color Themes
+@import "~bootstrap/dist/css/bootstrap.css"
+
+$colorThemes: (primaryTheme: #074BFB, secondaryTheme: #F7B308, tertiaryTheme:#7D7D7D, nevyBlue: #030451, light: #f0f3f5, dark: #2f353a, primary: #20a8d8, secondary: #c8ced3, success: #4dbd74, info: #63c2de, warning: #ffc107, danger: #f86c6b)
+
+$grayColors: (g100: #f0f3f5, g200: #e4e7ea, g300: #c8ced3, g400: #acb4bc, g500: #8f9ba6, g600: #73818f, g700: #5c6873, g800: #2f353a, g900: #23282c)
+
+
+// Color function
+@function colorTheme($color-name) 
+    @return map-get($colorThemes , $color-name)
+
+@function grayColor($color-name) 
+    @return map-get($grayColors , $color-name)
+    
+    
+// Resposivenes Breakpoints
+// Extra small    
+$desktop_xm: 0px
+
+@mixin desktop_xm
+    @media (max-width: #{$desktop_xm}) 
+        @content
+    
+// Small
+$desktop_sm: 576px
+
+@mixin desktop_sm
+    @media (max-width: #{$desktop_sm}) 
+        @content
+    
+// Medium
+$desktop_md: 768px
+
+@mixin desktop_md
+    @media (max-width: #{$desktop_md}) 
+        @content
+    
+// Large
+$desktop_lg: 992px
+
+@mixin desktop_lg
+    @media (max-width: #{$desktop_lg}) 
+        @content
+    
+// Extra large
+$desktop_xl: 1200px
+
+@mixin desktop_xl
+    @media (max-width: #{$desktop_xl}) 
+        @content
+
+$bgThrough: rgba(0,0,0,0.2)  
+    
+    
+
+
+
+
+
+
+
+#mainBody
+    background-color: grayColor(g100)
+    font-family: Montserrat
+    -ms-overflow-style: none
+    scrollbar-width: none
+
+::-webkit-scrollbar
+    width: 0px
+    background: transparent
+
+::-webkit-scrollbar-thumb 
+    background-color: brandColor(brandPrimary)
+    width: 1px
+
+
+// TOASTR BUG FIX 
+
+.toast-custom-one
+    top: 25%
+    left: 50%
+    transform: translate(-50%, -50%)
+
+#toast-container > div 
+    opacity: 1
+
+.toast 
+    // font-size: initial !important
+    font-size: 12px !important
+    font-family: Montserrat !important
+    border: initial !important
+    backdrop-filter: blur(0) !important
+
+.toast-success 
+    background-color: #51A351 !important
+
+
+.toast-error 
+    background-color: #BD362F !important
+
+.toast-info 
+    background-color: #2F96B4 !important
+
+.toast-warning 
+    background-color: #F89406 !important
+
+
+
+
+
+
+
+
+
+
+// Browser compatability
+
+// Android, Chrome, IOS, Safari  -webkit-
+// Firefox   -moz-
+// Internet Explorer   -ms-
+// Opera   -o-
+
+
+
+
+
+
+
