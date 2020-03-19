@@ -1,6 +1,6 @@
 @import 'src/styles.sass'
-main
 
+main
     width: 100%
     height: 100%
 
@@ -12,41 +12,24 @@ main .side-bg
     clip-path: polygon(0 0, 50% 0, 50% 100%, 0% 100%)
     background-color: colorTheme(primaryTheme)
 
+    @include desktop_md
+        clip-path: polygon(100% 0, 100% 50%, 0 50%, 0 0)
+
 
 
 
 
 .body-section
     position: absolute
-    padding: 80px 3em 0 3em
+    padding: 3em 1em
     width: 100%
     height: 100%
     display: flex
     align-items: strecth
+    border
 
     @include desktop_md
-         padding: 80px 1em 0 1em
-
-.body-section .illustration-wrap
-    background-color: white
-
-    border-radius: 2px
-    box-shadow: 0 2px 7px rgba(0, 0, 0, .2)
-    width: 40%
-    height: 500px
-    margin: 1em auto
-
-    @include desktop_md
-        margin: auto
-        width: 100%
-
-
-
-.body-section .illustration-wrap .illustrative-bg
-    width: 100%
-    height: 100%
-    background-color: colorTheme(secondaryTheme)
-    clip-path: polygon(28% 4%, 53% 13%, 23% 14%, 42% 30%, 17% 23%, 22% 45%, 7% 26%, 0 51%, 0 0, 61% 0)
+         padding: 3em 1em
 
 
 .body-section .form-section
@@ -55,28 +38,44 @@ main .side-bg
     box-shadow: 2px 4px 10px rgba(0, 0, 0, .4)
     width: 100%
     max-width: 700px
-    height: 350px
+    height: 80%
     margin: 3em
     display: flex
     align-items: stretch
 
+    @include desktop_md
+        display: flex
+        flex-direction: column
+        height: fit-content
+
     
 .body-section .form-section .logo-section
+    margin: auto
     width: 100%
     height: 100%
     padding: 1em
+    display: flex
+    align-items: stretch
 
-    h4
-        font-size: 22px
-        margin: 1em 0
-        color: white
+    .wrap
+        margin: auto
+        width: fit-content
+        height: 100%
+        display: flex
+        flex-direction: column
+        justify-content: center
 
-    img 
-        width: 200px 
-        height: 150px
+        h4
+            font-size: 22px
+            margin: 1em 0
+            color: white
+
+        img 
+            width: 200px 
+            height: 150px
 
 .body-section .form-section .form-wrap
-    width: 50%
+    width: 100%
     height: 100% 
     display: flex
     align-items: sretch
@@ -89,16 +88,17 @@ main .side-bg
     flex-direction: column
     justify-content: center
     padding: 1em
+    width: 100%
 
 .body-section .form-section .form-wrap .form .head
     width: 100%
-    margin: 0 0 1em 0
+    margin: 0 0 3em 0
     display: flex
     align-items: stretch
 
     h4 
         margin-left: auto
-        font-size: 15px
+        font-size: 18px
         font-weight: bold  
         color: colorTheme(primaryTheme) 
 
@@ -109,11 +109,14 @@ main .side-bg
     align-items: stretch
 
     fa-icon
-        font-size: 12px
+        font-size: 14px
         color: colorTheme(primaryTheme)
+        margin: .5em 0 0 0
 
     input 
-        width: 12em
+        padding: 0 .5em
+        font-size: 14px
+        width: 100%
         outline: none
         border: none
         border-bottom: solid 1px colorTheme(primaryTheme)

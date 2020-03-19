@@ -13,9 +13,9 @@ export class LandingPageComponent implements OnInit {
   ) { }
 
 
-  // icon 
-  faEnvelope = faEnvelope;
-  faKey = faKey;
+  // icon
+  public faEnvelope = faEnvelope;
+  public faKey = faKey;
 
 
 
