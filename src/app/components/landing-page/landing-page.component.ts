@@ -70,7 +70,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
 
       },
-      error => {this.notifyService.showError(error.error.message, 'Access denied'); this.ImprintLoader = false;}
+      error => {this.notifyService.showError(error.error.message, 'Access denied'); this.ImprintLoader = false; }
     );
   }
 

@@ -2,7 +2,7 @@
 
 
     
-article
+.article
     width: 100%
     height: fit-content
 
@@ -368,17 +368,32 @@ article
             -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .4)
             -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .4)
 
-
             &:hover
                 box-shadow: 0 0 7px rgba(0, 0, 0, .3)
                 -moz-box-shadow: 0 0 7px rgba(0, 0, 0, .3)
                 -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .3)
+
+                .bg-1
+                    background-color: colorTheme(primaryTheme)
+
+                h4
+                    color: colorTheme(secondaryTheme)
+
+
+            .bg-1
+                z-index: 1
+                height: 100%
+                height: 100%
+                background-color: colorTheme(secondaryTheme)
+                clip-path: polygon(19% 0, 0 0, 0 30%)
 
             h4
                 margin: 2em
                 font-size: 16px 
                 font-weight: bold
                 color: colorTheme(primaryTheme)
+                text-shadow: 0 1px 2px rgba(0, 0, 0, .2)
+
 
 
 

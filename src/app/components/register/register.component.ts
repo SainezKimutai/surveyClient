@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
 import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.sass']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
   ) { }
 
 
-
+  public ImprintLoader = false;
   public faEnvelope = faEnvelope;
   public faKey = faKey;
 
@@ -80,6 +80,7 @@ export class RegisterComponent implements OnInit {
 
 
   register() {
+    this.ImprintLoader = true;
     const newProfileData = {
       companyName: this.registrationForm.companyName,
       logo: {
@@ -108,11 +109,11 @@ export class RegisterComponent implements OnInit {
             localStorage.setItem('permissionStatus', 'isCustomer');
             this.router.navigate(['/home/profile']);
           },
-          error => this.notifyService.showWarning('Could not submit', 'Failled')
+          error => {this.notifyService.showWarning('Could not submit', 'Failled');  this.ImprintLoader = false; }
         );
 
       },
-      error => this.notifyService.showWarning('Could not submit', 'Failled')
+      error => {this.notifyService.showWarning('Could not submit', 'Failled');  this.ImprintLoader = false; }
     );
 
 
@@ -122,6 +123,8 @@ export class RegisterComponent implements OnInit {
 
 
 
-
+  ngOnDestroy() {
+    this.ImprintLoader = false;
+  }
 
 }

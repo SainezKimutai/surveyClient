@@ -23,6 +23,9 @@ export class EditorialComponent implements OnInit {
 
 
 
+  // loader
+  public ImprintLoader = false;
+
 
 // Icons
   public faPlus = faPlus;
@@ -197,11 +200,12 @@ export class EditorialComponent implements OnInit {
 
 
   saveSurveyTemplate() {
+    this.ImprintLoader = true;
     this.surveyService.createSurvey({surveyName: this.CurrentSurveyInput}).subscribe(
       dataSurvey => {
         this.createQuestions(dataSurvey);
       },
-      error => this.notifyService.showError('Could not create Survey', 'Failed')
+      error => {this.notifyService.showError('Could not create Survey', 'Failed'); this.ImprintLoader = false; }
     );
   }
 
@@ -220,7 +224,7 @@ export class EditorialComponent implements OnInit {
 
       this.questionService.createQuestion(myQuizData).subscribe(
         data => {
-          this.notifyService.showSuccess('Survey Template Created', 'Success');
+         
           this.CurrentQuestionInput = '';
           this.openQuestionInput = '';
           this.multipleChoiceInput = '';
@@ -233,9 +237,11 @@ export class EditorialComponent implements OnInit {
 
           this.updatePage();
           this.viewSurveyTemplates();
+          this.ImprintLoader = false;
+          this.notifyService.showSuccess('Survey Template Created', 'Success');
 
         },
-        error => this.notifyService.showError('Could not create Survey', 'Failed')
+        error => {this.notifyService.showError('Could not create Survey', 'Failed'); this.ImprintLoader = false; }
       );
     });
   }
