@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from 'src/app/shared/services/user.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './landing-page.component.html',
   styleUrls: ['./landing-page.component.sass']
 })
-export class LandingPageComponent implements OnInit {
+export class LandingPageComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
@@ -18,6 +18,8 @@ export class LandingPageComponent implements OnInit {
     private notifyService: NotificationService
   ) { }
 
+  // loader
+  public ImprintLoader = false;
 
   // icon
   public faEnvelope = faEnvelope;
@@ -33,11 +35,11 @@ export class LandingPageComponent implements OnInit {
       password: ''
     };
 
-
   }
 
 
   login() {
+    this.ImprintLoader = true;
     this.userService.loginUser(this.loginForm).subscribe(
       dataUser => {
 
@@ -68,9 +70,18 @@ export class LandingPageComponent implements OnInit {
 
 
       },
-      error => this.notifyService.showError(error.error.message, 'Access denied')
+      error => {this.notifyService.showError(error.error.message, 'Access denied'); this.ImprintLoader = false;}
     );
   }
+
+
+
+
+
+  ngOnDestroy() {
+    this.ImprintLoader = false;
+  }
+
 
 
 }
