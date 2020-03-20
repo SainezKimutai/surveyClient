@@ -14,6 +14,8 @@ import { UserService } from './shared/services/user.service';
 import { AppCustomPreloader } from './app-preload.module';
 import { NotificationService } from './shared/services/notification.service';
 import { CompanyProfileService } from './shared/services/companyProfile.service';
+import { SurveyService } from './shared/services/survey.service';
+import { QuestionService } from './shared/services/questions.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,7 @@ import { CompanyProfileService } from './shared/services/companyProfile.service'
       preventDuplicates: false,
     }),
   ],
-  providers: [AppCustomPreloader, NotificationService, UserService, CompanyProfileService],
+  providers: [AppCustomPreloader, NotificationService, UserService, CompanyProfileService, SurveyService, QuestionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

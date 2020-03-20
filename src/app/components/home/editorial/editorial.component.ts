@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSearch, faListAlt, faBackward } from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
+import { SurveyService } from 'src/app/shared/services/survey.service';
+import { QuestionService } from 'src/app/shared/services/questions.service';
 
 
 @Component({
@@ -14,13 +16,27 @@ export class EditorialComponent implements OnInit {
 
 
   constructor(
-    private notifyService: NotificationService
+    private notifyService: NotificationService,
+    private surveyService: SurveyService,
+    private questionService: QuestionService
   ) { }
 
 
 
 
+// Icons
   public faPlus = faPlus;
+  public faSearch = faSearch;
+  public faListAlt = faListAlt;
+  public faBackward = faBackward;
+
+
+  //
+  public AllSurveys = [];
+  public AllQuestions = [];
+
+  public TemplateNameOnView = [];
+  public TemplateQuestions = [];
 
   public ChoicesStatus = false;
 
@@ -29,15 +45,19 @@ export class EditorialComponent implements OnInit {
   public CurrentQuestionArray = [];
   public CurrentQuestionInput = '';
   public CurrentChoiceInput = '';
-  
-  public openQuestionInput = '';
-  public multipleChoiceInput = '';
-  public choiceTypeInput = '';
-  public positionInput = null;
+
+  public openQuestionInput = 'true';
+  public multipleChoiceInput = 'true';
+  public choiceTypeInput = 'string';
+  public positionInput = 1;
+
 
 
 
   // status
+    public FormSectionStatus = false;
+    public TemeplateViewSectionStatus = true;
+    public QuestionsViewStatus = false;
     public SurveyFormStatus = true;
     public QuestionFormStatus = false;
 
@@ -48,7 +68,55 @@ export class EditorialComponent implements OnInit {
 
   ngOnInit() {
     localStorage.setItem('ActiveNav', 'editorial');
+    this.updatePage();
+
+
+
   }
+
+
+
+
+  updatePage() {
+
+    this.surveyService.getAllSurveys().subscribe(
+      data => this.AllSurveys = data,
+      error => console.log('Error getting all surveys')
+    );
+
+    this.questionService.getAllQuestions().subscribe(
+      data => this.AllQuestions = data,
+      error => console.log('Error getting all question')
+    );
+
+  }
+
+
+
+  createNewSurveyTemplate() {
+    this.FormSectionStatus = true;
+    this.TemeplateViewSectionStatus = false;
+    this.QuestionsViewStatus = false;
+  }
+
+  viewSurveyTemplates() {
+    this.FormSectionStatus = false;
+    this.TemeplateViewSectionStatus = true;
+    this.QuestionsViewStatus = false;
+  }
+
+
+
+  viewSurvey(name, id) {
+    this.TemplateQuestions = [];
+    this.TemplateNameOnView = name;
+    this.TemplateQuestions = this.AllQuestions.filter(( quiz) => quiz.surveyId === id ).map(e => e);
+    this.FormSectionStatus = false;
+    this.TemeplateViewSectionStatus = false;
+    this.QuestionsViewStatus = true;
+
+  }
+
 
 
 
@@ -75,20 +143,26 @@ export class EditorialComponent implements OnInit {
 
 
   checkQuestioType(type) {
-    if (type === 'open') {
+    if (type === 'true') {
       this.ChoicesStatus = false;
+      this.openQuestionInput = 'true';
+      this.multipleChoiceInput = 'false';
+      this.choiceTypeInput = 'string';
     }
-    if (type === 'closed'){
+    if (type === 'false') {
       this.ChoicesStatus = true;
+      this.openQuestionInput = 'false';
+      this.multipleChoiceInput = 'true';
+      this.choiceTypeInput = 'string';
     }
   }
 
 
   addChoice() {
-    if (this.CurrentChoiceInput === ''){
+    if (this.CurrentChoiceInput === '') {
       this.notifyService.showWarning('Input answer', 'Empty Array');
     } else {
-      this.CurrentChoicesArr.push(this.CurrentChoiceInput);
+      this.CurrentChoicesArr.push({ answer: this.CurrentChoiceInput});
       this.CurrentChoiceInput = '';
     }
 
@@ -108,14 +182,63 @@ export class EditorialComponent implements OnInit {
         position: this.positionInput,
         choices: this.CurrentChoicesArr,
 
-      }
+      };
       this.CurrentQuestionArray.push(quizData);
       this.CurrentQuestionInput = '';
+      this.openQuestionInput = '';
+      this.multipleChoiceInput = '';
+      this.choiceTypeInput = '';
+      this.CurrentChoicesArr = [];
+      this.positionInput++;
     }
   }
 
 
 
+
+  saveSurveyTemplate() {
+    this.surveyService.createSurvey({surveyName: this.CurrentSurveyInput}).subscribe(
+      dataSurvey => {
+        this.createQuestions(dataSurvey);
+      },
+      error => this.notifyService.showError('Could not create Survey', 'Failed')
+    );
+  }
+
+
+  createQuestions(survey) {
+    this.CurrentQuestionArray.forEach( quiz => {
+      const myQuizData = {
+        surveyId: survey._id,
+        question: quiz.question,
+        open_question: (quiz.open_question === 'true' ? true : false),
+        multiple_choice: (quiz.multiple_choice === 'true' ? true : false),
+        choice_type: quiz.choice_type,
+        position: quiz.position,
+        choices: quiz.choices,
+      };
+
+      this.questionService.createQuestion(myQuizData).subscribe(
+        data => {
+          this.notifyService.showSuccess('Survey Template Created', 'Success');
+          this.CurrentQuestionInput = '';
+          this.openQuestionInput = '';
+          this.multipleChoiceInput = '';
+          this.choiceTypeInput = '';
+          this.CurrentChoicesArr = [];
+          this.positionInput++;
+          this.CurrentSurveyInput = '';
+          this.CurrentQuestionArray = [];
+          this.swithToSurveyForm();
+
+          this.updatePage();
+          this.viewSurveyTemplates();
+
+        },
+        error => this.notifyService.showError('Could not create Survey', 'Failed')
+      );
+    });
+  }
 
 
 

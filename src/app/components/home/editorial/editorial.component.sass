@@ -4,12 +4,12 @@
     
 article
     width: 100%
-    height: 100%
+    height: fit-content
 
 .body-section
     width: 100%
     display: flex
-    padding: 0 0 0 3em
+    padding: 0 320px 0 3em
 
 .form-section
     margin-left: auto
@@ -17,6 +17,8 @@ article
     min-height: 500px
     padding: 1em 1em 0 0
     width: 100%
+    max-height: 700px
+    overflow-x: scroll
 
 
 
@@ -28,7 +30,7 @@ article
     display: none
 .form-section .survey-template
     width: 500px
-    height: 400px
+    // height: 300px
     background-color: white
     border-radius: 2px
     box-shadow: 0 2px 3px rgba(0, 0, 0, .2)
@@ -48,15 +50,16 @@ article
         width: 100%
         display: flex
         flex-direction: column
-        padding: 1em
+        justify-content: center
+        padding: 2em
 
 
         .form-group
-            margin: auto
-            width: 100%
+            // margin: auto
+            // width: 100%
             background-color: grayColor(g200)
             padding: .5em
-            margin: 5em 0 3em 0
+            margin: 2em
             border-radius: 5px
 
             input 
@@ -80,7 +83,6 @@ article
 .form-section .question-template
     width: 100%
     max-width: 700px
-    min-height: 500px
     height: fit-content
     background-color: white
     border-radius: 5px
@@ -126,20 +128,22 @@ article
 
 
 .form-section .question-template .form .options-wrap .option-item
-    width: 20%  
+    width: 25%  
     text-align: left
     margin: 0 1em 1em 0
     border: solid 1px grayColor(g100)
 
     h4
         width: 100%
-        padding: 1em
+        padding: 0 1em 1em 1em
         font-size: 12px 
         font-weight: bold
 
     &.input-text
 
         input
+            outline: none
+            border: solid 2px grayColor(g100)
             width: 4em
 
     .form-group
@@ -147,15 +151,7 @@ article
         display: flex
         align-items: stretch
         background-color: transparent
-
-        &.text-input
-            background-color: grayColor(g100)
-            width: 100%
-            height: 3em
-
-            input 
-                padding: 5px
-                margin: auto
+        margin: 2px
 
 
         input
@@ -254,14 +250,17 @@ article
             background-color: colorTheme(secondaryTheme)
             margin: auto
 
+            fa-icon
+                color: white
+
     .btn-wrap
         margin: 2em 0
         width: 100%
         display: flex
 
-        .btn
-            margin: auto
-            background-color: colorTheme(success)
+        .btn-next
+            background-color: colorTheme(primary)
+            color: white
 
 
 
@@ -298,10 +297,19 @@ article
 
         h4
             font-size: 16px
+
+        .btn
+            background-color: colorTheme(success)
+            color:  white 
+            font-size: 15px
+            font-weight: bold
+
+
     .question-wrap
         background-color: white
         margin: 4px 0
         padding: 5px 1em
+        height: 4em
 
         &:hover
             background-color: colorTheme(primaryTheme)
@@ -327,39 +335,166 @@ article
 
 
 
+.templates-section
+    width: 100%
+    height: 100%
+
+    .head
+        padding: 1em
+        color: grayColor(g800)
+
+        h4 
+            font-size: 20px
+            font-weight: bold
+
+    .card-group
+
+        margin: 1em auto auto 0
+        max-height: 500px
+        overflow-x: scroll
+
+        .card
+            min-width: 15em
+            height: 10em
+            max-width: 50%
+            margin: 0 .5em .5em 0
+            border-radius: 5px
+            text-align: center
+            display: flex
+            flex-direction: column
+            cursor: pointer
+            border: none
+            box-shadow: 0 0 10px rgba(0, 0, 0, .4)
+            -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .4)
+            -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .4)
+
+
+            &:hover
+                box-shadow: 0 0 7px rgba(0, 0, 0, .3)
+                -moz-box-shadow: 0 0 7px rgba(0, 0, 0, .3)
+                -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .3)
+
+            h4
+                margin: 2em
+                font-size: 16px 
+                font-weight: bold
+                color: colorTheme(primaryTheme)
+
+
+
+
+
+
+.Questions-listing
+    width: 100%
+    height: 100%
+    margin: 5em 0 0 0
+
+    .head
+        padding: 1em
+        width: 100%
+        text-align: center
+        background-color: colorTheme(primaryTheme)
+
+        .btn
+            background-color: colorTheme(secondaryTheme)
+            border-radius: 50%
+
+        h4
+            font-size: 14px
+            color: white
+
+    .question-wrap
+        background-color: white
+        margin: 4px 0
+        padding: 5px 1em
+        height: 4em
+
+        &:hover
+            background-color: colorTheme(secondaryTheme)
+            color: white
+
+        .question
+            font-size: 12px
+            font-weight: bold
+
+        .choices
+            width: 100%
+
+            span 
+                font-size: 12px
+                width: 100%
+                margin: 0 1em
+
+
+
+
+
+
 .navigation-section
     margin-left: auto
+    position: absolute
+    top: 0
+    right: 0
     height: 100%
-    width: 500px
+    width: 310px
+    background-color: black
+    padding: 0
+    display: flex
+    flex-direction: column
+
+
+.navigation-section .body
     background-color: white
-    padding: 2em 2em 2em 2em
+    height: 50%
 
-.navigation-section .head
-    width: 100%
-    padding: 1em
-
-    h4 
-        font-size: 16px
-        font-weight: bold
-
-
-.navigation-section ul
-    list-style: none
-
-    li 
+    .search-wrap
+        width: 100%
         padding: 1em
-        font-weight: bold
-        font-size: 16px
-        background-color: grayColor(g200)
-        margin: 0 0 1em 0
-        width: 10em
-        border-radius: 5px
-        box-shadow: 0px 2px 5px rgba(0, 0, 0, .2)
-        color: colorTheme(secondaryTheme)
+        margin: 2em 0
+   
+        .input-wrap
+            border-radius: 1em
+            background-color: grayColor(g200)
 
-    .footer
+            fa-icon
+                margin: auto .5em
+
+
+            input
+                width: 100%
+                outline: none
+                padding: .5em
+                border: none
+                border-radius: 0px
+                background-color: transparent
+                
+    .create-new, .surveys
+        cursor: pointer
+        border-radius: 1em
+        width: 8em
+        padding: .5em 1em
+        box-shadow: 0 0 10px rgba(0, 0, 0, .3)
+        color: grayColor(g800)
+        margin: 0 auto 2em auto
+        text-align: center
+
+        &.active
+            background-color: colorTheme(primaryTheme)
+            color: white
+
+        fa-icon
+            margin-right: .5em
+            color: colorTheme(secondaryTheme)
+
+        
+
+
+
+.navigation-section .footer
         background-color: grayColor(g800)
-        height: 15em
+        position: relative
+        bottom: 0
         width: 100%
 
 
