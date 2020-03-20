@@ -16,6 +16,7 @@ import { NotificationService } from './shared/services/notification.service';
 import { CompanyProfileService } from './shared/services/companyProfile.service';
 import { SurveyService } from './shared/services/survey.service';
 import { QuestionService } from './shared/services/questions.service';
+import { ResponseService } from './shared/services/response.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { QuestionService } from './shared/services/questions.service';
       preventDuplicates: false,
     }),
   ],
-  providers: [AppCustomPreloader, NotificationService, UserService, CompanyProfileService, SurveyService, QuestionService],
+  providers: [AppCustomPreloader, NotificationService, UserService, CompanyProfileService, SurveyService, QuestionService, ResponseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

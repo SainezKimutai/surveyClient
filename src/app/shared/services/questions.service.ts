@@ -41,5 +41,9 @@ export class QuestionService {
         return this.http.delete<any>(this.url + 'delete/' + id);
     }
 
+    getQuestionsInASurvey(id){
+        return this.http.get<any>(this.url + 'survey/' + id);
+    }
+
 
 }

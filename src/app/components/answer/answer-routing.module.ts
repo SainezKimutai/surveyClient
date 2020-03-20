@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SurveyComponent } from './survey.component';
-import { SurveyService } from 'src/app/shared/services/survey.service';
+import { AnswerComponent } from './answer.component';
+
 
 const routes: Routes = [
 
-    { path: '', component: SurveyComponent }
+    { path: '', component: AnswerComponent }
 
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SurveyRoutingModule { }
+export class AnswerRoutingModule { }

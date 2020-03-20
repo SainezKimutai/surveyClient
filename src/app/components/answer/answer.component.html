@@ -1,0 +1,95 @@
+<article *ngIf="ImprintLoader" class="imprint-loader home">
+    <div class="imprint-loader-wrap">
+        <div class="imprint-loader-main">
+        <div class="imprint-loader-ball ball-one"></div>
+        <div class="imprint-loader-ball ball-two"></div>
+        <div class="imprint-loader-ball ball-three"></div>
+        <div class="imprint-loader-ball ball-four"></div>
+        </div>
+    </div>
+</article>
+
+
+
+<main>
+
+
+
+    <div class="side-bg"></div>
+    
+    
+    
+    <section class="body-section d-flex">
+       
+        
+        <div class="form-section mx-auto">
+    
+    
+            <div class="logo-section">
+                <div class="wrap">
+                    <h4>{{surveyName}}</h4>
+    
+                    <img src="../../../assets/images/logo1.jpg" alt="" >
+                </div>
+    
+            </div>
+    
+    
+            <div class="form-wrap">
+    
+    
+            <form class="form">
+    
+                <div *ngIf="questions.length > 0" [ngClass]="'dynamic-wrapper'">
+
+                    <div class="head">
+                        <h4>Answer section</h4>
+                    </div>
+        
+                    <div class="form-group">
+                        <p>{{questionTag}}</p>
+                    </div>
+                    
+                    <div class="form-group" *ngIf="open">
+                        <!-- <fa-icon [icon]="faKey"></fa-icon> -->
+                        <input type="{{type}}" [(ngModel)]="response" name="response" placeholder="">
+                    </div>
+
+                    <div class="form-group" *ngIf="!open">
+                        <!-- <fa-icon [icon]="faKey"></fa-icon> -->
+                        <select type="text" [(ngModel)]="response" name="response">
+                            <option *ngFor="let option of options"  value="{{option.answer}}">{{option.answer}}</option>
+                        </select>
+                    </div>
+
+                    <div *ngIf="!isLast" class="btn-wrap d-flex">
+                        <button [disabled]="response === '' || !response"
+                        class="btn btn-sm btn-next ml-auto" (click)="next(pageNumber)">Next</button>
+                    </div>
+
+                    <div *ngIf="isLast" class="btn-wrap d-flex">
+                        <button [disabled]="response === '' || !response"
+                        class="btn btn-sm btn-next ml-auto" (click)="next(pageNumber)">Submit</button>
+                    </div>
+
+                    <div class="text-muted">
+                        <h6>{{pageNumber}} of {{totalPages}}</h6>
+                    </div>
+
+                </div>
+
+            </form>
+
+    
+            </div>
+    
+        </div>
+    
+    </section>
+    
+    
+    
+    </main>
+    
+    
+    
