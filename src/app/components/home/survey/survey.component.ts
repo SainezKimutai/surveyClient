@@ -87,7 +87,7 @@ export class SurveyComponent implements OnInit {
 
 
 
-  // 
+  // Filter Completed and Not completed surveys by cheking from the response array.s
 
   filterSurveys() {
 
