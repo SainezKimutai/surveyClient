@@ -54,6 +54,11 @@
           </a>
         </li>
     
+        <li [ngClass]="editorialNavBarActive ? 'nav-item active' : 'nav-item'" >
+          <a routerLink="/home/editorial" [ngClass]=" editorialNavBarActive ? 'nav-link active' : 'nav-link'">
+            <fa-icon [icon]="faUser"></fa-icon> <span>Editorial</span>
+          </a>
+        </li>
     
     </ul>
 

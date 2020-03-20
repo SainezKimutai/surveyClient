@@ -37,6 +37,7 @@ public sideBarStatus = true;
 public dashboardNavBarActive = false;
 public surveyNavBarActive = false;
 public profileNavBarActive = false;
+public editorialNavBarActive = false;
 
 public myInterval;
 
@@ -71,9 +72,11 @@ CheckActiveNavBar() {
   this.dashboardNavBarActive = false;
   this.surveyNavBarActive = false;
   this.profileNavBarActive = false;
+  this.editorialNavBarActive = false;
   if (window.localStorage.getItem('ActiveNav') === 'dashboard') {this.dashboardNavBarActive = true; }
   if (window.localStorage.getItem('ActiveNav') === 'survey') {this.surveyNavBarActive = true; }
   if (window.localStorage.getItem('ActiveNav') === 'profile') {this.profileNavBarActive = true; }
+  if (window.localStorage.getItem('ActiveNav') === 'editorial') {this.editorialNavBarActive = true; }
 }
 
 

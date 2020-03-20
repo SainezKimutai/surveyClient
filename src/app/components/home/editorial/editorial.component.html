@@ -1,0 +1,217 @@
+
+
+<article>
+
+<section class="body-section">
+
+
+
+
+
+
+
+<section class="form-section">
+
+    <div [ngClass]="SurveyFormStatus ? 'survey-template' : 'survey-template hide'">
+
+        <div class="title">
+            <h4>Survey</h4>
+        </div>
+
+        <form class="form " >
+
+            <div class="form-group">
+                <input type="text" name="CurrentSurveyInput" [(ngModel)]="CurrentSurveyInput" placeholder="Enter survey name">
+            </div>
+
+
+            <div class="btn-wrap">
+               <button class="btn btn-sm" (click)="nextToQuestion()">Next</button>
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+
+
+
+
+    <div [ngClass]="QuestionFormStatus ? 'question-template' : 'question-template hide'" >
+        <div class="title">
+            <h4>Questions</h4>
+        </div>
+
+        <form class="form">
+
+            <div class="form-group">
+                <input type="text" class="" name="CurrentQuestionInput" [(ngModel)]="CurrentQuestionInput" placeholder="Question">
+            </div>
+
+            <div class="options-wrap">
+
+                <div class="option-item">
+                    <h4>Quize Type</h4>
+
+                    <div class="form-group">
+                        <input type="radio" name="openQuestionInput" value="open" (change)="checkQuestioType('open')" [(ngModel)]="openQuestionInput">
+                        <label for="openQuestionInput" >Open</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="radio" name="openQuestionInput" (change)="checkQuestioType('closed')"  [(ngModel)]="openQuestionInput">
+                        <label for="openQuestionInput">Closed</label>
+                    </div>
+                </div>
+
+                <div class="option-item" [hidden]="!ChoicesStatus">
+                    <h4>Multiple Choice ?</h4>
+
+                    <div class="form-group">
+                        <input type="radio" name="multipleChoiceInput" value="yes" [(ngModel)]="multipleChoiceInput">
+                        <label for="">Yes</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="radio" name="multipleChoiceInput" value="no" [(ngModel)]="multipleChoiceInput">
+                        <label for="">No</label>
+                    </div>
+                </div>
+                <div class="option-item" [hidden]="!ChoicesStatus">
+                    <h4>Answer Type</h4>
+
+                    <div class="form-group">
+                        <input type="radio" name="choiceTypeInput" value="string" [(ngModel)]="choiceTypeInput">
+                        <label for="">String</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="radio" name="choiceTypeInput" value="number" [(ngModel)]="choiceTypeInput">
+                        <label for="">Number</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="radio" name="choiceTypeInput" value="boolean" [(ngModel)]="choiceTypeInput">
+                        <label for="">Boolean</label>
+                    </div>
+                </div>
+                <div class="option-item input-text" [hidden]="!ChoicesStatus">
+                    <h4>Position</h4>
+
+                    <input type="number" name="positionInput" [(ngModel)]="positionInput">
+             
+
+                </div>
+
+            </div>
+
+
+            <!-- <div class="form-group form-group-radio d-flex" hidden>
+                <div class="wrap">
+                <label for="questionType">Open</label>
+                <input type="radio" name="questionType" value="open" (change)="checkQuestioType('open')" >
+                </div>
+                <div class="wrap">
+                    <label for="questionType">closed</label>
+                    <input type="radio" name="questionType" value="closed" (change)="checkQuestioType('closed')" >
+                </div>
+              
+            </div> -->
+
+            <div class="choices-wrapper" [hidden]="!ChoicesStatus">
+          
+                <div class="preview-questions" *ngFor="let item of CurrentChoicesArr; let x = index">
+                  {{x + 1}}. {{item}}
+                </div>
+                <div class="form-group-choices">
+                    <input type="text" name="CurrentChoiceInput" [(ngModel)]="CurrentChoiceInput" placeholder="Type Answer">
+                </div>
+
+
+
+                <div class="add-ans">
+                    <button class="btn btn-sm" (click)="addChoice()"><fa-icon [icon]="faPlus"></fa-icon></button>
+                </div>
+            </div>
+
+
+
+            <div class="btn-wrap">
+               <button class="btn btn-sm" (click)="nextQuestion()">Next</button>
+            </div>
+
+        </form>
+    </div>
+
+
+
+
+
+    <div class="list-section">
+
+        <div *ngIf="CurrentSurveyInput" class="head">
+            <h4>{{CurrentSurveyInput}}</h4>
+        </div>
+
+        <div class="question-wrap" *ngFor="let item of CurrentQuestionArray">
+            <div class="question">{{item.question}}</div>
+            <div class="choices">
+                <span *ngFor="let ans of item.choices">One</span>
+          
+            </div>
+        </div>
+
+
+
+
+    </div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="navigation-section">
+
+    <div class="head">
+        <h4>Design Survey Questionniare</h4>
+    </div>
+
+    <ul>
+        <li>Create New</li>
+        <li>Surveys</li>
+        <li>Questions</li>
+
+    </ul>
+
+    <div class="footer">
+
+    </div>
+
+</section>
+
+
+
+
+
+</section> 
+
+</article>
+
+
+
+
+

@@ -8,6 +8,7 @@ header
     transition: all 0.6s
     -moz-transition: all 0.6s
     -webkit-transition: all 0.6s
+    position: fixed
 
 
     &.hide
@@ -53,9 +54,9 @@ header
 
 #sidebar.hide
     width: 50px
-    box-shadow: 1px 1px 5px rgba(0, 0, 0, .1)
-    -moz-box-shadow: 1px 1px 5px rgba(0, 0, 0, .1)
-    -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, .1)
+    // box-shadow: 1px 1px 5px rgba(0, 0, 0, .1)
+    // -moz-box-shadow: 1px 1px 5px rgba(0, 0, 0, .1)
+    // -webkit-box-shadow: 1px 1px 5px rgba(0, 0, 0, .1)
     
 
     @include desktop_md
@@ -96,9 +97,9 @@ header
     -moz-transition: all 0.6s
     -webkit-transition: all 0.6s
     background-color: colorTheme(primaryTheme) !important
-    box-shadow: 2px 2px 7px rgba(0, 0, 0, .3)
-    -moz-box-shadow: 2px 2px 7px rgba(0, 0, 0, .3)
-    -webkit-box-shadow: 2px 2px 7px rgba(0, 0, 0, .3)
+    // box-shadow: 2px 2px 7px rgba(0, 0, 0, .3)
+    // -moz-box-shadow: 2px 2px 7px rgba(0, 0, 0, .3)
+    // -webkit-box-shadow: 2px 2px 7px rgba(0, 0, 0, .3)
     
 
     @include desktop_md
@@ -111,7 +112,7 @@ header
 
 
 #sidebar .nav-pills
-    margin: .3em 1em 3em 2em !important
+    margin: .3em 0 3em 2em !important
     padding: 2em 0 0 0
     height: 700px
     overflow-x: scroll
@@ -121,7 +122,8 @@ header
         font-size: 12px
         font-family: Montserrat
         padding: .5em 1em
-        border-radius: 4px
+        border-top-left-radius: 2em
+        border-bottom-left-radius: 2em
         background-color: transparent
         transition: .1s background-color
         -moz-transition: 1s background-color
@@ -129,15 +131,10 @@ header
 
         &:hover
             background-color: grayColor(g300) !important
-            box-shadow: 2px 2px 7px rgba(0, 0, 0, .3)
-            -moz-box-shadow: 2px 2px 7px rgba(0, 0, 0, .3)
-            -webkit-box-shadow: 2px 2px 7px rgba(0, 0, 0, .3)
-
+            
         &.active 
-            background-color: colorTheme(secondaryTheme) !important
-            box-shadow: 2px 2px 7px rgba(0, 0, 0, .3)
-            -moz-box-shadow: 2px 2px 7px rgba(0, 0, 0, .3)
-            -webkit-box-shadow: 2px 2px 7px rgba(0, 0, 0, .3)
+            background-color: grayColor(g100) !important
+
 
 
         a
@@ -150,11 +147,11 @@ header
 
             &.active
                 background: none !important
-                color: white !important
+                color: colorTheme(secondaryTheme) !important
                 font-weight: bold
 
                 fa-icon, fa
-                    color: white
+                    color: colorTheme(secondaryTheme)
                     margin: 0 .5em 0 0 
                     text-decoration: underline !important
 

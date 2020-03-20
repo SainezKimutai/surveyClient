@@ -12,7 +12,7 @@ import { UserModel } from '../models/user.model';
 export class UserService {
 
 
-    url = `${dev.connect}api/user/`;
+    url = `${dev.connect}api/users/`;
 
     constructor( private http: HttpClient ) { }
 

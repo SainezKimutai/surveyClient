@@ -1,0 +1,365 @@
+@import "src/styles.sass"
+
+
+    
+article
+    width: 100%
+    height: 100%
+
+.body-section
+    width: 100%
+    display: flex
+    padding: 0 0 0 3em
+
+.form-section
+    margin-left: auto
+    height: fit-content
+    min-height: 500px
+    padding: 1em 1em 0 0
+    width: 100%
+
+
+
+
+
+
+
+.form-section .survey-template.hide
+    display: none
+.form-section .survey-template
+    width: 500px
+    height: 400px
+    background-color: white
+    border-radius: 2px
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .2)
+    margin: 0 0 1em 0
+
+    .title
+        width: 100%
+        padding: .5em 1em
+        background-color: colorTheme(secondaryTheme)
+
+        h4 
+            font-weight: bold
+            font-size: 16px
+
+    
+    .form
+        width: 100%
+        display: flex
+        flex-direction: column
+        padding: 1em
+
+
+        .form-group
+            margin: auto
+            width: 100%
+            background-color: grayColor(g200)
+            padding: .5em
+            margin: 5em 0 3em 0
+            border-radius: 5px
+
+            input 
+                background-color: transparent
+                width: 100%
+                outline: none
+                border: none
+                font-size: 13px
+
+        .btn-wrap
+            width: 100%
+            display: flex
+
+            .btn
+                margin: auto
+                background-color: colorTheme(secondaryTheme)
+
+
+.form-section .question-template.hide
+    display: none
+.form-section .question-template
+    width: 100%
+    max-width: 700px
+    min-height: 500px
+    height: fit-content
+    background-color: white
+    border-radius: 5px
+    margin: 0 0 1em 0
+    border-radius: 2px
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .2)
+
+    .title
+        width: 100%
+        padding: .5em 1em
+        background-color: colorTheme(secondaryTheme)
+
+        h4 
+            font-weight: bold
+            font-size: 16px
+
+    
+    .form
+        width: 100%
+        display: flex
+        flex-direction: column
+        padding: 1em
+
+
+        .form-group
+            margin: auto
+            width: 100%
+            background-color: grayColor(g200)
+            padding: .5em
+            margin: 0 0 1em 0
+            border-radius: 5px
+
+            input 
+                background-color: transparent
+                width: 100%
+                outline: none
+                border: none
+                font-size: 13px
+
+.form-section .question-template .form .options-wrap
+    display: flex
+    align-items: stretch
+
+
+.form-section .question-template .form .options-wrap .option-item
+    width: 20%  
+    text-align: left
+    margin: 0 1em 1em 0
+    border: solid 1px grayColor(g100)
+
+    h4
+        width: 100%
+        padding: 1em
+        font-size: 12px 
+        font-weight: bold
+
+    &.input-text
+
+        input
+            width: 4em
+
+    .form-group
+        padding: 5px
+        display: flex
+        align-items: stretch
+        background-color: transparent
+
+        &.text-input
+            background-color: grayColor(g100)
+            width: 100%
+            height: 3em
+
+            input 
+                padding: 5px
+                margin: auto
+
+
+        input
+            margin-right: auto
+            width: 1em
+
+        label 
+            margin-right: auto
+            font-size: 12px
+        
+        
+
+        &.form-group-radio 
+            background-color: transparent
+
+            .wrap
+                width: 100%
+                text-align: left
+                display: flex
+                flex-direction: column
+                padding: 0 0 0 5em 
+
+                label
+                    font-size: 12px
+                    font-weight: bold
+                
+                input 
+                    width: 3em
+
+
+    .choices-type
+        background-color: transparent
+        margin: 0 0 1em 0
+        padding: .5em
+
+        h4
+            font-size: 12px
+            padding: .5em
+            width: 100%
+            text-align: center
+
+        .form-group-radio
+            background-color: transparent
+            display: flex
+            align-items: stretch
+            width: 100%
+
+            .wrap
+                margin: auto
+                width: 100%
+                text-align: center
+                display: flex
+                flex-direction: column
+                // padding: 0 0 0 5em 
+
+                label
+                    font-size: 12px
+                    font-weight: bold
+                
+                input 
+                    width: 100%
+
+
+.form-section .question-template .form .choices-wrapper .form-group-choices
+        margin: auto
+        width: 100%
+        background-color: grayColor(g200)
+        padding: .5em
+        margin: 0 0 1em 0
+        border-radius: 5px
+
+        input 
+            background-color: transparent
+            width: 100%
+            outline: none
+            border: none
+            font-size: 13px
+
+.form-section .question-template .form 
+
+    .preview-questions
+        width: 100%
+        text-align: left
+        font-size: 12px
+        padding: 5px 1em
+        margin: 0 0 2px 0
+        border-radius: 2px
+        background-color: grayColor(g200)
+
+    .add-ans
+        width: 100%
+        display: flex
+
+        .btn
+            border-radius: 50%
+            background-color: colorTheme(secondaryTheme)
+            margin: auto
+
+    .btn-wrap
+        margin: 2em 0
+        width: 100%
+        display: flex
+
+        .btn
+            margin: auto
+            background-color: colorTheme(success)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.form-section .list-section 
+    width: 100%
+    height: fit-content
+
+    .head
+        padding: 1em
+        background-color: grayColor(g200)
+
+        h4
+            font-size: 16px
+    .question-wrap
+        background-color: white
+        margin: 4px 0
+        padding: 5px 1em
+
+        &:hover
+            background-color: colorTheme(primaryTheme)
+            color: white
+
+        .question
+            font-size: 12px
+            font-weight: bold
+
+        .choices
+            width: 100%
+
+            span 
+                font-size: 12px
+                width: 100%
+                margin: 0 1em
+
+
+
+
+
+
+
+
+
+.navigation-section
+    margin-left: auto
+    height: 100%
+    width: 500px
+    background-color: white
+    padding: 2em 2em 2em 2em
+
+.navigation-section .head
+    width: 100%
+    padding: 1em
+
+    h4 
+        font-size: 16px
+        font-weight: bold
+
+
+.navigation-section ul
+    list-style: none
+
+    li 
+        padding: 1em
+        font-weight: bold
+        font-size: 16px
+        background-color: grayColor(g200)
+        margin: 0 0 1em 0
+        width: 10em
+        border-radius: 5px
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, .2)
+        color: colorTheme(secondaryTheme)
+
+    .footer
+        background-color: grayColor(g800)
+        height: 15em
+        width: 100%
+
+

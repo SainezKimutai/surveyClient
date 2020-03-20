@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { UserService } from './shared/services/user.service';
 import { AppCustomPreloader } from './app-preload.module';
 import { NotificationService } from './shared/services/notification.service';
+import { CompanyProfileService } from './shared/services/companyProfile.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { NotificationService } from './shared/services/notification.service';
       preventDuplicates: false,
     }),
   ],
-  providers: [AppCustomPreloader, NotificationService, UserService],
+  providers: [AppCustomPreloader, NotificationService, UserService, CompanyProfileService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
