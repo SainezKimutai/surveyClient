@@ -1,1 +1,34 @@
-<p>survey works!</p>
+
+<section class="body-section">
+
+
+
+    <section class="templates-section" *ngIf="TemeplateViewSectionStatus">
+
+        <div class="head">
+            <h4>Survey Template</h4>
+        </div>
+    
+        <div class="card-group">
+            <div class="card" *ngFor="let item of AllSurveys" (click)="viewSurvey(item.surveyName, item._id)">
+                <div class="bg-1">.</div>
+                <h5> <fa-icon [icon]="faCheck"></fa-icon> Completed </h5>
+                <h4>{{item.surveyName}}</h4>
+
+    
+            </div>
+    
+            <div class="card" *ngIf="AllSurveys.length === 0">
+                <div class="bg-1">.</div>
+                
+                <h4>No Template</h4>
+            </div>
+        </div>
+    
+    </section>
+
+
+
+
+</section>
+

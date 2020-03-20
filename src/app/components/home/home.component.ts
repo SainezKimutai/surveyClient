@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { faBars, faArrowLeft, faChartLine, faUser, faListAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faArrowLeft, faChartLine, faUser, faListAlt, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -27,6 +27,7 @@ public faArrowLeft = faArrowLeft;
 public faChartLine = faChartLine;
 public faUser = faUser;
 public faListAlt = faListAlt;
+public faPowerOff = faPowerOff;
 
 
 
@@ -92,10 +93,12 @@ CheckActiveNavBar() {
 
 
 
-
-
   logout() {
-
+    window.localStorage.removeItem('loggedUserToken');
+    window.localStorage.removeItem('loggedUserName');
+    window.localStorage.removeItem('permissionStatus');
+    window.localStorage.removeItem('loggedUserID');
+    window.localStorage.removeItem('loggedCompanyId');
     this.router.navigate(['/landing_page']);
   }
 
