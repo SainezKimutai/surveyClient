@@ -10,10 +10,13 @@ import { ProfileRoutingModule } from './profile-routing.module';
 
 
 
+
 @NgModule({
 
   declarations: [
-      ProfileComponent
+      ProfileComponent,
+      
+    
           ],
 
     imports: [
@@ -30,7 +33,9 @@ import { ProfileRoutingModule } from './profile-routing.module';
       })
 
     ]
+    
 
   })
+  
 
   export class ProfileModule {}
