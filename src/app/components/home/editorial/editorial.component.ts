@@ -3,7 +3,7 @@ import { faPlus, faSearch, faListAlt, faBackward, faEdit, faTrash} from '@fortaw
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
-import { ModalDirective, ModalOptions } from 'ngx-bootstrap';
+import { ModalDirective, ModalOptions, ModalModule } from 'ngx-bootstrap';
 
 
 @Component({
@@ -22,9 +22,7 @@ export class EditorialComponent implements OnInit {
 
 // Modals
 @ViewChild('editModal', {static: true, }) editModal: ModalDirective;
-config = {
-  backdrop: 'static'
-};
+@ViewChild('addQuizModal', {static: true, }) addQuizModal: ModalDirective;
 
   // loader
   public ImprintLoader = false;
@@ -45,9 +43,9 @@ config = {
 
   public TemplateNameOnView = [];
   public TemplateQuestions = [];
-  public surveyIdOnView ='';
-  public surveyNameOnView ='';
-  public QuestionIdOnEdit ='';
+  public surveyIdOnView = '';
+  public surveyNameOnView = '';
+  public QuestionIdOnEdit = '';
   public ChoicesStatus = false;
 
   public CurrentSurveyInput = '';
@@ -73,6 +71,7 @@ config = {
   public EditpositionInput = 1;
 
 
+  public AddedQuestionsArray = [];
 
   // status
     public FormSectionStatus = false;
@@ -94,15 +93,15 @@ config = {
   }
   updatePage() {
     return new Promise((resolve, reject) => {
-  
+
       this.surveyService.getAllSurveys().subscribe(
         dataS => {this.AllSurveys = dataS;
-  
+
                   this.questionService.getAllQuestions().subscribe(
             dataQ => {this.AllQuestions = dataQ; resolve(); },
             error => console.log('Error getting all question')
           );
-  
+
         },
         error => console.log('Error getting all surveys')
         );
@@ -143,7 +142,7 @@ config = {
   viewSurvey(name, id) {
     this.TemplateQuestions = [];
     this.TemplateNameOnView = name;
-    //for use later in rerender..
+    // for use later in rerender..
     this.surveyIdOnView = id;
     this.surveyNameOnView = name;
 
@@ -245,7 +244,7 @@ config = {
 
 
   createQuestions(survey) {
-    this.CurrentQuestionArray.forEach( quiz => {
+    this.CurrentQuestionArray.forEach( (quiz, idx, array) => {
       const myQuizData = {
         surveyId: survey._id,
         question: quiz.question,
@@ -259,20 +258,25 @@ config = {
       this.questionService.createQuestion(myQuizData).subscribe(
         data => {
 
-          this.CurrentQuestionInput = '';
-          this.openQuestionInput = '';
-          this.multipleChoiceInput = '';
-          this.choiceTypeInput = '';
-          this.CurrentChoicesArr = [];
-          this.positionInput++;
-          this.CurrentSurveyInput = '';
-          this.CurrentQuestionArray = [];
-          this.swithToSurveyForm();
 
-          this.updatePage();
-          this.viewSurveyTemplates();
-          this.ImprintLoader = false;
-          this.notifyService.showSuccess('Survey Template Created', 'Success');
+          if (idx === array.length - 1) {
+
+            this.CurrentQuestionInput = '';
+            this.openQuestionInput = '';
+            this.multipleChoiceInput = '';
+            this.choiceTypeInput = '';
+            this.CurrentChoicesArr = [];
+            this.positionInput++;
+            this.CurrentSurveyInput = '';
+            this.CurrentQuestionArray = [];
+            this.swithToSurveyForm();
+
+            this.updatePage();
+            this.viewSurveyTemplates();
+            this.ImprintLoader = false;
+            this.notifyService.showSuccess('Survey Template Created', 'Success');
+          }
+
 
         },
         error => {this.notifyService.showError('Could not create Survey', 'Failed'); this.ImprintLoader = false; }
@@ -287,11 +291,11 @@ config = {
     this.QuestionIdOnEdit = item._id;
   }
   deleteQuestion(item, index) {
-    this.questionService.deleteQuestion(item._id).subscribe(data =>
-      {this.notifyService.showWarning('Deleted Question','Deleted!');
-      this.updatePage().then(e => this.viewSurvey(this.surveyNameOnView, this.surveyIdOnView));
-    }, 
-      err=> this.notifyService.showWarning('Question was not delete','Failed!'));
+    this.questionService.deleteQuestion(item._id).subscribe(data => {this.notifyService.showWarning('Deleted Question', 'Deleted!');
+                                                                     // tslint:disable-next-line: max-line-length
+                                                                     this.updatePage().then(e => this.viewSurvey(this.surveyNameOnView, this.surveyIdOnView));
+    },
+      err => this.notifyService.showWarning('Question was not delete', 'Failed!'));
   }
   EditaddChoice() {
     if (this.EditChoiceInput === '') {
@@ -302,23 +306,97 @@ config = {
     }
   }
 
-  saveEditQuestion(){
+  saveEditQuestion() {
     this.editModal.hide();
-    const Question ={
+    const Question = {
       surveyId: this.surveyIdOnView,
       question: this.EditQuestionInput,
       open_question: (this.EditopenQuestionInput === 'true' ? true : false),
-      multiple_choice: (this.EditmultipleChoiceInput === 'true'? true: false),
+      multiple_choice: (this.EditmultipleChoiceInput === 'true' ? true : false),
       choice_type: this.EditchoiceTypeInput,
       position: this.EditpositionInput,
       choices: this.EditChoicesArr
-    }
+    };
     this.questionService.updateQuestion(this.QuestionIdOnEdit, Question).subscribe(
-      data=>{this.notifyService.showSuccess('Question Successfully Editted', 'Success!')
-      this.updatePage().then(e => this.viewSurvey(this.surveyNameOnView, this.surveyIdOnView))
+      data => {this.notifyService.showSuccess('Question Successfully Editted', 'Success!');
+               this.updatePage().then(() => this.viewSurvey(this.surveyNameOnView, this.surveyIdOnView));
     },
-      err=>this.notifyService.showError('Question was not editted', 'Failed')
+      err => this.notifyService.showError('Question was not editted', 'Failed')
     );
   }
-   
+
+
+
+
+
+  closeAddQuizModal() {
+    this.addQuizModal.hide();
+    this.updatePage().then(() => this.viewSurvey(this.surveyNameOnView, this.surveyIdOnView));
+  }
+
+
+  addMoreQuestions() {
+    const myAddedQuiz = {
+      surveyId: this.surveyIdOnView,
+      question: this.EditQuestionInput,
+      open_question: (this.EditopenQuestionInput === 'true' ? true : false),
+      multiple_choice: (this.EditmultipleChoiceInput === 'true' ? true : false),
+      choice_type: this.EditchoiceTypeInput,
+      position: this.EditpositionInput,
+      choices: this.EditChoicesArr
+    };
+
+
+    this.AddedQuestionsArray.push(myAddedQuiz);
+    this.TemplateQuestions.push(myAddedQuiz);
+    this.EditQuestionInput = '';
+    this.EditopenQuestionInput = 'true';
+    this.EditmultipleChoiceInput = 'true';
+    this.EditchoiceTypeInput = 'string';
+    this.EditpositionInput = (this.TemplateQuestions.length + 1 );
+    this.EditChoicesArr = [];
+
+  }
+
+
+
+
+  addQuestionToExistingTemplate() {
+    this.ImprintLoader = true;
+    this.AddedQuestionsArray.forEach( (quiz, idx, array) => {
+
+      this.questionService.createQuestion(quiz).subscribe(
+        data => {
+
+
+
+          if (idx === array.length - 1) {
+            this.EditQuestionInput = '';
+            this.EditopenQuestionInput = 'true';
+            this.EditmultipleChoiceInput = 'true';
+            this.EditchoiceTypeInput = 'string';
+            this.EditpositionInput = (this.TemplateQuestions.length + 1 );
+            this.EditChoicesArr = [];
+            this.ImprintLoader = false;
+            this.updatePage().then(() => this.viewSurvey(this.surveyNameOnView, this.surveyIdOnView));
+            this.notifyService.showSuccess('Questions Added', 'Success');
+            this.addQuizModal.hide();
+          }
+
+        },
+        error => {this.notifyService.showError('Could not create Survey', 'Failed'); this.ImprintLoader = false; }
+      );
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -9,7 +9,7 @@
     display: none
     background-color: colorTheme(primaryTheme)
 
-    @include desktop_sm
+    @include desktop_md
         display: -ms-flexbox
         display: flex
 
@@ -103,7 +103,7 @@
 
 // Header
 header
-    width: 15%
+    width: 160px
     height: 3em
     background-color: colorTheme(primaryTheme)
     transition: all 0.6s
@@ -112,9 +112,6 @@ header
     position: fixed
 
     @include desktop_md
-        width: 130px
-
-    @include desktop_sm
         display: none
 
 
@@ -131,7 +128,7 @@ header
         align-items: stretch
 
         @include desktop_md
-            width: 130px
+            width: 160px
             
         img
             width: 6.4em
@@ -162,9 +159,6 @@ header
 #sidebar.hide
     width: 50px
     
-
-    @include desktop_md
-
     .nav-pills
         margin: .3em 0 3em 0 !important
         padding: 2em 0 0 0
@@ -191,7 +185,7 @@ header
 
 // Side Bar
 #sidebar
-    width: 15%
+    width: 160px
     position: fixed
     top: 47px
     left: 0
@@ -207,10 +201,9 @@ header
     
 
     @include desktop_md
-        width: 130px
-
-    @include desktop_sm
         display: none
+
+
 
 
 
@@ -300,7 +293,7 @@ header
 // Main
 main
     max-width: 100%
-    margin: 0px 0px 0px 15%
+    margin: 0px 0px 0px 160px
     padding: 0
     transition: all 0.6s
     overflow: hidden
@@ -308,9 +301,6 @@ main
     background-color: transparent
 
     @include desktop_md 
-        margin: 0px 0px 0px 130px
-
-    @include desktop_sm
         margin: 0px
 
 // main Toggle Class    

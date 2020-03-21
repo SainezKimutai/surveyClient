@@ -42,7 +42,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.ImprintLoader = true;
     this.userService.loginUser(this.loginForm).subscribe(
       dataUser => {
-
+    
         if (dataUser.userType === 'customer') {
           localStorage.setItem('loggedUserName', dataUser.name);
           localStorage.setItem('loggedUserEmail', dataUser.email);

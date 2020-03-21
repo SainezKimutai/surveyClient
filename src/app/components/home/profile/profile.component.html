@@ -1,15 +1,5 @@
 
 
-
-
-
-
-
-
-
-
-
-
 <div class="page-title">
 
     <h4>Profile</h4>
@@ -156,7 +146,7 @@
                 <span>**********</span>
                 <fa-icon id="faEdit" [icon]="faEdit" (click)="userPasswordInputStatus = !userPasswordInputStatus"></fa-icon>
                 <input *ngIf="userPasswordInputStatus" class="edit-input" type="text" name="userPasswordInput" [(ngModel)]="userPasswordInput">
-                <button *ngIf="userPasswordInputStatus" id="faCheck" (click)="changeUserPasswordInput()" class="save-btn">Save</button>
+                <button *ngIf="userPasswordInputStatus" id="faCheck" [disabled]="userPasswordInput === ''" (click)="changeUserPasswordInput()" class="save-btn">Save</button>
             </div>
         </div>
 

@@ -21,7 +21,7 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav nav-pills mr-auto">
-      <li [ngClass]="dashboardNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
+      <li *ngIf="toAdmin" [ngClass]="dashboardNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
         <a routerLink="/home/dashboard" [ngClass]=" salesNavBarActive ? 'nav-link active' : 'nav-link'">
           <fa-icon [icon]="faChartLine"></fa-icon> <span>Dashboard</span>
         </a>
@@ -35,13 +35,13 @@
       </li>
 
 
-      <li [ngClass]="profileNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
+      <li *ngIf="toCustomer"  [ngClass]="profileNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
         <a routerLink="/home/profile" [ngClass]=" salesNavBarActive ? 'nav-link active' : 'nav-link'">
           <fa-icon [icon]="faUser"></fa-icon> <span>Profile</span>
         </a>
       </li>
   
-      <li [ngClass]="editorialNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
+      <li *ngIf="toAdmin"  [ngClass]="editorialNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
         <a routerLink="/home/editorial" [ngClass]=" editorialNavBarActive ? 'nav-link active' : 'nav-link'">
           <fa-icon [icon]="faUser"></fa-icon> <span>Editorial</span>
         </a>
@@ -86,7 +86,7 @@
 
 
 
-      <li [ngClass]="dashboardNavBarActive ? 'nav-item active' : 'nav-item'" >
+      <li  *ngIf="toAdmin" [ngClass]="dashboardNavBarActive ? 'nav-item active' : 'nav-item'" >
           <a routerLink="/home/dashboard" [ngClass]=" salesNavBarActive ? 'nav-link active' : 'nav-link'">
             <fa-icon [icon]="faChartLine"></fa-icon> <span>Dashboard</span>
           </a>
@@ -100,13 +100,13 @@
         </li>
 
 
-        <li [ngClass]="profileNavBarActive ? 'nav-item active' : 'nav-item'" >
+        <li *ngIf="toCustomer"  [ngClass]="profileNavBarActive ? 'nav-item active' : 'nav-item'" >
           <a routerLink="/home/profile" [ngClass]=" salesNavBarActive ? 'nav-link active' : 'nav-link'">
             <fa-icon [icon]="faUser"></fa-icon> <span>Profile</span>
           </a>
         </li>
     
-        <li [ngClass]="editorialNavBarActive ? 'nav-item active' : 'nav-item'" >
+        <li  *ngIf="toAdmin" [ngClass]="editorialNavBarActive ? 'nav-item active' : 'nav-item'" >
           <a routerLink="/home/editorial" [ngClass]=" editorialNavBarActive ? 'nav-link active' : 'nav-link'">
             <fa-icon [icon]="faUser"></fa-icon> <span>Editorial</span>
           </a>

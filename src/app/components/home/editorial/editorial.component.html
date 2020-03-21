@@ -213,6 +213,7 @@
     <div class="head d-flex">
         <button class="btn btn-sm mr-auto" (click)="viewSurveyTemplates()"> <fa-icon [icon]="faBackward"></fa-icon> </button>
         <h4 class="mr-auto">{{TemplateNameOnView}}</h4>
+        <button class="btn btn-sm ml-auto btn-success" (click)="addQuizModal.show()"> <fa-icon [icon]="faPlus"></fa-icon></button>
     </div>
    
     <div class="question-wrap"  *ngFor="let item of TemplateQuestions; let i = index">
@@ -358,12 +359,113 @@
     
             </form>
         </div>
-        <div class="modal-footer">
+        <!-- <div class="modal-footer">
             <button type="button" class="btn btn-cancel" (click)="editModal.hide()">Cancel</button>
             <button type="button" class="btn btn-confirm" (click)=" editModal.hide()">Save</button>
-        </div>
+        </div> -->
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+
+<div bsModal  #addQuizModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="config">
+    <div class="modal-dialog addQuizModal" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title ">Edit Form</h4>
+            <button type="button" class="btn close" (click)="closeAddQuizModal()" aria-label="Close"></button>
+            <span aria-hidden="true">&times;</span>
+      
+        </div>
+        <div class="modal-body" >
+            <form class="form">
+
+                <div class="form-group">
+                    <input type="text" class="" name="CurrentQuestionInput" [(ngModel)]="EditQuestionInput" placeholder="Question">
+                </div>
+    
+                <div class="options-wrap">
+    
+                    <div class="option-item">
+                        <h4>Quiz Type</h4>
+    
+                        <div class="form-group">
+                            <input type="radio" name="openQuestionInput" value="true" (click)="checkQuestioType('true')" [(ngModel)]="EditopenQuestionInput" required>
+                            <label for="openQuestionInput" >Open</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="radio" name="openQuestionInput" value="false" (click)="checkQuestioType('false')"  [(ngModel)]="EditopenQuestionInput" required>
+                            <label for="openQuestionInput">Closed</label>
+                        </div>
+                    </div>
+    
+                    <div class="option-item" [hidden]="!ChoicesStatus">
+                        <h4>Multiple Choice ?</h4>
+    
+                        <div class="form-group">
+                            <input type="radio" name="multipleChoiceInput" value="true" [(ngModel)]="EditmultipleChoiceInput">
+                            <label for="">Yes</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="radio" name="multipleChoiceInput" value="false" [(ngModel)]="EditmultipleChoiceInput">
+                            <label for="">No</label>
+                        </div>
+                    </div>
+                    <div class="option-item" >
+                        <h4>Answer Type</h4>
+    
+                        <div class="form-group">
+                            <input type="radio" name="choiceTypeInput" value="string" [(ngModel)]="EditchoiceTypeInput">
+                            <label for="">String</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="radio" name="choiceTypeInput" value="number" [(ngModel)]="EditchoiceTypeInput">
+                            <label for="">Number</label>
+                        </div>
+                        <div class="form-group" [hidden]="!ChoicesStatus">
+                            <input type="radio" name="choiceTypeInput" value="boolean" [(ngModel)]="EditchoiceTypeInput">
+                            <label for="">Boolean</label>
+                        </div>
+                    </div>
+                    <div class="option-item input-text">
+                        <h4>Position</h4>
+    
+                        <input type="number" name="positionInput" [(ngModel)]="EditpositionInput">
+                 
+    
+                    </div>
+    
+                </div>
+    
+    
+                <div class="choices-wrapper" [hidden]="!ChoicesStatus">
+              
+                    <div class="preview-questions" *ngFor="let item of EditChoicesArr; let x = index">
+                      {{x + 1}}. {{item.answer}}
+                    </div>
+                    <div class="form-group-choices">
+                        <input type="text" name="EditChoiceInput" [(ngModel)]="EditChoiceInput" placeholder="Type Choices">
+                    </div>
+    
+                    <div class="add-ans">
+                        <button class="btn btn-sm" (click)="EditaddChoice()"><fa-icon [icon]="faPlus"></fa-icon></button>
+                    </div>
+                </div>
+    
+    
+    
+                <div class="btn-wrap d-flex">
+                    <button class="btn btn-sm ml-auto btn-success" (click)="addMoreQuestions()">Add this question</button>
+                </div>
+    
+            </form>
+        </div>
+        <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-cancel" (click)="addQuizModal.hide()">Cancel</button> -->
+            <button type="button" class="btn btn-confirm" (click)="addQuestionToExistingTemplate()">Save All</button>
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 

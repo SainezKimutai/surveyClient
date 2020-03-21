@@ -13,9 +13,9 @@ import { faBars, faArrowLeft, faChartLine, faUser, faListAlt, faPowerOff } from 
 
 export class HomeComponent implements OnInit, OnDestroy {
 
-  salesNavBarActive:boolean=false;
-  ImprintLoader: boolean=false;
-  
+  salesNavBarActive = false;
+  ImprintLoader = false;
+
   constructor(
     private router: Router
   ) {  }
@@ -32,6 +32,10 @@ public faListAlt = faListAlt;
 public faPowerOff = faPowerOff;
 
 
+// permisions
+public toAdmin = false;
+public toCustomer = false;
+public toThirdParty = false;
 
 
 
@@ -54,7 +58,13 @@ public myInterval;
 
   ngOnInit() {
 
-
+    if (window.localStorage.getItem('permissionStatus') === 'isAdmin') {
+      this.toAdmin = true;
+    } else if (window.localStorage.getItem('permissionStatus') === 'isCustomer') {
+        this.toCustomer = true;
+    } else if (window.localStorage.getItem('permissionStatus') === 'isThirdParty') {
+        this.toThirdParty = true;
+    }
 
 
     this.myInterval = setInterval(() => {
