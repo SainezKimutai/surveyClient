@@ -237,19 +237,107 @@
         <button class="btn btn-sm mr-auto" (click)="viewSurveyTemplates()"> <fa-icon [icon]="faBackward"></fa-icon> </button>
         <h4 class="mr-auto">{{TemplateNameOnView}}</h4>
     </div>
-
-    <div class="question-wrap" *ngFor="let item of TemplateQuestions">
-        <div class="question">{{item.question}}</div>
+    
+    <div class="question-wrap"  *ngFor="let item of TemplateQuestions; let i = index">
+        <div class="question d-flex w-100">{{item.question}} 
+            <div class="ml-auto d-flex">
+                <fa-icon [icon]="faPlus" class="ml-3" (click)="editQuestion(item)"></fa-icon>
+                <fa-icon [icon]="faPlus" class="ml-3" (click)="deleteQuestion(item)"></fa-icon>
+            </div>
+        </div>
         <div class="choices">
             <span *ngFor="let ans of item.choices; let x = index">{{x + 1 }}. {{ans.answer}}</span>
         </div>
-    </div>
+        
+        </div>
 
+        <div id="{{item._id}}" style="display: none;">
+            <form class="form">
 
+                <div class="form-group">
+                    <input type="text" class="" name="CurrentQuestionInput" [(ngModel)]="CurrentQuestionInput" placeholder="Question">
+                </div>
+    
+                <div class="options-wrap">
+    
+                    <div class="option-item">
+                        <h4>Quiz Type</h4>
+    
+                        <div class="form-group">
+                            <input type="radio" name="openQuestionInput" value="true" (click)="checkQuestioType('true')" [(ngModel)]="openQuestionInput" required>
+                            <label for="openQuestionInput" >Open</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="radio" name="openQuestionInput" value="false" (click)="checkQuestioType('false')"  [(ngModel)]="openQuestionInput" required>
+                            <label for="openQuestionInput">Closed</label>
+                        </div>
+                    </div>
+    
+                    <div class="option-item" [hidden]="!ChoicesStatus">
+                        <h4>Multiple Choice ?</h4>
+    
+                        <div class="form-group">
+                            <input type="radio" name="multipleChoiceInput" value="true" [(ngModel)]="multipleChoiceInput">
+                            <label for="">Yes</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="radio" name="multipleChoiceInput" value="false" [(ngModel)]="multipleChoiceInput">
+                            <label for="">No</label>
+                        </div>
+                    </div>
+                    <div class="option-item" >
+                        <h4>Answer Type</h4>
+    
+                        <div class="form-group">
+                            <input type="radio" name="choiceTypeInput" value="string" [(ngModel)]="choiceTypeInput">
+                            <label for="">String</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="radio" name="choiceTypeInput" value="number" [(ngModel)]="choiceTypeInput">
+                            <label for="">Number</label>
+                        </div>
+                        <div class="form-group" [hidden]="!ChoicesStatus">
+                            <input type="radio" name="choiceTypeInput" value="boolean" [(ngModel)]="choiceTypeInput">
+                            <label for="">Boolean</label>
+                        </div>
+                    </div>
+                    <div class="option-item input-text">
+                        <h4>Position</h4>
+    
+                        <input type="number" name="positionInput" [(ngModel)]="positionInput">
+                 
+    
+                    </div>
+    
+                </div>
+    
+    
+                <div class="choices-wrapper" [hidden]="!ChoicesStatus">
+              
+                    <div class="preview-questions" *ngFor="let item of CurrentChoicesArr; let x = index">
+                      {{x + 1}}. {{item.answer}}
+                    </div>
+                    <div class="form-group-choices">
+                        <input type="text" name="CurrentChoiceInput" [(ngModel)]="CurrentChoiceInput" placeholder="Type Choices">
+                    </div>
+    
+    
+    
+                    <div class="add-ans">
+                        <button class="btn btn-sm" (click)="addChoice()"><fa-icon [icon]="faPlus"></fa-icon></button>
+                    </div>
+                </div>
+    
+    
+    
+                <div class="btn-wrap d-flex">
+                    <button class="btn btn-sm ml-auto btn-next" (click)="nextQuestion()">Add</button>
+                </div>
+    
+            </form>
+        </div>
+     
 </section>
-
-
-
 
 </section> 
 
@@ -287,19 +375,16 @@
             <fa-icon [icon]="faPlus"></fa-icon>
             Create
         </div>
-   
-        
+
         <div [ngClass]="TemeplateViewSectionStatus ? 'surveys active' : 'surveys'" (click)="viewSurveyTemplates()">
             <fa-icon [icon]="faListAlt"></fa-icon>
             Surveys
         </div>
 
-        
-
-
     </div>
 
     <div>
+
     </div>
 
 </section>

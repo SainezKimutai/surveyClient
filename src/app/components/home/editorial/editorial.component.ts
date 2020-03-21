@@ -246,6 +246,13 @@ export class EditorialComponent implements OnInit {
     });
   }
 
+  editQuestion(item){
+    document.getElementById(item._id).style.display="block";
+  }
+  deleteQuestion(item){
+    console.log(item);
+  }
+
 
 
 

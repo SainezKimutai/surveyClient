@@ -442,7 +442,8 @@
         background-color: white
         margin: 4px 0
         padding: 5px 1em
-        height: 4em
+        // height: 4em
+        display: flex
 
         &:hover
             background-color: colorTheme(primaryTheme)
@@ -451,6 +452,7 @@
         .question
             font-size: 12px
             font-weight: bold
+            float: left
 
         .choices
             width: 100%
@@ -459,10 +461,23 @@
                 font-size: 12px
                 width: 100%
                 margin: 0 1em
+        .actions
+            float: right
+            
+            .edit
+                float: left
+            .delete
+                float: right
+        .demo div 
+            float: left
+            clear: none
+
+        .editSection
+            display: none
+        
 
 
-
-
+  
 
 
 
