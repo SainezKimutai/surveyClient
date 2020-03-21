@@ -224,7 +224,7 @@ export class EditorialComponent implements OnInit {
 
       this.questionService.createQuestion(myQuizData).subscribe(
         data => {
-         
+
           this.CurrentQuestionInput = '';
           this.openQuestionInput = '';
           this.multipleChoiceInput = '';

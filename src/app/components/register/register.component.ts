@@ -106,6 +106,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             localStorage.setItem('loggedUserName', dataUser.name);
             localStorage.setItem('loggedUserEmail', dataUser.email);
             localStorage.setItem('loggedUserID', dataUser._id);
+            localStorage.setItem('loggedCompanyId', dataUser.companyId);
             localStorage.setItem('permissionStatus', 'isCustomer');
             this.router.navigate(['/home/profile']);
           },

@@ -59,6 +59,12 @@
             <fa-icon [icon]="faUser"></fa-icon> <span>Editorial</span>
           </a>
         </li>
+
+        <li [ngClass]="editorialNavBarActive ? 'nav-item active' : 'nav-item'" >
+          <a (click)="logout()" [ngClass]=" editorialNavBarActive ? 'nav-link active' : 'nav-link'">
+            <fa-icon [icon]="faPowerOff"></fa-icon> <span>Log Out</span>
+          </a>
+        </li>
     
     </ul>
 
