@@ -1,5 +1,180 @@
 
+
+
+
+
+
+
+
+
+
+
+
+<div class="page-title">
+
+    <h4>Profile</h4>
+
+</div>
+
+
+
+<section class="body-section">
+
+    <section class="info-section">
+
+        <div class="survey-info-wrap">
+
+            <h5>Survey Info</h5>
+            <div class="grid-container">
+
+                <div class="grid-item">
+                    <h4>Questionaire</h4>
+                </div>
+
+                <div class="grid-item">
+                    <h4>Feedback</h4>
+                </div>
+
+                <div class="grid-item">
+                    <h4>Issue Rating</h4>
+                </div>
+
+                <div class="grid-item">
+                    <h4>Reports</h4>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="account-status-wrap">
+
+            <h5>Account Info</h5>
+
+            <div class="grid-container">
+
+                <div class="grid-item">
+                    <h4>Questionaire</h4>
+                </div>
+
+                <div class="grid-item">
+                    <h4>Feedback</h4>
+                </div>
+
+                <div class="grid-item">
+                    <h4>Issue Rating</h4>
+                </div>
+
+                <div class="grid-item">
+                    <h4>Reports</h4>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="profile-section">
+
+        <div class="company-info">
+
+            <h4>
+                Company name
+            </h4>
+            <p>
+                Lorem ipsum dolor sit amet, habeo numquam aliquando id eum, duo an sapientem urbanitas,
+                <fa-icon id="faEdit" [icon]="faEdit"></fa-icon>
+            </p>
+
+        </div>
+
+        <div class="company-other">
+
+            <div class="img-wrap">
+                <img src="../../../assets/images/logo.jpeg" alt="logo" class="company-logo">
+                <fa-icon id="faEdit" [icon]="faEdit"></fa-icon>
+            </div>
+
+            <div class="other-info">
+
+                <div class="item-info"> 
+                    <fa-icon [icon]="faEnvelope"></fa-icon>
+                    <span>---@----.org</span>
+                    <fa-icon id="faEdit" [icon]="faEdit" (click)="companyEmailInputStatus = !companyEmailInputStatus"></fa-icon>
+                    <input *ngIf="companyEmailInputStatus" class="edit-input" type="text" name="companyEmailInput" [(ngModel)]="companyEmailInput">
+                    <button *ngIf="companyEmailInputStatus" id="faCheck" [disabled]="companyEmailInput === ''" (click)="changeCompanyEmail()" class="save-btn">Save</button>
+                </div>
+                <div class="item-info"> 
+                    <fa-icon [icon]="faGlobe"></fa-icon>
+                    <span>www@youcompany.org</span>
+                    <fa-icon id="faEdit" [icon]="faEdit"></fa-icon>
+                </div>
+                <div class="item-info"> 
+                    <fa-icon [icon]="faAddressBook"></fa-icon>
+                    <span>info@youcompany.com</span>
+                    <fa-icon id="faEdit" [icon]="faEdit"></fa-icon>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="personal-info">
+            <hr class="line">
+            <div class="head">
+                <h4>Personal Info</h4>
+            </div>
+            <div class="item-info"> 
+                <fa-icon [icon]="faEnvelope"></fa-icon>
+                <span>{{loggedUserEmail}}</span>
+                <fa-icon id="faEdit" [icon]="faEdit"></fa-icon>
+            </div>
+            <div class="item-info"> 
+                <fa-icon [icon]="faKey"></fa-icon>
+                <span>**********</span>
+                <fa-icon id="faEdit" [icon]="faEdit"></fa-icon>
+            </div>
+        </div>
+
+    </section>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+
+
+
 <main>
+
+
+
+
     <h5>Profile</h5>
     <div class="survey-page">
         <div class="left-section">
@@ -71,4 +246,4 @@
     
 
 </main>
-
+ -->

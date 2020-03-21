@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { faEnvelope, faKey , faPhone , faAddressBook } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faKey , faGlobe , faAddressBook, faEdit, faCheck} from '@fortawesome/free-solid-svg-icons';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+import { SurveyService } from 'src/app/shared/services/survey.service';
+import { QuestionService } from 'src/app/shared/services/questions.service';
+import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
+import { UserService } from 'src/app/shared/services/user.service';
+import { ResponseService } from 'src/app/shared/services/responses.service';
 
 @Component({
   selector: 'app-profile',
@@ -7,17 +13,96 @@ import { faEnvelope, faKey , faPhone , faAddressBook } from '@fortawesome/free-s
   styleUrls: ['./profile.component.sass']
 })
 export class ProfileComponent implements OnInit {
+ // tslint:disable: max-line-length
 
-  constructor() { }
+  constructor(
+    private notifyService: NotificationService,
+    private userService: UserService,
+    private surveyService: SurveyService,
+    private questionService: QuestionService,
+    private companyProfileService: CompanyProfileService,
+    public responseService: ResponseService,
+
+  ) { }
 
     // icon
     public faEnvelope = faEnvelope;
     public faKey = faKey;
-    public faPhone = faPhone
-    public faAddressBook = faAddressBook
+    public faGlobe = faGlobe;
+    public faAddressBook = faAddressBook;
+    public faEdit = faEdit;
+    public faCheck = faCheck;
+
+    public AllUsers = [];
+    public AllCompanies = [];
+    public AllSurveys = [];
+    public AllQuestions = [];
+    public AllResponses = [];
+
+    public loggedUserEmail = '';
+
+
+    public companyEmailInputStatus = false;
+    public companyEmailInput = '';
+
+
+
+
+
+
+
 
   ngOnInit() {
     localStorage.setItem('ActiveNav', 'profile');
+    this.loggedUserEmail = localStorage.getItem('loggedUserEmail');
+
+    this.updatePage();
   }
+
+
+
+  updatePage() {
+    this.userService.getAllUsers().subscribe(
+      data => this.AllUsers = data,
+      error => console.log('Error geting all Users')
+    );
+    this.companyProfileService.getAllCompanyProfiles().subscribe(
+      data => {
+        this.AllCompanies = data;
+        for (const comp of this.AllCompanies) { if (comp._id === localStorage.getItem('loggedCompanyId')) { break; }}
+      },
+      error => console.log('Error geting all Companies')
+    );
+    this.surveyService.getAllSurveys().subscribe(
+      data => this.AllSurveys = data,
+      error => console.log('Error geting all Surveys')
+    );
+    this.questionService.getAllQuestions().subscribe(
+      data => this.AllQuestions = data,
+      error => console.log('Error geting all Questions')
+    );
+    this.responseService.getAllResponses().subscribe(
+      data => this.AllUsers = data,
+      error => console.log('Error geting all Responses')
+    );
+  }
+
+
+
+
+  changeCompanyEmail() {
+
+    this.companyProfileService.updateCompanyProfile( localStorage.getItem('loggedCompanyId'), {companyEmail: this.companyEmailInput}).subscribe(
+      data => {
+        this.updatePage();
+        this.companyEmailInput = '';
+        this.companyEmailInputStatus = false;
+        this.notifyService.showSuccess('Saved', 'Success');
+      },
+      error => this.notifyService.showError('Could not save', 'Failed')
+    );
+  }
+
+
 
 }

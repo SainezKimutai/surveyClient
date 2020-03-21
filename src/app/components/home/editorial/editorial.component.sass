@@ -1,15 +1,147 @@
 @import "src/styles.sass"
 
 
+
+
+.page-title
+    width: 100%
+    // padding: 1em 2em
+
+
+    h4 
+        padding: 1em 2em
+        font-size: 18px
+        font-weight: bold
+        text-transform: uppercase
+        text-shadow: 1px -1px 1px white
+        -moz-text-shadow: 1px -1px 1px white
+        -webkit-text-shadow: 1px -1px 1px white
+
+
+
+
+
+
+
     
 .article
     width: 100%
     height: fit-content
 
+
+
+
+
+.page-title #top_header
+    display: none
+    background-color: transparent
+
+    @include desktop_md
+        display: flex
+        align-items: stretch
+
+    @include desktop_sm
+        display: flex
+        flex-direction: column
+
+   
+    // height: 50%
+
+    .search-wrap
+        // width: 100%
+        padding: 1em
+        margin: 0
+        @include desktop_sm
+            padding: .5em 1em
+            display: none
+   
+        .input-wrap
+            border-radius: 1em
+            background-color: grayColor(g200)
+
+            fa-icon
+                margin: auto .5em
+
+
+            input
+                width: 100%
+                outline: none
+                padding: .5em
+                border: none
+                border-radius: 0px
+                background-color: transparent
+
+    .btn-wrap
+        width: 100%
+        display: flex
+        align-items: stretch
+        
+    
+        @include desktop_sm
+            padding: 0 1em
+
+        .create-new, .surveys
+            margin: 1em
+            cursor: pointer
+            border-radius: 1em
+            width: 8em
+            padding-top: 2em
+            color: grayColor(g800)
+            text-align: center
+
+            @include desktop_md
+                border-radius: 0px
+                width: 100%
+                padding: .5em 0 0 0
+                margin: 1em 0
+
+            @include desktop_sm
+                padding: 0
+
+            &.active
+                background-color: colorTheme(primaryTheme)
+                color: white
+
+            fa-icon
+                margin: 1em
+              
+                color: colorTheme(secondaryTheme)
+
+            span 
+                
+                @include desktop_md
+                    display: none
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .body-section
     width: 100%
     display: flex
     padding: 0 320px 0 3em
+
+    @include desktop_lg
+        padding: 0 200px 0 3em
+
+    @include desktop_md
+        padding: 1em
+
+
+
+
+
+
 
 .form-section
     margin-left: auto
@@ -29,7 +161,8 @@
 .form-section .survey-template.hide
     display: none
 .form-section .survey-template
-    width: 500px
+    width: 100%
+    max-width: 500px
     // height: 300px
     background-color: white
     border-radius: 2px
@@ -59,7 +192,7 @@
             // width: 100%
             background-color: grayColor(g200)
             padding: .5em
-            margin: 2em
+            // margin: 2em
             border-radius: 5px
 
             input 
@@ -457,6 +590,13 @@
     padding: 0
     display: flex
     flex-direction: column
+
+    @include desktop_lg
+        width: 190px
+
+    @include desktop_md
+        display: none
+
 
 
 .navigation-section .body

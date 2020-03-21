@@ -9,14 +9,17 @@
     </div>
 </article>
 
+<div class="page-title">
+
+    <h4>Survey</h4>
+
+</div>
+
+
+
 <article class="article">
 
 <section class="templates-section">
-
-    <div class="head">
-        <h4>Surveys</h4>
-    </div>
-
     <div *ngIf="AllSurveys" class="card-group" >
         <div class="card" *ngFor="let item of AllSurveys" (click)="takeSurvey(item)">
             <div class="bg-1">.</div>

@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class SurveyComponent implements OnInit {
   AllSurveys: any;
-  ImprintLoader: boolean = false;
+  ImprintLoader = false;
 
   constructor(private surveyService: SurveyService, private router: Router) { }
 
@@ -19,13 +19,13 @@ export class SurveyComponent implements OnInit {
   }
 
   updatePage() {
-    console.log("Called");
+    console.log('Called');
     this.surveyService.getAllSurveys().subscribe(
-      data => {console.log(data);this.AllSurveys = data},
+      data => {console.log(data); this.AllSurveys = data;},
       error => console.log('Error getting all surveys')
     );
   }
-  async takeSurvey(survey){
+  async takeSurvey(survey) {
     // Navigate to /results?page=1
     this.router.navigate(['/answer'], { queryParams: { surveyId: survey._id, surveyName: survey.surveyName} });
   }
