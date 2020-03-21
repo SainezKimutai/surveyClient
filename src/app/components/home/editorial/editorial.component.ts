@@ -13,8 +13,6 @@ import { QuestionService } from 'src/app/shared/services/questions.service';
 export class EditorialComponent implements OnInit {
 
 
-
-
   constructor(
     private notifyService: NotificationService,
     private surveyService: SurveyService,
