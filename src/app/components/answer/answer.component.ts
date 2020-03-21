@@ -92,6 +92,7 @@ export class AnswerComponent implements OnInit {
     this.answerStructure ={
       surveyId: this.surveyId,
       userId: localStorage.getItem('loggedUserID'),
+      companyId: localStorage.getItem('loggedCompanyId')
     }
   }
   async postAnswers(answers){
