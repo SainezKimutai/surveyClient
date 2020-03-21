@@ -19,6 +19,9 @@ import { QuestionService } from './shared/services/questions.service';
 import { ResponseService } from './shared/services/responses.service';
 import { FileUploadService } from 'src/app/shared/services/fileUpload.service';
 import { ModalModule } from 'ngx-bootstrap';
+import { CustomerGuard } from './shared/route-guards/customer.guard';
+import { AdminGuard } from './shared/route-guards/admin.guard';
+import { TokenGuard } from './shared/route-guards/token.guard';
 
  // tslint:disable: max-line-length
 @NgModule({
@@ -43,7 +46,8 @@ import { ModalModule } from 'ngx-bootstrap';
     }),
   ],
 
-  providers: [AppCustomPreloader, NotificationService, UserService, CompanyProfileService, SurveyService, QuestionService, ResponseService, FileUploadService],
+  providers: [AppCustomPreloader, TokenGuard, AdminGuard, CustomerGuard,  NotificationService, UserService, CompanyProfileService, SurveyService, QuestionService, ResponseService, FileUploadService,
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
