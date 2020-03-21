@@ -156,7 +156,7 @@
                 <span>**********</span>
                 <fa-icon id="faEdit" [icon]="faEdit" (click)="userPasswordInputStatus = !userPasswordInputStatus"></fa-icon>
                 <input *ngIf="userPasswordInputStatus" class="edit-input" type="text" name="userPasswordInput" [(ngModel)]="userPasswordInput">
-                <button *ngIf="userPasswordInputStatus" id="faCheck" [disabled]="companyAddressInput === ''" (click)="changeUserPasswordInput()" class="save-btn">Save</button>
+                <button *ngIf="userPasswordInputStatus" id="faCheck" (click)="changeUserPasswordInput()" class="save-btn">Save</button>
             </div>
         </div>
 
