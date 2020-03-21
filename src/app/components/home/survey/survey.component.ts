@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
-import { QuestionService } from 'src/app/shared/services/questions.service';
-import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import { ResponseService } from 'src/app/shared/services/responses.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-survey',
@@ -12,94 +8,25 @@ import { ResponseService } from 'src/app/shared/services/responses.service';
   styleUrls: ['./survey.component.sass']
 })
 export class SurveyComponent implements OnInit {
+  AllSurveys: any;
+  ImprintLoader: boolean = false;
 
-
-
-
-
-
-  constructor(
-    private notifyService: NotificationService,
-    private companyProfileService: CompanyProfileService,
-    private surveyService: SurveyService,
-    private questionService: QuestionService,
-    private responseService: ResponseService
-  ) { }
-
-
-
-
-
-  public AllSurveys = [];
-  public AllQuestions = [];
-  public AllCompanies = [];
-  public AllResponses = [];
-
-  public TemeplateViewSectionStatus = true;
-
-  public faCheck = faCheck;
-
-
-
+  constructor(private surveyService: SurveyService, private router: Router) { }
 
   ngOnInit() {
     localStorage.setItem('ActiveNav', 'survey');
-
     this.updatePage();
   }
 
-
-
-
-
-
-
-
-
   updatePage() {
+    console.log("Called");
     this.surveyService.getAllSurveys().subscribe(
-      data => this.AllSurveys = data,
+      data => {console.log(data);this.AllSurveys = data},
       error => console.log('Error getting all surveys')
     );
-
-    this.companyProfileService.getAllCompanyProfiles().subscribe(
-      data => this.AllCompanies = data,
-      error => console.log('Error getting all companies')
-    );
-
-    this.questionService.getAllQuestions().subscribe(
-      data => this.AllQuestions = data,
-      error => console.log('Error getting all questions')
-    );
-
-    this.responseService.getAllResponses().subscribe(
-      data => this.AllResponses = data,
-      error => console.log('Error getting all companies')
-    );
-
-    this.filterSurveys();
-
   }
-
-
-
-
-
-
-
-  // Filter Completed and Not completed surveys by cheking from the response array.s
-
-  filterSurveys() {
-
-    const CompanyId = localStorage.getItem('loggedCompanyId');
-
+  async takeSurvey(survey){
+    // Navigate to /results?page=1
+    this.router.navigate(['/answer'], { queryParams: { surveyId: survey._id, surveyName: survey.surveyName} });
   }
-
-
-
-
-
-
-
-
 }

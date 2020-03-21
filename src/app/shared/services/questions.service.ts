@@ -12,6 +12,7 @@ export class QuestionService {
 
 
     public url = `${dev.connect}api/questions/`;
+    
 
 
     constructor( private http: HttpClient ) { }
@@ -39,6 +40,10 @@ export class QuestionService {
 
     deleteQuestion(id) {
         return this.http.delete<any>(this.url + 'delete/' + id);
+    }
+
+    getQuestionsInASurvey(id){
+        return this.http.get<any>(this.url + 'survey/' + id);
     }
 
 

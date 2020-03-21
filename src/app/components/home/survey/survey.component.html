@@ -1,34 +1,34 @@
-
-<section class="body-section">
-
-
-
-    <section class="templates-section" *ngIf="TemeplateViewSectionStatus">
-
-        <div class="head">
-            <h4>Survey Template</h4>
+<article *ngIf="ImprintLoader" class="imprint-loader home">
+    <div class="imprint-loader-wrap">
+        <div class="imprint-loader-main">
+        <div class="imprint-loader-ball ball-one"></div>
+        <div class="imprint-loader-ball ball-two"></div>
+        <div class="imprint-loader-ball ball-three"></div>
+        <div class="imprint-loader-ball ball-four"></div>
         </div>
-    
-        <div class="card-group">
-            <div class="card" *ngFor="let item of AllSurveys" (click)="viewSurvey(item.surveyName, item._id)">
-                <div class="bg-1">.</div>
-                <h5> <fa-icon [icon]="faCheck"></fa-icon> Completed </h5>
-                <h4>{{item.surveyName}}</h4>
+    </div>
+</article>
 
-    
-            </div>
-    
-            <div class="card" *ngIf="AllSurveys.length === 0">
-                <div class="bg-1">.</div>
-                
-                <h4>No Template</h4>
-            </div>
+<article class="article">
+
+<section class="templates-section">
+
+    <div class="head">
+        <h4>Surveys</h4>
+    </div>
+
+    <div *ngIf="AllSurveys" class="card-group" >
+        <div class="card" *ngFor="let item of AllSurveys" (click)="takeSurvey(item)">
+            <div class="bg-1">.</div>
+            <h4 class="color:black;">{{item.surveyName}}</h4>
         </div>
-    
-    </section>
 
-
-
+        <div class="card" *ngIf="AllSurveys.length === 0">
+            <div class="bg-1">.</div>
+            <h4>No Template</h4>
+        </div>
+    </div>
 
 </section>
 
+</article>

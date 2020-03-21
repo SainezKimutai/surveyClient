@@ -13,7 +13,9 @@ import { faBars, faArrowLeft, faChartLine, faUser, faListAlt, faPowerOff } from 
 
 export class HomeComponent implements OnInit, OnDestroy {
 
-
+  salesNavBarActive:boolean=false;
+  ImprintLoader: boolean=false;
+  
   constructor(
     private router: Router
   ) {  }

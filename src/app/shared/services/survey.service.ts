@@ -41,5 +41,4 @@ export class SurveyService {
         return this.http.delete<any>(this.url + 'delete/' + id);
     }
 
-
 }
