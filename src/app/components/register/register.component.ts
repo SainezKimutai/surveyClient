@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faUsers, faGlobe, faIndustry, faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
 import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -22,9 +22,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
 
   public ImprintLoader = false;
+  public faBuilding = faBuilding;
+  public faUsers = faUsers;
+  public faIndustry = faIndustry;
+  public faGlobe = faGlobe;
   public faEnvelope = faEnvelope;
   public faKey = faKey;
-
 
   public formOne = true;
   public formTwo = false;

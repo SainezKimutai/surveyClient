@@ -9,9 +9,58 @@
     </div>
 </article>
 
+
+
+
+
+
+<div class="page-title d-flex">
+
+    <h4>Editorial</h4>
+
+    <section id="top_header" class="top-header">
+        <div class="search-wrap">
+            <div class="input-wrap d-flex">
+                <fa-icon [icon]="faSearch"></fa-icon>
+                <input type="text">
+            </div>
+            
+        </div>
+    
+        <div class="btn-wrap">
+        <div [ngClass]="FormSectionStatus ? 'create-new active' : 'create-new'" (click)="createNewSurveyTemplate()">
+            <fa-icon [icon]="faPlus"></fa-icon>
+            <span>Create</span> 
+        </div>
+    
+        
+        <div [ngClass]="TemeplateViewSectionStatus ? 'surveys active' : 'surveys'" (click)="viewSurveyTemplates()">
+            <fa-icon [icon]="faListAlt"></fa-icon>
+            <span>Surveys</span> 
+        </div>
+    </div>
+    </section>   
+</div>
+
+
+
+
+
+
+
+
 <article class="article">
 
+
+
+
+
+
+
+
 <section class="body-section">
+
+
 
 
 
@@ -22,9 +71,8 @@
 <section class="form-section" *ngIf="FormSectionStatus">
 
     <div [ngClass]="SurveyFormStatus ? 'survey-template' : 'survey-template hide'">
-
         <div class="title">
-            <h4>Survey</h4>
+            <h4>Template Name</h4>
         </div>
 
         <form class="form " >
@@ -165,10 +213,6 @@
 
 
 <section class="templates-section" *ngIf="TemeplateViewSectionStatus">
-
-    <div class="head">
-        <h4>Survey Template</h4>
-    </div>
 
     <div class="card-group">
         <div class="card" *ngFor="let item of AllSurveys" (click)="viewSurvey(item.surveyName, item._id)">

@@ -10,6 +10,58 @@
 </article>
 
 
+
+
+
+<nav id="topNavBar" class="navbar navbar-expand-lg navbar-light ">
+  <a class="navbar-brand" ><img src="/../../../assets/images/logo3.jpg"></a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav nav-pills mr-auto">
+      <li [ngClass]="dashboardNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
+        <a routerLink="/home/dashboard" [ngClass]=" salesNavBarActive ? 'nav-link active' : 'nav-link'">
+          <fa-icon [icon]="faChartLine"></fa-icon> <span>Dashboard</span>
+        </a>
+      </li>
+  
+
+      <li [ngClass]="surveyNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
+        <a routerLink="/home/survey" [ngClass]=" salesNavBarActive ? 'nav-link active' : 'nav-link'">
+          <fa-icon [icon]="faListAlt"></fa-icon> <span>Survey</span>
+        </a>
+      </li>
+
+
+      <li [ngClass]="profileNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
+        <a routerLink="/home/profile" [ngClass]=" salesNavBarActive ? 'nav-link active' : 'nav-link'">
+          <fa-icon [icon]="faUser"></fa-icon> <span>Profile</span>
+        </a>
+      </li>
+  
+      <li [ngClass]="editorialNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
+        <a routerLink="/home/editorial" [ngClass]=" editorialNavBarActive ? 'nav-link active' : 'nav-link'">
+          <fa-icon [icon]="faUser"></fa-icon> <span>Editorial</span>
+        </a>
+      </li>
+
+      <li class="nav-item" >
+        <a (click)="logout()" [ngClass]=" editorialNavBarActive ? 'nav-link active' : 'nav-link'" data-toggle="collapse" data-target="#navbarSupportedContent" >
+          <fa-icon [icon]="faPowerOff"></fa-icon> <span>Log Out</span>
+        </a>
+      </li>
+    </ul>
+
+  </div>
+</nav>
+
+
+
+
+
+
 <header [ngClass]="sideBarStatus ? '' : 'hide'">
     <div class="logo-wrap d-flex" >
       <img [hidden]="!sideBarStatus" src="/../../../assets/images/logo1.png">
@@ -60,7 +112,7 @@
           </a>
         </li>
 
-        <li [ngClass]="editorialNavBarActive ? 'nav-item active' : 'nav-item'" >
+        <li class="nav-item" >
           <a (click)="logout()" [ngClass]=" editorialNavBarActive ? 'nav-link active' : 'nav-link'">
             <fa-icon [icon]="faPowerOff"></fa-icon> <span>Log Out</span>
           </a>
