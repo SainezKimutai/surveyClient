@@ -680,6 +680,7 @@
         .modal-title
             font-size: 15px
             font-family: Montserrat
+            color: white
             
 
     .modal-body
@@ -711,12 +712,166 @@
 
 
 
+.modal-body 
+    overflow: auto
+    .form
+        width: 100%
+        display: flex
+        flex-direction: column
+        padding: 1em
 
 
+        .form-group
+            margin: auto
+            width: 100%
+            background-color: grayColor(g200)
+            padding: .5em
+            margin: 0 0 1em 0
+            border-radius: 5px
+
+            input 
+                background-color: transparent
+                width: 100%
+                outline: none
+                border: none
+                font-size: 13px
+
+        .options-wrap
+            display: flex
+            align-items: stretch
 
 
+.modal-body .options-wrap .option-item
+    width: 25%  
+    text-align: left
+    margin: 0 1em 1em 0
+    border: solid 1px grayColor(g100)
+
+    h4
+        width: 100%
+        padding: 0 1em 1em 1em
+        font-size: 12px 
+        font-weight: bold
+
+    &.input-text
+
+        input
+            outline: none
+            border: solid 2px grayColor(g100)
+            width: 4em
+
+    .form-group
+        padding: 5px
+        display: flex
+        align-items: stretch
+        background-color: transparent
+        margin: 2px
 
 
+        input
+            margin-right: auto
+            width: 1em
+
+        label 
+            margin-right: auto
+            font-size: 12px
+        
+        
+
+        &.form-group-radio 
+            background-color: transparent
+
+            .wrap
+                width: 100%
+                text-align: left
+                display: flex
+                flex-direction: column
+                padding: 0 0 0 5em 
+
+                label
+                    font-size: 12px
+                    font-weight: bold
+                
+                input 
+                    width: 3em
 
 
+    .choices-type
+        background-color: transparent
+        margin: 0 0 1em 0
+        padding: .5em
 
+        h4
+            font-size: 12px
+            padding: .5em
+            width: 100%
+            text-align: center
+
+        .form-group-radio
+            background-color: transparent
+            display: flex
+            align-items: stretch
+            width: 100%
+
+            .wrap
+                margin: auto
+                width: 100%
+                text-align: center
+                display: flex
+                flex-direction: column
+                // padding: 0 0 0 5em 
+
+                label
+                    font-size: 12px
+                    font-weight: bold
+                
+                input 
+                    width: 100%
+
+
+.modal-body .form .choices-wrapper .form-group-choices
+        margin: auto
+        width: 100%
+        background-color: grayColor(g200)
+        padding: .5em
+        margin: 0 0 1em 0
+        border-radius: 5px
+
+        input 
+            background-color: transparent
+            width: 100%
+            outline: none
+            border: none
+            font-size: 13px
+
+.modal-body .form 
+
+    .preview-questions
+        width: 100%
+        text-align: left
+        font-size: 12px
+        padding: 5px 1em
+        margin: 0 0 2px 0
+        border-radius: 2px
+        background-color: grayColor(g200)
+
+    .add-ans
+        width: 100%
+        display: flex
+
+        .btn
+            border-radius: 50%
+            background-color: colorTheme(secondaryTheme)
+            margin: auto
+
+            fa-icon
+                color: white
+
+    .btn-wrap
+        margin: 2em 0
+        width: 100%
+        display: flex
+
+        .btn-next
+            background-color: colorTheme(primary)
+            color: white
