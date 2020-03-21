@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { ProfileComponent } from './profile.component';
 import { ProfileRoutingModule } from './profile-routing.module';
+import { ModalModule } from 'ngx-bootstrap';
 
 
 
@@ -26,6 +27,7 @@ import { ProfileRoutingModule } from './profile-routing.module';
       FontAwesomeModule,
       ReactiveFormsModule,
       FormsModule,
+      ModalModule.forRoot(),
       ToastrModule.forRoot({
         timeOut: 5000,
         positionClass: 'toast-bottom-right',

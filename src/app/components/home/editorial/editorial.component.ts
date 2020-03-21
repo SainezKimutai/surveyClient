@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { faPlus, faSearch, faListAlt, faBackward } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { faPlus, faSearch, faListAlt, faBackward, faEdit, faTrash} from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
+import { ModalDirective, ModalOptions } from 'ngx-bootstrap';
 
 
 @Component({
@@ -17,9 +18,13 @@ export class EditorialComponent implements OnInit {
     private notifyService: NotificationService,
     private surveyService: SurveyService,
     private questionService: QuestionService
-  ) { }
+  ) {  }
 
-
+// Modals
+@ViewChild('editModal', {static: true, }) editModal: ModalDirective;
+config = {
+  backdrop: 'static'
+};
 
   // loader
   public ImprintLoader = false;
@@ -30,6 +35,8 @@ export class EditorialComponent implements OnInit {
   public faSearch = faSearch;
   public faListAlt = faListAlt;
   public faBackward = faBackward;
+  public faEdit = faEdit;
+  public faTrash = faTrash;
 
 
   //
@@ -38,7 +45,9 @@ export class EditorialComponent implements OnInit {
 
   public TemplateNameOnView = [];
   public TemplateQuestions = [];
-
+  public surveyIdOnView ='';
+  public surveyNameOnView ='';
+  public QuestionIdOnEdit ='';
   public ChoicesStatus = false;
 
   public CurrentSurveyInput = '';
@@ -52,6 +61,16 @@ export class EditorialComponent implements OnInit {
   public choiceTypeInput = 'string';
   public positionInput = 1;
 
+  public EditSurveyInput = '';
+  public EditChoicesArr = [];
+  public EditQuestionArray = [];
+  public EditQuestionInput = '';
+  public EditChoiceInput = '';
+
+  public EditopenQuestionInput = 'true';
+  public EditmultipleChoiceInput = 'true';
+  public EditchoiceTypeInput = 'string';
+  public EditpositionInput = 1;
 
 
 
@@ -72,25 +91,38 @@ export class EditorialComponent implements OnInit {
     this.updatePage();
 
 
-
   }
-
-
-
-
   updatePage() {
+    return new Promise((resolve, reject) => {
+  
+      this.surveyService.getAllSurveys().subscribe(
+        dataS => {this.AllSurveys = dataS;
+  
+                  this.questionService.getAllQuestions().subscribe(
+            dataQ => {this.AllQuestions = dataQ; resolve(); },
+            error => console.log('Error getting all question')
+          );
+  
+        },
+        error => console.log('Error getting all surveys')
+        );
+       });
+      }
 
-    this.surveyService.getAllSurveys().subscribe(
-      data => this.AllSurveys = data,
-      error => console.log('Error getting all surveys')
-    );
 
-    this.questionService.getAllQuestions().subscribe(
-      data => this.AllQuestions = data,
-      error => console.log('Error getting all question')
-    );
+  // updatePage() {
 
-  }
+  //   this.surveyService.getAllSurveys().subscribe(
+  //     data => this.AllSurveys = data,
+  //     error => console.log('Error getting all surveys')
+  //   );
+
+  //   this.questionService.getAllQuestions().subscribe(
+  //     data => this.AllQuestions = data,
+  //     error => console.log('Error getting all question')
+  //   );
+
+  // }
 
 
 
@@ -111,6 +143,10 @@ export class EditorialComponent implements OnInit {
   viewSurvey(name, id) {
     this.TemplateQuestions = [];
     this.TemplateNameOnView = name;
+    //for use later in rerender..
+    this.surveyIdOnView = id;
+    this.surveyNameOnView = name;
+
     this.TemplateQuestions = this.AllQuestions.filter(( quiz) => quiz.surveyId === id ).map(e => e);
     this.FormSectionStatus = false;
     this.TemeplateViewSectionStatus = false;
@@ -244,16 +280,45 @@ export class EditorialComponent implements OnInit {
     });
   }
 
-  editQuestion(item){
-    document.getElementById(item._id).style.display="block";
+  editQuestion(item, index) {
+    this.editModal.show();
+    this.EditQuestionInput = item.question;
+    this.EditpositionInput = item.position;
+    this.QuestionIdOnEdit = item._id;
   }
-  deleteQuestion(item){
-    console.log(item);
+  deleteQuestion(item, index) {
+    this.questionService.deleteQuestion(item._id).subscribe(data =>
+      {this.notifyService.showWarning('Deleted Question','Deleted!');
+      this.updatePage().then(e => this.viewSurvey(this.surveyNameOnView, this.surveyIdOnView));
+    }, 
+      err=> this.notifyService.showWarning('Question was not delete','Failed!'));
+  }
+  EditaddChoice() {
+    if (this.EditChoiceInput === '') {
+      this.notifyService.showWarning('Input answer', 'Empty Array');
+    } else {
+      this.EditChoicesArr.push({ answer: this.EditChoiceInput});
+      this.EditChoiceInput = '';
+    }
   }
 
-
-
-
-
-
+  saveEditQuestion(){
+    this.editModal.hide();
+    const Question ={
+      surveyId: this.surveyIdOnView,
+      question: this.EditQuestionInput,
+      open_question: (this.EditopenQuestionInput === 'true' ? true : false),
+      multiple_choice: (this.EditmultipleChoiceInput === 'true'? true: false),
+      choice_type: this.EditchoiceTypeInput,
+      position: this.EditpositionInput,
+      choices: this.EditChoicesArr
+    }
+    this.questionService.updateQuestion(this.QuestionIdOnEdit, Question).subscribe(
+      data=>{this.notifyService.showSuccess('Question Successfully Editted', 'Success!')
+      this.updatePage().then(e => this.viewSurvey(this.surveyNameOnView, this.surveyIdOnView))
+    },
+      err=>this.notifyService.showError('Question was not editted', 'Failed')
+    );
+  }
+   
 }

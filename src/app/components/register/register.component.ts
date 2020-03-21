@@ -92,7 +92,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       },
       numberOfEmployees: this.registrationForm.numberOfEmployees,
       companyType:  this.registrationForm.companyType,
-      companyWebsite: this.registrationForm.companyWebsite
+      companyWebsite: this.registrationForm.companyWebsite,
+      companyAbout: '',
+      companyAddress: '',
+      companyEmail: ''
     };
     this.companyProfileService.createCompanyProfile(newProfileData).subscribe(
       dataProfile => {

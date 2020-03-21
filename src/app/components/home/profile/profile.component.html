@@ -81,40 +81,61 @@
         <div class="company-info">
 
             <h4>
-                Company name
+                <span *ngIf="myCompany">{{myCompany.companyName}}  
+                    <span *ngIf="!myCompany.companyName">Company Name</span> 
+                </span>
+                <fa-icon id="faEdit" [icon]="faEdit" (click)="companyNameInputStatus = !companyNameInputStatus"></fa-icon>
+                <input *ngIf="companyNameInputStatus" class="edit-input" type="text" name="companyNameInput" [(ngModel)]="companyNameInput">
+                <button *ngIf="companyNameInputStatus" id="faCheck" [disabled]="companyNameInput === ''" (click)="changeCompanyName()" class="save-btn">Save</button>
             </h4>
             <p>
-                Lorem ipsum dolor sit amet, habeo numquam aliquando id eum, duo an sapientem urbanitas,
-                <fa-icon id="faEdit" [icon]="faEdit"></fa-icon>
+                <span *ngIf="myCompany">{{myCompany.companyAbout}}  
+                    <span *ngIf="!myCompany.companyAbout">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span> 
+                </span>
+                <fa-icon id="faEdit" [icon]="faEdit" (click)="companyAboutInputStatus = !companyAboutInputStatus"></fa-icon>
             </p>
+
+            <textarea name="" id="" cols="30" rows="3"
+            *ngIf="companyAboutInputStatus" class="edit-input" type="text" name="companyAboutInput" [(ngModel)]="companyAboutInput"></textarea>
+
+            <button *ngIf="companyAboutInputStatus" id="faCheck" [disabled]="companyAboutInput === ''" (click)="changeCompanyAbout()" class="save-btn">Save</button>
 
         </div>
 
         <div class="company-other">
 
             <div class="img-wrap">
-                <img src="../../../assets/images/logo.jpeg" alt="logo" class="company-logo">
-                <fa-icon id="faEdit" [icon]="faEdit"></fa-icon>
+                 <div *ngIf="myCompany">
+                     <img *ngIf="myCompany.logo.url === ''" src="../../../assets/images/logo.jpeg" alt="logo" class="company-logo">
+                     <img *ngIf="myCompany.logo.url !== ''" [src]="myCompany.logo.url" alt="logo" class="company-logo">
+                </div>
+                <fa-icon id="faEdit" [icon]="faEdit" (click)="previewCompLogo = 'sd'"></fa-icon>
+                <input *ngIf="previewCompLogo" class="edit-input" type="text" type="file" name="fileUploaded" (change)="uploadLogo($event)">
+                <button *ngIf="previewCompLogo" id="faCheck" [disabled]="previewCompLogo === ''" (click)="saveCompanyProfile()" class="save-btn">Save</button>
             </div>
 
             <div class="other-info">
 
                 <div class="item-info"> 
                     <fa-icon [icon]="faEnvelope"></fa-icon>
-                    <span>---@----.org</span>
+                    <span *ngIf="myCompany">{{myCompany.companyEmail}}</span>           
                     <fa-icon id="faEdit" [icon]="faEdit" (click)="companyEmailInputStatus = !companyEmailInputStatus"></fa-icon>
                     <input *ngIf="companyEmailInputStatus" class="edit-input" type="text" name="companyEmailInput" [(ngModel)]="companyEmailInput">
                     <button *ngIf="companyEmailInputStatus" id="faCheck" [disabled]="companyEmailInput === ''" (click)="changeCompanyEmail()" class="save-btn">Save</button>
                 </div>
                 <div class="item-info"> 
                     <fa-icon [icon]="faGlobe"></fa-icon>
-                    <span>www@youcompany.org</span>
-                    <fa-icon id="faEdit" [icon]="faEdit"></fa-icon>
+                    <span *ngIf="myCompany">{{myCompany.companyWebsite}}</span>    
+                    <fa-icon id="faEdit" [icon]="faEdit" (click)="companyWebsiteInputStatus = !companyWebsiteInputStatus"></fa-icon>
+                    <input *ngIf="companyWebsiteInputStatus" class="edit-input" type="text" name="companyWebsiteInput" [(ngModel)]="companyWebsiteInput">
+                    <button *ngIf="companyWebsiteInputStatus" id="faCheck" [disabled]="companyWebsiteInput === ''" (click)="changeCompanyWebsite()" class="save-btn">Save</button>
                 </div>
                 <div class="item-info"> 
                     <fa-icon [icon]="faAddressBook"></fa-icon>
-                    <span>info@youcompany.com</span>
-                    <fa-icon id="faEdit" [icon]="faEdit"></fa-icon>
+                    <span *ngIf="myCompany">{{myCompany.companyAddress}}</span> 
+                    <fa-icon id="faEdit" [icon]="faEdit" (click)="companyAddressInputStatus = !companyAddressInputStatus"></fa-icon>
+                    <input *ngIf="companyAddressInputStatus" class="edit-input" type="text" name="companyAddressInput" [(ngModel)]="companyAddressInput">
+                    <button *ngIf="companyAddressInputStatus" id="faCheck" [disabled]="companyAddressInput === ''" (click)="changeCompanyAddress()" class="save-btn">Save</button>
                 </div>
 
             </div>
@@ -129,12 +150,13 @@
             <div class="item-info"> 
                 <fa-icon [icon]="faEnvelope"></fa-icon>
                 <span>{{loggedUserEmail}}</span>
-                <fa-icon id="faEdit" [icon]="faEdit"></fa-icon>
             </div>
             <div class="item-info"> 
                 <fa-icon [icon]="faKey"></fa-icon>
                 <span>**********</span>
-                <fa-icon id="faEdit" [icon]="faEdit"></fa-icon>
+                <fa-icon id="faEdit" [icon]="faEdit" (click)="userPasswordInputStatus = !userPasswordInputStatus"></fa-icon>
+                <input *ngIf="userPasswordInputStatus" class="edit-input" type="text" name="userPasswordInput" [(ngModel)]="userPasswordInput">
+                <button *ngIf="userPasswordInputStatus" id="faCheck" [disabled]="companyAddressInput === ''" (click)="changeUserPasswordInput()" class="save-btn">Save</button>
             </div>
         </div>
 

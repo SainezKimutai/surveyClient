@@ -17,7 +17,10 @@ import { CompanyProfileService } from './shared/services/companyProfile.service'
 import { SurveyService } from './shared/services/survey.service';
 import { QuestionService } from './shared/services/questions.service';
 import { ResponseService } from './shared/services/responses.service';
+import { FileUploadService } from 'src/app/shared/services/fileUpload.service';
+import { ModalModule } from 'ngx-bootstrap';
 
+ // tslint:disable: max-line-length
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,13 +35,15 @@ import { ResponseService } from './shared/services/responses.service';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ModalModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: false,
     }),
   ],
-  providers: [AppCustomPreloader, NotificationService, UserService, CompanyProfileService, SurveyService, QuestionService, ResponseService],
+
+  providers: [AppCustomPreloader, NotificationService, UserService, CompanyProfileService, SurveyService, QuestionService, ResponseService, FileUploadService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
