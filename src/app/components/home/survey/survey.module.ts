@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { SurveyComponent } from './survey.component';
 import { SurveyRoutingModule } from './survey-routing.module';
+import { ModalModule } from 'ngx-bootstrap';
 
 
 
@@ -23,6 +24,7 @@ import { SurveyRoutingModule } from './survey-routing.module';
       FontAwesomeModule,
       ReactiveFormsModule,
       FormsModule,
+      ModalModule.forRoot(),
       ToastrModule.forRoot({
         timeOut: 5000,
         positionClass: 'toast-bottom-right',

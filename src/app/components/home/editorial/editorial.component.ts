@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { faPlus, faSearch, faListAlt, faBackward } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { faPlus, faSearch, faListAlt, faBackward, faEdit, faTrash} from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
+import { ModalDirective, ModalOptions } from 'ngx-bootstrap';
 
 
 @Component({
@@ -19,9 +20,13 @@ export class EditorialComponent implements OnInit {
     private notifyService: NotificationService,
     private surveyService: SurveyService,
     private questionService: QuestionService
-  ) { }
+  ) {  }
 
-
+// Modals
+@ViewChild('editModal', {static: true, }) editModal: ModalDirective;
+config = {
+  backdrop: 'static'
+};
 
   // loader
   public ImprintLoader = false;
@@ -32,6 +37,8 @@ export class EditorialComponent implements OnInit {
   public faSearch = faSearch;
   public faListAlt = faListAlt;
   public faBackward = faBackward;
+  public faEdit = faEdit;
+  public faTrash = faTrash;
 
 
   //
@@ -74,9 +81,7 @@ export class EditorialComponent implements OnInit {
     this.updatePage();
 
 
-
   }
-
 
 
 
@@ -246,10 +251,11 @@ export class EditorialComponent implements OnInit {
     });
   }
 
-  editQuestion(item){
-    document.getElementById(item._id).style.display="block";
+  editQuestion(item) {
+    this.editModal.show();
+    document.getElementById(item._id).style.display = 'block';
   }
-  deleteQuestion(item){
+  deleteQuestion(item) {
     console.log(item);
   }
 
