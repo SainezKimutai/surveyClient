@@ -23,8 +23,8 @@ export class ProfileComponent implements OnInit {
     private surveyService: SurveyService,
     private questionService: QuestionService,
     private companyProfileService: CompanyProfileService,
-    public responseService: ResponseService,
-    public fileUploadServcie: FileUploadService
+    private responseService: ResponseService,
+    private fileUploadServcie: FileUploadService
 
   ) { }
 

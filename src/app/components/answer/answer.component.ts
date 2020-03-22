@@ -61,7 +61,7 @@ export class AnswerComponent implements OnInit {
 
   async getAndSetQuestions() {
     await this.questioService.getQuestionsInASurvey(this.surveyId).
-     subscribe(data => {this.questions = data.sort((a, b) =>  b.position - a.position);  this.formatQuestions(); }, err => console.log(err));
+     subscribe(data => {this.questions = data.sort((a, b) =>  a.position - b.position);  this.formatQuestions(); }, err => console.log(err));
   }
 
 

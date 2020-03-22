@@ -252,7 +252,7 @@ export class EditorialComponent implements OnInit {
             this.multipleChoiceInput = '';
             this.choiceTypeInput = '';
             this.CurrentChoicesArr = [];
-            this.positionInput++;
+            this.positionInput = 1;
             this.CurrentSurveyInput = '';
             this.CurrentQuestionArray = [];
             this.swithToSurveyForm();
