@@ -666,15 +666,17 @@
         position: relative
         bottom: 0
         width: 100%
-
-
-
-
-
-
-     
-
-.editModal, .addQuizModal 
+    
+.addQuizModal .modal-content
+    height: 500px
+    overflow-x: scroll
+    overflow-y: scroll
+.editModal .modal-content
+    height: 500px
+    overflow-x: scroll
+    overflow-y: scroll
+.editModal, .addQuizModal
+    
     .modal-header
         background-color: colorTheme(primary) !important
         .modal-title
@@ -684,7 +686,6 @@
             
 
     .modal-body
-
         h4
             font-size: 14px
             font-family: Montserrat

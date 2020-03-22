@@ -14,7 +14,7 @@ export class DashboardComponent implements OnInit {
   public faSearch = faSearch
 
   ngOnInit() {
-    localStorage.setItem('ActiveNav', 'profile');
+    localStorage.setItem('ActiveNav', 'dashboard');
   }
 
 }
