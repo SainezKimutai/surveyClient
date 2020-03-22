@@ -99,7 +99,7 @@ export class AnswerComponent implements OnInit {
     await this.responseService.sendResponse(answers).subscribe(data => {
       console.log(this.response);
       {this.notification.showSuccess('Survey resonses submited', 'Success');  this.ImprintLoader = false; }
-      this.router.navigate(['/home/dashboard']);
+      this.router.navigate(['/home/profile']);
     }, err => {{this.notification.showWarning('Could not submit', 'Failled');  this.ImprintLoader = false; }});
   }
 }

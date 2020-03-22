@@ -219,8 +219,8 @@
     <div class="question-wrap"  *ngFor="let item of TemplateQuestions; let i = index">
         <div class="question d-flex w-100">{{item.question}} 
             <div class="ml-auto d-flex">
-                <fa-icon style="cursor: pointer;" [icon]="faEdit" class="ml-3" (click)="editQuestion(item, index)"></fa-icon>
-                <fa-icon style="cursor: pointer;"  [icon]="faTrash" class="ml-3" (click)="deleteQuestion(item, index)"></fa-icon>
+                <fa-icon style="cursor: pointer;" [icon]="faEdit" class="ml-3" (click)="editQuestion(item, i)"></fa-icon>
+                <fa-icon style="cursor: pointer;"  [icon]="faTrash" class="ml-3" (click)="deleteQuestion(item, i)"></fa-icon>
             </div>
         </div>
         <div class="choices">
@@ -267,7 +267,7 @@
 
 <!-- mOdals -->
 
-<div bsModal  #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="config">
+<div bsModal  #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog editModal" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -369,7 +369,7 @@
 
 
 
-<div bsModal  #addQuizModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" [config]="config">
+<div bsModal  #addQuizModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog addQuizModal" role="document">
         <div class="modal-content">
         <div class="modal-header ">
