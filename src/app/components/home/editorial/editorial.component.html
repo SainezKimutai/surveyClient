@@ -213,7 +213,7 @@
     <div class="head d-flex">
         <button class="btn btn-sm mr-auto" (click)="viewSurveyTemplates()"> <fa-icon [icon]="faBackward"></fa-icon> </button>
         <h4 class="mr-auto">{{TemplateNameOnView}}</h4>
-        <button class="btn btn-sm ml-auto btn-success" (click)="addQuizModal.show()"> <fa-icon [icon]="faPlus"></fa-icon></button>
+        <button class="btn btn-sm ml-auto btn-success" (click)="openAddQuizModal()"> <fa-icon [icon]="faPlus"></fa-icon></button>
     </div>
    
     <div class="question-wrap"  *ngFor="let item of TemplateQuestions; let i = index">

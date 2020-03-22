@@ -442,7 +442,8 @@
         background-color: white
         margin: 4px 0
         padding: 5px 1em
-        // height: 4em
+        min-height: 4em
+        height: fit-content
         display: flex
 
         &:hover
@@ -516,6 +517,9 @@
             -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .4)
             -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .4)
 
+            @include desktop_md
+                margin: auto
+
             &:hover
                 box-shadow: 0 0 7px rgba(0, 0, 0, .3)
                 -moz-box-shadow: 0 0 7px rgba(0, 0, 0, .3)
@@ -571,7 +575,8 @@
         background-color: white
         margin: 4px 0
         padding: 5px 1em
-        height: 4em
+        min-height: 4em
+        height: fit-content
 
         &:hover
             background-color: colorTheme(secondaryTheme)
