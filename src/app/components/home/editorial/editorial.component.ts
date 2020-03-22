@@ -284,13 +284,13 @@ export class EditorialComponent implements OnInit {
     });
   }
 
-  editQuestion(item, index) {
+  editQuestion(item) {
     this.editModal.show();
     this.EditQuestionInput = item.question;
     this.EditpositionInput = item.position;
     this.QuestionIdOnEdit = item._id;
   }
-  deleteQuestion(item, index) {
+  deleteQuestion(item) {
     this.questionService.deleteQuestion(item._id).subscribe(data => {this.notifyService.showWarning('Deleted Question', 'Deleted!');
                                                                      // tslint:disable-next-line: max-line-length
                                                                      this.updatePage().then(e => this.viewSurvey(this.surveyNameOnView, this.surveyIdOnView));
