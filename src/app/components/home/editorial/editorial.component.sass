@@ -442,7 +442,8 @@
         background-color: white
         margin: 4px 0
         padding: 5px 1em
-        // height: 4em
+        min-height: 4em
+        height: fit-content
         display: flex
 
         &:hover
@@ -501,6 +502,7 @@
         max-height: 500px
         overflow-x: scroll
 
+
         .card
             min-width: 15em
             height: 10em
@@ -515,6 +517,13 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, .4)
             -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .4)
             -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .4)
+
+            @include desktop_md
+                max-width: 100%
+                margin: 0 1em 1em 0
+
+            @include desktop_sm
+                margin: 0 0 1em 0
 
             &:hover
                 box-shadow: 0 0 7px rgba(0, 0, 0, .3)
@@ -571,7 +580,8 @@
         background-color: white
         margin: 4px 0
         padding: 5px 1em
-        height: 4em
+        min-height: 4em
+        height: fit-content
 
         &:hover
             background-color: colorTheme(secondaryTheme)
@@ -671,13 +681,16 @@
     height: 500px
     overflow-x: scroll
     overflow-y: scroll
+    border: none
 .editModal .modal-content
     height: 500px
     overflow-x: scroll
     overflow-y: scroll
+    border: none
 .editModal, .addQuizModal
     
     .modal-header
+        border: none
         background-color: colorTheme(primary) !important
         .modal-title
             font-size: 15px

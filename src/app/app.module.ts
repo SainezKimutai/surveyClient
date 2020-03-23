@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { ChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -38,6 +39,7 @@ import { TokenGuard } from './shared/route-guards/token.guard';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ChartsModule,
     ModalModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 5000,

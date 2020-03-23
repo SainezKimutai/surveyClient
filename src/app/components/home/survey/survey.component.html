@@ -24,6 +24,7 @@
         <div class="card" *ngFor="let item of AllSurveys" (click)="takeSurvey(item)">
             <div class="bg-1">.</div>
             <h4 class="color:black;">{{item.surveyName}}</h4>
+            <h5 *ngIf="item.done"> <fa-icon [icon]="faCheck"></fa-icon> Completed</h5>
         </div>
 
         <div class="card" *ngIf="AllSurveys.length === 0">
