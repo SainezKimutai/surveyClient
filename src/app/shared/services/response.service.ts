@@ -12,12 +12,12 @@ export class ResponseService {
 
 
     public url = `${dev.connect}api/responses/`;
-    
+
 
 
     constructor( private http: HttpClient ) { }
 
-    sendResponse (data: any){
+    sendResponse(data: any) {
         return this.http.post<any>(this.url + 'create', data);
     }
 

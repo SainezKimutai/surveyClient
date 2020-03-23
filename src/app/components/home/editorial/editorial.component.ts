@@ -4,6 +4,7 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
 import { ModalDirective, ModalOptions, ModalModule } from 'ngx-bootstrap';
+import { ThreatService } from 'src/app/shared/services/threats.service';
 
 
 @Component({
@@ -17,12 +18,14 @@ export class EditorialComponent implements OnInit {
   constructor(
     private notifyService: NotificationService,
     private surveyService: SurveyService,
-    private questionService: QuestionService
+    private questionService: QuestionService,
+    private threatService: ThreatService
   ) {  }
 
 // Modals
 @ViewChild('editModal', {static: true, }) editModal: ModalDirective;
 @ViewChild('addQuizModal', {static: true, }) addQuizModal: ModalDirective;
+@ViewChild('addThreatModal', {static: true}) addThreatModal: ModalDirective;
 
   // loader
   public ImprintLoader = false;
@@ -40,6 +43,7 @@ export class EditorialComponent implements OnInit {
   //
   public AllSurveys = [];
   public AllQuestions = [];
+  public AllThreats = [];
 
   public TemplateNameOnView = [];
   public TemplateQuestions = [];
@@ -53,6 +57,7 @@ export class EditorialComponent implements OnInit {
   public CurrentQuestionArray = [];
   public CurrentQuestionInput = '';
   public CurrentChoiceInput = '';
+  public CurrentChoiceInputThreat = '';
 
   public openQuestionInput = 'true';
   public multipleChoiceInput = 'true';
@@ -64,6 +69,7 @@ export class EditorialComponent implements OnInit {
   public EditQuestionArray = [];
   public EditQuestionInput = '';
   public EditChoiceInput = '';
+  public EditChoiceInputThreat = '';
 
   public EditopenQuestionInput = 'true';
   public EditmultipleChoiceInput = 'true';
@@ -82,6 +88,10 @@ export class EditorialComponent implements OnInit {
 
 
 
+    public threatName = '';
+    public threatLevel = '';
+    public threatRecom = '';
+
 
 
 
@@ -93,20 +103,20 @@ export class EditorialComponent implements OnInit {
   }
   updatePage() {
     return new Promise((resolve, reject) => {
-
-      this.surveyService.getAllSurveys().subscribe(
-        dataS => {this.AllSurveys = dataS;
-
-                  this.questionService.getAllQuestions().subscribe(
-            dataQ => {this.AllQuestions = dataQ; resolve(); },
-            error => console.log('Error getting all question')
-          );
-
-        },
-        error => console.log('Error getting all surveys')
+        this.surveyService.getAllSurveys().subscribe(
+          data => this.AllSurveys = data,
+          error => console.log('Error getting all surveys')
         );
-       });
-      }
+        this.questionService.getAllQuestions().subscribe(
+          data => this.AllQuestions = data,
+          error => console.log('Error getting all question')
+        );
+        this.threatService.getAllThreats().subscribe(
+          data => {this.AllThreats = data; resolve(); },
+          error => console.log('Error getting all threats')
+        );
+    });
+  }
 
 
 
@@ -181,11 +191,12 @@ export class EditorialComponent implements OnInit {
 
 
   addChoice() {
-    if (this.CurrentChoiceInput === '') {
+    if (this.CurrentChoiceInput === '' || this.CurrentChoiceInputThreat === '') {
       this.notifyService.showWarning('Input answer', 'Empty Array');
     } else {
-      this.CurrentChoicesArr.push({ answer: this.CurrentChoiceInput});
+      this.CurrentChoicesArr.push({ answer: this.CurrentChoiceInput, threat: this.CurrentChoiceInputThreat });
       this.CurrentChoiceInput = '';
+      this.CurrentChoiceInputThreat = '';
     }
 
   }
@@ -284,11 +295,12 @@ export class EditorialComponent implements OnInit {
       err => this.notifyService.showWarning('Question was not delete', 'Failed!'));
   }
   EditaddChoice() {
-    if (this.EditChoiceInput === '') {
-      this.notifyService.showWarning('Input answer', 'Empty Array');
+    if (this.EditChoiceInput === '' || this.EditChoiceInputThreat === '') {
+      this.notifyService.showWarning('Input answer', 'Empty Field');
     } else {
-      this.EditChoicesArr.push({ answer: this.EditChoiceInput});
+      this.EditChoicesArr.push({ answer: this.EditChoiceInput, threat: this.EditChoiceInputThreat});
       this.EditChoiceInput = '';
+      this.EditChoiceInputThreat = '';
     }
   }
 
@@ -392,6 +404,25 @@ export class EditorialComponent implements OnInit {
 
 
 
+
+
+
+
+
+
+  addThreat() {
+    let myData = {
+      name: this.threatName,
+      level: this.threatLevel,
+      recom: this.threatRecom,
+      alias: ''
+    };
+
+    this.threatService.createThreat(myData).subscribe(
+      data => {this.updatePage().then(() => { this.notifyService.showSuccess('Threat added', 'Success'); this.addThreatModal.hide(); } ); },
+      error => this.notifyService.showError('could not create threat', 'Failed')
+    );
+  }
 
 
 
