@@ -16,8 +16,8 @@ import { ModalModule } from 'ngx-bootstrap';
 
   declarations: [
       ProfileComponent,
-      
-    
+
+
           ],
 
     imports: [
@@ -35,9 +35,9 @@ import { ModalModule } from 'ngx-bootstrap';
       })
 
     ]
-    
+
 
   })
-  
+
 
   export class ProfileModule {}

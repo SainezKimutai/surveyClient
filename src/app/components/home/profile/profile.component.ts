@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { faEnvelope, faKey , faGlobe , faAddressBook, faEdit, faCheck} from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { faBuilding, faFire, faComment, faEnvelope, faKey , faGlobe , faAddressBook,
+  faEdit, faCheck, faListAlt, faBookReader} from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
@@ -8,6 +9,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { ResponseService } from 'src/app/shared/services/responses.service';
 import { FileUploadService } from 'src/app/shared/services/fileUpload.service';
 import { dev } from 'src/app/shared/dev/dev';
+import { ModalDirective } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-profile',
@@ -27,6 +29,7 @@ export class ProfileComponent implements OnInit {
     private fileUploadServcie: FileUploadService
 
   ) { }
+  @ViewChild('viewAnswersModal', {static: true, }) viewAnswersModal: ModalDirective;
 
     // icon
     public faEnvelope = faEnvelope;
@@ -35,6 +38,11 @@ export class ProfileComponent implements OnInit {
     public faAddressBook = faAddressBook;
     public faEdit = faEdit;
     public faCheck = faCheck;
+    public faBuilding = faBuilding;
+    public faFire = faFire;
+    public faComment = faComment;
+    public faListAlt = faListAlt;
+    public faBookReader = faBookReader;
 
     public AllUsers = [];
     public AllCompanies = [];
@@ -67,17 +75,29 @@ export class ProfileComponent implements OnInit {
 
 
 
+    public QuestionsOnView = [];
+    public companyNameOnView = '';
+    public surveyNameOnView = '';
+
+    public CompanyRiskRates = [];
+
+
+
+
+
+
 
   ngOnInit() {
     localStorage.setItem('ActiveNav', 'profile');
     this.loggedUserEmail = localStorage.getItem('loggedUserEmail');
 
-    this.updatePage();
+    this.updatePage().then(() => {this.computeCompanyRiskRates(); });
   }
 
 
 
   updatePage() {
+    return new Promise((resolve, reject) => {
     this.userService.getAllUsers().subscribe(
       data => this.AllUsers = data,
       error => console.log('Error geting all Users')
@@ -98,9 +118,10 @@ export class ProfileComponent implements OnInit {
       error => console.log('Error geting all Questions')
     );
     this.responseService.getAllResponses().subscribe(
-      data => this.AllUsers = data,
+      data => {this.AllResponses = data; resolve(); },
       error => console.log('Error geting all Responses')
     );
+  });
   }
 
 
@@ -231,6 +252,84 @@ export class ProfileComponent implements OnInit {
       error => this.notifyService.showError('Could not save', 'Failed')
     );
     }
+  }
+
+
+
+  computeCompanyRiskRates() {
+
+      this.AllResponses.forEach((resp) => {
+        if (this.myCompany._id === resp.companyId) {
+
+          for (const surv of this.AllSurveys) {
+            if (resp.surveyId === surv._id) {
+
+              const data = {
+                companyId: this.myCompany._id,
+                surveyId: surv._id,
+                responseId: resp._id,
+                companyName: this.myCompany.companyName,
+                surveyName: surv.surveyName,
+                riskRate: 'To be determined',
+                recommendation: 'Awaiting...'
+              };
+
+              this.CompanyRiskRates.push(data);
+
+            }
+          }
+        }
+      });
+
+  }
+
+
+
+
+
+
+  openAnswersModal(companyName, surveyName, surveyId, responseId) {
+    this.companyNameOnView = companyName;
+    this.surveyNameOnView = surveyName;
+    this.QuestionsOnView = [];
+
+    for (const resp of this.AllResponses) {
+     if ( resp._id === responseId) {
+
+      resp.answers.forEach((ans) => {
+
+        for (const quiz of this.AllQuestions) {
+          if (ans.questionId === quiz._id) {
+            const theQuestions = {
+              question: quiz.question,
+              answers: []
+            };
+
+            quiz.choices.forEach((myAns, key, arr) => {
+              if (ans.answer.includes(myAns.answer)) {
+                theQuestions.answers.push({picked: true, answer: myAns.answer });
+                if (Object.is(arr.length - 1, key)) {
+                  this.QuestionsOnView.push(theQuestions);
+                }
+              } else {
+                theQuestions.answers.push({picked: false, answer: myAns.answer });
+                if (Object.is(arr.length - 1, key)) {
+                  this.QuestionsOnView.push(theQuestions);
+                }
+              }
+            });
+
+            // break;
+          }
+        }
+
+      });
+      // break;
+     }
+   }
+
+
+    this.viewAnswersModal.show();
   }
 
 

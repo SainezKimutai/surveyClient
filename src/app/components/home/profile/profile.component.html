@@ -18,19 +18,52 @@
             <div class="grid-container">
 
                 <div class="grid-item">
-                    <h4>Questionaire</h4>
+                    <h4>Surveys</h4>    
+                    <div class="body-wrap d-flex">
+                        <div class="icon">
+                            <fa-icon [icon]="faListAlt"> </fa-icon>
+                        </div>
+                        <div class="value">
+                            <h4>{{CompanyRiskRates.length}}</h4>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="grid-item">
                     <h4>Feedback</h4>
+                    <div class="body-wrap d-flex">
+                        <div class="icon">
+                            <fa-icon [icon]="faComment"></fa-icon>
+                        </div>
+                        <div class="value">
+                            <h4>Pending...</h4>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="grid-item">
-                    <h4>Issue Rating</h4>
+                    <h4>Issue Rating</h4>          
+                    <div class="body-wrap d-flex">
+                        <div class="icon">
+                            <fa-icon [icon]="faFire"></fa-icon>
+                        </div>
+                        <div class="value">
+                            <h4>Pending...</h4>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="grid-item">
                     <h4>Reports</h4>
+                    <div class="body-wrap d-flex">
+                        <div class="icon">
+                            <fa-icon [icon]="faBookReader"></fa-icon>
+                        </div>
+                        <div class="value">
+                            <h4>Pending...</h4>
+                        </div>
+                    </div>
+                   
                 </div>
 
             </div>
@@ -39,27 +72,37 @@
 
         <div class="account-status-wrap">
 
-            <h5>Account Info</h5>
-
-            <div class="grid-container">
-
-                <div class="grid-item">
-                    <h4>Questionaire</h4>
+          
+                <div class="title">Your Risk Rates Per Survey Template</div>
+                <div class="body-wrapper">
+                <div class="body-title" >
+          
+                  <div  class="body-item d-flex">
+                    <div class="mx-auto ">Comapany Name</div>
+                    <div class="mx-auto ">Survey Name</div>
+                    <div class="mx-auto ">Risk rate</div>
+                    <div class="rate">Recommendation</div>
+                  </div>
+          
                 </div>
-
-                <div class="grid-item">
-                    <h4>Feedback</h4>
+             
+                    <div class="body d-flex" *ngIf="CompanyRiskRates.length === 0">
+                        <div class="spinner-div spinner-border mx-auto" role="status"></div>
+                      </div>
+                
+                      <div class="body" *ngIf="CompanyRiskRates.length !== 0">
+            
+                        <div *ngFor="let comp of CompanyRiskRates" class="body-item d-flex" (click)="openAnswersModal(comp.companyName, comp.surveyName, comp.surveyId, comp.responseId)">
+                          <div class="mx-auto companyName">{{comp.companyName}}</div>
+                          <div class="mx-auto surveyName">{{comp.surveyName}}</div>
+                          <div class="mx-auto riskRate">{{comp.riskRate}}</div>
+                          <div class="mx-auto recommendation">{{comp.recommendation}}</div>
+                     
+                        </div>
+                
+                      </div>
                 </div>
-
-                <div class="grid-item">
-                    <h4>Issue Rating</h4>
-                </div>
-
-                <div class="grid-item">
-                    <h4>Reports</h4>
-                </div>
-
-            </div>
+      
 
         </div>
 
@@ -170,92 +213,35 @@
 
 
 
-
-
-
-
-
-
-
-<!-- 
-
-
-
-
-<main>
-
-
-
-
-    <h5>Profile</h5>
-    <div class="survey-page">
-        <div class="left-section">
-            <div class="card ">
-                <strong><h6>Survey info</h6> </strong>
-                <div class="survey-info">
-                    <div class="col-md-6 ">
-                        <p>Questionaire</p>
-                    </div>
-                    <div class="col-md-6">
-                        <p>feedback</p>
-                    </div>
-        
-                    
-                </div>
-                <div class="survey-info">
-                    <div class="col-md-6 ">
-                        <p>Issue rating</p>
-                    </div>
-                    <div class="col-md-6 survey-info">
-                        <p>reports</p>
-                    </div>
-        
-                    
-                </div>
-        
-        
-               
-            </div>
-        
-            <div class="card ">
-                <strong><h6>Account status</h6> </strong>
-                
-            </div>
+<div bsModal  #viewAnswersModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog viewAnswersModal modal-lg" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title ">Responses of <span>{{companyNameOnView}}</span>  on <span>{{surveyNameOnView}} survey</span></h4>
+            <button type="button" class="btn close" (click)="viewAnswersModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      
         </div>
-    
-        <div class="right-section">
-            <div class="card">
-                <div class="card-header">
-                    <h6>Company name </h6>
-                    <p>Lorem ipsum dolor sit amet, habeo numquam aliquando id eum, duo an sapientem urbanitas,</p>
-                </div>
-                <div class="card-body">
-                    <img src="../../../assets/images/logo.jpeg" alt="logo" class="company-logo">
-                    <div class="icon-group">
-                        <fa-icon [icon]="faEnvelope" class="mr-2"></fa-icon><p>info@mycompany.com</p>
-                    </div>
-
-                    <div class="icon-group">
-                        <fa-icon [icon]="faPhone" class="mr-2"></fa-icon>
-                        <p>+250 070-000-0020</p>
-                    </div>
-                   <div class="icon-group">
-                    <fa-icon [icon]="faAddressBook" class="mr-2"></fa-icon>
-                    <p>23787, Nairobi Kennta</p>
-                   </div>
-                    
-                    
-
-                </div>
-                
-              
-        
-              </div>
+        <div class="modal-body" >
+     
+          <div class="question-wrap" *ngFor="let item of QuestionsOnView">
+  
+            <div class="question">{{item.question}}</div>
+  
+            <div class="answer-wrap" >
+              <div *ngFor="let ans of item.answers" [ngClass]="ans.picked ? 'answer picked' : 'answer'" class="answer">{{ans.answer}}</div>
+            </div>
+  
+          </div>
+  
+  
         </div>
-    </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  
 
 
-    
 
-</main>
- -->
+

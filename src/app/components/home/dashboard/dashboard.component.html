@@ -14,11 +14,11 @@
 
     <div class="card first">
         <div class="card-title">
-            <h4 >ssdkjsdk</h4>
+            <h4>Surveys</h4>
             <fa-icon [icon]="faListAlt"></fa-icon>
         </div>
         <div class="card-info">
-            <h4>ajksdjs</h4>
+            <h4>{{AllSurveys.length}}</h4>
         </div>
         <div class="card-body">
             <canvas *ngIf="cardOneType" baseChart class="chart"
@@ -32,11 +32,11 @@
     
     <div class="card second">
         <div class="card-title">
-            <h4 >ssdkjsdk</h4>
-            <fa-icon [icon]="faListAlt"></fa-icon>
+            <h4>Companies</h4>
+            <fa-icon [icon]="faBuilding"></fa-icon>
         </div>
         <div class="card-info">
-            <h4>ajksdjs</h4>
+            <h4>{{AllCompanies.length}}</h4>
         </div>
         <div class="card-body">
             <canvas *ngIf="cardTwoType" baseChart class="chart"
@@ -50,11 +50,11 @@
     
     <div class="card third">
         <div class="card-title">
-            <h4 >ssdkjsdk</h4>
-            <fa-icon [icon]="faListAlt"></fa-icon>
+            <h4 >Risk Rates</h4>
+            <fa-icon [icon]="faFire"></fa-icon>
         </div>
         <div class="card-info">
-            <h4>ajksdjs</h4>
+            <h4>By Industry Type</h4>
         </div>
         <div class="card-body">
             <canvas *ngIf="cardThreeType" baseChart class="chart"
@@ -68,11 +68,11 @@
     
     <div class="card forth">
         <div class="card-title">
-            <h4 >ssdkjsdk</h4>
-            <fa-icon [icon]="faListAlt"></fa-icon>
+            <h4>Risk Rates</h4>
+            <fa-icon [icon]="faFire"></fa-icon>
         </div>
         <div class="card-info">
-            <h4>ajksdjs</h4>
+            <h4>By Company</h4>
         </div>
         <div class="card-body">
             <canvas *ngIf="cardFourType" baseChart class="chart"
@@ -92,91 +92,30 @@
 
 <section id="second_cards_section" class="card-group">
     <div class="card">
-        <div class="title">Customer Convertion Rate</div>
+        <div class="title">Company Risk Rates Per Survey Template</div>
         <div class="body-wrapper">
         <div class="body-title" >
   
           <div  class="body-item d-flex">
             <div class="mx-auto ">Comapany Name</div>
-            <div class="mx-auto ">Comapany Name</div>
-            <div class="mx-auto ">Comapany name</div>
-            <div class="rate">Comapany Name</div>
+            <div class="mx-auto ">Survey Name</div>
+            <div class="mx-auto ">Risk rate</div>
+            <div class="rate">Recommendation</div>
           </div>
   
         </div>
      
-            <div class="body d-flex" *ngIf="AllCompanies.length === 0">
+            <div class="body d-flex" *ngIf="CompnayRiskRates.length === 0">
                 <div class="spinner-div spinner-border mx-auto" role="status"></div>
               </div>
         
-              <div class="body" *ngIf="AllCompanies.length !== 0">
+              <div class="body" *ngIf="CompnayRiskRates.length !== 0">
         
-                <div *ngFor="let comp of AllCompanies" class="body-item d-flex">
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                </div>
-      
-                <div *ngFor="let comp of AllCompanies" class="body-item d-flex">
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                </div>
-                <div *ngFor="let comp of AllCompanies" class="body-item d-flex">
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                </div>
-                <div *ngFor="let comp of AllCompanies" class="body-item d-flex">
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                </div>
-                <div *ngFor="let comp of AllCompanies" class="body-item d-flex">
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                </div>
-                <div *ngFor="let comp of AllCompanies" class="body-item d-flex">
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                </div>    <div *ngFor="let comp of AllCompanies" class="body-item d-flex">
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                </div>    <div *ngFor="let comp of AllCompanies" class="body-item d-flex">
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                </div>    <div *ngFor="let comp of AllCompanies" class="body-item d-flex">
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                </div>    <div *ngFor="let comp of AllCompanies" class="body-item d-flex">
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                </div>    <div *ngFor="let comp of AllCompanies" class="body-item d-flex">
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                </div>    <div *ngFor="let comp of AllCompanies" class="body-item d-flex">
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
+                <div *ngFor="let comp of CompnayRiskRates" class="body-item d-flex" (click)="openAnswersModal(comp.companyName, comp.surveyName, comp.surveyId, comp.responseId)">
+                  <div class="mx-auto companyName">{{comp.companyName}}</div>
+                  <div class="mx-auto surveyName">{{comp.surveyName}}</div>
+                  <div class="mx-auto riskRate">{{comp.riskRate}}</div>
+                  <div class="mx-auto recommendation">{{comp.recommendation}}</div>
                 </div>
         
               </div>
@@ -185,16 +124,16 @@
     </div>
     
     <div class="card">
-        <div class="title">Customer Convertion Rate</div>
+        <div class="title">Risk Issues</div>
 
         <div class="body-wrapper">
             <div class="body-title" >
   
                 <div  class="body-item d-flex">
-                  <div class="mx-auto ">Comapany Name</div>
-                  <div class="mx-auto ">Comapany Name</div>
-                  <div class="mx-auto ">Comapany name</div>
-                  <div class="rate">Comapany Name</div>
+                  <div class="mx-auto ">Risk</div>
+                  <div class="mx-auto ">Survey Name</div>
+                  <div class="mx-auto ">Companies Affected</div>
+                  <div class="rate">Intervention</div>
                 </div>
         
               </div>
@@ -206,10 +145,10 @@
               <div class="body" *ngIf="AllCompanies.length !== 0">
         
                 <div *ngFor="let comp of AllCompanies" class="body-item d-flex">
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
-                  <div class="mx-auto">{{comp.companyName}}</div>
+                  <div class="mx-auto">-</div>
+                  <div class="mx-auto">-</div>
+                  <div class="mx-auto">-</div>
+                  <div class="mx-auto">-</div>
                 </div>
         
               </div>
@@ -226,7 +165,7 @@
 
 <section id="graph_section" class="card-group">
     <div class="card">
-        <div class="title">Customer Convertion Rate</div>
+        <div class="title">Risks Representations</div>
         <div class="body">
             <canvas *ngIf="graphType" baseChart class="chart"
             [chartType]="graphType"
@@ -240,23 +179,70 @@
 </section> <!-- graph_section -->
 
 
-<section id="list_section_one" class="card-group">
+
+
+
+
+
+
+
+
+
+
+
+<section hidden id="list_section_one" class="card-group">
     <div class="card">
-shdjhsjhdshjdhjshjdhjkshjhjshd shdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshd
+ 
     </div>
-</section> <!-- graph_section -->
+</section> <!-- list_section_one -->
 
 
-<section id="list_section_two" class="card-group">
+
+
+
+
+
+
+
+<section hidden id="list_section_two" class="card-group">
     <div class="card">
-shdjhsjhdshjdhjshjdhjkshjhjshd shdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshdshdjhsjhdshjdhjshjdhjkshjhjshd
+ 
     </div>
-</section>
+</section> <!-- list_section_two -->
 
 
 
 
 
+
+
+<div bsModal  #viewAnswersModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog viewAnswersModal modal-lg" role="document">
+      <div class="modal-content">
+      <div class="modal-header ">
+          <h4 class="modal-title ">Responses of <span>{{companyNameOnView}}</span>  on <span>{{surveyNameOnView}} survey</span></h4>
+          <button type="button" class="btn close" (click)="viewAnswersModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    
+      </div>
+      <div class="modal-body" >
+   
+        <div class="question-wrap" *ngFor="let item of QuestionsOnView">
+
+          <div class="question">{{item.question}}</div>
+
+          <div class="answer-wrap" >
+            <div *ngFor="let ans of item.answers" [ngClass]="ans.picked ? 'answer picked' : 'answer'" class="answer">{{ans.answer}}</div>
+          </div>
+
+        </div>
+
+
+      </div>
+      </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 

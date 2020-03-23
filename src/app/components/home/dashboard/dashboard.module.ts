@@ -8,6 +8,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { ChartsModule } from 'ng2-charts';
+import { ModalModule } from 'ngx-bootstrap';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { ChartsModule } from 'ng2-charts';
       ReactiveFormsModule,
       FormsModule,
       ChartsModule,
+      ModalModule.forRoot(),
       ToastrModule.forRoot({
         timeOut: 5000,
         positionClass: 'toast-bottom-right',
