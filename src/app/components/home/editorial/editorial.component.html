@@ -145,8 +145,18 @@
                 <div class="preview-questions" *ngFor="let item of CurrentChoicesArr; let x = index">
                   {{x + 1}}. {{item.answer}}
                 </div>
-                <div class="form-group-choices">
-                    <input type="text" name="CurrentChoiceInput" [(ngModel)]="CurrentChoiceInput" placeholder="Type Choices">
+                <div class="form-group-choices d-flex">
+                    <div class="form-group">
+                        <input type="text" name="CurrentChoiceInput" [(ngModel)]="CurrentChoiceInput" placeholder="Type Choices">
+                    </div>
+                    <div class="form-group">
+                        <select  name="CurrentChoiceInputThreat" [(ngModel)]="CurrentChoiceInputThreat" >
+                            <option value="" disabled selected hidden >... choose threat</option>
+                            <option *ngFor="let trt of AllThreats" [value]="trt._id" >{{trt.name}}</option>
+                        </select>
+                        <button  (click)="addThreatModal.show()">Add Threat</button>
+                    </div>
+                   
                 </div>
 
 
@@ -445,9 +455,19 @@
                     <div class="preview-questions" *ngFor="let item of EditChoicesArr; let x = index">
                       {{x + 1}}. {{item.answer}}
                     </div>
-                    <div class="form-group-choices">
-                        <input type="text" name="EditChoiceInput" [(ngModel)]="EditChoiceInput" placeholder="Type Choices">
+                    <div class="form-group-choices d-flex">
+                        <div class="form-group">
+                            <input type="text" name="EditChoiceInput" [(ngModel)]="EditChoiceInput" placeholder="Type Choices">
+                        </div>
+                        <div class="form-group">
+                            <select  name="EditChoiceInputThreat" [(ngModel)]="EditChoiceInputThreat" >
+                                <option value="" disabled selected hidden >... choose threat</option>
+                                <option *ngFor="let trt of AllThreats" [value]="trt._id" >{{trt.name}}</option>
+                            </select>
+                            <button  (click)="addThreatModal.show()">Add Threat</button>
+                        </div>  
                     </div>
+                   
     
                     <div class="add-ans">
                         <button class="btn btn-sm" (click)="EditaddChoice()"><fa-icon [icon]="faPlus"></fa-icon></button>
@@ -470,3 +490,37 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+<div bsModal  #addThreatModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog addThreatModal" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title ">Add Threat</h4>
+            <button type="button" class="btn close" (click)="closeaddThreatModal()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <form class="form">
+                <div class="form-group">
+                    <label for="threatName">Threat Name</label>
+                    <textarea name="threatName" [(ngModel)]="threatName"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="threatLevel">Threat Level</label>
+                    <textarea name="threatLevel" [(ngModel)]="threatLevel"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="threatRecom">Threat Name</label>
+                    <textarea name="threatRecom" [(ngModel)]="threatRecom"></textarea>
+                </div>
+
+            </form>
+        </div>
+        <div class="modal-footer">
+     
+            <button [disabled]="threatName === '' || threatLevel === '' || threatRecom === ''" type="button" class="btn btn-confirm" (click)="addThreat()">Save</button>
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

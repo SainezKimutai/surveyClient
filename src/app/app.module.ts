@@ -23,6 +23,7 @@ import { ModalModule } from 'ngx-bootstrap';
 import { CustomerGuard } from './shared/route-guards/customer.guard';
 import { AdminGuard } from './shared/route-guards/admin.guard';
 import { TokenGuard } from './shared/route-guards/token.guard';
+import { ThreatService } from './shared/services/threats.service';
 
  // tslint:disable: max-line-length
 @NgModule({
@@ -48,7 +49,8 @@ import { TokenGuard } from './shared/route-guards/token.guard';
     }),
   ],
 
-  providers: [AppCustomPreloader, TokenGuard, AdminGuard, CustomerGuard,  NotificationService, UserService, CompanyProfileService, SurveyService, QuestionService, ResponseService, FileUploadService,
+  providers: [AppCustomPreloader, TokenGuard, AdminGuard, CustomerGuard,  NotificationService, UserService, CompanyProfileService, SurveyService, QuestionService,
+    ResponseService, FileUploadService, ThreatService
     ],
   bootstrap: [AppComponent]
 })
