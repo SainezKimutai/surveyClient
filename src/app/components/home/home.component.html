@@ -22,21 +22,21 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav nav-pills mr-auto">
       <li *ngIf="toAdmin" [ngClass]="dashboardNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
-        <a routerLink="/home/dashboard" [ngClass]=" salesNavBarActive ? 'nav-link active' : 'nav-link'">
+        <a routerLink="/home/dashboard" [ngClass]=" dashboardNavBarActive ? 'nav-link active' : 'nav-link'">
           <fa-icon [icon]="faChartLine"></fa-icon> <span>Dashboard</span>
         </a>
       </li>
   
 
       <li [ngClass]="surveyNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
-        <a routerLink="/home/survey" [ngClass]=" salesNavBarActive ? 'nav-link active' : 'nav-link'">
+        <a routerLink="/home/survey" [ngClass]=" surveyNavBarActive ? 'nav-link active' : 'nav-link'">
           <fa-icon [icon]="faListAlt"></fa-icon> <span>Survey</span>
         </a>
       </li>
 
 
       <li *ngIf="toCustomer"  [ngClass]="profileNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
-        <a routerLink="/home/profile" [ngClass]=" salesNavBarActive ? 'nav-link active' : 'nav-link'">
+        <a routerLink="/home/profile" [ngClass]=" profileNavBarActive ? 'nav-link active' : 'nav-link'">
           <fa-icon [icon]="faUser"></fa-icon> <span>Profile</span>
         </a>
       </li>
@@ -64,8 +64,8 @@
 
 <header [ngClass]="sideBarStatus ? '' : 'hide'">
     <div class="logo-wrap d-flex" >
-      <img [hidden]="!sideBarStatus" src="/../../../assets/images/logo1.png">
-      <fa-icon id="sideBarToggler" class="ml-auto" (click)="toggleSideBar()" [icon]="sideBarStatus ? faArrowLeft : faBars"></fa-icon>
+      <img [hidden]="!sideBarStatus" src="/../../../assets/images/logo3.jpg">
+      <fa-icon id="sideBarToggler"  (click)="toggleSideBar()" [icon]="sideBarStatus ? faArrowLeft : faBars"></fa-icon>
 
     </div>
 
@@ -87,21 +87,21 @@
 
 
       <li  *ngIf="toAdmin" [ngClass]="dashboardNavBarActive ? 'nav-item active' : 'nav-item'" >
-          <a routerLink="/home/dashboard" [ngClass]=" salesNavBarActive ? 'nav-link active' : 'nav-link'">
+          <a routerLink="/home/dashboard" [ngClass]=" dashboardNavBarActive ? 'nav-link active' : 'nav-link'">
             <fa-icon [icon]="faChartLine"></fa-icon> <span>Dashboard</span>
           </a>
         </li>
     
 
         <li [ngClass]="surveyNavBarActive ? 'nav-item active' : 'nav-item'" >
-          <a routerLink="/home/survey" [ngClass]=" salesNavBarActive ? 'nav-link active' : 'nav-link'">
+          <a routerLink="/home/survey" [ngClass]=" surveyNavBarActive ? 'nav-link active' : 'nav-link'">
             <fa-icon [icon]="faListAlt"></fa-icon> <span>Survey</span>
           </a>
         </li>
 
 
         <li *ngIf="toCustomer"  [ngClass]="profileNavBarActive ? 'nav-item active' : 'nav-item'" >
-          <a routerLink="/home/profile" [ngClass]=" salesNavBarActive ? 'nav-link active' : 'nav-link'">
+          <a routerLink="/home/profile" [ngClass]=" profileNavBarActive ? 'nav-link active' : 'nav-link'">
             <fa-icon [icon]="faUser"></fa-icon> <span>Profile</span>
           </a>
         </li>
