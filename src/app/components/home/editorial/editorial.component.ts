@@ -12,7 +12,7 @@ import { ModalDirective, ModalOptions, ModalModule } from 'ngx-bootstrap';
   styleUrls: ['./editorial.component.sass']
 })
 export class EditorialComponent implements OnInit {
-
+// tslint:disable: prefer-const
 
   constructor(
     private notifyService: NotificationService,
@@ -109,20 +109,6 @@ export class EditorialComponent implements OnInit {
       }
 
 
-  // updatePage() {
-
-  //   this.surveyService.getAllSurveys().subscribe(
-  //     data => this.AllSurveys = data,
-  //     error => console.log('Error getting all surveys')
-  //   );
-
-  //   this.questionService.getAllQuestions().subscribe(
-  //     data => this.AllQuestions = data,
-  //     error => console.log('Error getting all question')
-  //   );
-
-  // }
-
 
 
   createNewSurveyTemplate() {
@@ -145,8 +131,8 @@ export class EditorialComponent implements OnInit {
     // for use later in rerender..
     this.surveyIdOnView = id;
     this.surveyNameOnView = name;
-
-    this.TemplateQuestions = this.AllQuestions.filter(( quiz) => quiz.surveyId === id ).map(e => e);
+    let unSortedQuestions = this.AllQuestions.filter(( quiz) => quiz.surveyId === id ).map(e => e);
+    this.TemplateQuestions = unSortedQuestions.sort((a, b) =>  a.position - b.position);
     this.FormSectionStatus = false;
     this.TemeplateViewSectionStatus = false;
     this.QuestionsViewStatus = true;
@@ -266,7 +252,7 @@ export class EditorialComponent implements OnInit {
             this.multipleChoiceInput = '';
             this.choiceTypeInput = '';
             this.CurrentChoicesArr = [];
-            this.positionInput++;
+            this.positionInput = 1;
             this.CurrentSurveyInput = '';
             this.CurrentQuestionArray = [];
             this.swithToSurveyForm();
@@ -326,6 +312,18 @@ export class EditorialComponent implements OnInit {
   }
 
 
+
+  openAddQuizModal() {
+    this.AddedQuestionsArray = [];
+    this.EditQuestionInput = '';
+    this.EditopenQuestionInput = 'true';
+    this.EditmultipleChoiceInput = 'true';
+    this.EditchoiceTypeInput = 'string';
+    this.EditpositionInput = (this.TemplateQuestions.length + 1 );
+    this.EditChoicesArr = [];
+    this.addQuizModal.show();
+
+  }
 
 
 
@@ -388,15 +386,5 @@ export class EditorialComponent implements OnInit {
       );
     });
   }
-
-
-
-
-
-
-
-
-
-
 
 }

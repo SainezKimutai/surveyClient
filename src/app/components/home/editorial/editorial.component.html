@@ -9,11 +9,6 @@
     </div>
 </article>
 
-
-
-
-
-
 <div class="page-title d-flex">
 
     <h4>Editorial</h4>
@@ -41,18 +36,9 @@
     </div>
     </section>   
 </div>
-
-
-
-
-
-
-
-
 <article class="article">
 
 <section class="body-section">
-
 <section class="form-section" *ngIf="FormSectionStatus">
 
     <div [ngClass]="SurveyFormStatus ? 'survey-template' : 'survey-template hide'">
@@ -148,7 +134,17 @@
                 <div class="form-group-choices">
                     <input type="text" name="CurrentChoiceInput" [(ngModel)]="CurrentChoiceInput" placeholder="Type Choices">
                 </div>
-
+                <div class="form-group-choices">
+                    <div>
+                     <select>
+                         <option>Threat 1</option>
+                         <option>Threat 2</option>
+                     </select>
+                    </div>
+                     <div>
+                         <button>New</button>
+                     </div>
+                </div>
 
 
                 <div class="add-ans">
@@ -164,10 +160,6 @@
 
         </form>
     </div>
-
-
-
-
 
     <div class="list-section">
 
@@ -206,8 +198,6 @@
 
 </section>
 
-
-
 <section class="Questions-listing" *ngIf="QuestionsViewStatus">
 
     <div class="head d-flex">
@@ -228,10 +218,9 @@
         </div>
     </div>
      
-</section>
+ </section>
 
 </section> 
-
 
 <section class="navigation-section">
 
@@ -264,10 +253,8 @@
 </section>
 
 </article>
-
-<!-- mOdals -->
-
-<div bsModal  #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+ <!-- mOdals -->
+ <div bsModal  #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog editModal" role="document">
         <div class="modal-content">
         <div class="modal-header">
@@ -366,8 +353,6 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-
 
 <div bsModal  #addQuizModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog addQuizModal" role="document">
@@ -468,4 +453,3 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-

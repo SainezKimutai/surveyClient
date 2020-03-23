@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { ChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +17,7 @@ import { NotificationService } from './shared/services/notification.service';
 import { CompanyProfileService } from './shared/services/companyProfile.service';
 import { SurveyService } from './shared/services/survey.service';
 import { QuestionService } from './shared/services/questions.service';
+import { ThreatService } from './shared/services/threat.service';
 import { ResponseService } from './shared/services/responses.service';
 import { FileUploadService } from 'src/app/shared/services/fileUpload.service';
 import { ModalModule } from 'ngx-bootstrap';
@@ -38,6 +40,7 @@ import { TokenGuard } from './shared/route-guards/token.guard';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ChartsModule,
     ModalModule.forRoot(),
     ToastrModule.forRoot({
       timeOut: 5000,
@@ -46,7 +49,7 @@ import { TokenGuard } from './shared/route-guards/token.guard';
     }),
   ],
 
-  providers: [AppCustomPreloader, TokenGuard, AdminGuard, CustomerGuard,  NotificationService, UserService, CompanyProfileService, SurveyService, QuestionService, ResponseService, FileUploadService,
+  providers: [AppCustomPreloader, TokenGuard, AdminGuard, CustomerGuard,  NotificationService, UserService, CompanyProfileService, SurveyService,ThreatService, QuestionService, ResponseService, FileUploadService,
     ],
   bootstrap: [AppComponent]
 })

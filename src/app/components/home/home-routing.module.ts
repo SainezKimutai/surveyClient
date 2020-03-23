@@ -18,9 +18,9 @@ const routes: Routes = [
 
         { path: 'dashboard', loadChildren: 'src/app/components/home/dashboard/dashboard.module#DashboardModule', canActivate: [AdminGuard], data: {preload: true}},
         { path: 'survey', loadChildren: 'src/app/components/home/survey/survey.module#SurveyModule', data: {preload: true}},
+        { path: 'reports', loadChildren: 'src/app/components/home/reports/reports.module#ReportsModule'},//set guard..
         { path: 'profile', loadChildren: 'src/app/components/home/profile/profile.module#ProfileModule', canActivate: [CustomerGuard],  data: {preload: true}},
         { path: 'editorial', loadChildren: 'src/app/components/home/editorial/editorial.module#EditorialModule', canActivate: [AdminGuard], data: {preload: true}},
-
       ]
   }
 

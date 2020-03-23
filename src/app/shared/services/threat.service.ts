@@ -8,10 +8,11 @@ import { dev } from '../dev/dev';
 })
 
 
-export class ResponseService {
+export class ThreatService {
 
 
-    public url = `${dev.connect}api/responses/`;
+    public url = `${dev.connect}api/threats/`;
+
 
 
     constructor( private http: HttpClient ) { }
@@ -44,6 +45,4 @@ export class ResponseService {
     getUsersResponses(id){
         return this.http.get<any>(this.url + 'user/' +id);
     }
-
-
 }

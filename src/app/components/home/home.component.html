@@ -34,6 +34,12 @@
         </a>
       </li>
 
+      <li [ngClass] ="reportsNavBarActive ? 'nav-item active': 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
+        <a routerLink="/home/reports" [ngClass]=" reportsNavBarActive ? 'nav-link active': 'nav-link'">
+          <fa-icon [icon]="faListAlt"></fa-icon><span>Reports</span>
+        </a>
+      </li>
+
 
       <li *ngIf="toCustomer"  [ngClass]="profileNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
         <a routerLink="/home/profile" [ngClass]=" salesNavBarActive ? 'nav-link active' : 'nav-link'">
@@ -98,6 +104,12 @@
             <fa-icon [icon]="faListAlt"></fa-icon> <span>Survey</span>
           </a>
         </li>
+        
+        <li [ngClass] ="reportsNavBarActive ? 'nav-item active': 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
+          <a routerLink="/home/reports" [ngClass]=" reportsNavBarActive ? 'nav-link active': 'nav-link'">
+            <fa-icon [icon]="faListAlt"></fa-icon><span>Reports</span>
+          </a>
+        </li>
 
 
         <li *ngIf="toCustomer"  [ngClass]="profileNavBarActive ? 'nav-item active' : 'nav-item'" >
@@ -113,7 +125,7 @@
         </li>
 
         <li class="nav-item" >
-          <a (click)="logout()" [ngClass]=" editorialNavBarActive ? 'nav-link active' : 'nav-link'">
+          <a (click)="logout()" class="nav-link">
             <fa-icon [icon]="faPowerOff"></fa-icon> <span>Log Out</span>
           </a>
         </li>
