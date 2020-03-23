@@ -42,8 +42,8 @@ export class ResponseService {
         return this.http.delete<any>(this.url + 'delete/' + id);
     }
 
-    getUsersResponses(id){
-        return this.http.get<any>(this.url + 'user/' +id);
+    getUsersResponses(id) {
+        return this.http.get<any>(this.url + 'user/' + id);
     }
 
 }
