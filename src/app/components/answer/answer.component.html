@@ -57,13 +57,13 @@
 
                     <div class="multy-choice-wrap w-100"  *ngIf="!open && multiple">
                         <div class="form-group" *ngFor="let option of options">
-                            <input type="checkbox" (click)="captureMultipleResponses(option.answer)" name="response" value="{{option.answer}}">
+                            <input type="checkbox" (click)="captureMultipleResponses(option)" name="response" value="{{option.answer}}">
                             <label for="response">{{option.answer}}</label>
                         </div>
                     </div>
                     <div class="multy-choice-wrap w-100"  *ngIf="!open && !multiple">
                         <div class="form-group" *ngFor="let option of options">
-                            <input type="radio" [(ngModel)]="response" name="response" (change)="captureResponse()" value="{{option.answer}}">
+                            <input type="radio" [(ngModel)]="response" name="response" (change)="captureSingleResponse(option)" value="{{option.answer}}">
                             <label for="response">{{option.answer}}</label>
                         </div>
                     </div>

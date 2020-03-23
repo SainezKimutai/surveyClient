@@ -5,18 +5,18 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
-import { HomeComponent } from './home.component';
-import { HomeRoutingModule } from './home-routing.module';
+import { ReportsComponent } from './reports.component';
+import { ReportsRoutingModule } from './reports-routing.module';
 
 @NgModule({
 
   declarations: [
-      HomeComponent,
+      ReportsComponent
           ],
 
     imports: [
       CommonModule,
-      HomeRoutingModule,
+      ReportsRoutingModule,
       AngularFontAwesomeModule,
       FontAwesomeModule,
       ReactiveFormsModule,
@@ -26,7 +26,9 @@ import { HomeRoutingModule } from './home-routing.module';
         positionClass: 'toast-bottom-right',
         preventDuplicates: false,
       })
+
     ]
+
   })
 
-export class HomeModule {}
+  export class ReportsModule {}

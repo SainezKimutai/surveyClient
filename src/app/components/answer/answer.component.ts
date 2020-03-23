@@ -61,7 +61,7 @@ export class AnswerComponent implements OnInit {
 
   async getAndSetQuestions() {
     await this.questioService.getQuestionsInASurvey(this.surveyId).
-     subscribe(data => {this.questions = data.sort((a, b) =>  a.position - b.position);  this.formatQuestions(); }, err => console.log(err));
+     subscribe(data => {this.questions = data.sort((a, b) =>  a.position - b.position);  this.formatQuestions(); console.log(this.questions);}, err => console.log(err));
   }
 
 
@@ -88,6 +88,10 @@ export class AnswerComponent implements OnInit {
   captureResponse() {
     this.responseArray = [];
     this.responseArray.push(this.response);
+  }
+  captureSingleResponse(ans) {
+    this.responseArray = [];
+    this.responseArray.push(ans);
   }
 
   captureMultipleResponses(ans) {
@@ -125,6 +129,7 @@ export class AnswerComponent implements OnInit {
       questionId: this.questions[id - 1]._id,
       answer : this.responseArray
     };
+    console.log(answer);
     this.responseArray = [];
     this.response = '';
     this.answers.push(answer);

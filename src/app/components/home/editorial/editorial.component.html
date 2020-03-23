@@ -9,11 +9,6 @@
     </div>
 </article>
 
-
-
-
-
-
 <div class="page-title d-flex">
 
     <h4>Editorial</h4>
@@ -41,18 +36,9 @@
     </div>
     </section>   
 </div>
-
-
-
-
-
-
-
-
 <article class="article">
 
 <section class="body-section">
-
 <section class="form-section" *ngIf="FormSectionStatus">
 
     <div [ngClass]="SurveyFormStatus ? 'survey-template' : 'survey-template hide'">
@@ -158,7 +144,17 @@
                     </div>
                    
                 </div>
-
+                <div class="form-group-choices">
+                    <div>
+                     <select>
+                         <option>Threat 1</option>
+                         <option>Threat 2</option>
+                     </select>
+                    </div>
+                     <div>
+                         <button>New</button>
+                     </div>
+                </div>
 
 
                 <div class="add-ans">
@@ -174,10 +170,6 @@
 
         </form>
     </div>
-
-
-
-
 
     <div class="list-section">
 
@@ -223,14 +215,12 @@
 
 </section>
 
-
-
 <section class="Questions-listing" *ngIf="QuestionsViewStatus">
 
     <div class="head d-flex">
         <button class="btn btn-sm mr-auto" (click)="viewSurveyTemplates()"> <fa-icon [icon]="faBackward"></fa-icon> </button>
         <h4 class="mr-auto">{{TemplateNameOnView}}</h4>
-        <button class="btn btn-sm ml-auto btn-success" (click)="openAddQuizModal()"> <fa-icon [icon]="faPlus"></fa-icon></button>
+        <button class="btn btn-sm ml-auto btn-success" (click)="addQuizModal.show()"> <fa-icon [icon]="faPlus"></fa-icon></button>
     </div>
    
     <div class="question-wrap"  *ngFor="let item of TemplateQuestions; let i = index">
@@ -245,10 +235,9 @@
         </div>
     </div>
      
-</section>
+ </section>
 
 </section> 
-
 
 <section class="navigation-section">
 
@@ -281,17 +270,14 @@
 </section>
 
 </article>
-
-<!-- mOdals -->
-
-<div bsModal  #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+ <!-- mOdals -->
+ <div bsModal  #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog editModal" role="document">
         <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title">Edit Form</h4>
-            <button type="button" class="btn close" (click)="editModal.hide()" aria-label="Close">
+            <button type="button" class="btn close" (click)="editModal.hide()" aria-label="Close"></button>
             <span aria-hidden="true">&times;</span>
-            </button>
       
         </div>
         <div class="modal-body" >
@@ -385,16 +371,14 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-
-
 <div bsModal  #addQuizModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog addQuizModal" role="document">
         <div class="modal-content">
         <div class="modal-header ">
             <h4 class="modal-title ">Add Question Form</h4>
-            <button type="button" class="btn close" (click)="closeAddQuizModal()" aria-label="Close">
+            <button type="button" class="btn close" (click)="closeAddQuizModal()" aria-label="Close"></button>
             <span aria-hidden="true">&times;</span>
-            </button>
+      
         </div>
         <div class="modal-body" >
             <form class="form">

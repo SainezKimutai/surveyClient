@@ -34,6 +34,12 @@
         </a>
       </li>
 
+      <li [ngClass] ="reportsNavBarActive ? 'nav-item active': 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
+        <a routerLink="/home/reports" [ngClass]=" reportsNavBarActive ? 'nav-link active': 'nav-link'">
+          <fa-icon [icon]="faListAlt"></fa-icon><span>Reports</span>
+        </a>
+      </li>
+
 
       <li *ngIf="toCustomer"  [ngClass]="profileNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
         <a routerLink="/home/profile" [ngClass]=" profileNavBarActive ? 'nav-link active' : 'nav-link'">
@@ -96,6 +102,12 @@
         <li [ngClass]="surveyNavBarActive ? 'nav-item active' : 'nav-item'" >
           <a routerLink="/home/survey" [ngClass]=" surveyNavBarActive ? 'nav-link active' : 'nav-link'">
             <fa-icon [icon]="faListAlt"></fa-icon> <span>Survey</span>
+          </a>
+        </li>
+        
+        <li [ngClass] ="reportsNavBarActive ? 'nav-item active': 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
+          <a routerLink="/home/reports" [ngClass]=" reportsNavBarActive ? 'nav-link active': 'nav-link'">
+            <fa-icon [icon]="faListAlt"></fa-icon><span>Reports</span>
           </a>
         </li>
 

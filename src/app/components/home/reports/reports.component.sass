@@ -9,7 +9,7 @@
 
 
     h4 
-        padding: .5em 1em
+        padding: 1em 2em
         font-size: 18px
         font-weight: bold
         text-transform: uppercase
@@ -129,7 +129,7 @@
 .body-section
     width: 100%
     display: flex
-    padding: 0 210px 0 3em
+    padding: 0 320px 0 3em
 
     @include desktop_lg
         padding: 0 200px 0 3em
@@ -351,42 +351,17 @@
 .form-section .question-template .form .choices-wrapper .form-group-choices
         margin: auto
         width: 100%
-        background-color: white
-        // padding: .5em
+        background-color: grayColor(g200)
+        padding: .5em
         margin: 0 0 1em 0
         border-radius: 5px
-        display: flex
-        align-items: stretch
 
-        .form-group
-            width: 100%
-            display: flex
-            flex-direction: column
+        input 
             background-color: transparent
-            padding: 0 1em 0 0
-            text-align: center
-
-            input, select
-                background-color: transparent
-                width: 100%
-                outline: none
-                border: noen
-                background-color: grayColor(g100)
-                padding: .5em
-                border-radius: 5px
-                font-size: 13px
-                margin: 1em
-
-            button
-                border: none
-                outline: none
-                box-shadow: 0 0 5px rgba(0, 0, 0, .2)
-                padding: 3px
-                margin: 0 0 0 3em
-                width: 10em
-                font-size: 12px
-                background-color: colorTheme(secondaryTheme)
-                color: white
+            width: 100%
+            outline: none
+            border: none
+            font-size: 13px
 
 .form-section .question-template .form 
 
@@ -538,6 +513,10 @@
             display: flex
             flex-direction: column
             cursor: pointer
+            border: none
+            box-shadow: 0 0 10px rgba(0, 0, 0, .4)
+            -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .4)
+            -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .4)
 
             @include desktop_md
                 max-width: 100%
@@ -546,25 +525,31 @@
             @include desktop_sm
                 margin: 0 0 1em 0
 
+            &:hover
+                box-shadow: 0 0 7px rgba(0, 0, 0, .3)
+                -moz-box-shadow: 0 0 7px rgba(0, 0, 0, .3)
+                -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .3)
 
-            .card-body
-                display: flex
-                align-items: stretch
-
-                fa-icon
-                    margin: 2em 1em 0 0
-                    font-size: 16px 
-                    color: colorTheme(secondaryTheme)
+                .bg-1
+                    background-color: colorTheme(primaryTheme)
 
                 h4
-                    margin: 2em 0
-                    font-size: 16px 
-                    font-weight: bold
-                    color: grayColor(g800)
+                    color: colorTheme(secondaryTheme)
 
-                &:hover
-                    h4
-                        color: colorTheme(secondaryTheme)
+
+            .bg-1
+                z-index: 1
+                height: 100%
+                height: 100%
+                background-color: colorTheme(secondaryTheme)
+                clip-path: polygon(19% 0, 0 0, 0 30%)
+
+            h4
+                margin: 2em
+                font-size: 16px 
+                font-weight: bold
+                color: colorTheme(primaryTheme)
+                text-shadow: 0 1px 2px rgba(0, 0, 0, .2)
 
 
 
@@ -625,8 +610,7 @@
     top: 0
     right: 0
     height: 100%
-    // width: 310px
-    width: 200px
+    width: 310px
     background-color: #202239
     padding: 0
     display: flex
@@ -862,42 +846,17 @@
 .modal-body .form .choices-wrapper .form-group-choices
         margin: auto
         width: 100%
-        background-color: white
-        // padding: .5em
+        background-color: grayColor(g200)
+        padding: .5em
         margin: 0 0 1em 0
         border-radius: 5px
-        display: flex
-        align-items: stretch
 
-        .form-group
-            width: 100%
-            display: flex
-            flex-direction: column
+        input 
             background-color: transparent
-            padding: 0 1em 0 0
-            text-align: center
-
-            input, select
-                background-color: transparent
-                width: 100%
-                outline: none
-                border: noen
-                background-color: grayColor(g100)
-                padding: .5em
-                border-radius: 5px
-                font-size: 13px
-                margin: 1em
-
-            button
-                border: none
-                outline: none
-                box-shadow: 0 0 5px rgba(0, 0, 0, .2)
-                padding: 3px
-                margin: 0 0 0 3em
-                width: 10em
-                font-size: 12px
-                background-color: colorTheme(secondaryTheme)
-                color: white
+            width: 100%
+            outline: none
+            border: none
+            font-size: 13px
 
 .modal-body .form 
 
@@ -943,55 +902,4 @@
             font-size: 15px
             font-family: Montserrat
             color: white
-
-
-
-
-
-
-
-
-
-.addThreatModal
-    border: none
-
-    .modal-content
-        border: none
-
-        .modal-header
-            border: none
-            background-color: colorTheme(success)
-
-            h4 
-                font-size: 14px
-                color: white
-
-        .modal-body
-            width: 100%
-
-            form 
-                width: 100%
-
-                .form-group
-                    width: 100%
-                    background-color: transparent
-                    display: flex
-                    flex-direction: column
-                    text-align: left          
-
-                    label
-                        font-size: 13px
-                        font-weight: bold
-
-
-                    textarea
-                        width: 100%
-                        height: 4em
-                        font-size: 12px
-        .modal-footer
-            button 
-                background-color: colorTheme(success)
-                color: white
-
-
 

@@ -14,6 +14,7 @@ export class ResponseService {
     public url = `${dev.connect}api/responses/`;
 
 
+
     constructor( private http: HttpClient ) { }
 
 
@@ -41,5 +42,8 @@ export class ResponseService {
         return this.http.delete<any>(this.url + 'delete/' + id);
     }
 
+    getUsersResponses(id){
+        return this.http.get<any>(this.url + 'user/' +id);
+    }
 
 }

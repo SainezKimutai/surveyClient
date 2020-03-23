@@ -72,6 +72,7 @@ export class SurveyComponent implements OnInit {
 
   async takeSurvey(survey) {
     // Navigate to /results?page=1
+    console.log(survey);
     this.router.navigate(['/answer'], { queryParams: { surveyId: survey._id, surveyName: survey.surveyName} });
   }
 

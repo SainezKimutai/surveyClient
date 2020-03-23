@@ -221,7 +221,7 @@ topCardsChartFunction() {
   this.cardFourLabels = this.AllCompanies.filter(() => true ).map(e => e.companyName);
 
   this.cardFourDatasets = [{
-      label: 'Opportunty',
+      label: 'Risk',
       data: myCardFourDataSet,
       backgroundColor: 'transparent',
       borderColor: 'white',
