@@ -22,33 +22,22 @@ export class ReportsComponent implements OnInit {
         private threatService: ThreatService
       ) {  }
       public ImprintLoader = false;
-    
-    
     // Icons
-   
       public faBackward = faBackward;
-    
-      //
-      public AllSurveys = [];//keep and rename..
-      public AllResponses =[];
+
+      public AllSurveys = []; // keep and rename..
+      public AllResponses = [];
       public AllQuestions = [];
-    
       public TemplateNameOnView = [];
-      public TemplateQuestions = []; //keep and rename.
-      
-      public TemeplateViewSectionStatus = true;//keep.
-      public QuestionsViewStatus = false;//keep and rename.
-    
-    
-    
-    
-    
+      public TemplateQuestions = []; // keep and rename.
+      public TemeplateViewSectionStatus = true; // keep.
+      public QuestionsViewStatus = false; // keep and rename.
+
       ngOnInit() {
         localStorage.setItem('ActiveNav', 'reports');
         this.updatePage();
-    
-    
       }
+
       updatePage() {
         return new Promise((resolve, reject) => {
     
@@ -62,14 +51,13 @@ export class ReportsComponent implements OnInit {
                       }
                      )
                      responseObj.answers.forEach(answr => {
-                      const question={};
+                      const question = {};
                         this.questionService.getOneQuestion(answr.questionId).subscribe(
                             questions=>{
                                question['surveyId'] = responseObj.surveyId,
                                question['open'] = questions.open_question,
                                question['question'] =questions.question
                                   if(answr.answer.length>0){
-                                  
                                   answr.answer.forEach(answr => {
                                     question['answer'] = answr.answer;
 
@@ -104,7 +92,6 @@ export class ReportsComponent implements OnInit {
         );
      });
     }
-
 
     //keep and rename.
       viewSurveyTemplates() {
