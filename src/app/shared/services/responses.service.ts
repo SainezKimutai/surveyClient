@@ -14,6 +14,7 @@ export class ResponseService {
     public url = `${dev.connect}api/responses/`;
 
 
+
     constructor( private http: HttpClient ) { }
 
 
@@ -44,6 +45,5 @@ export class ResponseService {
     getUsersResponses(id){
         return this.http.get<any>(this.url + 'user/' +id);
     }
-
 
 }

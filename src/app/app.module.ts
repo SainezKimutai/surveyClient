@@ -17,13 +17,13 @@ import { NotificationService } from './shared/services/notification.service';
 import { CompanyProfileService } from './shared/services/companyProfile.service';
 import { SurveyService } from './shared/services/survey.service';
 import { QuestionService } from './shared/services/questions.service';
-import { ThreatService } from './shared/services/threat.service';
 import { ResponseService } from './shared/services/responses.service';
 import { FileUploadService } from 'src/app/shared/services/fileUpload.service';
 import { ModalModule } from 'ngx-bootstrap';
 import { CustomerGuard } from './shared/route-guards/customer.guard';
 import { AdminGuard } from './shared/route-guards/admin.guard';
 import { TokenGuard } from './shared/route-guards/token.guard';
+import { ThreatService } from './shared/services/threats.service';
 
  // tslint:disable: max-line-length
 @NgModule({
@@ -49,7 +49,8 @@ import { TokenGuard } from './shared/route-guards/token.guard';
     }),
   ],
 
-  providers: [AppCustomPreloader, TokenGuard, AdminGuard, CustomerGuard,  NotificationService, UserService, CompanyProfileService, SurveyService,ThreatService, QuestionService, ResponseService, FileUploadService,
+  providers: [AppCustomPreloader, TokenGuard, AdminGuard, CustomerGuard,  NotificationService, UserService, CompanyProfileService, SurveyService, QuestionService,
+    ResponseService, FileUploadService, ThreatService
     ],
   bootstrap: [AppComponent]
 })

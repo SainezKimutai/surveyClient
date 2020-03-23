@@ -14,35 +14,31 @@ export class ThreatService {
     public url = `${dev.connect}api/threats/`;
 
 
-
     constructor( private http: HttpClient ) { }
 
 
-    createResponse( data: any ) {
+    createThreat( data: any ) {
         return this.http.post<any>(this.url + 'create', data);
     }
 
 
-    getAllResponses() {
+    getAllThreats() {
         return this.http.get<any>(this.url + 'getAll/');
     }
 
 
-    getOneResponse(id) {
+    getOneThreat(id) {
         return this.http.get<any>(this.url + 'getOne/' + id);
     }
 
 
-    updateResponse(id, data: any) {
+    updateThreat(id, data: any) {
         return this.http.put<any>(this.url + 'update/' + id, data);
     }
 
 
-    deleteResponse(id) {
+    deleteThreat(id) {
         return this.http.delete<any>(this.url + 'delete/' + id);
     }
 
-    getUsersResponses(id){
-        return this.http.get<any>(this.url + 'user/' +id);
-    }
 }
