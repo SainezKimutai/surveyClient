@@ -109,6 +109,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
         this.userService.registerUser(newUserData).subscribe(
           dataUser => {
+            localStorage.setItem('loggedUserToken', dataUser.token);
             localStorage.setItem('loggedUserName', dataUser.name);
             localStorage.setItem('loggedUserEmail', dataUser.email);
             localStorage.setItem('loggedUserID', dataUser._id);

@@ -219,8 +219,8 @@
     <div class="question-wrap"  *ngFor="let item of TemplateQuestions; let i = index">
         <div class="question d-flex w-100">{{item.question}} 
             <div class="ml-auto d-flex">
-                <fa-icon style="cursor: pointer;" [icon]="faEdit" class="ml-3" (click)="editQuestion(item, i)"></fa-icon>
-                <fa-icon style="cursor: pointer;"  [icon]="faTrash" class="ml-3" (click)="deleteQuestion(item, i)"></fa-icon>
+                <fa-icon style="cursor: pointer;" [icon]="faEdit" class="ml-3" (click)="editQuestion(item)"></fa-icon>
+                <fa-icon style="cursor: pointer;"  [icon]="faTrash" class="ml-3" (click)="deleteQuestion(item)"></fa-icon>
             </div>
         </div>
         <div class="choices">
