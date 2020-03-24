@@ -13,6 +13,27 @@
 
 <div class="page-title d-flex">
     <h4>Tracker</h4>  
+    <section id="top_header" class="top-header">
+        <div class="search-wrap">
+            <div class="input-wrap d-flex">
+                <fa-icon [icon]="faSearch"></fa-icon>
+                <input type="text">
+            </div>
+            
+        </div>
+    
+        <div class="btn-wrap">
+            <div [ngClass]="FormSectionStatus ? 'nav-tav active' : 'nav-tav'" (click)="createNewTracker()">
+                <fa-icon [icon]="faPlus"></fa-icon>
+                New
+            </div>
+    
+            <div [ngClass]="FormSectionStatus ? 'nav-tav active' : 'nav-tav'" (click)="listTracker()">
+                <fa-icon [icon]="faListAlt"></fa-icon>
+                Tracker
+            </div>
+        </div>
+    </section>   
 </div>
 
 
