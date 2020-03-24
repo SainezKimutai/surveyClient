@@ -99,13 +99,14 @@
                 padding: 0
 
             &.active
-                background-color: colorTheme(primaryTheme)
+                background-color: colorTheme(light)
                 color: white
 
             fa-icon
                 margin: 1em
               
                 color: colorTheme(secondaryTheme)
+                
 
             span 
                 
@@ -129,7 +130,7 @@
 .body-section
     width: 100%
     display: flex
-    padding: 0 320px 0 3em
+    padding: 0 210px 0 3em
 
     @include desktop_lg
         padding: 0 200px 0 3em
@@ -500,12 +501,6 @@
 
         .editSection
             display: none
-        
-
-
-  
-
-
 
 
 
@@ -538,10 +533,6 @@
             display: flex
             flex-direction: column
             cursor: pointer
-            border: none
-            box-shadow: 0 0 10px rgba(0, 0, 0, .4)
-            -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .4)
-            -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .4)
 
             @include desktop_md
                 max-width: 100%
@@ -550,31 +541,25 @@
             @include desktop_sm
                 margin: 0 0 1em 0
 
-            &:hover
-                box-shadow: 0 0 7px rgba(0, 0, 0, .3)
-                -moz-box-shadow: 0 0 7px rgba(0, 0, 0, .3)
-                -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, .3)
 
-                .bg-1
-                    background-color: colorTheme(primaryTheme)
+            .card-body
+                display: flex
+                align-items: stretch
 
-                h4
+                fa-icon
+                    margin: 2em 1em 0 0
+                    font-size: 16px 
                     color: colorTheme(secondaryTheme)
 
+                h4
+                    margin: 2em 0
+                    font-size: 16px 
+                    font-weight: bold
+                    color: grayColor(g800)
 
-            .bg-1
-                z-index: 1
-                height: 100%
-                height: 100%
-                background-color: colorTheme(secondaryTheme)
-                clip-path: polygon(19% 0, 0 0, 0 30%)
-
-            h4
-                margin: 2em
-                font-size: 16px 
-                font-weight: bold
-                color: colorTheme(primaryTheme)
-                text-shadow: 0 1px 2px rgba(0, 0, 0, .2)
+                &:hover
+                    h4
+                        color: colorTheme(secondaryTheme)
 
 
 
@@ -635,7 +620,8 @@
     top: 0
     right: 0
     height: 100%
-    width: 310px
+    // width: 310px
+    width: 200px
     background-color: #202239
     padding: 0
     display: flex
@@ -674,7 +660,7 @@
                 border-radius: 0px
                 background-color: transparent
                 
-    .create-new, .surveys
+    .create-new
         cursor: pointer
         border-radius: 1em
         width: 8em
@@ -686,8 +672,33 @@
 
         &.active
             background-color: colorTheme(primaryTheme)
-            color: white
+            color: colorTheme(light)
 
+            fa-icon
+                margin-right: .5em
+                color: colorTheme(light)
+
+        fa-icon
+            margin-right: .5em
+            color: colorTheme(secondaryTheme)
+
+    .surveys
+        cursor: pointer
+        border-radius: 1em
+        width: 8em
+        padding: .5em 1em
+        box-shadow: 0 0 10px rgba(0, 0, 0, .3)
+        color: grayColor(g800)
+        margin: 0 auto 2em auto
+        text-align: center
+
+        &.active
+            background-color: colorTheme(primaryTheme)
+            color: colorTheme(light)
+
+            fa-icon
+                margin-right: .5em
+                color: colorTheme(light)
         fa-icon
             margin-right: .5em
             color: colorTheme(secondaryTheme)

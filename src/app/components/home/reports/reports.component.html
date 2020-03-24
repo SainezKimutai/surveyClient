@@ -21,14 +21,21 @@
 
     <div class="card-group">
         <div class="card" *ngFor="let item of AllSurveys" (click)="viewSurvey(item.surveyName, item._id)">
-            <div class="bg-1">.</div>
-            <h4>{{item.surveyName}}</h4>
+            <div class="card-header"></div>
+            <div class="card-body">
+                <fa-icon [icon]="faListAlt"></fa-icon>
+                <h4>{{item.surveyName}}</h4>
+            </div>
+           
 
         </div>
 
         <div class="card" *ngIf="AllSurveys.length === 0">
-            <div class="bg-1">.</div>
-            <h4>No Template</h4>
+            <div class="card-header"></div>
+            <div class="card-body">
+                <fa-icon [icon]="faListAlt"></fa-icon>
+                <h4>No Template</h4>
+            </div>
         </div>
     </div>
 
@@ -37,22 +44,23 @@
  <section class="Questions-listing" *ngIf="QuestionsViewStatus">
 
     <div class="head d-flex">
-        <button class="btn btn-sm mr-auto" (click)="viewSurveyTemplates()"> <fa-icon [icon]="faBackward"></fa-icon> </button>
+        <button class="btn btn-sm mr-auto" (click)="viewSurveyTemplates()"> <fa-icon style="color: white;" [icon]="faBackward"></fa-icon> </button>
         <h4 class="mr-auto">{{TemplateNameOnView}}</h4>
         <button class="btn btn-sm ml-auto btn-success"> <fa-icon [icon]="faDownload"></fa-icon></button>
     </div>
    
     <div class="question-wrap"  *ngFor="let item of TemplateQuestions; let i = index">
-        <div class="question d-flex w-100">{{item.question}}
-        </div>
-        <div class="choices">
+        <div class="question d-flex w-100">{{item.question}}</div>
+        <div class="choices-wrapper">
+        <div class="choices answer">
             <span>{{item.answer}}</span>
         </div>
-        <div class="choices" *ngIf="item.level">
-            <span>Threat: {{item.level}}</span>
+        <div class="choices threat" *ngIf="item.level">
+            <span>Threat: <span class="span-inner">{{item.level}}</span> </span>
         </div>
-        <div class="choices" *ngIf="item.recom">
-            <span>Recommendation: {{item.recom}}</span>
+        <div class="choices recom" *ngIf="item.recom">
+            <span>Recommendation: <span class="span-inner">{{item.recom}}</span> </span>
+        </div>
         </div>
     </div>
      

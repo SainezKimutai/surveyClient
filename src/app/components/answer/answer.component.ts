@@ -170,7 +170,7 @@ export class AnswerComponent implements OnInit {
 
       if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
       if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
-      if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/profile']); }, 3000);  }
+      if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/reports']); }, 3000);  }
 
 
     }, err => {{this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }});

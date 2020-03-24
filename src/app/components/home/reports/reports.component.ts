@@ -1,4 +1,4 @@
-import { Component,ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { faBackward, } from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
@@ -6,6 +6,7 @@ import { ResponseService } from 'src/app/shared/services/responses.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
 import { ThreatService } from 'src/app/shared/services/threats.service';
 import { ModalDirective, ModalOptions, ModalModule } from 'ngx-bootstrap';
+import { faCheck, faListAlt, faDownload } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
@@ -22,11 +23,16 @@ export class ReportsComponent implements OnInit {
         private threatService: ThreatService
       ) {  }
       public ImprintLoader = false;
+  //  tslint:disable
+    
     // Icons
       public faBackward = faBackward;
-
-      public AllSurveys = []; // keep and rename..
-      public AllResponses = [];
+      public faListAlt = faListAlt;
+      public faDownload = faDownload;
+    
+      //
+      public AllSurveys = [];//keep and rename..
+      public AllResponses =[];
       public AllQuestions = [];
       public TemplateNameOnView = [];
       public TemplateQuestions = []; // keep and rename.
@@ -56,6 +62,7 @@ export class ReportsComponent implements OnInit {
                             questions=>{
                                question['surveyId'] = responseObj.surveyId,
                                question['open'] = questions.open_question,
+                              
                                question['question'] =questions.question
                                   if(answr.answer.length>0){
                                   answr.answer.forEach(answr => {
@@ -83,6 +90,7 @@ export class ReportsComponent implements OnInit {
                              this.AllQuestions.push(question);
                            }
                     }
+                    // tslint:disable-next-line: semicolon
                     )
                     
                     });

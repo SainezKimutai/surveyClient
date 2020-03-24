@@ -24,7 +24,7 @@
     
         <div class="btn-wrap">
         <div [ngClass]="FormSectionStatus ? 'create-new active' : 'create-new'" (click)="createNewSurveyTemplate()">
-            <fa-icon [icon]="faPlus"></fa-icon>
+            <fa-icon class="addicon" [icon]="faPlus"></fa-icon>
             <span>Create</span> 
         </div>
     
@@ -142,21 +142,7 @@
                         </select>
                         <button  (click)="addThreatModal.show()">Add Threat</button>
                     </div>
-                   
                 </div>
-                <div class="form-group-choices">
-                    <div>
-                     <select>
-                         <option>Threat 1</option>
-                         <option>Threat 2</option>
-                     </select>
-                    </div>
-                     <div>
-                         <button>New</button>
-                     </div>
-                </div>
-
-
                 <div class="add-ans">
                     <button class="btn btn-sm" (click)="addChoice()"><fa-icon [icon]="faPlus"></fa-icon></button>
                 </div>
@@ -194,14 +180,21 @@
 <section class="templates-section" *ngIf="TemeplateViewSectionStatus">
 
     <div class="card-group">
-        <div class="card" *ngFor="let item of AllSurveys" (click)="viewSurvey(item.surveyName, item._id)">
-            <div class="bg-1">.</div>
-            <h4>{{item.surveyName}}</h4>
+        <div class="card" *ngFor="let item of AllSurveys" (click)="viewSurvey(item.surveyName, item._id)">  
+            <div class="card-header">
+
+            </div>
+            <div class="card-body">
+                <fa-icon [icon]="faListAlt"></fa-icon>
+                <h4>{{item.surveyName}}</h4>
+            </div>
+      
+          
 
         </div>
 
         <div class="card" *ngIf="AllSurveys.length === 0">
-            <div class="bg-1">.</div>
+      
             <h4>No Template</h4>
         </div>
     </div>
@@ -211,7 +204,7 @@
 <section class="Questions-listing" *ngIf="QuestionsViewStatus">
 
     <div class="head d-flex">
-        <button class="btn btn-sm mr-auto" (click)="viewSurveyTemplates()"> <fa-icon [icon]="faBackward"></fa-icon> </button>
+        <button class="btn btn-sm mr-auto" (click)="viewSurveyTemplates()"> <fa-icon style="color: white;" [icon]="faBackward"></fa-icon> </button>
         <h4 class="mr-auto">{{TemplateNameOnView}}</h4>
         <button class="btn btn-sm ml-auto btn-success" (click)="addQuizModal.show()"> <fa-icon [icon]="faPlus"></fa-icon></button>
     </div>
@@ -495,7 +488,7 @@
                     <textarea name="threatLevel" [(ngModel)]="threatLevel"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="threatRecom">Threat Name</label>
+                    <label for="threatRecom">Recommendations</label>
                     <textarea name="threatRecom" [(ngModel)]="threatRecom"></textarea>
                 </div>
 

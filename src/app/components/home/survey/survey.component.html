@@ -22,14 +22,24 @@
 <section class="templates-section">
     <div *ngIf="AllSurveys" class="card-group" >
         <div class="card" *ngFor="let item of AllSurveys" (click)="takeSurvey(item)">
-            <div class="bg-1">.</div>
-            <h4 class="color:black;">{{item.surveyName}}</h4>
-            <h5 *ngIf="item.done"> <fa-icon [icon]="faCheck"></fa-icon> Completed</h5>
+            <div class="card-header"></div>
+            <div class="card-body">
+                <fa-icon [icon]="faListAlt"></fa-icon>
+                <h4 class="color:black;">{{item.surveyName}}</h4>
+            </div>
+            <div class="card-footer">
+                <h5 *ngIf="item.done"> <fa-icon [icon]="faCheck"></fa-icon> Completed</h5>
+            </div>
+
+           
         </div>
 
         <div class="card" *ngIf="AllSurveys.length === 0">
-            <div class="bg-1">.</div>
-            <h4>No Template</h4>
+            <div class="card-header"></div>
+            <div class="card-body">
+                <h4>No Template</h4>
+            </div>
+            
         </div>
     </div>
 

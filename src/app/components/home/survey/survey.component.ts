@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { Router } from '@angular/router';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faListAlt } from '@fortawesome/free-solid-svg-icons';
 import { ResponseService } from 'src/app/shared/services/responses.service';
 
 @Component({
@@ -22,7 +22,9 @@ export class SurveyComponent implements OnInit {
   AllSurveys = [];
   AllResponses = [];
   ImprintLoader = false;
+
   public faCheck = faCheck;
+  public faListAlt = faListAlt;
 
 
 

@@ -337,7 +337,9 @@ export class EditorialComponent implements OnInit {
 
   }
 
-
+  closeaddThreatModal() {
+    this.addThreatModal.hide();
+  }
 
   closeAddQuizModal() {
     this.addQuizModal.hide();
