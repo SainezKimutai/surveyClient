@@ -194,8 +194,14 @@
         </div>
 
         <div class="card" *ngIf="AllSurveys.length === 0">
-      
-            <h4>No Template</h4>
+            <div class="card-header">
+
+            </div>
+            <div class="card-body">
+                <fa-icon [icon]="faListAlt"></fa-icon>
+                <h4>No Template</h4>
+            </div>
+           
         </div>
     </div>
 
@@ -239,13 +245,19 @@
 
         <div [ngClass]="FormSectionStatus ? 'create-new active' : 'create-new'" (click)="createNewSurveyTemplate()">
             <fa-icon [icon]="faPlus"></fa-icon>
-            Create
+            Survey
+        </div>
+
+        <div class="create-new" (click)="addThreatModal.show()">
+            <fa-icon [icon]="faPlus"></fa-icon>
+            Threats
         </div>
 
         <div [ngClass]="TemeplateViewSectionStatus ? 'surveys active' : 'surveys'" (click)="viewSurveyTemplates()">
             <fa-icon [icon]="faListAlt"></fa-icon>
             Surveys
         </div>
+
 
     </div>
 
