@@ -20,8 +20,125 @@
 
 
 
+
+
+
+
+.page-title #top_header
+    display: none
+    background-color: transparent
+
+    @include desktop_md
+        display: flex
+        align-items: stretch
+
+    @include desktop_sm
+        display: flex
+        flex-direction: column
+
+   
+    // height: 50%
+
+    .search-wrap
+        // width: 100%
+        padding: 1em
+        margin: 0
+        @include desktop_sm
+            padding: .5em 1em
+            display: none
+   
+        .input-wrap
+            border-radius: 1em
+            background-color: grayColor(g200)
+
+            fa-icon
+                margin: auto .5em
+
+
+            input
+                width: 100%
+                outline: none
+                padding: .5em
+                border: none
+                border-radius: 0px
+                background-color: transparent
+
+    .btn-wrap
+        width: 100%
+        display: flex
+        align-items: stretch
+        
+    
+        @include desktop_sm
+            padding: 0 1em
+
+        .nav-tav
+            margin: 1em
+            cursor: pointer
+            border-radius: 1em
+            width: 8em
+            padding-top: 2em
+            color: grayColor(g800)
+            text-align: center
+
+            @include desktop_md
+                border-radius: 0px
+                width: 100%
+                padding: .5em 0 0 0
+                margin: 1em 0
+
+            @include desktop_sm
+                padding: 0
+
+            &.active
+                background-color: colorTheme(light)
+                color: white
+
+            fa-icon
+                margin: 1em
+              
+                color: colorTheme(secondaryTheme)
+                
+
+            span 
+                
+                @include desktop_md
+                    display: none
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .body-section
     padding: 0 200px 0 1em
+
+    @include desktop_md
+        padding: 0 1em
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -145,6 +262,10 @@
     align-items: stretch
     border-bottom: solid 1px grayColor(g100)
     border-radius: 3px
+
+    @include desktop_sm
+        display: flex
+        flex-direction: column
 
     .param
         width: 100%

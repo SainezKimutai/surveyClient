@@ -19,16 +19,16 @@ export class TrackerComponent implements OnInit {
       private trackerService: TrackerService
     ) {}
 
-@ViewChild('name', {static: true}) name: ElementRef;
-@ViewChild('kpiTarget', {static: true}) kpiTarget: ElementRef;
-@ViewChild('kpiUnit', {static: true}) kpiUnit: ElementRef;
-@ViewChild('cat', {static: true}) cat: ElementRef;
-@ViewChild('kpiActual', {static: true}) kpiActual: ElementRef;
-@ViewChild('monthly', {static: true}) monthly: ElementRef;
-@ViewChild('value', {static: true}) value: ElementRef;
-@ViewChild('weeklyActual', {static: true}) weeklyActual: ElementRef;
-@ViewChild('reason', {static: true}) reason: ElementRef;
-@ViewChild('comment', {static: true}) comment: ElementRef;
+@ViewChild('name', {static: false}) name: ElementRef;
+@ViewChild('kpiTarget', {static: false}) kpiTarget: ElementRef;
+@ViewChild('kpiUnit', {static: false}) kpiUnit: ElementRef;
+@ViewChild('cat', {static: false}) cat: ElementRef;
+@ViewChild('kpiActual', {static: false}) kpiActual: ElementRef;
+@ViewChild('monthly', {static: false}) monthly: ElementRef;
+@ViewChild('value', {static: false}) value: ElementRef;
+@ViewChild('weeklyActual', {static: false}) weeklyActual: ElementRef;
+@ViewChild('reason', {static: false}) reason: ElementRef;
+@ViewChild('comment', {static: false}) comment: ElementRef;
 
 // Loader
 public ImprintLoader = false;
