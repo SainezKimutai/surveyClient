@@ -127,6 +127,9 @@
 .body-section
     padding: 0 200px 0 1em
 
+    @include desktop_md
+        padding: 0 1em
+
 
 
 
@@ -259,6 +262,10 @@
     align-items: stretch
     border-bottom: solid 1px grayColor(g100)
     border-radius: 3px
+
+    @include desktop_sm
+        display: flex
+        flex-direction: column
 
     .param
         width: 100%
