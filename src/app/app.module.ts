@@ -24,6 +24,7 @@ import { CustomerGuard } from './shared/route-guards/customer.guard';
 import { AdminGuard } from './shared/route-guards/admin.guard';
 import { TokenGuard } from './shared/route-guards/token.guard';
 import { ThreatService } from './shared/services/threats.service';
+import { TrackerService } from './shared/services/tracker.service';
 
  // tslint:disable: max-line-length
 @NgModule({
@@ -50,7 +51,7 @@ import { ThreatService } from './shared/services/threats.service';
   ],
 
   providers: [AppCustomPreloader, TokenGuard, AdminGuard, CustomerGuard,  NotificationService, UserService, CompanyProfileService, SurveyService, QuestionService,
-    ResponseService, FileUploadService, ThreatService
+    ResponseService, FileUploadService, ThreatService, TrackerService
     ],
   bootstrap: [AppComponent]
 })

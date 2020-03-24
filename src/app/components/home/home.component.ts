@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { faBars, faArrowLeft, faChartLine, faUser, faListAlt, faPowerOff } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faArrowLeft, faChartLine, faEdit, faUser, faListAlt, faPowerOff,
+  faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -30,6 +31,8 @@ public faChartLine = faChartLine;
 public faUser = faUser;
 public faListAlt = faListAlt;
 public faPowerOff = faPowerOff;
+public faEdit = faEdit;
+public faProjectDiagram = faProjectDiagram;
 
 
 // permisions
@@ -41,11 +44,13 @@ public toThirdParty = false;
 
 public sideBarStatus = true;
 
+// Active Nav bars
 public dashboardNavBarActive = false;
 public surveyNavBarActive = false;
 public profileNavBarActive = false;
 public editorialNavBarActive = false;
 public reportsNavBarActive = false;
+public trackerNavBarActive = false;
 
 public myInterval;
 
@@ -88,11 +93,13 @@ CheckActiveNavBar() {
   this.profileNavBarActive = false;
   this.editorialNavBarActive = false;
   this.reportsNavBarActive = false;
+  this.trackerNavBarActive = false;
   if (window.localStorage.getItem('ActiveNav') === 'dashboard') {this.dashboardNavBarActive = true; }
   if (window.localStorage.getItem('ActiveNav') === 'survey') {this.surveyNavBarActive = true; }
   if (window.localStorage.getItem('ActiveNav') === 'profile') {this.profileNavBarActive = true; }
   if (window.localStorage.getItem('ActiveNav') === 'editorial') {this.editorialNavBarActive = true; }
   if (window.localStorage.getItem('ActiveNav') === 'reports') {this.reportsNavBarActive = true; }
+  if (window.localStorage.getItem('ActiveNav') === 'tracker') {this.trackerNavBarActive = true; }
 }
 
 
@@ -123,7 +130,6 @@ CheckActiveNavBar() {
 
   ngOnDestroy() {
     clearInterval(this.myInterval);
-
   }
 
 

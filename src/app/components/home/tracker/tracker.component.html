@@ -1,0 +1,379 @@
+<article *ngIf="ImprintLoader" class="imprint-loader home">
+    <div class="imprint-loader-wrap">
+        <div class="imprint-loader-main">
+        <div class="imprint-loader-ball ball-one"></div>
+        <div class="imprint-loader-ball ball-two"></div>
+        <div class="imprint-loader-ball ball-three"></div>
+        <div class="imprint-loader-ball ball-four"></div>
+        </div>
+    </div>
+</article>
+
+
+
+<div class="page-title d-flex">
+    <h4>Tracker</h4>  
+</div>
+
+
+
+
+
+<section class="body-section">
+
+
+
+    <section class="list-section" *ngIf="listSectionStatus">
+        <div *ngIf="AllTrackers" class="card-group" >
+            <div class="card" *ngFor="let item of AllTrackers" (click)="openTracker(item._id)">
+                <div class="card-header"></div>
+                <div class="card-body">
+                    <fa-icon [icon]="faListAlt"></fa-icon>
+                    <h4 class="color:black;">{{item.name}}</h4>
+                </div>
+                <div class="card-footer">
+
+                </div>
+    
+               
+            </div>
+    
+            <div class="card" *ngIf="AllTrackers.length === 0">
+                <div class="card-header"></div>
+                <div class="card-body">
+                    <h4>No Template</h4>
+                </div>  
+            </div>
+
+
+
+        </div>
+    
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="view-section" *ngIf="viewSectionStatus">
+
+    <div class="main-wrap">
+
+        <div class="title d-flex">
+            <h4 class="mr-auto">{{trackerOnView.name}}</h4>
+
+            <button class="btn btn-sm btn-edit mr-4" (click)="editTracker()">Edit</button>
+            <button class="btn btn-sm btn-remove"  (click)="deleteTracker(trackerOnView._id)">Delete</button>
+
+        </div>
+
+        <div class="body-item">
+            <h5 class="param">KPI Target</h5>
+            <h4 class="answer">{{trackerOnView.kpiTarget}}</h4>
+        </div>
+        
+        <div class="body-item">
+            <h5 class="param">KPI Unit</h5>
+            <h4 class="answer">{{trackerOnView.kpiUnit}}</h4>
+        </div>
+        
+        <div class="body-item">
+            <h5 class="param">KPI Measure Category</h5>
+
+            <div class="answer">
+                <div class="ans-title">
+                    <h4>Cat</h4>
+                    <h4>Category</h4>
+                    <h4>Threat</h4>
+                </div>
+                <div class="ans-value" *ngFor="let item of trackerOnView.kpiMeasureCats">
+                    <h4>{{item.cat}}</h4>
+                    <h4>{{item.category}}</h4>
+                    <h4>{{item.threat}}</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="body-item">
+            <h5 class="param">KPI Actual</h5>
+            <h4 class="answer">{{trackerOnView.kpiActual}}</h4>
+        </div>
+
+        <div class="body-item">
+            <h5 class="param">Monthly</h5>
+            <h4 class="answer">{{trackerOnView.monthly}}</h4>
+        </div>
+
+
+        <div class="body-item">
+            <h5 class="param">Weekly</h5>
+
+            <div class="answer">
+                <div class="ans-title">
+                    <h4>Value</h4>
+                    <h4>Week</h4>
+                </div>
+                <div class="ans-value" *ngFor="let item of trackerOnView.weekly">
+                    <h4>{{item.value}}</h4>
+                    <h4>{{item.week}}</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="body-item">
+            <h5 class="param">Weekly Actual</h5>
+            <h4 class="answer">{{trackerOnView.weeklyActual}}</h4>
+        </div>
+
+        <div class="body-item">
+            <h5 class="param">Reason</h5>
+            <h4 class="answer">{{trackerOnView.reason}}</h4>
+        </div>
+        <div class="body-item">
+            <h5 class="param">Comment</h5>
+            <h4 class="answer">{{trackerOnView.comment}}</h4>
+        </div>
+        
+
+    </div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section class="form-section" *ngIf="formSectionStatus">
+
+        <form class="form">
+        
+            <div class="form-title">
+                <h4>Form Input</h4>
+            </div>
+
+
+            <!-- Name -->
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" #name class="" name="name" [(ngModel)]="bcpFunctionInput.name">
+            </div>
+
+
+            <!-- kpiTarget -->
+            <div class="form-group">
+                <label for="kpiTarget">KPI Target</label>
+                <input type="number" #kpiTarget class="" name="kpiTarget" [(ngModel)]="bcpFunctionInput.kpiTarget">
+            </div>
+
+            <!-- kpiUnit -->
+            <div class="form-group">
+                <label for="kpiUnit">KPI Unit</label>
+                <input type="text" #kpiUnit class="" name="kpiUnit" [(ngModel)]="bcpFunctionInput.kpiUnit">
+            </div>
+
+            <!-- kPI Measure Categories -->
+            <div class="array-form">
+                <label>KPI Measure Categories</label>
+                <div class="input-label-wrap">
+                    <label for="cat">CaT</label>
+                    <label for="category">Category</label>
+                    <label for="threat">Threat</label>
+                </div>
+                <div class="input-preview-wrap" *ngFor="let item of kpiMeasureCatsArray; let x = index">
+                    <div class="input-preview">
+                        {{item.cat}}
+                    </div>
+                    <div class="input-preview">
+                        {{item.category}}
+                    </div>
+                    <div class="input-preview">
+                        {{item.threat}}
+                    </div>
+                    <fa-icon [icon]="faTrash" (click)="removeKpiMeasureCatInput(x)"></fa-icon>
+                </div>
+                <div class="input-wrap">
+                    <input type="number" #cat class="" name="cat" [(ngModel)]="kpiMeasureCatInput.cat">
+                    <input type="text" name="category" [(ngModel)]="kpiMeasureCatInput.category">
+                    <input type="text" name="threat" [(ngModel)]="kpiMeasureCatInput.threat">
+                </div>
+                <div class="btn-wrap">
+                    <button class="btn btn-sm" [disabled]="kpiMeasureCatInput.cat === '' || kpiMeasureCatInput.category === '' || kpiMeasureCatInput.threat === ''" 
+                    (click)="addKpiMeasureCatInput()"><fa-icon [icon]="faPlus"></fa-icon></button>
+                </div>
+
+
+            </div>
+
+
+            <!-- kpiActual -->
+            <div class="form-group">
+                <label for="kpiActual">KPI Actual</label>
+                <input type="number" #kpiActual class="" name="kpiActual" [(ngModel)]="bcpFunctionInput.kpiActual">
+            </div>
+
+            <!-- Monthly -->
+            <div class="form-group">
+                <label for="monthly">Monthly</label>
+                <input type="number" #monthly class="" name="monthly" [(ngModel)]="bcpFunctionInput.monthly">
+            </div>
+
+            <!-- Weekly -->
+            <div class="array-form">
+                <label>Weekly </label>
+                <div class="input-label-wrap">
+                    <label for="value">Value</label>
+                    <label for="week">Week</label>
+                </div>
+                <div class="input-preview-wrap" *ngFor="let item of weeklyArray; let r = index">
+                    <div class="input-preview">
+                        {{item.value}}
+                    </div>
+                    <div class="input-preview">
+                        {{item.week}}
+                    </div>
+                    <fa-icon [icon]="faTrash" (click)="removeWeeklyInput(r)"></fa-icon>
+                </div>
+                <div class="input-wrap">
+                    <input type="number" #value class="" name="value" [(ngModel)]="weeklyInput.value">
+                    <input type="number" name="week" [(ngModel)]="weeklyInput.week">
+                </div>
+                <div class="btn-wrap">
+                    <button class="btn btn-sm" [disabled]="weeklyInput.value === '' || weeklyInput.week === '' " 
+                    (click)="addWeeklyInput()"><fa-icon [icon]="faPlus"></fa-icon></button>
+                </div>
+
+
+            </div>
+
+            <!-- weeklyActual -->
+            <div class="form-group">
+                <label for="weeklyActual">Weekly Actual</label>
+                <input type="number" #weeklyActual class="" name="weeklyActual" [(ngModel)]="bcpFunctionInput.weeklyActual">
+            </div>
+
+            <!-- Reason -->
+            <div class="form-group">
+                <label for="reason">Reason</label>
+                <textarea type="text" #reason class="" name="reason" [(ngModel)]="bcpFunctionInput.reason"> </textarea>
+            </div>
+
+            <!-- Comment -->
+            <div class="form-group">
+                <label for="comment">Comment</label>
+                <textarea name="comment" #comment class="" [(ngModel)]="bcpFunctionInput.comment"> </textarea>
+            </div>
+
+
+            <div class="btn-wrap">
+                <button 
+                class="btn btn-sm" (click)="validateForm()">Save</button>
+            </div>
+
+
+        </form>
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+<section class="navigation-section">
+
+    <div class="body">
+
+        <div class="search-wrap">
+            <div class="input-wrap d-flex">
+                <fa-icon [icon]="faSearch"></fa-icon>
+                <input type="text">
+            </div>
+            
+        </div>
+
+        <div [ngClass]="FormSectionStatus ? 'nav-tav active' : 'nav-tav'" (click)="createNewTracker()">
+            <fa-icon [icon]="faPlus"></fa-icon>
+            New
+        </div>
+
+        <div [ngClass]="FormSectionStatus ? 'nav-tav active' : 'nav-tav'" (click)="listTracker()">
+            <fa-icon [icon]="faListAlt"></fa-icon>
+            Tracker
+        </div>
+
+
+    </div>
+
+    <div>
+
+    </div>
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+    
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

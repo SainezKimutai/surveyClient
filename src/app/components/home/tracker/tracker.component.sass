@@ -1,0 +1,447 @@
+@import "src/styles.sass"
+
+
+
+
+.page-title
+    width: 100%
+    // padding: 1em 2em
+
+
+    h4 
+        padding: 1em 2em
+        font-size: 18px
+        font-weight: bold
+        text-transform: uppercase
+        text-shadow: 1px -1px 1px white
+        -moz-text-shadow: 1px -1px 1px white
+        -webkit-text-shadow: 1px -1px 1px white
+
+
+
+
+.body-section
+    padding: 0 200px 0 1em
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.list-section
+    width: 100%
+    height: 100%
+    padding: 30px
+
+
+    .head
+        padding: 1em
+        color: grayColor(g800)
+
+        h4 
+            font-size: 20px
+            font-weight: bold
+
+    .card-group
+
+        margin: 1em auto auto 0
+        max-height: 500px
+        overflow-x: scroll
+
+
+        .card
+            min-width: 15em
+            height: 10em
+            max-width: 50%
+            margin: 0 .5em .5em 0
+            border-radius: 5px
+            text-align: center
+            display: flex
+            flex-direction: column
+            cursor: pointer
+
+            @include desktop_md
+                max-width: 100%
+                margin: 0 1em 1em 0
+
+            @include desktop_sm
+                margin: 0 0 1em 0
+
+
+            .card-body
+                display: flex
+                align-items: stretch
+
+                fa-icon
+                    margin: 2em 1em 0 0
+                    font-size: 16px 
+                    color: colorTheme(secondaryTheme)
+
+                h4
+                    margin: 2em 0
+                    font-size: 16px 
+                    font-weight: bold
+                    color: grayColor(g800)
+
+                &:hover
+                    h4
+                        color: colorTheme(secondaryTheme)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.view-section
+    width: 100%
+    display: flex
+    margin: 0 0 3em 0
+
+.view-section .main-wrap
+    width: 100%
+    max-width: 700px
+    margin: auto
+    background-color: white
+
+.view-section .main-wrap .title
+    background-color: colorTheme(primaryTheme)
+    padding: 1em
+   
+    h4
+        font-size: 14px
+        color: white
+        font-weight: bold
+    .btn-edit
+        border: solid 1px white
+        background-color: transparent
+        color: white
+    .btn-remove
+        border: solid 1px red
+        background-color: transparent
+        color: red
+
+.view-section .main-wrap .body-item
+    margin: .5em .8em
+    padding: 1em .2em
+    display: flex
+    align-items: stretch
+    border-bottom: solid 1px grayColor(g100)
+    border-radius: 3px
+
+    .param
+        width: 100%
+        font-size: 12px
+        font-weight: bold
+        color: grayColor(g700)
+
+    .answer
+        width: 100%
+        font-size: 12px
+        color: grayColor(g800)
+        font-weight: 600
+
+        .ans-title
+            display: flex
+            align-items: stretch
+
+            h4
+                font-size: 12px
+                background-color: grayColor(g100)
+                width: 100%
+                padding: .5em
+                margin: 0 5px 5px 0
+                color: grayColor(g800)
+                font-weight: 600
+        .ans-value
+            display: flex
+            align-items: stretch
+
+            h4
+                font-size: 12px
+                border: solid 1px grayColor(g100)
+                width: 100%
+                padding: .5em
+                margin: 0 5px 5px 0
+                color: grayColor(g800)
+                font-weight: 600
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.form-section
+    width: 100%
+    display: flex
+    margin: 0 0 3em 0
+
+.form-section .form
+    width: 100%
+    max-width: 600px
+    margin: auto
+    background-color: white
+
+.form-section .form .form-title
+    background-color: colorTheme(primaryTheme)
+    padding: 1em
+    
+    h4
+        font-size: 14px
+        color: white
+        font-weight: bold
+
+.form-section .form .form-group
+    padding: 1em 2em
+    display: flex
+    flex-direction: column
+
+    label
+        padding: 0
+        font-size: 13px 
+        font-weight: bold
+        color: grayColor(g600)
+
+
+    input
+        width: 100%
+        border-radius: 2px
+        padding: .5em
+        border: none
+        outline: none
+        background-color: grayColor(g100)
+        font-size: 12px
+    
+    textarea
+        width: 100%
+        height: 4em
+        border-radius: 2px
+        padding: .5em
+        border: none
+        outline: none
+        background-color: grayColor(g100)
+        font-size: 12px
+
+    .inputEror
+        border: solid 1px red
+
+
+.form-section .form .array-form
+    width: 100%
+    padding: 1em 2em
+    display: flex
+    flex-direction: column
+    
+    label
+        padding: 0
+        font-size: 13px 
+        font-weight: bold
+        color: grayColor(g600)
+
+    .input-label-wrap
+        width: 100%
+        display: flex
+        align-items: stretch   
+
+        label
+            width: 100%
+            padding: 0
+            font-size: 11px 
+            font-weight: bold
+            color: grayColor(g500)     
+
+    .input-preview-wrap
+        width: 100%
+        display: flex
+        align-items: stretch  
+
+        .input-preview
+            width: 100%
+            border-radius: 2px
+            padding: .5em
+            border: solid 1px grayColor(g100)
+            font-size: 12px
+            margin: 0 10px 10px 0
+        
+        fa-icon
+            font-size: 14px
+            color: colorTheme(danger)
+
+
+
+    .input-wrap
+        width: 100%
+        display: flex
+        align-items: stretch  
+
+        input
+            width: 100%
+            border-radius: 2px
+            padding: .5em
+            border: none
+            outline: none
+            margin: 0 10px 10px 0
+            background-color: grayColor(g100)
+            font-size: 12px
+
+        .inputEror
+            border: solid 1px red
+
+
+
+
+.form-section .form .btn-wrap
+    padding: 1em 2em
+    display: flex
+    align-items: stretch
+
+    .btn
+        outline: none !important
+        margin-left: auto
+        font-size: 12px
+        color: white
+        background-color: colorTheme(success)
+
+
+
+
+
+
+
+
+
+
+.navigation-section
+    margin-left: auto
+    position: absolute
+    top: 0
+    right: 0
+    height: 100%
+    width: 200px
+    background-color: #202239
+    padding: 0
+    display: flex
+    flex-direction: column
+
+    @include desktop_lg
+        width: 190px
+
+    @include desktop_md
+        display: none
+
+
+
+.navigation-section .body
+    background-color: white
+    height: 50%
+
+    .search-wrap
+        width: 100%
+        padding: 1em
+        margin: 2em 0
+   
+        .input-wrap
+            border-radius: 1em
+            background-color: grayColor(g200)
+
+            fa-icon
+                margin: auto .5em
+
+
+            input
+                width: 100%
+                outline: none
+                padding: .5em
+                border: none
+                border-radius: 0px
+                background-color: transparent
+                
+    .nav-tav
+        cursor: pointer
+        border-radius: 1em
+        width: 8em
+        padding: .5em 1em
+        box-shadow: 0 0 10px rgba(0, 0, 0, .3)
+        color: grayColor(g800)
+        margin: 0 auto 2em auto
+        text-align: left
+
+        &.active
+            background-color: colorTheme(primaryTheme)
+            color: colorTheme(light)
+
+            fa-icon
+                margin-right: .5em
+                color: colorTheme(light)
+
+        fa-icon
+            margin-right: .5em
+            color: colorTheme(secondaryTheme)
+
+
+
+        
+
+
+
+.navigation-section .footer
+    background-color: grayColor(g800)
+    position: relative
+    bottom: 0
+    width: 100%
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
