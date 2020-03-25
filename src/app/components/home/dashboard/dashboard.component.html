@@ -105,7 +105,7 @@
   
         </div>
      
-            <div class="body d-flex" *ngIf="CompnayRiskRates.length === 0">
+            <div  class="body d-flex" *ngIf="CompnayRiskRates.length === 0">
                 <div class="spinner-div spinner-border mx-auto" role="status"></div>
               </div>
         
@@ -130,25 +130,25 @@
             <div class="body-title" >
   
                 <div  class="body-item d-flex">
-                  <div class="mx-auto ">Risk</div>
-                  <div class="mx-auto ">Survey Name</div>
-                  <div class="mx-auto ">Companies Affected</div>
+                  <div class="mx-auto ">Threat</div>  
+                  <div class="mx-auto ">Company</div>
+                  <div class="mx-auto ">Severity</div>
                   <div class="rate">Intervention</div>
                 </div>
         
               </div>
         
-              <div class="body d-flex" *ngIf="AllCompanies.length === 0">
+              <div class="body d-flex" *ngIf="riskIssueArray.length === 0">
                 <div class="spinner-div spinner-border mx-auto" role="status"></div>
               </div>
         
-              <div class="body" *ngIf="AllCompanies.length !== 0">
+              <div class="body" *ngIf="riskIssueArray.length !== 0">
         
-                <div *ngFor="let comp of AllCompanies" class="body-item d-flex">
-                  <div class="mx-auto">-</div>
-                  <div class="mx-auto">-</div>
-                  <div class="mx-auto">-</div>
-                  <div class="mx-auto">-</div>
+                <div *ngFor="let item of riskIssueArray" class="body-item d-flex">
+                  <div class="mx-auto">{{item.risk}}</div>
+                  <div class="mx-auto">{{item.company}}</div>
+                  <div class="mx-auto riskRate">{{item.level}}</div>
+                  <div class="mx-auto">{{item.recom}}</div>
                 </div>
         
               </div>
@@ -167,6 +167,9 @@
     <div class="card">
         <div class="title">Risks Representations</div>
         <div class="body">
+            <div  class="body w-10 d-flex" *ngIf="!graphType">
+                <div class="spinner-div spinner-border mx-auto" role="status"></div>
+              </div>
             <canvas *ngIf="graphType" baseChart class="chart"
             [chartType]="graphType"
             [labels]="graphLabels"

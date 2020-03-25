@@ -225,7 +225,7 @@
     <div class="head d-flex">
         <button class="btn btn-sm mr-auto" (click)="viewSurveyTemplates()"> <fa-icon style="color: white;" [icon]="faBackward"></fa-icon> </button>
         <h4 class="mr-auto">{{TemplateNameOnView}}</h4>
-        <button class="btn btn-sm ml-auto btn-success" (click)="addQuizModal.show()"> <fa-icon [icon]="faPlus"></fa-icon></button>
+        <button class="btn btn-sm ml-auto btn-success" (click)="openAddQuizModal()"> <fa-icon [icon]="faPlus"></fa-icon></button>
     </div>
    
     <div class="question-wrap"  *ngFor="let item of TemplateQuestions; let i = index">
@@ -295,8 +295,10 @@
         <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title">Edit Form</h4>
-            <button type="button" class="btn close" (click)="editModal.hide()" aria-label="Close"></button>
-            <span aria-hidden="true">&times;</span>
+            <button type="button" class="btn close" (click)="editModal.hide()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+           
       
         </div>
         <div class="modal-body" >
@@ -360,7 +362,7 @@
                 </div>
     
     
-                <div class="choices-wrapper" [hidden]="!ChoicesStatus">
+                <!-- <div class="choices-wrapper" [hidden]="!ChoicesStatus">
               
                     <div class="preview-questions" *ngFor="let item of EditChoicesArr; let x = index">
                       {{x + 1}}. {{item.answer}}
@@ -372,8 +374,33 @@
                     <div class="add-ans">
                         <button class="btn btn-sm" (click)="EditaddChoice()"><fa-icon [icon]="faPlus"></fa-icon></button>
                     </div>
-                </div>
+                </div> -->
+                <div class="choices-wrapper" [hidden]="!ChoicesStatus">
+              
+                    <div class="preview-questions" *ngFor="let item of EditChoicesArr; let x = index">
+                      {{x + 1}}. {{item.answer}}
+                    </div>
+                    <div class="form-group-choices d-flex">
+                        <div class="form-group">
+                            <input type="text" name="EditChoiceInput" [(ngModel)]="EditChoiceInput" placeholder="Type Choices">
+                        </div>
+                        <div class="form-group">
+                            <select  name="EditChoiceInputThreat" [(ngModel)]="EditChoiceInputThreat" >
+                                <option value="" disabled selected hidden >... choose threat</option>
+                                <option *ngFor="let trt of AllThreats" [value]="trt._id" >{{trt.name}}</option>
+                            </select>
+                            <button  (click)="addThreatModal.show()">Add Threat</button>
+                        </div>  
+                    </div>
+                   
     
+                    <div class="add-ans">
+                        <button class="btn btn-sm" (click)="EditaddChoice()"><fa-icon [icon]="faPlus"></fa-icon></button>
+                    </div>
+                </div>
+
+
+
     
     
                 <div class="btn-wrap d-flex">
@@ -395,8 +422,10 @@
         <div class="modal-content">
         <div class="modal-header ">
             <h4 class="modal-title ">Add Question Form</h4>
-            <button type="button" class="btn close" (click)="closeAddQuizModal()" aria-label="Close"></button>
-            <span aria-hidden="true">&times;</span>
+            <button type="button" class="btn close" (click)="closeAddQuizModal()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+           
       
         </div>
         <div class="modal-body" >
@@ -518,7 +547,13 @@
                 </div>
                 <div class="form-group">
                     <label for="threatLevel">Threat Level</label>
-                    <textarea name="threatLevel" [(ngModel)]="threatLevel"></textarea>
+                    <select name="threatLevel" [(ngModel)]="threatLevel">
+                        <option value="" disabled selected hidden >... select</option>
+                            <option  value="Low">Low</option>
+                            <option  value="Medium">Medium</option>
+                            <option  value="High">High</option>
+                    </select>
+               
                 </div>
                 <div class="form-group">
                     <label for="threatRecom">Recommendations</label>

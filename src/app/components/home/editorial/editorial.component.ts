@@ -69,7 +69,7 @@ export class EditorialComponent implements OnInit {
   public CurrentChoiceInputThreat = '';
 
   public openQuestionInput = 'true';
-  public multipleChoiceInput = 'true';
+  public multipleChoiceInput = 'false';
   public choiceTypeInput = 'string';
   public positionInput = 1;
 
@@ -81,7 +81,7 @@ export class EditorialComponent implements OnInit {
   public EditChoiceInputThreat = '';
 
   public EditopenQuestionInput = 'true';
-  public EditmultipleChoiceInput = 'true';
+  public EditmultipleChoiceInput = 'false';
   public EditchoiceTypeInput = 'string';
   public EditpositionInput = 1;
 
@@ -205,7 +205,7 @@ export class EditorialComponent implements OnInit {
     if (type === 'false') {
       this.ChoicesStatus = true;
       this.openQuestionInput = 'false';
-      this.multipleChoiceInput = 'true';
+      this.multipleChoiceInput = 'false';
       this.choiceTypeInput = 'string';
     }
   }
@@ -237,11 +237,13 @@ export class EditorialComponent implements OnInit {
         choices: this.CurrentChoicesArr,
 
       };
+
+
       this.CurrentQuestionArray.push(quizData);
       this.CurrentQuestionInput = '';
-      this.openQuestionInput = '';
-      this.multipleChoiceInput = '';
-      this.choiceTypeInput = '';
+      this.openQuestionInput = 'true';
+      this.multipleChoiceInput = 'false';
+      this.choiceTypeInput = 'string';
       this.CurrentChoicesArr = [];
       this.positionInput++;
     }
@@ -280,9 +282,9 @@ export class EditorialComponent implements OnInit {
           if (idx === array.length - 1) {
 
             this.CurrentQuestionInput = '';
-            this.openQuestionInput = '';
-            this.multipleChoiceInput = '';
-            this.choiceTypeInput = '';
+            this.openQuestionInput = 'true';
+            this.multipleChoiceInput = 'false';
+            this.choiceTypeInput = 'string';
             this.CurrentChoicesArr = [];
             this.positionInput = 1;
             this.CurrentSurveyInput = '';
@@ -350,7 +352,7 @@ export class EditorialComponent implements OnInit {
     this.AddedQuestionsArray = [];
     this.EditQuestionInput = '';
     this.EditopenQuestionInput = 'true';
-    this.EditmultipleChoiceInput = 'true';
+    this.EditmultipleChoiceInput = 'false';
     this.EditchoiceTypeInput = 'string';
     this.EditpositionInput = (this.TemplateQuestions.length + 1 );
     this.EditChoicesArr = [];
@@ -384,7 +386,7 @@ export class EditorialComponent implements OnInit {
     this.TemplateQuestions.push(myAddedQuiz);
     this.EditQuestionInput = '';
     this.EditopenQuestionInput = 'true';
-    this.EditmultipleChoiceInput = 'true';
+    this.EditmultipleChoiceInput = 'false';
     this.EditchoiceTypeInput = 'string';
     this.EditpositionInput = (this.TemplateQuestions.length + 1 );
     this.EditChoicesArr = [];
@@ -406,7 +408,7 @@ export class EditorialComponent implements OnInit {
           if (idx === array.length - 1) {
             this.EditQuestionInput = '';
             this.EditopenQuestionInput = 'true';
-            this.EditmultipleChoiceInput = 'true';
+            this.EditmultipleChoiceInput = 'false';
             this.EditchoiceTypeInput = 'string';
             this.EditpositionInput = (this.TemplateQuestions.length + 1 );
             this.EditChoicesArr = [];
