@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionService } from 'src/app/shared/services/questions.service';
-import { ResponseService } from 'src/app/shared/services/response.service';
+import { ResponseService } from 'src/app/shared/services/responses.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 
@@ -11,17 +11,22 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 })
 export class AnswerComponent implements OnInit {
   // tslint:disable: max-line-length
+  // tslint:disable: prefer-const
 
 
 
-
-  constructor(private questioService: QuestionService,
+  constructor(private questionService: QuestionService,
               private responseService: ResponseService,
               private router: Router,
               private activeRoute: ActivatedRoute,
-              private notification: NotificationService) { }
+              private notification: NotificationService
+              ) { }
 
 
+    public AllResponses = [];
+    public DoneQuestions = null;
+    public myPreviousAnswers = [];
+    public myPreviousResponseId = '';
 
     surveyId: any;
     surveyName: any;
@@ -49,19 +54,46 @@ export class AnswerComponent implements OnInit {
           this.surveyId = params.surveyId;
           this.surveyName = params.surveyName;
     });
+    this.responseService.getAllResponses().subscribe(
+      data => {this.AllResponses = data; this.checkIfSurveyHadBeenAnsweredBefore(); },
+      error => console.log('Error geting all Responses')
+    );
 
 
-    this.getAndSetQuestions();
-    this.structureQuestions();
   }
 
 
 
 
 
+
+
+  checkIfSurveyHadBeenAnsweredBefore() {
+    const myResponses = this.AllResponses.filter((resp) => (resp.companyId === localStorage.getItem('loggedCompanyId') && resp.surveyId === this.surveyId) && resp.userId === localStorage.getItem('loggedUserID') ).map( e => e);
+
+    if (myResponses.length > 0) {
+      this.myPreviousResponseId = myResponses[0]._id;
+      this.myPreviousAnswers = myResponses[0].answers;
+      this.DoneQuestions = Number(this.myPreviousAnswers.length);
+      this.structureQuestions();
+      this.continuationFromBefore(this.DoneQuestions);
+
+    } else {
+
+      this.DoneQuestions = 0;
+      this.getAndSetQuestions();
+      this.structureQuestions();
+    }
+  }
+
+
+
+
+
+
   async getAndSetQuestions() {
-    await this.questioService.getQuestionsInASurvey(this.surveyId).
-     subscribe(data => {this.questions = data.sort((a, b) =>  a.position - b.position);  this.formatQuestions(); console.log(this.questions);}, err => console.log(err));
+    await this.questionService.getQuestionsInASurvey(this.surveyId).
+     subscribe(data => {this.questions = data.sort((a, b) =>  a.position - b.position);  this.formatQuestions(); }, err => console.log(err));
   }
 
 
@@ -120,6 +152,33 @@ export class AnswerComponent implements OnInit {
   }
 
 
+  continuationFromBefore(id) {
+
+    this.questionService.getQuestionsInASurvey(this.surveyId).
+    subscribe(data => {this.questions = data.sort((a, b) =>  a.position - b.position);  this.formatQuestions2(id); this.structureAnswers2(id); }, err => console.log(err));
+
+  }
+
+
+  formatQuestions2(myId) {
+    if (this.questions.length > 0) {
+      this.questionTag = this.questions[myId].question;
+      this.open = this.questions[myId].open_question;
+      this.multiple = this.questions[myId].multiple_choice;
+      this.type = this.questions[myId].choice_type;
+      this.options = this.questions[myId].choices;
+      this.pageNumber = myId + 1;
+      this.totalPages = this.questions.length;
+
+      if (this.questions.length === 1) {
+        this.isLast = true;
+      }
+    }
+  }
+
+
+
+
 
 
 
@@ -129,7 +188,7 @@ export class AnswerComponent implements OnInit {
       questionId: this.questions[id - 1]._id,
       answer : this.responseArray
     };
-    console.log(answer);
+
     this.responseArray = [];
     this.response = '';
     this.answers.push(answer);
@@ -145,6 +204,20 @@ export class AnswerComponent implements OnInit {
 
 
 
+  structureAnswers2(id) {
+
+    this.responseArray = [];
+    this.response = '';
+    this.answers = this.myPreviousAnswers;
+    if (id === this.questions.length - 1) {
+      this.isLast = true;
+    }
+    if (id === this.questions.length) {
+      this.ImprintLoader = true;
+      this.answerStructure.answers = this.answers;
+      this.postAnswers(this.answerStructure);
+    }
+  }
 
 
 
@@ -162,20 +235,83 @@ export class AnswerComponent implements OnInit {
 
 
   async postAnswers(answers) {
-    await this.responseService.sendResponse(answers).subscribe(
+
+    if ( this.DoneQuestions === 0 ) {
+    await this.responseService.createResponse(answers).subscribe(
       data => {
-      this.ImprintLoader = false;
-      this.notification.showSuccess('Survey responses submited', 'Success');
-      this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
+        this.ImprintLoader = false;
+        this.notification.showSuccess('Survey responses submited', 'Success');
+        this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
 
-      if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
-      if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
-      if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/reports']); }, 3000);  }
+        if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
+        if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
+        if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 3000);  }
 
 
-    }, err => {{this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }});
+      }, err => {{this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }});
+    }
+
+    if ( this.DoneQuestions > 0) {
+      this.responseService.updateResponse(this.myPreviousResponseId, {answers: this.answers} ).subscribe(
+        data => {
+          this.ImprintLoader = false;
+          this.notification.showSuccess('Survey responses submited', 'Success');
+          this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
+
+          if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
+          if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
+          if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 3000);  }
+
+        },
+        error => {this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }
+      );
+    }
   }
 
+
+
+
+
+
+
+
+  saveAndExit() {
+    this.ImprintLoader = true;
+    this.answerStructure.answers = this.answers;
+    if ( this.DoneQuestions === 0 ) {
+      this.responseService.createResponse(this.answerStructure).subscribe(
+        data => {
+          this.ImprintLoader = false;
+          this.notification.showSuccess('Survey responses submited', 'Success');
+          this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
+
+          if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
+          if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
+          if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 3000);  }
+
+
+        }, err => {{this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }});
+      }
+
+    if ( this.DoneQuestions > 0) {
+        this.responseService.updateResponse(this.myPreviousResponseId, {answers: this.answers} ).subscribe(
+          data => {
+            this.ImprintLoader = false;
+            this.notification.showSuccess('Survey responses submited', 'Success');
+            this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
+
+            if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
+            if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
+            if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 3000);  }
+
+          },
+          error => {this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }
+        );
+      }
+
+
+
+  }
 
 
 

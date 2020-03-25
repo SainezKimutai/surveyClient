@@ -30,6 +30,8 @@
                     <h4>{{surveyName}}</h4>
     
                     <img class="logo" src="../../../assets/images/logo1.png" alt="" >
+
+                    <button *ngIf="pageNumber > 1" class="btn btn-sm btn-outline-warning" (click)="saveAndExit()">Save & continue later</button>
                 </div>
     
             </div>

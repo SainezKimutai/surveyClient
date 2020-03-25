@@ -6,6 +6,8 @@
 .page-title
     width: 100%
     // padding: 1em 2em
+    display: flex
+    flex-direction: column
 
 
     h4 
@@ -80,8 +82,8 @@
         @include desktop_sm
             padding: 0 1em
 
-        .create-new, .surveys
-            margin: 1em
+        .create-new, .surveys, .nav-tab
+            margin: 0 1em
             cursor: pointer
             border-radius: 1em
             width: 8em

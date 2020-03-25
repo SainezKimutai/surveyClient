@@ -14,13 +14,6 @@
     <h4>Editorial</h4>
 
     <section id="top_header" class="top-header">
-        <div class="search-wrap">
-            <div class="input-wrap d-flex">
-                <fa-icon [icon]="faSearch"></fa-icon>
-                <input type="text">
-            </div>
-            
-        </div>
     
         <div class="btn-wrap">
         <div [ngClass]="FormSectionStatus ? 'create-new active' : 'create-new'" (click)="createNewSurveyTemplate()">
@@ -33,6 +26,22 @@
             <fa-icon [icon]="faListAlt"></fa-icon>
             <span>Surveys</span> 
         </div>
+
+        <div class="nav-tab" (click)="addThreatModal.show()">
+            <fa-icon [icon]="faFire"></fa-icon>
+            <span>Threat</span> 
+        </div>
+        
+        <div class="nav-tab" (click)="addTrackerReasonModal.show()">
+            <fa-icon [icon]="faComments"></fa-icon>
+            <span>Tracker Reasons</span> 
+            
+        </div>
+        <div class="nav-tab" (click)="addIndustriesModal.show()">
+            <fa-icon [icon]="faBuilding"></fa-icon>
+             <span>Industries</span> 
+        </div>
+
     </div>
     </section>   
 </div>
