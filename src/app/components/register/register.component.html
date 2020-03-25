@@ -60,10 +60,7 @@
                         <fa-icon [icon]="faIndustry"></fa-icon>
                         <select type="text" name="companyType" [(ngModel)]="registrationForm.companyType">
                             <option value="" disabled selected hidden >Industry Type</option>
-                            <option  value="Technology">Technology</option>
-                            <option  value="Business Associations">Business Associations</option>
-                            <option  value="Health">Health</option>
-                            <option  value="Insurance">Insurance</option>
+                            <option *ngFor="let item of AllIndustrys"  [value]="item.industryName">{{item.industryName}}</option>
                         </select>
                     </div>
 

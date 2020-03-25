@@ -429,7 +429,7 @@
         display: flex
         align-items: stretch  
 
-        input
+        input, select
             width: 100%
             border-radius: 2px
             padding: .5em
@@ -587,7 +587,43 @@
 
 
 
+.deleteModal
+    border: none
 
+    .modal-content
+        width: 100%
+        border: none
+  
+        .modal-header 
+            border: none
+            background-color: colorTheme(danger)
+
+            .modal-title
+                font-size: 12px
+
+        .modal-body
+            width: 100%
+            border: none
+
+            p 
+                font-weight: bold
+
+        .modal-footer
+            width: 100%
+            border: none
+
+            .btn
+                padding: .5em 1em
+                border-radius: 2px
+                border: solid 1px colorTheme(danger)
+                background-color: white
+                color: colorTheme(danger)
+                font-size: 12px
+
+                &:hover
+                    background-color: colorTheme(danger)
+                    color: white
+                    border: solid 1px white            
 
 
 

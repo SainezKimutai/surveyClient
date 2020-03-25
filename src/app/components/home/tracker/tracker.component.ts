@@ -6,6 +6,7 @@ import { ResponseService } from 'src/app/shared/services/responses.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { TrackerService } from 'src/app/shared/services/tracker.service';
 import { ModalDirective } from 'ngx-bootstrap';
+import { TrackerReasonService } from 'src/app/shared/services/trackerReasons.service';
 
 @Component({
   selector: 'app-tracker',
@@ -13,15 +14,17 @@ import { ModalDirective } from 'ngx-bootstrap';
   styleUrls: ['./tracker.component.sass']
 })
 export class TrackerComponent implements OnInit {
-
+ // tslint:disable
 
     constructor(
       private notifyService: NotificationService,
-      private trackerService: TrackerService
+      private trackerService: TrackerService,
+      private trackerReasonService: TrackerReasonService
     ) {}
 
 @ViewChild('viewCommentsModal', {static: true, }) viewCommentsModal: ModalDirective;
 @ViewChild('viewRecomModal', {static: true, }) viewRecomModal: ModalDirective;
+@ViewChild('deleteModal', {static: true}) deleteModal: ModalDirective;
 
 @ViewChild('name', {static: false}) name: ElementRef;
 @ViewChild('kpiTarget', {static: false}) kpiTarget: ElementRef;
@@ -49,6 +52,7 @@ public faSearch = faSearch;
 
 //
 public AllTrackers = [];
+public AllTrackerReasons = [];
 
 // status
 public formSectionStatus = false;
@@ -62,7 +66,7 @@ public trackerOnEdit: any;
 
 
 
-// input variables
+// input letiables
 public bcpFunctionsArray = [];
 public bcpFunctionInput;
 public kpiMeasureCatsArray = [];
@@ -89,8 +93,34 @@ public recommendation: any;
     }
 
 
+
+
+
+
+
+getWeek() {
+  let date = new Date();
+  let todaysDate = date.getDate()
+  if (todaysDate > 0 && todaysDate < 8 ) { return 1 }
+  if (todaysDate > 7 && todaysDate < 15 ) { return 2 }
+  if (todaysDate > 14 && todaysDate < 22 ) { return 3 }
+  if (todaysDate > 21 && todaysDate < 32 ) { return 4 } 
+}
+
+
+
+
+
+
+
+
+
 updatePage() {
   return new Promise((resolve, reject) => {
+    this.trackerReasonService.getAllTrackerReasons().subscribe(
+      data => this.AllTrackerReasons = data,
+      error => console.log('Error getting all tracker reasons')
+    );
     this.trackerService.getAllTrackers().subscribe(
       data => {
         this.AllTrackers = data.filter((e) => e.companyId === localStorage.getItem('loggedCompanyId')).map(e => e); resolve();
@@ -126,7 +156,7 @@ creatNewForm() {
 
   this.weeklyInput = {
     value: null,
-    week: null,
+    week: this.getWeek(),
     reason: null,
     comment: null
   };
@@ -152,8 +182,9 @@ listTracker() {
   this.viewSectionStatus = false;
 }
 
-openTracker(id) {
 
+
+openTracker(id) {
   for (const trck of this.AllTrackers) {
     if (trck._id === id) {
       this.trackerOnView = trck;
@@ -163,14 +194,15 @@ openTracker(id) {
       break;
     }
   }
-
-
 }
 
-viewBcpFunctionDefaults(){
+
+
+
+viewBcpFunctionDefaults() {
   this.bcpFunctionDefaults = true;
 }
-hideBcpFunctionDefaults(){
+hideBcpFunctionDefaults() {
   this.bcpFunctionDefaults = false;
 }
 
@@ -198,7 +230,7 @@ editTracker() {
 
   this.weeklyInput = {
     value: null,
-    week: null,
+    week: this.getWeek(),
     reason: null,
     comment: null
   };
@@ -230,7 +262,7 @@ addWeeklyInput() {
   console.log(this.weeklyArray);
   this.weeklyInput = {
     value: null,
-    week: null,
+    week: this.getWeek(),
     reason: null,
     comment: null
   };
@@ -309,7 +341,7 @@ AddBcpTracker() {
 
 
 async updateBcpTracker() {
-  let actual =0;
+  let actual = 0;
   await this.weeklyArray.forEach(week => {
     actual = actual + week.value;
   });
@@ -348,6 +380,7 @@ deleteTracker(id) {
     data => {
       this.updatePage().then(() => {
       this.ImprintLoader = false;
+      this.deleteModal.hide();
       this.notifyService.showSuccess('Tracker Deleted', 'Success');
       this.listTracker();
       });
@@ -356,24 +389,24 @@ deleteTracker(id) {
   );
 }
 
-viewWeeklyReportResponse(reason, comments){
+viewWeeklyReportResponse(reason, comments) {
   this.weeklyReportReason = reason;
   this.weeklyReportComments = comments;
   this.viewCommentsModal.show();
 }
 
-viewWeeklyReportRecommendations(value, target, unit){
-  const expected_capacity = target/4;
-  const attained_capacity = value/expected_capacity*100;
-  if(attained_capacity<50){
-    this.observation = "Mapped risk is high due to low productivity("+attained_capacity+"%)";
-    this.recommendation = "Escalate to management.";
-  }else if(49<attained_capacity && attained_capacity<70){
-    this.observation = "Mapped risk is Medium due to average productivity("+attained_capacity+"%)";
-    this.recommendation = "Improve on implementation.";
-  }else if(attained_capacity>69){
-    this.observation = "Mapped risk is low due to good productivity("+attained_capacity+"%)";
-    this.recommendation = "You are on the right track, improve on any week points.";
+viewWeeklyReportRecommendations(value, target, unit) {
+  const expected_capacity = target / 4;
+  const attained_capacity = value / expected_capacity * 100;
+  if (attained_capacity < 50) {
+    this.observation = 'Mapped risk is high due to low productivity('+ attained_capacity +'%)';
+    this.recommendation = 'Escalate to management.';
+  } else if (49 < attained_capacity && attained_capacity < 70) {
+    this.observation = 'Mapped risk is Medium due to average productivity('+ attained_capacity +'%)';
+    this.recommendation = 'Improve on implementation.';
+  } else if (attained_capacity > 69) {
+    this.observation = 'Mapped risk is low due to good productivity('+ attained_capacity +'%)';
+    this.recommendation = 'You are on the right track, improve on any week points.';
   }
   this.viewRecomModal.show();
 

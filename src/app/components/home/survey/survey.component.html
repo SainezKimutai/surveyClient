@@ -21,14 +21,16 @@
 
 <section class="templates-section">
     <div *ngIf="AllSurveys" class="card-group" >
-        <div class="card" *ngFor="let item of AllSurveys" (click)="takeSurvey(item)">
+        <div class="card" *ngFor="let item of AllSurveys" (click)="item.done === 100 ? '' : takeSurvey(item)">
             <div class="card-header"></div>
             <div class="card-body">
                 <fa-icon [icon]="faListAlt"></fa-icon>
                 <h4 class="color:black;">{{item.surveyName}}</h4>
             </div>
             <div class="card-footer">
-                <h5 *ngIf="item.done"> <fa-icon [icon]="faCheck"></fa-icon> Completed</h5>
+                <h5 *ngIf="item.done === 100"> <fa-icon [icon]="faCheck"></fa-icon> <span>{{item.done}}%</span> Completed</h5>
+                <h5 *ngIf="item.done > 0 && 100 > item.done"> <fa-icon [icon]="faSpinner"></fa-icon> <span>{{item.done}}%</span> In progress</h5>
+                <h5 *ngIf="item.done === 0"> Not Done</h5>
             </div>
 
            
@@ -38,6 +40,9 @@
             <div class="card-header"></div>
             <div class="card-body">
                 <h4>No Template</h4>
+            </div>
+            <div class="card-footer">
+
             </div>
             
         </div>

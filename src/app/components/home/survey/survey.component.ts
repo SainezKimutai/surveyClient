@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { Router } from '@angular/router';
-import { faCheck, faListAlt } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faListAlt, faSpinner} from '@fortawesome/free-solid-svg-icons';
 import { ResponseService } from 'src/app/shared/services/responses.service';
+import { QuestionService } from 'src/app/shared/services/questions.service';
 
 @Component({
   selector: 'app-survey',
@@ -12,19 +13,26 @@ import { ResponseService } from 'src/app/shared/services/responses.service';
 export class SurveyComponent implements OnInit {
 
 // tslint:disable: max-line-length
+ // tslint:disable: prefer-const
+
+
+  constructor(
+    private surveyService: SurveyService,
+    private responseService: ResponseService,
+    private questionService: QuestionService,
+    private router: Router
+    ) { }
 
 
 
-  constructor(private surveyService: SurveyService, private responseService: ResponseService, private router: Router) { }
-
-
-
-  AllSurveys = [];
-  AllResponses = [];
-  ImprintLoader = false;
+  public AllSurveys = [];
+  public AllQuestions = [];
+  public AllResponses = [];
+  public ImprintLoader = false;
 
   public faCheck = faCheck;
   public faListAlt = faListAlt;
+  public faSpinner = faSpinner;
 
 
 
@@ -46,6 +54,10 @@ export class SurveyComponent implements OnInit {
       data => {this.AllSurveys = data; },
       error => console.log('Error getting all surveys')
     );
+    this.questionService.getAllQuestions().subscribe(
+      data => this.AllQuestions = data,
+      error => console.log('Error getting all question')
+    );
     this.responseService.getAllResponses().subscribe(
       data => {this.AllResponses = data; resolve(); },
       error => console.log('Error geting all Responses')
@@ -59,8 +71,15 @@ export class SurveyComponent implements OnInit {
   checkForCompletedSurveys() {
     if (localStorage.getItem('permissionStatus') ===  'isCustomer') {
      this.AllSurveys =  this.AllSurveys.filter((surv) => {
-        const myResponses = this.AllResponses.filter((resp) => (resp.companyId === localStorage.getItem('loggedCompanyId') && resp.surveyId === surv._id)).map( e => e);
-        if (myResponses.length > 0) { surv.done = true; }
+        const myResponses = this.AllResponses.filter((resp) => (resp.companyId === localStorage.getItem('loggedCompanyId') && resp.surveyId === surv._id) && resp.userId === localStorage.getItem('loggedUserID') ).map( e => e);
+        if (myResponses.length > 0) {
+        let allQuizs = this.AllQuestions.filter((q) => q.surveyId === surv._id).map(e => e);
+        let allAnswers = myResponses[0].answers;
+        let myCompletionValue = (( Number(allAnswers.length) * 100 ) / Number(allQuizs.length)).toFixed(0);
+        surv.done = Number(myCompletionValue);
+        } else {
+          surv.done = 0;
+        }
         return true;
       }).map( e => e);
     }
@@ -72,7 +91,6 @@ export class SurveyComponent implements OnInit {
 
   async takeSurvey(survey) {
     // Navigate to /results?page=1
-    console.log(survey);
     this.router.navigate(['/answer'], { queryParams: { surveyId: survey._id, surveyName: survey.surveyName} });
   }
 

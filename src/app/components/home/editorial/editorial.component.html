@@ -14,13 +14,6 @@
     <h4>Editorial</h4>
 
     <section id="top_header" class="top-header">
-        <div class="search-wrap">
-            <div class="input-wrap d-flex">
-                <fa-icon [icon]="faSearch"></fa-icon>
-                <input type="text">
-            </div>
-            
-        </div>
     
         <div class="btn-wrap">
         <div [ngClass]="FormSectionStatus ? 'create-new active' : 'create-new'" (click)="createNewSurveyTemplate()">
@@ -33,6 +26,22 @@
             <fa-icon [icon]="faListAlt"></fa-icon>
             <span>Surveys</span> 
         </div>
+
+        <div class="nav-tab" (click)="addThreatModal.show()">
+            <fa-icon [icon]="faFire"></fa-icon>
+            <span>Threat</span> 
+        </div>
+        
+        <div class="nav-tab" (click)="addTrackerReasonModal.show()">
+            <fa-icon [icon]="faComments"></fa-icon>
+            <span>Tracker Reasons</span> 
+            
+        </div>
+        <div class="nav-tab" (click)="addIndustriesModal.show()">
+            <fa-icon [icon]="faBuilding"></fa-icon>
+             <span>Industries</span> 
+        </div>
+
     </div>
     </section>   
 </div>
@@ -225,7 +234,7 @@
     <div class="head d-flex">
         <button class="btn btn-sm mr-auto" (click)="viewSurveyTemplates()"> <fa-icon style="color: white;" [icon]="faBackward"></fa-icon> </button>
         <h4 class="mr-auto">{{TemplateNameOnView}}</h4>
-        <button class="btn btn-sm ml-auto btn-success" (click)="addQuizModal.show()"> <fa-icon [icon]="faPlus"></fa-icon></button>
+        <button class="btn btn-sm ml-auto btn-success" (click)="openAddQuizModal()"> <fa-icon [icon]="faPlus"></fa-icon></button>
     </div>
    
     <div class="question-wrap"  *ngFor="let item of TemplateQuestions; let i = index">
@@ -256,21 +265,29 @@
            
         </div>
 
-        <div [ngClass]="FormSectionStatus ? 'create-new active' : 'create-new'" (click)="createNewSurveyTemplate()">
+        <div [ngClass]="FormSectionStatus ? 'nav-tab active' : 'nav-tab'" (click)="createNewSurveyTemplate()">
             <fa-icon [icon]="faPlus"></fa-icon>
             Survey
         </div>
 
-        <div class="create-new" (click)="addThreatModal.show()">
-            <fa-icon [icon]="faPlus"></fa-icon>
-            Threats
-        </div>
-
-        <div [ngClass]="TemeplateViewSectionStatus ? 'surveys active' : 'surveys'" (click)="viewSurveyTemplates()">
+        <div [ngClass]="TemeplateViewSectionStatus ? 'nav-tab active' : 'nav-tab'" (click)="viewSurveyTemplates()">
             <fa-icon [icon]="faListAlt"></fa-icon>
             Surveys
         </div>
-
+        
+        <div class="nav-tab" (click)="addThreatModal.show()">
+            <fa-icon [icon]="faFire"></fa-icon>
+            Threat
+        </div>
+        
+        <div class="nav-tab" (click)="addTrackerReasonModal.show()">
+            <fa-icon [icon]="faComments"></fa-icon>
+            Tracker Reasons
+        </div>
+        <div class="nav-tab" (click)="addIndustriesModal.show()">
+            <fa-icon [icon]="faBuilding"></fa-icon>
+            Industries
+        </div>
 
     </div>
 
@@ -287,8 +304,10 @@
         <div class="modal-content">
         <div class="modal-header">
             <h4 class="modal-title">Edit Form</h4>
-            <button type="button" class="btn close" (click)="editModal.hide()" aria-label="Close"></button>
-            <span aria-hidden="true">&times;</span>
+            <button type="button" class="btn close" (click)="editModal.hide()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+           
       
         </div>
         <div class="modal-body" >
@@ -352,7 +371,7 @@
                 </div>
     
     
-                <div class="choices-wrapper" [hidden]="!ChoicesStatus">
+                <!-- <div class="choices-wrapper" [hidden]="!ChoicesStatus">
               
                     <div class="preview-questions" *ngFor="let item of EditChoicesArr; let x = index">
                       {{x + 1}}. {{item.answer}}
@@ -364,8 +383,33 @@
                     <div class="add-ans">
                         <button class="btn btn-sm" (click)="EditaddChoice()"><fa-icon [icon]="faPlus"></fa-icon></button>
                     </div>
-                </div>
+                </div> -->
+                <div class="choices-wrapper" [hidden]="!ChoicesStatus">
+              
+                    <div class="preview-questions" *ngFor="let item of EditChoicesArr; let x = index">
+                      {{x + 1}}. {{item.answer}}
+                    </div>
+                    <div class="form-group-choices d-flex">
+                        <div class="form-group">
+                            <input type="text" name="EditChoiceInput" [(ngModel)]="EditChoiceInput" placeholder="Type Choices">
+                        </div>
+                        <div class="form-group">
+                            <select  name="EditChoiceInputThreat" [(ngModel)]="EditChoiceInputThreat" >
+                                <option value="" disabled selected hidden >... choose threat</option>
+                                <option *ngFor="let trt of AllThreats" [value]="trt._id" >{{trt.name}}</option>
+                            </select>
+                            <button  (click)="addThreatModal.show()">Add Threat</button>
+                        </div>  
+                    </div>
+                   
     
+                    <div class="add-ans">
+                        <button class="btn btn-sm" (click)="EditaddChoice()"><fa-icon [icon]="faPlus"></fa-icon></button>
+                    </div>
+                </div>
+
+
+
     
     
                 <div class="btn-wrap d-flex">
@@ -387,8 +431,10 @@
         <div class="modal-content">
         <div class="modal-header ">
             <h4 class="modal-title ">Add Question Form</h4>
-            <button type="button" class="btn close" (click)="closeAddQuizModal()" aria-label="Close"></button>
-            <span aria-hidden="true">&times;</span>
+            <button type="button" class="btn close" (click)="closeAddQuizModal()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+           
       
         </div>
         <div class="modal-body" >
@@ -510,7 +556,13 @@
                 </div>
                 <div class="form-group">
                     <label for="threatLevel">Threat Level</label>
-                    <textarea name="threatLevel" [(ngModel)]="threatLevel"></textarea>
+                    <select name="threatLevel" [(ngModel)]="threatLevel">
+                        <option value="" disabled selected hidden >... select</option>
+                            <option  value="Low">Low</option>
+                            <option  value="Medium">Medium</option>
+                            <option  value="High">High</option>
+                    </select>
+               
                 </div>
                 <div class="form-group">
                     <label for="threatRecom">Recommendations</label>
@@ -526,3 +578,70 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
+
+<div bsModal  #addTrackerReasonModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog addTrackerReasonModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title"> Tracker Reasons</h4>
+            <button type="button" class="btn close" (click)="addTrackerReasonModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <div class="wrap d-flex" *ngFor="let item of AllTrackerReasons">
+                <h4>{{item.reason}}</h4>
+                <fa-icon [icon]="faTrash" (click)="deleteTrackerReason(item._id)"></fa-icon>
+            </div>
+            <input type="text" name="trackerReasonInput" [(ngModel)]="trackerReasonInput" placeholder="Type here">
+        </div>
+        <div class="modal-footer">
+            <button [disabled]="trackerReasonInput === ''" type="button" class="btn btn-confirm" (click)="addTrackerReason()">Add</button>
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+<div bsModal  #addIndustriesModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog addIndustriesModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title"> Industries Types</h4>
+            <button type="button" class="btn close" (click)="addIndustriesModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <div class="wrap d-flex" *ngFor="let item of AllIndustrys">
+                <h4>{{item.industryName}}</h4>
+                <fa-icon [icon]="faTrash" (click)="deleteIndustry(item._id)"></fa-icon>
+            </div>
+            <input type="text" name="industryInput"[(ngModel)]="industryInput" placeholder="Type here">
+        </div>
+        <div class="modal-footer">
+            <button [disabled]="industryInput === ''"  type="button" class="btn btn-confirm" (click)="addIndustries()">Add</button>
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { faPlus, faSearch, faListAlt, faBackward, faEdit, faTrash} from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSearch, faListAlt, faBackward, faEdit, faTrash, faBuilding, faComments, faFire} from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
 import { ModalDirective, ModalOptions, ModalModule } from 'ngx-bootstrap';
 import { ThreatService } from 'src/app/shared/services/threats.service';
+import { IndustryService } from 'src/app/shared/services/industry.service';
+import { TrackerReasonService } from 'src/app/shared/services/trackerReasons.service';
 
 
 @Component({
@@ -19,7 +21,9 @@ export class EditorialComponent implements OnInit {
     private notifyService: NotificationService,
     private surveyService: SurveyService,
     private questionService: QuestionService,
-    private threatService: ThreatService
+    private threatService: ThreatService,
+    private industryService: IndustryService,
+    private trackerReasonService: TrackerReasonService
   ) {  }
 
 // Modals
@@ -38,12 +42,17 @@ export class EditorialComponent implements OnInit {
   public faBackward = faBackward;
   public faEdit = faEdit;
   public faTrash = faTrash;
+  public faFire = faFire;
+  public faBuilding = faBuilding;
+  public faComments = faComments;
 
 
   //
   public AllSurveys = [];
   public AllQuestions = [];
   public AllThreats = [];
+  public AllTrackerReasons = [];
+  public AllIndustrys = [];
 
   public TemplateNameOnView = [];
   public TemplateQuestions = [];
@@ -60,7 +69,7 @@ export class EditorialComponent implements OnInit {
   public CurrentChoiceInputThreat = '';
 
   public openQuestionInput = 'true';
-  public multipleChoiceInput = 'true';
+  public multipleChoiceInput = 'false';
   public choiceTypeInput = 'string';
   public positionInput = 1;
 
@@ -72,25 +81,29 @@ export class EditorialComponent implements OnInit {
   public EditChoiceInputThreat = '';
 
   public EditopenQuestionInput = 'true';
-  public EditmultipleChoiceInput = 'true';
+  public EditmultipleChoiceInput = 'false';
   public EditchoiceTypeInput = 'string';
   public EditpositionInput = 1;
 
 
   public AddedQuestionsArray = [];
 
-  // status
-    public FormSectionStatus = false;
-    public TemeplateViewSectionStatus = true;
-    public QuestionsViewStatus = false;
-    public SurveyFormStatus = true;
-    public QuestionFormStatus = false;
+// status
+  public FormSectionStatus = false;
+  public TemeplateViewSectionStatus = true;
+  public QuestionsViewStatus = false;
+  public SurveyFormStatus = true;
+  public QuestionFormStatus = false;
+
+  public threatName = '';
+  public threatLevel = '';
+  public threatRecom = '';
 
 
 
-    public threatName = '';
-    public threatLevel = '';
-    public threatRecom = '';
+  public trackerReasonInput = '';
+  public industryInput = '';
+
 
 
 
@@ -110,6 +123,14 @@ export class EditorialComponent implements OnInit {
         this.questionService.getAllQuestions().subscribe(
           data => this.AllQuestions = data,
           error => console.log('Error getting all question')
+        );
+        this.industryService.getAllIndustrys().subscribe(
+          data => this.AllIndustrys = data,
+          error => console.log('Error getting all industries')
+        );
+        this.trackerReasonService.getAllTrackerReasons().subscribe(
+          data => this.AllTrackerReasons = data,
+          error => console.log('Error getting all tracker reasons')
         );
         this.threatService.getAllThreats().subscribe(
           data => {this.AllThreats = data; resolve(); },
@@ -184,7 +205,7 @@ export class EditorialComponent implements OnInit {
     if (type === 'false') {
       this.ChoicesStatus = true;
       this.openQuestionInput = 'false';
-      this.multipleChoiceInput = 'true';
+      this.multipleChoiceInput = 'false';
       this.choiceTypeInput = 'string';
     }
   }
@@ -216,11 +237,13 @@ export class EditorialComponent implements OnInit {
         choices: this.CurrentChoicesArr,
 
       };
+
+
       this.CurrentQuestionArray.push(quizData);
       this.CurrentQuestionInput = '';
-      this.openQuestionInput = '';
-      this.multipleChoiceInput = '';
-      this.choiceTypeInput = '';
+      this.openQuestionInput = 'true';
+      this.multipleChoiceInput = 'false';
+      this.choiceTypeInput = 'string';
       this.CurrentChoicesArr = [];
       this.positionInput++;
     }
@@ -259,9 +282,9 @@ export class EditorialComponent implements OnInit {
           if (idx === array.length - 1) {
 
             this.CurrentQuestionInput = '';
-            this.openQuestionInput = '';
-            this.multipleChoiceInput = '';
-            this.choiceTypeInput = '';
+            this.openQuestionInput = 'true';
+            this.multipleChoiceInput = 'false';
+            this.choiceTypeInput = 'string';
             this.CurrentChoicesArr = [];
             this.positionInput = 1;
             this.CurrentSurveyInput = '';
@@ -329,7 +352,7 @@ export class EditorialComponent implements OnInit {
     this.AddedQuestionsArray = [];
     this.EditQuestionInput = '';
     this.EditopenQuestionInput = 'true';
-    this.EditmultipleChoiceInput = 'true';
+    this.EditmultipleChoiceInput = 'false';
     this.EditchoiceTypeInput = 'string';
     this.EditpositionInput = (this.TemplateQuestions.length + 1 );
     this.EditChoicesArr = [];
@@ -363,7 +386,7 @@ export class EditorialComponent implements OnInit {
     this.TemplateQuestions.push(myAddedQuiz);
     this.EditQuestionInput = '';
     this.EditopenQuestionInput = 'true';
-    this.EditmultipleChoiceInput = 'true';
+    this.EditmultipleChoiceInput = 'false';
     this.EditchoiceTypeInput = 'string';
     this.EditpositionInput = (this.TemplateQuestions.length + 1 );
     this.EditChoicesArr = [];
@@ -385,7 +408,7 @@ export class EditorialComponent implements OnInit {
           if (idx === array.length - 1) {
             this.EditQuestionInput = '';
             this.EditopenQuestionInput = 'true';
-            this.EditmultipleChoiceInput = 'true';
+            this.EditmultipleChoiceInput = 'false';
             this.EditchoiceTypeInput = 'string';
             this.EditpositionInput = (this.TemplateQuestions.length + 1 );
             this.EditChoicesArr = [];
@@ -430,4 +453,70 @@ export class EditorialComponent implements OnInit {
 
 
 
-}
+  addTrackerReason() {
+    this.trackerReasonService.createTrackerReason({reason: this.trackerReasonInput}).subscribe(
+      data => {
+        this.updatePage().then(() => {
+          this.notifyService.showSuccess('reason added', 'Success');
+          this.trackerReasonInput = '';
+        });
+      },
+      error => this.notifyService.showError('could not add reason', 'Failed')
+    );
+  }
+
+  deleteTrackerReason(id) {
+    this.trackerReasonService.deleteTrackerReason(id).subscribe(
+      data => {
+        this.updatePage().then(() => {
+          this.notifyService.showSuccess('reason deleted', 'Success');
+          this.trackerReasonInput = '';
+        });
+      },
+      error => this.notifyService.showError('could not delete reason', 'Failed')
+    );
+  }
+
+
+  addIndustries() {
+    this.industryService.createIndustry({industryName: this.industryInput}).subscribe(
+      data => {
+        this.updatePage().then(() => {
+          this.notifyService.showSuccess('industry added', 'Success');
+          this.industryInput = '';
+        });
+      },
+      error => this.notifyService.showError('could not add industry', 'Failed')
+    );
+  }
+
+  deleteIndustry(id) {
+    this.industryService.deleteIndustry(id).subscribe(
+      data => {
+        this.updatePage().then(() => {
+          this.notifyService.showSuccess('industry deleted', 'Success');
+          this.industryInput = '';
+        });
+      },
+      error => this.notifyService.showError('could not delete industry', 'Failed')
+    );
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+} // End of main class

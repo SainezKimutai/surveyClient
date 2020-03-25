@@ -19,12 +19,14 @@ import { SurveyService } from './shared/services/survey.service';
 import { QuestionService } from './shared/services/questions.service';
 import { ResponseService } from './shared/services/responses.service';
 import { FileUploadService } from 'src/app/shared/services/fileUpload.service';
-import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule, BsDatepickerModule, DatepickerModule } from 'ngx-bootstrap';
 import { CustomerGuard } from './shared/route-guards/customer.guard';
 import { AdminGuard } from './shared/route-guards/admin.guard';
 import { TokenGuard } from './shared/route-guards/token.guard';
 import { ThreatService } from './shared/services/threats.service';
 import { TrackerService } from './shared/services/tracker.service';
+import { TrackerReasonService } from './shared/services/trackerReasons.service';
+import { IndustryService } from './shared/services/industry.service';
 
  // tslint:disable: max-line-length
 @NgModule({
@@ -48,10 +50,12 @@ import { TrackerService } from './shared/services/tracker.service';
       positionClass: 'toast-bottom-right',
       preventDuplicates: false,
     }),
+    BsDatepickerModule.forRoot(),
+    DatepickerModule.forRoot(),
   ],
 
   providers: [AppCustomPreloader, TokenGuard, AdminGuard, CustomerGuard,  NotificationService, UserService, CompanyProfileService, SurveyService, QuestionService,
-    ResponseService, FileUploadService, ThreatService, TrackerService
+    ResponseService, FileUploadService, ThreatService, TrackerService, TrackerReasonService, IndustryService
     ],
   bootstrap: [AppComponent]
 })

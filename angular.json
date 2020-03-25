@@ -98,7 +98,8 @@
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/ngx-toastr/toastr.css",
               "src/assets/toastr/toastr.css",
-              "node_modules/chart.js/dist/Chart.css"
+              "node_modules/chart.js/dist/Chart.css",
+              "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",

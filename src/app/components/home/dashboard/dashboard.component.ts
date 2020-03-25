@@ -6,6 +6,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
 import { ResponseService } from 'src/app/shared/services/responses.service';
 import { ModalDirective } from 'ngx-bootstrap';
+import { ThreatService } from 'src/app/shared/services/threats.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,7 +26,8 @@ export class DashboardComponent implements OnInit {
     private companyProfileService: CompanyProfileService,
     private surveyService: SurveyService,
     private questionService: QuestionService,
-    private responseService: ResponseService
+    private responseService: ResponseService,
+    private threatService: ThreatService
   ) { }
 
   @ViewChild('viewAnswersModal', {static: true, }) viewAnswersModal: ModalDirective;
@@ -46,6 +48,7 @@ export class DashboardComponent implements OnInit {
   public AllSurveys = [];
   public AllQuestions = [];
   public AllResponses = [];
+  public AllThreats = [];
 
 // Top Cards variables
   public cardOneType: string;
@@ -77,12 +80,12 @@ export class DashboardComponent implements OnInit {
   public companyNameOnView = '';
   public surveyNameOnView = '';
 
-
+  public riskIssueArray = [];
 
 
 
   ngOnInit() {
-    this.updatePage().then(() => {this.topCardsChartFunction(); this.graphChartFuctions(); this.computeCompanyRiskRates(); } );
+    this.updatePage().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFuctions(); } );
     localStorage.setItem('ActiveNav', 'dashboard');
 
   }
@@ -97,7 +100,8 @@ updatePage() {
     this.userService.getAllUsers().subscribe( data => this.AllUsers = data, error => console.log('Error getting all users'));
     this.companyProfileService.getAllCompanyProfiles().subscribe( data => this.AllCompanies = data, error => console.log('Error getting all companies'));
     this.surveyService.getAllSurveys().subscribe( data => this.AllSurveys = data, error => console.log('Error getting all surveys'));
-    this.questionService.getAllQuestions().subscribe( data => this.AllQuestions = data, error => console.log('Error getting all questions'));
+    this.questionService.getAllQuestions().subscribe( data => { this.AllQuestions = data; }, error => console.log('Error getting all questions'));
+    this.threatService.getAllThreats().subscribe( data => {this.AllThreats = data; }, error => console.log('Error getting all threats') );
     this.responseService.getAllResponses().subscribe( data => {this.AllResponses = data; resolve(); }, error => console.log('Error getting all responses'));
 
   });
@@ -299,32 +303,45 @@ topCardsChartFunction() {
 
 
 graphChartFuctions() {
-  let mygraphDataSet = [];
-  this.AllCompanies.forEach((comp) => {
-    let allSurveysDone = this.AllResponses.filter((r) => r.companyId === comp._id ).map(e => e.surveyId);
-    let filteredSurveysDone = Array.from(new Set(allSurveysDone));
-    mygraphDataSet.push(filteredSurveysDone.length);
+  let lowArray = [];
+  let mediumArray = [];
+  let highArray = [];
+  let riskArray = this.riskIssueArray.filter(() => true ).map(e => e.risk);
+  let filterRiskArray = Array.from(new Set(riskArray));
+
+  filterRiskArray.forEach((risk) => {
+    let myRAray = this.riskIssueArray.filter((r) => r.risk === risk).map(e => e);
+    let low = myRAray.filter((r) => r.level === 'Low').map(e => e);
+    lowArray.push(low.length);
+    let medium = myRAray.filter((r) => r.level === 'Medium').map(e => e);
+    mediumArray.push(medium.length);
+    let high = myRAray.filter((r) => r.level === 'High').map(e => e);
+    highArray.push(high.length);
+
   });
 
   let myGraphLabelColors = [];
 
   this.graphType = 'bar';
 
-  this.graphLabels = this.AllCompanies.filter(() => true ).map(e => e.companyName);
+  this.graphLabels = filterRiskArray;
   this.graphLabels.forEach((e) => {
     myGraphLabelColors.push(this.getRandomColor());
   });
-  this.graphDatasets = [{
-      label: 'Risk',
-      data: mygraphDataSet,
-      backgroundColor: myGraphLabelColors,
-      borderColor: 'white',
-      borderWidth: 0.5,
-      pointBackgroundColor: 'transparent',
-      pointHoverBackgroundColor: 'transparent',
-      pointBorderColor: 'white',
-      pointHoverBorderColor: 'gray'
-    }];
+  this.graphDatasets = [
+
+    {
+      label: 'Low', data: lowArray,
+      backgroundColor: '#02b0cc'
+    }, {
+      label: 'Medium', data: highArray,
+      backgroundColor: 'orange'
+    }, {
+      label: 'High', data: highArray,
+      backgroundColor: 'red'
+    },
+
+  ];
 
 
 
@@ -350,19 +367,19 @@ graphChartFuctions() {
     },
     scales: {
       yAxes: [{
-          display: false,
+          display: true,
           gridLines: {
               drawBorder: false,
               display: false
           },
-          stacked: true,
+          stacked: false,
           ticks: {
               beginAtZero: true
           }
       }],
       xAxes: [{
-          display: false,
-          stacked: true,
+          display: true,
+          stacked: false,
           gridLines: {
               drawBorder: true,
               display: false
@@ -395,11 +412,11 @@ graphChartFuctions() {
 
 
 
-
 computeCompanyRiskRates() {
   this.AllCompanies.forEach( (comp) => {
     this.AllResponses.forEach((resp) => {
       if (comp._id === resp.companyId) {
+        console.log();
         for (let surv of this.AllSurveys) {
           if (resp.surveyId === surv._id) {
 
@@ -421,6 +438,82 @@ computeCompanyRiskRates() {
     });
   });
 }
+
+
+
+
+
+
+
+riskIssuesFuctions() {
+
+    this.AllResponses.forEach((resp, idx1, array1) => {
+
+      for (let surv of this.AllSurveys) {
+        if (surv._id === resp.surveyId) {
+
+          for (let comp of this.AllCompanies) {
+            if (comp._id === resp.companyId) {
+
+              resp.answers.forEach( (respAns, idx2, array2) => {
+
+                for (let quiz of this.AllQuestions) {
+
+                  if (respAns.questionId === quiz._id) {
+
+                    for (let qAns of quiz.choices) {
+
+                      if (respAns.answer[0].answer === qAns.answer) {
+
+                        for (let threat of this.AllThreats) {
+                          if (threat._id === qAns.threat) {
+                            let myRiskIssueObject = {
+                              risk: threat.name,
+                              level: threat.level,
+                              recom: threat.recom,
+                              surveyName: surv.surveyName,
+                              company: comp.companyName,
+                            };
+                            this.riskIssueArray.push(myRiskIssueObject);
+                            this.graphChartFuctions();
+                            break;
+                          }
+                        }
+                        break;
+                      }
+                      //
+                    }
+                    break;
+                  }
+
+                }
+              });
+
+              break;
+            }
+          }
+          break;
+        }
+      }
+    });
+}
+
+
+
+
+
+
+
+
+filterRisks() {
+
+}
+
+
+
+
+
+
 
 
 
