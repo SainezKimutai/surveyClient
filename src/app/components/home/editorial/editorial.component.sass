@@ -637,7 +637,9 @@
 
 .navigation-section .body
     background-color: white
-    height: 50%
+    min-height: 50%
+    height: fit-content
+    padding: 0 1em
 
     .search-wrap
         width: 100%
@@ -660,15 +662,16 @@
                 border-radius: 0px
                 background-color: transparent
                 
-    .create-new
+    .nav-tab
         cursor: pointer
         border-radius: 1em
-        width: 8em
+        width: 100%
         padding: .5em 1em
         box-shadow: 0 0 10px rgba(0, 0, 0, .3)
         color: grayColor(g800)
         margin: 0 auto 2em auto
-        text-align: center
+        text-align: left
+        font-size: 12px
 
         &.active
             background-color: colorTheme(primaryTheme)
@@ -678,27 +681,6 @@
                 margin-right: .5em
                 color: colorTheme(light)
 
-        fa-icon
-            margin-right: .5em
-            color: colorTheme(secondaryTheme)
-
-    .surveys
-        cursor: pointer
-        border-radius: 1em
-        width: 8em
-        padding: .5em 1em
-        box-shadow: 0 0 10px rgba(0, 0, 0, .3)
-        color: grayColor(g800)
-        margin: 0 auto 2em auto
-        text-align: center
-
-        &.active
-            background-color: colorTheme(primaryTheme)
-            color: colorTheme(light)
-
-            fa-icon
-                margin-right: .5em
-                color: colorTheme(light)
         fa-icon
             margin-right: .5em
             color: colorTheme(secondaryTheme)
@@ -1027,3 +1009,111 @@
 
 
 
+
+.addTrackerReasonModal
+    .modal-content
+        width: 100%
+        border: none
+        height: fit-content
+        max-height: 500px
+        overflow-x: scroll
+
+        .modal-header
+            width: 100%
+            border: none
+            background-color: colorTheme(warning)
+
+            h4 
+                font-size: 14px
+                color: white
+
+        .modal-body
+            width: 100%
+            border: none
+
+            .wrap
+                width: 100%
+                padding: .5em
+                border-bottom: solid 1px grayColor(g100)
+
+                h4
+                    width: 100%
+                    font-size: 12px
+
+                fa-icon
+                    cursor: pointer
+                    color: colorTheme(danger)
+                    font-size: 12px
+
+            input 
+                width: 100%
+                border-radius: 2px
+                padding: .5em
+                border: none
+                outline: none
+                margin: 0 10px 10px 0
+                background-color: grayColor(g100)
+                font-size: 12px
+
+
+        .modal-footer
+            button 
+                font-size: 12px
+                background-color: colorTheme(warning)
+                color: white
+        
+
+
+
+.addIndustriesModal
+    .modal-content
+        width: 100%
+        border: none
+        height: fit-content
+        max-height: 500px
+        overflow-x: scroll
+
+        .modal-header
+            width: 100%
+            border: none
+            background-color: purple
+
+            h4 
+                font-size: 14px
+                color: white
+
+
+        .modal-body
+            width: 100%
+            border: none
+
+            .wrap
+                width: 100%
+                padding: .5em
+                border-bottom: solid 1px grayColor(g100)
+
+                h4
+                    width: 100%
+                    font-size: 12px
+
+                fa-icon
+                    cursor: pointer
+                    color: colorTheme(danger)
+                    font-size: 12px
+
+            input 
+                width: 100%
+                border-radius: 2px
+                padding: .5em
+                border: none
+                outline: none
+                margin: 0 10px 10px 0
+                background-color: grayColor(g100)
+                font-size: 12px
+
+        .modal-footer
+            button 
+                font-size: 12px
+                background-color: purple
+                color: white
+        

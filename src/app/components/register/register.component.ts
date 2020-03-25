@@ -4,6 +4,7 @@ import { CompanyProfileService } from 'src/app/shared/services/companyProfile.se
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { Router } from '@angular/router';
+import { IndustryService } from 'src/app/shared/services/industry.service';
 
 
 @Component({
@@ -17,9 +18,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private router: Router,
     private userService: UserService,
     private companyProfileService: CompanyProfileService,
+    private industryService: IndustryService,
     private notifyService: NotificationService
   ) { }
 
+
+  public AllIndustrys = [];
 
   public ImprintLoader = false;
   public faBuilding = faBuilding;
@@ -59,6 +63,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
       email: '',
       userType: 'customer'
     };
+
+    this.industryService.getAllIndustrys().subscribe(
+      data => this.AllIndustrys = data,
+      error => console.log('Error getting all industries')
+    );
+
     // this.superAdmin();
 
   }

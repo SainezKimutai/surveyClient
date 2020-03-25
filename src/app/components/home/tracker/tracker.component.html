@@ -97,7 +97,7 @@
             <h4 class="mr-auto">{{trackerOnView.name}}</h4>
 
             <button class="btn btn-sm btn-edit mr-4" (click)="editTracker()">Edit</button>
-            <button class="btn btn-sm btn-remove"  (click)="deleteTracker(trackerOnView._id)">Delete</button>
+            <button class="btn btn-sm btn-remove"  (click)="deleteModal.show()">Delete</button>
              
         </div>
 
@@ -379,13 +379,16 @@
                 </div>
                 <div class="input-wrap">
                     <input type="number" #value class="" name="value" [(ngModel)]="weeklyInput.value">
-                    <input type="number" name="week" [(ngModel)]="weeklyInput.week">
+                    <input type="number" readonly name="week" [(ngModel)]="weeklyInput.week">
                 </div>
                 <div class="input-wrap">
                      <!-- Reason -->
                     <div class="form-group">
                         <label for="reason">Reason</label>
-                        <textarea type="text" #reason class="" name="reason" [(ngModel)]="weeklyInput.reason"> </textarea>
+                        <select type="text" #reason class="" name="reason" [(ngModel)]="weeklyInput.reason"> 
+                            <option value="" disabled selected hidden >...select reason</option>
+                            <option *ngFor="let item of AllTrackerReasons"  [value]="item.reason">{{item.reason}}</option>  
+                        </select>
                     </div>
 
                     <!-- Comment -->
@@ -508,6 +511,33 @@
   </div><!-- /.modal -->
 
 
+
+
+
+  
+  <div bsModal  #deleteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog deleteModal modal-sm" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title ">Delete</h4>
+            <button type="button" class="btn close" (click)="deleteModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      
+        </div>
+        <div class="modal-body" >
+            <p>
+                Are you sure ?
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-outline-danger"  (click)="deleteTracker(trackerOnView._id)" aria-label="Close">
+                Yes
+              </button>
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
 
     
 

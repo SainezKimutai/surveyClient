@@ -5,7 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
-import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule, BsDatepickerModule, DatepickerModule } from 'ngx-bootstrap';
 import { TrackerRoutingModule } from './tracker-routing.module';
 import { TrackerComponent } from './tracker.component';
 
@@ -29,7 +29,9 @@ import { TrackerComponent } from './tracker.component';
         timeOut: 5000,
         positionClass: 'toast-bottom-right',
         preventDuplicates: false,
-      })
+      }),
+      BsDatepickerModule.forRoot(),
+      DatepickerModule.forRoot(),
 
     ]
 

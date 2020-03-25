@@ -256,21 +256,29 @@
            
         </div>
 
-        <div [ngClass]="FormSectionStatus ? 'create-new active' : 'create-new'" (click)="createNewSurveyTemplate()">
+        <div [ngClass]="FormSectionStatus ? 'nav-tab active' : 'nav-tab'" (click)="createNewSurveyTemplate()">
             <fa-icon [icon]="faPlus"></fa-icon>
             Survey
         </div>
 
-        <div class="create-new" (click)="addThreatModal.show()">
-            <fa-icon [icon]="faPlus"></fa-icon>
-            Threats
-        </div>
-
-        <div [ngClass]="TemeplateViewSectionStatus ? 'surveys active' : 'surveys'" (click)="viewSurveyTemplates()">
+        <div [ngClass]="TemeplateViewSectionStatus ? 'nav-tab active' : 'nav-tab'" (click)="viewSurveyTemplates()">
             <fa-icon [icon]="faListAlt"></fa-icon>
             Surveys
         </div>
-
+        
+        <div class="nav-tab" (click)="addThreatModal.show()">
+            <fa-icon [icon]="faFire"></fa-icon>
+            Threat
+        </div>
+        
+        <div class="nav-tab" (click)="addTrackerReasonModal.show()">
+            <fa-icon [icon]="faComments"></fa-icon>
+            Tracker Reasons
+        </div>
+        <div class="nav-tab" (click)="addIndustriesModal.show()">
+            <fa-icon [icon]="faBuilding"></fa-icon>
+            Industries
+        </div>
 
     </div>
 
@@ -526,3 +534,70 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
+
+<div bsModal  #addTrackerReasonModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog addTrackerReasonModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title"> Tracker Reasons</h4>
+            <button type="button" class="btn close" (click)="addTrackerReasonModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <div class="wrap d-flex" *ngFor="let item of AllTrackerReasons">
+                <h4>{{item.reason}}</h4>
+                <fa-icon [icon]="faTrash" (click)="deleteTrackerReason(item._id)"></fa-icon>
+            </div>
+            <input type="text" name="trackerReasonInput" [(ngModel)]="trackerReasonInput" placeholder="Type here">
+        </div>
+        <div class="modal-footer">
+            <button [disabled]="trackerReasonInput === ''" type="button" class="btn btn-confirm" (click)="addTrackerReason()">Add</button>
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+<div bsModal  #addIndustriesModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog addIndustriesModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title"> Industries Types</h4>
+            <button type="button" class="btn close" (click)="addIndustriesModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <div class="wrap d-flex" *ngFor="let item of AllIndustrys">
+                <h4>{{item.industryName}}</h4>
+                <fa-icon [icon]="faTrash" (click)="deleteIndustry(item._id)"></fa-icon>
+            </div>
+            <input type="text" name="industryInput"[(ngModel)]="industryInput" placeholder="Type here">
+        </div>
+        <div class="modal-footer">
+            <button [disabled]="industryInput === ''"  type="button" class="btn btn-confirm" (click)="addIndustries()">Add</button>
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
