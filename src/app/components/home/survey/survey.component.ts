@@ -69,7 +69,7 @@ export class SurveyComponent implements OnInit {
 
 
   checkForCompletedSurveys() {
-    if (localStorage.getItem('permissionStatus') ===  'isCustomer') {
+
      this.AllSurveys =  this.AllSurveys.filter((surv) => {
         const myResponses = this.AllResponses.filter((resp) => (resp.companyId === localStorage.getItem('loggedCompanyId') && resp.surveyId === surv._id) && resp.userId === localStorage.getItem('loggedUserID') ).map( e => e);
         if (myResponses.length > 0) {
@@ -82,7 +82,7 @@ export class SurveyComponent implements OnInit {
         }
         return true;
       }).map( e => e);
-    }
+
 
   }
 

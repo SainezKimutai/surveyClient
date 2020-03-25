@@ -71,13 +71,12 @@ export class AnswerComponent implements OnInit {
   checkIfSurveyHadBeenAnsweredBefore() {
     const myResponses = this.AllResponses.filter((resp) => (resp.companyId === localStorage.getItem('loggedCompanyId') && resp.surveyId === this.surveyId) && resp.userId === localStorage.getItem('loggedUserID') ).map( e => e);
 
-    if (myResponses.length > 0) {
+    if (myResponses.length > 0 ) {
       this.myPreviousResponseId = myResponses[0]._id;
       this.myPreviousAnswers = myResponses[0].answers;
       this.DoneQuestions = Number(this.myPreviousAnswers.length);
       this.structureQuestions();
       this.continuationFromBefore(this.DoneQuestions);
-
     } else {
 
       this.DoneQuestions = 0;
@@ -155,12 +154,13 @@ export class AnswerComponent implements OnInit {
   continuationFromBefore(id) {
 
     this.questionService.getQuestionsInASurvey(this.surveyId).
-    subscribe(data => {this.questions = data.sort((a, b) =>  a.position - b.position);  this.formatQuestions2(id); this.structureAnswers2(id); }, err => console.log(err));
+    subscribe(data => {this.questions = data.sort((a, b) =>  a.position - b.position); console.log(this.questions);  this.formatQuestions2(id); this.structureAnswers2(id); }, err => console.log(err));
 
   }
 
 
   formatQuestions2(myId) {
+
     if (this.questions.length > 0) {
       this.questionTag = this.questions[myId].question;
       this.open = this.questions[myId].open_question;
@@ -169,6 +169,7 @@ export class AnswerComponent implements OnInit {
       this.options = this.questions[myId].choices;
       this.pageNumber = myId + 1;
       this.totalPages = this.questions.length;
+
 
       if (this.questions.length === 1) {
         this.isLast = true;
