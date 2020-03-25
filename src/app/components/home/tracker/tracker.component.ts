@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { Router } from '@angular/router';
-import { faPlus, faListAlt, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faListAlt, faTrash, faEyeSlash, faEye, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { ResponseService } from 'src/app/shared/services/responses.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { TrackerService } from 'src/app/shared/services/tracker.service';
+import { ModalDirective } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-tracker',
@@ -18,6 +19,9 @@ export class TrackerComponent implements OnInit {
       private notifyService: NotificationService,
       private trackerService: TrackerService
     ) {}
+
+@ViewChild('viewCommentsModal', {static: true, }) viewCommentsModal: ModalDirective;
+@ViewChild('viewRecomModal', {static: true, }) viewRecomModal: ModalDirective;
 
 @ViewChild('name', {static: false}) name: ElementRef;
 @ViewChild('kpiTarget', {static: false}) kpiTarget: ElementRef;
@@ -36,8 +40,11 @@ public ImprintLoader = false;
 // icons
 public faPlus = faPlus;
 public faTrash = faTrash;
+public faEye = faEye;
+public faEmpty = faEyeSlash;
 public faListAlt = faListAlt;
 public faSearch = faSearch;
+
 
 
 //
@@ -45,6 +52,8 @@ public AllTrackers = [];
 
 // status
 public formSectionStatus = false;
+public editformSectionStatus = false;
+public bcpFunctionDefaults = false;
 public listSectionStatus = true;
 public viewSectionStatus = false;
 
@@ -62,6 +71,12 @@ public weeklyArray = [];
 public weeklyInput;
 
 public trackerFormId = '';
+
+// modal data holders
+public weeklyReportReason: any;
+public weeklyReportComments: any;
+public observation: any;
+public recommendation: any;
 
 
 
@@ -111,7 +126,9 @@ creatNewForm() {
 
   this.weeklyInput = {
     value: null,
-    week: null
+    week: null,
+    reason: null,
+    comment: null
   };
   this.weeklyArray = [];
   this.kpiMeasureCatsArray = [];
@@ -130,6 +147,7 @@ createNewTracker() {
 
 listTracker() {
   this.formSectionStatus = false;
+  this.editformSectionStatus = false;
   this.listSectionStatus = true;
   this.viewSectionStatus = false;
 }
@@ -149,6 +167,13 @@ openTracker(id) {
 
 }
 
+viewBcpFunctionDefaults(){
+  this.bcpFunctionDefaults = true;
+}
+hideBcpFunctionDefaults(){
+  this.bcpFunctionDefaults = false;
+}
+
 
 editTracker() {
   this.trackerFormId = this.trackerOnView._id;
@@ -156,13 +181,13 @@ editTracker() {
     name: this.trackerOnView.name,
     kpiTarget: this.trackerOnView.kpiTarget,
     kpiUnit: this.trackerOnView.kpiUnit,
-    kpiMeasureCats: this.trackerOnView.kpiMeasureCats,
+    // kpiMeasureCats: this.trackerOnView.kpiMeasureCats,
     kpiActual: this.trackerOnView.kpiActual,
     monthly: this.trackerOnView.monthly,
     weekly: this.trackerOnView.weekly,
-    weeklyActual: this.trackerOnView.weeklyActual,
-    reason: this.trackerOnView.reason,
-    comment: this.trackerOnView.comment
+    // weeklyActual: this.trackerOnView.weeklyActual,
+    // reason: this.trackerOnView.reason,
+    // comment: this.trackerOnView.comment
   };
 
   this.kpiMeasureCatInput = {
@@ -173,39 +198,17 @@ editTracker() {
 
   this.weeklyInput = {
     value: null,
-    week: null
+    week: null,
+    reason: null,
+    comment: null
   };
   this.weeklyArray = this.trackerOnView.weekly;
   this.kpiMeasureCatsArray = this.trackerOnView.kpiMeasureCats;
 
-  this.formSectionStatus = true;
+  this.editformSectionStatus = true;
   this.listSectionStatus = false;
   this.viewSectionStatus = false;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 addKpiMeasureCatInput() {
@@ -224,9 +227,12 @@ removeKpiMeasureCatInput(x) {
 
 addWeeklyInput() {
   this.weeklyArray.push(this.weeklyInput);
+  console.log(this.weeklyArray);
   this.weeklyInput = {
     value: null,
-    week: null
+    week: null,
+    reason: null,
+    comment: null
   };
 }
 
@@ -257,49 +263,6 @@ validateForm() {
     setTimeout(() => { this.kpiUnit.nativeElement.className = ''; }, 4000);
     this.notifyService.showWarning('... input kpiUnit', 'Empty Field');
 
-
-  } else if (this.kpiMeasureCatsArray.length === 0) {
-    this.cat.nativeElement.focus(); this.cat.nativeElement.className = 'inputEror';
-    setTimeout(() => { this.cat.nativeElement.className = ''; }, 4000);
-    this.notifyService.showWarning('... input kpi Measure Categories', 'Empty Field');
-
-
-  } else if (this.bcpFunctionInput.kpiActual === null) {
-    this.kpiActual.nativeElement.focus(); this.kpiActual.nativeElement.className = 'inputEror';
-    setTimeout(() => { this.kpiActual.nativeElement.className = ''; }, 4000);
-    this.notifyService.showWarning('... input kpi Actual', 'Empty Field');
-
-
-  } else if (this.bcpFunctionInput.monthly === null ) {
-    this.monthly.nativeElement.focus(); this.monthly.nativeElement.className = 'inputEror';
-    setTimeout(() => { this.monthly.nativeElement.className = ''; }, 4000);
-    this.notifyService.showWarning('... input monthly', 'Empty Field');
-
-
-  } else if (this.weeklyArray.length === 0) {
-    this.value.nativeElement.focus(); this.value.nativeElement.className = 'inputEror';
-    setTimeout(() => { this.value.nativeElement.className = ''; }, 4000);
-    this.notifyService.showWarning('... input weekly', 'Empty Field');
-
-
-  } else if (this.bcpFunctionInput.weeklyActual === null ) {
-    this.weeklyActual.nativeElement.focus(); this.weeklyActual.nativeElement.className = 'inputEror';
-    setTimeout(() => { this.weeklyActual.nativeElement.className = ''; }, 4000);
-    this.notifyService.showWarning('... input weekly Actual', 'Empty Field');
-
-
-  } else if (this.bcpFunctionInput.reason === '') {
-    this.reason.nativeElement.focus(); this.reason.nativeElement.className = 'inputEror';
-    setTimeout(() => { this.reason.nativeElement.className = ''; }, 4000);
-    this.notifyService.showWarning('... input reason', 'Empty Field');
-
-
-  } else if (this.bcpFunctionInput.comment === '') {
-    this.comment.nativeElement.focus(); this.comment.nativeElement.className = 'inputEror';
-    setTimeout(() => { this.comment.nativeElement.className = ''; }, 4000);
-    this.notifyService.showWarning('... input comment', 'Empty Field');
-
-
   } else {
     this.ImprintLoader = true;
 
@@ -316,27 +279,14 @@ validateForm() {
 
 
 
-
-
-
-
-
-
-
-
 AddBcpTracker() {
   const myBCPdata = {
     companyId: localStorage.getItem('loggedCompanyId'),
     name: this.bcpFunctionInput.name,
     kpiTarget: this.bcpFunctionInput.kpiTarget,
     kpiUnit: this.bcpFunctionInput.kpiUnit,
-    kpiMeasureCats: this.kpiMeasureCatsArray,
-    kpiActual: this.bcpFunctionInput.kpiActual,
-    monthly: this.bcpFunctionInput.monthly,
-    weekly: this.weeklyArray,
-    weeklyActual: this.bcpFunctionInput.weeklyActual,
-    reason: this.bcpFunctionInput.reason,
-    comment: this.bcpFunctionInput.comment
+    kpiActual: 0,
+    monthly: this.bcpFunctionInput.kpiTarget,
   };
 
   this.bcpFunctionsArray.push(myBCPdata);
@@ -358,28 +308,29 @@ AddBcpTracker() {
 
 
 
-updateBcpTracker() {
+async updateBcpTracker() {
+  let actual =0;
+  await this.weeklyArray.forEach(week => {
+    actual = actual + week.value;
+  });
   const myBCPdata = {
     _id: this.trackerOnView._id,
     companyId: localStorage.getItem('loggedCompanyId'),
     name: this.bcpFunctionInput.name,
     kpiTarget: this.bcpFunctionInput.kpiTarget,
     kpiUnit: this.bcpFunctionInput.kpiUnit,
-    kpiMeasureCats: this.kpiMeasureCatsArray,
-    kpiActual: this.bcpFunctionInput.kpiActual,
+    kpiActual: actual,
     monthly: this.bcpFunctionInput.monthly,
     weekly: this.weeklyArray,
-    weeklyActual: this.bcpFunctionInput.weeklyActual,
-    reason: this.bcpFunctionInput.reason,
-    comment: this.bcpFunctionInput.comment
   };
-
+  console.log(myBCPdata);
 
   this.trackerService.updateTracker(myBCPdata._id, myBCPdata).subscribe(
     data => {
       this.updatePage().then(() => {
       this.ImprintLoader = false;
       this.notifyService.showSuccess('Tracker Updated', 'Success');
+      this.editformSectionStatus = false;
       this.openTracker(this.trackerOnView._id);
       });
     },
@@ -403,6 +354,29 @@ deleteTracker(id) {
     },
     error => { this.ImprintLoader = false; this.notifyService.showError('could not delete tracker', 'Failed'); }
   );
+}
+
+viewWeeklyReportResponse(reason, comments){
+  this.weeklyReportReason = reason;
+  this.weeklyReportComments = comments;
+  this.viewCommentsModal.show();
+}
+
+viewWeeklyReportRecommendations(value, target, unit){
+  const expected_capacity = target/4;
+  const attained_capacity = value/expected_capacity*100;
+  if(attained_capacity<50){
+    this.observation = "Mapped risk is high due to low productivity("+attained_capacity+"%)";
+    this.recommendation = "Escalate to management.";
+  }else if(49<attained_capacity && attained_capacity<70){
+    this.observation = "Mapped risk is Medium due to average productivity("+attained_capacity+"%)";
+    this.recommendation = "Improve on implementation.";
+  }else if(attained_capacity>69){
+    this.observation = "Mapped risk is low due to good productivity("+attained_capacity+"%)";
+    this.recommendation = "You are on the right track, improve on any week points.";
+  }
+  this.viewRecomModal.show();
+
 }
 
 
