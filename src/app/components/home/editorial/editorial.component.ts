@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { faPlus, faSearch, faListAlt, faBackward, faEdit, faTrash, faBuilding, faComments, faFire} from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSearch, faListAlt, faTrashAlt,faExclamationTriangle, faEye, faBackward, faEdit, faTrash, faBuilding, faComments, faFire} from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
@@ -30,6 +30,7 @@ export class EditorialComponent implements OnInit {
 @ViewChild('editModal', {static: true, }) editModal: ModalDirective;
 @ViewChild('addQuizModal', {static: true, }) addQuizModal: ModalDirective;
 @ViewChild('addThreatModal', {static: true}) addThreatModal: ModalDirective;
+@ViewChild('deletePromptModal',{static: true}) deletePromptModal: ModalDirective;
 
   // loader
   public ImprintLoader = false;
@@ -45,6 +46,9 @@ export class EditorialComponent implements OnInit {
   public faFire = faFire;
   public faBuilding = faBuilding;
   public faComments = faComments;
+  public faDelete = faTrashAlt;
+  public faEye = faEye;
+  public faWarning = faExclamationTriangle;
 
 
   //
@@ -90,19 +94,27 @@ export class EditorialComponent implements OnInit {
 
 // status
   public FormSectionStatus = false;
+  public ThreatSectionStatus = false;
   public TemeplateViewSectionStatus = true;
   public QuestionsViewStatus = false;
   public SurveyFormStatus = true;
   public QuestionFormStatus = false;
+  public ThreatsViewSectionStatus = false;
 
   public threatName = '';
   public threatLevel = '';
   public threatRecom = '';
-
-
+  public openThreat = {};
+  public openThreatName = '';
+  public isEditThreatModal=false;
 
   public trackerReasonInput = '';
   public industryInput = '';
+
+  // Delete Modal 
+  public warningMessage ='';
+  public itemIdToDelete = '';
+  public modalName = '';
 
 
 
@@ -145,13 +157,17 @@ export class EditorialComponent implements OnInit {
   createNewSurveyTemplate() {
     this.FormSectionStatus = true;
     this.TemeplateViewSectionStatus = false;
+    this.ThreatSectionStatus = false;
     this.QuestionsViewStatus = false;
+    this.ThreatsViewSectionStatus = false;
   }
 
   viewSurveyTemplates() {
     this.FormSectionStatus = false;
     this.TemeplateViewSectionStatus = true;
+    this.ThreatSectionStatus = false;
     this.QuestionsViewStatus = false;
+    this.ThreatsViewSectionStatus = false;
   }
 
 
@@ -170,7 +186,62 @@ export class EditorialComponent implements OnInit {
 
   }
 
+  prompSurveyDelete(id){
+    this.warningMessage = 'This operation will delete the survey, the questions associated with the survey and their responses';
+    this.itemIdToDelete = id;
+    this.modalName = 'survey';
+    this.deletePromptModal.show();
+  }
 
+  closeDeleteModal(){
+    this.warningMessage = '';
+    this.itemIdToDelete = '';
+    this.modalName = '';
+    this.deletePromptModal.hide();
+  }
+  delete(){
+    if(this.modalName === 'survey'){
+      this.surveyService.deleteSurvey(this.itemIdToDelete).subscribe(data => {
+        this.warningMessage = '';
+        this.itemIdToDelete = '';
+        this.modalName = '';
+        this.deletePromptModal.hide();
+        this.updatePage()
+      }, 
+      error=>this.notifyService.showError("Survey was not deleted", "Failed"))
+    }
+    if(this.modalName === 'threat'){
+      this.threatService.deleteThreat(this.itemIdToDelete).subscribe(data => {
+        this.warningMessage = '';
+        this.itemIdToDelete = '';
+        this.modalName = '';
+        this.deletePromptModal.hide();
+        this.updatePage()
+      }, 
+      error=>this.notifyService.showError("Threat was not deleted", "Failed"))
+    }
+  }
+
+  prompThreatDelete(id){
+    this.warningMessage = 'This operation will delete the threat object';
+    this.itemIdToDelete = id;
+    this.modalName = 'threat';
+    this.deletePromptModal.show();
+  }
+
+   
+  
+  viewThreat(item){
+
+    this.openThreat = item;
+    this.threatName = item.name;
+    this.threatLevel = item.level;
+    this.threatRecom = item.recom;
+
+    this.isEditThreatModal = true;
+    this.addThreatModal.show();
+    
+  }
 
 
   swithToQuestionForm() {
@@ -362,6 +433,8 @@ export class EditorialComponent implements OnInit {
 
   closeaddThreatModal() {
     this.addThreatModal.hide();
+    this.isEditThreatModal=false;
+    this.ThreatSectionStatus = false;
   }
 
   closeAddQuizModal() {
@@ -426,15 +499,23 @@ export class EditorialComponent implements OnInit {
 
 
 
+  getThreats(){
+    this.TemeplateViewSectionStatus = false;
+    this.ThreatsViewSectionStatus = true;
+    this.ThreatsViewSectionStatus = true;
+    this.FormSectionStatus = false;
+  }
 
-
-
-
-
-
-
-
-
+  clearThreat(){
+    this.ThreatSectionStatus = true;
+    this.FormSectionStatus = false;
+    this.TemeplateViewSectionStatus = false;
+    this.ThreatsViewSectionStatus = true;
+    this.threatName = '';
+    this.threatRecom = '';
+    this.threatLevel='';
+  }
+  
   addThreat() {
     let myData = {
       name: this.threatName,
@@ -447,6 +528,21 @@ export class EditorialComponent implements OnInit {
       data => {this.updatePage().then(() => { this.notifyService.showSuccess('Threat added', 'Success'); this.addThreatModal.hide(); } ); },
       error => this.notifyService.showError('could not create threat', 'Failed')
     );
+  }
+
+  editThreat() {
+    let myData = {
+      name: this.threatName,
+      level: this.threatLevel,
+      recom: this.threatRecom,
+      alias: ''
+    };
+
+    this.threatService.updateThreat(this.openThreat['_id'], myData).subscribe(
+      data => {this.updatePage().then(() => { this.notifyService.showSuccess('Threat added', 'Success'); this.addThreatModal.hide(); } ); },
+      error => this.notifyService.showError('could not create threat', 'Failed')
+    );
+
   }
 
 

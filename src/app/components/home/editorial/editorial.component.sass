@@ -557,16 +557,33 @@
                     margin: 2em 1em 0 0
                     font-size: 14px 
                     color: colorTheme(secondaryTheme)
+                
 
                 h4
                     margin: 2em 0
                     font-size: 14px 
                     font-weight: bold
                     color: grayColor(g800)
-
                 &:hover
                     h4
                         color: colorTheme(secondaryTheme)
+            .Low
+                color: red
+            .Medium
+                color: orange
+            .High
+                color: red
+            .editIcon
+                float: left
+                margin-left: 20px
+                margin-bottom: 10px
+                color: green
+            .deleteIcon
+                float: right
+                margin-right: 20px
+                margin-bottom: 10px
+                color: red
+
 
 
 
@@ -967,6 +984,21 @@
 
 
 
+
+.deletePromptModal
+    .modal-header
+        background-color: colorTheme(warning) !important
+        .modal-title
+            font-size: 15px
+            font-family: Montserrat
+            color: white
+    .modal-footer
+            .delete 
+                background-color: colorTheme(warning)
+                color: white
+            .cancel
+                background-color: colorTheme(success)
+                color: white
 
 
 
