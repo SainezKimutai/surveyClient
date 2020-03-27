@@ -18,7 +18,7 @@
         <div class="btn-wrap">
         <div [ngClass]="FormSectionStatus ? 'create-new active' : 'create-new'" (click)="createNewSurveyTemplate()">
             <fa-icon class="addicon" [icon]="faPlus"></fa-icon>
-            <span>Create</span> 
+            <span>Survey</span> 
         </div>
     
         
@@ -27,9 +27,14 @@
             <span>Surveys</span> 
         </div>
 
-        <div class="nav-tab" (click)="addThreatModal.show()">
-            <fa-icon [icon]="faFire"></fa-icon>
+        <div [ngClass]="FormSectionStatus ? 'create-new active' : 'create-new'" (click)="clearThreat();addThreatModal.show()">
+            <fa-icon class="addicon" [icon]="faPlus"></fa-icon>
             <span>Threat</span> 
+        </div>
+
+        <div class="nav-tab" (click)="getThreats();">
+            <fa-icon [icon]="faFire"></fa-icon>
+            <span>Threats</span> 
         </div>
         
         <div class="nav-tab" (click)="addTrackerReasonModal.show()">
@@ -202,7 +207,7 @@
 <section class="templates-section" *ngIf="TemeplateViewSectionStatus">
 
     <div class="card-group">
-        <div class="card" *ngFor="let item of AllSurveys" (click)="viewSurvey(item.surveyName, item._id)">  
+        <div class="card" *ngFor="let item of AllSurveys">  
             <div class="card-header">
 
             </div>
@@ -210,8 +215,10 @@
                 <fa-icon [icon]="faListAlt"></fa-icon>
                 <h4>{{item.surveyName}}</h4>
             </div>
-      
-          
+            <div>
+                <fa-icon class="editIcon" [icon]="faEye" (click)="viewSurvey(item.surveyName, item._id)"></fa-icon>
+                <fa-icon class="deleteIcon" [icon]="faDelete" (click)="prompSurveyDelete(item._id)"></fa-icon>
+            </div>
 
         </div>
 
@@ -222,6 +229,41 @@
             <div class="card-body">
                 <fa-icon [icon]="faListAlt"></fa-icon>
                 <h4>No Template</h4>
+            </div>
+           
+        </div>
+    </div>
+
+</section>
+
+<section class="templates-section" *ngIf="ThreatsViewSectionStatus">
+
+    <div class="card-group">
+        <div class="card" *ngFor="let item of AllThreats">  
+            <div class="card-header">
+
+            </div>
+            <div class="card-body">
+                <fa-icon [icon]="faListAlt"></fa-icon>
+                <h4>{{item.name}}</h4>
+            </div>
+            <div [ngClass] = "item.level">
+                <p>{{item.level}}</p>
+            </div>
+            <div>
+                <fa-icon class="editIcon" [icon]="faEye" (click)="viewThreat(item)"></fa-icon>
+                <fa-icon class="deleteIcon" [icon]="faDelete" (click)="prompThreatDelete(item._id)"></fa-icon>
+            </div>
+
+        </div>
+
+        <div class="card" *ngIf="AllThreats.length === 0">
+            <div class="card-header">
+
+            </div>
+            <div class="card-body">
+                <fa-icon [icon]="faListAlt"></fa-icon>
+                <h4>No Threats</h4>
             </div>
            
         </div>
@@ -275,9 +317,14 @@
             Surveys
         </div>
         
-        <div class="nav-tab" (click)="addThreatModal.show()">
-            <fa-icon [icon]="faFire"></fa-icon>
+        <div [ngClass]="ThreatSectionStatus ? 'nav-tab active' : 'nav-tab'" (click)="clearThreat(); addThreatModal.show()">
+            <fa-icon [icon]="faPlus"></fa-icon>
             Threat
+        </div>
+
+        <div [ngClass]="ThreatsViewSectionStatus ? 'nav-tab active' : 'nav-tab'" class="nav-tab" (click)="getThreats()">
+            <fa-icon [icon]="faFire"></fa-icon>
+            Threats
         </div>
         
         <div class="nav-tab" (click)="addTrackerReasonModal.show()">
@@ -573,7 +620,8 @@
         </div>
         <div class="modal-footer">
      
-            <button [disabled]="threatName === '' || threatLevel === '' || threatRecom === ''" type="button" class="btn btn-confirm" (click)="addThreat()">Save</button>
+            <button *ngIf="!isEditThreatModal" [disabled]="threatName === '' || threatLevel === '' || threatRecom === ''" type="button" class="btn btn-confirm" (click)="addThreat()">Save</button>
+            <button *ngIf="isEditThreatModal"  [disabled]="threatName === '' || threatLevel === '' || threatRecom === ''" type="button" class="btn btn-confirm"  (click)="editThreat()">Edit</button>
         </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -626,6 +674,29 @@
         </div>
         <div class="modal-footer">
             <button [disabled]="industryInput === ''"  type="button" class="btn btn-confirm" (click)="addIndustries()">Add</button>
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal  #deletePromptModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog deletePromptModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title">Delete?</h4>
+            <button (click)="closeDeleteModal()" type="button" class="btn close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <div class="wrap d-flex">
+                <fa-icon [icon]="faWarning" style="color: yellow; size: 40px;"></fa-icon>
+                <p>{{warningMessage}}</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button  class="btn btn-confirm cancel" (click)="closeDeleteModal()">Cancel</button>
+            <button  type="button" class="btn btn-confirm delete" (click)="delete()">Delete</button>
         </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

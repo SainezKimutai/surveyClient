@@ -314,6 +314,11 @@ export class AnswerComponent implements OnInit {
 
   }
 
+  back(){
+    if ( localStorage.getItem('permissionStatus') === 'isThirdParty') {  this.router.navigate(['/home/dashboard']); }
+    if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  this.router.navigate(['/home/dashboard']); }
+    if ( localStorage.getItem('permissionStatus') === 'isCustomer') { this.router.navigate(['/home/survey']); }
+  }
 
 
 }
