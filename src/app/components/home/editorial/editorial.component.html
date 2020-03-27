@@ -590,7 +590,7 @@
     <div class="modal-dialog addThreatModal" role="document">
         <div class="modal-content">
         <div class="modal-header ">
-            <h4 class="modal-title ">Add Threat</h4>
+            <h4 class="modal-title ">Threat</h4>
             <button type="button" class="btn close" (click)="closeaddThreatModal()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -620,7 +620,7 @@
         </div>
         <div class="modal-footer">
      
-            <button *ngIf="!isEditThreatModal" [disabled]="threatName === '' || threatLevel === '' || threatRecom === ''" type="button" class="btn btn-confirm" (click)="addThreat()">Save</button>
+            <button *ngIf="!isEditThreatModal" [disabled]="threatName === '' || threatLevel === '' || threatRecom === ''" type="button" class="btn btn-confirm" (click)="addThreat()">Add</button>
             <button *ngIf="isEditThreatModal"  [disabled]="threatName === '' || threatLevel === '' || threatRecom === ''" type="button" class="btn btn-confirm"  (click)="editThreat()">Edit</button>
         </div>
         </div><!-- /.modal-content -->
