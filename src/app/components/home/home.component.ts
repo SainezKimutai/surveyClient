@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { faBars, faArrowLeft, faChartLine, faEdit, faUser, faListAlt, faPowerOff,
+import { faBars, faArrowLeft, faChartLine, faEdit, faUser, faUsers, faListAlt, faPowerOff,
   faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
@@ -33,6 +33,7 @@ public faListAlt = faListAlt;
 public faPowerOff = faPowerOff;
 public faEdit = faEdit;
 public faProjectDiagram = faProjectDiagram;
+public faUsers = faUsers;
 
 
 // permisions
@@ -51,6 +52,7 @@ public profileNavBarActive = false;
 public editorialNavBarActive = false;
 public reportsNavBarActive = false;
 public trackerNavBarActive = false;
+public usersNavBarActive = false;
 
 public myInterval;
 
@@ -64,18 +66,18 @@ public myInterval;
 
   ngOnInit() {
 
-    if (window.localStorage.getItem('permissionStatus') === 'isAdmin') {
+    if (localStorage.getItem('permissionStatus') === 'isAdmin') {
       this.toAdmin = true;
-    } else if (window.localStorage.getItem('permissionStatus') === 'isCustomer') {
+    } else if (localStorage.getItem('permissionStatus') === 'isCustomer') {
         this.toCustomer = true;
-    } else if (window.localStorage.getItem('permissionStatus') === 'isThirdParty') {
+    } else if (localStorage.getItem('permissionStatus') === 'isThirdParty') {
         this.toThirdParty = true;
     }
 
 
     this.myInterval = setInterval(() => {
       this.CheckActiveNavBar();
-    }, 700);
+    }, 50);
 
 
   } //
@@ -94,12 +96,14 @@ CheckActiveNavBar() {
   this.editorialNavBarActive = false;
   this.reportsNavBarActive = false;
   this.trackerNavBarActive = false;
-  if (window.localStorage.getItem('ActiveNav') === 'dashboard') {this.dashboardNavBarActive = true; }
-  if (window.localStorage.getItem('ActiveNav') === 'survey') {this.surveyNavBarActive = true; }
-  if (window.localStorage.getItem('ActiveNav') === 'profile') {this.profileNavBarActive = true; }
-  if (window.localStorage.getItem('ActiveNav') === 'editorial') {this.editorialNavBarActive = true; }
-  if (window.localStorage.getItem('ActiveNav') === 'reports') {this.reportsNavBarActive = true; }
-  if (window.localStorage.getItem('ActiveNav') === 'tracker') {this.trackerNavBarActive = true; }
+  this.usersNavBarActive = false;
+  if (localStorage.getItem('ActiveNav') === 'dashboard') {this.dashboardNavBarActive = true; }
+  if (localStorage.getItem('ActiveNav') === 'survey') {this.surveyNavBarActive = true; }
+  if (localStorage.getItem('ActiveNav') === 'profile') {this.profileNavBarActive = true; }
+  if (localStorage.getItem('ActiveNav') === 'editorial') {this.editorialNavBarActive = true; }
+  if (localStorage.getItem('ActiveNav') === 'reports') {this.reportsNavBarActive = true; }
+  if (localStorage.getItem('ActiveNav') === 'tracker') {this.trackerNavBarActive = true; }
+  if (localStorage.getItem('ActiveNav') === 'users') {this.usersNavBarActive = true; }
 }
 
 
@@ -116,11 +120,11 @@ CheckActiveNavBar() {
 
 
   logout() {
-    window.localStorage.removeItem('loggedUserToken');
-    window.localStorage.removeItem('loggedUserName');
-    window.localStorage.removeItem('permissionStatus');
-    window.localStorage.removeItem('loggedUserID');
-    window.localStorage.removeItem('loggedCompanyId');
+    localStorage.removeItem('loggedUserToken');
+    localStorage.removeItem('loggedUserName');
+    localStorage.removeItem('permissionStatus');
+    localStorage.removeItem('loggedUserID');
+    localStorage.removeItem('loggedCompanyId');
     this.router.navigate(['/landing_page']);
   }
 

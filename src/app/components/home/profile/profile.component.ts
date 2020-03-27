@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { faBuilding, faFire, faComment, faEnvelope, faKey , faGlobe , faAddressBook,
-  faEdit, faCheck, faListAlt, faBookReader} from '@fortawesome/free-solid-svg-icons';
+  faEdit, faCheck, faListAlt, faBookReader, faTrash} from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
@@ -30,7 +30,8 @@ export class ProfileComponent implements OnInit {
 
   ) { }
   @ViewChild('viewAnswersModal', {static: true, }) viewAnswersModal: ModalDirective;
-
+  @ViewChild('departmentModal', {static: true}) departmentModal: ModalDirective;
+  @ViewChild('departmentFormModal', {static: true}) departmentFormModal: ModalDirective;
     // icon
     public faEnvelope = faEnvelope;
     public faKey = faKey;
@@ -43,6 +44,7 @@ export class ProfileComponent implements OnInit {
     public faComment = faComment;
     public faListAlt = faListAlt;
     public faBookReader = faBookReader;
+    public faTrash = faTrash;
 
     public AllUsers = [];
     public AllCompanies = [];
@@ -71,10 +73,6 @@ export class ProfileComponent implements OnInit {
 
 
 
-
-
-
-
     public QuestionsOnView = [];
     public companyNameOnView = '';
     public surveyNameOnView = '';
@@ -82,6 +80,12 @@ export class ProfileComponent implements OnInit {
     public CompanyRiskRates = [];
 
 
+
+
+    public editProfileSwitch = false;
+    public editDepartmentSwitch = false;
+    public departmentInput = '';
+    public departmentInputId = '';
 
 
 
@@ -92,6 +96,7 @@ export class ProfileComponent implements OnInit {
     this.loggedUserEmail = localStorage.getItem('loggedUserEmail');
 
     this.updatePage().then(() => {this.computeCompanyRiskRates(); });
+
   }
 
 
@@ -335,6 +340,118 @@ export class ProfileComponent implements OnInit {
 
 
 
+  showDepartmentFormModal() {
+    this.departmentInput = '';
+    this.departmentInputId = '';
+    this.departmentFormModal.show();
+  }
+
+
+  editProfile(item) {
+    this.departmentInput = item.departmentName;
+    this.departmentInputId = item._id;
+    this.departmentFormModal.show();
+  }
+
+
+
+
+
+  saveDepartment() {
+    if (this.myCompany.department) {
+
+      if (this.departmentInputId === '') {
+        this.myCompany.department.push({departmentName: this.departmentInput});
+
+        this.companyProfileService.updateCompanyProfile(this.myCompany._id, {department: this.myCompany.department}).subscribe(
+          data => {
+            this.updatePage().then(() => {
+              this.departmentInput = '';
+              this.departmentInputId = '';
+              this.notifyService.showSuccess('Department Created', 'Success');
+              this.departmentFormModal.hide();
+            });
+          },
+          error => this.notifyService.showError('Could not create department', 'Failed')
+        );
+      } else {
+        for (const dept of this.myCompany.department) {
+          if (dept._id === this.departmentInputId) {
+            dept.departmentName = this.departmentInput;
+
+            this.companyProfileService.updateCompanyProfile(this.myCompany._id, {department: this.myCompany.department}).subscribe(
+              data => {
+                this.updatePage().then(() => {
+                  this.departmentInput = '';
+                  this.departmentInputId = '';
+                  this.notifyService.showSuccess('Department Created', 'Success');
+                  this.departmentFormModal.hide();
+                });
+              },
+              error => this.notifyService.showError('Could not create department', 'Failed')
+            );
+            break;
+          }
+        }
+
+
+      }
+
+
+
+
+
+    } else {
+      const newDepartment = [{departmentName: this.departmentInput}];
+      this.companyProfileService.updateCompanyProfile(this.myCompany._id, {department: newDepartment}).subscribe(
+        data => {
+          this.updatePage().then(() => {
+            this.departmentInput = '';
+            this.departmentInputId = '';
+            this.notifyService.showSuccess('Department Created', 'Success');
+            this.departmentFormModal.hide();
+          });
+        },
+        error => this.notifyService.showError('Could not create department', 'Failed')
+      );
+    }
+
+
+
+  }
+
+
+
+
+
+
+
+
+  deleteDepartment(id) {
+
+    const findUser = this.AllUsers.filter((user) => (user.departmentId === id && user.companyId === this.myCompany._id)).map(e => e);
+
+    if (findUser.length > 0) {
+      this.notifyService.showWarning('re assign user under this department', 'Department Has Users !!');
+    }
+    if (findUser.length === 0) {
+
+      const filterDepartment = this.myCompany.department.filter((dept) => dept._id !== id).map(e => e);
+
+      this.companyProfileService.updateCompanyProfile(this.myCompany._id, {department: filterDepartment}).subscribe(
+        data => {
+          this.updatePage().then(() => {
+            this.departmentInput = '';
+            this.departmentInputId = '';
+            this.notifyService.showSuccess('Department deleted', 'Success');
+            this.departmentFormModal.hide();
+          });
+        },
+        error => this.notifyService.showError('Could not delete department', 'Failed')
+      );
+    }
+
+  }
 
 
 

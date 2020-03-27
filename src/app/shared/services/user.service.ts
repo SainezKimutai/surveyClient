@@ -24,6 +24,9 @@ export class UserService {
       return this.http.post<any>(this.url + 'login', loginData);
     }
 
+    inviteUser(inviteData: any) {
+      return this.http.post<any>(this.url + 'invite', inviteData);
+    }
 
     getAllUsers() {
       return this.http.get<any>(this.url + 'getAll/');

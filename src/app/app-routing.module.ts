@@ -9,6 +9,8 @@ const routes: Routes = [
 
   { path: 'landing_page', loadChildren: 'src/app/components/landing-page/landing-page.module#LandingPageModule',  data: {preload: true}},
 
+  { path: 'invitation/:companyId/:userType/:userRole/:deptId/:email/:token', loadChildren: 'src/app/components/invitation/invitation.module#InvitationModule',  data: {preload: false}},
+
   { path: 'register', loadChildren: 'src/app/components/register/register.module#RegisterModule', data: {preload: true}},
 
   { path: 'answer', loadChildren: 'src/app/components/answer/answer.module#AnswerModule', canActivate: [TokenGuard]  },
