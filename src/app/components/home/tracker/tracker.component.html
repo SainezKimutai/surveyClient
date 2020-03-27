@@ -23,12 +23,12 @@
         </div>
     
         <div class="btn-wrap">
-            <div [ngClass]="formSectionStatus ? 'nav-tav active' : 'nav-tav'" (click)="createNewTracker()">
+            <div class="nav-tab" (click)="createNewTracker()">
                 <fa-icon [icon]="faPlus"></fa-icon>
                  <span>New</span>
             </div>
     
-            <div [ngClass]="listSectionStatus ? 'nav-tav active' : 'nav-tav'" (click)="listTracker()">
+            <div class="nav-tab" (click)="listTracker()">
                 <fa-icon [icon]="faListAlt"></fa-icon>
                  <span>Tracker</span>
             </div>
@@ -52,10 +52,6 @@
                     <fa-icon [icon]="faListAlt"></fa-icon>
                     <h4 class="color:black;">{{item.name}}</h4>
                 </div>
-                <div class="card-footer">
-
-                </div>
-    
                
             </div>
     
@@ -437,12 +433,12 @@
             
         </div>
 
-        <div [ngClass]="formSectionStatus ? 'nav-tav active' : 'nav-tav'" (click)="createNewTracker()">
+        <div class="nav-tab" (click)="createNewTracker()">
             <fa-icon [icon]="faPlus"></fa-icon>
             New
         </div>
 
-        <div [ngClass]="listSectionStatus ? 'nav-tav active' : 'nav-tav'" (click)="listTracker()">
+        <div class="nav-tab" (click)="listTracker()">
             <fa-icon [icon]="faListAlt"></fa-icon>
             Tracker
         </div>
