@@ -117,7 +117,7 @@
                 <span *ngIf="myCompany">{{myCompany.companyName}}  
                     <span *ngIf="!myCompany.companyName">Company Name</span> 
                 </span>
-                <fa-icon id="faEdit" [icon]="faEdit" (click)="companyNameInputStatus = !companyNameInputStatus"></fa-icon>
+                <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="companyNameInputStatus = !companyNameInputStatus"></fa-icon>
                 <input *ngIf="companyNameInputStatus" class="edit-input" type="text" name="companyNameInput" [(ngModel)]="companyNameInput">
                 <button *ngIf="companyNameInputStatus" id="faCheck" [disabled]="companyNameInput === ''" (click)="changeCompanyName()" class="save-btn">Save</button>
             </h4>
@@ -125,7 +125,7 @@
                 <span *ngIf="myCompany">{{myCompany.companyAbout}}  
                     <span *ngIf="!myCompany.companyAbout">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span> 
                 </span>
-                <fa-icon id="faEdit" [icon]="faEdit" (click)="companyAboutInputStatus = !companyAboutInputStatus"></fa-icon>
+                <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="companyAboutInputStatus = !companyAboutInputStatus"></fa-icon>
             </p>
 
             <textarea name="" id="" cols="30" rows="3"
@@ -135,45 +135,78 @@
 
         </div>
 
+
+
+
+
+
+
+
         <div class="company-other">
+
+
+
+
+            <div class="wrap-one">
 
             <div class="img-wrap">
                  <div *ngIf="myCompany">
                      <img *ngIf="myCompany.logo.url === ''" src="../../../assets/images/logo.jpeg" alt="logo" class="company-logo">
                      <img *ngIf="myCompany.logo.url !== ''" [src]="myCompany.logo.url" alt="logo" class="company-logo">
                 </div>
-                <fa-icon id="faEdit" [icon]="faEdit" (click)="previewCompLogo = 'sd'"></fa-icon>
+                <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="previewCompLogo = 'sd'"></fa-icon>
                 <input *ngIf="previewCompLogo" class="edit-input" type="text" type="file" name="fileUploaded" (change)="uploadLogo($event)">
                 <button *ngIf="previewCompLogo" id="faCheck" [disabled]="previewCompLogo === ''" (click)="saveCompanyProfile()" class="save-btn">Save</button>
             </div>
+
+
 
             <div class="other-info">
 
                 <div class="item-info"> 
                     <fa-icon [icon]="faEnvelope"></fa-icon>
                     <span *ngIf="myCompany">{{myCompany.companyEmail}}</span>           
-                    <fa-icon id="faEdit" [icon]="faEdit" (click)="companyEmailInputStatus = !companyEmailInputStatus"></fa-icon>
+                    <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="companyEmailInputStatus = !companyEmailInputStatus"></fa-icon>
                     <input *ngIf="companyEmailInputStatus" class="edit-input" type="text" name="companyEmailInput" [(ngModel)]="companyEmailInput">
                     <button *ngIf="companyEmailInputStatus" id="faCheck" [disabled]="companyEmailInput === ''" (click)="changeCompanyEmail()" class="save-btn">Save</button>
                 </div>
                 <div class="item-info"> 
                     <fa-icon [icon]="faGlobe"></fa-icon>
                     <span *ngIf="myCompany">{{myCompany.companyWebsite}}</span>    
-                    <fa-icon id="faEdit" [icon]="faEdit" (click)="companyWebsiteInputStatus = !companyWebsiteInputStatus"></fa-icon>
+                    <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="companyWebsiteInputStatus = !companyWebsiteInputStatus"></fa-icon>
                     <input *ngIf="companyWebsiteInputStatus" class="edit-input" type="text" name="companyWebsiteInput" [(ngModel)]="companyWebsiteInput">
                     <button *ngIf="companyWebsiteInputStatus" id="faCheck" [disabled]="companyWebsiteInput === ''" (click)="changeCompanyWebsite()" class="save-btn">Save</button>
                 </div>
                 <div class="item-info"> 
                     <fa-icon [icon]="faAddressBook"></fa-icon>
                     <span *ngIf="myCompany">{{myCompany.companyAddress}}</span> 
-                    <fa-icon id="faEdit" [icon]="faEdit" (click)="companyAddressInputStatus = !companyAddressInputStatus"></fa-icon>
+                    <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="companyAddressInputStatus = !companyAddressInputStatus"></fa-icon>
                     <input *ngIf="companyAddressInputStatus" class="edit-input" type="text" name="companyAddressInput" [(ngModel)]="companyAddressInput">
                     <button *ngIf="companyAddressInputStatus" id="faCheck" [disabled]="companyAddressInput === ''" (click)="changeCompanyAddress()" class="save-btn">Save</button>
                 </div>
 
             </div>
 
+        </div>   <!-- wrap-one -->
+
+        <div class="wrap-two">
+            <div class="actions d-flex">
+                <div class="custom-control custom-switch ml-auto">
+                    <input type="checkbox" name="editProfileSwitch" [(ngModel)]="editProfileSwitch"  class="custom-control-input" id="customSwitch1">
+                    <label class="custom-control-label" for="customSwitch1">Edit Profile</label>
+                  </div>
+            </div>
+            <button class="btn btn-sm btn-outline-primary" (click)="departmentModal.show()">Departments</button>
         </div>
+      
+
+        </div>  <!-- company-other -->
+
+
+
+
+
+
 
         <div class="personal-info">
             <hr class="line">
@@ -187,11 +220,17 @@
             <div class="item-info"> 
                 <fa-icon [icon]="faKey"></fa-icon>
                 <span>**********</span>
-                <fa-icon id="faEdit" [icon]="faEdit" (click)="userPasswordInputStatus = !userPasswordInputStatus"></fa-icon>
+                <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="userPasswordInputStatus = !userPasswordInputStatus"></fa-icon>
                 <input *ngIf="userPasswordInputStatus" class="edit-input" type="text" name="userPasswordInput" [(ngModel)]="userPasswordInput">
                 <button *ngIf="userPasswordInputStatus" id="faCheck" [disabled]="userPasswordInput === ''" (click)="changeUserPasswordInput()" class="save-btn">Save</button>
             </div>
         </div>
+
+
+
+
+
+
 
     </section>
 
@@ -244,4 +283,62 @@
 
 
 
+  <div bsModal  #departmentModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog departmentModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title ">Departments</h4>
+            <button type="button" class="btn close" (click)="departmentModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      
+        </div>
+        <div class="modal-body" >
 
+            <div class="actions d-flex">
+                <button *ngIf="editDepartmentSwitch" class="btn btn-sm mr-auto btn-outline-success" (click)="showDepartmentFormModal()">New</button>
+                <div class="custom-control custom-switch ml-auto">
+                    <input type="checkbox" name="editDepartmentSwitch" [(ngModel)]="editDepartmentSwitch"  class="custom-control-input" id="customSwitch2">
+                    <label class="custom-control-label" for="customSwitch2">Edit</label>
+                  </div>
+            </div>
+            <div class="dept-item d-flex" *ngIf="!myCompany || !myCompany.department || myCompany.department.length === 0">
+                <h4 class="no-dept"> No Department set </h4>
+                
+            </div>  
+            <div class="dept-item-wrap" *ngIf="myCompany && myCompany.department && myCompany.department.length > 0">
+                <div class="dept-item d-flex" *ngFor="let item of myCompany.department">
+                    <h4 >{{item.departmentName}}</h4>
+                    <fa-icon *ngIf="editDepartmentSwitch" class="ml-auto mr-5 text-primary" [icon]="faEdit" (click)="editProfile(item)"></fa-icon>
+                    <fa-icon *ngIf="editDepartmentSwitch" class="text-danger" [icon]="faTrash" (click)="deleteDepartment(item._id)"></fa-icon>
+                </div>  
+            </div>
+
+  
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+
+  <div bsModal  #departmentFormModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog departmentFormModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title ">Create New Department</h4>
+            <button type="button" class="btn close" (click)="departmentFormModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+      
+        </div>
+        <div class="modal-body" >
+
+         <input type="text" name="departmentInput" [(ngModel)]="departmentInput" placeholder="Type here">
+  
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-sm" (click)="saveDepartment()">Save</button>
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->

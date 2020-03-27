@@ -142,7 +142,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
           companyId: dataProfile._id,
           password: this.registrationForm.password,
           email: this.registrationForm.email,
-          userType: 'customer'
+          userType: 'customer',
+          userRole: 'admin',
+          departmentId: '',
         };
 
         this.userService.registerUser(newUserData).subscribe(

@@ -60,7 +60,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
           localStorage.setItem('loggedUserEmail', dataUser.email);
           localStorage.setItem('loggedUserID', dataUser._id);
           localStorage.setItem('permissionStatus', 'isAdmin');
-          this.router.navigate(['/home/editorial']);
+          this.router.navigate(['/home/dashboard']);
         }
 
         if (dataUser.userType === 'thirdparty') {

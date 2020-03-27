@@ -22,6 +22,7 @@ const routes: Routes = [
         { path: 'tracker', loadChildren: 'src/app/components/home/tracker/tracker.module#TrackerModule', canActivate: [CustomerGuard], data: {preload: true}},
         { path: 'profile', loadChildren: 'src/app/components/home/profile/profile.module#ProfileModule', canActivate: [CustomerGuard],  data: {preload: true}},
         { path: 'editorial', loadChildren: 'src/app/components/home/editorial/editorial.module#EditorialModule', canActivate: [AdminGuard], data: {preload: true}},
+        { path: 'users', loadChildren: 'src/app/components/home/users/users.module#UsersModule', data: {preload: true}},
       ]
   }
 

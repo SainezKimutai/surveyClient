@@ -257,11 +257,46 @@
 
 .body-section .profile-section .company-other
     height: fit-content
+    display: flex
+    align-items: stretch
+
+    .wrap-one
+        text-align: center
+        width: 100%
+        
+    .wrap-two
+        text-align: center
+        width: 100%
+        display: flex
+        flex-direction: column
+
+        .actions
+            margin: 0 0 auto 0
+
+            .custom-control
+                padding: .5em 2em
+
+                label
+                    padding: 2px 0 0 0
+                    font-size: 12px
+                    font-weight: 400
+                    text-transform: uppercase
+
+        .btn
+            padding: 1em
+            border-radius: 1em
+            width: fit-content
+            margin: auto 1em 2em 50%
+            // color: black
+            font-size: 13px
+
+
+
 
 .body-section .profile-section .company-other .img-wrap
     width: 100%
-    text-align: center
-    padding: 1em
+    text-align: left
+    padding: 1em 2em
 
     img 
         width: 100%
@@ -275,8 +310,9 @@
 
     .item-info
         width: 100%
-        padding: .5em 1em .5em 15%
+        // padding: .5em 1em .5em 15%
         text-align: left
+        margin: 0 0 1em 0
 
         fa-icon
             font-size: 12px
@@ -379,6 +415,112 @@
                             background-color: colorTheme(secondaryTheme)
 
                     
+
+
+
+.departmentModal
+    border: none
+
+    .modal-content
+        width: 100%
+        border: none
+  
+        .modal-header 
+            border: none
+            background-color: colorTheme(primary)
+
+            .modal-title
+                color: white
+                font-size: 14px
+                text-transform: uppercase
+
+                span 
+                    color: black
+
+        .modal-body
+
+            .actions
+                margin: 0 0 auto 0
+                padding: 0  2em
+                background-color: whitesmoke
+
+                .btn
+                    padding: .5em 1em
+                    font-size: 12px
+
+                .custom-control
+                    padding: .5em 1em
+
+                    label
+                        padding: 2px 0 0 0
+                        font-size: 12px
+                        font-weight: 400
+                        text-transform: uppercase
+
+
+            .dept-item
+                width: 100%
+                padding: .5em 1em
+                border-bottom: solid 1px grayColor(g100)
+
+                h4
+                    font-size: 12px
+
+                    &.no-dept
+                        font-style: italic
+
+                fa-icon 
+                    font-size: 12px
+                    color: colorTheme(danger)
+                    cursor: pointer
+
+
+
+
+
+      
+.departmentFormModal
+    border: none
+
+    .modal-content
+        width: 100%
+        border: none
+  
+        .modal-header 
+            border: none
+            background-color: colorTheme(success)
+
+            .modal-title
+                color: white
+                font-size: 14px
+                text-transform: uppercase
+
+            span 
+                color: white
+
+        .modal-body
+            border: none
+            background-color: white
+
+            input
+                width: 100%
+                border-radius: 2px
+                padding: .5em
+                border: none
+                outline: none
+                background-color: grayColor(g100)
+                font-size: 12px
+    
+
+
+        .modal-footer
+            border: none
+            background-color: colorTheme(success)
+
+            .btn
+                color: white
+                background-color: transparent
+                border: solid 1px white
 
 
 
