@@ -9,6 +9,21 @@
     </div>
 </article>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="page-title d-flex">
 
     <h4>Editorial</h4>
@@ -63,17 +78,221 @@
 
 
 
+
+
+
+
 <article class="article">
 
+
+
+
+
+
 <section class="body-section">
-<section class="form-section" *ngIf="FormSectionStatus">
+
+
+
+
+
+
+
+
+
+<section *ngIf="FormSectionStatus" class="survey-create-section">
+
+
+    <div class="heading">
+        Survey Form
+    </div>
+
+    <ul class="progressbar">
+        <li [ngClass]="formOneStatus || formTwoStatus || formThreeStatus || formFourStatus ? 'active' : ''" > <span>Survey Name</span></li>
+        <li [ngClass]="formTwoStatus || formThreeStatus || formFourStatus ? 'active' : ''"><span>Question</span></li>
+        <li [ngClass]="formThreeStatus || formFourStatus ? 'active' : ''"><span>Question Type</span></li>
+        <li [ngClass]="formFourStatus ? 'active' : ''"><span>Choices</span> </li>
+    </ul>
+    
+
+
+
+    <!-- Survey Name -->
+    <form  [ngClass]="formOneStatus ? 'form' : 'form hide' ">
+        <div class="form-group">
+            <label for="CurrentSurveyInput">Survey Name</label>
+            <input type="text" name="CurrentSurveyInput" [(ngModel)]="CurrentSurveyInput" placeholder="Enter survey name">
+        </div>
+
+        <div class="btn-wrap d-flex">
+           <button [disabled]="CurrentSurveyInput === ''" class="btn btn-sm btn-success ml-auto" (click)="toFormTwo()">Proceed</button>
+        </div>
+    </form>
+
+
+
+
+    <!-- Question  -->
+    <form [ngClass]="formTwoStatus ? 'form' : 'form hide' ">
+        <div class="form-group">
+            <label for="CurrentSurveyInput">Question</label>
+            <input type="text" class="" name="CurrentQuestionInput" [(ngModel)]="CurrentQuestionInput" placeholder="Question">
+        </div>
+
+        <div class="btn-wrap d-flex">
+            <button class="btn btn-sm btn-secondary mr-auto" (click)="toFormOne()">Back</button>
+           <button [disabled]="CurrentQuestionInput === ''" class="btn btn-sm btn-success ml-auto" (click)="toFormThree()">Proceed</button>
+        </div>
+    </form>
+
+
+
+
+    <!-- Question Type  -->
+    <form  [ngClass]="formThreeStatus ? 'form' : 'form hide' ">
+        <div class="option-item">
+            <h4>Question Type</h4>
+
+            <div class="grid">
+            <div class="form-groupp">
+                <input type="radio" name="openQuestionInput" value="true" (click)="checkQuestioType('true')" [(ngModel)]="openQuestionInput" required>
+                <label for="openQuestionInput" >Open</label>
+            </div>
+            <div class="form-groupp">
+                <input type="radio" name="openQuestionInput" value="false" (click)="checkQuestioType('false')"  [(ngModel)]="openQuestionInput" required>
+                <label for="openQuestionInput">Closed</label>
+            </div>
+            </div>
+        </div>
+
+        <div class="option-item" [hidden]="!ChoicesStatus">
+            <h4>Multiple Choice ?</h4>
+            <div class="grid">
+            <div class="form-groupp">
+                <input type="radio" name="multipleChoiceInput" value="true" [(ngModel)]="multipleChoiceInput">
+                <label for="">Yes</label>
+            </div>
+            <div class="form-groupp">
+                <input type="radio" name="multipleChoiceInput" value="false" [(ngModel)]="multipleChoiceInput">
+                <label for="">No</label>
+            </div>
+            </div>
+        </div>
+
+        <div class="option-item" >
+            <h4>Answer Type</h4>
+            <div class="grid">
+            <div class="form-groupp">
+                <input type="radio" name="choiceTypeInput" value="string" [(ngModel)]="choiceTypeInput">
+                <label for="">String</label>
+            </div>
+            <div class="form-groupp">
+                <input type="radio" name="choiceTypeInput" value="number" [(ngModel)]="choiceTypeInput">
+                <label for="">Number</label>
+            </div>
+            <div class="form-groupp" [hidden]="!ChoicesStatus">
+                <input type="radio" name="choiceTypeInput" value="boolean" [(ngModel)]="choiceTypeInput">
+                <label for="">Boolean</label>
+            </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Question Position</label>
+            <input type="number" name="positionInput" [(ngModel)]="positionInput">
+    
+        </div>
+
+
+        <div class="btn-wrap d-flex">
+            <button class="btn btn-sm btn-secondary mr-auto" (click)="toFormTwo()">Back</button>
+            <button class="btn btn-sm btn-success ml-auto" (click)="toFormFour()">Proceed</button>
+        </div>
+    </form>
+
+
+
+
+    <!-- Choices -->
+    <form  [ngClass]="formFourStatus ? 'form' : 'form hide' ">
+        <div class="form-group">
+            <label>Assossiated Threat</label>
+            <div class="d-flex">
+            <select (change)="fetchLinkedAnswers()"  name="CurrentChoiceInputThreat" [(ngModel)]="CurrentChoiceInputThreat" >
+                <option value="" disabled selected hidden >Select</option>
+                <option *ngFor="let trt of AllThreats" [value]="trt._id" >{{trt.name}}</option>
+            </select>
+            <button class="btn btn-sm btn-outline-warning" (click)="addThreatModal.show()">Add&nbsp;&nbsp;Threat</button>
+            </div>
+        </div>
+
+        
+        <div class="preview-questions d-flex" *ngFor="let item of CurrentChoicesArr; let x = index">
+            {{x + 1}}. {{item.answer}} <fa-icon class="ml-auto text-danger" (click)="removeAns(x)" [icon]="faTrash"></fa-icon>
+
+          </div>
+         
+        <div class="form-group">
+            <label>Choices</label>
+            <div class="d-flex">
+                <input type="text" name="CurrentChoiceInput" [(ngModel)]="CurrentChoiceInput" placeholder="Type Choices">
+                <button class="btn btn-sm btn-success text-light" (click)="addChoice()"><fa-icon [icon]="faPlus"></fa-icon></button>
+            </div>
+           
+        </div>
+
+        
+        <div class="btn-wrap d-flex">
+            <button class="btn btn-sm btn-secondary mr-auto" (click)="toFormThree()">Back</button>
+            <button class="btn btn-sm btn-success ml-auto" (click)="nextQuestion()">Add this question</button>
+         </div>
+
+    </form>
+
+
+
+    <div class="list-section">
+
+        <div *ngIf="CurrentSurveyInput" class="head d-flex">
+            <h4 class="mr-auto">{{CurrentSurveyInput}}</h4>
+            <button *ngIf="CurrentQuestionArray.length > 0" class="btn btn-sm ml-auto" (click)="saveSurveyTemplate()">Save Survey</button>
+        </div>
+
+        <div class="question-wrap" *ngFor="let item of CurrentQuestionArray">
+            <div class="question">{{item.question}}</div>
+            <div class="choices">
+                <span *ngFor="let ans of item.choices; let x = index">{{x + 1 }}. {{ans.answer}}</span>
+          
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+<section hidden class="form-section" >
 
     <div [ngClass]="SurveyFormStatus ? 'survey-template' : 'survey-template hide'">
         <div class="title">
             <h4>Template Name</h4>
         </div>
 
-        <form class="form " >
+        <!-- <form class="form " >
 
             <div class="form-group">
                 <input type="text" name="CurrentSurveyInput" [(ngModel)]="CurrentSurveyInput" placeholder="Enter survey name">
@@ -84,7 +303,7 @@
                <button class="btn btn-sm" (click)="nextToQuestion()">Next</button>
             </div>
 
-        </form>
+        </form> -->
 
     </div>
 
@@ -206,6 +425,45 @@
 
 </section>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <section class="templates-section" *ngIf="TemeplateViewSectionStatus">
 
     <div class="card-group">
@@ -237,6 +495,19 @@
     </div>
 
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <section class="templates-section" *ngIf="ThreatsViewSectionStatus">
 
@@ -272,6 +543,18 @@
     </div>
 
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
 
 <section class="Questions-listing" *ngIf="QuestionsViewStatus">
 
@@ -346,7 +629,34 @@
 
 </section>
 
+
+
+
+
+
+
+
+
 </article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  <!-- mOdals -->
  <div bsModal  #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog editModal" role="document">
@@ -372,11 +682,11 @@
                         <h4>Quiz Type</h4>
     
                         <div class="form-group">
-                            <input type="radio" name="openQuestionInput" value="true" (click)="checkQuestioType('true')" [(ngModel)]="EditopenQuestionInput" required>
+                            <input type="radio" name="openQuestionInput" value="true" (click)="checkQuestioType('true')" [(ngModel)]="openQuestionInput" required>
                             <label for="openQuestionInput" >Open</label>
                         </div>
                         <div class="form-group">
-                            <input type="radio" name="openQuestionInput" value="false" (click)="checkQuestioType('false')"  [(ngModel)]="EditopenQuestionInput" required>
+                            <input type="radio" name="openQuestionInput" value="false" (click)="checkQuestioType('false')"  [(ngModel)]="openQuestionInput" required>
                             <label for="openQuestionInput">Closed</label>
                         </div>
                     </div>
