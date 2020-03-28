@@ -103,6 +103,10 @@ export class EditorialComponent implements OnInit {
   public ThreatsViewSectionStatus = false;
 
   public threatName = '';
+  public threatType = '';
+  public threatLevels = [];
+  public threatValue1 = '';
+  public threatValue2 = '';
   public threatLevel = '';
   public threatRecom = '';
   public openThreat = {};
@@ -235,6 +239,8 @@ export class EditorialComponent implements OnInit {
 
     this.openThreat = item;
     this.threatName = item.name;
+    this.threatType = item.type;
+    this.threatLevels = item.categorization_inferences;
     this.threatLevel = item.level;
     this.threatRecom = item.recom;
 
@@ -521,11 +527,41 @@ export class EditorialComponent implements OnInit {
     this.threatName = '';
     this.threatRecom = '';
     this.threatLevel='';
+    this.threatType = '';
+    this.threatValue1 = '';
+    this.threatValue2 = '';
+    this.threatLevels = [];
+  }
+  checkType()
+  {
+    console.log(this.threatType);
+  }
+
+  addThreatTypes(){
+    let classifier = [];
+    if(this.threatValue1 && this.threatValue2){
+      classifier.push(parseInt(this.threatValue1))
+      classifier.push(parseInt(this.threatValue2))
+    }else{
+      classifier.push(this.threatValue1)
+    }
+    const threat = {
+      category: this.threatLevel,
+      inference: this.threatRecom,
+      classifier: classifier
+    }
+    this.threatLevels.push(threat);
+    console.log(this.threatLevels);
+  }
+  removeFromThreatLevels(index){
+    this.threatLevels.splice(index, 1);
   }
   
   addThreat() {
     let myData = {
       name: this.threatName,
+      type: this.threatType,
+      categorization_inferences: this.threatLevels,
       level: this.threatLevel,
       recom: this.threatRecom,
       alias: ''
@@ -540,6 +576,8 @@ export class EditorialComponent implements OnInit {
   editThreat() {
     let myData = {
       name: this.threatName,
+      type: this.threatType,
+      categorization_inferences : this.threatLevels,
       level: this.threatLevel,
       recom: this.threatRecom,
       alias: ''

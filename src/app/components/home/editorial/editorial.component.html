@@ -598,27 +598,67 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body" >
+        <div class="modal-body" style="height: 300px; overflow-y: auto;">
             <form class="form">
                 <div class="form-group">
                     <label for="threatName">Threat Name</label>
-                    <textarea name="threatName" [(ngModel)]="threatName"></textarea>
+                    <textarea name="threatName" (change)="checkType()" [(ngModel)]="threatName"></textarea>
                 </div>
                 <div class="form-group">
-                    <label for="threatLevel">Threat Level</label>
-                    <select name="threatLevel" [(ngModel)]="threatLevel">
+                    <label for="threatType">Classifier</label>
+                    <select name="threatType" (change)="checkType()" [(ngModel)]="threatType">
                         <option value="" disabled selected hidden >... select</option>
-                            <option  value="Low">Low</option>
-                            <option  value="Medium">Medium</option>
-                            <option  value="High">High</option>
+                            <option value=0>Value</option>
+                            <option value=1>Range</option>
                     </select>
                
                 </div>
+                
+                <div *ngIf="threatType"  style="margin: 20px;">
+                <div class="preview-questions"  *ngFor="let item of threatLevels; let x = index">
+                  <div style="display: flex;">
+                    <div style="float: left;">
+                    <p>{{x + 1}}. {{item.category}}</p>
+                    </div>
+                    <div style="float: right;">
+                    <p (click)="removeFromThreatLevels(i)"><fa-icon [icon]="faTrash"></fa-icon></p>
+                    </div>
+                  </div>
+                </div>
+                  <div class="form-group">
+                        <label for="threatLevel">Threat Level</label>
+                        <select name="threatLevel" [(ngModel)]="threatLevel">
+                            <option value="" disabled selected hidden >... select</option>
+                                <option  value="Low">Low</option>
+                                <option  value="Medium">Medium</option>
+                                <option  value="High">High</option>
+                    </select>
+                 </div>
+                <div *ngIf="threatType == 0" class="form-group">
+                    <label for="threatValue1">Value</label>
+                    <input style="border: 1px solid grey;" name="threatValue1" [(ngModel)]="threatValue1">
+                </div>
+                <div *ngIf="threatType == 1" class="form-group">
+                <div style="display: flex; ">
+                    <div style="float: left; padding-right:10px;">
+                        <label for="threatValue1">From</label>
+                        <input style="border: 1px solid grey;" name="threatValue1" [(ngModel)]="threatValue1">
+                    </div>
+                    <div style="float: right; padding-left:10px;">
+                        <label for="threatValue2">To</label>
+                        <input style="border: 1px solid grey;" name="threatValue2" [(ngModel)]="threatValue2">
+                    </div>
+                </div>
+                </div>
                 <div class="form-group">
+                     
                     <label for="threatRecom">Recommendations</label>
                     <textarea name="threatRecom" [(ngModel)]="threatRecom"></textarea>
                 </div>
-
+                <div class="form-group">
+                 <fa-icon style="align-self: center; color: green;" [icon]="faPlus" (click)="addThreatTypes()"></fa-icon>
+                </div>
+            </div>     
             </form>
         </div>
         <div class="modal-footer">
