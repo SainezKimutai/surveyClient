@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { Router } from '@angular/router';
-import { faPlus, faListAlt, faTrash, faEyeSlash, faEye, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faListAlt, faTrash, faEyeSlash, faEye, faSearch, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { ResponseService } from 'src/app/shared/services/responses.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { TrackerService } from 'src/app/shared/services/tracker.service';
 import { ModalDirective } from 'ngx-bootstrap';
 import { TrackerReasonService } from 'src/app/shared/services/trackerReasons.service';
+import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-tracker',
@@ -19,23 +21,25 @@ export class TrackerComponent implements OnInit {
     constructor(
       private notifyService: NotificationService,
       private trackerService: TrackerService,
-      private trackerReasonService: TrackerReasonService
+      private userService: UserService,
+      private trackerReasonService: TrackerReasonService,
+      private companyProfileService: CompanyProfileService,
     ) {}
 
-@ViewChild('viewCommentsModal', {static: true, }) viewCommentsModal: ModalDirective;
-@ViewChild('viewRecomModal', {static: true, }) viewRecomModal: ModalDirective;
+
 @ViewChild('deleteModal', {static: true}) deleteModal: ModalDirective;
+@ViewChild('addReportModal', {static: true}) addReportModal: ModalDirective;
+@ViewChild('viewUserReportModal', {static: true}) viewUserReportModal: ModalDirective;
 
 @ViewChild('name', {static: false}) name: ElementRef;
 @ViewChild('kpiTarget', {static: false}) kpiTarget: ElementRef;
 @ViewChild('kpiUnit', {static: false}) kpiUnit: ElementRef;
-@ViewChild('cat', {static: false}) cat: ElementRef;
 @ViewChild('kpiActual', {static: false}) kpiActual: ElementRef;
 @ViewChild('monthly', {static: false}) monthly: ElementRef;
-@ViewChild('value', {static: false}) value: ElementRef;
-@ViewChild('weeklyActual', {static: false}) weeklyActual: ElementRef;
-@ViewChild('reason', {static: false}) reason: ElementRef;
-@ViewChild('comment', {static: false}) comment: ElementRef;
+@ViewChild('reportingUser', {static: false}) reportingUser: ElementRef;
+@ViewChild('departmentId', {static: false}) departmentId: ElementRef;
+// @ViewChild('reason', {static: false}) reason: ElementRef;
+// @ViewChild('comment', {static: false}) comment: ElementRef;
 
 // Loader
 public ImprintLoader = false;
@@ -47,12 +51,16 @@ public faEye = faEye;
 public faEmpty = faEyeSlash;
 public faListAlt = faListAlt;
 public faSearch = faSearch;
+public faCheck = faCheck;
 
 
 
 //
+public AllCompanies = [];
+public myCompany: any;
 public AllTrackers = [];
 public AllTrackerReasons = [];
+public Users = [];
 
 // status
 public formSectionStatus = false;
@@ -83,13 +91,83 @@ public observation: any;
 public recommendation: any;
 
 
+public reportingUserArray =[];
+
+public MyUser = ['amon', 'goefrey', 'kim', 'muinde'];
+public formOneStatus = true;
+
+
+
+
+// Report Variables
+
+public monthsArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+public today = new Date();
+public thisYear = this.today.getFullYear();
+public thisMonth = this.monthsArray[this.today.getMonth()];
+public thisWeek: any;
+public thisDay = this.today.getDay()
+public reportInputForm: any;
+public MyReports = [];
+public reportsWeeklyStatus = false;
+public lastUpdateDay = null;
+public reportSubmitedStatus = false;
+public reportOnView;
+
+
+
+// permisions
+public loggedInUserId = localStorage.getItem('loggedUserID');
+public toAdminCustomer = false;
+public toManagerCustomer = false;
+
+
+
+
+
+
+
+
+
+
+
 
 
 
     ngOnInit() {
       localStorage.setItem('ActiveNav', 'tracker');
-      this.updatePage();
+      this.thisWeek = this.getWeek();
+      this.updatePage().then(() => {
+
+        for(let user of this.Users) {
+          if (localStorage.getItem('loggedUserID') === user._id){
+            if (user.userRole === 'admin'){
+              this.toAdminCustomer = true;
+            }
+            if (user.userRole === 'manager'){
+              this.toManagerCustomer = true;
+            }
+            if (user.userRole === 'normal') {
+              this.AllTrackers = this.AllTrackers.filter(trck => trck.departmentId  === user.departmentId).map(e => e);
+            }
+            break;
+          }
+        }
+
+      } );
       this.creatNewForm();
+
+      this.reportInputForm = {
+        userId: localStorage.getItem('loggedUserID'), 
+        value: null,
+        week: this.getWeek(),
+        reason : '',
+        comment: '',
+        date_submitted: new Date()
+      }
+      
+
+
     }
 
 
@@ -115,12 +193,29 @@ getWeek() {
 
 
 
+
+
 updatePage() {
   return new Promise((resolve, reject) => {
     this.trackerReasonService.getAllTrackerReasons().subscribe(
       data => this.AllTrackerReasons = data,
       error => console.log('Error getting all tracker reasons')
     );
+    this.companyProfileService.getAllCompanyProfiles().subscribe(
+      data => {
+        this.AllCompanies = data;
+        for (const comp of this.AllCompanies) { if (comp._id === localStorage.getItem('loggedCompanyId')) { this.myCompany = comp; break; }}
+      },
+      error => console.log('Error geting all Companies')
+    );
+    this.userService.getAllUsers().subscribe(
+      data => {
+        this.Users = data;
+      },
+      error => {
+        console.log('Error In listing Users');
+      }
+    ); 
     this.trackerService.getAllTrackers().subscribe(
       data => {
         this.AllTrackers = data.filter((e) => e.companyId === localStorage.getItem('loggedCompanyId')).map(e => e); resolve();
@@ -142,10 +237,12 @@ creatNewForm() {
     kpiMeasureCats: [],
     kpiActual: null,
     monthly: null,
-    weekly: [],
-    weeklyActual: null,
-    reason: '',
-    comment: ''
+    departmentId: '',
+    allInDepartment: true,
+    reportingUsers: [],
+    reporting_schedule: 'weekly',
+    last_reporting_day: '5',
+    reports: []
   };
 
   this.kpiMeasureCatInput = {
@@ -162,7 +259,23 @@ creatNewForm() {
   };
   this.weeklyArray = [];
   this.kpiMeasureCatsArray = [];
+  this.formOneStatus = true;
 }
+
+
+
+
+
+
+
+
+
+backToFormTwo() {
+  this.formOneStatus = true;
+}
+
+
+
 
 
 
@@ -173,6 +286,10 @@ createNewTracker() {
   this.viewSectionStatus = false;
   this.creatNewForm();
 }
+
+
+
+
 
 
 listTracker() {
@@ -191,93 +308,148 @@ openTracker(id) {
       this.formSectionStatus = false;
       this.listSectionStatus = false;
       this.viewSectionStatus = true;
+      this.formatReports(this.trackerOnView.reports)
       break;
     }
   }
 }
 
 
+formatReports(reports) {
+  this.MyReports = [];
+  let decDay = this.thisDay
+  let constDay = this.thisDay - 1;
+  let x;
+  for(x = 0; x <= constDay; x++) {
+    reports.forEach((rep , key, arr) => {
+      let d = new Date();
+      d.setDate(d.getDate()-x);
+      let bool = (d.toDateString() === new Date(rep.date_submitted).toDateString());
+
+      if (bool){
+
+        for(let user of this.Users){
+          if (rep.userId === user._id) {
+            rep.userEmail = user.email
+            rep.position = decDay;
+            this.MyReports.push(rep)
+            decDay--
 
 
-viewBcpFunctionDefaults() {
-  this.bcpFunctionDefaults = true;
+            if (Object.is(arr.length - 1, key)) {
+              this.checkTrackerType(this.trackerOnView);
+              this.viewWeeklyReportRecommendations();
+            }
+
+
+          }
+        }
+
+      }
+
+    })
+
+  }
+
 }
-hideBcpFunctionDefaults() {
-  this.bcpFunctionDefaults = false;
+
+
+
+checkTrackerType(trck) {
+  this.reportsWeeklyStatus = trck.reporting_schedule === 'weekly' ? true : false;
+  this.lastUpdateDay = Number(trck.last_reporting_day)
+ 
+  if (!this.reportsWeeklyStatus) {
+  let filterReports = trck.reports.filter((rep) => {
+    let d = new Date();
+    let bool = (d.toDateString() === new Date(rep.date_submitted).toDateString());
+    if (bool && rep.userId === localStorage.getItem('loggedUserID')) {
+      return true;
+    }
+  }).map(e => e)
+  this.reportSubmitedStatus = filterReports.length > 0 ? true : false;
+  }
+
+  if(this.reportsWeeklyStatus) {
+    let filterReports = this.MyReports.filter((rep) => rep.userId === localStorage.getItem('loggedUserID')).map(e => e)
+    this.reportSubmitedStatus = filterReports.length > 0 ? true : false;
+  }
+
+
 }
+
+
+
+
+
+
+
+reportSubmitedAlert() { this.notifyService.showInfo('You have submited your report', 'Already Submited')}
+
+
+
+openViewUserReportModal(report) {
+  this.viewUserReportModal.show()
+  this.reportOnView = report;
+}
+
+
+
+
+editReport(){
+  this.reportInputForm = this.reportOnView;
+  this.addReportModal.show()
+}
+
+
+
+
+
+
+
+
+captureReportingUsers(ans) {
+
+  if (this.reportingUserArray.includes(ans)) {
+    this.reportingUserArray = this.reportingUserArray.filter(a => a !== ans ).map( e => e );
+  } else {
+    this.reportingUserArray.push(ans);
+
+  }
+
+}
+
+
+
+
+
+
+
+
+
 
 
 editTracker() {
   this.trackerFormId = this.trackerOnView._id;
-  this.bcpFunctionInput = {
-    name: this.trackerOnView.name,
-    kpiTarget: this.trackerOnView.kpiTarget,
-    kpiUnit: this.trackerOnView.kpiUnit,
-    // kpiMeasureCats: this.trackerOnView.kpiMeasureCats,
-    kpiActual: this.trackerOnView.kpiActual,
-    monthly: this.trackerOnView.monthly,
-    weekly: this.trackerOnView.weekly,
-    // weeklyActual: this.trackerOnView.weeklyActual,
-    // reason: this.trackerOnView.reason,
-    // comment: this.trackerOnView.comment
-  };
-
-  this.kpiMeasureCatInput = {
-    cat: '',
-    category: '',
-    threat: ''
-  };
-
-  this.weeklyInput = {
-    value: null,
-    week: this.getWeek(),
-    reason: null,
-    comment: null
-  };
-  this.weeklyArray = this.trackerOnView.weekly;
-  this.kpiMeasureCatsArray = this.trackerOnView.kpiMeasureCats;
-
-  this.editformSectionStatus = true;
+  this.bcpFunctionInput = this.trackerOnView;
+  this.bcpFunctionInput.last_reporting_day = this.bcpFunctionInput.last_reporting_day.toString(),
+  this.formSectionStatus = true;
   this.listSectionStatus = false;
   this.viewSectionStatus = false;
 }
 
 
-addKpiMeasureCatInput() {
-  this.kpiMeasureCatsArray.push(this.kpiMeasureCatInput);
-  this.kpiMeasureCatInput = {
-    cat: '',
-    category: '',
-    threat: ''
-  };
-}
-
-removeKpiMeasureCatInput(x) {
-  this.kpiMeasureCatsArray.splice(x, 1);
-}
-
-
-addWeeklyInput() {
-  this.weeklyArray.push(this.weeklyInput);
-  console.log(this.weeklyArray);
-  this.weeklyInput = {
-    value: null,
-    week: this.getWeek(),
-    reason: null,
-    comment: null
-  };
-}
-
-removeWeeklyInput(r) {
-  this.weeklyArray.splice(r, 1);
-}
 
 
 
 
 
 
-validateForm() {
+
+
+
+
+validateForm1() {
   if (this.bcpFunctionInput.name === '') {
     this.name.nativeElement.focus(); this.name.nativeElement.className = 'inputEror';
     setTimeout(() => { this.name.nativeElement.className = ''; }, 4000);
@@ -295,81 +467,143 @@ validateForm() {
     setTimeout(() => { this.kpiUnit.nativeElement.className = ''; }, 4000);
     this.notifyService.showWarning('... input kpiUnit', 'Empty Field');
 
+  }
+  else if (this.bcpFunctionInput.kpiActual === null) {
+    this.kpiActual.nativeElement.focus(); this.kpiActual.nativeElement.className = 'inputEror';
+    setTimeout(() => { this.kpiActual.nativeElement.className = ''; }, 4000);
+    this.notifyService.showWarning('... input kpiActual', 'Empty Field');
+
+  } 
+  else if (this.bcpFunctionInput.monthly === null ) {
+    this.monthly.nativeElement.focus(); this.monthly.nativeElement.className = 'inputEror';
+    setTimeout(() => { this.monthly.nativeElement.className = ''; }, 4000);
+    this.notifyService.showWarning('... input monthly', 'Empty Field');
+
   } else {
-    this.ImprintLoader = true;
-
-    if (this.trackerFormId === '') {
-      this.AddBcpTracker();
-    }
-    if ( this.trackerFormId !== '') {
-      this.updateBcpTracker();
-    }
-
+    this.formOneStatus = false;
   }
 
+
 }
+
+
+
+validateForm2() {
+  
+  if (this.bcpFunctionInput.departmentId === '') {
+    this.departmentId.nativeElement.focus(); this.departmentId.nativeElement.className = 'inputEror';
+    setTimeout(() => { this.departmentId.nativeElement.className = ''; }, 4000);
+    this.notifyService.showWarning('... select a department', 'Unselected Field');
+
+  } else if (!this.bcpFunctionInput.allInDepartment && this.reportingUserArray.length === 0) {
+    this.reportingUser.nativeElement.focus(); this.reportingUser.nativeElement.className = 'inputEror';
+    setTimeout(() => { this.reportingUser.nativeElement.className = ''; }, 4000);
+    this.notifyService.showWarning('... select atleast one reporting user', 'Unselected Field');
+
+  }
+  else {
+    this.AddBcpTracker()
+   }
+ 
+}
+
+
+
 
 
 
 AddBcpTracker() {
-  const myBCPdata = {
-    companyId: localStorage.getItem('loggedCompanyId'),
-    name: this.bcpFunctionInput.name,
-    kpiTarget: this.bcpFunctionInput.kpiTarget,
-    kpiUnit: this.bcpFunctionInput.kpiUnit,
-    kpiActual: 0,
-    monthly: this.bcpFunctionInput.kpiTarget,
-  };
+  this.ImprintLoader = true;
+ 
 
-  this.bcpFunctionsArray.push(myBCPdata);
+  if(this.trackerFormId === '') {
 
-  this.creatNewForm();
-  this.trackerService.createTracker(myBCPdata).subscribe(
-    data => {
+    const myBCPdata = {
+      companyId: localStorage.getItem('loggedCompanyId'),
+      name: this.bcpFunctionInput.name,
+      kpiTarget: this.bcpFunctionInput.kpiTarget,
+      kpiUnit: this.bcpFunctionInput.kpiActual,
+      kpiActual: this.bcpFunctionInput.kpiActual,
+      monthly: this.bcpFunctionInput.monthly,
+      departmentId: this.bcpFunctionInput.departmentId,
+      allInDepartment: this.bcpFunctionInput.allInDepartment,
+      reportingUsers: this.reportingUserArray,
+      reporting_schedule: this.bcpFunctionInput.reporting_schedule,
+      last_reporting_day: Number(this.bcpFunctionInput.last_reporting_day),
+      created_at: new Date(),
+      updated_at: new Date(),
+      reports:[]
+    };
+  
+
+    this.trackerService.createTracker(myBCPdata).subscribe(
+      data => {
+        this.updatePage().then(() => {
+        this.creatNewForm();
+        this.ImprintLoader = false;
+        this.notifyService.showSuccess('Tracker created', 'Success');
+        this.listTracker();
+        });
+      },
+      error => { this.ImprintLoader = false; this.notifyService.showError('could not create tracker', 'Failed'); }
+    );
+  }
+
+  if (this.trackerFormId !== '') {
+
+    const myUpdateData = this.bcpFunctionInput
+    myUpdateData.last_reporting_day = Number(this.bcpFunctionInput.last_reporting_day);
+    this.trackerService.updateTracker(this.trackerFormId, myUpdateData).subscribe(
+      data => {
       this.updatePage().then(() => {
-      this.ImprintLoader = false;
-      this.notifyService.showSuccess('Tracker created', 'Success');
-      this.listTracker();
-      });
-    },
-    error => { this.ImprintLoader = false; this.notifyService.showError('could not create tracker', 'Failed'); }
-  );
+        this.ImprintLoader = false;
+        this.notifyService.showSuccess('Tracker Updated', 'Success');
+        this.openTracker(this.trackerOnView._id);
+        });
+      },
+      error => { this.ImprintLoader = false; this.notifyService.showError('could not update tracker', 'Failed'); }
+    );
+
+  }
+
+
 }
 
 
 
 
 
-async updateBcpTracker() {
-  let actual = 0;
-  await this.weeklyArray.forEach(week => {
-    actual = actual + week.value;
-  });
-  const myBCPdata = {
-    _id: this.trackerOnView._id,
-    companyId: localStorage.getItem('loggedCompanyId'),
-    name: this.bcpFunctionInput.name,
-    kpiTarget: this.bcpFunctionInput.kpiTarget,
-    kpiUnit: this.bcpFunctionInput.kpiUnit,
-    kpiActual: actual,
-    monthly: this.bcpFunctionInput.monthly,
-    weekly: this.weeklyArray,
-  };
-  console.log(myBCPdata);
 
-  this.trackerService.updateTracker(myBCPdata._id, myBCPdata).subscribe(
-    data => {
-      this.updatePage().then(() => {
-      this.ImprintLoader = false;
-      this.notifyService.showSuccess('Tracker Updated', 'Success');
-      this.editformSectionStatus = false;
-      this.openTracker(this.trackerOnView._id);
-      });
-    },
-    error => { this.ImprintLoader = false; this.notifyService.showError('could not update tracker', 'Failed'); }
-  );
+// async updateBcpTracker() {
+//   let actual = 0;
+//   await this.weeklyArray.forEach(week => {
+//     actual = actual + week.value;
+//   });
+//   const myBCPdata = {
+//     _id: this.trackerOnView._id,
+//     companyId: localStorage.getItem('loggedCompanyId'),
+//     name: this.bcpFunctionInput.name,
+//     kpiTarget: this.bcpFunctionInput.kpiTarget,
+//     kpiUnit: this.bcpFunctionInput.kpiUnit,
+//     kpiActual: actual,
+//     monthly: this.bcpFunctionInput.monthly,
+//     weekly: this.weeklyArray,
+//   };
+//   console.log(myBCPdata);
 
-}
+//   this.trackerService.updateTracker(myBCPdata._id, myBCPdata).subscribe(
+//     data => {
+//       this.updatePage().then(() => {
+//       this.ImprintLoader = false;
+//       this.notifyService.showSuccess('Tracker Updated', 'Success');
+//       this.editformSectionStatus = false;
+//       this.openTracker(this.trackerOnView._id);
+//       });
+//     },
+//     error => { this.ImprintLoader = false; this.notifyService.showError('could not update tracker', 'Failed'); }
+//   );
+
+// }
 
 
 
@@ -389,13 +623,105 @@ deleteTracker(id) {
   );
 }
 
-viewWeeklyReportResponse(reason, comments) {
-  this.weeklyReportReason = reason;
-  this.weeklyReportComments = comments;
-  this.viewCommentsModal.show();
+
+
+
+
+
+
+
+
+
+
+
+
+saveReport() {
+
+  if(this.reportInputForm._id){
+    this.ImprintLoader = true;
+    for (let rep of this.trackerOnView.reports) {
+      if (rep._id === this.reportInputForm._id) {
+        rep = this.reportInputForm
+        break;
+      }
+    }
+
+    this.trackerService.updateTracker(this.trackerOnView._id, this.trackerOnView).subscribe(
+      data => {
+      this.updatePage().then(() => {
+        this.ImprintLoader = false;
+        this.notifyService.showSuccess('Report Updated', 'Success');
+        this.addReportModal.hide();
+        this.viewUserReportModal.show();
+        this.openTracker(this.trackerOnView._id)
+        });
+      },
+      error => { this.ImprintLoader = false; this.notifyService.showError('could not update report', 'Failed'); }
+    );
+  }
+  if(!this.reportInputForm._id){
+    this.ImprintLoader = true;
+    this.reportInputForm.date_submitted = new Date();
+    this.trackerOnView.reports.push(this.reportInputForm)
+  
+    this.trackerService.updateTracker(this.trackerOnView._id, this.trackerOnView).subscribe(
+      data => {
+      this.updatePage().then(() => {
+        this.ImprintLoader = false;
+        this.notifyService.showSuccess('Report Created', 'Success');
+        this.addReportModal.hide();
+        this.openTracker(this.trackerOnView._id)
+        });
+      },
+      error => { this.ImprintLoader = false; this.notifyService.showError('could not create report', 'Failed'); }
+    );
+  }
+
+
+
 }
 
-viewWeeklyReportRecommendations(value, target, unit) {
+
+
+
+
+
+
+deleteReport() {
+  this.ImprintLoader = true;
+  this.trackerOnView.reports = this.trackerOnView.reports.filter((r) => r.userId !== this.reportOnView.userId ).map(e => e);
+
+  this.trackerService.updateTracker(this.trackerOnView._id, this.trackerOnView).subscribe(
+    data => {
+    this.updatePage().then(() => {
+      this.ImprintLoader = false;
+      this.notifyService.showSuccess('Report Deleted', 'Success');
+      this.viewUserReportModal.hide();
+      this.openTracker(this.trackerOnView._id)
+      });
+    },
+    error => { this.ImprintLoader = false; this.notifyService.showError('could not delete report', 'Failed'); }
+  );
+}
+
+
+
+
+
+
+
+
+
+
+// viewWeeklyReportResponse(reason, comments) {
+//   this.weeklyReportReason = reason;
+//   this.weeklyReportComments = comments;
+//   this.viewCommentsModal.show();
+// }
+
+viewWeeklyReportRecommendations() {
+  const value = this.MyReports.reduce( (previous, current) => previous + current.value, 0);
+  const target = this.trackerOnView.kpiTarget
   const expected_capacity = target / 4;
   const attained_capacity = value / expected_capacity * 100;
   if (attained_capacity < 50) {
@@ -408,10 +734,17 @@ viewWeeklyReportRecommendations(value, target, unit) {
     this.observation = 'Mapped risk is low due to good productivity('+ attained_capacity +'%)';
     this.recommendation = 'You are on the right track, improve on any week points.';
   }
-  this.viewRecomModal.show();
+  // this.viewRecomModal.show();
 
 }
 
 
 
-}
+
+
+
+
+
+
+
+} // End of main class
