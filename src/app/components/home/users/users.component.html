@@ -219,7 +219,7 @@
 
 
 
-        <div class="form-group" *ngIf="toCustomer && myCompany && myCompany.department && myCompany.department.length > 0">
+        <div class="form-group" *ngIf="toCustomer && myCompany && myCompany.department">
           <select type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
           formControlName="departmentId"  [class.is-invalid]="formInvite.departmentId.invalid && formInvite.departmentId.touched" >
           <option value="" disabled selected hidden >Select department</option>
@@ -247,13 +247,13 @@
           <option value="" disabled selected hidden >User Type</option>
           <option value="admin">Admin</option>
           <option value="thirdparty">Third Party</option>
-          <option value="customer">Customer</option>
+          <!-- <option value="customer">Customer</option> -->
          </select>
         </div>
 
 
 
-        <button [disabled]="!inviteForm.valid" class="btn btn-sm" (click)="inviteUser()">Invite</button>
+        <button  class="btn btn-sm" (click)="inviteForm.valid ? inviteUser() : informValidation()">Invite</button>
       </form>
   
   

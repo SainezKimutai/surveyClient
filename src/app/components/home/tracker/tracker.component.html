@@ -62,8 +62,6 @@
                 </div>  
             </div>
 
-
-
         </div>
     
     </section>
@@ -87,58 +85,228 @@
 
 <section class="view-section" *ngIf="viewSectionStatus">
 
-    <div class="main-wrap">
+    <div class="title d-flex">
+        <h4 class="mr-auto">{{trackerOnView.name}}</h4>
 
-        <div class="title d-flex">
-            <h4 class="mr-auto">{{trackerOnView.name}}</h4>
-
-            <button class="btn btn-sm btn-edit mr-4" (click)="editTracker()">Edit</button>
-            <button class="btn btn-sm btn-remove"  (click)="deleteModal.show()">Delete</button>
-             
-        </div>
-
-        <div class="body-item">
-            <h5 class="param">KPI Target</h5>
-            <h4 class="answer">{{trackerOnView.kpiTarget}}</h4>
-        </div>
-        
-        <div class="body-item">
-            <h5 class="param">KPI Unit</h5>
-            <h4 class="answer">{{trackerOnView.kpiUnit}}</h4>
-        </div>
-
-        <div class="body-item">
-            <h5 class="param">KPI Actual</h5>
-            <h4 class="answer">{{trackerOnView.kpiActual}}</h4>
-        </div>
-
-        <div class="body-item">
-            <h5 class="param">Monthly</h5>
-            <h4 class="answer">{{trackerOnView.monthly}}</h4>
-        </div>
-
-
-        <div class="body-item">
-            <h5 class="param">Weekly</h5>
-
-            <div class="answer">
-                <div class="ans-title">
-                    <h4>Value</h4>
-                    <h4>Week</h4>
-                    <h4>Reason & Comments</h4>
-                    <h4>Feedback</h4>
-                </div>
-                <div class="ans-value" *ngFor="let item of trackerOnView.weekly">
-                    <h4>{{item.value}}</h4>
-                    <h4>{{item.week}}</h4>
-                    <h4 *ngIf="item.reason"><fa-icon class="view-icon" [icon]="faEye" (click)="viewWeeklyReportResponse(item.reason, item.comment)"></fa-icon></h4>
-                    <h4 *ngIf="!item.reason"><fa-icon class="view-icon" [icon]="faEmpty" ></fa-icon></h4>
-                    <h4><fa-icon class="view-icon" [icon]="faEye" (click)="viewWeeklyReportRecommendations(item.value, trackerOnView.kpiTarget, trackerOnView.kpiUnit)"></fa-icon></h4>
-                </div>
-            </div>
-        </div>
-
+        <button *ngIf="toAdminCustomer || toManagerCustomer" class="btn btn-sm btn-edit mr-4" (click)="editTracker()">Edit</button>
+        <button *ngIf="toAdminCustomer" class="btn btn-sm btn-remove"  (click)="deleteModal.show()">Delete</button>
+         
     </div>
+
+
+
+    <ul class="nav nav-tabs d-flex" id="myTab" role="tablist">
+
+        <li class="nav-item">
+            <a class="nav-link " id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="true" >Info</a>
+        </li>  
+    
+        <li class="nav-item">
+            <a class="nav-link active" id="report-tab" data-toggle="tab" href="#report" role="tab" aria-controls="report"  aria-selected="false" >Report</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link " id="recom-tab" data-toggle="tab" href="#recom" role="tab" aria-controls="recom" aria-selected="true" >Recommendations</a>
+        </li>  
+    
+    </ul>
+    
+    
+    
+    
+    
+    
+    <div class="tab-content" id="myTabContent">
+    
+    
+    
+    <!-- Info -->
+        <div class="tab-pane fade " id="info" role="tabpanel"aria-labelledby="info-tab" >
+         
+                <div class="body-item">
+                    <h5 class="param">KPI Target</h5>
+                    <h4 class="answer">{{trackerOnView.kpiTarget}}</h4>
+                </div>
+                
+                <div class="body-item">
+                    <h5 class="param">KPI Unit</h5>
+                    <h4 class="answer">{{trackerOnView.kpiUnit}}</h4>
+                </div>
+        
+                <div class="body-item">
+                    <h5 class="param">KPI Actual</h5>
+                    <h4 class="answer">{{trackerOnView.kpiActual}}</h4>
+                </div>
+        
+                <div class="body-item">
+                    <h5 class="param">Monthly</h5>
+                    <h4 class="answer">{{trackerOnView.monthly}}</h4>
+                </div>
+    
+    
+        </div>
+
+        <!-- Report -->
+        <div class="tab-pane fade show active" id="report" role="tabpanel"aria-labelledby="report-tab" >
+     
+            <article>
+
+                <div class="main-wrap">
+                    <div class="main-header">Week {{thisWeek}}&nbsp;&nbsp;<span>{{thisMonth}},&nbsp;&nbsp;{{thisYear}}</span></div>
+                    <div class="main-body">
+                    <div class="report-wrap">
+                        <div [ngClass]="reportsWeeklyStatus && lastUpdateDay === 1 ? 'day-report end' : 'day-report'" >
+                            <div  [ngClass]="thisDay === 1 ? 'week-name active' : 'week-name'">Monday</div>
+                            <button 
+                            [disabled]="((thisDay === 1 && !reportsWeeklyStatus) || (thisDay === 1 && reportsWeeklyStatus && lastUpdateDay >= 1)) ? false : true"
+                            [ngClass]="((thisDay === 1 && !reportsWeeklyStatus) || (thisDay === 1 && reportsWeeklyStatus && lastUpdateDay >= 1)) ? 'btn btn-sm active' : 'btn btn-sm'" 
+                            (click)="reportSubmitedStatus ? reportSubmitedAlert() : addReportModal.show()"> 
+                                <fa-icon [icon]="faPlus"></fa-icon> 
+                            </button>
+                            <h4 *ngFor="let item of MyReports" [hidden]="item.position !== 1" (click)="openViewUserReportModal(item)"> 
+                                <fa-icon [icon]="faCheck"></fa-icon> <span>{{item.userEmail}}</span></h4>
+                            
+                     
+                        </div>
+                        <div  [ngClass]="reportsWeeklyStatus && lastUpdateDay === 2 ? 'day-report end' : 'day-report'">
+                            
+                            <div  [ngClass]="thisDay === 2 ? 'week-name active' : 'week-name'">Tuesday</div>
+                            <button 
+                            [disabled]="((thisDay === 2 && !reportsWeeklyStatus) || (thisDay === 2 && reportsWeeklyStatus && lastUpdateDay >= 2)) ? false : true"
+                            [ngClass]="((thisDay === 2 && !reportsWeeklyStatus) || (thisDay === 2 && reportsWeeklyStatus && lastUpdateDay >= 2)) ? 'btn btn-sm active' : 'btn btn-sm'" 
+                            (click)="reportSubmitedStatus ? reportSubmitedAlert() : addReportModal.show()"> 
+                                <fa-icon [icon]="faPlus"></fa-icon> 
+                            </button>
+                            <h4 *ngFor="let item of MyReports" [hidden]="item.position !== 2"(click)="openViewUserReportModal(item)"> 
+                                <fa-icon [icon]="faCheck"></fa-icon> <span>{{item.userEmail}}</span></h4>
+
+                        </div>
+
+
+
+
+                        <div  [ngClass]="reportsWeeklyStatus && lastUpdateDay === 3 ? 'day-report end' : 'day-report'">
+                            <div  [ngClass]="thisDay === 3 ? 'week-name active' : 'week-name'">Wednesday</div>
+                            <button 
+                            [disabled]="((thisDay === 3 && !reportsWeeklyStatus) || (thisDay === 3 && reportsWeeklyStatus && lastUpdateDay >= 3)) ? false : true"
+                            [ngClass]="((thisDay === 3 && !reportsWeeklyStatus) || (thisDay === 3 && reportsWeeklyStatus && lastUpdateDay >= 3)) ? 'btn btn-sm active' : 'btn btn-sm'" 
+                            (click)="reportSubmitedStatus ? reportSubmitedAlert() : addReportModal.show()"> 
+                                <fa-icon [icon]="faPlus"></fa-icon> 
+                            </button>
+                            <h4 *ngFor="let item of MyReports" [hidden]="item.position !== 3" (click)="openViewUserReportModal(item)"> 
+                                <fa-icon [icon]="faCheck"></fa-icon> <span>{{item.userEmail}}</span></h4>
+
+                        </div>
+
+
+
+                        <div  [ngClass]="reportsWeeklyStatus && lastUpdateDay === 4 ? 'day-report end' : 'day-report'">
+                            <div  [ngClass]="thisDay === 4 ? 'week-name active' : 'week-name'">Thurdsay</div>
+                            <button 
+                            [disabled]="((thisDay === 4 && !reportsWeeklyStatus) || (thisDay === 4 && reportsWeeklyStatus && lastUpdateDay >= 4)) ? false : true"
+                            [ngClass]="((thisDay === 4 && !reportsWeeklyStatus) || (thisDay === 4 && reportsWeeklyStatus && lastUpdateDay >= 4)) ? 'btn btn-sm active' : 'btn btn-sm'" 
+                            (click)="reportSubmitedStatus ? reportSubmitedAlert() : addReportModal.show()"> 
+                                <fa-icon [icon]="faPlus"></fa-icon> 
+                            </button>
+                            <h4 *ngFor="let item of MyReports" [hidden]="item.position !== 4" (click)="openViewUserReportModal(item)"> 
+                                <fa-icon [icon]="faCheck"></fa-icon> <span>{{item.userEmail}}</span></h4>
+
+
+                        </div>
+
+
+
+
+                        <div [ngClass]="reportsWeeklyStatus && lastUpdateDay === 5 ? 'day-report end' : 'day-report'">
+                            <div [ngClass]="thisDay === 5 ? 'week-name active' : 'week-name'">Friday</div>
+                            <button 
+                            [disabled]="((thisDay === 5 && !reportsWeeklyStatus) || (thisDay === 5 && reportsWeeklyStatus && lastUpdateDay >= 5)) ? false : true"
+                            [ngClass]="((thisDay === 5 && !reportsWeeklyStatus) || (thisDay === 5 && reportsWeeklyStatus && lastUpdateDay >= 5)) ? 'btn btn-sm active' : 'btn btn-sm'" 
+                            (click)="reportSubmitedStatus ? reportSubmitedAlert() : addReportModal.show()"> 
+                                <fa-icon [icon]="faPlus"></fa-icon> 
+                            </button>
+                            <h4 *ngFor="let item of MyReports" [hidden]="item.position !== 5" (click)="openViewUserReportModal(item)"> 
+                                <fa-icon [icon]="faCheck"></fa-icon> <span>{{item.userEmail}}</span></h4>
+                        </div>
+
+
+
+                        <div  [ngClass]="reportsWeeklyStatus && lastUpdateDay === 6 ? 'day-report end' : 'day-report'">
+                            <div [ngClass]="thisDay === 6 ? 'week-name active' : 'week-name'">Saturday</div>
+
+                            <button 
+                            [disabled]="((thisDay === 6 && !reportsWeeklyStatus) || (thisDay === 6 && reportsWeeklyStatus && lastUpdateDay >= 6)) ? false : true"
+                            [ngClass]="((thisDay === 6 && !reportsWeeklyStatus) || (thisDay === 6 && reportsWeeklyStatus && lastUpdateDay >= 6)) ? 'btn btn-sm active' : 'btn btn-sm'" 
+                            (click)="reportSubmitedStatus ? reportSubmitedAlert() : addReportModal.show()"> 
+                                <fa-icon [icon]="faPlus"></fa-icon> 
+                            </button>
+                            <h4 *ngFor="let item of MyReports" [hidden]="item.position !== 6" (click)="openViewUserReportModal(item)"> 
+                                <fa-icon [icon]="faCheck"></fa-icon> <span>{{item.userEmail}}</span></h4>
+
+                        </div>
+
+
+
+                        <div  [ngClass]="reportsWeeklyStatus && lastUpdateDay === 7 ? 'day-report end' : 'day-report'">
+                                
+                            <div [ngClass]="thisDay === 7 ? 'week-name active' : 'week-name'">Sunday</div>
+                            <button 
+                            [disabled]="((thisDay === 7 && !reportsWeeklyStatus) || (thisDay === 7 && reportsWeeklyStatus && lastUpdateDay >= 7)) ? false : true"
+                            [ngClass]="((thisDay === 7 && !reportsWeeklyStatus) || (thisDay === 7 && reportsWeeklyStatus && lastUpdateDay >= 7)) ? 'btn btn-sm active' : 'btn btn-sm'" 
+                            (click)="reportSubmitedStatus ? reportSubmitedAlert() : addReportModal.show()"> 
+                                <fa-icon [icon]="faPlus"></fa-icon> 
+                            </button>
+                            <h4 *ngFor="let item of MyReports" [hidden]="item.position !== 7" (click)="openViewUserReportModal(item)"> 
+                                <fa-icon [icon]="faCheck"></fa-icon> <span>{{item.userEmail}}</span></h4>
+
+                        </div>
+
+
+                    </div>
+                    </div>
+
+                </div>
+
+
+
+            </article>
+
+    
+        </div>
+        <!-- Recommendation -->
+        <div class="tab-pane fade " id="recom" role="tabpanel"aria-labelledby="info-tab" >
+         
+            <div class="wrap">
+                <h4>Observation</h4>
+                <p *ngIf="observation">{{observation}}</p>
+            </div>
+            <div class="wrap">
+                <h4>Recommendation</h4>
+                <p *ngIf="recommendation">{{recommendation}}</p>
+            </div>
+
+
+        </div>
+    
+    
+    </div><!-- tab-content -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </section>
@@ -147,13 +315,14 @@
 
     <section class="form-section" *ngIf="formSectionStatus">
 
-        <form class="form">
-        
-            <div class="form-title">
-                <h4>Create Business Function</h4>
-            </div>
+        <div class="form-section-title">
+            <h4 *ngIf="trackerFormId === ''">Create Business Function</h4>
+            <h4 *ngIf="trackerFormId !== ''">Editing Business Function</h4>
+        </div>
 
 
+        <form [ngClass]="formOneStatus ? 'form' : 'form hide'">
+    
             <!-- Name -->
             <div class="form-group">
                 <label for="name">Name</label>
@@ -172,244 +341,126 @@
                 <label for="kpiUnit">KPI Unit</label>
                 <input type="text" #kpiUnit class="" name="kpiUnit" [(ngModel)]="bcpFunctionInput.kpiUnit">
             </div>
-
-            <!-- kPI Measure Categories -->
-            <!-- <div class="array-form">
-                <label>KPI Measure Categories</label>
-                <div class="input-label-wrap">
-                    <label for="cat">CaT</label>
-                    <label for="category">Category</label>
-                    <label for="threat">Threat</label>
-                </div>
-                <div class="input-preview-wrap" *ngFor="let item of kpiMeasureCatsArray; let x = index">
-                    <div class="input-preview">
-                        {{item.cat}}
-                    </div>
-                    <div class="input-preview">
-                        {{item.category}}
-                    </div>
-                    <div class="input-preview">
-                        {{item.threat}}
-                    </div>
-                    <fa-icon [icon]="faTrash" (click)="removeKpiMeasureCatInput(x)"></fa-icon>
-                </div>
-                <div class="input-wrap">
-                    <input type="number" #cat class="" name="cat" [(ngModel)]="kpiMeasureCatInput.cat">
-                    <input type="text" name="category" [(ngModel)]="kpiMeasureCatInput.category">
-                    <input type="text" name="threat" [(ngModel)]="kpiMeasureCatInput.threat">
-                </div>
-                <div class="btn-wrap">
-                    <button class="btn btn-sm" [disabled]="kpiMeasureCatInput.cat === '' || kpiMeasureCatInput.category === '' || kpiMeasureCatInput.threat === ''" 
-                    (click)="addKpiMeasureCatInput()"><fa-icon [icon]="faPlus"></fa-icon></button>
-                </div>
-
-
-            </div> -->
-
-
-            <!-- kpiActual -->
-            <!-- <div class="form-group">
+                        <!-- kpiActual -->
+            <div class="form-group">
                 <label for="kpiActual">KPI Actual</label>
                 <input type="number" #kpiActual class="" name="kpiActual" [(ngModel)]="bcpFunctionInput.kpiActual">
-            </div> -->
+            </div>
 
             <!-- Monthly -->
-            <!-- <div class="form-group">
-                <label for="monthly">Monthly</label>
-                <input type="number" #monthly class="" name="monthly" [(ngModel)]="bcpFunctionInput.monthly">
-            </div> -->
-
-            <!-- Weekly -->
-            <!-- <div class="array-form">
-                <label>Weekly </label>
-                <div class="input-label-wrap">
-                    <label for="value">Value</label>
-                    <label for="week">Week</label>
-                </div>
-                <div class="input-preview-wrap" *ngFor="let item of weeklyArray; let r = index">
-                    <div class="input-preview">
-                        {{item.value}}
-                    </div>
-                    <div class="input-preview">
-                        {{item.week}}
-                    </div>
-                    <fa-icon [icon]="faTrash" (click)="removeWeeklyInput(r)"></fa-icon>
-                </div>
-                <div class="input-wrap">
-                    <input type="number" #value class="" name="value" [(ngModel)]="weeklyInput.value">
-                    <input type="number" name="week" [(ngModel)]="weeklyInput.week">
-                </div>
-                <div class="btn-wrap">
-                    <button class="btn btn-sm" [disabled]="weeklyInput.value === '' || weeklyInput.week === '' " 
-                    (click)="addWeeklyInput()"><fa-icon [icon]="faPlus"></fa-icon></button>
-                </div>
-
-
-            </div> -->
-
-            <!-- weeklyActual -->
-            <!-- <div class="form-group">
-                <label for="weeklyActual">Weekly Actual</label>
-                <input type="number" #weeklyActual class="" name="weeklyActual" [(ngModel)]="bcpFunctionInput.weeklyActual">
-            </div> -->
-
-            <!-- Reason -->
-            <!-- <div class="form-group">
-                <label for="reason">Reason</label>
-                <textarea type="text" #reason class="" name="reason" [(ngModel)]="bcpFunctionInput.reason"> </textarea>
-            </div> -->
-
-            <!-- Comment -->
-            <!-- <div class="form-group">
-                <label for="comment">Comment</label>
-                <textarea name="comment" #comment class="" [(ngModel)]="bcpFunctionInput.comment"> </textarea>
-            </div> -->
-
-
-            <div class="btn-wrap">
-                <button 
-                class="btn btn-sm" (click)="validateForm()">Save</button>
-            </div>
-
-
-        </form>
-
-    </section>
-
-    <section class="form-section" *ngIf="editformSectionStatus">
-
-        <form class="form">
-        
-            <div class="form-title">
-                <h4>Update Business Function</h4>
-            </div>
-            <div class="form-group" *ngIf="!bcpFunctionDefaults">
-                <button (click)="viewBcpFunctionDefaults()">Edit Business Function Details</button>
-            </div>
-            <div class="form-group" *ngIf="bcpFunctionDefaults">
-                <button (click)="hideBcpFunctionDefaults()">Hide Business Function Details</button>
-            </div>
-           <div *ngIf="bcpFunctionDefaults">
-            <!-- Name -->
             <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" #name class="" name="name" [(ngModel)]="bcpFunctionInput.name">
-            </div>
-
-
-            <!-- kpiTarget -->
-            <div class="form-group">
-                <label for="kpiTarget">KPI Target</label>
-                <input type="number" #kpiTarget class="" name="kpiTarget" [(ngModel)]="bcpFunctionInput.kpiTarget">
-            </div>
-
-            <!-- kpiUnit -->
-            <div class="form-group">
-                <label for="kpiUnit">KPI Unit</label>
-                <input type="text" #kpiUnit class="" name="kpiUnit" [(ngModel)]="bcpFunctionInput.kpiUnit">
-            </div>
-
-              <!-- Monthly -->
-              <div class="form-group">
                 <label for="monthly">Monthly</label>
                 <input type="number" #monthly class="" name="monthly" [(ngModel)]="bcpFunctionInput.monthly">
             </div>
 
-            <hr/>
-
-            <!-- kPI Measure Categories -->
-            <!-- <div class="array-form">
-                <label>KPI Measure Categories</label>
-                <div class="input-label-wrap">
-                    <label for="cat">CaT</label>
-                    <label for="category">Category</label>
-                    <label for="threat">Threat</label>
-                </div>
-                <div class="input-preview-wrap" *ngFor="let item of kpiMeasureCatsArray; let x = index">
-                    <div class="input-preview">
-                        {{item.cat}}
-                    </div>
-                    <div class="input-preview">
-                        {{item.category}}
-                    </div>
-                    <div class="input-preview">
-                        {{item.threat}}
-                    </div>
-                    <fa-icon [icon]="faTrash" (click)="removeKpiMeasureCatInput(x)"></fa-icon>
-                </div>
-                <div class="input-wrap">
-                    <input type="number" #cat class="" name="cat" [(ngModel)]="kpiMeasureCatInput.cat">
-                    <input type="text" name="category" [(ngModel)]="kpiMeasureCatInput.category">
-                    <input type="text" name="threat" [(ngModel)]="kpiMeasureCatInput.threat">
-                </div>
-                <div class="btn-wrap">
-                    <button class="btn btn-sm" [disabled]="kpiMeasureCatInput.cat === '' || kpiMeasureCatInput.category === '' || kpiMeasureCatInput.threat === ''" 
-                    (click)="addKpiMeasureCatInput()"><fa-icon [icon]="faPlus"></fa-icon></button>
-                </div>
-
-
-            </div> -->
-          </div>
-
-            <!-- kpiActual -->
-            <div class="form-group">
-                <label for="kpiActual">KPI Actual</label>
-                <input type="number" [readonly]="true" #kpiActual class="" name="kpiActual" [(ngModel)]="bcpFunctionInput.kpiActual">
-            </div>
-
-            <!-- Weekly -->
-            <div class="array-form">
-                <label>Weekly </label>
-                <div class="input-label-wrap">
-                    <label for="value">Value</label>
-                    <label for="week">Week</label>
-                </div>
-                <div class="input-preview-wrap" *ngFor="let item of weeklyArray; let r = index">
-                    <div class="input-preview">
-                        {{item.value}}
-                    </div>
-                    <div class="input-preview">
-                        {{item.week}}
-                    </div>
-                    <fa-icon [icon]="faTrash" (click)="removeWeeklyInput(r)"></fa-icon>
-                </div>
-                <div class="input-wrap">
-                    <input type="number" #value class="" name="value" [(ngModel)]="weeklyInput.value">
-                    <input type="number" readonly name="week" [(ngModel)]="weeklyInput.week">
-                </div>
-                <div class="input-wrap">
-                     <!-- Reason -->
-                    <div class="form-group">
-                        <label for="reason">Reason</label>
-                        <select type="text" #reason class="" name="reason" [(ngModel)]="weeklyInput.reason"> 
-                            <option value="" disabled selected hidden >...select reason</option>
-                            <option *ngFor="let item of AllTrackerReasons"  [value]="item.reason">{{item.reason}}</option>  
-                        </select>
-                    </div>
-
-                    <!-- Comment -->
-                    <div class="form-group">
-                        <label for="comment">Comment</label>
-                        <textarea name="comment" #comment class="" [(ngModel)]="weeklyInput.comment"> </textarea>
-                    </div>
-
-                </div>
-                <div class="btn-wrap">
-                    <button class="btn btn-sm" [disabled]="weeklyInput.value === '' || weeklyInput.week === '' " 
-                    (click)="addWeeklyInput()"><fa-icon [icon]="faPlus"></fa-icon></button>
-                </div>
-
-            </div>
-
-            <div class="btn-wrap">
+            
+            <div class="btn-wrap d-flex">
                 <button 
-                class="btn btn-sm" (click)="validateForm()">Save</button>
+                class="btn btn-sm btn-save ml-auto" (click)="validateForm1()">Proceed</button>
             </div>
-
 
         </form>
 
+
+        <form [ngClass]="formOneStatus ? 'form hide' : 'form'">
+
+
+            <!-- Department -->
+            <div class="form-group" *ngIf="myCompany">
+                <label for="departmentId">Department</label>
+                <select type="number" #departmentId class="" name="departmentId" [(ngModel)]="bcpFunctionInput.departmentId">
+                    <option value="" disabled selected hidden >Select department</option>
+                    <option *ngFor="let item of myCompany.department"  [value]="item._id">{{item.departmentName}}</option>
+                </select>
+            </div>
+
+            <!-- All User In Department -->
+            <div class="form-group" style="padding-top: 0; margin-top: 0;">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" name="allInDepartment" [(ngModel)]="bcpFunctionInput.allInDepartment"  class="custom-control-input" id="customSwitch2">
+                    <label class="custom-control-label" for="customSwitch2">All Users In Department</label>
+                </div>
+            </div>
+
+
+            <!-- Choose reporting users -->
+            <div class="select-wrap" *ngIf="!bcpFunctionInput.allInDepartment">
+                <h4>Reporting users</h4>
+                <div class="grid-wrap">
+                    <div class="custom-form-group" *ngFor="let user of MyUser">
+                        <input type="checkbox" #reportingUser class="" (click)="captureReportingUsers(user)" name="user" value="user">
+                        <label for="user">{{user}}</label>
+                    </div>
+                </div>   
+            </div>
+
+            <!-- Reporting schedule -->
+            <div class="select-wrap" >
+                <h4>Reporting schedule</h4>
+                <div class="grid-wrap">
+                    <div class="custom-form-group">
+                        <input type="radio" name="reporting_schedule" [(ngModel)]="bcpFunctionInput.reporting_schedule" value="weekly">
+                        <label for="">Weekly</label>
+                    </div>
+                    <div class="custom-form-group">
+                        <input type="radio" name="reporting_schedule"  [(ngModel)]="bcpFunctionInput.reporting_schedule" value="daily">
+                        <label for="">Daily</label>
+                    </div>
+                </div>   
+            </div>
+            
+            <!-- Last reporting day of the week -->
+            <div class="select-wrap" *ngIf="bcpFunctionInput.reporting_schedule === 'weekly'" >
+                <h4>Last reporting day of the week</h4>
+                <div class="grid-wrap">
+                    <div class="custom-form-group">
+                        <input type="radio" name="last_reporting_day" [(ngModel)]="bcpFunctionInput.last_reporting_day" value="1">
+                        <label for="">Mondays</label>
+                    </div>
+                    <div class="custom-form-group">
+                        <input type="radio" name="last_reporting_day" [(ngModel)]="bcpFunctionInput.last_reporting_day" value="2">
+                        <label for="">Tuesdays</label>
+                    </div>
+                    <div class="custom-form-group">
+                        <input type="radio" name="last_reporting_day" [(ngModel)]="bcpFunctionInput.last_reporting_day" value="3">
+                        <label for="">Wednesdays</label>
+                    </div>
+                    <div class="custom-form-group">
+                        <input type="radio" name="last_reporting_day" [(ngModel)]="bcpFunctionInput.last_reporting_day" value="4">
+                        <label for="">Thursdays</label>
+                    </div>
+                    <div class="custom-form-group">
+                        <input type="radio" name="last_reporting_day" [(ngModel)]="bcpFunctionInput.last_reporting_day" value="5">
+                        <label for="">Fridays</label>
+                    </div>
+                    <div class="custom-form-group">
+                        <input type="radio" name="last_reporting_day" [(ngModel)]="bcpFunctionInput.last_reporting_day" value="6">
+                        <label for="">Saturdays</label>
+                    </div>
+                    <div class="custom-form-group">
+                        <input type="radio" name="last_reporting_day" [(ngModel)]="bcpFunctionInput.last_reporting_day" value="7">
+                        <label for="">Sundays</label>
+                    </div>
+                </div>   
+            </div>
+
+            <div class="btn-wrap d-flex">
+                <button class="btn btn-sm btn-back mr-auto" (click)="backToFormTwo()">Back</button>
+                <button class="btn btn-sm btn-save ml-auto" (click)="validateForm2()">Save</button>
+            </div>
+
+        </form>
+
+ 
+
+
+
     </section>
+
+
+
+
+
 
 
 
@@ -458,53 +509,105 @@
 
 
 
-<div bsModal  #viewCommentsModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog viewCommentsModal modal-lg" role="document">
+
+
+
+
+
+<div bsModal  #addReportModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog addReportModal modal-md" role="document">
         <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title ">Reason & Comments</h4>
-            <button type="button" class="btn close" (click)="viewCommentsModal.hide()" aria-label="Close">
+            <h4 class="modal-title ">Report Form Input</h4>
+            <button type="button" class="btn close" (click)="addReportModal.hide()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
       
         </div>
         <div class="modal-body" >
-            <div>
-                <h4>Reason</h4>
-                <p>{{weeklyReportReason}}</p>
+            <div class="form-group">
+                <label for="">Value</label>
+                <input type="number" name="value" [(ngModel)]="reportInputForm.value">
             </div>
-            <div>
-                <h4>Comments</h4>
-                <p>{{weeklyReportComments}}</p>
+            <div class="form-group">
+                <label for="">Week</label>
+                <input type="number"  name="week" [(ngModel)]="reportInputForm.week" readonly>
             </div>
+            <div class="form-group">
+                <label for="">Reason</label>
+                <select type="text"  name="reason" [(ngModel)]="reportInputForm.reason"> 
+                    <option value="">Reason</option>
+                    <option *ngFor="let item of AllTrackerReasons" [value]="item.reason">{{item.reason}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">Comment</label>
+                <textarea  name="comment" [(ngModel)]="reportInputForm.comment" ></textarea>
+            </div>
+        </div>
+        <div class="modal-footer">
+
+            <button  [disabled]="reportInputForm.value === null || reportInputForm.reason === '' || reportInputForm.comment === ''"
+            class="btn btn-sm btn-outline-success" (click)="saveReport()">Save</button>
+
         </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 
-  <div bsModal  #viewRecomModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog viewRecomModal modal-lg" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title ">Automated Recommendations</h4>
-            <button type="button" class="btn close" (click)="viewRecomModal.hide()" aria-label="Close">
+
+
+
+<div bsModal  #viewUserReportModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog viewUserReportModal modal-md" role="document">
+    <div class="modal-content" *ngIf="reportOnView">
+    <div class="modal-header d-flex" >
+        <h4 class="modal-title">{{reportOnView.userEmail}} report</h4>
+        <button *ngIf="loggedInUserId === reportOnView.userId" class="btn btn-sm ml-auto btn-edit" (click)="editReport(); viewUserReportModal.hide()"> Edit</button>
+        <button *ngIf="loggedInUserId === reportOnView.userId" class="btn btn-sm ml-auto btn-delete" (click)="deleteReport()"> Delete</button>
+        <button type="button" class="btn ml-auto close" (click)="viewUserReportModal.hide()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-          </button>
-      
-        </div>
-        <div class="modal-body" >
-            <div>
-                <h4>Observation</h4>
-                <p>{{observation}}</p>
-            </div>
-            <div>
-                <h4>Recommendation</h4>
-                <p>{{recommendation}}</p>
+        </button>
+    
+    </div>
+    <div class="modal-body" >
+        <div class="item-wrap">
+            <h5>Value</h5>
+            <div class="value">
+                {{reportOnView.value}}
             </div>
         </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+        <div class="item-wrap">
+            <h5>Value</h5>
+            <div class="value">
+                {{reportOnView.week}}
+            </div>
+        </div>
+        <div class="item-wrap">
+            <h5>Value</h5>
+            <div class="value">
+                {{reportOnView.reason}}
+            </div>
+        </div>
+        <div class="item-wrap">
+            <h5>Value</h5>
+            <div class="value">
+                {{reportOnView.comment}}
+            </div>
+        </div>
+    </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+
+
+
+
 
 
 

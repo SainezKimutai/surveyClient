@@ -246,6 +246,47 @@ export class UsersComponent implements OnInit, OnDestroy {
 
 
 
+
+
+  // email: ['', [Validators.required, Validators.email]],
+  // companyId: (this.toAdmin ? '' : localStorage.getItem('loggedCompanyId')),
+  // userType: (this.toAdmin ? ['', [Validators.required]] : 'customer'),
+  // userRole: (this.toAdmin ? 'admin' : ['', [Validators.required]]),
+  // departmentId: (this.toAdmin ? '' : ['', [Validators.required]]),
+
+  informValidation() {
+    if (this.inviteForm.value.email === '') {
+      this.notifyService.showInfo('Please input valid email', 'Invalid email format');
+      return;
+    }
+    if (this.inviteForm.value.departmentId === '') {
+      this.notifyService.showInfo('Please select or set department for your company', 'No Department');
+      return;
+    }
+    if (this.inviteForm.value.userRole === '') {
+      this.notifyService.showInfo('Please select user role', 'No User role');
+      return;
+    }
+    if (this.inviteForm.value.userType === '') {
+      this.notifyService.showInfo('Please set user type', 'No User type');
+      return;
+    }
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   inviteUser() {
     this.ImprintLoader = true;
 
