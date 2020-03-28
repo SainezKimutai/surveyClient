@@ -147,6 +147,9 @@ public toManagerCustomer = false;
             if (user.userRole === 'manager'){
               this.toManagerCustomer = true;
             }
+            if (user.userRole === 'normal') {
+              this.AllTrackers = this.AllTrackers.filter(trck => trck.departmentId  === user.departmentId).map(e => e);
+            }
             break;
           }
         }
@@ -212,7 +215,7 @@ updatePage() {
       error => {
         console.log('Error In listing Users');
       }
-    ); // listUsers()
+    ); 
     this.trackerService.getAllTrackers().subscribe(
       data => {
         this.AllTrackers = data.filter((e) => e.companyId === localStorage.getItem('loggedCompanyId')).map(e => e); resolve();
