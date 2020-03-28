@@ -78,7 +78,7 @@
 
                     <div *ngIf="isLast" class="btn-wrap d-flex">
                         <button [disabled]="(response === '' || !response) && responseArray.length === 0"
-                        class="btn btn-sm btn-next ml-auto" (click)="next(pageNumber)">Submit</button>
+                        class="btn btn-sm btn-next ml-auto" (click)="Process(pageNumber)">Submit</button>
                     </div>
 
                     <div class="text-muted">

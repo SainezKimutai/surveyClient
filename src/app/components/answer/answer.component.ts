@@ -3,7 +3,8 @@ import { QuestionService } from 'src/app/shared/services/questions.service';
 import { ResponseService } from 'src/app/shared/services/responses.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotificationService } from 'src/app/shared/services/notification.service';
-
+import { ThreatService } from 'src/app/shared/services/threats.service';
+import { async } from '@angular/core/testing';
 @Component({
   selector: 'app-answer',
   templateUrl: './answer.component.html',
@@ -19,6 +20,7 @@ export class AnswerComponent implements OnInit {
               private responseService: ResponseService,
               private router: Router,
               private activeRoute: ActivatedRoute,
+              private threatService: ThreatService,
               private notification: NotificationService
               ) { }
 
@@ -44,6 +46,7 @@ export class AnswerComponent implements OnInit {
     questions = [];
     answerStructure: any;
     answers: any = [];
+    threat: any;
 
 
 
@@ -98,8 +101,9 @@ export class AnswerComponent implements OnInit {
 
 
 
-  formatQuestions() {
+  async formatQuestions() {
     if (this.questions.length > 0) {
+      
       this.questionTag = this.questions[0].question;
       this.open = this.questions[0].open_question;
       this.multiple = this.questions[0].multiple_choice;
@@ -107,6 +111,7 @@ export class AnswerComponent implements OnInit {
       this.options = this.questions[0].choices;
       this.pageNumber = 1;
       this.totalPages = this.questions.length;
+       
 
       if (this.questions.length === 1) {
         this.isLast = true;
@@ -114,11 +119,76 @@ export class AnswerComponent implements OnInit {
     }
   }
 
+  // impoertant...
+
+  getThreatInference(){
+    //check threat type, ie. direct value comparison or range comparison
+    let response;
+    if(this.responseArray[this.responseArray.length-1].answer){
+      response = this.responseArray[this.responseArray.length-1].answer
+    }
+    else{
+      response = this.responseArray[this.responseArray.length-1];
+    }
+    let feedback = {};
+    this.responseArray['threatId'] = this.threat._id;
+    // direct range comparison...
+    if(this.threat.type === 0){
+      for(var i=0; i< this.threat.categorization_inferences.length; i++){
+        if(response == this.threat.categorization_inferences[i].classifier[0]){
+          feedback = this.threat.categorization_inferences[i];
+          this.responseArray['threat'] = feedback;
+        }else{
+         
+        }
+      }
+    }
+    // range comparison..
+    if(this.threat.type === 1){
+       // range representations using to..
+      if(response.includes('to')){
+        console.log(response.split('to'))
+        let range = [];
+        range.push(parseInt(response.split('to')[0]))
+        range.push(parseInt(response.split('to')[1]))
+        for(var i=0; i< this.threat.categorization_inferences.length; i++){
+          if(JSON.stringify(range) === JSON.stringify(this.threat.categorization_inferences[i].classifier)){
+             
+            feedback = this.threat.categorization_inferences[i];
+            this.responseArray['threat'] = feedback;
+          }
+        }
+      }
+      // value comparison
+      else{
+      for(var i=0; i< this.threat.categorization_inferences.length; i++){
+        if(this.threat.categorization_inferences[i].classifier.length === 1){
+          //if only one parameter is passed, ie, 10 and above, only 10 should be stored to process on this..
+          console.log("only one param");
+          if(parseInt(response) < this.threat.categorization_inferences[i].classifier[0]+1){
+            feedback = this.threat.categorization_inferences[i];
+            this.responseArray['threat'] = feedback;
+          }
+        }
+        else{
+          // console.log("Comparing agains two params", parseInt(response));
+          //checking if value is within a given range out of the given ones
+        if(this.threat.categorization_inferences[i].classifier[0]-1 < parseInt(response) && parseInt(response) < this.threat.categorization_inferences[i].classifier[1]+1)
+        {
+          feedback = this.threat.categorization_inferences[i];
+          this.responseArray['threat'] = feedback;
+        }
+      }
+    }
+   }
+  }
+ }
 
 
   captureResponse() {
     this.responseArray = [];
     this.responseArray.push(this.response);
+    
   }
   captureSingleResponse(ans) {
     this.responseArray = [];
@@ -135,9 +205,21 @@ export class AnswerComponent implements OnInit {
     }
   }
 
+  async getThreat(id){
+    await this.threatService.getOneThreat(id).subscribe(async data => {this.threat = data; console.log(this.threat); await this.getThreatInference();}, error =>console.log("ERROR"));
+    return this.threat;
+  }
+
+  async Process(id){
+  
+      this.next(id);
+     
+
+  }
 
 
-  next(id) {
+  async next(id) {
+   
     this.structureAnswers(id);
     if (id !== this.questions.length) {
     this.questionTag = this.questions[id].question;
@@ -184,8 +266,11 @@ export class AnswerComponent implements OnInit {
 
 
 
-  structureAnswers(id) {
-    const answer = {
+  async structureAnswers(id) {
+    if(this.questions[id-1].threat){
+    await this.threatService.getOneThreat(this.questions[id-1].threat).subscribe(async data => {this.threat = data; console.log(this.threat); await this.getThreatInference();
+    //  console.log("Sending..",this.responseArray)
+      const answer = {
       questionId: this.questions[id - 1]._id,
       answer : this.responseArray
     };
@@ -201,7 +286,26 @@ export class AnswerComponent implements OnInit {
       this.answerStructure.answers = this.answers;
       this.postAnswers(this.answerStructure);
     }
+  }, error =>console.log("error"));
+}else{
+  const answer = {
+    questionId: this.questions[id - 1]._id,
+    answer : this.responseArray
+  };
+
+  this.responseArray = [];
+  this.response = '';
+  this.answers.push(answer);
+  if (id === this.questions.length - 1) {
+    this.isLast = true;
   }
+  if (id === this.questions.length) {
+    this.ImprintLoader = true;
+    this.answerStructure.answers = this.answers;
+    this.postAnswers(this.answerStructure);
+  }
+}
+}
 
 
 

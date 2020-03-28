@@ -8,8 +8,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { EditorialComponent } from './editorial.component';
 import { EditorialRoutingModule } from './editorial-routing.module';
 import { ModalModule } from 'ngx-bootstrap';
-
-
+import { MatStepperModule } from '@angular/material/stepper';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 @NgModule({
 
   declarations: [
@@ -22,6 +23,9 @@ import { ModalModule } from 'ngx-bootstrap';
       AngularFontAwesomeModule,
       FontAwesomeModule,
       ReactiveFormsModule,
+      MatStepperModule,
+      MatInputModule,
+      MatFormFieldModule,
       FormsModule,
       ModalModule.forRoot(),
       ToastrModule.forRoot({

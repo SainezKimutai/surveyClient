@@ -7,7 +7,7 @@ import { ModalDirective, ModalOptions, ModalModule } from 'ngx-bootstrap';
 import { ThreatService } from 'src/app/shared/services/threats.service';
 import { IndustryService } from 'src/app/shared/services/industry.service';
 import { TrackerReasonService } from 'src/app/shared/services/trackerReasons.service';
-
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-editorial',
@@ -16,13 +16,14 @@ import { TrackerReasonService } from 'src/app/shared/services/trackerReasons.ser
 })
 export class EditorialComponent implements OnInit {
 // tslint:disable: prefer-const
-
+ 
   constructor(
     private notifyService: NotificationService,
     private surveyService: SurveyService,
     private questionService: QuestionService,
     private threatService: ThreatService,
     private industryService: IndustryService,
+    private _formBuilder: FormBuilder,
     private trackerReasonService: TrackerReasonService
   ) {  }
 
@@ -123,8 +124,7 @@ export class EditorialComponent implements OnInit {
   ngOnInit() {
     localStorage.setItem('ActiveNav', 'editorial');
     this.updatePage();
-
-
+     
   }
   updatePage() {
     return new Promise((resolve, reject) => {
@@ -283,12 +283,11 @@ export class EditorialComponent implements OnInit {
 
 
   addChoice() {
-    if (this.CurrentChoiceInput === '' || this.CurrentChoiceInputThreat === '') {
+    if (this.CurrentChoiceInput === '') {
       this.notifyService.showWarning('Input answer', 'Empty Array');
     } else {
-      this.CurrentChoicesArr.push({ answer: this.CurrentChoiceInput, threat: this.CurrentChoiceInputThreat });
+      this.CurrentChoicesArr.push({ answer: this.CurrentChoiceInput});
       this.CurrentChoiceInput = '';
-      this.CurrentChoiceInputThreat = '';
     }
 
   }
@@ -302,11 +301,11 @@ export class EditorialComponent implements OnInit {
       const quizData = {
         question: this.CurrentQuestionInput,
         open_question: this.openQuestionInput,
+        threat: this.CurrentChoiceInputThreat,
         multiple_choice: this.multipleChoiceInput,
         choice_type: this.choiceTypeInput,
         position: this.positionInput,
         choices: this.CurrentChoicesArr,
-
       };
 
 
@@ -317,6 +316,7 @@ export class EditorialComponent implements OnInit {
       this.choiceTypeInput = 'string';
       this.CurrentChoicesArr = [];
       this.positionInput++;
+      this.CurrentChoiceInputThreat =''
     }
   }
 
@@ -339,6 +339,7 @@ export class EditorialComponent implements OnInit {
       const myQuizData = {
         surveyId: survey._id,
         question: quiz.question,
+        threat: quiz.threat,
         open_question: (quiz.open_question === 'true' ? true : false),
         multiple_choice: (quiz.multiple_choice === 'true' ? true : false),
         choice_type: quiz.choice_type,
@@ -389,12 +390,12 @@ export class EditorialComponent implements OnInit {
       err => this.notifyService.showWarning('Question was not delete', 'Failed!'));
   }
   EditaddChoice() {
-    if (this.EditChoiceInput === '' || this.EditChoiceInputThreat === '') {
+
+    if (this.EditChoiceInput === '') {
       this.notifyService.showWarning('Input answer', 'Empty Field');
     } else {
-      this.EditChoicesArr.push({ answer: this.EditChoiceInput, threat: this.EditChoiceInputThreat});
+      this.EditChoicesArr.push({ answer: this.EditChoiceInput});
       this.EditChoiceInput = '';
-      this.EditChoiceInputThreat = '';
     }
   }
 
@@ -403,12 +404,15 @@ export class EditorialComponent implements OnInit {
     const Question = {
       surveyId: this.surveyIdOnView,
       question: this.EditQuestionInput,
+      threat: this.EditChoiceInputThreat,
       open_question: (this.EditopenQuestionInput === 'true' ? true : false),
       multiple_choice: (this.EditmultipleChoiceInput === 'true' ? true : false),
       choice_type: this.EditchoiceTypeInput,
       position: this.EditpositionInput,
       choices: this.EditChoicesArr
     };
+
+    console.log(Question);
     this.questionService.updateQuestion(this.QuestionIdOnEdit, Question).subscribe(
       data => {this.notifyService.showSuccess('Question Successfully Editted', 'Success!');
                this.updatePage().then(() => this.viewSurvey(this.surveyNameOnView, this.surveyIdOnView));
@@ -445,14 +449,17 @@ export class EditorialComponent implements OnInit {
 
   addMoreQuestions() {
     const myAddedQuiz = {
+
       surveyId: this.surveyIdOnView,
       question: this.EditQuestionInput,
+      threat : this.EditChoiceInputThreat,
       open_question: (this.EditopenQuestionInput === 'true' ? true : false),
       multiple_choice: (this.EditmultipleChoiceInput === 'true' ? true : false),
       choice_type: this.EditchoiceTypeInput,
       position: this.EditpositionInput,
       choices: this.EditChoicesArr
     };
+    console.log(myAddedQuiz);
 
 
     this.AddedQuestionsArray.push(myAddedQuiz);

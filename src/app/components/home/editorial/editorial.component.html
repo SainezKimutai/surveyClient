@@ -154,7 +154,15 @@
 
 
             <div class="choices-wrapper" [hidden]="!ChoicesStatus">
-          
+                
+                <div class="form-group">
+                    <select  name="CurrentChoiceInputThreat" [(ngModel)]="CurrentChoiceInputThreat" >
+                        <option value="" disabled selected hidden >... choose threat</option>
+                        <option *ngFor="let trt of AllThreats" [value]="trt._id" >{{trt.name}}</option>
+                    </select>
+                    <button  (click)="addThreatModal.show()">Add Threat</button>
+                </div>
+
                 <div class="preview-questions" *ngFor="let item of CurrentChoicesArr; let x = index">
                   {{x + 1}}. {{item.answer}}
                 </div>
@@ -162,13 +170,7 @@
                     <div class="form-group">
                         <input type="text" name="CurrentChoiceInput" [(ngModel)]="CurrentChoiceInput" placeholder="Type Choices">
                     </div>
-                    <div class="form-group">
-                        <select  name="CurrentChoiceInputThreat" [(ngModel)]="CurrentChoiceInputThreat" >
-                            <option value="" disabled selected hidden >... choose threat</option>
-                            <option *ngFor="let trt of AllThreats" [value]="trt._id" >{{trt.name}}</option>
-                        </select>
-                        <button  (click)="addThreatModal.show()">Add Threat</button>
-                    </div>
+                    
                 </div>
                 <div class="add-ans">
                     <button class="btn btn-sm" (click)="addChoice()"><fa-icon [icon]="faPlus"></fa-icon></button>
@@ -432,7 +434,13 @@
                     </div>
                 </div> -->
                 <div class="choices-wrapper" [hidden]="!ChoicesStatus">
-              
+                    <div class="form-group">
+                        <select  name="EditChoiceInputThreat" [(ngModel)]="EditChoiceInputThreat" >
+                            <option value="" disabled selected hidden >... choose threat</option>
+                            <option *ngFor="let trt of AllThreats" [value]="trt._id" >{{trt.name}}</option>
+                        </select>
+                        <button  (click)="addThreatModal.show()">Add Threat</button>
+                    </div> 
                     <div class="preview-questions" *ngFor="let item of EditChoicesArr; let x = index">
                       {{x + 1}}. {{item.answer}}
                     </div>
@@ -440,13 +448,7 @@
                         <div class="form-group">
                             <input type="text" name="EditChoiceInput" [(ngModel)]="EditChoiceInput" placeholder="Type Choices">
                         </div>
-                        <div class="form-group">
-                            <select  name="EditChoiceInputThreat" [(ngModel)]="EditChoiceInputThreat" >
-                                <option value="" disabled selected hidden >... choose threat</option>
-                                <option *ngFor="let trt of AllThreats" [value]="trt._id" >{{trt.name}}</option>
-                            </select>
-                            <button  (click)="addThreatModal.show()">Add Threat</button>
-                        </div>  
+                          
                     </div>
                    
     
@@ -546,21 +548,22 @@
     
     
                 <div class="choices-wrapper" [hidden]="!ChoicesStatus">
-              
+
+                    <div class="form-group">
+                        <select  name="EditChoiceInputThreat" [(ngModel)]="EditChoiceInputThreat" >
+                            <option value="" disabled selected hidden >... choose threat</option>
+                            <option *ngFor="let trt of AllThreats" [value]="trt._id" >{{trt.name}}</option>
+                        </select>
+                        <button  (click)="addThreatModal.show()">Add Threat</button>
+                    </div>
+
                     <div class="preview-questions" *ngFor="let item of EditChoicesArr; let x = index">
                       {{x + 1}}. {{item.answer}}
                     </div>
                     <div class="form-group-choices d-flex">
                         <div class="form-group">
                             <input type="text" name="EditChoiceInput" [(ngModel)]="EditChoiceInput" placeholder="Type Choices">
-                        </div>
-                        <div class="form-group">
-                            <select  name="EditChoiceInputThreat" [(ngModel)]="EditChoiceInputThreat" >
-                                <option value="" disabled selected hidden >... choose threat</option>
-                                <option *ngFor="let trt of AllThreats" [value]="trt._id" >{{trt.name}}</option>
-                            </select>
-                            <button  (click)="addThreatModal.show()">Add Threat</button>
-                        </div>  
+                        </div> 
                     </div>
                    
     
@@ -579,18 +582,18 @@
         </div>
         <div class="modal-footer">
             <!-- <button type="button" class="btn btn-cancel" (click)="addQuizModal.hide()">Cancel</button> -->
-            <button type="button" class="btn btn-confirm" (click)="addQuestionToExistingTemplate()">Save All</button>
+             <button type="button" class="btn btn-confirm" (click)="addQuestionToExistingTemplate()">Save All</button>
         </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div> 
+</div>
 
 
 <div bsModal  #addThreatModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog addThreatModal" role="document">
         <div class="modal-content">
         <div class="modal-header ">
-            <h4 class="modal-title ">Add Threat</h4>
+            <h4 class="modal-title ">Threat</h4>
             <button type="button" class="btn close" (click)="closeaddThreatModal()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -620,12 +623,107 @@
         </div>
         <div class="modal-footer">
      
-            <button *ngIf="!isEditThreatModal" [disabled]="threatName === '' || threatLevel === '' || threatRecom === ''" type="button" class="btn btn-confirm" (click)="addThreat()">Save</button>
+            <button *ngIf="!isEditThreatModal" [disabled]="threatName === '' || threatLevel === '' || threatRecom === ''" type="button" class="btn btn-confirm" (click)="addThreat()">Add</button>
             <button *ngIf="isEditThreatModal"  [disabled]="threatName === '' || threatLevel === '' || threatRecom === ''" type="button" class="btn btn-confirm"  (click)="editThreat()">Edit</button>
         </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<!-- <div bsModal  #addQuizModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog addQuizModal" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title ">Add Question Form</h4>
+            <button type="button" class="btn close" (click)="closeAddQuizModal()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+              <mat-horizontal-stepper [linear]="isLinear" #stepper>
+                <mat-step [stepControl]="firstFormGroup">
+                  <form [formGroup]="firstFormGroup">
+                    <ng-template matStepLabel></ng-template>
+
+                    <mat-form-field>
+                      <mat-label>Question Statement</mat-label>
+                      <input matInput name="CurrentQuestionInput" [(ngModel)]="EditQuestionInput" placeholder="Question" required>
+                    </mat-form-field>
+                    
+                    <div>
+                      <button class="btn btn-success" mat-button matStepperNext>Next</button>
+                    </div>
+                  </form>
+                </mat-step>
+                <mat-step [stepControl]="firstFormGroup">
+                    <form [formGroup]="firstFormGroup">
+                      <ng-template matStepLabel></ng-template>
+                      
+                      <mat-form-field>
+                        <mat-label>Question Statement</mat-label>
+                        <input matInput name="CurrentQuestionInput" [(ngModel)]="EditQuestionInput" placeholder="Question" required>
+                      </mat-form-field>
+                      
+                      <div>
+                        <button class="btn btn-success" mat-button matStepperNext>Next</button>
+                      </div>
+                    </form>
+                  </mat-step>
+                  <mat-step [stepControl]="firstFormGroup">
+                    <form [formGroup]="firstFormGroup">
+                      <ng-template matStepLabel></ng-template>
+                      
+                      <mat-form-field>
+                        <mat-label>Question Statement</mat-label>
+                        <input matInput name="CurrentQuestionInput" [(ngModel)]="EditQuestionInput" placeholder="Question" required>
+                      </mat-form-field>
+                      
+                      <div>
+                        <button class="btn btn-success" mat-button matStepperNext>Next</button>
+                      </div>
+                    </form>
+                  </mat-step>
+                  <mat-step [stepControl]="firstFormGroup">
+                    <form [formGroup]="firstFormGroup">
+                      <ng-template matStepLabel></ng-template>
+                      
+                      <mat-form-field>
+                        <mat-label>Question Statement</mat-label>
+                        <input matInput name="CurrentQuestionInput" [(ngModel)]="EditQuestionInput" placeholder="Question" required>
+                      </mat-form-field>
+                      
+                      <div>
+                        <button class="btn btn-success" mat-button matStepperNext>Next</button>
+                      </div>
+                    </form>
+                  </mat-step>
+                <mat-step [stepControl]="secondFormGroup">
+                  <form [formGroup]="secondFormGroup">
+                    <ng-template matStepLabel></ng-template>
+                    <mat-form-field>
+                      <mat-label>Address</mat-label>
+                      <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
+                             required>
+                    </mat-form-field>
+                    <div>
+                      <button  class="btn btn-primary stepperFormBckBtn" mat-button matStepperPrevious>Back</button>
+                      <button  class="btn btn-success stepperFormNextBtn" mat-button matStepperNext>Next</button>
+                    </div>
+                  </form>
+                </mat-step>
+                <mat-step>
+                  <ng-template matStepLabel>Finish</ng-template>
+                  <p>You are now done.</p>
+                  <div>
+                    <button class="btn btn-primary stepperFormBckBtn" mat-button matStepperPrevious>Back</button>
+                    <button class="btn btn-success stepperFormNextBtn" mat-button (click)="stepper.reset()">Reset</button>
+                  </div>
+                </mat-step>
+              </mat-horizontal-stepper>
+        </div>
+        </div> 
+    </div>
+</div> -->
 
 
 
