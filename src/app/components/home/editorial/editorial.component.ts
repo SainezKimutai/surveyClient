@@ -33,6 +33,7 @@ export class EditorialComponent implements OnInit {
 @ViewChild('addThreatModal', {static: true}) addThreatModal: ModalDirective;
 @ViewChild('deletePromptModal', {static: true}) deletePromptModal: ModalDirective;
 
+
   // loader
   public ImprintLoader = false;
 
@@ -646,9 +647,17 @@ export class EditorialComponent implements OnInit {
     this.threatValue2 = '';
     this.threatLevels = [];
   }
+
+
+
+
+
   checkType() {
-    console.log(this.threatType);
+    // console.log(this.threatType);
   }
+
+
+
 
   addThreatTypes() {
     let classifier = [];
@@ -664,11 +673,20 @@ export class EditorialComponent implements OnInit {
       classifier
     };
     this.threatLevels.push(threat);
-    console.log(this.threatLevels);
+    // console.log(this.threatLevels);
   }
+
+
+
+
+
+
   removeFromThreatLevels(index) {
     this.threatLevels.splice(index, 1);
   }
+
+
+
 
   addThreat() {
     let myData = {

@@ -540,7 +540,7 @@
                 <div class="preview-questions"  *ngFor="let item of threatLevels; let x = index">
                   <div style="display: flex;">
                     <div style="float: left;">
-                    <p>{{x + 1}}. {{item.category}}</p>
+                    <p >{{x + 1}}. {{item.category}}</p>
                     </div>
                     <div style="float: right;">
                     <p (click)="removeFromThreatLevels(i)"><fa-icon [icon]="faTrash"></fa-icon></p>
@@ -578,7 +578,7 @@
                     <textarea name="threatRecom" [(ngModel)]="threatRecom"></textarea>
                 </div>
                 <div class="form-group">
-                 <fa-icon style="align-self: center; color: green;" [icon]="faPlus" (click)="addThreatTypes()"></fa-icon>
+                 <fa-icon style="align-self: center; color: green; cursor: pointer;" [icon]="faPlus" (click)="addThreatTypes()"></fa-icon>
                 </div>
             </div>     
             </form>
