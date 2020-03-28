@@ -63,27 +63,19 @@ export class ReportsComponent implements OnInit {
                                question['surveyId'] = responseObj.surveyId,
                                question['open'] = questions.open_question,
                               
-                               question['question'] =questions.question
+                               question['question'] = questions.question
                                   if(answr.answer.length>0){
                                   answr.answer.forEach(answr => {
                                     question['answer'] = answr.answer;
+                                    question['recom'] = answr.recom;
+                                    question['level'] = answr.level;
 
                                       if(question['answer']==null){
                                         question['answer'] = answr
                                       }
-                                      if(answr.threat){
-                                      this.threatService.getOneThreat(answr.threat).subscribe(
-                                          threat =>{
-                                          question['threat'] = threat['name'],
-                                          question['level'] = threat['level'],
-                                          question['recom'] = threat['recom']
-                                          }
-                                      )
-                                     // console.log(question)
+                                     
                                       this.AllQuestions.push(question);
-                                      }else{
-                                        this.AllQuestions.push(question);
-                                      }
+                                     
                                   });
                            } else{
                              question['answer'] = answr
@@ -113,6 +105,7 @@ export class ReportsComponent implements OnInit {
         this.TemplateQuestions = [];
         this.TemplateNameOnView = name;
         let unSortedQuestions = this.AllQuestions.filter(( quiz) => quiz.surveyId === id ).map(e => e);
+        // console.log(unSortedQuestions);
         this.TemplateQuestions = unSortedQuestions.sort((a, b) =>  a.position - b.position);
         this.TemeplateViewSectionStatus = false;
         this.QuestionsViewStatus = true;

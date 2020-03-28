@@ -247,6 +247,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
 
   inviteUser() {
+    console.log("Called");
     this.ImprintLoader = true;
 
 
