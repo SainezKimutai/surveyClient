@@ -29,8 +29,7 @@ export class EditorialComponent implements OnInit {
   ) {  }
 
 // Modals
-@ViewChild('editModal', {static: true, }) editModal: ModalDirective;
-@ViewChild('addQuizModal', {static: true, }) addQuizModal: ModalDirective;
+
 @ViewChild('addThreatModal', {static: true}) addThreatModal: ModalDirective;
 @ViewChild('deletePromptModal', {static: true}) deletePromptModal: ModalDirective;
 
@@ -123,6 +122,7 @@ export class EditorialComponent implements OnInit {
   public modalName = '';
 
 
+  public CurrentQuestionOnEdit;
 
 
 
@@ -132,6 +132,10 @@ export class EditorialComponent implements OnInit {
   public formThreeStatus = false;
   public formFourStatus = false;
 
+
+  public newSurveyStatus = false;
+  public editSurveyQuestionStatus = false;
+  public addSurveyQuestionsSatus = false;
 
 
 
@@ -194,6 +198,9 @@ export class EditorialComponent implements OnInit {
     this.ThreatSectionStatus = false;
     this.QuestionsViewStatus = false;
     this.ThreatsViewSectionStatus = false;
+    this.newSurveyStatus = true;
+    this.editSurveyQuestionStatus = false;
+    this.addSurveyQuestionsSatus = false;
   }
 
   viewSurveyTemplates() {
@@ -202,11 +209,13 @@ export class EditorialComponent implements OnInit {
     this.ThreatSectionStatus = false;
     this.QuestionsViewStatus = false;
     this.ThreatsViewSectionStatus = false;
+    this.newSurveyStatus = false;
   }
 
 
 
   viewSurvey(name, id) {
+    this.newSurveyStatus = false;
     this.TemplateQuestions = [];
     this.TemplateNameOnView = name;
     // for use later in rerender..
@@ -475,12 +484,58 @@ export class EditorialComponent implements OnInit {
     });
   }
 
+
+
+
+
+
   editQuestion(item) {
-    this.editModal.show();
-    this.EditQuestionInput = item.question;
-    this.EditpositionInput = item.position;
-    this.QuestionIdOnEdit = item._id;
+
+
+    this.CurrentQuestionOnEdit = item;
+    this.CurrentQuestionInput = item.question;
+    this.openQuestionInput = String(item.open_question);
+    this.multipleChoiceInput = String(item.multiple_choice);
+    this.choiceTypeInput = item.choice_type;
+    this.CurrentChoicesArr = item.choices;
+    this.positionInput = item.position;
+    this.FormSectionStatus = true;
+    this.TemeplateViewSectionStatus = false;
+    this.ThreatSectionStatus = false;
+    this.QuestionsViewStatus = false;
+    this.ThreatsViewSectionStatus = false;
+    this.toFormTwo();
+    this.editSurveyQuestionStatus = true;
+    this.addSurveyQuestionsSatus = false;
+
   }
+
+  editedQuestionSave() {
+    const quizData = {
+      question: this.CurrentQuestionInput,
+      open_question:  (this.openQuestionInput === 'true' ? true : false),
+      threat: this.CurrentChoiceInputThreat,
+      multiple_choice: (this.multipleChoiceInput === 'true' ? true : false),
+      choice_type: this.choiceTypeInput,
+      position: this.positionInput,
+      choices: this.CurrentChoicesArr,
+    };
+
+    this.questionService.updateQuestion(this.CurrentQuestionOnEdit._id, quizData).subscribe(
+      data => {
+        this.notifyService.showSuccess('question updated', 'Success')
+        this.updatePage().then(e => this.viewSurvey(this.surveyNameOnView, this.surveyIdOnView));
+      },
+      error => this.notifyService.showError('could not edit question ', 'Failed')
+    )
+
+  }
+
+
+
+
+
+
   deleteQuestion(item) {
     this.questionService.deleteQuestion(item._id).subscribe(data => {this.notifyService.showWarning('Deleted Question', 'Deleted!');
                                                                      // tslint:disable-next-line: max-line-length
@@ -491,50 +546,69 @@ export class EditorialComponent implements OnInit {
 
 
 
-  EditaddChoice() {
 
-    if (this.EditChoiceInput === '') {
-      this.notifyService.showWarning('Input answer', 'Empty Field');
-    } else {
-      this.EditChoicesArr.push({ answer: this.EditChoiceInput});
-      this.EditChoiceInput = '';
-    }
+
+  addQuiz() {
+
+   
+    this.CurrentQuestionInput = '';
+    this.openQuestionInput = 'true';
+    this.multipleChoiceInput = 'false';
+    this.choiceTypeInput = 'string';
+    this.CurrentChoicesArr = [];
+    this.positionInput = this.TemplateQuestions.length + 1;
+    this.FormSectionStatus = true;
+    this.TemeplateViewSectionStatus = false;
+    this.ThreatSectionStatus = false;
+    this.QuestionsViewStatus = false;
+    this.ThreatsViewSectionStatus = false;
+    this.toFormTwo();
+    this.editSurveyQuestionStatus = false;
+    this.addSurveyQuestionsSatus = true;
   }
 
-  saveEditQuestion() {
-    this.editModal.hide();
-    const Question = {
+
+
+
+
+  saveAddedQuiz() {
+
+    const quizData = {
       surveyId: this.surveyIdOnView,
-      question: this.EditQuestionInput,
-      threat: this.EditChoiceInputThreat,
-      open_question: (this.EditopenQuestionInput === 'true' ? true : false),
-      multiple_choice: (this.EditmultipleChoiceInput === 'true' ? true : false),
-      choice_type: this.EditchoiceTypeInput,
-      position: this.EditpositionInput,
-      choices: this.EditChoicesArr
+      question: this.CurrentQuestionInput,
+      open_question:  (this.openQuestionInput === 'true' ? true : false),
+      threat: this.CurrentChoiceInputThreat,
+      multiple_choice: (this.multipleChoiceInput === 'true' ? true : false),
+      choice_type: this.choiceTypeInput,
+      position: this.positionInput,
+      choices: this.CurrentChoicesArr,
     };
-
-    this.questionService.updateQuestion(this.QuestionIdOnEdit, Question).subscribe(
-      data => {this.notifyService.showSuccess('Question Successfully Editted', 'Success!');
-               this.updatePage().then(() => this.viewSurvey(this.surveyNameOnView, this.surveyIdOnView));
-    },
-      err => this.notifyService.showError('Question was not editted', 'Failed')
-    );
-  }
-
-
-
-  openAddQuizModal() {
-    this.AddedQuestionsArray = [];
-    this.EditQuestionInput = '';
-    this.EditopenQuestionInput = 'true';
-    this.EditmultipleChoiceInput = 'false';
-    this.EditchoiceTypeInput = 'string';
-    this.EditpositionInput = (this.TemplateQuestions.length + 1 );
-    this.EditChoicesArr = [];
-    this.addQuizModal.show();
+    this.questionService.createQuestion(quizData).subscribe(
+      data => {
+        this.notifyService.showSuccess('question created', 'Success')
+        this.updatePage().then(e => this.viewSurvey(this.surveyNameOnView, this.surveyIdOnView));
+      },
+      error => this.notifyService.showError('could not create question ', 'Failed')
+    )
 
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
 
   closeaddThreatModal() {
     this.addThreatModal.hide();
@@ -542,68 +616,13 @@ export class EditorialComponent implements OnInit {
     this.ThreatSectionStatus = false;
   }
 
-  closeAddQuizModal() {
-    this.addQuizModal.hide();
-    this.updatePage().then(() => this.viewSurvey(this.surveyNameOnView, this.surveyIdOnView));
-  }
-
-
-  addMoreQuestions() {
-    const myAddedQuiz = {
-
-      surveyId: this.surveyIdOnView,
-      question: this.EditQuestionInput,
-      threat : this.EditChoiceInputThreat,
-      open_question: (this.EditopenQuestionInput === 'true' ? true : false),
-      multiple_choice: (this.EditmultipleChoiceInput === 'true' ? true : false),
-      choice_type: this.EditchoiceTypeInput,
-      position: this.EditpositionInput,
-      choices: this.EditChoicesArr
-    };
 
 
 
-    this.AddedQuestionsArray.push(myAddedQuiz);
-    this.TemplateQuestions.push(myAddedQuiz);
-    this.EditQuestionInput = '';
-    this.EditopenQuestionInput = 'true';
-    this.EditmultipleChoiceInput = 'false';
-    this.EditchoiceTypeInput = 'string';
-    this.EditpositionInput = (this.TemplateQuestions.length + 1 );
-    this.EditChoicesArr = [];
-
-  }
+ 
 
 
 
-
-  addQuestionToExistingTemplate() {
-    this.ImprintLoader = true;
-    this.AddedQuestionsArray.forEach( (quiz, idx, array) => {
-
-      this.questionService.createQuestion(quiz).subscribe(
-        data => {
-
-
-
-          if (idx === array.length - 1) {
-            this.EditQuestionInput = '';
-            this.EditopenQuestionInput = 'true';
-            this.EditmultipleChoiceInput = 'false';
-            this.EditchoiceTypeInput = 'string';
-            this.EditpositionInput = (this.TemplateQuestions.length + 1 );
-            this.EditChoicesArr = [];
-            this.ImprintLoader = false;
-            this.updatePage().then(() => this.viewSurvey(this.surveyNameOnView, this.surveyIdOnView));
-            this.notifyService.showSuccess('Questions Added', 'Success');
-            this.addQuizModal.hide();
-          }
-
-        },
-        error => {this.notifyService.showError('Could not create Survey', 'Failed'); this.ImprintLoader = false; }
-      );
-    });
-  }
 
 
 
