@@ -365,23 +365,32 @@ export class EditorialComponent implements OnInit {
       this.openQuestionInput = 'true';
       this.multipleChoiceInput = 'false';
       this.choiceTypeInput = 'string';
+      console.log(this.openQuestionInput);
     }
     if (type === 'false') {
       this.ChoicesStatus = true;
       this.openQuestionInput = 'false';
       this.multipleChoiceInput = 'false';
       this.choiceTypeInput = 'string';
+      console.log(this.openQuestionInput);
     }
   }
 
   fetchLinkedAnswers() {
-  
+    this.CurrentChoicesArr =[];
     for(let threat of this.AllThreats){
       if (threat._id === this.CurrentChoiceInputThreat) {
-   
+        console.log(threat);
+        if(threat.type == 0){
+          console.log("Zero");
         threat.categorization_inferences.forEach( (inf) => {
           this.CurrentChoicesArr.push({ answer: inf.classifier[0]});
         })
+      }else{
+        threat.categorization_inferences.forEach( (inf) => {
+          this.CurrentChoicesArr.push({ answer: inf.classifier[0].toString() + " to " + inf.classifier[1].toString()});
+        })
+      }
       }
     }
   }
@@ -673,7 +682,12 @@ export class EditorialComponent implements OnInit {
       classifier
     };
     this.threatLevels.push(threat);
-    // console.log(this.threatLevels);
+    this.notifyService.showSuccess('Threat type', 'Success!');
+    this.threatValue1 = '';
+    this.threatValue2 = '';
+    this.threatLevel = '';
+    this.threatRecom = '';
+        // console.log(this.threatLevels);
   }
 
 

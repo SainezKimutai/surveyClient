@@ -110,7 +110,7 @@
         <li [ngClass]="formOneStatus || formTwoStatus || formThreeStatus || formFourStatus ? 'active' : ''" > <span>Survey Name</span></li>
         <li [ngClass]="formTwoStatus || formThreeStatus || formFourStatus ? 'active' : ''"><span>Question</span></li>
         <li [ngClass]="formThreeStatus || formFourStatus ? 'active' : ''"><span>Question Type</span></li>
-        <li [ngClass]="formFourStatus ? 'active' : ''"><span>Choices</span> </li>
+        <li [ngClass]="formFourStatus ? 'active' : ''"><span>Finish</span> </li>
     </ul>
     
 
@@ -213,8 +213,8 @@
 
 
     <!-- Choices -->
-    <form  [ngClass]="formFourStatus ? 'form' : 'form hide' ">
-        <div class="form-group">
+    <form [ngClass]="formFourStatus ? 'form' : 'form hide' ">
+        <div *ngIf="openQuestionInput =='false'" class="form-group">
             <label>Assossiated Threat</label>
             <div class="d-flex">
             <select (change)="fetchLinkedAnswers()"  name="CurrentChoiceInputThreat" [(ngModel)]="CurrentChoiceInputThreat" >
@@ -225,13 +225,12 @@
             </div>
         </div>
 
-        
+        <div *ngIf="openQuestionInput == 'false' && CurrentChoiceInputThreat" class="preview-questions d-flex"><p><strong>Populated choices from chosen threat</strong></p></div>
         <div class="preview-questions d-flex" *ngFor="let item of CurrentChoicesArr; let x = index">
             {{x + 1}}. {{item.answer}} <fa-icon class="ml-auto text-danger" (click)="removeAns(x)" [icon]="faTrash"></fa-icon>
-
           </div>
          
-        <div class="form-group">
+        <div *ngIf="openQuestionInput == 'false'" class="form-group">
             <label>Choices</label>
             <div class="d-flex">
                 <input type="text" name="CurrentChoiceInput" [(ngModel)]="CurrentChoiceInput" placeholder="Type Choices">
@@ -543,7 +542,7 @@
                     <p >{{x + 1}}. {{item.category}}</p>
                     </div>
                     <div style="float: right;">
-                    <p (click)="removeFromThreatLevels(i)"><fa-icon [icon]="faTrash"></fa-icon></p>
+                    <p (click)="removeFromThreatLevels(x)"><fa-icon [icon]="faTrash"></fa-icon></p>
                     </div>
                   </div>
                 </div>
@@ -556,11 +555,11 @@
                                 <option  value="High">High</option>
                     </select>
                  </div>
-                <div *ngIf="threatType == 0" class="form-group">
+                <div *ngIf="threatType == '0'" class="form-group">
                     <label for="threatValue1">Value</label>
                     <input style="border: 1px solid grey;" name="threatValue1" [(ngModel)]="threatValue1">
                 </div>
-                <div *ngIf="threatType == 1" class="form-group">
+                <div *ngIf="threatType == '1'" class="form-group">
                 <div style="display: flex; ">
                     <div style="float: left; padding-right:10px;">
                         <label for="threatValue1">From</label>
