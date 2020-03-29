@@ -316,18 +316,20 @@ openTracker(id) {
 
 
 formatReports(reports) {
+
   this.MyReports = [];
   let decDay = this.thisDay
   let constDay = this.thisDay - 1;
   let x;
+  console.log(this.thisDay)
   for(x = 0; x <= constDay; x++) {
     reports.forEach((rep , key, arr) => {
       let d = new Date();
       d.setDate(d.getDate()-x);
       let bool = (d.toDateString() === new Date(rep.date_submitted).toDateString());
-
+  
       if (bool){
-
+  
         for(let user of this.Users){
           if (rep.userId === user._id) {
             rep.userEmail = user.email
@@ -337,6 +339,7 @@ formatReports(reports) {
 
 
             if (Object.is(arr.length - 1, key)) {
+            
               this.checkTrackerType(this.trackerOnView);
               this.viewWeeklyReportRecommendations();
             }
