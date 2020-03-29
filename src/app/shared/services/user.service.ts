@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient  } from '@angular/common/http';
-import { dev } from '../dev/dev';
+import { HttpClient, HttpHeaders  } from '@angular/common/http';
+import { dev, header } from '../dev/dev';
 import { UserModel } from '../models/user.model';
 
 
@@ -14,37 +14,41 @@ export class UserService {
 
     url = `${dev.connect}api/users/`;
 
+    registrationHeader = new HttpHeaders().set(
+      'Authorization', `Bearer ${localStorage.getItem('invitedUserToken')}`
+    );
+
     constructor( private http: HttpClient ) { }
 
     registerUser( registrationData: UserModel ) {
-        return this.http.post<any>(this.url + 'register', registrationData);
+        return this.http.post<any>(this.url + 'register', registrationData, {headers : this.registrationHeader});
     }
 
     loginUser( loginData: any ) {
-      return this.http.post<any>(this.url + 'login', loginData);
+      return this.http.post<any>(this.url + 'login', loginData, {headers : header});
     }
 
     inviteUser(inviteData: any) {
-      return this.http.post<any>(this.url + 'invite', inviteData);
+      return this.http.post<any>(this.url + 'invite', inviteData, {headers : header});
     }
 
     getAllUsers() {
-      return this.http.get<any>(this.url + 'getAll/');
+      return this.http.get<any>(this.url + 'getAll/', {headers : header});
     }
 
 
     getOneUser(id) {
-      return this.http.get<any>(this.url + 'getOne/' + id);
+      return this.http.get<any>(this.url + 'getOne/' + id, {headers : header});
     }
 
 
     updateUsers(id, data: any) {
-      return this.http.put<any>(this.url + 'update/' + id, data);
+      return this.http.put<any>(this.url + 'update/' + id, data, {headers : header});
     }
 
 
     deleteUser(id) {
-      return this.http.delete<any>(this.url + 'delete/' + id );
+      return this.http.delete<any>(this.url + 'delete/' + id, {headers : header});
     }
 
 

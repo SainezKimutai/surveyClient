@@ -740,7 +740,8 @@ export class EditorialComponent implements OnInit {
 
 
   addTrackerReason() {
-    this.trackerReasonService.createTrackerReason({reason: this.trackerReasonInput}).subscribe(
+    let dataResn: any = {reason: this.trackerReasonInput};
+    this.trackerReasonService.createTrackerReason(dataResn).subscribe(
       data => {
         this.updatePage().then(() => {
           this.notifyService.showSuccess('reason added', 'Success');

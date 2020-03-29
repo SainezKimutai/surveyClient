@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
-import { dev } from '../dev/dev';
+import { dev, header} from '../dev/dev';
 
 
 @Injectable({
@@ -20,61 +20,51 @@ export class ResponseService {
 
     createResponse( data: any ) {
 
-        console.log(data);
-        
-        const payload ={
+        const payload = {
             surveyId: data.surveyId,
             userId : data.userId,
             companyId: data.companyId,
             answers: []
-          }
-          
-        for(var i =0; i< data.answers.length; i++){
-        
-            payload['answers'].push({
+          };
+
+        // tslint:disable-next-line: prefer-for-of
+        for (let i = 0; i < data.answers.length; i++) {
+
+            payload.answers.push({
             questionId: data.answers[i].questionId,
-            answer:[{
-                threatId:data.answers[i].answer.threatId ? data.answers[i].answer.threatId: '',
-                recom: data.answers[i].answer.threatId ? data.answers[i].answer.threat.inference: '', 
-                level: data.answers[i].answer.threatId ? data.answers[i].answer.threat.category: '',
-                answer: data.answers[i].answer.threat ? data.answers[i].answer[0].answer: data.answers[i].answer[0]}]
-          })
-        //    }
-        //     else{
-        //         payload['answers'].push({
-        //             questionId: data.answers[i].questionId,
-        //             answer: [{
-        //                 answer: data.answers[i].answer[0]
-        //             }]
-        //          })
-        //   }
+            answer: [{
+                threatId: data.answers[i].answer.threatId ? data.answers[i].answer.threatId : '',
+                recom: data.answers[i].answer.threatId ? data.answers[i].answer.threat.inference : '',
+                level: data.answers[i].answer.threatId ? data.answers[i].answer.threat.category : '',
+                answer: data.answers[i].answer.threat ? data.answers[i].answer[0].answer : data.answers[i].answer[0]}]
+          });
+
         }
-        console.log(payload);
-        return this.http.post<any>(this.url + 'create', payload);
+        return this.http.post<any>(this.url + 'create', payload, {headers : header});
     }
 
 
     getAllResponses() {
-        return this.http.get<any>(this.url + 'getAll/');
+        return this.http.get<any>(this.url + 'getAll/', {headers : header});
     }
 
 
     getOneResponse(id) {
-        return this.http.get<any>(this.url + 'getOne/' + id);
+        return this.http.get<any>(this.url + 'getOne/' + id, {headers : header});
     }
 
 
     updateResponse(id, data: any) {
-        return this.http.put<any>(this.url + 'update/' + id, data);
+        return this.http.put<any>(this.url + 'update/' + id, data, {headers : header});
     }
 
 
     deleteResponse(id) {
-        return this.http.delete<any>(this.url + 'delete/' + id);
+        return this.http.delete<any>(this.url + 'delete/' + id, {headers : header});
     }
 
     getUsersResponses(id) {
-        return this.http.get<any>(this.url + 'user/' + id);
+        return this.http.get<any>(this.url + 'user/' + id, {headers : header});
     }
 
 }

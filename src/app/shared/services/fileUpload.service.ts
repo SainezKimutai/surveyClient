@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
-import { dev } from '../dev/dev';
+import { dev, header } from '../dev/dev';
 
 
 @Injectable({
@@ -14,19 +14,15 @@ export class FileUploadService {
     url = `${dev.connect}api/fileUpload/`;
 
 
-    header = new HttpHeaders().set(
-      'Authorization', `Bearer ${window.localStorage.getItem('loggedUserToken')}`
-    );
-
     constructor( private http: HttpClient ) {  }
 
 
     uploadCompanyLogo( data: any ) {
-      return this.http.post<any>(this.url + 'uploadCompanyLogo/', data, {headers : this.header});
+      return this.http.post<any>(this.url + 'uploadCompanyLogo/', data, {headers : header});
     }
 
     removeCompanyLogo(name) {
-      return this.http.delete<any>(this.url + 'removeCompanyLogo/' + name, {headers : this.header});
+      return this.http.delete<any>(this.url + 'removeCompanyLogo/' + name, {headers : header});
     }
 
 
