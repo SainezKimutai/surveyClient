@@ -12,7 +12,6 @@ export class QuestionService {
 
 
     public url = `${dev.connect}api/questions/`;
-    
 
 
     constructor( private http: HttpClient ) { }
@@ -42,7 +41,7 @@ export class QuestionService {
         return this.http.delete<any>(this.url + 'delete/' + id, {headers : header});
     }
 
-    getQuestionsInASurvey(id){
+    getQuestionsInASurvey(id) {
         return this.http.get<any>(this.url + 'survey/' + id, {headers : header});
     }
 
