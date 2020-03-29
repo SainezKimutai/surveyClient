@@ -323,10 +323,14 @@
 .survey-create-section  .list-section 
     width: 100%
     height: fit-content
+    background-color: grayColor(g100)
+    padding: 2em 0 0 0
+    
+    
 
     .head
-        padding: 1em
-        background-color: colorTheme(primaryTheme)
+        padding: .5em 1em
+        background-color: orange
 
         h4
             font-size: 13px
@@ -717,60 +721,60 @@
 
 
 
-.form-section .list-section 
-    width: 100%
-    height: fit-content
+// .form-section .list-section 
+//     width: 100%
+//     height: fit-content
 
-    .head
-        padding: 1em
-        background-color: grayColor(g200)
+//     .head
+//         padding: 1em
+//         background-color: grayColor(g200)
 
-        h4
-            font-size: 16px
+//         h4
+//             font-size: 16px
 
-        .btn
-            background-color: colorTheme(success)
-            color:  white 
-            font-size: 15px
-            font-weight: bold
+//         .btn
+//             background-color: colorTheme(success)
+//             color:  white 
+//             font-size: 15px
+//             font-weight: bold
 
 
-    .question-wrap
-        background-color: white
-        margin: 4px 0
-        padding: 5px 1em
-        min-height: 4em
-        height: fit-content
+//     .question-wrap
+//         background-color: white
+//         margin: 4px 0
+//         padding: 5px 1em
+//         min-height: 4em
+//         height: fit-content
 
-        &:hover
-            background-color: colorTheme(primaryTheme)
-            color: white
+//         &:hover
+//             background-color: colorTheme(primaryTheme)
+//             color: white
 
-        .question
-            font-size: 12px
-            font-weight: bold
-            float: left
+//         .question
+//             font-size: 12px
+//             font-weight: bold
+//             float: left
 
-        .choices
-            width: 100%
+//         .choices
+//             width: 100%
 
-            span 
-                font-size: 12px
-                width: 100%
-                margin: 0 1em
-        .actions
-            float: right
+//             span 
+//                 font-size: 12px
+//                 width: 100%
+//                 margin: 0 1em
+//         .actions
+//             float: right
             
-            .edit
-                float: left
-            .delete
-                float: right
-        .demo div 
-            float: left
-            clear: none
+//             .edit
+//                 float: left
+//             .delete
+//                 float: right
+//         .demo div 
+//             float: left
+//             clear: none
 
-        .editSection
-            display: none
+//         .editSection
+//             display: none
 
 
 
@@ -1288,6 +1292,10 @@
 
         .modal-body
             width: 100%
+            height: fit-content
+            min-height: 300px
+            max-height: 500px
+            overflow-x: scroll
 
             form 
                 width: 100%
@@ -1318,7 +1326,7 @@
                         font-size: 12px
                         height: 4em
 
-                    select 
+                    input, select 
                         width: 100%
                         border-radius: 2px
                         padding: .5em
@@ -1327,10 +1335,42 @@
                         margin: 0 10px 10px 0
                         background-color: grayColor(g100)
                         font-size: 12px
+
+                .classifier-wrap
+                    border: solid 1px grayColor(g100)
+                    margin: 0px 20px
+                    
+
+                    .preview-classifier
+                        padding: .7em
+                        margin: 2px 0
+                        display: flex
+                        font-size: 12px
+                        background-color: orange
+
+                        fa-icon
+                            cursor: pointer
+
+                    .btn-wrap
+                        width: 100%
+                        text-align: center
+                        display: flex
+
+                        .btn 
+                            margin: auto
+                            border-radius: 50%
+                            background-color: orange
+                            color: white
+
+
+
+
         .modal-footer
+
             button 
                 background-color: colorTheme(success)
                 color: white
+
 
 
 

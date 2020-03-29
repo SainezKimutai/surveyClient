@@ -319,15 +319,15 @@ formatReports(reports) {
 
   this.MyReports = [];
   let decDay = this.thisDay
-  let constDay = this.thisDay - 1;
+  let constDay = this.thisDay;
   let x;
-  console.log(this.thisDay)
+
   for(x = 0; x <= constDay; x++) {
     reports.forEach((rep , key, arr) => {
       let d = new Date();
       d.setDate(d.getDate()-x);
       let bool = (d.toDateString() === new Date(rep.date_submitted).toDateString());
-  
+
       if (bool){
   
         for(let user of this.Users){
@@ -352,6 +352,11 @@ formatReports(reports) {
 
     })
 
+    if (reports.length === 0) {
+      this.checkTrackerType(this.trackerOnView);
+      this.viewWeeklyReportRecommendations();
+    }
+
   }
 
 }
@@ -361,6 +366,7 @@ formatReports(reports) {
 checkTrackerType(trck) {
   this.reportsWeeklyStatus = trck.reporting_schedule === 'weekly' ? true : false;
   this.lastUpdateDay = Number(trck.last_reporting_day)
+
  
   if (!this.reportsWeeklyStatus) {
   let filterReports = trck.reports.filter((rep) => {

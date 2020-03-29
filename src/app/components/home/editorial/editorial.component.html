@@ -107,10 +107,10 @@
     </div>
 
     <ul class="progressbar">
-        <li [ngClass]="formOneStatus || formTwoStatus || formThreeStatus || formFourStatus ? 'active' : ''" > <span>Survey Name</span></li>
-        <li [ngClass]="formTwoStatus || formThreeStatus || formFourStatus ? 'active' : ''"><span>Question</span></li>
-        <li [ngClass]="formThreeStatus || formFourStatus ? 'active' : ''"><span>Question Type</span></li>
-        <li [ngClass]="formFourStatus ? 'active' : ''"><span>Finish</span> </li>
+        <li [ngClass]="formTwoStatus || formThreeStatus || formFourStatus ? 'active' : ''" > <span>Survey Name</span></li>
+        <li [ngClass]="formThreeStatus || formFourStatus ? 'active' : ''"><span>Question</span></li>
+        <li [ngClass]="formFourStatus ? 'active' : ''"><span>Question Type</span></li>
+        <li ><span>Finish</span> </li>
     </ul>
     
 
@@ -519,15 +519,15 @@
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body" style="height: 300px; overflow-y: auto;">
+        <div class="modal-body" >
             <form class="form">
                 <div class="form-group">
                     <label for="threatName">Threat Name</label>
-                    <textarea name="threatName" (change)="checkType()" [(ngModel)]="threatName"></textarea>
+                    <input name="threatName"  [(ngModel)]="threatName">
                 </div>
                 <div class="form-group">
                     <label for="threatType">Classifier</label>
-                    <select name="threatType" (change)="checkType()" [(ngModel)]="threatType">
+                    <select name="threatType" [(ngModel)]="threatType">
                         <option value="" disabled selected hidden >... select</option>
                             <option value=0>Value</option>
                             <option value=1>Range</option>
@@ -535,57 +535,54 @@
                
                 </div>
                 
-                <div *ngIf="threatType"  style="margin: 20px;">
-                <div class="preview-questions"  *ngFor="let item of threatLevels; let x = index">
-                  <div style="display: flex;">
-                    <div style="float: left;">
-                    <p >{{x + 1}}. {{item.category}}</p>
-                    </div>
-                    <div style="float: right;">
-                    <p (click)="removeFromThreatLevels(x)"><fa-icon [icon]="faTrash"></fa-icon></p>
-                    </div>
-                  </div>
-                </div>
-                  <div class="form-group">
-                        <label for="threatLevel">Threat Level</label>
-                        <select name="threatLevel" [(ngModel)]="threatLevel">
-                            <option value="" disabled selected hidden >... select</option>
-                                <option  value="Low">Low</option>
-                                <option  value="Medium">Medium</option>
-                                <option  value="High">High</option>
-                    </select>
-                 </div>
-                <div *ngIf="threatType == '0'" class="form-group">
-                    <label for="threatValue1">Value</label>
-                    <input style="border: 1px solid grey;" name="threatValue1" [(ngModel)]="threatValue1">
-                </div>
-                <div *ngIf="threatType == '1'" class="form-group">
-                <div style="display: flex; ">
-                    <div style="float: left; padding-right:10px;">
-                        <label for="threatValue1">From</label>
-                        <input style="border: 1px solid grey;" name="threatValue1" [(ngModel)]="threatValue1">
-                    </div>
-                    <div style="float: right; padding-left:10px;">
-                        <label for="threatValue2">To</label>
-                        <input style="border: 1px solid grey;" name="threatValue2" [(ngModel)]="threatValue2">
-                    </div>
-                </div>
-                </div>
-                <div class="form-group">
-                     
-                    <label for="threatRecom">Recommendations</label>
-                    <textarea name="threatRecom" [(ngModel)]="threatRecom"></textarea>
-                </div>
-                <div class="form-group">
-                 <fa-icon style="align-self: center; color: green; cursor: pointer;" [icon]="faPlus" (click)="addThreatTypes()"></fa-icon>
-                </div>
-            </div>     
+                <div *ngIf="threatType" class="classifier-wrap" >
+
+                        <div class="preview-classifier d-flex" *ngFor="let item of threatLevels; let x = index">
+                            {{x + 1}}. {{item.category}}<fa-icon class="ml-auto text-danger" (click)="removeFromThreatLevels(x)" [icon]="faTrash"></fa-icon>
+                        </div>
+                        <div class="form-group">
+                                <label for="threatLevel">Threat Level</label>
+                                <select name="threatLevel" [(ngModel)]="threatLevel">
+                                    <option value="" disabled selected hidden >... select</option>
+                                        <option  value="Low">Low</option>
+                                        <option  value="Medium">Medium</option>
+                                        <option  value="High">High</option>
+                            </select>
+                        </div>
+                        <div *ngIf="threatType == '0'" class="form-group">
+                            <label for="threatValue1">Value</label>
+                            <input  name="threatValue1" [(ngModel)]="threatValue1">
+                        </div>
+                        <div *ngIf="threatType == '1'" class="form-group">
+                        <div style="display: flex; ">
+                            <div style="float: left; padding-right:10px;">
+                                <label for="threatValue1">From</label>
+                                <input  name="threatValue1" [(ngModel)]="threatValue1">
+                            </div>
+                            <div style="float: right; padding-left:10px;">
+                                <label for="threatValue2">To</label>
+                                <input  name="threatValue2" [(ngModel)]="threatValue2">
+                            </div>
+                        </div>
+                        </div>
+                        <div class="form-group">
+                            
+                            <label for="threatRecom">Recommendations</label>
+                            <textarea name="threatRecom" [(ngModel)]="threatRecom"></textarea>
+                        </div>
+                        <div class="btn-wrap">
+                            <button [disabled]="threatLevel === '' || threatValue1 === '' || threatRecom === ''" class="btn btn-sm" (click)="addThreatTypes()">
+                                <fa-icon [icon]="faPlus"></fa-icon>
+                            </button>
+                        
+                        </div>
+                </div>     
             </form>
         </div>
         <div class="modal-footer">
      
-            <button *ngIf="!isEditThreatModal" [disabled]="threatName === '' || threatLevel === '' || threatRecom === ''" type="button" class="btn btn-confirm" (click)="addThreat()">Add</button>
-            <button *ngIf="isEditThreatModal"  [disabled]="threatName === '' || threatLevel === '' || threatRecom === ''" type="button" class="btn btn-confirm"  (click)="editThreat()">Edit</button>
+            <button *ngIf="!isEditThreatModal" [disabled]="threatName === '' || threatLevels.length === 0" type="button" class="btn btn-sm btn-confirm" (click)="addThreat()">Add</button>
+            <button *ngIf="isEditThreatModal"  [disabled]="threatName === '' || threatLevels.length === 0" type="button" class="btn btn-sm btn-confirm"  (click)="editThreat()">Edit</button>
         </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

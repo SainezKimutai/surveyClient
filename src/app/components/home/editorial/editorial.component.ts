@@ -434,7 +434,7 @@ export class EditorialComponent implements OnInit {
       this.CurrentChoicesArr = [];
       this.positionInput++;
       this.CurrentChoiceInputThreat = '';
-      this.toFormOne();
+      this.toFormTwo();
     }
   }
 
@@ -729,7 +729,7 @@ export class EditorialComponent implements OnInit {
     };
 
     this.threatService.updateThreat(this.openThreat._id, myData).subscribe(
-      data => {this.updatePage().then(() => { this.notifyService.showSuccess('Threat added', 'Success'); this.addThreatModal.hide(); } ); },
+      data => {this.updatePage().then(() => { this.notifyService.showSuccess('Threat Edited', 'Success'); this.addThreatModal.hide(); } ); },
       error => this.notifyService.showError('could not create threat', 'Failed')
     );
 

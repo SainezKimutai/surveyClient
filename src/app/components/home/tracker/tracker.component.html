@@ -89,7 +89,7 @@
         <h4 class="mr-auto">{{trackerOnView.name}}</h4>
 
         <button *ngIf="toAdminCustomer || toManagerCustomer" class="btn btn-sm btn-edit mr-4" (click)="editTracker()">Edit</button>
-        <button *ngIf="toAdminCustomer" class="btn btn-sm btn-remove"  (click)="deleteModal.show()">Delete</button>
+        <button *ngIf="toAdminCustomer || toManagerCustomer" class="btn btn-sm btn-remove"  (click)="deleteModal.show()">Delete</button>
          
     </div>
 
@@ -155,6 +155,23 @@
                     <div class="main-header">Week {{thisWeek}}&nbsp;&nbsp;<span>{{thisMonth}},&nbsp;&nbsp;{{thisYear}}</span></div>
                     <div class="main-body">
                     <div class="report-wrap">
+                        
+                        <div  [ngClass]="reportsWeeklyStatus && lastUpdateDay === 0 ? 'day-report end' : 'day-report'">
+                                
+                            <div [ngClass]="thisDay === 0 ? 'week-name active' : 'week-name'">Sunday</div>
+                            <button 
+                            [disabled]="((thisDay === 0 && !reportsWeeklyStatus) || (thisDay === 0 && reportsWeeklyStatus && lastUpdateDay >= 0)) ? false : true"
+                            [ngClass]="((thisDay === 0 && !reportsWeeklyStatus) || (thisDay === 0 && reportsWeeklyStatus && lastUpdateDay >= 0)) ? 'btn btn-sm active' : 'btn btn-sm'" 
+                            (click)="reportSubmitedStatus ? reportSubmitedAlert() : addReportModal.show()"> 
+                                <fa-icon [icon]="faPlus"></fa-icon> 
+                            </button>
+                            <h4 *ngFor="let item of MyReports" [hidden]="item.position !== 0" (click)="openViewUserReportModal(item)"> 
+                                <fa-icon [icon]="faCheck"></fa-icon> <span>{{item.userEmail}}</span></h4>
+
+                        </div>
+
+
+
                         <div [ngClass]="reportsWeeklyStatus && lastUpdateDay === 1 ? 'day-report end' : 'day-report'" >
                             <div  [ngClass]="thisDay === 1 ? 'week-name active' : 'week-name'">Monday</div>
                             <button 
@@ -244,23 +261,6 @@
                                 <fa-icon [icon]="faCheck"></fa-icon> <span>{{item.userEmail}}</span></h4>
 
                         </div>
-
-
-
-                        <div  [ngClass]="reportsWeeklyStatus && lastUpdateDay === 7 ? 'day-report end' : 'day-report'">
-                                
-                            <div [ngClass]="thisDay === 7 ? 'week-name active' : 'week-name'">Sunday</div>
-                            <button 
-                            [disabled]="((thisDay === 7 && !reportsWeeklyStatus) || (thisDay === 7 && reportsWeeklyStatus && lastUpdateDay >= 7)) ? false : true"
-                            [ngClass]="((thisDay === 7 && !reportsWeeklyStatus) || (thisDay === 7 && reportsWeeklyStatus && lastUpdateDay >= 7)) ? 'btn btn-sm active' : 'btn btn-sm'" 
-                            (click)="reportSubmitedStatus ? reportSubmitedAlert() : addReportModal.show()"> 
-                                <fa-icon [icon]="faPlus"></fa-icon> 
-                            </button>
-                            <h4 *ngFor="let item of MyReports" [hidden]="item.position !== 7" (click)="openViewUserReportModal(item)"> 
-                                <fa-icon [icon]="faCheck"></fa-icon> <span>{{item.userEmail}}</span></h4>
-
-                        </div>
-
 
                     </div>
                     </div>
@@ -414,6 +414,10 @@
                 <h4>Last reporting day of the week</h4>
                 <div class="grid-wrap">
                     <div class="custom-form-group">
+                        <input type="radio" name="last_reporting_day" [(ngModel)]="bcpFunctionInput.last_reporting_day" value="0">
+                        <label for="">Sundays</label>
+                    </div>
+                    <div class="custom-form-group">
                         <input type="radio" name="last_reporting_day" [(ngModel)]="bcpFunctionInput.last_reporting_day" value="1">
                         <label for="">Mondays</label>
                     </div>
@@ -436,10 +440,6 @@
                     <div class="custom-form-group">
                         <input type="radio" name="last_reporting_day" [(ngModel)]="bcpFunctionInput.last_reporting_day" value="6">
                         <label for="">Saturdays</label>
-                    </div>
-                    <div class="custom-form-group">
-                        <input type="radio" name="last_reporting_day" [(ngModel)]="bcpFunctionInput.last_reporting_day" value="7">
-                        <label for="">Sundays</label>
                     </div>
                 </div>   
             </div>
