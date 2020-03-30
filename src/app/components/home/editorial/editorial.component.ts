@@ -388,7 +388,11 @@ export class EditorialComponent implements OnInit {
         })
       }else{
         threat.categorization_inferences.forEach( (inf) => {
+          if(inf.classifier.length>1){
           this.CurrentChoicesArr.push({ answer: inf.classifier[0].toString() + " to " + inf.classifier[1].toString()});
+          }else{
+            this.CurrentChoicesArr.push({answer: inf.classifier[0].toString() + " and above"});
+          }
         })
       }
       }
