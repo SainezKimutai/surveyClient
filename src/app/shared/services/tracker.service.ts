@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
-import { dev } from '../dev/dev';
+import { dev, header } from '../dev/dev';
 
 
 @Injectable({
@@ -18,27 +18,27 @@ export class TrackerService {
 
 
     createTracker( data: any ) {
-        return this.http.post<any>(this.url + 'create', data);
+        return this.http.post<any>(this.url + 'create', data, {headers : header});
     }
 
 
     getAllTrackers() {
-        return this.http.get<any>(this.url + 'getAll/');
+        return this.http.get<any>(this.url + 'getAll/', {headers : header});
     }
 
 
     getOneTracker(id) {
-        return this.http.get<any>(this.url + 'getOne/' + id);
+        return this.http.get<any>(this.url + 'getOne/' + id, {headers : header});
     }
 
 
     updateTracker(id, data: any) {
-        return this.http.put<any>(this.url + 'update/' + id, data);
+        return this.http.put<any>(this.url + 'update/' + id, data, {headers : header});
     }
 
 
     deleteTracker(id) {
-        return this.http.delete<any>(this.url + 'delete/' + id);
+        return this.http.delete<any>(this.url + 'delete/' + id, {headers : header});
     }
 
 }

@@ -112,10 +112,10 @@ export class UsersComponent implements OnInit, OnDestroy {
 
     this.inviteForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      companyId: (this.toAdmin ? '' : localStorage.getItem('loggedCompanyId')),
+      companyId: (this.toAdmin ? 'none' : localStorage.getItem('loggedCompanyId')),
       userType: (this.toAdmin ? ['', [Validators.required]] : 'customer'),
       userRole: (this.toAdmin ? 'admin' : ['', [Validators.required]]),
-      departmentId: (this.toAdmin ? '' : ['', [Validators.required]]),
+      departmentId: (this.toAdmin ? 'none' : ['', [Validators.required]]),
     });
 
 
@@ -288,7 +288,6 @@ export class UsersComponent implements OnInit, OnDestroy {
 
 
   inviteUser() {
-    console.log("Called");
     this.ImprintLoader = true;
 
 
