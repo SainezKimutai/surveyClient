@@ -1,10 +1,10 @@
 <article *ngIf="ImprintLoader" class="imprint-loader home">
     <div class="imprint-loader-wrap">
         <div class="imprint-loader-main">
-        <div class="imprint-loader-ball ball-one"></div>
-        <div class="imprint-loader-ball ball-two"></div>
-        <div class="imprint-loader-ball ball-three"></div>
-        <div class="imprint-loader-ball ball-four"></div>
+            <div class="imprint-loader-ball ball-one"></div>
+            <div class="imprint-loader-ball ball-two"></div>
+            <div class="imprint-loader-ball ball-three"></div>
+            <div class="imprint-loader-ball ball-four"></div>
         </div>
     </div>
 </article>
@@ -16,38 +16,41 @@
 </div>
 
 
-
 <article class="article">
 
-<section class="templates-section">
-    <div *ngIf="AllSurveys" class="card-group" >
-        <div class="card" *ngFor="let item of AllSurveys" (click)="item.done === 100 ? '' : takeSurvey(item)">
-            <div class="card-header"></div>
-            <div class="card-body">
-                <fa-icon [icon]="faListAlt"></fa-icon>
-                <h4 class="color:black;">{{item.surveyName}}</h4>
-            </div>
-            <div class="card-footer">
-                <h5 *ngIf="item.done === 100"> <fa-icon [icon]="faCheck"></fa-icon> <span>{{item.done}}%</span> Completed</h5>
-                <h5 *ngIf="item.done > 0 && 100 > item.done"> <fa-icon [icon]="faSpinner"></fa-icon> <span>{{item.done}}%</span> In progress</h5>
-                <h5 *ngIf="item.done === 0"> Not Done</h5>
+    <section class="templates-section">
+        <div *ngIf="AllSurveys" class="card-group">
+            <div class="card"  *ngFor="let item of AllSurveys" (click)="item.done === 100 ? '' : takeSurvey(item)">
+                <div class=""></div>
+                <div class="card-body">
+                    <fa-icon [icon]="faListAlt"></fa-icon>
+                    <h4 >{{item.surveyName}}</h4>
+                </div>
+                <div class="card-footer">
+                    <h5 *ngIf="item.done === 100">
+                        <fa-icon [icon]="faCheck"></fa-icon> <span>{{item.done}}%</span> <p >Completed</p>
+                    </h5>
+                    <h5 *ngIf="item.done > 0 && 100 > item.done">
+                        <fa-icon [icon]="faSpinner"></fa-icon> <span>{{item.done}}%</span> <p >In progress</p>
+                    </h5>
+                    <h5 *ngIf="item.done === 0"> Not Done</h5>
+                </div>
+
+
             </div>
 
-           
+            <div class="card" *ngIf="AllSurveys.length === 0">
+                <div class="card-header"></div>
+                <div class="card-body">
+                    <h4 style="color: white;">No Template</h4>
+                </div>
+                <div class="card-footer">
+
+                </div>
+
+            </div>
         </div>
 
-        <div class="card" *ngIf="AllSurveys.length === 0">
-            <div class="card-header"></div>
-            <div class="card-body">
-                <h4>No Template</h4>
-            </div>
-            <div class="card-footer">
-
-            </div>
-            
-        </div>
-    </div>
-
-</section>
+    </section>
 
 </article>

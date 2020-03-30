@@ -323,10 +323,8 @@
 <section class="templates-section" *ngIf="TemeplateViewSectionStatus">
 
     <div class="card-group">
-        <div class="card" *ngFor="let item of AllSurveys">  
-            <div class="card-header">
-
-            </div>
+        <div class="card"  *ngFor="let item of AllSurveys">  
+          
             <div class="card-body">
                 <fa-icon [icon]="faListAlt"></fa-icon>
                 <h4>{{item.surveyName}}</h4>
