@@ -41,16 +41,30 @@
 
 
         .card
+           
+            border-radius: 8px
+            box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)
+            cursor: pointer
+            height: 400px
+            margin: 20px
+            padding: 0 20px
+            position: relative
+            -webkit-tap-highlight-color: rgba(0,0,0,0.025)
+            text-align: center
+            transition: height 1000ms
             min-width: 15em
-            min-height: 13em
+            min-height: 330px
             height: fit-content
             max-width: 50%
             margin: 0 .5em .5em 0
-            border-radius: 5px
-            text-align: center
+            width: 260px
             display: flex
             flex-direction: column
-            cursor: pointer
+            transition: all 0.3s ease
+            
+            &:hover
+               transform: translateY(-5px)
+               box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
 
             @include desktop_md
                 max-width: 100%
