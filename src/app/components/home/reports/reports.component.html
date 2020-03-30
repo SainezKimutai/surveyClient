@@ -61,7 +61,7 @@
             <span>{{item.answer}}</span>
         </div>
         <div class="choices threat" *ngIf="item.level">
-            <span>Threat: <span class="span-inner">{{item.level}}</span> </span>
+            <span>Threat: <span class="{{item.level}}">{{item.level}}</span> </span>
         </div>
         <div class="choices recom" *ngIf="item.recom">
             <span>Recommendation: <span class="span-inner">{{item.recom}}</span> </span>

@@ -38,6 +38,7 @@ export class SurveyComponent implements OnInit {
 
 
   ngOnInit() {
+    this.ImprintLoader = true;
     localStorage.setItem('ActiveNav', 'survey');
     this.updatePage().then(() => { this.checkForCompletedSurveys(); });
   }
@@ -62,6 +63,7 @@ export class SurveyComponent implements OnInit {
       data => {this.AllResponses = data; resolve(); },
       error => console.log('Error geting all Responses')
     );
+    this.ImprintLoader = false;
 
   });
   }

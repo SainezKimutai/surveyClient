@@ -48,17 +48,23 @@
 
 #top_cards_section .card
     border: none
-    border-radius: 5px
+    border-radius: 10px
     min-width: 200px
     max-width: 50%
-    height: 150px
+    height: 300px
+    cursor: pointer
+    transition: all 0.3s ease
+
     // height: fit-content
     margin: 0 1.5em 1em 0
     padding: 1em 2em 0 2em
     box-shadow: 0 0 10px rgba(0, 0, 0, .2)
     -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
     -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
-   
+    
+    &:hover
+      transform: translateY(-5px)
+      box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
 
     @include desktop_md
         max-width: 100%
@@ -66,22 +72,40 @@
     @include desktop_sm
         width: 100%
 
+    &:hover
+      &:focus
+          transform: scale3d(1.006, 1.006, 1)
+      &::after
+           opacity: 1
 
     &.first
-        background-color: colorTheme(primary)
+      background: #c31432
+      background: -webkit-linear-gradient(to right, #240b36, #c31432)
+      background: linear-gradient(to right, #240b36, #c31432)
+
+
         
 
     &.second
-        background-color: colorTheme(primaryTheme)
+        background: #0F2027
+        background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027)
+        background: linear-gradient(to right, #2C5364, #203A43, #0F2027)
+
     
         
 
     &.third
-        background-color: colorTheme(warning)
+       background: #11998e
+       background: -webkit-linear-gradient(to right, #38ef7d, #11998e)
+       background: linear-gradient(to right, #38ef7d, #11998e)  
+
  
 
     &.forth
-        background-color: colorTheme(danger)
+        background: #0f0c29
+        background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29)
+        background: linear-gradient(to right, #24243e, #302b63, #0f0c29)
+    
 
 
 
@@ -164,8 +188,10 @@
     align-items: stretch
     width: 100%
     height: 100%
-
     
+
+  
+
     @include desktop_sm
         display: flex
         flex-direction: column
@@ -173,15 +199,21 @@
 
 #second_cards_section .card
     border: none
-    border-radius: 5px
+    border-radius: 15px
     max-width: 50%
-    height: 300px
+    height: 400px
     margin: 0 1.5em 1em 0
     padding: 1em 2em 0 2em
     box-shadow: 0 0 10px rgba(0, 0, 0, .2)
     -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
     -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    transition: all 0.3s ease
+    cursor: pointer
    
+    
+    &:hover
+      transform: translateY(-5px)
+      box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
 
     @include desktop_md
         max-width: 100%
@@ -202,7 +234,7 @@
 
     .body-wrapper
         width: 100%
-        height: 220px
+        height: 300px
         overflow-y: scroll
         padding: 0 0 1em 0
 
@@ -305,11 +337,18 @@
 
 #graph_section .card
     border: none
-    border-radius: 3px
+    border-radius: 20px
     width: 100%
     height: 500px
     margin: 0 1.5em 1em 0
     padding: 1em 2em 0 2em
+    transition: all 0.3s ease
+    cursor: pointer
+   
+    
+    &:hover
+      transform: translateY(-5px)
+      box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
 
     @include desktop_md
         height: 400px
@@ -325,16 +364,16 @@
         font-weight: bold
 
     .body 
-        width: 100%
+        width: 80%
         padding: .5em
-        height: 100%
+        height: 80%
         overflow-y: scroll
 
         canvas
             min-width: $desktop_md
-            width: 100%
-            max-width: 100%
-            max-height: 100%
+            width: 90%
+            max-width: 90%
+            max-height: 90%
             margin: 0
             background-color: transparent
 

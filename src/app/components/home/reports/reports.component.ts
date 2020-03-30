@@ -50,6 +50,7 @@ export class ReportsComponent implements OnInit {
           this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
             data => 
             { 
+              console.log(data);
               data.forEach(responseObj => {
                     this.surveyService.getOneSurvey(responseObj.surveyId).subscribe(
                      survey =>{
@@ -60,19 +61,21 @@ export class ReportsComponent implements OnInit {
                       const question = {};
                         this.questionService.getOneQuestion(answr.questionId).subscribe(
                             questions=>{
+                              
                                question['surveyId'] = responseObj.surveyId,
                                question['open'] = questions.open_question,
                               
                                question['question'] = questions.question
                                   if(answr.answer.length>0){
                                   answr.answer.forEach(answr => {
+              
                                     question['answer'] = answr.answer;
                                     question['recom'] = answr.recom;
                                     question['level'] = answr.level;
-
                                       if(question['answer']==null){
                                         question['answer'] = answr
                                       }
+                                      console.log(question);
                                      
                                       this.AllQuestions.push(question);
                                      
