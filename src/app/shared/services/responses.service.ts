@@ -26,7 +26,6 @@ export class ResponseService {
             companyId: data.companyId,
             answers: []
           };
-
         // tslint:disable-next-line: prefer-for-of
         for (let i = 0; i < data.answers.length; i++) {
 
@@ -34,9 +33,10 @@ export class ResponseService {
             questionId: data.answers[i].questionId,
             answer: [{
                 threatId: data.answers[i].answer.threatId ? data.answers[i].answer.threatId : '',
-                recom: data.answers[i].answer.threatId ? data.answers[i].answer.threat.inference : '',
-                level: data.answers[i].answer.threatId ? data.answers[i].answer.threat.category : '',
-                answer: data.answers[i].answer.threat ? data.answers[i].answer[0].answer : data.answers[i].answer[0]}]
+                recom: (data.answers[i].answer.threatId && data.answers[i].answer.threat)  ? data.answers[i].answer.threat.inference : '',
+                level: (data.answers[i].answer.threatId && data.answers[i].answer.threat)  ? data.answers[i].answer.threat.category : '',
+                answer: (data.answers[i].answer.threat && data.answers[i].answer.threat) ? data.answers[i].answer[0].answer : data.answers[i].answer[0]
+            }]
           });
 
         }

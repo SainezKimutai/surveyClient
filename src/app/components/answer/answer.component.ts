@@ -166,6 +166,7 @@ export class AnswerComponent implements OnInit {
           //if only one parameter is passed, ie, 10 and above, only 10 should be stored to process on this..
           console.log("only one param");
           if(parseInt(response) < this.threat.categorization_inferences[i].classifier[0]+1){
+            console.log(parseInt(response));
             feedback = this.threat.categorization_inferences[i];
             this.responseArray['threat'] = feedback;
           }
@@ -269,7 +270,7 @@ export class AnswerComponent implements OnInit {
   async structureAnswers(id) {
     if(this.questions[id-1].threat){
     await this.threatService.getOneThreat(this.questions[id-1].threat).subscribe(async data => {this.threat = data; console.log(this.threat); await this.getThreatInference();
-    //  console.log("Sending..",this.responseArray)
+
       const answer = {
       questionId: this.questions[id - 1]._id,
       answer : this.responseArray
@@ -350,7 +351,7 @@ export class AnswerComponent implements OnInit {
 
         if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
         if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
-        if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 3000);  }
+        if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/reports']); }, 3000);  }
 
 
       }, err => {{this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }});

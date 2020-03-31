@@ -11,7 +11,7 @@
 </article>
 
 <img class="wave" src="../../../assets/images/wave.png">
-	<img style="top: 0;" src="../../../assets/images/logo.png">
+	<img style="top: 0;" src="../../../assets/images/smlg2.png">
 	<div class="container">
 		<div class="img">
 			<img src="../../../assets/images/bg.png">
@@ -26,7 +26,7 @@
            		   		<i class="fa fa-user"></i>
            		   </div>
            		   <div class="div">
-           		   		<!-- <h5>email</h5> -->
+           		   		
            		   		<input type="email" name="email" [(ngModel)]="loginForm.email" placeholder="Enter Email" required>
            		   </div>
            		</div>
@@ -35,12 +35,12 @@
            		    	<i class="fa fa-lock"></i>
            		   </div>
            		   <div class="div">
-           		    	<!-- <h5>Password</h5> -->
+           		    	
                            <input type="password" name="password" [(ngModel)]="loginForm.password"  placeholder="Enter Password">
             	   </div>
             	</div>
             
-                <button [disabled]="loginForm.password === '' || loginForm.email === ''" class="btn btn-sm " (click)="login()">Login</button>
+                <button [disabled]="loginForm.password === '' || loginForm.email === ''" class="btn btn-sm " (click)="login()" style="color: white;">Login</button>
                 <a routerLink="/register">Dont have an account register here</a>
             </form>
         </div>
