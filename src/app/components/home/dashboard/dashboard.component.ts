@@ -97,12 +97,47 @@ export class DashboardComponent implements OnInit {
 updatePage() {
   return new Promise((resolve, reject) => {
 
-    this.userService.getAllUsers().subscribe( data => this.AllUsers = data, error => console.log('Error getting all users'));
-    this.companyProfileService.getAllCompanyProfiles().subscribe( data => this.AllCompanies = data, error => console.log('Error getting all companies'));
-    this.surveyService.getAllSurveys().subscribe( data => this.AllSurveys = data, error => console.log('Error getting all surveys'));
-    this.questionService.getAllQuestions().subscribe( data => { this.AllQuestions = data; }, error => console.log('Error getting all questions'));
-    this.threatService.getAllThreats().subscribe( data => {this.AllThreats = data; }, error => console.log('Error getting all threats') );
-    this.responseService.getAllResponses().subscribe( data => {this.AllResponses = data; resolve(); }, error => console.log('Error getting all responses'));
+    this.userService.getAllUsers().subscribe( datauser => {
+      this.AllUsers = datauser;
+
+      this.companyProfileService.getAllCompanyProfiles().subscribe( dataCompanies => {
+
+        this.AllCompanies = dataCompanies;
+
+        this.surveyService.getAllSurveys().subscribe( dataSurvey => {
+
+          this.AllSurveys = dataSurvey;
+
+          this.questionService.getAllQuestions().subscribe( dataQuestion => {
+            this.AllQuestions = dataQuestion;
+
+            this.threatService.getAllThreats().subscribe( dataThreats => {
+              this.AllThreats = dataThreats;
+
+
+              this.responseService.getAllResponses().subscribe( dataResponse => {
+                this.AllResponses = dataResponse; resolve();
+
+
+              }, error => console.log('Error getting all responses'));
+
+
+            }, error => console.log('Error getting all threats') );
+
+          }, error => console.log('Error getting all questions'));
+
+
+        }, error => console.log('Error getting all surveys'));
+
+
+      }, error => console.log('Error getting all companies'));
+
+    }, error => console.log('Error getting all users'));
+
+
+
+
+
 
   });
 }
@@ -311,6 +346,7 @@ graphChartFuctions() {
 
   filterRiskArray.forEach((risk) => {
     let myRAray = this.riskIssueArray.filter((r) => r.risk === risk).map(e => e);
+
     let low = myRAray.filter((r) => r.level === 'Low').map(e => e);
     lowArray.push(low.length);
     let medium = myRAray.filter((r) => r.level === 'Medium').map(e => e);
@@ -413,10 +449,10 @@ graphChartFuctions() {
 
 
 computeCompanyRiskRates() {
+
   this.AllCompanies.forEach( (comp) => {
     this.AllResponses.forEach((resp) => {
       if (comp._id === resp.companyId) {
-        console.log();
         for (let surv of this.AllSurveys) {
           if (resp.surveyId === surv._id) {
 
@@ -446,8 +482,7 @@ computeCompanyRiskRates() {
 
 
 riskIssuesFuctions() {
-
-    this.AllResponses.forEach((resp, idx1, array1) => {
+  this.AllResponses.forEach((resp, idx1, array1) => {
 
       for (let surv of this.AllSurveys) {
         if (surv._id === resp.surveyId) {
@@ -456,37 +491,32 @@ riskIssuesFuctions() {
             if (comp._id === resp.companyId) {
 
               resp.answers.forEach( (respAns, idx2, array2) => {
+                if (respAns.answer[0].threatId.length > 5) {
 
-                for (let quiz of this.AllQuestions) {
+                  for ( let trt of this.AllThreats) {
 
-                  if (respAns.questionId === quiz._id) {
+                      for (let trtInference of trt.categorization_inferences) {
+                        if (trtInference.category === respAns.answer[0].level) {
+                          let myRiskIssueObject = {
+                            risk: trt.name,
+                            level: respAns.answer[0].level,
+                            recom: respAns.answer[0].recom,
+                            surveyName: surv.surveyName,
+                            company: comp.companyName,
+                          };
 
-                    for (let qAns of quiz.choices) {
-
-                      if (respAns.answer[0].answer === qAns.answer) {
-
-                        for (let threat of this.AllThreats) {
-                          if (threat._id === qAns.threat) {
-                            let myRiskIssueObject = {
-                              risk: threat.name,
-                              level: threat.level,
-                              recom: threat.recom,
-                              surveyName: surv.surveyName,
-                              company: comp.companyName,
-                            };
-                            this.riskIssueArray.push(myRiskIssueObject);
-                            this.graphChartFuctions();
-                            break;
-                          }
-                        }
-                        break;
+                          this.riskIssueArray.push(myRiskIssueObject);
+                          this.graphChartFuctions();
+                          break;
                       }
-                      //
+
+
                     }
-                    break;
+
                   }
 
                 }
+
               });
 
               break;
