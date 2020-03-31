@@ -55,7 +55,7 @@
     </div>
    
     <div class="question-wrap"  *ngFor="let item of TemplateQuestions; let i = index">
-        <div class="question d-flex w-100">{{item.question}}</div>
+        <div class="question d-flex w-100">{{i+1}}. {{item.question}}</div>
         <div class="choices-wrapper">
         <div class="choices answer">
             <span>{{item.answer}}</span>

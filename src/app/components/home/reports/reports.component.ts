@@ -50,7 +50,7 @@ export class ReportsComponent implements OnInit {
           this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
             data => 
             { 
-              console.log(data);
+             
               data.forEach(responseObj => {
                     this.surveyService.getOneSurvey(responseObj.surveyId).subscribe(
                      survey =>{
@@ -77,8 +77,7 @@ export class ReportsComponent implements OnInit {
                                     
 
                                     if(typeof(question['answer']) === 'object'){
-                                      console.log(typeof(question['answer'])); 
-                                      console.log(typeof(answr.answer));
+                                      
                                       question['answer'] = answr.answer.answer;
                                       question['recom'] = answr.answer.recom;
                                       question['level'] = answr.answer.level;
@@ -96,7 +95,7 @@ export class ReportsComponent implements OnInit {
                                 question['recom'] = '';
                                 question['level'] = '';
 
-                              for(var i =0; i<answr.answer.length ; i++){
+                              for(var i =0; i < answr.answer.length ; i++){
                                 
 
                                 question['answer'] = answr.answer[i].answer ? question['answer'] +" "+answr.answer[i].answer: '';
@@ -109,7 +108,6 @@ export class ReportsComponent implements OnInit {
                               }
               
                             }
-            
                     }
 
                     )
