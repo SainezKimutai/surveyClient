@@ -11,7 +11,7 @@ import { async } from '@angular/core/testing';
   styleUrls: ['./answer.component.sass']
 })
 export class AnswerComponent implements OnInit {
-  // tslint:disable: max-line-length
+  // tslint:disable
   // tslint:disable: prefer-const
 
 
