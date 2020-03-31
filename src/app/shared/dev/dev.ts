@@ -4,7 +4,6 @@ import { HttpHeaders } from '@angular/common/http';
 export const header = new HttpHeaders().set(
     'Authorization', `Bearer ${window.localStorage.getItem('loggedUserToken')}`
   );
-<<<<<<< HEAD
 
 
 
@@ -14,8 +13,6 @@ export const header = new HttpHeaders().set(
 //     connect: 'http://localhost:4111/',
 // };
 
-=======
->>>>>>> 2b8b07c734c4080debc42e261611aef0833f7f76
 export const dev = {
     connect: 'https://surveyserver.imprintafrica.co.ke/',
 };
