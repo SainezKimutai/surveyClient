@@ -327,15 +327,14 @@ formatReports(reports) {
       let d = new Date();
       d.setDate(d.getDate()-x);
       let bool = (d.toDateString() === new Date(rep.date_submitted).toDateString());
-
+      
       if (bool){
-  
         for(let user of this.Users){
           if (rep.userId === user._id) {
             rep.userEmail = user.email
             rep.position = decDay;
             this.MyReports.push(rep)
-            decDay--
+           
 
 
             if (Object.is(arr.length - 1, key)) {
@@ -349,6 +348,9 @@ formatReports(reports) {
         }
 
       }
+
+      // decrease day
+      decDay--
 
     })
 
