@@ -66,26 +66,52 @@ export class ReportsComponent implements OnInit {
                                question['open'] = questions.open_question,
                               
                                question['question'] = questions.question
-                                  if(answr.answer.length>0){
+                                  if(answr.answer.length == 1){
+                                  
                                   answr.answer.forEach(answr => {
-              
-                                    question['answer'] = answr.answer;
-                                    question['recom'] = answr.recom;
-                                    question['level'] = answr.level;
-                                      if(question['answer']==null){
-                                        question['answer'] = answr
-                                      }
-                                      console.log(question);
-                                     
-                                      this.AllQuestions.push(question);
+                                  
+
+                                    question['answer'] = answr.answer ? answr.answer: answr;
+                                    question['recom'] = answr.recom ? answr.recom: '';
+                                    question['level'] = answr.level ? answr.level : '';
+                                    
+
+                                    if(typeof(question['answer']) === 'object'){
+                                      console.log(typeof(question['answer'])); 
+                                      console.log(typeof(answr.answer));
+                                      question['answer'] = answr.answer.answer;
+                                      question['recom'] = answr.answer.recom;
+                                      question['level'] = answr.answer.level;
+                              
+                                    }
+
+                                    this.AllQuestions.push(question);
                                      
                                   });
-                           } else{
-                             question['answer'] = answr
-                             this.AllQuestions.push(question);
-                           }
+                                
+                            }
+                            if(answr.answer.length>1){
+
+                                question['answer'] = '';
+                                question['recom'] = '';
+                                question['level'] = '';
+
+                              for(var i =0; i<answr.answer.length ; i++){
+                                
+
+                                question['answer'] = answr.answer[i].answer ? question['answer'] +" "+answr.answer[i].answer: '';
+                                question['recom'] = answr.answer[i].recom ? question['recom'] + " " + answr.answer[i].recom: '';
+                                question['level'] = answr.answer[i].level ? question['level'] + " " + answr.answer[i].level : '';
+                                
+                                if(i === answr.answer.length-1){
+                                this.AllQuestions.push(question);
+                                }
+                              }
+              
+                            }
+            
                     }
-                    // tslint:disable-next-line: semicolon
+
                     )
                     
                     });
