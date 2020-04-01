@@ -5,8 +5,7 @@ import { SurveyService } from 'src/app/shared/services/survey.service';
 import { ResponseService } from 'src/app/shared/services/responses.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
 import { ThreatService } from 'src/app/shared/services/threats.service';
-import { ModalDirective, ModalOptions, ModalModule } from 'ngx-bootstrap';
-import { faCheck, faListAlt, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faListAlt, faDownload } from '@fortawesome/free-solid-svg-icons';
 
 
 @Component({
