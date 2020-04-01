@@ -171,8 +171,6 @@ export class ReportsComponent implements OnInit {
 
 
 
-
-
   async downloadPdf() {
     this.ImprintLoader = true;
     this.notifyService.showInfo('..downloading', 'Pdf template')
