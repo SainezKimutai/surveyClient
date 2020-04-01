@@ -103,13 +103,13 @@ export class ReportsComponent implements OnInit {
                                       question['level'] = answr.answer.level;
                                       question['threat'] = answr.answer.threatId ?  answr.answer.threat : '';
                               
-                                    }
+                                    });
 
-                                    this.AllQuestions.push(question);
+                                    this.AllQuestions.push(question)
                                      
-                                  });
+                                  
                                 
-                                  }
+                                  };
                                   if(answr.answer.length>1){
 
                                 question['answer'] = '';
