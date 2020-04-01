@@ -132,12 +132,14 @@ export class AnswerComponent implements OnInit {
     }
     let feedback = {};
     this.responseArray['threatId'] = this.threat._id;
+    this.responseArray['threatName'] = this.threat.name;
     // direct range comparison...
     if(this.threat.type === 0){
       for(var i=0; i< this.threat.categorization_inferences.length; i++){
         if(response == this.threat.categorization_inferences[i].classifier[0]){
           feedback = this.threat.categorization_inferences[i];
           this.responseArray['threat'] = feedback;
+          
         }else{
          
         }
@@ -271,6 +273,7 @@ export class AnswerComponent implements OnInit {
     if(this.questions[id-1].threat){
     await this.threatService.getOneThreat(this.questions[id-1].threat).subscribe(async data => {this.threat = data; console.log(this.threat); await this.getThreatInference();
 
+      console.log(this.responseArray);
       const answer = {
       questionId: this.questions[id - 1]._id,
       answer : this.responseArray

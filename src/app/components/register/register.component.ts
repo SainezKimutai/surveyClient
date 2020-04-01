@@ -24,6 +24,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
 
   public AllIndustrys = [];
+  public AllInstitutions = [];
 
   public ImprintLoader = false;
   public faBuilding = faBuilding;
@@ -56,6 +57,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       },
       numberOfEmployees: null,
       companyType: '',
+      institutionId: '',
       companyWebsite: '',
       companyId: '',
       password: '',
@@ -63,6 +65,18 @@ export class RegisterComponent implements OnInit, OnDestroy {
       email: '',
       userType: 'customer'
     };
+
+    this.userService.getAllUsers().subscribe(
+      data => 
+      {
+        const allUsers = data;
+        allUsers.forEach(user => {
+          if(user.userType === 'thirdparty'){
+            this.AllInstitutions.push(user);
+          }
+        });
+      }, error => console.log('Error getting all institutions')
+    );
 
     this.industryService.getAllIndustrys().subscribe(
       data => this.AllIndustrys = data,
@@ -130,6 +144,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       },
       numberOfEmployees: this.registrationForm.numberOfEmployees,
       companyType:  this.registrationForm.companyType,
+      institutionId: this.registrationForm.institutionId,
       companyWebsite: this.registrationForm.companyWebsite,
       companyAbout: '',
       companyAddress: '',
@@ -141,6 +156,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         const newUserData = {
           companyId: dataProfile._id,
           password: this.registrationForm.password,
+          institutionId: this.registrationForm.institutionId,
           email: this.registrationForm.email,
           userType: 'customer',
           userRole: 'admin',
@@ -151,6 +167,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           dataUser => {
             localStorage.setItem('loggedUserToken', dataUser.token);
             localStorage.setItem('loggedUserName', dataUser.name);
+            localStorage.setItem('loggedUserInstitution', dataUser.institutionId);
             localStorage.setItem('loggedUserEmail', dataUser.email);
             localStorage.setItem('loggedUserID', dataUser._id);
             localStorage.setItem('loggedCompanyId', dataUser.companyId);

@@ -40,5 +40,9 @@ export class IndustryService {
     deleteIndustry(id) {
         return this.http.delete<any>(this.url + 'delete/' + id, {headers : header});
     }
+    getAllInstitutionIndustrys(){
+        const data = {institutionId: localStorage.getItem('loggedUserID')};
+        return this.http.post<any> (this.url + 'institution/', data, {headers: header});
+    }
 
 }

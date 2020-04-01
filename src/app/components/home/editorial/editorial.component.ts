@@ -167,25 +167,29 @@ export class EditorialComponent implements OnInit {
 
   updatePage() {
     return new Promise((resolve, reject) => {
-        this.surveyService.getAllSurveys().subscribe(
+        
+        this.surveyService.getAllInstitutionSurveysAdmin().subscribe(
           data => this.AllSurveys = data,
           error => console.log('Error getting all surveys')
         );
+
         this.questionService.getAllQuestions().subscribe(
           data => this.AllQuestions = data,
           error => console.log('Error getting all question')
         );
-        this.industryService.getAllIndustrys().subscribe(
+        this.industryService.getAllInstitutionIndustrys().subscribe(
           data => this.AllIndustrys = data,
           error => console.log('Error getting all industries')
         );
-        this.trackerReasonService.getAllTrackerReasons().subscribe(
+        
+        this.trackerReasonService.getAllInstitutionTrackerReasons().subscribe(
           data => this.AllTrackerReasons = data,
           error => console.log('Error getting all tracker reasons')
         );
-        this.threatService.getAllThreats().subscribe(
-          data => {this.AllThreats = data; resolve(); },
-          error => console.log('Error getting all threats')
+        
+        this.threatService.getAllInstitutionThreats().subscribe(
+          data=> {this.AllThreats = data;; resolve();},
+          error => console.log('Error getting threats')
         );
     });
   }
@@ -443,11 +447,9 @@ export class EditorialComponent implements OnInit {
   }
 
 
-
-
   saveSurveyTemplate() {
     this.ImprintLoader = true;
-    this.surveyService.createSurvey({surveyName: this.CurrentSurveyInput}).subscribe(
+    this.surveyService.createSurvey({surveyName: this.CurrentSurveyInput, institutionId: localStorage.getItem('loggedUserID')}).subscribe(
       dataSurvey => {
         this.createQuestions(dataSurvey);
       },
@@ -708,8 +710,10 @@ export class EditorialComponent implements OnInit {
 
   addThreat() {
     let myData = {
+
       name: this.threatName,
       type: this.threatType,
+      institutionId: localStorage.getItem('loggedUserID'),
       categorization_inferences: this.threatLevels,
       level: this.threatLevel,
       recom: this.threatRecom,
@@ -740,11 +744,8 @@ export class EditorialComponent implements OnInit {
   }
 
 
-
-
-
   addTrackerReason() {
-    let dataResn: any = {reason: this.trackerReasonInput};
+    let dataResn: any = {reason: this.trackerReasonInput, institutionId: localStorage.getItem('loggedUserID')};
     this.trackerReasonService.createTrackerReason(dataResn).subscribe(
       data => {
         this.updatePage().then(() => {
@@ -770,7 +771,7 @@ export class EditorialComponent implements OnInit {
 
 
   addIndustries() {
-    this.industryService.createIndustry({industryName: this.industryInput}).subscribe(
+    this.industryService.createIndustry({industryName: this.industryInput, institutionId: localStorage.getItem('loggedUserID')}).subscribe(
       data => {
         this.updatePage().then(() => {
           this.notifyService.showSuccess('industry added', 'Success');
