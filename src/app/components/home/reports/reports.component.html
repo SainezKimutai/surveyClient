@@ -34,12 +34,17 @@
            
 
         </div>
-
-        <div class="card" *ngIf="AllSurveys.length === 0">
+        <div class="card" *ngIf="AllSurveys && AllSurveys.length === 0">
             <div class="card-header"></div>
             <div class="card-body">
                 <fa-icon [icon]="faListAlt"></fa-icon>
                 <h4>No Template</h4>
+            </div>
+        </div>
+        <div class="card" *ngIf="!AllSurveys">
+            <div class="card-header"></div>
+            <div class="card-body d-flex">
+                <div class="spinner-div spinner-border mx-auto" role="status"></div>
             </div>
         </div>
     </div>
@@ -51,15 +56,17 @@
     <div class="head d-flex">
         <button class="btn btn-sm mr-auto" (click)="viewSurveyTemplates()"> <fa-icon style="color: white;" [icon]="faBackward"></fa-icon> </button>
         <h4 class="mr-auto">{{TemplateNameOnView}}</h4>
-        <button class="btn btn-sm ml-auto btn-success"> <fa-icon [icon]="faDownload"></fa-icon></button>
+        <button class="btn btn-sm ml-auto btn-success" (click)="downloadPdf(); ImprintLoader = true"> <fa-icon [icon]="faDownload"></fa-icon></button>
     </div>
    
-    <div class="question-wrap"  *ngFor="let item of TemplateQuestions; let i = index">
+    <div id="reportTemplate">
+    <div class="question-wrap"  *ngFor="let item of TemplateQuestions; let i = index" id="quiz{{i}}">
         <div class="question d-flex w-100">{{i+1}}. {{item.question}}</div>
         <div class="choices-wrapper">
         <div class="choices answer">
             <span>{{item.answer}}</span>
         </div>
+        
         <div class="choices threat" *ngIf="item.level">
             <span>Threat: <span class="{{item.level}}">{{item.level}}</span> </span>
         </div>
@@ -67,6 +74,7 @@
             <span>Recommendation: <span class="span-inner">{{item.recom}}</span> </span>
         </div>
         </div>
+    </div>
     </div>
      
  </section>
