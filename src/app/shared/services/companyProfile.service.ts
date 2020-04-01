@@ -31,6 +31,10 @@ export class CompanyProfileService {
         return this.http.get<any>(this.url + 'getOne/' + id, {headers: header});
     }
 
+    getAllCompaniesByInstitutionId() {
+        const data = {institutionId: localStorage.getItem('loggedUserInstitution')};
+        return this.http.post<any>(this.url + 'institution/', data, {headers: header});
+    }
 
     updateCompanyProfile(id, data: any) {
         return this.http.put<any>(this.url + 'update/' + id, data, {headers: header});

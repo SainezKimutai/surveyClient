@@ -88,8 +88,15 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit() {
-    this.updatePage().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFuctions(); } );
+
     localStorage.setItem('ActiveNav', 'dashboard');
+
+    if (localStorage.getItem('permissionStatus') === 'isAdmin') {
+      this.updatePage().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFuctions(); } );
+    } else if (localStorage.getItem('permissionStatus') === 'isThirdParty') {
+      this.updatePage2().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFuctions(); } );
+    }
+
 
   }
 
@@ -107,7 +114,7 @@ updatePage() {
 
         this.AllCompanies = dataCompanies;
 
-        this.surveyService.getAllSurveys().subscribe( dataSurvey => {
+        this.surveyService.getAllInstitutionSurveysAdmin().subscribe( dataSurvey => {
 
           this.AllSurveys = dataSurvey;
 
@@ -137,13 +144,62 @@ updatePage() {
 
     }, error => console.log('Error getting all users'));
 
+  });
+}
 
 
 
 
+
+
+
+
+
+
+updatePage2() {
+  return new Promise((resolve, reject) => {
+
+    this.userService.getAllUsers().subscribe( datauser => {
+      this.AllUsers = datauser;
+
+      this.companyProfileService.getAllCompaniesByInstitutionId().subscribe( dataCompanies => {
+
+        this.AllCompanies = dataCompanies;
+
+        this.surveyService.getAllInstitutionSurveys().subscribe( dataSurvey => {
+
+          this.AllSurveys = dataSurvey;
+
+          this.questionService.getAllQuestions().subscribe( dataQuestion => {
+            this.AllQuestions = dataQuestion;
+
+            this.threatService.getAllThreats().subscribe( dataThreats => {
+              this.AllThreats = dataThreats;
+
+
+              this.responseService.getAllResponses().subscribe( dataResponse => {
+                this.AllResponses = dataResponse; resolve();
+
+
+              }, error => console.log('Error getting all responses'));
+
+
+            }, error => console.log('Error getting all threats') );
+
+          }, error => console.log('Error getting all questions'));
+
+
+        }, error => console.log('Error getting all surveys'));
+
+
+      }, error => console.log('Error getting all companies'));
+
+    }, error => console.log('Error getting all users'));
 
   });
 }
+
+
 
 
 
@@ -342,7 +398,7 @@ graphChartFuctions(num) {
   let riskArray = this.riskIssueArray.filter(() => true ).map(e => e.risk);
   let filterRiskArray = Array.from(new Set(riskArray));
 
-  for( let risk of filterRiskArray) {
+  for ( let risk of filterRiskArray) {
 
     if ( this.riskIssueArrayToGraph[num] === risk ) {
       let myRAray = this.riskIssueArray.filter((r) => r.risk === risk).map(e => e);
