@@ -80,7 +80,10 @@ export class DashboardComponent implements OnInit {
   public companyNameOnView = '';
   public surveyNameOnView = '';
 
+  public riskIssueArrayUnsorted = [];
   public riskIssueArray = [];
+  public riskIssueArrayToGraph = [];
+  public activeRisk;
 
 
 
@@ -332,38 +335,40 @@ topCardsChartFunction() {
 }
 
 
-
-
-
-
-
-graphChartFuctions() {
+graphChartFuctions(num) {
   let lowArray = [];
   let mediumArray = [];
   let highArray = [];
   let riskArray = this.riskIssueArray.filter(() => true ).map(e => e.risk);
   let filterRiskArray = Array.from(new Set(riskArray));
 
-  filterRiskArray.forEach((risk) => {
-    let myRAray = this.riskIssueArray.filter((r) => r.risk === risk).map(e => e);
+  for( let risk of filterRiskArray) {
 
-    let low = myRAray.filter((r) => r.level === 'Low').map(e => e);
-    lowArray.push(low.length);
-    let medium = myRAray.filter((r) => r.level === 'Medium').map(e => e);
-    mediumArray.push(medium.length);
-    let high = myRAray.filter((r) => r.level === 'High').map(e => e);
-    highArray.push(high.length);
+    if ( this.riskIssueArrayToGraph[num] === risk ) {
+      let myRAray = this.riskIssueArray.filter((r) => r.risk === risk).map(e => e);
 
-  });
+      let low = myRAray.filter((r) => r.level === 'Low').map(e => e);
+      lowArray.push(low.length);
+      let medium = myRAray.filter((r) => r.level === 'Medium').map(e => e);
+      mediumArray.push(medium.length);
+      let high = myRAray.filter((r) => r.level === 'High').map(e => e);
+      highArray.push(high.length);
 
-  let myGraphLabelColors = [];
+      break;
+    }
+
+
+  }
+
+
+  this.activeRisk = this.riskIssueArrayToGraph[num];
 
   this.graphType = 'bar';
 
-  this.graphLabels = filterRiskArray;
-  this.graphLabels.forEach((e) => {
-    myGraphLabelColors.push(this.getRandomColor());
-  });
+  this.graphLabels = [this.riskIssueArrayToGraph[num]];
+  // this.graphLabels.forEach((e) => {
+  //   myGraphLabelColors.push(this.getRandomColor());
+  // });
   this.graphDatasets = [
 
     {
@@ -505,8 +510,15 @@ riskIssuesFuctions() {
                             company: comp.companyName,
                           };
 
-                          this.riskIssueArray.push(myRiskIssueObject);
-                          this.graphChartFuctions();
+
+                          this.riskIssueArrayUnsorted.push(myRiskIssueObject);
+                          this.riskIssueArray = this.riskIssueArrayUnsorted.sort((a, b) => a.risk.localeCompare(b.risk));
+                          let newRiskArray = this.riskIssueArray.filter(() => true ).map(e => e.risk);
+                          this.riskIssueArrayToGraph = Array.from(new Set(newRiskArray));
+                          this.graphChartFuctions(0);
+
+
+
                           break;
                       }
 
