@@ -48,7 +48,6 @@ export class SurveyComponent implements OnInit {
 
     this.surveyService.getAllInstitutionSurveys().subscribe(
       data=> {this.AllSurveys = data;
-        console.log(data);
       },
       error => console.log("Error getting all surveys")
     );

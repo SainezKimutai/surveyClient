@@ -152,7 +152,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     };
     this.companyProfileService.createCompanyProfile(newProfileData).subscribe(
       dataProfile => {
-
         const newUserData = {
           companyId: dataProfile._id,
           password: this.registrationForm.password,
@@ -180,7 +179,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
       },
       error => {this.notifyService.showWarning('Could not submit', 'Failled');  this.ImprintLoader = false; }
     );
-
 
   }
 

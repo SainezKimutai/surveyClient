@@ -151,7 +151,6 @@ export class EditorialComponent implements OnInit {
   ngOnInit() {
     localStorage.setItem('ActiveNav', 'editorial');
     this.updatePage();
-
   }
 
 
@@ -793,22 +792,4 @@ export class EditorialComponent implements OnInit {
       error => this.notifyService.showError('could not delete industry', 'Failed')
     );
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 } // End of main class
