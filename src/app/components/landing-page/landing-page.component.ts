@@ -47,6 +47,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
           localStorage.setItem('loggedUserToken', dataUser.token);
           localStorage.setItem('loggedUserName', dataUser.name);
           localStorage.setItem('loggedUserEmail', dataUser.email);
+          localStorage.setItem('loggedUserInstitution', dataUser.institutionId);
           localStorage.setItem('loggedUserID', dataUser._id);
           localStorage.setItem('loggedCompanyId', dataUser.companyId);
           localStorage.setItem('permissionStatus', 'isCustomer');

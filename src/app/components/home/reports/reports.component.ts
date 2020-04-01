@@ -7,6 +7,7 @@ import { QuestionService } from 'src/app/shared/services/questions.service';
 import { ThreatService } from 'src/app/shared/services/threats.service';
 import { ModalDirective, ModalOptions, ModalModule } from 'ngx-bootstrap';
 import { faCheck, faListAlt, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { async } from '@angular/core/testing';
 
 
 @Component({
@@ -20,7 +21,8 @@ export class ReportsComponent implements OnInit {
         private surveyService: SurveyService,
         private responseService: ResponseService,
         private questionService: QuestionService,
-        private threatService: ThreatService
+        private threatService: ThreatService,
+        
       ) {  }
       public ImprintLoader = false;
   //  tslint:disable
@@ -64,23 +66,29 @@ export class ReportsComponent implements OnInit {
                               
                                question['surveyId'] = responseObj.surveyId,
                                question['open'] = questions.open_question,
+
+                               
                               
                                question['question'] = questions.question
                                   if(answr.answer.length == 1){
                                   
-                                  answr.answer.forEach(answr => {
                                   
-
+                                  answr.answer.forEach(answr => {
+                                    
                                     question['answer'] = answr.answer ? answr.answer: answr;
                                     question['recom'] = answr.recom ? answr.recom: '';
                                     question['level'] = answr.level ? answr.level : '';
+                                    question['threat'] = answr.threatId ? answr.threat: '';
+                                  
                                     
 
                                     if(typeof(question['answer']) === 'object'){
                                       
+                                      
                                       question['answer'] = answr.answer.answer;
                                       question['recom'] = answr.answer.recom;
                                       question['level'] = answr.answer.level;
+                                      question['threat'] = answr.answer.threatId ?  answr.answer.threat : '';
                               
                                     }
 
@@ -94,6 +102,7 @@ export class ReportsComponent implements OnInit {
                                 question['answer'] = '';
                                 question['recom'] = '';
                                 question['level'] = '';
+                                question['threat'] = '';
 
                               for(var i =0; i < answr.answer.length ; i++){
                                 

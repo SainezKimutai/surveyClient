@@ -30,10 +30,23 @@ export class ThreatService {
     getOneThreat(id) {
         return this.http.get<any>(this.url + 'getOne/' + id, {headers : header});
     }
+    async getOneThreatName(id) {
+        
+     this.http.get<any>(this.url + 'getOne/' + id, {headers : header}).subscribe(data=> {
+         return data.name;
+     });
+
+        // return name;
+    }
 
 
     updateThreat(id, data: any) {
         return this.http.put<any>(this.url + 'update/' + id, data, {headers : header});
+    }
+
+    getAllInstitutionThreats(){
+        const data = {institutionId: localStorage.getItem('loggedUserID')};
+        return this.http.post<any>(this.url + 'institution/', data, {headers:header});
     }
 
 

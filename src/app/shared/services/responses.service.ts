@@ -26,13 +26,15 @@ export class ResponseService {
             companyId: data.companyId,
             answers: []
           };
+
+          console.log(data);
         // tslint:disable-next-line: prefer-for-of
         for (let i = 0; i < data.answers.length; i++) {
-
             payload.answers.push({
             questionId: data.answers[i].questionId,
             answer: [{
                 threatId: data.answers[i].answer.threatId ? data.answers[i].answer.threatId : '',
+                threat: data.answers[i].answer.threatName ? data.answers[i].answer.threatName: '',
                 recom: (data.answers[i].answer.threatId && data.answers[i].answer.threat)  ? data.answers[i].answer.threat.inference : '',
                 level: (data.answers[i].answer.threatId && data.answers[i].answer.threat)  ? data.answers[i].answer.threat.category : '',
                 answer: (data.answers[i].answer.threat && data.answers[i].answer.threat) ? data.answers[i].answer[0].answer : data.answers[i].answer[0]

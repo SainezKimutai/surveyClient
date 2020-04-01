@@ -60,8 +60,11 @@
         <div class="choices answer">
             <span>{{item.answer}}</span>
         </div>
+        <div class="choices recom" *ngIf="item.level">
+            <span>Mapped Risk: <span class="span-inner">{{item.threat}}</span> </span>
+        </div>
         <div class="choices threat" *ngIf="item.level">
-            <span>Threat: <span class="{{item.level}}">{{item.level}}</span> </span>
+            <span>Threat Level: <span class="{{item.level}}">{{item.level}}</span> </span>
         </div>
         <div class="choices recom" *ngIf="item.recom">
             <span>Recommendation: <span class="span-inner">{{item.recom}}</span> </span>
