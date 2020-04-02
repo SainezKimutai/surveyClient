@@ -223,8 +223,10 @@ export class AnswerComponent implements OnInit {
 
   async next(id) {
     if(this.responseArray.length === 0){
+      console.log("No answer");
       this.responseArray.push("Not answered")
     }
+
    
     this.structureAnswers(id);
     if (id !== this.questions.length) {
@@ -274,9 +276,9 @@ export class AnswerComponent implements OnInit {
 
   async structureAnswers(id) {
     if(this.questions[id-1].threat){
-    await this.threatService.getOneThreat(this.questions[id-1].threat).subscribe(async data => {this.threat = data; console.log(this.threat); await this.getThreatInference();
+      await this.threatService.getOneThreat(this.questions[id-1].threat).subscribe(async data => {this.threat = data; console.log(this.threat); await this.getThreatInference();
 
-       
+      console.log(this.responseArray);
 
       const answer = {
         questionId: this.questions[id - 1]._id,
