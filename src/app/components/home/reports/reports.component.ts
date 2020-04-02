@@ -96,13 +96,13 @@ export class ReportsComponent implements OnInit {
                                     question['threat'] = answr.threatId ? answr.threat: '';
                                   
                                     
-                                      
+                                     if(typeof(question['answer']) === 'object') {
                                       
                                       question['answer'] = answr.answer.answer;
                                       question['recom'] = answr.answer.recom;
                                       question['level'] = answr.answer.level;
                                       question['threat'] = answr.answer.threatId ?  answr.answer.threat : '';
-                              
+                                     }
                                     });
 
                                     this.AllQuestions.push(question)
@@ -112,10 +112,10 @@ export class ReportsComponent implements OnInit {
                                   };
                                   if(answr.answer.length>1){
 
-                                question['answer'] = '';
-                                question['recom'] = '';
-                                question['level'] = '';
-                                question['threat'] = '';
+                                        question['answer'] = '';
+                                        question['recom'] = '';
+                                        question['level'] = '';
+                                        question['threat'] = '';
 
                                         for(var i =0; i < answr.answer.length ; i++){
                                           

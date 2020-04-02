@@ -151,6 +151,7 @@ export class EditorialComponent implements OnInit {
   ngOnInit() {
     localStorage.setItem('ActiveNav', 'editorial');
     this.updatePage();
+    // this.updater();
   }
 
 
@@ -791,5 +792,19 @@ export class EditorialComponent implements OnInit {
       },
       error => this.notifyService.showError('could not delete industry', 'Failed')
     );
+  }
+
+  async updater(){
+    this.industryService.getAllIndustrys().subscribe(
+      data =>{
+        let allThreats = data;
+        allThreats.forEach(threat=> {
+          threat['institutionId']="5e7531b76879a6354e179ddf";
+            this.industryService.updateIndustry(threat._id, threat).subscribe(data=>{
+            console.log("updated")
+          })
+        })
+      }
+    )
   }
 } // End of main class
