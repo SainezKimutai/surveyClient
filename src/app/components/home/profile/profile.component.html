@@ -19,48 +19,24 @@
 
                 <div class="grid-item">
                     <h4>Surveys</h4>    
-                    <div class="body-wrap d-flex">
+                    <div class="body-wrap d-flex" style="outline: none; cursor: pointer;" routerLink="/home/survey">
                         <div class="icon">
                             <fa-icon [icon]="faListAlt"> </fa-icon>
                         </div>
-                        <div class="value">
-                            <h4>{{CompanyRiskRates.length}}</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid-item">
-                    <h4>Feedback</h4>
-                    <div class="body-wrap d-flex">
-                        <div class="icon">
-                            <fa-icon [icon]="faComment"></fa-icon>
-                        </div>
-                        <div class="value">
-                            <h4>Pending...</h4>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid-item">
-                    <h4>Issue Rating</h4>          
-                    <div class="body-wrap d-flex">
-                        <div class="icon">
-                            <fa-icon [icon]="faFire"></fa-icon>
-                        </div>
-                        <div class="value">
-                            <h4>Pending...</h4>
+                        <div class="value" >
+                            <h4 >{{CompanyRiskRates.length}}</h4>
                         </div>
                     </div>
                 </div>
 
                 <div class="grid-item">
                     <h4>Reports</h4>
-                    <div class="body-wrap d-flex">
+                    <div class="body-wrap d-flex" style="outline: none; cursor: pointer;" routerLink="/home/reports">
                         <div class="icon">
                             <fa-icon [icon]="faBookReader"></fa-icon>
                         </div>
-                        <div class="value">
-                            <h4>Pending...</h4>
+                        <div class="value" >
+                            <h4>{{AllResponses.length}}</h4>
                         </div>
                     </div>
                    
