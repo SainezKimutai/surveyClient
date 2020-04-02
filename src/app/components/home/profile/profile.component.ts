@@ -122,7 +122,7 @@ export class ProfileComponent implements OnInit {
       data => this.AllQuestions = data,
       error => console.log('Error geting all Questions')
     );
-    this.responseService.getAllResponses().subscribe(
+    this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
       data => {this.AllResponses = data; resolve(); },
       error => console.log('Error geting all Responses')
     );
