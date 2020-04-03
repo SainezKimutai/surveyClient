@@ -178,7 +178,7 @@
             </div>
         </div>
 
-        <div class="option-item" >
+        <div class="option-item">
             <h4>Answer Type</h4>
             <div class="grid">
             <div class="form-groupp">
@@ -194,6 +194,26 @@
                 <label for="">Boolean</label>
             </div>
             </div>
+        </div>
+
+        <div style="display: flex;">
+        <div class="option-item" style="float: right;">
+            <h4>Can Skip?</h4>
+            <div class="grid">
+            <div class="form-groupp">
+                <input type="checkbox" name="skipInput" value="yes" (change)="optionsOnchange()" [(ngModel)]="skipInput">
+            </div>
+            </div>
+        </div>
+
+        <div class="option-item" style="float: left;">
+            <h4>Linked?</h4>
+            <div class="grid">
+            <div class="form-groupp">
+                <input type="checkbox" name="linkedInput" value="yes" (change)="optionsOnchange()" [(ngModel)]="linkedInput">
+            </div>
+            </div>
+        </div>
         </div>
 
         <div class="form-group">
@@ -239,7 +259,7 @@
            
         </div>
 
-        
+    
         <div class="btn-wrap d-flex">
             <button class="btn btn-sm btn-secondary mr-auto" (click)="toFormThree()">Back</button>
             <button *ngIf="newSurveyStatus" class="btn btn-sm btn-success ml-auto" (click)="nextQuestion()">Add this question</button>
@@ -281,45 +301,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <section class="templates-section" *ngIf="TemeplateViewSectionStatus">
 
     <div class="card-group">
@@ -349,18 +330,6 @@
     </div>
 
 </section>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 <section class="templates-section" *ngIf="ThreatsViewSectionStatus">
@@ -577,6 +546,7 @@
                             </div>
                         </div>
                         </div>
+
                         <div class="form-group">
                             
                             <label for="threatRecom">Recommendations</label>
