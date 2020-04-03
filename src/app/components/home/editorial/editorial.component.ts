@@ -380,28 +380,39 @@ export class EditorialComponent implements OnInit {
     }
   }
 
+
+
   fetchLinkedAnswers() {
     this.CurrentChoicesArr =[];
     for(let threat of this.AllThreats){
       if (threat._id === this.CurrentChoiceInputThreat) {
-        console.log(threat);
-        if(threat.type == 0){
-          console.log("Zero");
-        threat.categorization_inferences.forEach( (inf) => {
-          this.CurrentChoicesArr.push({ answer: inf.classifier[0]});
-        })
-      }else{
-        threat.categorization_inferences.forEach( (inf) => {
-          if(inf.classifier.length>1){
-          this.CurrentChoicesArr.push({ answer: inf.classifier[0].toString() + " to " + inf.classifier[1].toString()});
+
+          if(threat.type == 0){
+
+          threat.categorization_inferences.forEach( (inf) => {
+            this.CurrentChoicesArr.push({ answer: inf.classifier[0]});
+
+          })
+
           }else{
-            this.CurrentChoicesArr.push({answer: inf.classifier[0].toString() + " and above"});
-          }
-        })
-      }
+
+          threat.categorization_inferences.forEach( (inf) => {
+
+            if(inf.classifier.length>1){
+
+            this.CurrentChoicesArr.push({ answer: inf.classifier[0].toString() + " to " + inf.classifier[1].toString()});
+            
+            }else{
+              this.CurrentChoicesArr.push({answer: inf.classifier[0].toString() + " and above"});
+            }
+
+          })
+        }
       }
     }
   }
+
+
 
 
   addChoice() {
