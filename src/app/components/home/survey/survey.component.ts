@@ -43,15 +43,21 @@ export class SurveyComponent implements OnInit {
     this.updatePage().then(() => { this.checkForCompletedSurveys(); });
   }
 
+
+
+
+
+
+
   async updatePage() {
     return new Promise((resolve, reject) => {
 
     this.surveyService.getAllInstitutionSurveys().subscribe(
-      data=> {this.AllSurveys = data;
+      data => {this.AllSurveys = data;
       },
-      error => console.log("Error getting all surveys")
+      error => console.log('Error getting all surveys')
     );
-    if(this.AllSurveys!=null || this.AllSurveys.length === 0 ){
+    if (this.AllSurveys != null || this.AllSurveys.length !== 0 ) {
     this.questionService.getAllQuestions().subscribe(
       data => this.AllQuestions = data,
       error => console.log('Error getting all question')
@@ -61,7 +67,7 @@ export class SurveyComponent implements OnInit {
       error => console.log('Error geting all Responses')
     );
     this.ImprintLoader = false;
-    }else{
+    } else {
       this.ImprintLoader = false;
     }
   });

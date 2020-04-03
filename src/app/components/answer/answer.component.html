@@ -71,12 +71,12 @@
                         </div>
                     </div>
 
-                    <div *ngIf="!response || responseArray.length === 0" class="btn-wrap d-flex">
+                    <div *ngIf="!isLast && (!response || responseArray.length === 0)" class="btn-wrap d-flex">
                         <button
                         class="btn btn-sm btn-next ml-auto" (click)="next(pageNumber)">Skip</button>
                     </div>
 
-                    <div *ngIf="!isLast && response || responseArray.length !== 0" class="btn-wrap d-flex">
+                    <div *ngIf="!isLast && responseArray.length !== 0 && response !== '' " class="btn-wrap d-flex">
                         <button [disabled]="(response === '' || !response) && responseArray.length === 0"
                         class="btn btn-sm btn-next ml-auto" (click)="next(pageNumber)">Next</button>
                     </div>

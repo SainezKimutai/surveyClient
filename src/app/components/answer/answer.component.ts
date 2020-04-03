@@ -148,7 +148,7 @@ export class AnswerComponent implements OnInit {
     if(this.threat.type === 1){
        // range representations using to..
       if(response.includes('to')){
-        console.log(response.split('to'))
+        // console.log(response.split('to'))
         let range = [];
         range.push(parseInt(response.split('to')[0]))
         range.push(parseInt(response.split('to')[1]))
@@ -165,9 +165,9 @@ export class AnswerComponent implements OnInit {
       for(var i=0; i< this.threat.categorization_inferences.length; i++){
         if(this.threat.categorization_inferences[i].classifier.length === 1){
           //if only one parameter is passed, ie, 10 and above, only 10 should be stored to process on this..
-          console.log("only one param");
+          // console.log("only one param");
           if(parseInt(response) < this.threat.categorization_inferences[i].classifier[0]+1){
-            console.log(parseInt(response));
+            // console.log(parseInt(response));
             feedback = this.threat.categorization_inferences[i];
             this.responseArray['threat'] = feedback;
           }
@@ -222,7 +222,7 @@ export class AnswerComponent implements OnInit {
 
   async next(id) {
     if(this.responseArray.length === 0){
-      console.log("No answer");
+      // console.log("No answer");
       this.responseArray.push("Not answered")
     }
 
@@ -244,7 +244,7 @@ export class AnswerComponent implements OnInit {
   continuationFromBefore(id) {
 
     this.questionService.getQuestionsInASurvey(this.surveyId).
-    subscribe(data => {this.questions = data.sort((a, b) =>  a.position - b.position); console.log(this.questions);  this.formatQuestions2(id); this.structureAnswers2(id); }, err => console.log(err));
+    subscribe(data => {this.questions = data.sort((a, b) =>  a.position - b.position);  this.formatQuestions2(id); this.structureAnswers2(id); }, err => console.log(err));
 
   }
 
@@ -276,9 +276,7 @@ export class AnswerComponent implements OnInit {
 
   async structureAnswers(id) {
     if(this.questions[id-1].threat){
-      await this.threatService.getOneThreat(this.questions[id-1].threat).subscribe(async data => {this.threat = data; console.log(this.threat); await this.getThreatInference();
-
-      console.log(this.responseArray);
+      await this.threatService.getOneThreat(this.questions[id-1].threat).subscribe(async data => {this.threat = data;  await this.getThreatInference();
 
       const answer = {
         questionId: this.questions[id - 1]._id,

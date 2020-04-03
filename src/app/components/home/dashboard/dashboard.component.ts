@@ -676,6 +676,36 @@ graphChartToPie() {
 }
 
 
+
+switchGraphDataset(num) {
+  let lowValue = null;
+  let mediumValue = null;
+  let highValue = null;
+  let riskArray = this.riskIssueArray.filter(() => true ).map(e => e.risk);
+  let filterRiskArray = Array.from(new Set(riskArray));
+
+  for ( let risk of filterRiskArray) {
+
+    if ( this.riskIssueArrayToGraph[num] === risk ) {
+      let myRAray = this.riskIssueArray.filter((r) => r.risk === risk).map(e => e);
+      let low = myRAray.filter((r) => r.level === 'Low').map(e => e);
+      lowValue = low.length;
+      let medium = myRAray.filter((r) => r.level === 'Medium').map(e => e);
+      mediumValue = medium.length;
+      let high = myRAray.filter((r) => r.level === 'High').map(e => e);
+      highValue = high.length;
+
+      break;
+    }
+
+
+  }
+
+  this.activeRisk = this.riskIssueArrayToGraph[num];
+  this.graphDatasets[0].data = [ lowValue, mediumValue, highValue];
+
+}
+
 graphChartFuctions(num) {
   let lowValue = null;
   let mediumValue = null;
@@ -748,7 +778,7 @@ graphChartFuctions(num) {
     },
     scales: {
       yAxes: [{
-          display: true,
+          display: false,
           gridLines: {
               drawBorder: false,
               display: false
