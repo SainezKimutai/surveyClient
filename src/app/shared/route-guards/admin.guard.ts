@@ -14,7 +14,7 @@ export class AdminGuard implements CanActivate {
 
     canActivate( next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
-        if (localStorage.getItem('permissionStatus') === 'isAdmin') {
+        if (localStorage.getItem('permissionStatus') === 'isAdmin' || localStorage.getItem('permissionStatus') === 'isThirdParty') {
         return true;
         }
 

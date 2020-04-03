@@ -51,7 +51,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
           localStorage.setItem('loggedUserID', dataUser._id);
           localStorage.setItem('loggedCompanyId', dataUser.companyId);
           localStorage.setItem('permissionStatus', 'isCustomer');
-          this.router.navigate(['/home/profile']);
+          this.router.navigate(['/home/survey']);
         }
 
 

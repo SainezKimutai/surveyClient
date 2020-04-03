@@ -15,7 +15,6 @@ export class AnswerComponent implements OnInit {
   // tslint:disable: prefer-const
 
 
-
   constructor(private questionService: QuestionService,
               private responseService: ResponseService,
               private router: Router,
@@ -228,7 +227,8 @@ export class AnswerComponent implements OnInit {
     }
 
    
-    this.structureAnswers(id);
+    await this.structureAnswers(id);
+
     if (id !== this.questions.length) {
     this.questionTag = this.questions[id].question;
     this.open = this.questions[id].open_question;
@@ -295,9 +295,9 @@ export class AnswerComponent implements OnInit {
       this.ImprintLoader = true;
       this.answerStructure.answers = this.answers;
       this.postAnswers(this.answerStructure);
-    }
-  }, error =>console.log("error"));
-}else{
+     }
+    }, error =>console.log("error"));
+  }else{
   const answer = {
     questionId: this.questions[id - 1]._id,
     answer : this.responseArray
@@ -316,8 +316,6 @@ export class AnswerComponent implements OnInit {
   }
 }
 }
-
-
 
   structureAnswers2(id) {
 
@@ -403,7 +401,6 @@ export class AnswerComponent implements OnInit {
           if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
           if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
           if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 3000);  }
-
 
         }, err => {{this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }});
       }
