@@ -14,7 +14,6 @@ export class AnswerComponent implements OnInit {
   // tslint:disable
   // tslint:disable: prefer-const
 
-
   constructor(private questionService: QuestionService,
               private responseService: ResponseService,
               private router: Router,
@@ -46,7 +45,7 @@ export class AnswerComponent implements OnInit {
     answerStructure: any;
     answers: any = [];
     threat: any;
-
+    skip = false;
 
 
 
@@ -104,6 +103,7 @@ export class AnswerComponent implements OnInit {
     if (this.questions.length > 0) {
       
       this.questionTag = this.questions[0].question;
+      this.skip = this.questions[0].skip;
       this.open = this.questions[0].open_question;
       this.multiple = this.questions[0].multiple_choice;
       this.type = this.questions[0].choice_type;
@@ -221,6 +221,7 @@ export class AnswerComponent implements OnInit {
 
 
   async next(id) {
+
     if(this.responseArray.length === 0){
       console.log("No answer");
       this.responseArray.push("Not answered")
@@ -230,14 +231,18 @@ export class AnswerComponent implements OnInit {
     await this.structureAnswers(id);
 
     if (id !== this.questions.length) {
+
     this.questionTag = this.questions[id].question;
+    this.skip = this.questions[id].skip;
     this.open = this.questions[id].open_question;
     this.multiple = this.questions[id].multiple_choice;
     this.type = this.questions[id].choice_type;
     this.options = this.questions[id].choices;
     this.pageNumber = id + 1;
     this.totalPages = this.questions.length;
+
     }
+
   }
   
 
@@ -253,6 +258,7 @@ export class AnswerComponent implements OnInit {
 
     if (this.questions.length > 0) {
       this.questionTag = this.questions[myId].question;
+      this.skip = this.questions[myId].skip;
       this.open = this.questions[myId].open_question;
       this.multiple = this.questions[myId].multiple_choice;
       this.type = this.questions[myId].choice_type;
@@ -265,6 +271,7 @@ export class AnswerComponent implements OnInit {
         this.isLast = true;
       }
     }
+
   }
 
 
@@ -286,6 +293,7 @@ export class AnswerComponent implements OnInit {
       };
 
     this.responseArray = [];
+    this.skip = false;
     this.response = '';
     this.answers.push(answer);
     if (id === this.questions.length - 1) {
@@ -305,6 +313,7 @@ export class AnswerComponent implements OnInit {
 
   this.responseArray = [];
   this.response = '';
+  this.skip=false;
   this.answers.push(answer);
   if (id === this.questions.length - 1) {
     this.isLast = true;
@@ -321,6 +330,7 @@ export class AnswerComponent implements OnInit {
 
     this.responseArray = [];
     this.response = '';
+    this.skip = false;
     this.answers = this.myPreviousAnswers;
     if (id === this.questions.length - 1) {
       this.isLast = true;
