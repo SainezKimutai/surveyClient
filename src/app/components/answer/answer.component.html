@@ -71,7 +71,7 @@
                         </div>
                     </div>
 
-                    <div *ngIf="!response" class="btn-wrap d-flex">
+                    <div *ngIf="!response || responseArray.length === 0" class="btn-wrap d-flex">
                         <button
                         class="btn btn-sm btn-next ml-auto" (click)="next(pageNumber)">Skip</button>
                     </div>
