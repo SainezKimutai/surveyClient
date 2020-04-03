@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {  faListAlt, faBuilding, faFire } from '@fortawesome/free-solid-svg-icons';
+import { faChartLine, faChartBar, faChartPie, faListAlt, faBuilding, faFire } from '@fortawesome/free-solid-svg-icons';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -50,6 +50,12 @@ export class DashboardComponent implements OnInit {
   public AllResponses = [];
   public AllThreats = [];
 
+
+// Icons
+  public faChartLine = faChartLine;
+  public faChartBar = faChartBar;
+  public faChartPie = faChartPie;
+
 // Top Cards variables
   public cardOneType: string;
   public cardOneLabels: Array<any>;
@@ -68,6 +74,19 @@ export class DashboardComponent implements OnInit {
 
 
   public CompnayRiskRates = [];
+
+
+  // Third Section graph variables
+  public third1Type;
+  public third1Labels;
+  public third1Datasets;
+  public third1ChartOptions;
+  public third1BgColors = [];
+  public third2Labels;
+  public third2Type;
+  public third2Datasets;
+  public third2ChartOptions;
+  public third2BgColors = [];
 
 
 // graph variables
@@ -92,9 +111,9 @@ export class DashboardComponent implements OnInit {
     localStorage.setItem('ActiveNav', 'dashboard');
 
     if (localStorage.getItem('permissionStatus') === 'isAdmin') {
-      this.updatePage().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFuctions(); } );
+      this.updatePage().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFuctions(); this.thirdSectionGraphsFunction(); } );
     } else if (localStorage.getItem('permissionStatus') === 'isThirdParty') {
-      this.updatePage2().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFuctions(); } );
+      this.updatePage2().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFuctions(); this.thirdSectionGraphsFunction(); } );
     }
 
 
@@ -391,10 +410,276 @@ topCardsChartFunction() {
 }
 
 
+
+
+
+third1graphToLine() {
+  this.third1Type = 'line';
+  this.third1ChartOptions.legend.display = false;
+  this.third1ChartOptions.scales.xAxes[0].display = true;
+  this.third1Datasets[0].backgroundColor = 'whitesmoke';
+  this.third1Datasets[0].borderColor = 'gray';
+  this.third1Datasets[0].pointBorderColor = 'black';
+}
+third1graphToBar() {
+  this.third1Type = 'bar';
+  this.third1ChartOptions.legend.display = false;
+  this.third1ChartOptions.scales.xAxes[0].display = true;
+  this.third1Datasets[0].backgroundColor = this.third1BgColors;
+  this.third1Datasets[0].borderColor = 'white';
+  this.third1Datasets[0].pointBorderColor = 'white';
+}
+third1graphToPie() {
+  this.third1Type = 'pie';
+  this.third1ChartOptions.legend.display = true;
+  this.third1ChartOptions.scales.xAxes[0].display = false;
+  this.third1Datasets[0].backgroundColor = this.third1BgColors;
+  this.third1Datasets[0].borderColor = 'white';
+  this.third1Datasets[0].pointBorderColor = 'white';
+}
+
+third2graphToLine() {
+  this.third2Type = 'line';
+  this.third2ChartOptions.legend.display = false;
+  this.third2ChartOptions.scales.xAxes[0].display = true;
+  this.third2Datasets[0].backgroundColor = 'whitesmoke';
+  this.third2Datasets[0].borderColor = 'gray';
+  this.third2Datasets[0].pointBorderColor = 'black';
+}
+third2graphToBar() {
+  this.third2Type = 'bar';
+  this.third2ChartOptions.legend.display = false;
+  this.third2ChartOptions.scales.xAxes[0].display = true;
+  this.third2Datasets[0].backgroundColor = this.third1BgColors;
+  this.third2Datasets[0].borderColor = 'white';
+  this.third2Datasets[0].pointBorderColor = 'white';
+}
+third2graphToPie() {
+  this.third2Type = 'pie';
+  this.third2ChartOptions.legend.display = true;
+  this.third2ChartOptions.scales.xAxes[0].display = false;
+  this.third2Datasets[0].backgroundColor = this.third1BgColors;
+  this.third2Datasets[0].borderColor = 'white';
+  this.third2Datasets[0].pointBorderColor = 'white';
+}
+
+
+
+thirdSectionGraphsFunction() {
+
+  // on the left
+  this.third1Type = 'pie';
+
+  this.third1Labels = ['Kim', 'Geofrey', 'Waithesh', 'Soraya', 'Kaye'];
+  this.third1BgColors = [];
+
+  this.third1Labels.forEach((e) => {
+    this.third1BgColors.push(this.getRandomColor());
+    });
+
+  this.third1Datasets = [{
+    label: 'Risk',
+    data: [ 15, 30, 20, 25, 10],
+    backgroundColor: this.third1BgColors,
+    borderColor: 'white',
+    borderWidth: 1.5,
+    pointBackgroundColor: 'transparent',
+    pointHoverBackgroundColor: 'transparent',
+    pointBorderColor: 'white',
+    pointHoverBorderColor: 'gray'
+  }];
+
+  this.third1ChartOptions = {
+    title: {
+      display: false,
+      text: 'Sales',
+      fontSize: 25
+    },
+    legend: {
+      display: true,
+      position: 'right',
+      labels: {
+            fontColor: '#00e676'
+          }
+    },
+    layout: {
+      padding: 10
+    },
+    tooltips: {
+        enabled: true
+    },
+    scales: {
+      yAxes: [{
+          display: false,
+          gridLines: {
+              drawBorder: false,
+              display: false
+          },
+          stacked: false,
+          ticks: {
+              beginAtZero: true
+          }
+      }],
+      xAxes: [{
+          display: false,
+          stacked: false,
+          gridLines: {
+              drawBorder: true,
+              display: false
+          },
+          ticks: {
+            beginAtZero: false
+          }
+      }]
+    },
+    maintainAspectRatio: false,
+    responsive: true,
+    plugins: {
+        datalabels: {
+            anchor: 'end',
+            align: 'top',
+            formatter: Math.round,
+            font: { weight: 'bold'}
+        }
+    }
+  };
+
+
+
+
+
+
+
+
+
+ // on the left
+  this.third2Type = 'pie';
+
+  this.third2Labels = ['Kim', 'Geofrey', 'Waithesh', 'Soraya', 'Kaye'];
+  this.third2BgColors = [];
+
+  this.third2Labels.forEach((e) => {
+    this.third2BgColors.push(this.getRandomColor());
+   });
+
+  this.third2Datasets = [{
+   label: 'Risk',
+   data: [ 15, 30, 20, 25, 10],
+   backgroundColor: this.third2BgColors,
+   borderColor: 'white',
+   borderWidth: 1.5,
+   pointBackgroundColor: 'transparent',
+   pointHoverBackgroundColor: 'transparent',
+   pointBorderColor: 'white',
+   pointHoverBorderColor: 'gray'
+ }];
+
+  this.third2ChartOptions = {
+   title: {
+     display: false,
+     text: 'Sales',
+     fontSize: 25
+   },
+   legend: {
+     display: true,
+     position: 'right',
+     labels: {
+           fontColor: '#00e676'
+         }
+   },
+   layout: {
+     padding: 10
+   },
+   tooltips: {
+       enabled: true
+   },
+   scales: {
+     yAxes: [{
+         display: false,
+         gridLines: {
+             drawBorder: false,
+             display: false
+         },
+         stacked: false,
+         ticks: {
+             beginAtZero: true
+         }
+     }],
+     xAxes: [{
+         display: false,
+         stacked: false,
+         gridLines: {
+             drawBorder: true,
+             display: false
+         },
+         ticks: {
+           beginAtZero: false
+         }
+     }]
+   },
+   maintainAspectRatio: false,
+   responsive: true,
+   plugins: {
+       datalabels: {
+           anchor: 'end',
+           align: 'top',
+           formatter: Math.round,
+           font: { weight: 'bold'}
+       }
+   }
+ };
+
+
+
+
+
+
+} // end of thirdSectionGraphsFunction
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+graphChartToLine() {
+  this.graphType = 'line';
+  this.graphChart.legend.display = false;
+  this.graphChart.scales.xAxes[0].display = true;
+  this.graphDatasets[0].backgroundColor = 'whitesmoke';
+  this.graphDatasets[0].borderColor = 'gray';
+  this.graphDatasets[0].pointBorderColor = 'black';
+}
+graphChartToBar() {
+  this.graphType = 'bar';
+  this.graphChart.legend.display = false;
+  this.graphChart.scales.xAxes[0].display = true;
+  this.graphDatasets[0].backgroundColor = ['#02b0cc', 'orange', 'red' ];
+  this.graphDatasets[0].borderColor = 'white';
+  this.graphDatasets[0].pointBorderColor = 'white';
+}
+graphChartToPie() {
+  this.graphType = 'pie';
+  this.graphChart.legend.display = true;
+  this.graphChart.scales.xAxes[0].display = false;
+  this.graphDatasets[0].backgroundColor = ['#02b0cc', 'orange', 'red' ];
+  this.graphDatasets[0].borderColor = 'white';
+  this.graphDatasets[0].pointBorderColor = 'white';
+}
+
+
 graphChartFuctions(num) {
-  let lowArray = [];
-  let mediumArray = [];
-  let highArray = [];
+  let lowValue = null;
+  let mediumValue = null;
+  let highValue = null;
   let riskArray = this.riskIssueArray.filter(() => true ).map(e => e.risk);
   let filterRiskArray = Array.from(new Set(riskArray));
 
@@ -404,11 +689,11 @@ graphChartFuctions(num) {
       let myRAray = this.riskIssueArray.filter((r) => r.risk === risk).map(e => e);
 
       let low = myRAray.filter((r) => r.level === 'Low').map(e => e);
-      lowArray.push(low.length);
+      lowValue = low.length;
       let medium = myRAray.filter((r) => r.level === 'Medium').map(e => e);
-      mediumArray.push(medium.length);
+      mediumValue = medium.length;
       let high = myRAray.filter((r) => r.level === 'High').map(e => e);
-      highArray.push(high.length);
+      highValue = high.length;
 
       break;
     }
@@ -421,23 +706,22 @@ graphChartFuctions(num) {
 
   this.graphType = 'bar';
 
-  this.graphLabels = [this.riskIssueArrayToGraph[num]];
+  this.graphLabels = ['Low', 'Medium', 'High'];
   // this.graphLabels.forEach((e) => {
   //   myGraphLabelColors.push(this.getRandomColor());
   // });
   this.graphDatasets = [
-
     {
-      label: 'Low', data: lowArray,
-      backgroundColor: '#02b0cc'
-    }, {
-      label: 'Medium', data: highArray,
-      backgroundColor: 'orange'
-    }, {
-      label: 'High', data: highArray,
-      backgroundColor: 'red'
-    },
-
+      label: this.riskIssueArrayToGraph[num],
+      data: [ lowValue, mediumValue, highValue],
+      backgroundColor: ['#02b0cc', 'orange', 'red' ],
+      borderColor: 'white',
+      borderWidth: 1.5,
+      pointBackgroundColor: 'transparent',
+      pointHoverBackgroundColor: 'transparent',
+      pointBorderColor: 'white',
+      pointHoverBorderColor: 'gray'
+    }
   ];
 
 

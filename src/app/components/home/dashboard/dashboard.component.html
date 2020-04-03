@@ -74,9 +74,112 @@
 
 
 
+
+
+
+
+
+
+
+
+    <section id="third_cards_section" class="card-group">
+        <div class="card">
+            <div class="title d-flex"> <span>Company Risks Representation</span>
+                <div class=" graph-switch d-flex ml-auto">
+                    <span (click)="third1graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="third1Type === 'line' ? 'active' : ''" ></fa-icon></span> 
+                    <span (click)="third1graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="third1Type === 'bar' ? 'active' : ''" ></fa-icon></span>
+                    <span (click)="third1graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="third1Type === 'pie' ? 'active' : ''" ></fa-icon> </span>
+                </div>
+            </div>
+            <div class="body-wrapper">
+                <canvas *ngIf="third1Type" baseChart class="chart" [chartType]="third1Type" [labels]="third1Labels"
+                [datasets]="third1Datasets" [options]="third1ChartOptions"></canvas>
+            </div>
+
+        </div>
+
+        <div class="card">
+            <div class="title d-flex"> <span>General Risk Representation</span>
+                <div class=" graph-switch d-flex ml-auto">
+                    <span (click)="third2graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="third2Type === 'line' ? 'active' : ''" ></fa-icon></span> 
+                    <span (click)="third2graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="third2Type === 'bar' ? 'active' : ''" ></fa-icon></span>
+                    <span (click)="third2graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="third2Type === 'pie' ? 'active' : ''" ></fa-icon> </span>
+                </div>
+            </div>
+
+            <div class="body-wrapper">
+                <canvas *ngIf="third2Type" baseChart class="chart" [chartType]="third2Type" [labels]="third2Labels"
+                [datasets]="third2Datasets" [options]="third2ChartOptions"></canvas>
+            </div>
+
+        </div>
+    </section><!-- third_cards_section -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section id="graph_section" class="card-group">
+        <div class="card">
+            <div class="title d-flex"> <span>Specific Risks Representations</span>
+                <div class=" graph-switch d-flex ml-auto">
+                    <span (click)="graphChartToLine()"><fa-icon [icon]="faChartLine" [ngClass]="graphType === 'line' ? 'active' : ''" ></fa-icon></span> 
+                    <span (click)="graphChartToBar()"><fa-icon [icon]="faChartBar" [ngClass]="graphType === 'bar' ? 'active' : ''" ></fa-icon></span>
+                    <span (click)="graphChartToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="graphType === 'pie' ? 'active' : ''" ></fa-icon> </span>
+                </div>
+            </div>
+            <div class="body">
+                <div class="body w-10 d-flex" *ngIf="!graphType">
+                    <div class="spinner-div spinner-border mx-auto" role="status"></div>
+                </div>
+                <div *ngIf="graphType" class="datasets-wrap">
+                    <div *ngFor="let item of riskIssueArrayToGraph; let x = index" 
+                    [ngClass]="activeRisk === item ? 'dataset-item active' : 'dataset-item' "
+                    (click)="graphChartFuctions(x)">
+                       {{item}}
+                    </div>
+                </div>
+                <div class="canvas-wrap">
+                    <canvas *ngIf="graphType" baseChart class="chart" [chartType]="graphType" [labels]="graphLabels"
+                    [datasets]="graphDatasets" [options]="graphChart"></canvas>
+                </div>
+       
+            </div>
+
+        </div>
+    </section> <!-- graph_section -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <section id="second_cards_section" class="card-group">
         <div class="card">
-            <div class="title">Company Risk Rates Per Survey Template</div>
+            <div class="title">List of Company Risk Rates Per Survey Template</div>
             <div class="body-wrapper">
                 <div class="body-title">
 
@@ -109,7 +212,7 @@
         </div>
 
         <div class="card">
-            <div class="title">Risk Issues</div>
+            <div class="title">List of Risk Issues</div>
 
             <div class="body-wrapper">
                 <div class="body-title">
@@ -154,29 +257,50 @@
 
 
 
-    <section id="graph_section" class="card-group">
-        <div class="card">
-            <div class="title">Risks Representations</div>
-            <div class="body">
-                <div class="body w-10 d-flex" *ngIf="!graphType">
-                    <div class="spinner-div spinner-border mx-auto" role="status"></div>
-                </div>
-                <div *ngIf="graphType" class="datasets-wrap">
-                    <div *ngFor="let item of riskIssueArrayToGraph; let x = index" 
-                    [ngClass]="activeRisk === item ? 'dataset-item active' : 'dataset-item' "
-                    (click)="graphChartFuctions(x)">
-                       {{item}}
-                    </div>
-                </div>
-                <div class="canvas-wrap">
-                    <canvas *ngIf="graphType" baseChart class="chart" [chartType]="graphType" [labels]="graphLabels"
-                    [datasets]="graphDatasets" [options]="graphChart"></canvas>
-                </div>
-       
-            </div>
 
-        </div>
-    </section> <!-- graph_section -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
