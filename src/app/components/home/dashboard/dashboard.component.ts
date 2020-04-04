@@ -466,7 +466,7 @@ third2graphToBar() {
   this.third2Type = 'bar';
   this.third2ChartOptions.legend.display = false;
   this.third2ChartOptions.scales.xAxes[0].display = true;
-  this.third2Datasets[0].backgroundColor = this.third1BgColors;
+  this.third2Datasets[0].backgroundColor = this.third2BgColors;
   this.third2Datasets[0].borderColor = 'white';
   this.third2Datasets[0].pointBorderColor = 'white';
 }
@@ -474,7 +474,7 @@ third2graphToPie() {
   this.third2Type = 'pie';
   this.third2ChartOptions.legend.display = true;
   this.third2ChartOptions.scales.xAxes[0].display = false;
-  this.third2Datasets[0].backgroundColor = this.third1BgColors;
+  this.third2Datasets[0].backgroundColor = this.third2BgColors;
   this.third2Datasets[0].borderColor = 'white';
   this.third2Datasets[0].pointBorderColor = 'white';
 }
@@ -493,7 +493,7 @@ third2graphToPie() {
 
   if (this.innerWidth > 992) {
     this.third1ChartOptions.legend.position = 'right';
-    this.third2ChartOptions.legend.position = 'top';
+    this.third2ChartOptions.legend.position = 'right';
   }
 
 

@@ -12,6 +12,175 @@
 
     <section class="info-section">
 
+
+
+
+
+
+        <section id="chart_section" class="card-group">
+            <div class="card">
+                <div class="title d-flex"> <span>Risk Categories</span>
+                    <div class=" graph-switch d-flex ml-auto">
+                        <span (click)="chart1graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart1Type === 'line' ? 'active' : ''" ></fa-icon></span> 
+                        <span (click)="chart1graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="chart1Type === 'bar' ? 'active' : ''" ></fa-icon></span>
+                        <span (click)="chart1graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="chart1Type === 'pie' ? 'active' : ''" ></fa-icon> </span>
+                    </div>
+                </div>
+                <div class="body-wrapper">
+                    <canvas *ngIf="chart1Type" baseChart class="chart" [chartType]="chart1Type" [labels]="chart1Labels"
+                    [datasets]="chart1Datasets" [options]="chart1ChartOptions"></canvas>
+                </div>
+    
+            </div>
+    
+            <div class="card">
+                <div class="title d-flex"> <span>General Risk Representation</span>
+                    <div class=" graph-switch d-flex ml-auto">
+                        <span (click)="chart2graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart2Type === 'line' ? 'active' : ''" ></fa-icon></span> 
+                        <span (click)="chart2graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="chart2Type === 'bar' ? 'active' : ''" ></fa-icon></span>
+                        <span (click)="chart2graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="chart2Type === 'pie' ? 'active' : ''" ></fa-icon> </span>
+                    </div>
+                </div>
+    
+                <div class="body-wrapper">
+                    <canvas *ngIf="chart2Type" baseChart class="chart" [chartType]="chart2Type" [labels]="chart2Labels"
+                    [datasets]="chart2Datasets" [options]="chart2ChartOptions"></canvas>
+                </div>
+    
+            </div>
+
+
+        </section><!-- second_cards_section -->
+
+
+
+
+
+
+
+
+
+        <section class="risk-graph-section">
+        
+                <div class="title d-flex"> <span>General Risk Representation</span>
+                    <div class=" graph-switch d-flex ml-auto">
+                        <span (click)="chart3graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart3Type === 'line' ? 'active' : ''" ></fa-icon></span> 
+                        <span (click)="chart3graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="chart3Type === 'bar' ? 'active' : ''" ></fa-icon></span>
+                        <span (click)="chart3graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="chart3Type === 'pie' ? 'active' : ''" ></fa-icon> </span>
+                    </div>
+                </div>
+    
+                <div class="body-wrapper">
+                    <canvas *ngIf="chart3Type" baseChart class="chart" [chartType]="chart3Type" [labels]="chart3Labels"
+                    [datasets]="chart3Datasets" [options]="chart3ChartOptions"></canvas>
+                </div>
+    
+       
+        </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div class="risk-section">
+            <div class="title">You risk maping</div>
+
+            <div class="body-wrapper">
+                <div class="body-title">
+
+                    <div class="body-item d-flex">
+                        <div class="mx-auto ">Threat</div>
+                        <div class="mx-auto ">Survey</div>
+                        <div class="mx-auto ">Severity</div>
+                        <!-- <div class="rate">Intervention</div> -->
+                    </div>
+
+                </div>
+
+                <div class="body d-flex" *ngIf="riskIssueArray.length === 0">
+                    <div class="spinner-div spinner-border mx-auto" role="status"></div>
+                </div>
+
+                <div class="body" *ngIf="riskIssueArray.length !== 0">
+
+                    <div *ngFor="let item of riskIssueArray" class="body-item d-flex">
+                        <div class="mx-auto">{{item.risk}}</div>
+                        <div class="mx-auto">{{item.surveyName}}</div>
+                        <div class="mx-auto riskRate"
+                        [ngClass]="[ 
+                        item.level === 'Low' ? 'mx-auto riskRate low' : 'mx-auto riskRate',
+                        item.level === 'Medium' ? 'mx-auto riskRate medium' : 'mx-auto riskRate',
+                        item.level === 'High' ? 'mx-auto riskRate high' : 'mx-auto riskRate'
+                        ]"
+                        >{{item.level}}</div>
+                        <!-- <div class="mx-auto">{{item.recom}}</div> -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="account-status-wrap">
+          
+                <div class="title">Your Risk Rates Per Survey Template</div>
+                <div class="body-wrapper">
+                <div class="body-title" >
+          
+                  <div  class="body-item d-flex">
+                    <div class="mx-auto ">Comapany Name</div>
+                    <div class="mx-auto ">Survey Name</div>
+                    <div class="mx-auto ">Risk rate</div>
+                    <!-- <div class="rate">Recommendation</div> -->
+                  </div>
+          
+                </div>
+             
+                    <div class="body d-flex" *ngIf="CompanyRiskRates.length === 0">
+                        <div class="spinner-div spinner-border mx-auto" role="status"></div>
+                      </div>
+                
+                      <div class="body" *ngIf="CompanyRiskRates.length !== 0">
+            
+                        <div *ngFor="let comp of CompanyRiskRates" class="body-item d-flex" (click)="openAnswersModal(comp.companyName, comp.surveyName, comp.surveyId, comp.responseId)">
+                          <div class="mx-auto companyName">{{comp.companyName}}</div>
+                          <div class="mx-auto surveyName">{{comp.surveyName}}</div>
+                          <div class="mx-auto riskRate">{{comp.riskRate}}</div>
+                          <!-- <div class="mx-auto recommendation">{{comp.recommendation}}</div> -->
+                     
+                        </div>
+                
+                      </div>
+                </div>
+    
+        </div>
+
+
+
+
+
+
+
+
+
         <div class="survey-info-wrap">
 
             <h5>Survey Info</h5>
@@ -46,41 +215,14 @@
 
         </div>
 
-        <div class="account-status-wrap">
 
-          
-                <div class="title">Your Risk Rates Per Survey Template</div>
-                <div class="body-wrapper">
-                <div class="body-title" >
-          
-                  <div  class="body-item d-flex">
-                    <div class="mx-auto ">Comapany Name</div>
-                    <div class="mx-auto ">Survey Name</div>
-                    <div class="mx-auto ">Risk rate</div>
-                    <!-- <div class="rate">Recommendation</div> -->
-                  </div>
-          
-                </div>
-             
-                    <div class="body d-flex" *ngIf="CompanyRiskRates.length === 0">
-                        <div class="spinner-div spinner-border mx-auto" role="status"></div>
-                      </div>
-                
-                      <div class="body" *ngIf="CompanyRiskRates.length !== 0">
-            
-                        <div *ngFor="let comp of CompanyRiskRates" class="body-item d-flex" (click)="openAnswersModal(comp.companyName, comp.surveyName, comp.surveyId, comp.responseId)">
-                          <div class="mx-auto companyName">{{comp.companyName}}</div>
-                          <div class="mx-auto surveyName">{{comp.surveyName}}</div>
-                          <div class="mx-auto riskRate">{{comp.riskRate}}</div>
-                          <!-- <div class="mx-auto recommendation">{{comp.recommendation}}</div> -->
-                     
-                        </div>
-                
-                      </div>
-                </div>
-      
 
-        </div>
+
+
+
+
+
+
 
     </section>
 
@@ -172,7 +314,10 @@
                     <label class="custom-control-label" for="customSwitch1">Edit Profile</label>
                   </div>
             </div>
-            <button class="btn btn-sm btn-outline-primary" (click)="departmentModal.show()">Departments</button>
+            <div class="w-100 pr-4 d-flex">
+                <button class="btn btn-sm btn-outline-primary ml-auto" (click)="departmentModal.show()">Departments</button>
+            </div>
+            
         </div>
       
 

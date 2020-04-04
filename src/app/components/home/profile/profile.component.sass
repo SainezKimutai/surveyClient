@@ -23,6 +23,10 @@
     @include desktop_md
         display: flex
         flex-direction: column-reverse
+        align-items: center
+        justify-content: center
+
+
 
 .spinner-div
     margin: auto
@@ -60,12 +64,9 @@
 
 
 
-
-
-
-
 .body-section .info-section
     width: 100%
+
 
     .survey-info-wrap, .account-status-wrap
         background-color: white
@@ -78,7 +79,10 @@
         padding: 1em
 
         h5
-            font-size: 14px
+            width: 100%
+            padding: .5em 1em 2em 1em
+            font-size: 12px
+            color: grayColor(g600)
             font-weight: bold
 
         .grid-container
@@ -125,12 +129,240 @@
 
 
 
+.graph-switch
+    display: flex
+    align-items: center
+    justify-content: center
+
+    span 
+        border: none
+        padding: 5px
+
+        &:hover
+            background-color: grayColor(g600)
+
+            fa-icon 
+                color: white
+
+
+        fa-icon
+            margin: auto
+            font-size: 14px
+            margin: 5px
+            cursor: pointer
+            color: grayColor(g400)
+
+            &.active 
+                color: colorTheme(primaryTheme)
+                font-size: 16px
+
+
+
+
+
+.body-section .info-section .risk-section
+    background-color: white
+    width: 100%
+    margin: 0 0 1em 0
+    border-radius: 5px
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    padding: 1em
+
+    .title
+        width: 100%
+        padding: .5em 1em 2em 1em
+        font-size: 12px
+        color: grayColor(g600)
+        font-weight: bold
+
+
+    .body-wrapper
+        width: 100%
+        height: 200px
+        overflow-y: scroll
+        padding: 0 0 1em 0
+
+        .body-title
+            width: 100%
+            padding: .5em
+            height: fit-content
+            max-height: 100px
+            min-width: 400px  
+            
+            .body-item 
+                height: 100%         
+                width: 100%
+                padding: .5em
+                margin: 0 0 .5em 0
+                cursor: pointer
+                background-color: grayColor(g100)
+
+                div
+                    height: 100%
+                    font-size: 11px
+                    font-weight: 500px
+                    text-align: left
+                    padding: 0 0 0 1em
+                    width: 100%
+                    
+
+        .body   
+            width: 100%
+            padding: .5em
+            height: 200px
+            min-width: 400px
+
+            .body-item 
+               
+                width: 100%
+                padding: .5em
+                margin: 0 0 .5em 0
+                cursor: pointer
+                background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
+                -moz-background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
+                -webkit-background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
+                -moz-background-blend-mode: screen, difference, lighten
+                -webkit-background-blend-mode: screen, difference, lighten
+                background-blend-mode: screen, difference, lighten
+
+                &:hover
+                    box-shadow: 1px 2px 3px rgba(0, 0, 0, .2)
+
+                div
+                    font-size: 11px
+                    font-weight: 500px
+                    text-align: left
+                    width: 100%
+                    padding: 0 0 0 1em
+
+                    &.riskRate
+                        background-color: grayColor(g100)
+                        color: white
+
+                    &.low 
+                        background-color: colorTheme(success)
+                    &.medium
+                        background-color: colorTheme(warning)
+                    &.high
+                        background-color: colorTheme(danger)
+
+
+
+
+
+
+
+
+
+
+
+#chart_section
+    display: flex
+    align-items: stretch
+    width: 100%
+    // height: 100%
+    
+    @include desktop_lg
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+
+
+#chart_section .card
+    border: none
+    border-radius: 5px
+    width: 100%
+    height: 400px
+    margin: 0 1.5em 1em 0
+    transition: all 0.3s ease
+    cursor: pointer
+    padding: 1em
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+   
+    
+    &:hover
+      transform: translateY(-5px)
+      box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
+
+
+
+    .title
+        width: 100%
+        padding: .5em 1em 2em 1em
+        font-size: 12px
+        color: grayColor(g600)
+        font-weight: bold
+
+
+    .body-wrapper
+        width: 100%
+        height: 250px
+
+
+
+
+
+
+
+
+.risk-graph-section
+    border: none
+    border-radius: 5px
+    // width: 100%
+    height: 400px
+    margin: 0 1.5em 1em 0
+    transition: all 0.3s ease
+    cursor: pointer
+    padding: 1em
+    background-color: white
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+   
+
+
+
+
+    .title
+        width: 100%
+        padding: .5em 1em 2em 1em
+        font-size: 12px
+        color: grayColor(g600)
+        font-weight: bold
+
+
+    .body-wrapper
+        width: 100%
+        height: 250px
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 .body-section .info-section .account-status-wrap
     background-color: white
-    width: 100%
+    // width: 100%
     margin: 0 0 1em 0
     border-radius: 5px
     box-shadow: 0 0 10px rgba(0, 0, 0, .2)
@@ -230,6 +462,8 @@
 .body-section .profile-section
     background-color: white
     width: 100%
+    max-width: 400px
+    max-height: 700px
     padding: 1em
     border-radius: 5px
     box-shadow: 0 0 10px rgba(0, 0, 0, .2)
@@ -269,6 +503,8 @@
         width: 100%
         display: flex
         flex-direction: column
+        justify-content: right
+        align-items: right
 
         .actions
             margin: 0 0 auto 0
@@ -283,10 +519,10 @@
                     text-transform: uppercase
 
         .btn
-            padding: 1em
+            padding: .4em
             border-radius: 1em
             width: fit-content
-            margin: auto 1em 2em 50%
+            // margin: auto 1em 2em 50%
             // color: black
             font-size: 13px
 
