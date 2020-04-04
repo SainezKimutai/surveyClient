@@ -35,88 +35,6 @@
 
 
 
-.page-title #top_header
-    display: none
-    background-color: transparent
-
-    @include desktop_md
-        display: flex
-        align-items: stretch
-
-    @include desktop_sm
-        display: flex
-        flex-direction: column
-
-   
-    // height: 50%
-
-    .search-wrap
-        // width: 100%
-        padding: 1em
-        margin: 0
-        @include desktop_sm
-            padding: .5em 1em
-            display: none
-   
-        .input-wrap
-            border-radius: 1em
-            background-color: grayColor(g200)
-
-            fa-icon
-                margin: auto .5em
-
-
-            input
-                width: 100%
-                outline: none
-                padding: .5em
-                border: none
-                border-radius: 0px
-                background-color: transparent
-
-    .btn-wrap
-        width: 100%
-        display: flex
-        align-items: stretch
-        
-    
-        @include desktop_sm
-            padding: 0 1em
-
-        .create-new, .surveys
-            margin: 1em
-            cursor: pointer
-            border-radius: 1em
-            width: 8em
-            padding-top: 2em
-            color: grayColor(g800)
-            text-align: center
-
-            @include desktop_md
-                border-radius: 0px
-                width: 100%
-                padding: .5em 0 0 0
-                margin: 1em 0
-
-            @include desktop_sm
-                padding: 0
-
-            &.active
-                background-color: colorTheme(primaryTheme)
-                color: white
-
-            fa-icon
-                margin: 1em
-              
-                color: colorTheme(secondaryTheme)
-
-            span 
-                
-                @include desktop_md
-                    display: none
-
-
-
 
 
 
@@ -132,7 +50,9 @@
 .body-section
     width: 100%
     display: flex
-    padding: 0 320px 0 3em
+    padding: 0 1em
+    align-items: center
+    justify-content: center
 
     @include desktop_lg
         padding: 0 200px 0 3em
@@ -143,342 +63,6 @@
 
 
 
-
-
-
-.form-section
-    margin-left: auto
-    height: fit-content
-    min-height: 500px
-    padding: 1em 1em 0 0
-    width: 100%
-    max-height: 700px
-    overflow-x: scroll
-
-
-
-
-
-
-
-.form-section .survey-template.hide
-    display: none
-.form-section .survey-template
-    width: 100%
-    max-width: 500px
-    // height: 300px
-    background-color: white
-    border-radius: 2px
-    box-shadow: 0 2px 3px rgba(0, 0, 0, .2)
-    margin: 0 0 1em 0
-
-    .title
-        width: 100%
-        padding: .5em 1em
-        background-color: colorTheme(secondaryTheme)
-
-        h4 
-            font-weight: bold
-            font-size: 16px
-
-    
-    .form
-        width: 100%
-        display: flex
-        flex-direction: column
-        justify-content: center
-        padding: 2em
-
-
-        .form-group
-            // margin: auto
-            // width: 100%
-            background-color: grayColor(g200)
-            padding: .5em
-            // margin: 2em
-            border-radius: 5px
-
-            input 
-                background-color: transparent
-                width: 100%
-                outline: none
-                border: none
-                font-size: 13px
-
-        .btn-wrap
-            width: 100%
-            display: flex
-
-            .btn
-                margin: auto
-                background-color: colorTheme(secondaryTheme)
-
-
-.form-section .question-template.hide
-    display: none
-.form-section .question-template
-    width: 100%
-    max-width: 700px
-    height: fit-content
-    background-color: white
-    border-radius: 5px
-    margin: 0 0 1em 0
-    border-radius: 2px
-    box-shadow: 0 2px 3px rgba(0, 0, 0, .2)
-
-    .title
-        width: 100%
-        padding: .5em 1em
-        background-color: colorTheme(secondaryTheme)
-
-        h4 
-            font-weight: bold
-            font-size: 16px
-
-    
-    .form
-        width: 100%
-        display: flex
-        flex-direction: column
-        padding: 1em
-
-
-        .form-group
-            margin: auto
-            width: 100%
-            background-color: grayColor(g200)
-            padding: .5em
-            margin: 0 0 1em 0
-            border-radius: 5px
-
-            input 
-                background-color: transparent
-                width: 100%
-                outline: none
-                border: none
-                font-size: 13px
-
-.form-section .question-template .form .options-wrap
-    display: flex
-    align-items: stretch
-
-
-.form-section .question-template .form .options-wrap .option-item
-    width: 25%  
-    text-align: left
-    margin: 0 1em 1em 0
-    border: solid 1px grayColor(g100)
-
-    h4
-        width: 100%
-        padding: 0 1em 1em 1em
-        font-size: 12px 
-        font-weight: bold
-
-    &.input-text
-
-        input
-            outline: none
-            border: solid 2px grayColor(g100)
-            width: 4em
-
-    .form-group
-        padding: 5px
-        display: flex
-        align-items: stretch
-        background-color: transparent
-        margin: 2px
-
-
-        input
-            margin-right: auto
-            width: 1em
-
-        label 
-            margin-right: auto
-            font-size: 12px
-        
-        
-
-        &.form-group-radio 
-            background-color: transparent
-
-            .wrap
-                width: 100%
-                text-align: left
-                display: flex
-                flex-direction: column
-                padding: 0 0 0 5em 
-
-                label
-                    font-size: 12px
-                    font-weight: bold
-                
-                input 
-                    width: 3em
-
-
-    .choices-type
-        background-color: transparent
-        margin: 0 0 1em 0
-        padding: .5em
-
-        h4
-            font-size: 12px
-            padding: .5em
-            width: 100%
-            text-align: center
-
-        .form-group-radio
-            background-color: transparent
-            display: flex
-            align-items: stretch
-            width: 100%
-
-            .wrap
-                margin: auto
-                width: 100%
-                text-align: center
-                display: flex
-                flex-direction: column
-                // padding: 0 0 0 5em 
-
-                label
-                    font-size: 12px
-                    font-weight: bold
-                
-                input 
-                    width: 100%
-
-
-.form-section .question-template .form .choices-wrapper .form-group-choices
-        margin: auto
-        width: 100%
-        background-color: grayColor(g200)
-        padding: .5em
-        margin: 0 0 1em 0
-        border-radius: 5px
-
-        input 
-            background-color: transparent
-            width: 100%
-            outline: none
-            border: none
-            font-size: 13px
-
-.form-section .question-template .form 
-
-    .preview-questions
-        width: 100%
-        text-align: left
-        font-size: 12px
-        padding: 5px 1em
-        margin: 0 0 2px 0
-        border-radius: 2px
-        background-color: grayColor(g200)
-
-    .add-ans
-        width: 100%
-        display: flex
-
-        .btn
-            border-radius: 50%
-            background-color: colorTheme(secondaryTheme)
-            margin: auto
-
-            fa-icon
-                color: white
-
-    .btn-wrap
-        margin: 2em 0
-        width: 100%
-        display: flex
-
-        .btn-next
-            background-color: colorTheme(primary)
-            color: white
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.form-section .list-section 
-    width: 100%
-    height: fit-content
-
-    .head
-        padding: 1em
-        background-color: grayColor(g200)
-
-        h4
-            font-size: 16px
-
-        .btn
-            background-color: colorTheme(success)
-            color:  white 
-            font-size: 15px
-            font-weight: bold
-
-
-    .question-wrap
-        background-color: white
-        margin: 4px 0
-        padding: 5px 1em
-        min-height: 4em
-        height: fit-content
-        display: flex
-
-        &:hover
-            background-color: colorTheme(primaryTheme)
-            color: white
-
-        .question
-            font-size: 12px
-            font-weight: bold
-            float: left
-
-        .choices
-            width: 100%
-
-            span 
-                font-size: 12px
-                width: 100%
-                margin: 0 1em
-        .actions
-            float: right
-            
-            .edit
-                float: left
-            .delete
-                float: right
-        .demo div 
-            float: left
-            clear: none
-
-        .editSection
-            display: none
-        
 
 
   
@@ -552,8 +136,9 @@
 
 .Questions-listing
     width: 100%
+    max-width: $desktop_lg
     height: 100%
-    margin: 5em 0 0 0
+    margin: 0 auto 0 auto
 
     .head
         padding: 1em
@@ -568,6 +153,18 @@
         h4
             font-size: 14px
             color: white
+
+
+    .top-header
+        padding: 1em 
+        text-align: center
+        background-color: white
+        margin: 2px 0
+
+        h2 
+            font-size: 15px
+            font-weight: bold
+            text-transform: uppercase
 
     .question-wrap
         background-color: white
@@ -663,302 +260,61 @@
 
 
 
-.navigation-section
-    margin-left: auto
-    position: absolute
-    top: 0
-    right: 0
-    height: 100%
-    width: 310px
-    background-color: #202239
-    padding: 0
+
+.graph-switch
     display: flex
-    flex-direction: column
+    align-items: center
+    justify-content: center
 
-    @include desktop_lg
-        width: 190px
-
-    @include desktop_md
-        display: none
-
-
-
-.navigation-section .body
-    background-color: white
-    height: 50%
-
-    .search-wrap
-        width: 100%
-        padding: 1em
-        margin: 2em 0
-   
-        .input-wrap
-            border-radius: 1em
-            background-color: grayColor(g200)
-
-            fa-icon
-                margin: auto .5em
-
-
-            input
-                width: 100%
-                outline: none
-                padding: .5em
-                border: none
-                border-radius: 0px
-                background-color: transparent
-                
-    .create-new, .surveys
-        cursor: pointer
-        border-radius: 1em
-        width: 8em
-        padding: .5em 1em
-        box-shadow: 0 0 10px rgba(0, 0, 0, .3)
-        color: grayColor(g800)
-        margin: 0 auto 2em auto
-        text-align: center
-
-        &.active
-            background-color: colorTheme(primaryTheme)
-            color: white
-
-        fa-icon
-            margin-right: .5em
-            color: colorTheme(secondaryTheme)
-
-        
-
-
-
-.navigation-section .footer
-        background-color: grayColor(g800)
-        position: relative
-        bottom: 0
-        width: 100%
-    
-.addQuizModal .modal-content
-    height: 500px
-    overflow-x: scroll
-    overflow-y: scroll
-    border: none
-.editModal .modal-content
-    height: 500px
-    overflow-x: scroll
-    overflow-y: scroll
-    border: none
-.editModal, .addQuizModal
-    
-    .modal-header
+    span 
         border: none
-        background-color: colorTheme(primary) !important
-        .modal-title
-            font-size: 15px
-            font-family: Montserrat
-            color: white
-            
-
-    .modal-body
-        h4
-            font-size: 14px
-            font-family: Montserrat
-            text-align: center
-
-        p
-            font-size: 12px
-            color: black
-
-            span
-                margin: 0 .2em 0 .2em
-                color: colorTheme(primary)
-                text-transform: uppercase
-
-    .modal-footer
-        .btn-cancel
-            background-color: colorTheme(secondary)
-            font-size: 10px
-            font-family: Montserrat
-        .btn-confirm
-            background-color: colorTheme(success)
-            font-size: 10px
-            font-family: Montserrat
-
-
-
-
-.modal-body 
-    overflow: auto
-    .form
-        width: 100%
-        display: flex
-        flex-direction: column
-        padding: 1em
-
-
-        .form-group
-            margin: auto
-            width: 100%
-            background-color: grayColor(g200)
-            padding: .5em
-            margin: 0 0 1em 0
-            border-radius: 5px
-
-            input 
-                background-color: transparent
-                width: 100%
-                outline: none
-                border: none
-                font-size: 13px
-
-        .options-wrap
-            display: flex
-            align-items: stretch
-
-
-.modal-body .options-wrap .option-item
-    width: 25%  
-    text-align: left
-    margin: 0 1em 1em 0
-    border: solid 1px grayColor(g100)
-
-    h4
-        width: 100%
-        padding: 0 1em 1em 1em
-        font-size: 12px 
-        font-weight: bold
-
-    &.input-text
-
-        input
-            outline: none
-            border: solid 2px grayColor(g100)
-            width: 4em
-
-    .form-group
         padding: 5px
-        display: flex
-        align-items: stretch
-        background-color: transparent
-        margin: 2px
 
+        &:hover
+            background-color: grayColor(g600)
 
-        input
-            margin-right: auto
-            width: 1em
-
-        label 
-            margin-right: auto
-            font-size: 12px
-        
-        
-
-        &.form-group-radio 
-            background-color: transparent
-
-            .wrap
-                width: 100%
-                text-align: left
-                display: flex
-                flex-direction: column
-                padding: 0 0 0 5em 
-
-                label
-                    font-size: 12px
-                    font-weight: bold
-                
-                input 
-                    width: 3em
-
-
-    .choices-type
-        background-color: transparent
-        margin: 0 0 1em 0
-        padding: .5em
-
-        h4
-            font-size: 12px
-            padding: .5em
-            width: 100%
-            text-align: center
-
-        .form-group-radio
-            background-color: transparent
-            display: flex
-            align-items: stretch
-            width: 100%
-
-            .wrap
-                margin: auto
-                width: 100%
-                text-align: center
-                display: flex
-                flex-direction: column
-                // padding: 0 0 0 5em 
-
-                label
-                    font-size: 12px
-                    font-weight: bold
-                
-                input 
-                    width: 100%
-
-
-.modal-body .form .choices-wrapper .form-group-choices
-        margin: auto
-        width: 100%
-        background-color: grayColor(g200)
-        padding: .5em
-        margin: 0 0 1em 0
-        border-radius: 5px
-
-        input 
-            background-color: transparent
-            width: 100%
-            outline: none
-            border: none
-            font-size: 13px
-
-.modal-body .form 
-
-    .preview-questions
-        width: 100%
-        text-align: left
-        font-size: 12px
-        padding: 5px 1em
-        margin: 0 0 2px 0
-        border-radius: 2px
-        background-color: grayColor(g200)
-
-    .add-ans
-        width: 100%
-        display: flex
-
-        .btn
-            border-radius: 50%
-            background-color: colorTheme(secondaryTheme)
-            margin: auto
-
-            fa-icon
+            fa-icon 
                 color: white
 
-    .btn-wrap
-        margin: 2em 0
+
+        fa-icon
+            margin: auto
+            font-size: 14px
+            margin: 5px
+            cursor: pointer
+            color: grayColor(g400)
+
+            &.active 
+                color: colorTheme(primaryTheme)
+                font-size: 16px
+
+
+
+
+
+
+
+.risk-graph-section
+    border: none
+    border-radius: 0px
+    width: 100%
+    height: 400px
+    margin: 0 1.5em 1em 0
+    transition: all 0.3s ease
+    cursor: pointer
+    padding: 1em
+    background-color: white
+
+
+    .title
         width: 100%
-        display: flex
-
-        .btn-next
-            background-color: colorTheme(primary)
-            color: white
-
+        padding: .5em 1em 2em 1em
+        font-size: 12px
+        color: grayColor(g600)
+        font-weight: bold
 
 
-
-
-
-.addQuizModal 
-    .modal-header
-        background-color: colorTheme(success) !important
-        .modal-title
-            font-size: 15px
-            font-family: Montserrat
-            color: white
+    .body-wrapper
+        width: 100%
+        height: 250px
 

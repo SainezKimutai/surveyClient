@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { ReportsComponent } from './reports.component';
 import { ReportsRoutingModule } from './reports-routing.module';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
 
@@ -21,6 +22,7 @@ import { ReportsRoutingModule } from './reports-routing.module';
       FontAwesomeModule,
       ReactiveFormsModule,
       FormsModule,
+      ChartsModule,
       ToastrModule.forRoot({
         timeOut: 5000,
         positionClass: 'toast-bottom-right',

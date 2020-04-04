@@ -58,6 +58,36 @@
         <h4 class="mr-auto">{{TemplateNameOnView}}</h4>
         <button class="btn btn-sm ml-auto btn-success" (click)="downloadPdf(); ImprintLoader = true"> <fa-icon [icon]="faDownload"></fa-icon></button>
     </div>
+
+
+    <div class="top-header">
+
+        <img src="" alt="">
+
+        <h2>Risk Analysis Report</h2>
+
+    </div>
+
+    
+    <section class="risk-graph-section">
+        
+        <div class="title d-flex"> <span>Your risk representaions</span>
+            <div class=" graph-switch d-flex ml-auto">
+                <span (click)="chart3graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart3Type === 'line' ? 'active' : ''" ></fa-icon></span> 
+                <span (click)="chart3graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="chart3Type === 'bar' ? 'active' : ''" ></fa-icon></span>
+                <span (click)="chart3graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="chart3Type === 'pie' ? 'active' : ''" ></fa-icon> </span>
+            </div>
+        </div>
+
+        <div class="body-wrapper">
+            <canvas *ngIf="chart3Type" baseChart class="chart" [chartType]="chart3Type" [labels]="chart3Labels"
+            [datasets]="chart3Datasets" [options]="chart3ChartOptions"></canvas>
+        </div>
+
+</section>
+
+
+
    
     <div id="reportTemplate">
     <div class="question-wrap"  *ngFor="let item of TemplateQuestions; let i = index" id="quiz{{i}}">
