@@ -9,6 +9,7 @@ import { ThreatService } from 'src/app/shared/services/threats.service';
 import { IndustryService } from 'src/app/shared/services/industry.service';
 import { TrackerReasonService } from 'src/app/shared/services/trackerReasons.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { createUrlResolverWithoutPackagePrefix } from '@angular/compiler';
 
 @Component({
   selector: 'app-editorial',
@@ -69,6 +70,7 @@ export class EditorialComponent implements OnInit {
 
   public CurrentSurveyInput = '';
   public CurrentChoicesArr = [];
+  public skipNext = false;
   public CurrentQuestionArray = [];
   public CurrentQuestionInput = '';
   public CurrentChoiceInput = '';
@@ -84,6 +86,7 @@ export class EditorialComponent implements OnInit {
   public EditSurveyInput = '';
   public EditChoicesArr = [];
   public EditQuestionArray = [];
+  public EditskipNext = false;
   public EditQuestionInput = '';
   public EditChoiceInput = '';
   public EditChoiceInputThreat = '';
@@ -404,14 +407,14 @@ export class EditorialComponent implements OnInit {
         if(threat.type == 0){
           console.log("Zero");
         threat.categorization_inferences.forEach( (inf) => {
-          this.CurrentChoicesArr.push({ answer: inf.classifier[0]});
+          this.CurrentChoicesArr.push({ answer: inf.classifier[0], skipNext:false});
         })
       }else{
         threat.categorization_inferences.forEach( (inf) => {
           if(inf.classifier.length>1){
-          this.CurrentChoicesArr.push({ answer: inf.classifier[0].toString() + " to " + inf.classifier[1].toString()});
+          this.CurrentChoicesArr.push({ answer: inf.classifier[0].toString() + " to " + inf.classifier[1].toString(), skipNext:false});
           }else{
-            this.CurrentChoicesArr.push({answer: inf.classifier[0].toString() + " and above"});
+            this.CurrentChoicesArr.push({answer: inf.classifier[0].toString() + " and above", skipNext:false});
           }
         })
       }
@@ -424,7 +427,7 @@ export class EditorialComponent implements OnInit {
     if (this.CurrentChoiceInput === '') {
       this.notifyService.showWarning('Input answer', 'Empty Array');
     } else {
-      this.CurrentChoicesArr.push({ answer: this.CurrentChoiceInput});
+      this.CurrentChoicesArr.push({ answer: this.CurrentChoiceInput, skipNext:false});
       this.CurrentChoiceInput = '';
     }
 
@@ -432,6 +435,17 @@ export class EditorialComponent implements OnInit {
 
   removeAns(x) {
     this.CurrentChoicesArr.splice(x, 1);
+  }
+  setSkipNext(x){
+    const checker = <HTMLInputElement> document.getElementById(x);
+    if(checker.checked === true){
+    
+    this.CurrentChoicesArr[x].skipNext = true;
+    console.log(this.CurrentChoicesArr);
+    }else{
+    this.CurrentChoicesArr[x].skipNext = false;
+    console.log(this.CurrentChoicesArr);
+    }
   }
 
 
@@ -464,7 +478,9 @@ export class EditorialComponent implements OnInit {
       this.positionInput++;
       this.CurrentChoiceInputThreat = '';
       this.toFormTwo();
+
     }
+
   }
 
 

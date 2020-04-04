@@ -26,8 +26,6 @@ export class ResponseService {
             companyId: data.companyId,
             answers: []
           };
-
-          console.log(data);
         // tslint:disable-next-line: prefer-for-of
         for (let i = 0; i < data.answers.length; i++) {
             payload.answers.push({

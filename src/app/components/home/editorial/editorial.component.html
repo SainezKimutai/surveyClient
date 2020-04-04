@@ -247,7 +247,14 @@
 
         <div *ngIf="openQuestionInput == 'false' && CurrentChoiceInputThreat" class="preview-questions d-flex"><p><strong>Populated choices from chosen threat</strong></p></div>
         <div class="preview-questions d-flex" *ngFor="let item of CurrentChoicesArr; let x = index">
-            {{x + 1}}. {{item.answer}} <fa-icon class="ml-auto text-danger" (click)="removeAns(x)" [icon]="faTrash"></fa-icon>
+            {{x + 1}}. {{item.answer}}
+
+            <div *ngIf="linkedInput" style="padding-left: 20px; padding-right: 20px;">
+            <label>skipNext?</label>
+              <input [checked]="item.skipNext" id="{{x}}" type="checkbox" (change)="setSkipNext(x)">
+            </div>
+
+             <fa-icon class="ml-auto text-danger" (click)="removeAns(x)" [icon]="faTrash"></fa-icon>
           </div>
          
         <div *ngIf="openQuestionInput == 'false'" class="form-group">
