@@ -9,6 +9,7 @@ import { ThreatService } from 'src/app/shared/services/threats.service';
 import { IndustryService } from 'src/app/shared/services/industry.service';
 import { TrackerReasonService } from 'src/app/shared/services/trackerReasons.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
 
 @Component({
   selector: 'app-editorial',
@@ -25,7 +26,8 @@ export class EditorialComponent implements OnInit {
     private threatService: ThreatService,
     private industryService: IndustryService,
     private _formBuilder: FormBuilder,
-    private trackerReasonService: TrackerReasonService
+    private trackerReasonService: TrackerReasonService,
+    private threatCategoryService: ThreatCategoryService
   ) {  }
 
 // Modals
@@ -59,6 +61,7 @@ export class EditorialComponent implements OnInit {
   public AllThreats = [];
   public AllTrackerReasons = [];
   public AllIndustrys = [];
+  public AllThreatCategories = [];
 
   public TemplateNameOnView = [];
   public TemplateQuestions = [];
@@ -110,6 +113,7 @@ export class EditorialComponent implements OnInit {
 
   public threatName = '';
   public threatType = '';
+  public threatCategory = '';
   public threatLevels = [];
   public threatValue1 = '';
   public threatValue2 = '';
@@ -143,6 +147,9 @@ export class EditorialComponent implements OnInit {
   public editSurveyQuestionStatus = false;
   public addSurveyQuestionsSatus = false;
 
+
+  // threat Categories
+  public threatCategoryInput = '';
 
 
 
@@ -187,6 +194,11 @@ export class EditorialComponent implements OnInit {
           error => console.log('Error getting all industries')
         );
         
+        this.threatCategoryService.getAllByInstitutions().subscribe(
+          data => this.AllThreatCategories = data,
+          error => console.log('Error getting all threat categories')
+        );
+
         this.trackerReasonService.getAllInstitutionTrackerReasons().subscribe(
           data => this.AllTrackerReasons = data,
           error => console.log('Error getting all tracker reasons')
@@ -300,6 +312,7 @@ export class EditorialComponent implements OnInit {
     this.openThreat = item;
     this.threatName = item.name;
     this.threatType = item.type;
+    this.threatCategory = item.category;
     this.threatLevels = item.categorization_inferences;
     this.threatLevel = item.level;
     this.threatRecom = item.recom;
@@ -396,28 +409,39 @@ export class EditorialComponent implements OnInit {
     }
   }
 
+
+
   fetchLinkedAnswers() {
     this.CurrentChoicesArr =[];
     for(let threat of this.AllThreats){
       if (threat._id === this.CurrentChoiceInputThreat) {
-        console.log(threat);
-        if(threat.type == 0){
-          console.log("Zero");
-        threat.categorization_inferences.forEach( (inf) => {
-          this.CurrentChoicesArr.push({ answer: inf.classifier[0]});
-        })
-      }else{
-        threat.categorization_inferences.forEach( (inf) => {
-          if(inf.classifier.length>1){
-          this.CurrentChoicesArr.push({ answer: inf.classifier[0].toString() + " to " + inf.classifier[1].toString()});
+
+          if(threat.type == 0){
+
+          threat.categorization_inferences.forEach( (inf) => {
+            this.CurrentChoicesArr.push({ answer: inf.classifier[0]});
+
+          })
+
           }else{
-            this.CurrentChoicesArr.push({answer: inf.classifier[0].toString() + " and above"});
-          }
-        })
-      }
+
+          threat.categorization_inferences.forEach( (inf) => {
+
+            if(inf.classifier.length>1){
+
+            this.CurrentChoicesArr.push({ answer: inf.classifier[0].toString() + " to " + inf.classifier[1].toString()});
+            
+            }else{
+              this.CurrentChoicesArr.push({answer: inf.classifier[0].toString() + " and above"});
+            }
+
+          })
+        }
       }
     }
   }
+
+
 
 
   addChoice() {
@@ -695,6 +719,7 @@ export class EditorialComponent implements OnInit {
     this.threatRecom = '';
     this.threatLevel = '';
     this.threatType = '';
+    this.threatCategory = '';
     this.threatValue1 = '';
     this.threatValue2 = '';
     this.threatLevels = [];
@@ -750,6 +775,7 @@ export class EditorialComponent implements OnInit {
 
       name: this.threatName,
       type: this.threatType,
+      category: this.threatCategory,
       institutionId: localStorage.getItem('loggedUserID'),
       categorization_inferences: this.threatLevels,
       level: this.threatLevel,
@@ -767,6 +793,7 @@ export class EditorialComponent implements OnInit {
     let myData = {
       name: this.threatName,
       type: this.threatType,
+      category: this.threatCategory,
       categorization_inferences : this.threatLevels,
       level: this.threatLevel,
       recom: this.threatRecom,
@@ -844,4 +871,49 @@ export class EditorialComponent implements OnInit {
       }
     )
   }
+
+
+
+
+
+
+  addThreatCategory() {
+    this.ImprintLoader = true;
+    this.threatCategoryService.createThreatCategory({threatCategoryName: this.threatCategoryInput, institutionId: localStorage.getItem('loggedUserID')}).subscribe(
+      data => {
+        this.updatePage().then(() => {
+          this.ImprintLoader = false;
+          this.notifyService.showSuccess('Threat Category added', 'Success');
+          this.threatCategoryInput = '';
+        });
+      },
+      error => {this.notifyService.showError('Could not add threat category', 'Failed'); this.ImprintLoader = false;}
+    );
+  }
+
+  deleteThreatCategory(id) {
+    this.threatCategoryService.deleteThreatCategory(id).subscribe(
+      data => {
+        this.updatePage().then(() => {
+          this.notifyService.showSuccess('Threat category deleted', 'Success');
+          this.threatCategoryInput = '';
+        });
+      },
+      error => this.notifyService.showError('Could not delete threat category', 'Failed')
+    );
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 } // End of main class

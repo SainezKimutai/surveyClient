@@ -22,9 +22,12 @@
         <div *ngIf="AllSurveys" class="card-group">
             <div class="card"  *ngFor="let item of AllSurveys" (click)="item.done === 100 ? '' : takeSurvey(item)">
                 <div class=""></div>
-                <div class="card-body">
+                <div class="card-body d-flex">
                     <fa-icon [icon]="faListAlt"></fa-icon>
                     <h4 >{{item.surveyName}}</h4>
+                    <fa-icon *ngIf="item.done !== 0" style="cursor: pointer; height: 1em;" 
+                    placement="left" ngbPopover="Reset Survey" triggers="mouseenter:mouseleave"
+                    (click)="deletePromptModal.show(); passSurveyToReset(item._id)" class="text-info ml-auto" [icon]="faEraser"></fa-icon>
                 </div>
                 <div class="card-footer">
                     <h5 *ngIf="item.done === 100">
@@ -54,3 +57,40 @@
     </section>
 
 </article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div bsModal #deletePromptModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog deletePromptModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title">Reset Survey</h4>
+            <button (click)="deletePromptModal.hide()" type="button" class="btn close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <p>Are you sure ?</p>
+        </div>
+        <div class="modal-footer">
+            <button  class="btn btn-sm cancel" (click)="deletePromptModal.hide()">No</button>
+            <button  type="button" class="btn btn-sm delete" (click)="resetSurvey()">Yes</button>
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+

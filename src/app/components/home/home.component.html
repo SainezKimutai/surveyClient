@@ -77,15 +77,6 @@
 
 
 
-<header [ngClass]="sideBarStatus ? '' : 'hide'">
-    <div class="logo-wrap d-flex" >
-      <img [hidden]="!sideBarStatus" src="/../../../assets/images/smlg2.png">
-      <fa-icon id="sideBarToggler"  (click)="toggleSideBar()" [icon]="sideBarStatus ? faArrowLeft : faBars"></fa-icon>
-
-    </div>
-
-    
-</header>
 
 
 
@@ -93,12 +84,14 @@
 <!-- Sidebar -->
 <nav id="sidebar" class="" [ngClass]="sideBarStatus ? '' : 'hide'">
 
-
+    <div class="header-nav-item" >
+      <fa-icon id="sideBarToggler"  (click)="toggleSideBar()" [icon]="faBars"></fa-icon>
+      <img [hidden]="!sideBarStatus" src="/../../../assets/images/smlg2.png">
+    </div>
 
 
 
     <ul class="navbar-nav nav-pills">
-
 
 
       <li  *ngIf="toAdmin || toThirdParty" [ngClass]="dashboardNavBarActive ? 'nav-item active' : 'nav-item'" >

@@ -27,6 +27,7 @@ import { ThreatService } from './shared/services/threats.service';
 import { TrackerService } from './shared/services/tracker.service';
 import { TrackerReasonService } from './shared/services/trackerReasons.service';
 import { IndustryService } from './shared/services/industry.service';
+import { ThreatCategoryService } from './shared/services/threatCategory.service';
 
  // tslint:disable: max-line-length
 @NgModule({
@@ -54,8 +55,8 @@ import { IndustryService } from './shared/services/industry.service';
     DatepickerModule.forRoot(),
   ],
 
-  providers: [AppCustomPreloader, TokenGuard, AdminGuard, CustomerGuard,  NotificationService, UserService, CompanyProfileService, SurveyService, QuestionService,
-    ResponseService, FileUploadService, ThreatService, TrackerService, TrackerReasonService, IndustryService
+  providers: [AppCustomPreloader, TokenGuard, AdminGuard, CustomerGuard, NotificationService, UserService, CompanyProfileService, SurveyService, QuestionService,
+    ResponseService, FileUploadService, ThreatService, ThreatCategoryService, TrackerService, TrackerReasonService, IndustryService
     ],
   bootstrap: [AppComponent]
 })
