@@ -73,7 +73,6 @@ public myInterval;
     } else if (localStorage.getItem('permissionStatus') === 'isThirdParty') {
         this.toThirdParty = true;
     }
-    console.log(this.toThirdParty);
 
 
     this.myInterval = setInterval(() => {

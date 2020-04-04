@@ -434,12 +434,17 @@
         
         <div [ngClass]="ThreatSectionStatus ? 'nav-tab active' : 'nav-tab'" (click)="clearThreat(); addThreatModal.show()">
             <fa-icon [icon]="faPlus"></fa-icon>
-            Threat
+            Add Threat
         </div>
 
         <div [ngClass]="ThreatsViewSectionStatus ? 'nav-tab active' : 'nav-tab'" class="nav-tab" (click)="getThreats()">
             <fa-icon [icon]="faFire"></fa-icon>
-            Threats
+            View Threats
+        </div>
+
+        <div class="nav-tab" (click)="addThreatCategoryModal.show()">
+            <fa-icon [icon]="faFire"></fa-icon>
+            Threat Category
         </div>
         
         <div class="nav-tab" (click)="addTrackerReasonModal.show()">
@@ -450,6 +455,7 @@
             <fa-icon [icon]="faBuilding"></fa-icon>
             Industries
         </div>
+
 
     </div>
 
@@ -484,7 +490,7 @@
 
 
 
-<div bsModal  #addThreatModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div bsModal #addThreatModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog addThreatModal" role="document">
         <div class="modal-content">
         <div class="modal-header ">
@@ -498,6 +504,14 @@
                 <div class="form-group">
                     <label for="threatName">Threat Name</label>
                     <input name="threatName"  [(ngModel)]="threatName">
+                </div>
+                <div class="form-group">
+                    <label for="threatCategory">Threat Category</label>
+                    <select name="threatCategory" [(ngModel)]="threatCategory">
+                        <option value="" disabled selected hidden >... select</option>
+                            <option *ngFor="let item of AllThreatCategories" [value]="item._id">{{item.threatCategoryName}}</option>
+                    </select>
+               
                 </div>
                 <div class="form-group">
                     <label for="threatType">Classifier</label>
@@ -525,17 +539,17 @@
                         </div>
                         <div *ngIf="threatType == '0'" class="form-group">
                             <label for="threatValue1">Value</label>
-                            <input  name="threatValue1" [(ngModel)]="threatValue1">
+                            <input name="threatValue1" [(ngModel)]="threatValue1">
                         </div>
                         <div *ngIf="threatType == '1'" class="form-group">
                         <div style="display: flex; ">
                             <div style="float: left; padding-right:10px;">
                                 <label for="threatValue1">From</label>
-                                <input  name="threatValue1" [(ngModel)]="threatValue1">
+                                <input type="number" name="threatValue1" [(ngModel)]="threatValue1">
                             </div>
                             <div style="float: right; padding-left:10px;">
                                 <label for="threatValue2">To</label>
-                                <input  name="threatValue2" [(ngModel)]="threatValue2">
+                                <input type="number" name="threatValue2" [(ngModel)]="threatValue2">
                             </div>
                         </div>
                         </div>
@@ -615,6 +629,46 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
+
+
+
+
+
+
+
+<div bsModal #addThreatCategoryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog addThreatCategoryModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title"> Threat Category </h4>
+            <button type="button" class="btn close" (click)="addThreatCategoryModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <div class="wrap d-flex" *ngFor="let item of AllThreatCategories">
+                <h4>{{item.threatCategoryName}}</h4>
+                <fa-icon [icon]="faTrash" (click)="deleteThreatCategory(item._id)"></fa-icon>
+            </div>
+            <input type="text" name="threatCategoryInput"[(ngModel)]="threatCategoryInput" placeholder="Type here">
+        </div>
+        <div class="modal-footer">
+            <button [disabled]="threatCategoryInput === ''"  type="button" class="btn btn-confirm" (click)="addThreatCategory()">Add</button>
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+
+
+
+
 
 <div bsModal  #deletePromptModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog deletePromptModal modal-md" role="document">

@@ -139,7 +139,7 @@ export class AnswerComponent implements OnInit {
     if(this.threat.type === 1){
        // range representations using to..
       if(response.includes('to')){
-        console.log(response.split('to'))
+        // console.log(response.split('to'))
         let range = [];
         range.push(parseInt(response.split('to')[0]))
         range.push(parseInt(response.split('to')[1]))
@@ -157,9 +157,9 @@ export class AnswerComponent implements OnInit {
       for(var i=0; i< this.threat.categorization_inferences.length; i++){
         if(this.threat.categorization_inferences[i].classifier.length === 1){
           //if only one parameter is passed, ie, 10 and above, only 10 should be stored to process on this..
-          console.log("only one param");
+          // console.log("only one param");
           if(parseInt(response) < this.threat.categorization_inferences[i].classifier[0]+1){
-            console.log(parseInt(response));
+            // console.log(parseInt(response));
             feedback = this.threat.categorization_inferences[i];
             this.responseArray['threat'] = feedback;
             this.responseArray['skipNext'] = this.threat.skipNext;
@@ -219,6 +219,7 @@ export class AnswerComponent implements OnInit {
  
    const responseArray = this.responseArray;
     if(this.responseArray.length === 0){
+      // console.log("No answer");
       this.responseArray.push("Not answered")
     }
     if(!this.response){
@@ -282,7 +283,7 @@ export class AnswerComponent implements OnInit {
   continuationFromBefore(id) {
 
     this.questionService.getQuestionsInASurvey(this.surveyId).
-    subscribe(data => {this.questions = data.sort((a, b) =>  a.position - b.position); console.log(this.questions);  this.formatQuestions2(id); this.structureAnswers2(id); }, err => console.log(err));
+    subscribe(data => {this.questions = data.sort((a, b) =>  a.position - b.position);  this.formatQuestions2(id); this.structureAnswers2(id); }, err => console.log(err));
 
   }
 

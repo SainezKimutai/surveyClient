@@ -437,6 +437,7 @@ export class EditorialComponent implements OnInit {
     this.CurrentChoicesArr.splice(x, 1);
   }
   setSkipNext(x){
+    
     const checker = <HTMLInputElement> document.getElementById(x);
     if(checker.checked === true){
     
