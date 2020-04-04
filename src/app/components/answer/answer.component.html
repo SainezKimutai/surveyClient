@@ -71,17 +71,17 @@
                         </div>
                     </div>
 
-                    <div *ngIf="!response" class="btn-wrap d-flex">
+                    <div *ngIf="skip && (!response || responseArray.length === 0 || !responseArray )" class="btn-wrap d-flex">
                         <button
                         class="btn btn-sm btn-next ml-auto" (click)="next(pageNumber)">Skip</button>
                     </div>
 
-                    <div *ngIf="!isLast && response || responseArray.length !== 0" class="btn-wrap d-flex">
+                    <div *ngIf="!isLast && !skip" class="btn-wrap d-flex">
                         <button [disabled]="(response === '' || !response) && responseArray.length === 0"
                         class="btn btn-sm btn-next ml-auto" (click)="next(pageNumber)">Next</button>
                     </div>
 
-                    <div *ngIf="isLast && response" class="btn-wrap d-flex">
+                    <div *ngIf="isLast && !skip" class="btn-wrap d-flex">
                         <button [disabled]="(response === '' || !response) && responseArray.length === 0"
                         class="btn btn-sm btn-next ml-auto" (click)="Process(pageNumber)">Submit</button>
                     </div>

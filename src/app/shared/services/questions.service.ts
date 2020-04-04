@@ -18,6 +18,7 @@ export class QuestionService {
 
 
     createQuestion( data: any ) {
+        console.log(data);
         return this.http.post<any>(this.url + 'create', data, {headers : header});
     }
 

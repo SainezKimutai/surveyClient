@@ -94,7 +94,8 @@ export class DashboardComponent implements OnInit {
     if (localStorage.getItem('permissionStatus') === 'isAdmin') {
       this.updatePage().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFuctions(); } );
     } else if (localStorage.getItem('permissionStatus') === 'isThirdParty') {
-      this.updatePage2().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFuctions(); } );
+      console.log("THirdParty");
+      this.updatePage().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFuctions(); } );
     }
 
 

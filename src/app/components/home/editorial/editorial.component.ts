@@ -73,6 +73,8 @@ export class EditorialComponent implements OnInit {
   public CurrentQuestionInput = '';
   public CurrentChoiceInput = '';
   public CurrentChoiceInputThreat = '';
+  public skipInput = false;
+  public linkedInput = false;
 
   public openQuestionInput = 'true';
   public multipleChoiceInput = 'false';
@@ -85,6 +87,9 @@ export class EditorialComponent implements OnInit {
   public EditQuestionInput = '';
   public EditChoiceInput = '';
   public EditChoiceInputThreat = '';
+  public EditskipInput = false;
+  public EditlinkedInput = false;
+
 
   public EditopenQuestionInput = 'true';
   public EditmultipleChoiceInput = 'false';
@@ -198,6 +203,17 @@ export class EditorialComponent implements OnInit {
 
 
   createNewSurveyTemplate() {
+    this.CurrentQuestionInput = '';
+    this.openQuestionInput = 'true';
+    this.multipleChoiceInput = 'false';
+    this.choiceTypeInput = 'string';
+    this.skipInput = false;
+    this.linkedInput = false;
+    this.CurrentChoicesArr = [];
+    this.positionInput = 1;
+    this.CurrentSurveyInput = '';
+    this.CurrentQuestionArray = [];
+
     this.FormSectionStatus = true;
     this.TemeplateViewSectionStatus = false;
     this.ThreatSectionStatus = false;
@@ -420,6 +436,7 @@ export class EditorialComponent implements OnInit {
 
 
   nextQuestion() {
+
     if (this.CurrentQuestionInput === '') {
       this.notifyService.showWarning('Input answer', 'Empty Array');
     } else {
@@ -427,6 +444,8 @@ export class EditorialComponent implements OnInit {
         question: this.CurrentQuestionInput,
         open_question: this.openQuestionInput,
         threat: this.CurrentChoiceInputThreat,
+        skip: this.skipInput,
+        linked: this.linkedInput,
         multiple_choice: this.multipleChoiceInput,
         choice_type: this.choiceTypeInput,
         position: this.positionInput,
@@ -436,6 +455,8 @@ export class EditorialComponent implements OnInit {
 
       this.CurrentQuestionArray.push(quizData);
       this.CurrentQuestionInput = '';
+      this.linkedInput = false;
+      this.skipInput = false;
       this.openQuestionInput = 'true';
       this.multipleChoiceInput = 'false';
       this.choiceTypeInput = 'string';
@@ -457,13 +478,20 @@ export class EditorialComponent implements OnInit {
     );
   }
 
+  optionsOnchange(){
+    console.log(this.skipInput);
+    console.log(this.linkedInput);
+  }
 
   createQuestions(survey) {
+
     this.CurrentQuestionArray.forEach( (quiz, idx, array) => {
       const myQuizData = {
         surveyId: survey._id,
         question: quiz.question,
         threat: quiz.threat,
+        skip : quiz.skip,
+        linked : quiz.linked,
         open_question: (quiz.open_question === 'true' ? true : false),
         multiple_choice: (quiz.multiple_choice === 'true' ? true : false),
         choice_type: quiz.choice_type,
@@ -481,6 +509,8 @@ export class EditorialComponent implements OnInit {
             this.openQuestionInput = 'true';
             this.multipleChoiceInput = 'false';
             this.choiceTypeInput = 'string';
+            this.skipInput = false;
+            this.linkedInput = false;
             this.CurrentChoicesArr = [];
             this.positionInput = 1;
             this.CurrentSurveyInput = '';
@@ -507,7 +537,6 @@ export class EditorialComponent implements OnInit {
 
   editQuestion(item) {
 
-
     this.CurrentQuestionOnEdit = item;
     this.CurrentQuestionInput = item.question;
     this.openQuestionInput = String(item.open_question);
@@ -515,6 +544,8 @@ export class EditorialComponent implements OnInit {
     this.choiceTypeInput = item.choice_type;
     this.CurrentChoicesArr = item.choices;
     this.positionInput = item.position;
+    this.skipInput = item.skip,
+    this.linkedInput = item.linked,
     this.FormSectionStatus = true;
     this.TemeplateViewSectionStatus = false;
     this.ThreatSectionStatus = false;
@@ -531,6 +562,8 @@ export class EditorialComponent implements OnInit {
       question: this.CurrentQuestionInput,
       open_question:  (this.openQuestionInput === 'true' ? true : false),
       threat: this.CurrentChoiceInputThreat,
+      skip: this.skipInput,
+      linked: this.linkedInput,
       multiple_choice: (this.multipleChoiceInput === 'true' ? true : false),
       choice_type: this.choiceTypeInput,
       position: this.positionInput,
@@ -572,6 +605,8 @@ export class EditorialComponent implements OnInit {
     this.multipleChoiceInput = 'false';
     this.choiceTypeInput = 'string';
     this.CurrentChoicesArr = [];
+    this.skipInput = false;
+    this.linkedInput = false;
     this.positionInput = this.TemplateQuestions.length + 1;
     this.FormSectionStatus = true;
     this.TemeplateViewSectionStatus = false;
@@ -594,6 +629,8 @@ export class EditorialComponent implements OnInit {
       question: this.CurrentQuestionInput,
       open_question:  (this.openQuestionInput === 'true' ? true : false),
       threat: this.CurrentChoiceInputThreat,
+      skip: this.skipInput ,
+      linked: this.linkedInput,
       multiple_choice: (this.multipleChoiceInput === 'true' ? true : false),
       choice_type: this.choiceTypeInput,
       position: this.positionInput,

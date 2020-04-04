@@ -44,6 +44,7 @@ export class InvitationComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.registrationForm = {
+      name: '',
       password: '',
       password2: ''
     };
@@ -84,6 +85,7 @@ export class InvitationComponent implements OnInit, OnDestroy {
       companyId: this.InvitedCompanyId,
       password: this.registrationForm.password,
       email: this.InvitedEmail,
+      name: this.InvitedUserType === 'thirdparty' ? this.registrationForm.name : '',
       userType: this.InvitedUserType,
       userRole: this.InvitedUserRole,
       departmentId: this.InvitedDeptId,
@@ -101,6 +103,7 @@ export class InvitationComponent implements OnInit, OnDestroy {
 
     this.userService.registerUser(myCredentials).subscribe(
       dataUser => {
+        console.log(dataUser);
         this.redirect(dataUser);
       },
       error => {this.notifyService.showWarning('Could not submit', 'Failled');  this.ImprintLoader = false; }
@@ -112,7 +115,7 @@ export class InvitationComponent implements OnInit, OnDestroy {
 
 
   redirect(dataUser) {
-
+     
     if ( this.InvitedUserType === 'admin') {
       localStorage.setItem('loggedUserToken', dataUser.token);
       localStorage.setItem('loggedUserName', dataUser.name);
@@ -124,6 +127,7 @@ export class InvitationComponent implements OnInit, OnDestroy {
     }
 
     if ( this.InvitedUserType === 'thirdparty') {
+
       localStorage.setItem('loggedUserToken', dataUser.token);
       localStorage.setItem('loggedUserName', dataUser.name);
       localStorage.setItem('loggedUserEmail', dataUser.email);
