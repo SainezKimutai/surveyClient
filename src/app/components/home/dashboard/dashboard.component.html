@@ -82,9 +82,9 @@
 
 
 
-    <section id="third_cards_section" class="card-group">
+    <section id="second_cards_section" class="card-group">
         <div class="card">
-            <div class="title d-flex"> <span>Company Risks Representation</span>
+            <div class="title d-flex"> <span>Risk Categories</span>
                 <div class=" graph-switch d-flex ml-auto">
                     <span (click)="third1graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="third1Type === 'line' ? 'active' : ''" ></fa-icon></span> 
                     <span (click)="third1graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="third1Type === 'bar' ? 'active' : ''" ></fa-icon></span>
@@ -113,7 +113,7 @@
             </div>
 
         </div>
-    </section><!-- third_cards_section -->
+    </section><!-- second_cards_section -->
 
 
 
@@ -177,42 +177,10 @@
 
 
 
-    <section id="second_cards_section" class="card-group">
+    <section id="third_cards_section" class="card-group">
+       
         <div class="card">
-            <div class="title">List of Company Risk Rates Per Survey Template</div>
-            <div class="body-wrapper">
-                <div class="body-title">
-
-                    <div class="body-item d-flex">
-                        <div class="mx-auto ">Comapany Name</div>
-                        <div class="mx-auto ">Survey Name</div>
-                        <div class="mx-auto ">Risk rate</div>
-                        <!-- <div class="rate">Recommendation</div> -->
-                    </div>
-
-                </div>
-
-                <div class="body d-flex" *ngIf="CompnayRiskRates.length === 0">
-                    <div class="spinner-div spinner-border mx-auto" role="status"></div>
-                </div>
-
-                <div class="body" *ngIf="CompnayRiskRates.length !== 0">
-
-                    <div *ngFor="let comp of CompnayRiskRates" class="body-item d-flex"
-                        (click)="openAnswersModal(comp.companyName, comp.surveyName, comp.surveyId, comp.responseId)">
-                        <div class="mx-auto companyName">{{comp.companyName}}</div>
-                        <div class="mx-auto surveyName">{{comp.surveyName}}</div>
-                        <div class="mx-auto riskRate">{{comp.riskRate}}</div>
-                        <!-- <div class="mx-auto recommendation">{{comp.recommendation}}</div> -->
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-
-        <div class="card">
-            <div class="title">List of Risk Issues</div>
+            <div class="title">List of Risk Issues among Companies</div>
 
             <div class="body-wrapper">
                 <div class="body-title">
@@ -249,7 +217,48 @@
             </div>
 
         </div>
-    </section><!-- second_cards_section -->
+
+
+
+
+
+
+        <div class="card">
+            <div class="title">List of Company Risk Rates Per Survey Template</div>
+            <div class="body-wrapper">
+                <div class="body-title">
+
+                    <div class="body-item d-flex">
+                        <div class="mx-auto ">Comapany Name</div>
+                        <div class="mx-auto ">Survey Name</div>
+                        <div class="mx-auto ">Risk rate</div>
+                        <!-- <div class="rate">Recommendation</div> -->
+                    </div>
+
+                </div>
+
+                <div class="body d-flex" *ngIf="CompnayRiskRates.length === 0">
+                    <div class="spinner-div spinner-border mx-auto" role="status"></div>
+                </div>
+
+                <div class="body" *ngIf="CompnayRiskRates.length !== 0">
+
+                    <div *ngFor="let comp of CompnayRiskRates" class="body-item d-flex"
+                        (click)="openAnswersModal(comp.companyName, comp.surveyName, comp.surveyId, comp.responseId)">
+                        <div class="mx-auto companyName">{{comp.companyName}}</div>
+                        <div class="mx-auto surveyName">{{comp.surveyName}}</div>
+                        <div class="mx-auto riskRate">{{comp.riskRate}}</div>
+                        <!-- <div class="mx-auto recommendation">{{comp.recommendation}}</div> -->
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </section><!-- third_cards_section -->
 
 
 

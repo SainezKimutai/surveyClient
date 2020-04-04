@@ -8,6 +8,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { SurveyComponent } from './survey.component';
 import { SurveyRoutingModule } from './survey-routing.module';
 import { ModalModule } from 'ngx-bootstrap';
+import { NgbModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -24,6 +25,8 @@ import { ModalModule } from 'ngx-bootstrap';
       FontAwesomeModule,
       ReactiveFormsModule,
       FormsModule,
+      NgbModule,
+      NgbModalModule,
       ModalModule.forRoot(),
       ToastrModule.forRoot({
         timeOut: 5000,

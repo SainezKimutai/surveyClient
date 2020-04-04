@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { faChartLine, faChartBar, faChartPie, faListAlt, faBuilding, faFire } from '@fortawesome/free-solid-svg-icons';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
@@ -7,6 +7,8 @@ import { CompanyProfileService } from 'src/app/shared/services/companyProfile.se
 import { ResponseService } from 'src/app/shared/services/responses.service';
 import { ModalDirective } from 'ngx-bootstrap';
 import { ThreatService } from 'src/app/shared/services/threats.service';
+import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,13 +29,15 @@ export class DashboardComponent implements OnInit {
     private surveyService: SurveyService,
     private questionService: QuestionService,
     private responseService: ResponseService,
-    private threatService: ThreatService
+    private threatService: ThreatService,
+    private threatCategoryService: ThreatCategoryService,
+    private notification: NotificationService
   ) { }
 
   @ViewChild('viewAnswersModal', {static: true, }) viewAnswersModal: ModalDirective;
 
 
-
+  public innerWidth: any;
   public faListAlt = faListAlt;
   public faBuilding = faBuilding;
   public faFire = faFire;
@@ -49,6 +53,7 @@ export class DashboardComponent implements OnInit {
   public AllQuestions = [];
   public AllResponses = [];
   public AllThreats = [];
+  public AllThreatCategorys = [];
 
 
 // Icons
@@ -111,9 +116,9 @@ export class DashboardComponent implements OnInit {
     localStorage.setItem('ActiveNav', 'dashboard');
 
     if (localStorage.getItem('permissionStatus') === 'isAdmin') {
-      this.updatePage().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFuctions(); this.thirdSectionGraphsFunction(); } );
+      this.updatePage().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFunction(); } );
     } else if (localStorage.getItem('permissionStatus') === 'isThirdParty') {
-      this.updatePage2().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFuctions(); this.thirdSectionGraphsFunction(); } );
+      this.updatePage2().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFunction(); } );
     }
 
 
@@ -140,12 +145,17 @@ updatePage() {
           this.questionService.getAllQuestions().subscribe( dataQuestion => {
             this.AllQuestions = dataQuestion;
 
-            this.threatService.getAllThreats().subscribe( dataThreats => {
+            this.threatService.getAllInstitutionThreats().subscribe( dataThreats => {
               this.AllThreats = dataThreats;
 
 
               this.responseService.getAllResponses().subscribe( dataResponse => {
-                this.AllResponses = dataResponse; resolve();
+                this.AllResponses = dataResponse;
+
+                this.threatCategoryService.getAllByInstitutions().subscribe ( dataThreatCat => {
+                  this.AllThreatCategorys = dataThreatCat; resolve();
+
+                }, error => console.log('Error getting all threat Categories'));
 
 
               }, error => console.log('Error getting all responses'));
@@ -197,7 +207,13 @@ updatePage2() {
 
 
               this.responseService.getAllResponses().subscribe( dataResponse => {
-                this.AllResponses = dataResponse; resolve();
+                this.AllResponses = dataResponse;
+
+
+                this.threatCategoryService.getAllByInstitutions().subscribe ( dataThreatCat => {
+                  this.AllThreatCategorys = dataThreatCat; resolve();
+
+                }, error => console.log('Error getting all threat Categories'));
 
 
               }, error => console.log('Error getting all responses'));
@@ -465,21 +481,50 @@ third2graphToPie() {
 
 
 
+
+
+@HostListener('window:resize', ['$event']) onResize() {
+  this.innerWidth = window.innerWidth;
+
+  if (this.innerWidth < 992) {
+    this.third1ChartOptions.legend.position = 'top';
+    this.third2ChartOptions.legend.position = 'top';
+  }
+
+  if (this.innerWidth > 992) {
+    this.third1ChartOptions.legend.position = 'right';
+    this.third2ChartOptions.legend.position = 'top';
+  }
+
+
+}
+
+
+
+
+
 thirdSectionGraphsFunction() {
 
   // on the left
   this.third1Type = 'pie';
 
-  this.third1Labels = ['Kim', 'Geofrey', 'Waithesh', 'Soraya', 'Kaye'];
+  let threatCatArray =  this.riskIssueArray.filter(() => true ).map(e => e.riskCategory);
+  let newThreatCatArray = Array.from(new Set(threatCatArray));
+  this.third1Labels = newThreatCatArray;
+  let mythird1Datasets = [];
   this.third1BgColors = [];
 
-  this.third1Labels.forEach((e) => {
+  this.third1Labels.forEach((riskCatEl) => {
     this.third1BgColors.push(this.getRandomColor());
+    let myArr = this.riskIssueArray.filter((rsk) => rsk.riskCategory === riskCatEl ).map(e => e);
+    mythird1Datasets.push(myArr.length);
+
+
     });
 
   this.third1Datasets = [{
     label: 'Risk',
-    data: [ 15, 30, 20, 25, 10],
+    data: mythird1Datasets,
     backgroundColor: this.third1BgColors,
     borderColor: 'white',
     borderWidth: 1.5,
@@ -499,7 +544,7 @@ thirdSectionGraphsFunction() {
       display: true,
       position: 'right',
       labels: {
-            fontColor: '#00e676'
+            fontColor: '#73818f'
           }
     },
     layout: {
@@ -552,19 +597,25 @@ thirdSectionGraphsFunction() {
 
 
 
- // on the left
+ // on the right
+  let threatArray =  this.riskIssueArray.filter(() => true ).map(e => e.risk);
+  let newThreatArray = Array.from(new Set(threatArray));
+
   this.third2Type = 'pie';
 
-  this.third2Labels = ['Kim', 'Geofrey', 'Waithesh', 'Soraya', 'Kaye'];
+  this.third2Labels = newThreatArray;
+  let mythird2Datasets = [];
   this.third2BgColors = [];
 
-  this.third2Labels.forEach((e) => {
+  this.third2Labels.forEach((riskEl) => {
     this.third2BgColors.push(this.getRandomColor());
+    let myArr2 = this.riskIssueArray.filter((rsk) => rsk.risk === riskEl ).map(e => e);
+    mythird2Datasets.push(myArr2.length);
    });
 
   this.third2Datasets = [{
    label: 'Risk',
-   data: [ 15, 30, 20, 25, 10],
+   data: mythird2Datasets,
    backgroundColor: this.third2BgColors,
    borderColor: 'white',
    borderWidth: 1.5,
@@ -584,7 +635,7 @@ thirdSectionGraphsFunction() {
      display: true,
      position: 'right',
      labels: {
-           fontColor: '#00e676'
+           fontColor: '#73818f'
          }
    },
    layout: {
@@ -632,7 +683,7 @@ thirdSectionGraphsFunction() {
 
 
 
-
+  this.onResize();
 
 } // end of thirdSectionGraphsFunction
 
@@ -698,7 +749,6 @@ switchGraphDataset(num) {
       break;
     }
 
-
   }
 
   this.activeRisk = this.riskIssueArrayToGraph[num];
@@ -706,7 +756,17 @@ switchGraphDataset(num) {
 
 }
 
-graphChartFuctions(num) {
+
+
+
+
+
+
+
+
+
+
+graphChartFunction(num) {
   let lowValue = null;
   let mediumValue = null;
   let highValue = null;
@@ -767,7 +827,7 @@ graphChartFuctions(num) {
       display: false,
       position: 'right',
       labels: {
-            fontColor: '#00e676'
+            fontColor: '#73818f'
           }
     },
     layout: {
@@ -856,68 +916,60 @@ computeCompanyRiskRates() {
 
 
 
-riskIssuesFuctions() {
-  this.AllResponses.forEach((resp, idx1, array1) => {
+riskIssuesFunction() {
 
-      for (let surv of this.AllSurveys) {
-        if (surv._id === resp.surveyId) {
+  this.AllThreats.forEach((threat) => {
 
-          for (let comp of this.AllCompanies) {
-            if (comp._id === resp.companyId) {
+    for (let trtCategory of this.AllThreatCategorys) {
 
-              resp.answers.forEach( (respAns, idx2, array2) => {
-                if (respAns.answer[0].threatId.length > 5) {
+      if (trtCategory._id === threat.category) {
 
-                  for ( let trt of this.AllThreats) {
+        this.AllCompanies.forEach( (comp) => {
 
-                      for (let trtInference of trt.categorization_inferences) {
-                        if (trtInference.category === respAns.answer[0].level) {
-                          let myRiskIssueObject = {
-                            risk: trt.name,
-                            level: respAns.answer[0].level,
-                            recom: respAns.answer[0].recom,
-                            surveyName: surv.surveyName,
-                            company: comp.companyName,
-                          };
+          for (let response of this.AllResponses) {
 
+            if (response.companyId === comp._id) {
 
-                          this.riskIssueArrayUnsorted.push(myRiskIssueObject);
-                          this.riskIssueArray = this.riskIssueArrayUnsorted.sort((a, b) => a.risk.localeCompare(b.risk));
-                          let newRiskArray = this.riskIssueArray.filter(() => true ).map(e => e.risk);
-                          this.riskIssueArrayToGraph = Array.from(new Set(newRiskArray));
-                          this.graphChartFuctions(0);
+              for (let survey of this.AllSurveys) {
 
+                if ((survey._id === response.surveyId)) {
 
+                    response.answers.forEach( (respAns, idx2, array2) => {
+                      if (respAns.answer[0].threatId === threat._id) {
+                        let myRiskIssueObject = {
+                          risk: threat.name,
+                          riskCategory: trtCategory.threatCategoryName,
+                          level: respAns.answer[0].level,
+                          recom: respAns.answer[0].recom,
+                          surveyName: survey.surveyName,
+                          company: comp.companyName,
+                        };
 
-                          break;
+                        this.riskIssueArrayUnsorted.push(myRiskIssueObject);
+                        this.riskIssueArray = this.riskIssueArrayUnsorted.sort((a, b) => a.risk.localeCompare(b.risk));
+                        let newRiskArray = this.riskIssueArray.filter(() => true ).map(e => e.risk);
+                        this.riskIssueArrayToGraph = Array.from(new Set(newRiskArray));
+                        this.graphChartFunction(0);
+                        this.thirdSectionGraphsFunction();
                       }
 
+                    });
 
-                    }
-
-                  }
 
                 }
+              }
 
-              });
 
-              break;
             }
           }
-          break;
-        }
+
+        });
+
       }
-    });
-}
+    }
 
+  });
 
-
-
-
-
-
-
-filterRisks() {
 
 }
 
