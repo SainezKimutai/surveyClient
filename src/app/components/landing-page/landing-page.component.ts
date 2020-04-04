@@ -56,6 +56,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
 
         if (dataUser.userType === 'admin') {
+          localStorage.setItem('loggedUserInstitution', dataUser._id);
           localStorage.setItem('loggedUserToken', dataUser.token);
           localStorage.setItem('loggedUserName', dataUser.name);
           localStorage.setItem('loggedUserEmail', dataUser.email);
@@ -65,6 +66,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
         }
 
         if (dataUser.userType === 'thirdparty') {
+          localStorage.setItem('loggedUserInstitution', dataUser._id);
           localStorage.setItem('loggedUserToken', dataUser.token);
           localStorage.setItem('loggedUserName', dataUser.name);
           localStorage.setItem('loggedUserEmail', dataUser.email);

@@ -60,18 +60,16 @@
     </div>
 
 
-    <div class="top-header">
-
-        <img src="" alt="">
+    <div id="top-header" class="top-header">
 
         <h2>Risk Analysis Report</h2>
 
     </div>
 
     
-    <section class="risk-graph-section">
+    <section id=summaryGraph class="risk-graph-section">
         
-        <div class="title d-flex"> <span>Your risk representaions</span>
+        <div class="title d-flex"> <span>Your risk representations</span>
             <div class=" graph-switch d-flex ml-auto">
                 <span (click)="chart3graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart3Type === 'line' ? 'active' : ''" ></fa-icon></span> 
                 <span (click)="chart3graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="chart3Type === 'bar' ? 'active' : ''" ></fa-icon></span>

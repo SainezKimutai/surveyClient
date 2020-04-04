@@ -86,6 +86,7 @@
         <div class="card">
             <div class="title d-flex"> <span>Risk Categories</span>
                 <div class=" graph-switch d-flex ml-auto">
+                  
                     <span (click)="third1graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="third1Type === 'line' ? 'active' : ''" ></fa-icon></span> 
                     <span (click)="third1graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="third1Type === 'bar' ? 'active' : ''" ></fa-icon></span>
                     <span (click)="third1graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="third1Type === 'pie' ? 'active' : ''" ></fa-icon> </span>

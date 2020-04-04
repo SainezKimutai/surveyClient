@@ -37,7 +37,13 @@ export class ProfileComponent implements OnInit {
   @ViewChild('viewAnswersModal', {static: true, }) viewAnswersModal: ModalDirective;
   @ViewChild('departmentModal', {static: true}) departmentModal: ModalDirective;
   @ViewChild('departmentFormModal', {static: true}) departmentFormModal: ModalDirective;
-    // icon
+
+
+
+  public ImprintLoader = false;
+
+
+  // icon
     public faEnvelope = faEnvelope;
     public faKey = faKey;
     public faGlobe = faGlobe;
@@ -261,6 +267,7 @@ export class ProfileComponent implements OnInit {
 
   saveCompanyProfile() {
     // tslint:disable-next-line: new-parens
+    this.ImprintLoader = true;
     const formData = new FormData;
     formData.append('fileUploaded', this.myCompLogo, this.myCompLogo.name);
 
@@ -270,7 +277,7 @@ export class ProfileComponent implements OnInit {
           url: `${dev.connect}static/images/companyProfileImages/${data.imageName}`,
           name: data.imageName
         };
-
+        this.ImprintLoader = false;
         if (this.myCompany.logo.url !== '' ) { this.removeLogo(this.myCompany.logo.name ); }
 
         this.companyProfileService.updateCompanyProfile( localStorage.getItem('loggedCompanyId'), {logo: logoData}).subscribe(
@@ -278,8 +285,9 @@ export class ProfileComponent implements OnInit {
             this.updatePage();
             this.previewCompLogo = null;
             this.notifyService.showSuccess('Saved', 'Success');
+            this.ImprintLoader = false;
           },
-          error => this.notifyService.showError('Could not save', 'Failed')
+          error => {this.notifyService.showError('Could not save', 'Failed'); this.ImprintLoader = false;}
         );
 
 
@@ -287,6 +295,7 @@ export class ProfileComponent implements OnInit {
       },
       error => {
         this.notifyService.showError('Could not upload Picture', 'Failed');
+        this.ImprintLoader = false;
       }
     );
 

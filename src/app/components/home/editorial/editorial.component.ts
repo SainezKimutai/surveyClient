@@ -878,14 +878,16 @@ export class EditorialComponent implements OnInit {
 
 
   addThreatCategory() {
+    this.ImprintLoader = true;
     this.threatCategoryService.createThreatCategory({threatCategoryName: this.threatCategoryInput, institutionId: localStorage.getItem('loggedUserID')}).subscribe(
       data => {
         this.updatePage().then(() => {
+          this.ImprintLoader = false;
           this.notifyService.showSuccess('Threat Category added', 'Success');
           this.threatCategoryInput = '';
         });
       },
-      error => this.notifyService.showError('Could not add threat category', 'Failed')
+      error => {this.notifyService.showError('Could not add threat category', 'Failed'); this.ImprintLoader = false;}
     );
   }
 

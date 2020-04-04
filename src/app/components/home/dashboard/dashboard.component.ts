@@ -86,12 +86,14 @@ export class DashboardComponent implements OnInit {
   public third1Labels;
   public third1Datasets;
   public third1ChartOptions;
+  public third1Legend;
   public third1BgColors = [];
   public third2Labels;
   public third2Type;
   public third2Datasets;
   public third2ChartOptions;
   public third2BgColors = [];
+  public third2Legend;
 
 
 // graph variables
@@ -492,8 +494,8 @@ third2graphToPie() {
   }
 
   if (this.innerWidth > 992) {
-    this.third1ChartOptions.legend.position = 'right';
-    this.third2ChartOptions.legend.position = 'right';
+    this.third1ChartOptions.legend.position = 'bottom';
+    this.third2ChartOptions.legend.position = 'bottom';
   }
 
 
@@ -504,7 +506,8 @@ third2graphToPie() {
 
 
 thirdSectionGraphsFunction() {
-
+  this.third1Legend = false;
+  this.third2Legend = false;
   // on the left
   this.third1Type = 'pie';
 
@@ -542,7 +545,7 @@ thirdSectionGraphsFunction() {
     },
     legend: {
       display: true,
-      position: 'right',
+      position: 'bottom',
       labels: {
             fontColor: '#73818f'
           }
@@ -633,7 +636,8 @@ thirdSectionGraphsFunction() {
    },
    legend: {
      display: true,
-     position: 'right',
+     position: 'bottom',
+     itemWidth: 10,
      labels: {
            fontColor: '#73818f'
          }
@@ -641,6 +645,7 @@ thirdSectionGraphsFunction() {
    layout: {
      padding: 10
    },
+
    tooltips: {
        enabled: true
    },
