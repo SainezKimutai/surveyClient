@@ -16,7 +16,7 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
   styleUrls: ['./dashboard.component.sass']
 })
 export class DashboardComponent implements OnInit {
-// tslint:disable: max-line-length
+// tslint:disable
 // tslint:disable: prefer-const
 
 
@@ -609,7 +609,7 @@ thirdSectionGraphsFunction() {
   let threatArray =  this.riskIssueArray.filter(() => true ).map(e => e.risk);
   let newThreatArray = Array.from(new Set(threatArray));
 
-  this.third2Type = 'pie';
+  this.third2Type = 'bar';
 
   this.third2Labels = newThreatArray;
   let mythird2Datasets = [];
@@ -640,7 +640,7 @@ thirdSectionGraphsFunction() {
      fontSize: 25
    },
    legend: {
-     display: true,
+     display: false,
      position: 'bottom',
      itemWidth: 10,
      labels: {
@@ -668,7 +668,7 @@ thirdSectionGraphsFunction() {
      }],
      xAxes: [{
          barPercentage: 0.4,
-         display: false,
+         display: true,
          stacked: false,
          gridLines: {
              drawBorder: true,
@@ -716,8 +716,8 @@ graphChartToLine() {
   this.graphType = 'line';
   this.graphChart.legend.display = false;
   this.graphChart.scales.xAxes[0].display = true;
-  this.graphDatasets[0].backgroundColor = 'whitesmoke';
-  this.graphDatasets[0].borderColor = 'gray';
+  this.graphDatasets[0].backgroundColor = '#02b0cc';
+  this.graphDatasets[0].borderColor = 'teal';
   this.graphDatasets[0].pointBorderColor = 'black';
 }
 graphChartToBar() {
@@ -805,7 +805,7 @@ graphChartFunction(num) {
 
   this.activeRisk = this.riskIssueArrayToGraph[num];
 
-  this.graphType = 'bar';
+  this.graphType = 'line';
 
   this.graphLabels = ['Low', 'Medium', 'High'];
   // this.graphLabels.forEach((e) => {
@@ -815,12 +815,12 @@ graphChartFunction(num) {
     {
       label: this.riskIssueArrayToGraph[num],
       data: [ lowValue, mediumValue, highValue],
-      backgroundColor: ['#02b0cc', 'orange', 'red' ],
-      borderColor: 'white',
+      backgroundColor: '#02b0cc',
+      borderColor: 'teal',
       borderWidth: 1.5,
       pointBackgroundColor: 'transparent',
       pointHoverBackgroundColor: 'transparent',
-      pointBorderColor: 'white',
+      pointBorderColor: 'black',
       pointHoverBorderColor: 'gray'
     }
   ];
