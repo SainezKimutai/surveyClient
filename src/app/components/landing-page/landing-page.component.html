@@ -1,4 +1,4 @@
-
+<!-- 
 <article *ngIf="ImprintLoader" class="imprint-loader home">
 <div class="imprint-loader-wrap">
     <div class="imprint-loader-main">
@@ -45,5 +45,117 @@
             </form>
         </div>
     </div>
+
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+ <article *ngIf="ImprintLoader" class="imprint-loader home">
+    <div class="imprint-loader-wrap">
+        <div class="imprint-loader-main">
+        <div class="imprint-loader-ball ball-one"></div>
+        <div class="imprint-loader-ball ball-two"></div>
+        <div class="imprint-loader-ball ball-three"></div>
+        <div class="imprint-loader-ball ball-four"></div>
+        </div>
+    </div>
+</article>
+
+
+
+<main>
+
+
+
+    <div class="side-bg"></div>
+    
+    
+    
+    <section class="body-section d-flex">
+	
+
+        
+        <div class="form-section mx-auto">
+    
+    
+            <div class="logo-section">
+                <div class="wrap">
+                    <h4>Welcome Back</h4>
+    
+                    <img src="../../../assets/images/logo1.png" alt="" >
+                </div>
+    
+            </div>
+    
+    
+            <div class="form-wrap">
+    
+    
+            <form class="form">
+    
+             
+
+				<div class="head">
+					<h4>Sign In</h4>
+				</div>
+	
+				<div class="form-group">
+					<fa-icon [icon]="faEnvelope"></fa-icon>
+					<input type="email" name="email" [(ngModel)]="loginForm.email" placeholder="Enter Email" required>
+				</div>
+				
+				<div class="form-group">
+					<fa-icon [icon]="faKey"></fa-icon>
+					<input type="password" name="password" [(ngModel)]="loginForm.password"  placeholder="Enter Password">
+				</div>
+
+
+
+				
+				<div class="btn-wrap d-flex">
+					<button [disabled]="loginForm.password === '' || loginForm.email === ''" class="btn ml-auto btn-sm btn-submit" (click)="login()" style="color: white;">Login</button>
+				</div>
+
+          
+
+                <div class="footer">
+                    <h4>Don't have an account ?</h4>
+                    <a routerLink="/register">Register</a>
+                </div>
+
+
+            </form>
+
+    
+            </div>
+    
+        </div>
+    
+    
+    </section>
+    
+    
+    
+    </main>
+    
+    
+    
+
+
+
+
+
+
+
+
 
 

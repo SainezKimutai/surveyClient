@@ -11,6 +11,8 @@ main .side-bg
     height: 100%
     clip-path: polygon(0 0, 50% 0, 50% 100%, 0% 100%)
     background-color: colorTheme(primaryTheme)
+    // background: linear-gradient(rgba(7, 75, 251, 0.9) ,rgba(7, 75, 251, 0.9)), url("../../../assets/images/bg.png") no-repeat
+
 
     @include desktop_md
         clip-path: polygon(100% 0, 100% 50%, 0 50%, 0 0)
@@ -26,10 +28,17 @@ main .side-bg
     height: 100%
     display: flex
     align-items: strecth
-    border: solid 1px red
 
     @include desktop_md
          padding: 3em 1em
+
+
+
+
+
+
+
+
 
 
 .body-section .form-section
@@ -67,14 +76,12 @@ main .side-bg
 
         h4
             font-size: 22px
-            margin: 1em 0
+            margin: 1em auto
             color: white
 
         img 
             width: 200px 
             height: 150px
-
-    
 
 .body-section .form-section .form-wrap
     width: 100%
@@ -90,7 +97,16 @@ main .side-bg
     flex-direction: column
     justify-content: center
     padding: 1em
+    border-radius: red solid 1px
     width: 100%
+
+.body-section .form-section .form-wrap .form .dynamic-wrapper
+    width: 100%
+    display: block
+    transition: all 1s
+
+.body-section .form-section .form-wrap .form .dynamic-wrapper.slide
+    display: none
 
 .body-section .form-section .form-wrap .form .head
     width: 100%
@@ -106,16 +122,17 @@ main .side-bg
 
 .body-section .form-section .form-wrap .form .form-group
     width: 100%
-    margin: 0 0 1em 0
+    margin: 0 0 2em 0
     display: flex
     align-items: stretch
 
     fa-icon
+        width: 1em
         font-size: 14px
         color: colorTheme(primaryTheme)
         margin: .5em 1em 0 0
 
-    input 
+    input, select
         padding: 0 .5em
         font-size: 14px
         width: 100%
@@ -134,9 +151,14 @@ main .side-bg
 
 
     .btn
-        margin-left: auto
-        background-color: colorTheme(primaryTheme)
+        
         color: white
+
+        &.btn-back
+            background-color: grayColor(g200)
+
+        &.btn-submit, &.btn-next
+            background-color: colorTheme(primaryTheme)
 
 
 .body-section .form-section .form-wrap .form .footer
@@ -151,3 +173,4 @@ main .side-bg
 
     a 
         font-size: 12px
+

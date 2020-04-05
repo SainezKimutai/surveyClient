@@ -854,7 +854,7 @@ export class ProfileComponent implements OnInit {
     let threatArray =  this.riskIssueArray.filter(() => true ).map(e => e.risk);
     let newThreatArray = Array.from(new Set(threatArray));
 
-    this.chart2Type = 'pie';
+    this.chart2Type = 'line';
 
     this.chart2Labels = newThreatArray;
     let mychart2Datasets = [];
@@ -869,12 +869,12 @@ export class ProfileComponent implements OnInit {
     this.chart2Datasets = [{
      label: 'Risk',
      data: mychart2Datasets,
-     backgroundColor: this.chart2BgColors,
-     borderColor: 'white',
+     backgroundColor: 'whitesmoke',
+     borderColor: 'gray',
      borderWidth: 1.5,
      pointBackgroundColor: 'transparent',
      pointHoverBackgroundColor: 'transparent',
-     pointBorderColor: 'white',
+     pointBorderColor: 'black',
      pointHoverBorderColor: 'gray'
    }];
 
@@ -911,7 +911,7 @@ export class ProfileComponent implements OnInit {
        }],
        xAxes: [{
            barPercentage: 0.4,
-           display: false,
+           display: true,
            stacked: false,
            gridLines: {
                drawBorder: true,
