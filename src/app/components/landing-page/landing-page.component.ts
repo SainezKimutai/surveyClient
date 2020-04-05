@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
-  styleUrls: ['./landing-page.component.css', './landing-page.component.sass']
+  styleUrls: ['./landing-page.component.sass']
 })
 export class LandingPageComponent implements OnInit, OnDestroy {
 
