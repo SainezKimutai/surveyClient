@@ -42,6 +42,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.ImprintLoader = true;
     this.userService.loginUser(this.loginForm).subscribe(
       dataUser => {
+        console.log()
 
         if (dataUser.userType === 'customer') {
           localStorage.setItem('loggedUserToken', dataUser.token);

@@ -30,6 +30,7 @@ export class ResponseService {
         for (let i = 0; i < data.answers.length; i++) {
             payload.answers.push({
             questionId: data.answers[i].questionId,
+            position: data.answers[i].position,
             answer: [{
                 threatId: data.answers[i].answer.threatId ? data.answers[i].answer.threatId : '',
                 threat: data.answers[i].answer.threatName ? data.answers[i].answer.threatName: '',
@@ -55,7 +56,28 @@ export class ResponseService {
 
 
     updateResponse(id, data: any) {
-        return this.http.put<any>(this.url + 'update/' + id, data, {headers : header});
+        const payload = {
+            surveyId: data.surveyId,
+            userId : data.userId,
+            companyId: data.companyId,
+            answers: []
+          };
+        // tslint:disable-next-line: prefer-for-of
+        for (let i = 0; i < data.answers.length; i++) {
+            payload.answers.push({
+            questionId: data.answers[i].questionId,
+            position: data.answers[i].position,
+            answer: [{
+                threatId: data.answers[i].answer.threatId ? data.answers[i].answer.threatId : '',
+                threat: data.answers[i].answer.threatName ? data.answers[i].answer.threatName: '',
+                recom: (data.answers[i].answer.threatId && data.answers[i].answer.threat)  ? data.answers[i].answer.threat.inference : '',
+                level: (data.answers[i].answer.threatId && data.answers[i].answer.threat)  ? data.answers[i].answer.threat.category : '',
+                answer: (data.answers[i].answer.threat && data.answers[i].answer.threat) ? data.answers[i].answer[0].answer : data.answers[i].answer[0]
+            }]
+          });
+
+        }
+        return this.http.put<any>(this.url + 'update/' + id, payload, {headers : header});
     }
 
 

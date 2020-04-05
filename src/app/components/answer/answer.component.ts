@@ -71,7 +71,27 @@ export class AnswerComponent implements OnInit {
 
     if (myResponses.length > 0 ) {
       this.myPreviousResponseId = myResponses[0]._id;
-      this.myPreviousAnswers = myResponses[0].answers;
+     
+      myResponses[0].answers.forEach(answer => {
+        
+        let formatedAnswer = {};
+        let questionId = answer.questionId;
+        let position = answer.position;
+        let structured = [];
+        let choice = {answer: answer.answer[0].answer};
+        let threat = {classifier: [answer.answer[0].answer], category: answer.answer[0].level, inference: answer.answer[0].recom};
+        structured.push(choice);
+        structured["threatId"] = answer.answer[0].threatId;
+        structured["threatName"] = answer.answer[0].threat;
+        structured["threat"] = threat;
+        formatedAnswer = {
+          questionId: questionId,
+          position: position,
+          answer: structured
+        }
+        this.myPreviousAnswers.push(formatedAnswer);
+      });
+      
       this.DoneQuestions = Number(this.myPreviousAnswers.length);
       this.structureQuestions();
       this.continuationFromBefore(this.DoneQuestions);
@@ -124,6 +144,7 @@ export class AnswerComponent implements OnInit {
     this.responseArray['threatName'] = this.threat.name;
     // direct range comparison...
     if(this.threat.type === 0){
+     
       for(var i=0; i< this.threat.categorization_inferences.length; i++){
         if(response == this.threat.categorization_inferences[i].classifier[0]){
           feedback = this.threat.categorization_inferences[i];
@@ -203,7 +224,7 @@ export class AnswerComponent implements OnInit {
   }
 
   async getThreat(id){
-    await this.threatService.getOneThreat(id).subscribe(async data => {this.threat = data; console.log(this.threat); await this.getThreatInference();}, error =>console.log("ERROR"));
+    await this.threatService.getOneThreat(id).subscribe(async data => {this.threat = data;  await this.getThreatInference();}, error =>console.log("ERROR"));
     return this.threat;
   }
 
@@ -215,15 +236,14 @@ export class AnswerComponent implements OnInit {
 
 
   async next(id) {
-
  
    const responseArray = this.responseArray;
     if(this.responseArray.length === 0){
-      // console.log("No answer");
+     
       this.responseArray.push("Not answered")
     }
     if(!this.response){
-       
+      
        this.responseArray[0]="Not answered";
     }
    
@@ -318,15 +338,18 @@ export class AnswerComponent implements OnInit {
 
 
   async structureAnswers(id) {
+     
     if(this.questions[id-1].threat){
-      await this.threatService.getOneThreat(this.questions[id-1].threat).subscribe(async data => {this.threat = data; console.log(this.threat); await this.getThreatInference();
-
+      await this.threatService.getOneThreat(this.questions[id-1].threat).subscribe(async data => {this.threat = data;  await this.getThreatInference();
+ 
       const answer = {
         questionId: this.questions[id - 1]._id,
+        position: this.questions[id-1].position,
         answer : this.responseArray
       };
-
+      
       this.answers.push(answer);
+
       
       if(this.questions[id-1].linked){ //check if linked == true
         if(this.responseArray[0].skipNext){//check if  skipNext == true
@@ -382,6 +405,7 @@ export class AnswerComponent implements OnInit {
     }else{//if question does not have a threat..
       const answer = {
         questionId: this.questions[id - 1]._id,
+        position: this.questions[id - 1].position,
         answer : this.responseArray
       };
 
@@ -402,12 +426,14 @@ export class AnswerComponent implements OnInit {
 }
 }
 
+
   structureAnswers2(id) {
 
     this.responseArray = [];
     this.response = '';
     this.skip = false;
     this.answers = this.myPreviousAnswers;
+    
     if (id === this.questions.length - 1) {
       this.isLast = true;
     }
@@ -434,6 +460,7 @@ export class AnswerComponent implements OnInit {
 
 
   async postAnswers(answers) {
+   
     
     if ( this.DoneQuestions === 0 ) {
     await this.responseService.createResponse(answers).subscribe(
