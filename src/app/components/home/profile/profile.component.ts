@@ -112,6 +112,7 @@ export class ProfileComponent implements OnInit {
 
 
     // chart
+    public chartsProgress = 0;
     public chart1Type;
     public chart1Labels;
     public chart1Datasets;
@@ -176,30 +177,36 @@ export class ProfileComponent implements OnInit {
     this.userService.getAllUsers().subscribe(
       dataUser => {
         this.AllUsers = dataUser;
+        this.chartsProgress = 10;
 
         this.companyProfileService.getAllCompanyProfiles().subscribe(
           dataComp => {
             this.AllCompanies = dataComp;
             for (const comp of this.AllCompanies) { if (comp._id === localStorage.getItem('loggedCompanyId')) { this.myCompany = comp; break; }}
+            this.chartsProgress = 20;
 
             this.surveyService.getAllSurveys().subscribe(
               dataSurvey => {
                 this.AllSurveys = dataSurvey;
+                this.chartsProgress = 30;
 
                 this.questionService.getAllQuestions().subscribe(
                   dataQuiz => {
                     this.AllQuestions = dataQuiz;
+                    this.chartsProgress = 40;
 
                     this.threatService.getAllThreats().subscribe(
                       dataTrt => {
                       this.AllThreats = dataTrt;
+                      this.chartsProgress = 50;
 
                       this.threatCategoryService.getAllThreatCategorys().subscribe(
                         dataTrtCat => {
                           this.AllThreatCategorys = dataTrtCat;
+                          this.chartsProgress = 60;
 
                           this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
-                            data => {this.AllResponses = data; resolve(); },
+                            data => {this.AllResponses = data; resolve(); this.chartsProgress = 70; },
                             error => console.log('Error geting all Responses')
                           );
 
@@ -573,7 +580,7 @@ export class ProfileComponent implements OnInit {
 
 
   riskIssuesFunction() {
-
+    this.chartsProgress = 80;
     this.AllThreats.forEach((threat) => {
 
 
@@ -602,6 +609,7 @@ export class ProfileComponent implements OnInit {
 
                           this.riskIssueArrayUnsorted.push(myRiskIssueObject);
                           this.riskIssueArray = this.riskIssueArrayUnsorted.sort((a, b) => a.risk.localeCompare(b.risk));
+                          this.chartsProgress = 90;
                           this.chartSectionGraphsFunction();
                         }
 
@@ -745,7 +753,7 @@ export class ProfileComponent implements OnInit {
 
 
   chartSectionGraphsFunction() {
-
+    this.chartsProgress = 100;
     // on the left
     this.chart1Type = 'pie';
 

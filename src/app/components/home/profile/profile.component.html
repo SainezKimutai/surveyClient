@@ -39,6 +39,7 @@
                     </div>
                 </div>
                 <div class="body-wrapper">
+                    <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
                     <canvas *ngIf="chart1Type" baseChart class="chart" [chartType]="chart1Type" [labels]="chart1Labels"
                     [datasets]="chart1Datasets" [options]="chart1ChartOptions"></canvas>
                 </div>
@@ -55,6 +56,7 @@
                 </div>
     
                 <div class="body-wrapper">
+                    <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
                     <canvas *ngIf="chart2Type" baseChart class="chart" [chartType]="chart2Type" [labels]="chart2Labels"
                     [datasets]="chart2Datasets" [options]="chart2ChartOptions"></canvas>
                 </div>
@@ -83,6 +85,7 @@
                 </div>
     
                 <div class="body-wrapper">
+                    <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
                     <canvas *ngIf="chart3Type" baseChart class="chart" [chartType]="chart3Type" [labels]="chart3Labels"
                     [datasets]="chart3Datasets" [options]="chart3ChartOptions"></canvas>
                 </div>
