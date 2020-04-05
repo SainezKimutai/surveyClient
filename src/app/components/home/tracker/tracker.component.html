@@ -46,7 +46,10 @@
 
     <section class="list-section" *ngIf="listSectionStatus">
         <div *ngIf="AllTrackers" class="card-group" >
-            <div class="card" *ngFor="let item of AllTrackers" (click)="openTracker(item._id)">
+            <div *ngIf="pageProgress !== 100" class="progress-wrap">
+                <circle-progress [percent]="pageProgress" ></circle-progress>
+            </div>
+            <div [hidden]="pageProgress !== 100" class="card" *ngFor="let item of AllTrackers" (click)="openTracker(item._id)">
                 <div class="card-header"></div>
                 <div class="card-body">
                     <fa-icon [icon]="faListAlt"></fa-icon>
@@ -55,7 +58,7 @@
                
             </div>
     
-            <div class="card" *ngIf="AllTrackers.length === 0">
+            <div [hidden]="pageProgress !== 100" class="card" *ngIf="AllTrackers.length === 0">
                 <div class="card-header"></div>
                 <div class="card-body">
                     <h4>No Template</h4>

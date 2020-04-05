@@ -31,6 +31,7 @@ export class SurveyComponent implements OnInit {
   public AllQuestions = [];
   public AllResponses = [];
   public ImprintLoader = false;
+  public pageProgress = 0;
 
   public faCheck = faCheck;
   public faListAlt = faListAlt;
@@ -40,10 +41,9 @@ export class SurveyComponent implements OnInit {
   public surveyTobeErased = '';
 
 
-  
+
 
   ngOnInit() {
-    this.ImprintLoader = true;
     localStorage.setItem('ActiveNav', 'survey');
     this.updatePage().then(() => { this.checkForCompletedSurveys(); });
   }
@@ -58,30 +58,42 @@ export class SurveyComponent implements OnInit {
     return new Promise((resolve, reject) => {
 
     this.surveyService.getAllInstitutionSurveys().subscribe(
-      data => {this.AllSurveys = data;
+      dataSurvey => {
+
+        this.AllSurveys = dataSurvey;
+        this.pageProgress = 25;
+
+        this.questionService.getAllQuestions().subscribe(
+          dataQuiz => {
+
+            this.AllQuestions = dataQuiz;
+            this.pageProgress = 50;
+
+            this.responseService.getAllResponses().subscribe(
+              dataRsp => {
+
+              this.AllResponses = dataRsp;
+              this.pageProgress = 75;
+              resolve();
+
+              },
+              error => console.log('Error geting all Responses')
+            );
+
+          },
+          error => console.log('Error getting all question')
+        );
       },
       error => console.log('Error getting all surveys')
     );
-    if (this.AllSurveys != null || this.AllSurveys.length !== 0 ) {
-    this.questionService.getAllQuestions().subscribe(
-      data => this.AllQuestions = data,
-      error => console.log('Error getting all question')
-    );
-    this.responseService.getAllResponses().subscribe(
-      data => {this.AllResponses = data; resolve(); },
-      error => console.log('Error geting all Responses')
-    );
-    this.ImprintLoader = false;
-    } else {
-      this.ImprintLoader = false;
-    }
+
   });
   }
 
 
 
   checkForCompletedSurveys() {
-     this.AllSurveys =  this.AllSurveys.filter((surv) => {
+     this.AllSurveys =  this.AllSurveys.filter((surv, ind, arr) => {
         const myResponses = this.AllResponses.filter((resp) => (resp.companyId === localStorage.getItem('loggedCompanyId') && resp.surveyId === surv._id) && resp.userId === localStorage.getItem('loggedUserID') ).map( e => e);
         if (myResponses.length > 0) {
         let allQuizs = this.AllQuestions.filter((q) => q.surveyId === surv._id).map(e => e);
@@ -91,6 +103,7 @@ export class SurveyComponent implements OnInit {
         } else {
           surv.done = 0;
         }
+        if (ind === arr.length - 1) { this.pageProgress = 100; }
         return true;
       }).map( e => e);
 
