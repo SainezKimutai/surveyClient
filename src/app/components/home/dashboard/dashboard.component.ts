@@ -214,6 +214,7 @@ updatePage2() {
 
                 this.threatCategoryService.getAllByInstitutions().subscribe ( dataThreatCat => {
                   this.AllThreatCategorys = dataThreatCat; resolve();
+                  console.log("ALL loaded")
 
                 }, error => console.log('Error getting all threat Categories'));
 
@@ -402,6 +403,7 @@ topCardsChartFunction() {
           }
       }],
       xAxes: [{
+          barPercentage: 0.4,
           display: false,
           stacked: true,
           gridLines: {
@@ -485,7 +487,7 @@ third2graphToPie() {
 
 
 
-@HostListener('window:resize', ['$event']) onResize() {
+@HostListener('window:resize', []) onResize() {
   this.innerWidth = window.innerWidth;
 
   if (this.innerWidth < 992) {
@@ -504,10 +506,10 @@ third2graphToPie() {
 
 
 
-
 thirdSectionGraphsFunction() {
   this.third1Legend = false;
   this.third2Legend = false;
+  console.log("thirdSectionGraphsFunction called");
   // on the left
   this.third1Type = 'pie';
 
@@ -536,6 +538,8 @@ thirdSectionGraphsFunction() {
     pointBorderColor: 'white',
     pointHoverBorderColor: 'gray'
   }];
+
+  console.log(this.third1Datasets);
 
   this.third1ChartOptions = {
     title: {
@@ -569,6 +573,7 @@ thirdSectionGraphsFunction() {
           }
       }],
       xAxes: [{
+          barPercentage: 0.4,
           display: false,
           stacked: false,
           gridLines: {
@@ -662,6 +667,7 @@ thirdSectionGraphsFunction() {
          }
      }],
      xAxes: [{
+         barPercentage: 0.4,
          display: false,
          stacked: false,
          gridLines: {
@@ -854,6 +860,7 @@ graphChartFunction(num) {
           }
       }],
       xAxes: [{
+          barPercentage: 0.4,
           display: true,
           stacked: false,
           gridLines: {
@@ -924,19 +931,12 @@ computeCompanyRiskRates() {
 riskIssuesFunction() {
 
   this.AllThreats.forEach((threat) => {
-
     for (let trtCategory of this.AllThreatCategorys) {
-
       if (trtCategory._id === threat.category) {
-
         this.AllCompanies.forEach( (comp) => {
-
           for (let response of this.AllResponses) {
-
             if (response.companyId === comp._id) {
-
               for (let survey of this.AllSurveys) {
-
                 if ((survey._id === response.surveyId)) {
 
                     response.answers.forEach( (respAns, idx2, array2) => {
@@ -954,6 +954,8 @@ riskIssuesFunction() {
                         this.riskIssueArray = this.riskIssueArrayUnsorted.sort((a, b) => a.risk.localeCompare(b.risk));
                         let newRiskArray = this.riskIssueArray.filter(() => true ).map(e => e.risk);
                         this.riskIssueArrayToGraph = Array.from(new Set(newRiskArray));
+
+
                         this.graphChartFunction(0);
                         this.thirdSectionGraphsFunction();
                       }

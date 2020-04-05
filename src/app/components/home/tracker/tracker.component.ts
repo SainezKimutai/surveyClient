@@ -443,7 +443,7 @@ captureReportingUsers(ans) {
 editTracker() {
   this.trackerFormId = this.trackerOnView._id;
   this.bcpFunctionInput = this.trackerOnView;
-  this.bcpFunctionInput.last_reporting_day = this.bcpFunctionInput.last_reporting_day.toString(),
+  this.bcpFunctionInput.last_reporting_day = this.trackerOnView.last_reporting_day.toString(),
   this.formSectionStatus = true;
   this.listSectionStatus = false;
   this.viewSectionStatus = false;

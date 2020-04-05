@@ -9,8 +9,8 @@ import { ThreatService } from 'src/app/shared/services/threats.service';
 import { IndustryService } from 'src/app/shared/services/industry.service';
 import { TrackerReasonService } from 'src/app/shared/services/trackerReasons.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { createUrlResolverWithoutPackagePrefix } from '@angular/compiler';
 import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
-
 @Component({
   selector: 'app-editorial',
   templateUrl: './editorial.component.html',
@@ -72,6 +72,7 @@ export class EditorialComponent implements OnInit {
 
   public CurrentSurveyInput = '';
   public CurrentChoicesArr = [];
+  public skipNext = false;
   public CurrentQuestionArray = [];
   public CurrentQuestionInput = '';
   public CurrentChoiceInput = '';
@@ -87,6 +88,7 @@ export class EditorialComponent implements OnInit {
   public EditSurveyInput = '';
   public EditChoicesArr = [];
   public EditQuestionArray = [];
+  public EditskipNext = false;
   public EditQuestionInput = '';
   public EditChoiceInput = '';
   public EditChoiceInputThreat = '';
@@ -113,8 +115,8 @@ export class EditorialComponent implements OnInit {
 
   public threatName = '';
   public threatType = '';
-  public threatCategory = '';
   public threatLevels = [];
+  public threatCategory = '';
   public threatValue1 = '';
   public threatValue2 = '';
   public threatLevel = '';
@@ -148,14 +150,12 @@ export class EditorialComponent implements OnInit {
   public addSurveyQuestionsSatus = false;
 
 
+
+
+
+
   // threat Categories
   public threatCategoryInput = '';
-
-
-
-
-
-
 
 
 
@@ -193,12 +193,12 @@ export class EditorialComponent implements OnInit {
           data => this.AllIndustrys = data,
           error => console.log('Error getting all industries')
         );
-        
+         
         this.threatCategoryService.getAllByInstitutions().subscribe(
           data => this.AllThreatCategories = data,
           error => console.log('Error getting all threat categories')
         );
-
+        
         this.trackerReasonService.getAllInstitutionTrackerReasons().subscribe(
           data => this.AllTrackerReasons = data,
           error => console.log('Error getting all tracker reasons')
@@ -409,46 +409,35 @@ export class EditorialComponent implements OnInit {
     }
   }
 
-
-
   fetchLinkedAnswers() {
     this.CurrentChoicesArr =[];
     for(let threat of this.AllThreats){
       if (threat._id === this.CurrentChoiceInputThreat) {
-
-          if(threat.type == 0){
-
-          threat.categorization_inferences.forEach( (inf) => {
-            this.CurrentChoicesArr.push({ answer: inf.classifier[0]});
-
-          })
-
+        console.log(threat);
+        if(threat.type == 0){
+          console.log("Zero");
+        threat.categorization_inferences.forEach( (inf) => {
+          this.CurrentChoicesArr.push({ answer: inf.classifier[0], skipNext:false});
+        })
+      }else{
+        threat.categorization_inferences.forEach( (inf) => {
+          if(inf.classifier.length>1){
+          this.CurrentChoicesArr.push({ answer: inf.classifier[0].toString() + " to " + inf.classifier[1].toString(), skipNext:false});
           }else{
-
-          threat.categorization_inferences.forEach( (inf) => {
-
-            if(inf.classifier.length>1){
-
-            this.CurrentChoicesArr.push({ answer: inf.classifier[0].toString() + " to " + inf.classifier[1].toString()});
-            
-            }else{
-              this.CurrentChoicesArr.push({answer: inf.classifier[0].toString() + " and above"});
-            }
-
-          })
-        }
+            this.CurrentChoicesArr.push({answer: inf.classifier[0].toString() + " and above", skipNext:false});
+          }
+        })
+      }
       }
     }
   }
-
-
 
 
   addChoice() {
     if (this.CurrentChoiceInput === '') {
       this.notifyService.showWarning('Input answer', 'Empty Array');
     } else {
-      this.CurrentChoicesArr.push({ answer: this.CurrentChoiceInput});
+      this.CurrentChoicesArr.push({ answer: this.CurrentChoiceInput, skipNext:false});
       this.CurrentChoiceInput = '';
     }
 
@@ -456,6 +445,18 @@ export class EditorialComponent implements OnInit {
 
   removeAns(x) {
     this.CurrentChoicesArr.splice(x, 1);
+  }
+  setSkipNext(x){
+
+    const checker = <HTMLInputElement> document.getElementById(x);
+    if(checker.checked === true){
+    
+    this.CurrentChoicesArr[x].skipNext = true;
+    console.log(this.CurrentChoicesArr);
+    }else{
+    this.CurrentChoicesArr[x].skipNext = false;
+    console.log(this.CurrentChoicesArr);
+    }
   }
 
 
@@ -488,7 +489,9 @@ export class EditorialComponent implements OnInit {
       this.positionInput++;
       this.CurrentChoiceInputThreat = '';
       this.toFormTwo();
+
     }
+
   }
 
 
@@ -873,10 +876,6 @@ export class EditorialComponent implements OnInit {
   }
 
 
-
-
-
-
   addThreatCategory() {
     this.ImprintLoader = true;
     this.threatCategoryService.createThreatCategory({threatCategoryName: this.threatCategoryInput, institutionId: localStorage.getItem('loggedUserID')}).subscribe(
@@ -903,17 +902,9 @@ export class EditorialComponent implements OnInit {
     );
   }
 
+} 
 
 
 
 
-
-
-
-
-
-
-
-
-
-} // End of main class
+// End of main class

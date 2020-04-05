@@ -447,7 +447,7 @@ export class ReportsComponent implements OnInit {
   }
 
 
-  @HostListener('window:resize', ['$event']) onResize() {
+  @HostListener('window:resize', []) onResize() {
     this.innerWidth = window.innerWidth;
 
     if (this.innerWidth < 992) {
@@ -542,6 +542,7 @@ export class ReportsComponent implements OnInit {
          }
      }],
      xAxes: [{
+         barPercentage: 0.4,
          display: true,
          stacked: false,
          gridLines: {

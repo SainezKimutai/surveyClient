@@ -125,6 +125,9 @@ CheckActiveNavBar() {
     localStorage.removeItem('permissionStatus');
     localStorage.removeItem('loggedUserID');
     localStorage.removeItem('loggedCompanyId');
+    localStorage.removeItem('loggedUserName');
+    localStorage.removeItem('loggedUserEmail');
+    localStorage.removeItem('loggedUserInstitution');
     this.router.navigate(['/landing_page']);
   }
 
