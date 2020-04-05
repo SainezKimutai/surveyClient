@@ -19,7 +19,7 @@ import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.se
   styleUrls: ['./profile.component.sass']
 })
 export class ProfileComponent implements OnInit {
- // tslint:disable: max-line-length
+ // tslint:disable
 // tslint:disable: prefer-const
 
   constructor(
@@ -130,6 +130,7 @@ export class ProfileComponent implements OnInit {
     public chart3BgColors = [];
 
     public innerWidth: any;
+    public onResizeStatus = false;
 
 
 
@@ -724,6 +725,7 @@ export class ProfileComponent implements OnInit {
   @HostListener('window:resize', []) onResize() {
     this.innerWidth = window.innerWidth;
 
+    if(this.onResizeStatus) {
     if (this.innerWidth < 992) {
       this.chart1ChartOptions.legend.position = 'top';
       this.chart2ChartOptions.legend.position = 'top';
@@ -735,6 +737,7 @@ export class ProfileComponent implements OnInit {
       this.chart2ChartOptions.legend.position = 'right';
       this.chart3ChartOptions.legend.position = 'right';
     }
+  }
 
 
   }
@@ -1066,6 +1069,7 @@ export class ProfileComponent implements OnInit {
 
 
 
+    this.onResizeStatus = true;
     this.onResize();
 
   } // end of chartSectionGraphsFunction

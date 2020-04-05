@@ -38,6 +38,7 @@ export class DashboardComponent implements OnInit {
 
 
   public innerWidth: any;
+  public onResizeStatus = false;
   public faListAlt = faListAlt;
   public faBuilding = faBuilding;
   public faFire = faFire;
@@ -505,6 +506,7 @@ third2graphToPie() {
 @HostListener('window:resize', []) onResize() {
   this.innerWidth = window.innerWidth;
 
+  if (this.onResizeStatus) {
   if (this.innerWidth < 992) {
     this.third1ChartOptions.legend.position = 'top';
     this.third2ChartOptions.legend.position = 'top';
@@ -513,6 +515,7 @@ third2graphToPie() {
   if (this.innerWidth > 992) {
     this.third1ChartOptions.legend.position = 'bottom';
     this.third2ChartOptions.legend.position = 'bottom';
+  }
   }
 
 
@@ -705,6 +708,7 @@ thirdSectionGraphsFunction() {
 
 
 
+  this.onResizeStatus = true;
   this.onResize();
 
 } // end of thirdSectionGraphsFunction

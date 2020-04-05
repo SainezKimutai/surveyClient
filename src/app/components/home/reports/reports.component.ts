@@ -34,6 +34,7 @@ export class ReportsComponent implements OnInit {
         
       ) {  }
       public ImprintLoader = false;
+      public pageProgress = 0;
   //  tslint:disable
     
     // Icons
@@ -72,6 +73,7 @@ export class ReportsComponent implements OnInit {
       public chart3BgColors = [];
   
       public innerWidth: any;
+      public onResizeStatus = false;
 
 
 
@@ -97,13 +99,14 @@ export class ReportsComponent implements OnInit {
             data => 
             { 
              this.AllSurveys = [];
-              data.forEach(responseObj => {
+             this.pageProgress = 10;
+              data.forEach((responseObj, ind1, arr1) => {
                     this.surveyService.getOneSurvey(responseObj.surveyId).subscribe(
                      survey =>{
                          this.AllSurveys.push((survey));
                       }
                      )
-                     responseObj.answers.forEach(answr => {
+                     responseObj.answers.forEach((answr , ind2, arr2) => {
                       const question = {};
                         this.questionService.getOneQuestion(answr.questionId).subscribe(
                             questions=>{
@@ -160,17 +163,20 @@ export class ReportsComponent implements OnInit {
                                         }
                         
                                   }
-                    }
-
-                    )
+                                // check for last loop
+                                if ((ind1 === arr1.length - 1) && (ind2 === arr2.length - 1)){
+                                  this.pageProgress = 60;
+                                  resolve();
+                                }
+                    })
                     
-                    });
-                });
+                    }); // responseObj.answers.forEach(answr => {
+
+                });   // data.forEach(responseObj => {
             },
             error => console.log('Error getting all surveys')
         );
-
-        resolve();
+      
      });
     }
 
@@ -184,18 +190,21 @@ export class ReportsComponent implements OnInit {
         this.companyProfileService.getAllCompanyProfiles().subscribe(
           dataComp => {
             this.AllCompanies = dataComp;
-            for (const comp of this.AllCompanies) { if (comp._id === localStorage.getItem('loggedCompanyId')) { this.myCompany = comp; break; }}
+            for (const comp of this.AllCompanies) { if (comp._id === localStorage.getItem('loggedCompanyId')) { this.myCompany = comp;  this.pageProgress = 70; break; }}
+           
 
             this.threatService.getAllThreats().subscribe(
               dataTrt => {
               this.AllThreats = dataTrt;
+              this.pageProgress = 80;
 
               this.threatCategoryService.getAllThreatCategorys().subscribe(
                 dataTrtCat => {
                   this.AllThreatCategorys = dataTrtCat;
+                  this.pageProgress = 90;
 
                   this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
-                    data => {this.AllResponses = data; resolve(); },
+                    data => {this.AllResponses = data; resolve(); this.pageProgress = 100; },
                     error => console.log('Error geting all Responses')
                   );
 
@@ -239,8 +248,9 @@ export class ReportsComponent implements OnInit {
         this.TemplateNameOnView = name;
         this.TemplateOneViewId = id;
         let unSortedQuestions = this.AllQuestions.filter(( quiz) => quiz.surveyId === id ).map(e => e);
-        // console.log(unSortedQuestions);
+   
         this.TemplateQuestions = unSortedQuestions.sort((a, b) =>  a.position - b.position);
+      
     
         this.TemeplateViewSectionStatus = false;
         this.QuestionsViewStatus = true;
@@ -268,7 +278,7 @@ export class ReportsComponent implements OnInit {
 
     const pdf = new jspdf('p', 'mm', 'a4');
 
-    const headerTemplate = html2canvas(document.querySelector('#top-header'), {scale: 3});  
+    const headerTemplate = html2canvas(document.querySelector('#top-header'), {scale: 1});  
     const summaryGraph = html2canvas(document.querySelector('#summaryGraph'), {scale: 3});  
 
     headerTemplate.then((headerCanvas) => {
@@ -299,7 +309,7 @@ export class ReportsComponent implements OnInit {
           
           this.TemplateQuestions.forEach((quiz, key, arr) => {
                 
-              const reportTemplate = html2canvas(document.querySelector(`#quiz${key}`), {scale: 3});   
+              const reportTemplate = html2canvas(document.querySelector(`#quiz${key}`), {scale: 1});   
 
               reportTemplate.then(reportCanvas => {
 
@@ -377,7 +387,9 @@ export class ReportsComponent implements OnInit {
                   if ((survey._id === response.surveyId &&   survey._id  === this.TemplateOneViewId)) {
 
                       response.answers.forEach( (respAns, idx2, array2) => {
+                        
                         if (respAns.answer[0].threatId === threat._id) {
+                          
                           let myRiskIssueObject = {
                             risk: threat.name,
                             riskCategory: trtCategory.threatCategoryName,
@@ -389,6 +401,7 @@ export class ReportsComponent implements OnInit {
 
                           this.riskIssueArrayUnsorted.push(myRiskIssueObject);
                           this.riskIssueArray = this.riskIssueArrayUnsorted.sort((a, b) => a.risk.localeCompare(b.risk));
+                          
                           this.chartSectionGraphsFunction();
                         }
 
@@ -449,16 +462,15 @@ export class ReportsComponent implements OnInit {
 
   @HostListener('window:resize', []) onResize() {
     this.innerWidth = window.innerWidth;
-
-    if (this.innerWidth < 992) {
-      this.chart3ChartOptions.legend.position = 'top';
+    if (this.onResizeStatus) {
+      if (this.innerWidth < 992) {
+        this.chart3ChartOptions.legend.position = 'top';
+      }
+  
+      if (this.innerWidth > 992) {
+        this.chart3ChartOptions.legend.position = 'right';
+      }
     }
-
-    if (this.innerWidth > 992) {
-      this.chart3ChartOptions.legend.position = 'right';
-    }
-
-
   }
 
 
@@ -576,7 +588,8 @@ export class ReportsComponent implements OnInit {
 
 
 
-   this.onResize();
+  this.onResizeStatus = true;
+  this.onResize();
   }
 
 

@@ -25,7 +25,12 @@
  <section class="templates-section" *ngIf="TemeplateViewSectionStatus">
 
     <div class="card-group">
-        <div class="card" *ngFor="let item of AllSurveys" (click)="viewSurvey(item.surveyName, item._id)">
+        <div *ngIf="pageProgress !== 100" class="progress-wrap">
+            <circle-progress [percent]="pageProgress" ></circle-progress>
+        </div>
+
+
+        <div [hidden]="pageProgress !== 100" class="card" *ngFor="let item of AllSurveys" (click)="viewSurvey(item.surveyName, item._id)">
             <div class="card-header"></div>
             <div class="card-body">
                 <fa-icon [icon]="faListAlt"></fa-icon>
@@ -34,19 +39,19 @@
            
 
         </div>
-        <div class="card" *ngIf="AllSurveys && AllSurveys.length === 0">
+        <div  [hidden]="pageProgress !== 100" class="card" *ngIf="AllSurveys && AllSurveys.length === 0">
             <div class="card-header"></div>
             <div class="card-body">
                 <fa-icon [icon]="faListAlt"></fa-icon>
                 <h4>No Template</h4>
             </div>
         </div>
-        <div class="card" *ngIf="!AllSurveys">
+        <!-- <div [hidden]="pageProgress !== 100" class="card" *ngIf="!AllSurveys">
             <div class="card-header"></div>
             <div class="card-body d-flex">
                 <div class="spinner-div spinner-border mx-auto" role="status"></div>
             </div>
-        </div>
+        </div> -->
     </div>
 
  </section>
