@@ -43,6 +43,7 @@ export class TrackerComponent implements OnInit {
 
 // Loader
 public ImprintLoader = false;
+public pageProgress = 0;
 
 // icons
 public faPlus = faPlus;
@@ -198,30 +199,48 @@ getWeek() {
 updatePage() {
   return new Promise((resolve, reject) => {
     this.trackerReasonService.getAllTrackerReasons().subscribe(
-      data => this.AllTrackerReasons = data,
+      dataReason => {
+        
+        this.AllTrackerReasons = dataReason;
+        this.pageProgress = 25;
+
+        this.companyProfileService.getAllCompanyProfiles().subscribe(
+          dataComp => {
+            this.AllCompanies = dataComp;
+            for (const comp of this.AllCompanies) { if (comp._id === localStorage.getItem('loggedCompanyId')) { this.myCompany = comp; break; }};
+            this.pageProgress = 50;
+
+            this.userService.getAllUsers().subscribe(
+              dataUser => {
+                this.Users = dataUser;
+                this.pageProgress = 75;
+
+                this.trackerService.getAllTrackers().subscribe(
+                  dataTrt => {
+                    this.AllTrackers = dataTrt.filter((e) => e.companyId === localStorage.getItem('loggedCompanyId')).map(e => e); 
+                    this.pageProgress = 100;
+                    resolve();
+
+
+                  },
+                  error => console.log('Error getting all trackers')
+                );
+              },
+              error => {
+                console.log('Error In listing Users');
+              }
+            ); 
+          },
+          error => console.log('Error geting all Companies')
+        );
+      
+      
+      },
       error => console.log('Error getting all tracker reasons')
     );
-    this.companyProfileService.getAllCompanyProfiles().subscribe(
-      data => {
-        this.AllCompanies = data;
-        for (const comp of this.AllCompanies) { if (comp._id === localStorage.getItem('loggedCompanyId')) { this.myCompany = comp; break; }}
-      },
-      error => console.log('Error geting all Companies')
-    );
-    this.userService.getAllUsers().subscribe(
-      data => {
-        this.Users = data;
-      },
-      error => {
-        console.log('Error In listing Users');
-      }
-    ); 
-    this.trackerService.getAllTrackers().subscribe(
-      data => {
-        this.AllTrackers = data.filter((e) => e.companyId === localStorage.getItem('loggedCompanyId')).map(e => e); resolve();
-      },
-      error => console.log('Error getting all trackers')
-    );
+
+
+
   });
 
 }
@@ -443,7 +462,7 @@ captureReportingUsers(ans) {
 editTracker() {
   this.trackerFormId = this.trackerOnView._id;
   this.bcpFunctionInput = this.trackerOnView;
-  this.bcpFunctionInput.last_reporting_day = this.bcpFunctionInput.last_reporting_day.toString(),
+  this.bcpFunctionInput.last_reporting_day = this.trackerOnView.last_reporting_day.toString(),
   this.formSectionStatus = true;
   this.listSectionStatus = false;
   this.viewSectionStatus = false;

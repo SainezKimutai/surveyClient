@@ -84,7 +84,7 @@
                     </div>
 
                     <div *ngIf="isLast && !skip" class="btn-wrap d-flex">
-                        <button [disabled]="(!response || response === '' || responseArray.length === 0)"
+                        <button [disabled]="(!response || response === '') && responseArray.length === 0"
                         class="btn btn-sm btn-next ml-auto" (click)="Process(pageNumber)">Submit</button>
                     </div>
 

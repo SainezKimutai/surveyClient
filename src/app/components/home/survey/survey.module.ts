@@ -9,6 +9,7 @@ import { SurveyComponent } from './survey.component';
 import { SurveyRoutingModule } from './survey-routing.module';
 import { ModalModule } from 'ngx-bootstrap';
 import { NgbModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 
 
@@ -32,7 +33,17 @@ import { NgbModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
         timeOut: 5000,
         positionClass: 'toast-bottom-right',
         preventDuplicates: false,
+      }),
+      NgCircleProgressModule.forRoot({
+        radius: 50,
+        outerStrokeWidth: 8,
+        innerStrokeWidth: 8,
+        outerStrokeColor: '#acb4bc',
+        innerStrokeColor: '#e4e7ea',
+        animation: false,
+        animationDuration: 300
       })
+
 
     ]
 

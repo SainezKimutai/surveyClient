@@ -311,7 +311,10 @@
 <section class="templates-section" *ngIf="TemeplateViewSectionStatus">
 
     <div class="card-group">
-        <div class="card"  *ngFor="let item of AllSurveys">  
+        <div *ngIf="pageProgress !== 100" class="progress-wrap">
+            <circle-progress [percent]="pageProgress" ></circle-progress>
+        </div>
+        <div [hidden]="pageProgress !== 100" class="card"  *ngFor="let item of AllSurveys">  
           
             <div class="card-body">
                 <fa-icon [icon]="faListAlt"></fa-icon>
@@ -324,7 +327,7 @@
 
         </div>
 
-        <div class="card" *ngIf="AllSurveys.length === 0">
+        <div [hidden]="pageProgress !== 100" class="card" *ngIf="AllSurveys.length === 0">
             <div class="card-header">
 
             </div>
@@ -337,6 +340,17 @@
     </div>
 
 </section>
+
+
+
+
+
+
+
+
+
+
+
 
 
 <section class="templates-section" *ngIf="ThreatsViewSectionStatus">

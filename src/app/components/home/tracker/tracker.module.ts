@@ -8,6 +8,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ModalModule, BsDatepickerModule, DatepickerModule } from 'ngx-bootstrap';
 import { TrackerRoutingModule } from './tracker-routing.module';
 import { TrackerComponent } from './tracker.component';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 
 
@@ -29,6 +30,15 @@ import { TrackerComponent } from './tracker.component';
         timeOut: 5000,
         positionClass: 'toast-bottom-right',
         preventDuplicates: false,
+      }),
+      NgCircleProgressModule.forRoot({
+        radius: 50,
+        outerStrokeWidth: 8,
+        innerStrokeWidth: 8,
+        outerStrokeColor: '#acb4bc',
+        innerStrokeColor: '#e4e7ea',
+        animation: false,
+        animationDuration: 300
       }),
       BsDatepickerModule.forRoot(),
       DatepickerModule.forRoot(),

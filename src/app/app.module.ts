@@ -52,7 +52,7 @@ import { ThreatCategoryService } from './shared/services/threatCategory.service'
       preventDuplicates: false,
     }),
     BsDatepickerModule.forRoot(),
-    DatepickerModule.forRoot(),
+    DatepickerModule.forRoot()
   ],
 
   providers: [AppCustomPreloader, TokenGuard, AdminGuard, CustomerGuard, NotificationService, UserService, CompanyProfileService, SurveyService, QuestionService,

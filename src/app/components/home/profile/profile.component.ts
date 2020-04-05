@@ -19,7 +19,7 @@ import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.se
   styleUrls: ['./profile.component.sass']
 })
 export class ProfileComponent implements OnInit {
- // tslint:disable: max-line-length
+ // tslint:disable
 // tslint:disable: prefer-const
 
   constructor(
@@ -112,6 +112,7 @@ export class ProfileComponent implements OnInit {
 
 
     // chart
+    public chartsProgress = 0;
     public chart1Type;
     public chart1Labels;
     public chart1Datasets;
@@ -129,6 +130,7 @@ export class ProfileComponent implements OnInit {
     public chart3BgColors = [];
 
     public innerWidth: any;
+    public onResizeStatus = false;
 
 
 
@@ -176,30 +178,36 @@ export class ProfileComponent implements OnInit {
     this.userService.getAllUsers().subscribe(
       dataUser => {
         this.AllUsers = dataUser;
+        this.chartsProgress = 10;
 
         this.companyProfileService.getAllCompanyProfiles().subscribe(
           dataComp => {
             this.AllCompanies = dataComp;
             for (const comp of this.AllCompanies) { if (comp._id === localStorage.getItem('loggedCompanyId')) { this.myCompany = comp; break; }}
+            this.chartsProgress = 20;
 
             this.surveyService.getAllSurveys().subscribe(
               dataSurvey => {
                 this.AllSurveys = dataSurvey;
+                this.chartsProgress = 30;
 
                 this.questionService.getAllQuestions().subscribe(
                   dataQuiz => {
                     this.AllQuestions = dataQuiz;
+                    this.chartsProgress = 40;
 
                     this.threatService.getAllThreats().subscribe(
                       dataTrt => {
                       this.AllThreats = dataTrt;
+                      this.chartsProgress = 50;
 
                       this.threatCategoryService.getAllThreatCategorys().subscribe(
                         dataTrtCat => {
                           this.AllThreatCategorys = dataTrtCat;
+                          this.chartsProgress = 60;
 
                           this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
-                            data => {this.AllResponses = data; resolve(); },
+                            data => {this.AllResponses = data; resolve(); this.chartsProgress = 70; },
                             error => console.log('Error geting all Responses')
                           );
 
@@ -573,7 +581,7 @@ export class ProfileComponent implements OnInit {
 
 
   riskIssuesFunction() {
-
+    this.chartsProgress = 80;
     this.AllThreats.forEach((threat) => {
 
 
@@ -602,6 +610,7 @@ export class ProfileComponent implements OnInit {
 
                           this.riskIssueArrayUnsorted.push(myRiskIssueObject);
                           this.riskIssueArray = this.riskIssueArrayUnsorted.sort((a, b) => a.risk.localeCompare(b.risk));
+                          this.chartsProgress = 90;
                           this.chartSectionGraphsFunction();
                         }
 
@@ -716,6 +725,7 @@ export class ProfileComponent implements OnInit {
   @HostListener('window:resize', []) onResize() {
     this.innerWidth = window.innerWidth;
 
+    if(this.onResizeStatus) {
     if (this.innerWidth < 992) {
       this.chart1ChartOptions.legend.position = 'top';
       this.chart2ChartOptions.legend.position = 'top';
@@ -727,6 +737,7 @@ export class ProfileComponent implements OnInit {
       this.chart2ChartOptions.legend.position = 'right';
       this.chart3ChartOptions.legend.position = 'right';
     }
+  }
 
 
   }
@@ -745,7 +756,7 @@ export class ProfileComponent implements OnInit {
 
 
   chartSectionGraphsFunction() {
-
+    this.chartsProgress = 100;
     // on the left
     this.chart1Type = 'pie';
 
@@ -1058,6 +1069,7 @@ export class ProfileComponent implements OnInit {
 
 
 
+    this.onResizeStatus = true;
     this.onResize();
 
   } // end of chartSectionGraphsFunction

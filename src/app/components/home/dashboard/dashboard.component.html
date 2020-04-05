@@ -76,12 +76,6 @@
 
 
 
-
-
-
-
-
-
     <section id="second_cards_section" class="card-group">
         <div class="card">
             <div class="title d-flex"> <span>Risk Categories</span>
@@ -93,6 +87,7 @@
                 </div>
             </div>
             <div class="body-wrapper">
+                <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
                 <canvas *ngIf="third1Type" baseChart class="chart" [chartType]="third1Type" [labels]="third1Labels"
                 [datasets]="third1Datasets" [options]="third1ChartOptions"></canvas>
             </div>
@@ -109,6 +104,7 @@
             </div>
 
             <div class="body-wrapper">
+                <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
                 <canvas *ngIf="third2Type" baseChart class="chart" [chartType]="third2Type" [labels]="third2Labels"
                 [datasets]="third2Datasets" [options]="third2ChartOptions"></canvas>
             </div>
@@ -149,6 +145,7 @@
                     </div>
                 </div>
                 <div class="canvas-wrap">
+                    <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
                     <canvas *ngIf="graphType" baseChart class="chart" [chartType]="graphType" [labels]="graphLabels"
                     [datasets]="graphDatasets" [options]="graphChart"></canvas>
                 </div>

@@ -214,13 +214,23 @@ export class AnswerComponent implements OnInit {
   }
 
   captureMultipleResponses(ans) {
-   
-    if (this.responseArray.includes(ans)) {
-      this.responseArray = this.responseArray.filter(a => a !== ans ).map( e => e );
-    } else {
-      this.responseArray.push(ans);
-
+    if(this.responseArray.length > 0){
+      this.responseArray.forEach(response => {
+        response = response+" , "+ans.answer;
+        this.responseArray[0]=response;
+      });
+    }else{
+      this.responseArray.push(ans.answer)
     }
+    
+    // if (this.responseArray.includes(ans.answer)) {
+    //   this.responseArray = this.responseArray.filter(a => a !== ans ).map( e => e );
+    // } else {
+    //   this.responseArray.push(ans.answer);
+
+    // }
+
+    // console.log(this.responseArray);
   }
 
   async getThreat(id){
@@ -242,7 +252,7 @@ export class AnswerComponent implements OnInit {
      
       this.responseArray.push("Not answered")
     }
-    if(!this.response){
+    if(!this.response && this.responseArray.length === 0){
       
        this.responseArray[0]="Not answered";
     }

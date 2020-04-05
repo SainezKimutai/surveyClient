@@ -38,6 +38,7 @@ export class EditorialComponent implements OnInit {
 
   // loader
   public ImprintLoader = false;
+  public pageProgress = 0;
 
 
 // Icons
@@ -181,33 +182,67 @@ export class EditorialComponent implements OnInit {
     return new Promise((resolve, reject) => {
         
         this.surveyService.getAllInstitutionSurveysAdmin().subscribe(
-          data => this.AllSurveys = data,
+          dataSurvey => {
+            
+            this.AllSurveys = dataSurvey;
+            this.pageProgress = 10;
+
+            this.questionService.getAllQuestions().subscribe(
+              dataQuiz => {
+                this.AllQuestions = dataQuiz;
+                this.pageProgress = 20;
+
+                this.industryService.getAllInstitutionIndustrys().subscribe(
+                  dataInd => {
+                    this.AllIndustrys = dataInd;
+                    this.pageProgress = 40;
+
+                    this.threatCategoryService.getAllByInstitutions().subscribe(
+                      dataTrtCat => {
+                        this.AllThreatCategories = dataTrtCat;
+                        this.pageProgress = 60;
+
+                        this.trackerReasonService.getAllInstitutionTrackerReasons().subscribe(
+                          dataTrtResn => {
+                            this.AllTrackerReasons = dataTrtResn;
+                            this.pageProgress = 80;
+
+                            this.threatService.getAllInstitutionThreats().subscribe(
+                              dataTrt=> {
+                                this.AllThreats = dataTrt; 
+                                this.pageProgress = 100;
+                                
+                                resolve();},
+                              error => console.log('Error getting threats')
+                            );
+                          
+                          },
+                          error => console.log('Error getting all tracker reasons')
+                        );
+
+                      },
+                      error => console.log('Error getting all threat categories')
+                    );
+                  
+                  },
+                  error => console.log('Error getting all industries')
+                );
+              },
+              error => console.log('Error getting all question')
+            );
+          
+          },
           error => console.log('Error getting all surveys')
         );
 
-        this.questionService.getAllQuestions().subscribe(
-          data => this.AllQuestions = data,
-          error => console.log('Error getting all question')
-        );
-        this.industryService.getAllInstitutionIndustrys().subscribe(
-          data => this.AllIndustrys = data,
-          error => console.log('Error getting all industries')
-        );
+
+
          
-        this.threatCategoryService.getAllByInstitutions().subscribe(
-          data => this.AllThreatCategories = data,
-          error => console.log('Error getting all threat categories')
-        );
+
         
-        this.trackerReasonService.getAllInstitutionTrackerReasons().subscribe(
-          data => this.AllTrackerReasons = data,
-          error => console.log('Error getting all tracker reasons')
-        );
+
         
-        this.threatService.getAllInstitutionThreats().subscribe(
-          data=> {this.AllThreats = data;; resolve();},
-          error => console.log('Error getting threats')
-        );
+
     });
   }
 

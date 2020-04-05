@@ -16,7 +16,7 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
   styleUrls: ['./dashboard.component.sass']
 })
 export class DashboardComponent implements OnInit {
-// tslint:disable: max-line-length
+// tslint:disable
 // tslint:disable: prefer-const
 
 
@@ -38,6 +38,7 @@ export class DashboardComponent implements OnInit {
 
 
   public innerWidth: any;
+  public onResizeStatus = false;
   public faListAlt = faListAlt;
   public faBuilding = faBuilding;
   public faFire = faFire;
@@ -82,6 +83,7 @@ export class DashboardComponent implements OnInit {
 
 
   // Third Section graph variables
+  public chartsProgress = 0;
   public third1Type;
   public third1Labels;
   public third1Datasets;
@@ -124,6 +126,7 @@ export class DashboardComponent implements OnInit {
     }
 
 
+
   }
 
 
@@ -131,32 +134,37 @@ export class DashboardComponent implements OnInit {
 
 
 updatePage() {
+
   return new Promise((resolve, reject) => {
 
     this.userService.getAllUsers().subscribe( datauser => {
       this.AllUsers = datauser;
+      this.chartsProgress = 10
 
       this.companyProfileService.getAllCompanyProfiles().subscribe( dataCompanies => {
 
         this.AllCompanies = dataCompanies;
+        this.chartsProgress = 20
 
         this.surveyService.getAllInstitutionSurveysAdmin().subscribe( dataSurvey => {
-
+        
           this.AllSurveys = dataSurvey;
+          this.chartsProgress = 30
 
           this.questionService.getAllQuestions().subscribe( dataQuestion => {
             this.AllQuestions = dataQuestion;
+            this.chartsProgress = 40
 
             this.threatService.getAllInstitutionThreats().subscribe( dataThreats => {
               this.AllThreats = dataThreats;
 
-
+              this.chartsProgress = 50
               this.responseService.getAllResponses().subscribe( dataResponse => {
                 this.AllResponses = dataResponse;
-
+                this.chartsProgress = 60
                 this.threatCategoryService.getAllByInstitutions().subscribe ( dataThreatCat => {
                   this.AllThreatCategorys = dataThreatCat; resolve();
-
+                  this.chartsProgress = 70
                 }, error => console.log('Error getting all threat Categories'));
 
 
@@ -188,33 +196,41 @@ updatePage() {
 
 
 updatePage2() {
+
   return new Promise((resolve, reject) => {
 
     this.userService.getAllUsers().subscribe( datauser => {
       this.AllUsers = datauser;
+      this.chartsProgress = 10
 
       this.companyProfileService.getAllCompaniesByInstitutionId().subscribe( dataCompanies => {
 
         this.AllCompanies = dataCompanies;
+        this.chartsProgress = 20
 
         this.surveyService.getAllInstitutionSurveys().subscribe( dataSurvey => {
 
           this.AllSurveys = dataSurvey;
+          this.chartsProgress = 30
 
           this.questionService.getAllQuestions().subscribe( dataQuestion => {
             this.AllQuestions = dataQuestion;
+            this.chartsProgress = 40
 
             this.threatService.getAllThreats().subscribe( dataThreats => {
               this.AllThreats = dataThreats;
+              this.chartsProgress = 50
 
 
               this.responseService.getAllResponses().subscribe( dataResponse => {
                 this.AllResponses = dataResponse;
+                this.chartsProgress = 60
 
 
                 this.threatCategoryService.getAllByInstitutions().subscribe ( dataThreatCat => {
                   this.AllThreatCategorys = dataThreatCat; resolve();
-                  console.log("ALL loaded")
+                  this.chartsProgress = 70
+                  
 
                 }, error => console.log('Error getting all threat Categories'));
 
@@ -490,6 +506,7 @@ third2graphToPie() {
 @HostListener('window:resize', []) onResize() {
   this.innerWidth = window.innerWidth;
 
+  if (this.onResizeStatus) {
   if (this.innerWidth < 992) {
     this.third1ChartOptions.legend.position = 'top';
     this.third2ChartOptions.legend.position = 'top';
@@ -499,6 +516,7 @@ third2graphToPie() {
     this.third1ChartOptions.legend.position = 'bottom';
     this.third2ChartOptions.legend.position = 'bottom';
   }
+  }
 
 
 }
@@ -507,9 +525,7 @@ third2graphToPie() {
 
 
 thirdSectionGraphsFunction() {
-  this.third1Legend = false;
-  this.third2Legend = false;
-  console.log("thirdSectionGraphsFunction called");
+  this.chartsProgress = 100;
   // on the left
   this.third1Type = 'pie';
 
@@ -538,8 +554,6 @@ thirdSectionGraphsFunction() {
     pointBorderColor: 'white',
     pointHoverBorderColor: 'gray'
   }];
-
-  console.log(this.third1Datasets);
 
   this.third1ChartOptions = {
     title: {
@@ -609,7 +623,7 @@ thirdSectionGraphsFunction() {
   let threatArray =  this.riskIssueArray.filter(() => true ).map(e => e.risk);
   let newThreatArray = Array.from(new Set(threatArray));
 
-  this.third2Type = 'pie';
+  this.third2Type = 'bar';
 
   this.third2Labels = newThreatArray;
   let mythird2Datasets = [];
@@ -640,7 +654,7 @@ thirdSectionGraphsFunction() {
      fontSize: 25
    },
    legend: {
-     display: true,
+     display: false,
      position: 'bottom',
      itemWidth: 10,
      labels: {
@@ -668,7 +682,7 @@ thirdSectionGraphsFunction() {
      }],
      xAxes: [{
          barPercentage: 0.4,
-         display: false,
+         display: true,
          stacked: false,
          gridLines: {
              drawBorder: true,
@@ -694,6 +708,7 @@ thirdSectionGraphsFunction() {
 
 
 
+  this.onResizeStatus = true;
   this.onResize();
 
 } // end of thirdSectionGraphsFunction
@@ -716,8 +731,8 @@ graphChartToLine() {
   this.graphType = 'line';
   this.graphChart.legend.display = false;
   this.graphChart.scales.xAxes[0].display = true;
-  this.graphDatasets[0].backgroundColor = 'whitesmoke';
-  this.graphDatasets[0].borderColor = 'gray';
+  this.graphDatasets[0].backgroundColor = '#02b0cc';
+  this.graphDatasets[0].borderColor = 'teal';
   this.graphDatasets[0].pointBorderColor = 'black';
 }
 graphChartToBar() {
@@ -805,7 +820,7 @@ graphChartFunction(num) {
 
   this.activeRisk = this.riskIssueArrayToGraph[num];
 
-  this.graphType = 'bar';
+  this.graphType = 'line';
 
   this.graphLabels = ['Low', 'Medium', 'High'];
   // this.graphLabels.forEach((e) => {
@@ -815,12 +830,12 @@ graphChartFunction(num) {
     {
       label: this.riskIssueArrayToGraph[num],
       data: [ lowValue, mediumValue, highValue],
-      backgroundColor: ['#02b0cc', 'orange', 'red' ],
-      borderColor: 'white',
+      backgroundColor: '#02b0cc',
+      borderColor: 'teal',
       borderWidth: 1.5,
       pointBackgroundColor: 'transparent',
       pointHoverBackgroundColor: 'transparent',
-      pointBorderColor: 'white',
+      pointBorderColor: 'black',
       pointHoverBorderColor: 'gray'
     }
   ];
@@ -929,7 +944,7 @@ computeCompanyRiskRates() {
 
 
 riskIssuesFunction() {
-
+  this.chartsProgress = 80;
   this.AllThreats.forEach((threat) => {
     for (let trtCategory of this.AllThreatCategorys) {
       if (trtCategory._id === threat.category) {
@@ -954,7 +969,7 @@ riskIssuesFunction() {
                         this.riskIssueArray = this.riskIssueArrayUnsorted.sort((a, b) => a.risk.localeCompare(b.risk));
                         let newRiskArray = this.riskIssueArray.filter(() => true ).map(e => e.risk);
                         this.riskIssueArrayToGraph = Array.from(new Set(newRiskArray));
-
+                        this.chartsProgress = 95;
 
                         this.graphChartFunction(0);
                         this.thirdSectionGraphsFunction();

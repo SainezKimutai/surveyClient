@@ -34,6 +34,7 @@
     "jquery": "^3.4.1",
     "jspdf": "^1.5.3",
     "jspdf-autotable": "^3.3.1",
+    "ng-circle-progress": "^1.5.1",
     "ng2-charts": "^2.3.0",
     "ngx-bootstrap": "^5.5.0",
     "ngx-toastr": "^9.2.0",

@@ -8,6 +8,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ReportsComponent } from './reports.component';
 import { ReportsRoutingModule } from './reports-routing.module';
 import { ChartsModule } from 'ng2-charts';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 @NgModule({
 
@@ -27,6 +28,15 @@ import { ChartsModule } from 'ng2-charts';
         timeOut: 5000,
         positionClass: 'toast-bottom-right',
         preventDuplicates: false,
+      }),
+      NgCircleProgressModule.forRoot({
+        radius: 50,
+        outerStrokeWidth: 8,
+        innerStrokeWidth: 8,
+        outerStrokeColor: '#acb4bc',
+        innerStrokeColor: '#e4e7ea',
+        animation: false,
+        animationDuration: 300
       })
 
     ]
