@@ -35,6 +35,8 @@ export class ReportsComponent implements OnInit {
       ) {  }
       public ImprintLoader = false;
       public pageProgress = 0;
+      public pdfDownloadProgressStatus = false;
+      public pdfDownloadProgress: number = 20;
   //  tslint:disable
     
     // Icons
@@ -74,6 +76,7 @@ export class ReportsComponent implements OnInit {
   
       public innerWidth: any;
       public onResizeStatus = false;
+      public myInterval: any;
 
 
 
@@ -268,8 +271,18 @@ export class ReportsComponent implements OnInit {
 
 
   async downloadPdf() {
-    this.ImprintLoader = true;
-    this.notifyService.showInfo('..downloading', 'Pdf template')
+    // this.ImprintLoader = true;
+    this.pdfDownloadProgressStatus = true;
+    this.pdfDownloadProgress = 4;
+    this.notifyService.showInfo('downloading...', 'Pdf template')
+
+    this.myInterval = setInterval(() => {
+      if(this.pdfDownloadProgress !== 99) {
+        this.pdfDownloadProgress = this.pdfDownloadProgress + 5
+      }
+      
+    }, 50)
+    
     setTimeout(() => {
       
     let pageQuestions = 3;
@@ -306,45 +319,65 @@ export class ReportsComponent implements OnInit {
           
           pdf.addPage();
 
+          const progressInterval = (100 / Number(this.TemplateQuestions.length));
           
-          this.TemplateQuestions.forEach((quiz, key, arr) => {
-                
+          this.TemplateQuestions.forEach((quiz, key, arr) => {              
+    
               const reportTemplate = html2canvas(document.querySelector(`#quiz${key}`), {scale: 1});   
-
+           
               reportTemplate.then(reportCanvas => {
 
         
                 let reportFinalStartPosition = Number(reportConstantStartPosition)
-
-
-                if ( quiz.recom) {
-                  pdf.addImage(reportCanvas, 10, reportFinalStartPosition, 190, 60);
-                  reportConstantStartPosition = reportConstantStartPosition + 65
-                }
-                if (!quiz.recom) {
-                  pdf.addImage(reportCanvas, 10, reportFinalStartPosition, 190, 30);
-                  reportConstantStartPosition = reportConstantStartPosition + 25
-                }
-
-
                 if ( key > pageQuestions) {
-                      pageNumber = pageNumber + 1;
-                      pageQuestions = pageQuestions + 4;
-                      reportConstantStartPosition = 15
-                      pdf.addPage();    
-          
+                  pageNumber = pageNumber + 1;
+                  pageQuestions = pageQuestions + 4;
+                  reportConstantStartPosition = 15
+                  reportFinalStartPosition = reportConstantStartPosition
+                  pdf.addPage();   
+                  // this.pdfDownloadProgress = pageNumber;
+
+                  if ( quiz.recom) {
+                    pdf.addImage(reportCanvas, 10, reportFinalStartPosition, 190, 60);
+                    reportConstantStartPosition = reportConstantStartPosition + 65
+                  }
+                  if (!quiz.recom) {
+                    pdf.addImage(reportCanvas, 10, reportFinalStartPosition, 190, 30);
+                    reportConstantStartPosition = reportConstantStartPosition + 25
+                  }
+                  
+                } else {
+
+                  if ( quiz.recom) {
+                    pdf.addImage(reportCanvas, 10, reportFinalStartPosition, 190, 60);
+                    reportConstantStartPosition = reportConstantStartPosition + 65
+                  }
+                  if (!quiz.recom) {
+                    pdf.addImage(reportCanvas, 10, reportFinalStartPosition, 190, 30);
+                    reportConstantStartPosition = reportConstantStartPosition + 25
+                  }
+
                 }
+
+               
+
+
+
 
 
                 if (Object.is(arr.length - 1, key)) {
 
                   pdf.save('RiskAnalysisReport.pdf');
                   // pdf.output('dataurlnewwindow');
+                  this.pdfDownloadProgressStatus = false;
                   this.ImprintLoader = false;
+                  clearInterval(this.myInterval);
                 }
 
               }); 
-          } )
+          
+          
+          })
 
         })
 
