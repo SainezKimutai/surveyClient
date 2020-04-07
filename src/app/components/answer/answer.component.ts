@@ -40,6 +40,7 @@ export class AnswerComponent implements OnInit {
     options: any = [];
     response: any;
     responseArray = [];
+    holderResponseArray = [];
     isLast = false;
     ImprintLoader = false;
     questions = [];
@@ -71,7 +72,27 @@ export class AnswerComponent implements OnInit {
 
     if (myResponses.length > 0 ) {
       this.myPreviousResponseId = myResponses[0]._id;
-      this.myPreviousAnswers = myResponses[0].answers;
+     
+      myResponses[0].answers.forEach(answer => {
+        
+        let formatedAnswer = {};
+        let questionId = answer.questionId;
+        let position = answer.position;
+        let structured = [];
+        let choice = {answer: answer.answer[0].answer};
+        let threat = {classifier: [answer.answer[0].answer], category: answer.answer[0].level, inference: answer.answer[0].recom};
+        structured.push(choice);
+        structured["threatId"] = answer.answer[0].threatId;
+        structured["threatName"] = answer.answer[0].threat;
+        structured["threat"] = threat;
+        formatedAnswer = {
+          questionId: questionId,
+          position: position,
+          answer: structured
+        }
+        this.myPreviousAnswers.push(formatedAnswer);
+      });
+      
       this.DoneQuestions = Number(this.myPreviousAnswers.length);
       this.structureQuestions();
       this.continuationFromBefore(this.DoneQuestions);
@@ -94,14 +115,14 @@ export class AnswerComponent implements OnInit {
     if (this.questions.length > 0) {
       
       this.questionTag = this.questions[0].question;
-      this.skip = this.questions[0].skip;
+      this.skip = (this.questions[0].skip ? true: false);
       this.open = this.questions[0].open_question;
       this.multiple = this.questions[0].multiple_choice;
       this.type = this.questions[0].choice_type;
       this.options = this.questions[0].choices;
       this.pageNumber = 1;
       this.totalPages = this.questions.length;
-       
+
       if (this.questions.length === 1) {
         this.isLast = true;
       }
@@ -124,6 +145,7 @@ export class AnswerComponent implements OnInit {
     this.responseArray['threatName'] = this.threat.name;
     // direct range comparison...
     if(this.threat.type === 0){
+     
       for(var i=0; i< this.threat.categorization_inferences.length; i++){
         if(response == this.threat.categorization_inferences[i].classifier[0]){
           feedback = this.threat.categorization_inferences[i];
@@ -193,17 +215,19 @@ export class AnswerComponent implements OnInit {
   }
 
   captureMultipleResponses(ans) {
-   
-    if (this.responseArray.includes(ans)) {
-      this.responseArray = this.responseArray.filter(a => a !== ans ).map( e => e );
-    } else {
-      this.responseArray.push(ans);
-
+    if(this.responseArray.length > 0){
+      this.responseArray.forEach(response => {
+        response = response+" , "+ans.answer;
+        this.responseArray[0]=response;
+      });
+    }else{
+      this.responseArray.push(ans.answer)
     }
+    
   }
 
   async getThreat(id){
-    await this.threatService.getOneThreat(id).subscribe(async data => {this.threat = data; console.log(this.threat); await this.getThreatInference();}, error =>console.log("ERROR"));
+    await this.threatService.getOneThreat(id).subscribe(async data => {this.threat = data;  await this.getThreatInference();}, error =>console.log("ERROR"));
     return this.threat;
   }
 
@@ -215,68 +239,20 @@ export class AnswerComponent implements OnInit {
 
 
   async next(id) {
+     
 
- 
-   const responseArray = this.responseArray;
     if(this.responseArray.length === 0){
-      // console.log("No answer");
+     
       this.responseArray.push("Not answered")
     }
-    if(!this.response){
-       
+    if(!this.response && this.responseArray.length === 0){
+      
        this.responseArray[0]="Not answered";
     }
+    this.holderResponseArray = this.responseArray;
    
-    await this.structureAnswers(this.pageNumber);
-    
+    await this.structureAnswers(id);
 
-    if (id !== this.totalPages) {
-    
-
-    if(this.questions[id-1].linked){
-    
-
-      if(responseArray[0].skipNext){
-     
-
-      if(id !== this.totalPages){
-
-        this.questionTag = this.questions[id+1].question;
-        this.skip =(this.questions[id+1].skip ? true: false);
-        this.open = this.questions[id+1].open_question;
-        this.multiple = this.questions[id+1].multiple_choice;
-        this.type = this.questions[id+1].choice_type;
-        this.options = this.questions[id+1].choices;
-        this.pageNumber = id+2;
-        this.totalPages = this.questions.length;
-     
-      }
-
-      }else{
-        this.questionTag = this.questions[id].question;
-        this.skip = (this.questions[id].skip ? true:false);
-        this.open = this.questions[id].open_question;
-        this.multiple = this.questions[id].multiple_choice;
-        this.type = this.questions[id].choice_type;
-        this.options = this.questions[id].choices;
-        this.pageNumber = id + 1;
-        this.totalPages = this.questions.length;
-        
-      }
-    }
-     else{
-      this.questionTag = this.questions[id].question;
-      this.skip = (this.questions[id].skip ? true: false);
-      this.open = this.questions[id].open_question;
-      this.multiple = this.questions[id].multiple_choice;
-      this.type = this.questions[id].choice_type;
-      this.options = this.questions[id].choices;
-      this.pageNumber = id + 1;
-      this.totalPages = this.questions.length;
-    
-   }
-  
- }
  }
   
 
@@ -312,95 +288,210 @@ export class AnswerComponent implements OnInit {
 
 
 
+async proceedToNext(id){
 
+  const responseArray = this.holderResponseArray;
+  
+
+  if (id !== this.totalPages) {
+    
+
+    if(this.questions[id-1].linked){
+
+      let skipNext = responseArray[0].skipNext ? true : false; 
+
+      if(skipNext){
+     
+      if(id !== this.totalPages-1){
+      if(id !== this.totalPages){
+         
+        this.questionTag = this.questions[id+1].question;
+        this.skip =(this.questions[id+1].skip ? true: false);
+        this.open = this.questions[id+1].open_question;
+        this.multiple = this.questions[id+1].multiple_choice;
+        this.type = this.questions[id+1].choice_type;
+        this.options = this.questions[id+1].choices;
+        this.pageNumber = id+2;
+        this.totalPages = this.questions.length;
+     
+      }
+     }
+
+      }else{
+        this.questionTag = this.questions[id].question;
+        this.skip = (this.questions[id].skip ? true:false);
+        this.open = this.questions[id].open_question;
+        this.multiple = this.questions[id].multiple_choice;
+        this.type = this.questions[id].choice_type;
+        this.options = this.questions[id].choices;
+        this.pageNumber = id + 1;
+        this.totalPages = this.questions.length;
+        
+      }
+    }
+     else{
+      this.questionTag = this.questions[id].question;
+      this.skip = (this.questions[id].skip ? true: false);
+      this.open = this.questions[id].open_question;
+      this.multiple = this.questions[id].multiple_choice;
+      this.type = this.questions[id].choice_type;
+      this.options = this.questions[id].choices;
+      this.pageNumber = id + 1;
+      this.totalPages = this.questions.length;
+    
+   }
+  
+ }
+//  this.holderResponseArray = []
+}
 
 
 
 
   async structureAnswers(id) {
     if(this.questions[id-1].threat){
-      await this.threatService.getOneThreat(this.questions[id-1].threat).subscribe(async data => {this.threat = data; console.log(this.threat); await this.getThreatInference();
-
-      const answer = {
+      // console.log(this.questions[id-1]);
+      await this.threatService.getOneThreat(this.questions[id-1].threat).subscribe(async data => {
+        this.threat = data; 
+        await this.getThreatInference();
+ 
+       const answer = {
         questionId: this.questions[id - 1]._id,
+        position: this.questions[id-1].position,
         answer : this.responseArray
       };
 
-      this.answers.push(answer);
-      
-      if(this.questions[id-1].linked){ //check if linked == true
-        if(this.responseArray[0].skipNext){//check if  skipNext == true
-          if (id === this.totalPages-1) { // check if the next question after skip is the last..
-            this.isLast = true; //make submit btn active
-          }
-          if (this.questions[id+1]==null) { // next question is the last question
+     
+      await this.answers.push(answer);
+
+      if(this.questions[id-1].linked){ 
+      //check if linked == true
+        if(this.responseArray[0].skipNext){
+          //check if  skipNext == true
+          if (id === this.totalPages-1) { 
+            // check if the next question after skip is the last..
+             this.isLast = true;
+             this.proceedToNext(id)
+          } 
+          if (this.questions[id+1]==null) { 
+            // current question is the last question
            
-            this.ImprintLoader = true;
-            this.answerStructure.answers = this.answers;
-            this.postAnswers(this.answerStructure);
+             this.ImprintLoader = true;
+             this.answerStructure.answers = this.answers;
+             await this.postAnswers(this.answerStructure);
           }
           this.responseArray = [];
           this.skip = false;
           this.response = '';
+          this.proceedToNext(id)
 
         }else{//if skipNext !=true
           if (id === this.totalPages - 1) {
             this.isLast = true;
-          }
+            this.proceedToNext(id)
+          } 
           if (id === this.totalPages) {
             this.ImprintLoader = true;
             this.answerStructure.answers = this.answers;
-            this.postAnswers(this.answerStructure);
+            await this.postAnswers(this.answerStructure);
           }
         }
         this.responseArray = [];
         this.skip = false;
         this.response = '';
+        this.proceedToNext(id)
 
       }
       else{ //not linked, continue as normal.
         if (id === this.totalPages - 1) {
           this.isLast = true;
+          this.proceedToNext(id);
         }
         if (id === this.totalPages) {
           this.ImprintLoader = true;
           this.answerStructure.answers = this.answers;
-          this.postAnswers(this.answerStructure);
+          await this.postAnswers(this.answerStructure);
         }
 
         this.responseArray = [];
         this.skip = false;
         this.response = '';
+        this.proceedToNext(id)
 
       }
       
       this.responseArray = [];
       this.skip = false;
       this.response = '';
+      // console.log("Goind to next")
+      // this.proceedToNext(id)
 
-     }, error =>console.log("error"));
+     }, error =>{
+     console.log("error")
+     this.proceedToNext(id)
+    });
     }else{//if question does not have a threat..
       const answer = {
         questionId: this.questions[id - 1]._id,
+        position: this.questions[id - 1].position,
         answer : this.responseArray
       };
+       
+      await this.answers.push(answer);
 
-      this.responseArray = [];
-      this.response = '';
-      this.skip=false;
-      this.answers.push(answer);
-
-      if (id === this.questions.length - 1) {
-        this.isLast = true;
-      }
-
-      if (id === this.totalPages) {
-        this.ImprintLoader = true;
-        this.answerStructure.answers = this.answers;
-        this.postAnswers(this.answerStructure);
-    }
+      if(this.questions[id-1].linked){ 
+        //check if linked == true
+          if(this.responseArray[0].skipNext){//check if  skipNext == true
+            if (id === this.totalPages-1) { // check if the next question after skip is the last..
+               this.isLast = true;
+               this.proceedToNext(id)
+            }
+            if (this.questions[id+1]==null) { // current question is the last question
+               this.ImprintLoader = true;
+               this.answerStructure.answers = this.answers;
+               await this.postAnswers(this.answerStructure);
+            }
+            this.responseArray = [];
+            this.skip = false;
+            this.response = '';
+            this.proceedToNext(id)
+  
+          }else{//if skipNext !=true
+            if (id === this.totalPages - 1) {
+              this.isLast = true;
+              this.proceedToNext(id)
+            } 
+            if (id === this.totalPages) {
+              this.ImprintLoader = true;
+              this.answerStructure.answers = this.answers;
+              await this.postAnswers(this.answerStructure);
+            }
+          }
+          this.responseArray = [];
+          this.skip = false;
+          this.response = '';
+          this.proceedToNext(id)
+  
+        }
+        else{ //not linked, continue as normal.
+          if (id === this.totalPages - 1) {
+            this.isLast = true;
+            this.proceedToNext(id);
+          }
+          if (id === this.totalPages) {
+            this.ImprintLoader = true;
+            this.answerStructure.answers = this.answers;
+            await this.postAnswers(this.answerStructure);
+          }
+  
+          this.responseArray = [];
+          this.skip = false;
+          this.response = '';
+          this.proceedToNext(id)
+        }
 }
 }
+
 
   structureAnswers2(id) {
 
@@ -408,6 +499,7 @@ export class AnswerComponent implements OnInit {
     this.response = '';
     this.skip = false;
     this.answers = this.myPreviousAnswers;
+    
     if (id === this.questions.length - 1) {
       this.isLast = true;
     }
@@ -427,11 +519,6 @@ export class AnswerComponent implements OnInit {
       companyId: localStorage.getItem('loggedCompanyId')
     };
   }
-
-
-
-
-
 
   async postAnswers(answers) {
     

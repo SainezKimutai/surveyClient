@@ -74,8 +74,10 @@
                     <div *ngIf="skip" class="btn-wrap d-flex">
                         <button *ngIf="!response || responseArray.length ===0"
                         class="btn btn-sm btn-next ml-auto" (click)="next(pageNumber)">Skip</button>
-                        <button *ngIf="!isLast && (response)" [disabled]="(response === '' || !response) && responseArray.length === 0"
+                        <button *ngIf="!isLast && (response || responseArray.length !==0)" [disabled]="(response === '' || !response) && responseArray.length === 0"
                         class="btn btn-sm btn-next ml-auto" (click)="next(pageNumber)">Next</button>
+                        <button *ngIf="isLast && (response || response !== '' || responseArray.length !==0)" [disabled]="(!response || response === '') && responseArray.length === 0"
+                        class="btn btn-sm btn-next ml-auto" (click)="Process(pageNumber)">Submit</button>
                     </div>
 
                     <div *ngIf="!skip && !isLast" class="btn-wrap d-flex">
@@ -84,12 +86,12 @@
                     </div>
 
                     <div *ngIf="isLast && !skip" class="btn-wrap d-flex">
-                        <button [disabled]="(!response || response === '' || responseArray.length === 0)"
+                        <button [disabled]="(!response || response === '') && responseArray.length === 0"
                         class="btn btn-sm btn-next ml-auto" (click)="Process(pageNumber)">Submit</button>
                     </div>
 
                     <div class="text-muted">
-                        <h6>{{pageNumber}} of {{totalPages}}</h6>
+                        <h6>{{((pageNumber-1) / totalPages)*100 | number:'1.0-2'}}  % Done</h6>
                     </div>
 
                 </div>
