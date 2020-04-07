@@ -49,6 +49,7 @@ export class AnswerComponent implements OnInit {
     threat: any;
     skip = false;
     currentQuestionIndex : any;
+    multiAnswers =[];
 
 
 
@@ -215,15 +216,27 @@ export class AnswerComponent implements OnInit {
   }
 
   captureMultipleResponses(ans) {
-    if(this.responseArray.length > 0){
-      this.responseArray.forEach(response => {
-        response = response+" , "+ans.answer;
-        this.responseArray[0]=response;
-      });
+     if(this.multiAnswers.length > 0){
+       if(this.multiAnswers.indexOf(ans.answer) > -1){
+         this.multiAnswers.splice(this.multiAnswers.indexOf(ans.answer), 1);
+       }else{
+         this.multiAnswers.push(ans.answer);
+       }
+     }else{
+       this.multiAnswers.push(ans.answer);
+     }
+     let value = this.multiAnswers[0];
+     if(this.multiAnswers.length>1){
+       for(var i = 1; i<this.multiAnswers.length; i++){
+         value = value + " , "+ this.multiAnswers[i]
+       }
+     this.responseArray[0] = value;
+    }else if(this.multiAnswers.length === 1){
+      this.responseArray[0] = this.multiAnswers[0];
     }else{
-      this.responseArray.push(ans.answer)
+      this.responseArray = [];
     }
-    
+     
   }
 
   async getThreat(id){
@@ -289,7 +302,7 @@ export class AnswerComponent implements OnInit {
 
 
 async proceedToNext(id){
-
+ 
   const responseArray = this.holderResponseArray;
   
 
@@ -340,7 +353,7 @@ async proceedToNext(id){
       this.totalPages = this.questions.length;
     
    }
-  
+   
  }
 //  this.holderResponseArray = []
 }
@@ -421,7 +434,6 @@ async proceedToNext(id){
       }
       
       this.responseArray = [];
-      this.skip = false;
       this.response = '';
       // console.log("Goind to next")
       // this.proceedToNext(id)
@@ -497,7 +509,6 @@ async proceedToNext(id){
 
     this.responseArray = [];
     this.response = '';
-    this.skip = false;
     this.answers = this.myPreviousAnswers;
     
     if (id === this.questions.length - 1) {
