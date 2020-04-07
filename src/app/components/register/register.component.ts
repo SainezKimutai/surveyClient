@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { faBuilding, faUsers, faGlobe, faIndustry, faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
 import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { Router } from '@angular/router';
 import { IndustryService } from 'src/app/shared/services/industry.service';
-
+import { ModalDirective, ModalOptions, ModalModule } from 'ngx-bootstrap';
 
 @Component({
   selector: 'app-register',
@@ -21,6 +21,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private industryService: IndustryService,
     private notifyService: NotificationService
   ) { }
+
+  @ViewChild('termsModal', {static: true}) addTermsModal: ModalDirective;
 
 
   public AllIndustrys = [];
@@ -39,7 +41,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   public registrationForm;
   public passwordMatch = false;
-
 
 
 
@@ -83,6 +84,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
       error => console.log('Error getting all industries')
     );
 
+    setTimeout(()=>{
+      this.addTermsModal.show();
+    }, 50);
     // this.superAdmin();
 
   }
