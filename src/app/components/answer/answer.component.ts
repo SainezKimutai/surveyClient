@@ -767,7 +767,7 @@ async proceedToNext(id){
       answer : this.responseArray
     };
 
-  
+   
     await this.answers.push(answer);
 
     if(this.questions[id-1].linked){ 
@@ -827,7 +827,6 @@ async proceedToNext(id){
     }
     
     this.responseArray = [];
-    this.skip = false;
     this.response = '';
     // console.log("Goind to next")
     // this.moveTotheNextQustionOnEdit(id)
@@ -895,7 +894,7 @@ async proceedToNext(id){
         this.response = '';
         this.moveTotheNextQustionOnEdit(id)
       }
-}
+  }
 }
 
 
