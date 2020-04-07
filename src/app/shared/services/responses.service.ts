@@ -7,7 +7,7 @@ import { dev, header} from '../dev/dev';
   providedIn: 'root'
 })
 
-
+// tslint:disable
 export class ResponseService {
 
 
@@ -26,7 +26,7 @@ export class ResponseService {
             companyId: data.companyId,
             answers: []
           };
-        // tslint:disable-next-line: prefer-for-of
+        
         for (let i = 0; i < data.answers.length; i++) {
             payload.answers.push({
             questionId: data.answers[i].questionId,
@@ -51,6 +51,10 @@ export class ResponseService {
 
     getOneResponse(id) {
         return this.http.get<any>(this.url + 'getOne/' + id, {headers : header});
+    }
+
+    getByUserIdCompanyIdSurveyId(data) {
+        return this.http.post<any>(this.url + 'getByUserIdCompanyIdSurveyId/', data,  {headers : header});
     }
 
 

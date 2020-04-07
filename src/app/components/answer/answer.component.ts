@@ -49,6 +49,9 @@ export class AnswerComponent implements OnInit {
     skip = false;
     currentQuestionIndex : any;
 
+    // previous step valriables
+    public previousSteps = 0;
+
 
 
   ngOnInit() {
@@ -57,17 +60,28 @@ export class AnswerComponent implements OnInit {
           this.surveyId = params.surveyId;
           this.surveyName = params.surveyName;
     });
-    this.responseService.getAllResponses().subscribe(
+    // this.responseService.getAllResponses().subscribe(
+    //   data => {this.AllResponses = data; this.checkIfSurveyHadBeenAnsweredBefore(); },
+    //   error => console.log('Error geting all Responses')
+    // );
+    let dataToSend = {
+      surveyId: this.surveyId,
+      companyId: localStorage.getItem('loggedCompanyId'),
+      userId: localStorage.getItem('loggedUserID')
+    }
+    this.responseService.getByUserIdCompanyIdSurveyId(dataToSend).subscribe(
       data => {this.AllResponses = data; this.checkIfSurveyHadBeenAnsweredBefore(); },
       error => console.log('Error geting all Responses')
     );
+
 
 
   }
 
 
   checkIfSurveyHadBeenAnsweredBefore() {
-    const myResponses = this.AllResponses.filter((resp) => (resp.companyId === localStorage.getItem('loggedCompanyId') && resp.surveyId === this.surveyId) && resp.userId === localStorage.getItem('loggedUserID') ).map( e => e);
+    // const myResponses = this.AllResponses.filter((resp) => (resp.companyId === localStorage.getItem('loggedCompanyId') && resp.surveyId === this.surveyId) && resp.userId === localStorage.getItem('loggedUserID') ).map( e => e);
+    const myResponses = this.AllResponses;
 
     if (myResponses.length > 0 ) {
       this.myPreviousResponseId = myResponses[0]._id;
@@ -511,6 +525,88 @@ export class AnswerComponent implements OnInit {
 
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  moveToPreviousQuestion() {
+    this.previousSteps = this.previousSteps + 1;
+  
+    let id = this.pageNumber - 2;
+  
+    this.questionTag = this.questions[id].question;
+    this.skip = (this.questions[id].skip ? true: false);
+    this.open = this.questions[id].open_question;
+    this.multiple = this.questions[id].multiple_choice;
+    this.type = this.questions[id].choice_type;
+    this.options = this.questions[id].choices;
+    this.pageNumber = this.pageNumber - 1;
+    this.totalPages = this.questions.length;
+    this.response = this.answers[id].answer[0].answer ? 
+                            this.answers[id].answer[0].answer.answer ? this.answers[id].answer[0].answer.answer : this.answers[id].answer[0].answer
+                            : this.answers[id].answer[0] 
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+  updatePreviousAnswers() {
+    this.previousSteps = this.previousSteps - 1;
+
+    let id = this.pageNumber;
+  
+    this.questionTag = this.questions[id].question;
+    this.skip = (this.questions[id].skip ? true: false);
+    this.open = this.questions[id].open_question;
+    this.multiple = this.questions[id].multiple_choice;
+    this.type = this.questions[id].choice_type;
+    this.options = this.questions[id].choices;
+    this.pageNumber = this.pageNumber + 1;
+    this.totalPages = this.questions.length;
+    this.response = this.answers[id].answer[0].answer ? 
+                            this.answers[id].answer[0].answer.answer ? this.answers[id].answer[0].answer.answer : this.answers[id].answer[0].answer
+                            : this.answers[id].answer[0] 
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   back(){
     if ( localStorage.getItem('permissionStatus') === 'isThirdParty') {  this.router.navigate(['/home/dashboard']); }
     if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  this.router.navigate(['/home/dashboard']); }
@@ -518,4 +614,35 @@ export class AnswerComponent implements OnInit {
   }
 
 
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+} // end of main class
