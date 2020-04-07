@@ -52,6 +52,8 @@ export class AnswerComponent implements OnInit {
 
     // previous step valriables
     public previousSteps = 0;
+    public answerHasChange = false;
+    public quizIdOfAnswerOnEdit = '';
 
 
 
@@ -71,7 +73,7 @@ export class AnswerComponent implements OnInit {
       userId: localStorage.getItem('loggedUserID')
     }
     this.responseService.getByUserIdCompanyIdSurveyId(dataToSend).subscribe(
-      data => {this.AllResponses = data; this.checkIfSurveyHadBeenAnsweredBefore(); },
+      data => {this.AllResponses = data; console.log(this.AllResponses); this.checkIfSurveyHadBeenAnsweredBefore(); },
       error => console.log('Error geting all Responses')
     );
 
@@ -121,7 +123,7 @@ export class AnswerComponent implements OnInit {
 
   async getAndSetQuestions() {
     await this.questionService.getQuestionsInASurvey(this.surveyId).
-     subscribe(data => {this.questions = data.sort((a, b) =>  a.position - b.position);  this.formatQuestions(); }, err => console.log(err));
+     subscribe(data => {this.questions = data.sort((a, b) =>  a.position - b.position); this.formatQuestions(); }, err => console.log(err));
   }
 
 
@@ -643,12 +645,21 @@ async proceedToNext(id){
     this.options = this.questions[id].choices;
     this.pageNumber = this.pageNumber - 1;
     this.totalPages = this.questions.length;
-    this.response = this.answers[id].answer[0].answer ? 
-                            this.answers[id].answer[0].answer.answer ? this.answers[id].answer[0].answer.answer : this.answers[id].answer[0].answer
-                            : this.answers[id].answer[0] 
+    this.quizIdOfAnswerOnEdit = this.questions[id]._id
 
 
+    for (let ans of this.answers) {
+      if (ans.questionId === this.quizIdOfAnswerOnEdit) { 
+          this.response = ans.answer[0].answer ? 
+                          ans.answer[0].answer.answer ? ans.answer[0].answer.answer : ans.answer[0].answer
+                          : ans.answer[0] 
+        break;
+      }
+    }
 
+
+    this.answerHasChange = false;
+   
   }
 
 
@@ -657,6 +668,10 @@ async proceedToNext(id){
 
 
 
+  detectChangeOnAnswer() {
+    this.answerHasChange = true;
+    
+  }
 
 
 
@@ -664,20 +679,272 @@ async proceedToNext(id){
   updatePreviousAnswers() {
     this.previousSteps = this.previousSteps - 1;
 
-    let id = this.pageNumber;
+    if (this.answerHasChange) {
+
+      this.answers = this.answers.filter((ans) => ans.questionId !== this.quizIdOfAnswerOnEdit).map(e => e);
+      this.checkValueOfPreviousAnswers(this.pageNumber)
+
+    }
+    if (!this.answerHasChange) {
+      let id = this.pageNumber;
   
-    this.questionTag = this.questions[id].question;
-    this.skip = (this.questions[id].skip ? true: false);
-    this.open = this.questions[id].open_question;
-    this.multiple = this.questions[id].multiple_choice;
-    this.type = this.questions[id].choice_type;
-    this.options = this.questions[id].choices;
-    this.pageNumber = this.pageNumber + 1;
-    this.totalPages = this.questions.length;
-    this.response = this.answers[id].answer[0].answer ? 
-                            this.answers[id].answer[0].answer.answer ? this.answers[id].answer[0].answer.answer : this.answers[id].answer[0].answer
-                            : this.answers[id].answer[0] 
+      this.questionTag = this.questions[id].question;
+      this.skip = (this.questions[id].skip ? true: false);
+      this.open = this.questions[id].open_question;
+      this.multiple = this.questions[id].multiple_choice;
+      this.type = this.questions[id].choice_type;
+      this.options = this.questions[id].choices;
+      this.pageNumber = this.pageNumber + 1;
+      this.totalPages = this.questions.length;
+  
+      if (this.previousSteps !== 0) {
+      this.quizIdOfAnswerOnEdit = this.questions[id]._id
+      this.response = this.answers[id].answer[0].answer ? 
+                              this.answers[id].answer[0].answer.answer ? this.answers[id].answer[0].answer.answer : this.answers[id].answer[0].answer
+                              : this.answers[id].answer[0] 
+      }
+  
+  
+      this.answerHasChange = false;
+    }
+   
+
+
+
+  } // updatePreviousAnswers
+
+
+
+
+
+
+
+
+
+  async checkValueOfPreviousAnswers(id) {
+     
+
+    if(this.responseArray.length === 0){
+     
+      this.responseArray.push("Not answered")
+    }
+    if(!this.response && this.responseArray.length === 0){
+      
+       this.responseArray[0]="Not answered";
+    }
+    this.holderResponseArray = this.responseArray;
+   
+    await this.structureEditedAnswers(id);
+
+ }
+
+
+
+
+
+
+ async structureEditedAnswers(id) {
+  if(this.questions[id-1].threat){
+    // console.log(this.questions[id-1]);
+    await this.threatService.getOneThreat(this.questions[id-1].threat).subscribe(async data => {
+      this.threat = data; 
+      await this.getThreatInference();
+
+     const answer = {
+      questionId: this.questions[id - 1]._id,
+      position: this.questions[id-1].position,
+      answer : this.responseArray
+    };
+
+  
+    await this.answers.push(answer);
+
+    if(this.questions[id-1].linked){ 
+    //check if linked == true
+      if(this.responseArray[0].skipNext){
+        //check if  skipNext == true
+        if (id === this.totalPages-1) { 
+          // check if the next question after skip is the last..
+           this.isLast = true;
+           this.moveTotheNextQustionOnEdit(id)
+        } 
+        if (this.questions[id+1]==null) { 
+          // current question is the last question
+         
+           this.ImprintLoader = true;
+           this.answerStructure.answers = this.answers;
+           await this.postAnswers(this.answerStructure);
+        }
+        this.responseArray = [];
+        this.skip = false;
+        this.response = '';
+        this.moveTotheNextQustionOnEdit(id)
+
+      }else{//if skipNext !=true
+        if (id === this.totalPages - 1) {
+          this.isLast = true;
+          this.moveTotheNextQustionOnEdit(id)
+        } 
+        if (id === this.totalPages) {
+          this.ImprintLoader = true;
+          this.answerStructure.answers = this.answers;
+          await this.postAnswers(this.answerStructure);
+        }
+      }
+      this.responseArray = [];
+      this.skip = false;
+      this.response = '';
+      this.moveTotheNextQustionOnEdit(id)
+
+    }
+    else{ //not linked, continue as normal.
+      if (id === this.totalPages - 1) {
+        this.isLast = true;
+        this.moveTotheNextQustionOnEdit(id);
+      }
+      if (id === this.totalPages) {
+        this.ImprintLoader = true;
+        this.answerStructure.answers = this.answers;
+        await this.postAnswers(this.answerStructure);
+      }
+
+      this.responseArray = [];
+      this.skip = false;
+      this.response = '';
+      this.moveTotheNextQustionOnEdit(id)
+
+    }
+    
+    this.responseArray = [];
+    this.skip = false;
+    this.response = '';
+    // console.log("Goind to next")
+    // this.moveTotheNextQustionOnEdit(id)
+
+   }, error =>{
+   console.log("error")
+   this.moveTotheNextQustionOnEdit(id)
+  });
+  }else{//if question does not have a threat..
+    const answer = {
+      questionId: this.questions[id - 1]._id,
+      position: this.questions[id - 1].position,
+      answer : this.responseArray
+    };
+     
+    await this.answers.push(answer);
+
+    if(this.questions[id-1].linked){ 
+      //check if linked == true
+        if(this.responseArray[0].skipNext){//check if  skipNext == true
+          if (id === this.totalPages-1) { // check if the next question after skip is the last..
+             this.isLast = true;
+             this.moveTotheNextQustionOnEdit(id)
+          }
+          if (this.questions[id+1]==null) { // current question is the last question
+             this.ImprintLoader = true;
+             this.answerStructure.answers = this.answers;
+             await this.postAnswers(this.answerStructure);
+          }
+          this.responseArray = [];
+          this.skip = false;
+          this.response = '';
+          this.moveTotheNextQustionOnEdit(id)
+
+        }else{//if skipNext !=true
+          if (id === this.totalPages - 1) {
+            this.isLast = true;
+            this.moveTotheNextQustionOnEdit(id)
+          } 
+          if (id === this.totalPages) {
+            this.ImprintLoader = true;
+            this.answerStructure.answers = this.answers;
+            await this.postAnswers(this.answerStructure);
+          }
+        }
+        this.responseArray = [];
+        this.skip = false;
+        this.response = '';
+        this.moveTotheNextQustionOnEdit(id)
+
+      }
+      else{ //not linked, continue as normal.
+        if (id === this.totalPages - 1) {
+          this.isLast = true;
+          this.moveTotheNextQustionOnEdit(id);
+        }
+        if (id === this.totalPages) {
+          this.ImprintLoader = true;
+          this.answerStructure.answers = this.answers;
+          await this.postAnswers(this.answerStructure);
+        }
+
+        this.responseArray = [];
+        this.skip = false;
+        this.response = '';
+        this.moveTotheNextQustionOnEdit(id)
+      }
+}
+}
+
+
+
+
+moveTotheNextQustionOnEdit(id) {
+
+  
+  this.questionTag = this.questions[id].question;
+  this.skip = (this.questions[id].skip ? true: false);
+  this.open = this.questions[id].open_question;
+  this.multiple = this.questions[id].multiple_choice;
+  this.type = this.questions[id].choice_type;
+  this.options = this.questions[id].choices;
+  this.pageNumber = this.pageNumber + 1;
+  this.totalPages = this.questions.length;
+
+  if (this.previousSteps !== 0) {
+    this.quizIdOfAnswerOnEdit = this.questions[id]._id
+    for (let ans of this.answers) {
+      if (ans.questionId === this.quizIdOfAnswerOnEdit) { 
+          this.response = ans.answer[0].answer ? 
+                          ans.answer[0].answer.answer ? ans.answer[0].answer.answer : ans.answer[0].answer
+                          : ans.answer[0] 
+        break;
+      }
+    }
   }
+
+
+  this.answerHasChange = false;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
