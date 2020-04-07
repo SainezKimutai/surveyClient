@@ -61,7 +61,9 @@
 
                     <div class="multy-choice-wrap w-100"  *ngIf="!open && multiple">
                         <div class="form-group" *ngFor="let option of options">
-                            <input type="checkbox" (click)="captureMultipleResponses(option); detectChangeOnAnswer();" name="response" value="{{option.answer}}">
+                            <input type="checkbox"
+                            [checked]="multiAnswers.indexOf(option.answer) > -1 || option.answer === response"
+                            (click)="captureMultipleResponses(option); detectChangeOnAnswer();" name="response" value="{{option.answer}}">
                             <label for="response">{{option.answer}}</label>
                         </div>
                     </div>
@@ -72,7 +74,7 @@
                         </div>
                     </div>
 
-                    <div *ngIf="skip" class="btn-wrap d-flex">
+                    <div *ngIf="skip && previousSteps === 0" class="btn-wrap d-flex">
                         <button *ngIf="(response==='' || responseArray.length ===0)"
                         [disabled]="response || responseArray.length !== 0"
                         class="btn btn-sm btn-next ml-auto" (click)="next(pageNumber)">Skip</button>
@@ -92,7 +94,7 @@
                         class="btn btn-sm btn-next ml-auto" (click)="updatePreviousAnswers()">Update & Next</button>
                     </div>
 
-                    <div *ngIf="isLast && !skip" class="btn-wrap d-flex">
+                    <div *ngIf="isLast && !skip && previousSteps === 0" class="btn-wrap d-flex">
                         <button [disabled]="(!response || response === '') && responseArray.length === 0"
                         class="btn btn-sm btn-next ml-auto" (click)="Process(pageNumber)">Submit</button>
                     </div>

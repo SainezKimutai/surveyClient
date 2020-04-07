@@ -73,8 +73,12 @@ export class AnswerComponent implements OnInit {
       companyId: localStorage.getItem('loggedCompanyId'),
       userId: localStorage.getItem('loggedUserID')
     }
+    
+    this.questionService.getQuestionsInASurvey(this.surveyId).
+     subscribe(data => {this.questions = data.sort((a, b) =>  a.position - b.position); }, err => console.log(err));
+
     this.responseService.getByUserIdCompanyIdSurveyId(dataToSend).subscribe(
-      data => {this.AllResponses = data; console.log(this.AllResponses); this.checkIfSurveyHadBeenAnsweredBefore(); },
+      data => {this.AllResponses = data; this.checkIfSurveyHadBeenAnsweredBefore(); },
       error => console.log('Error geting all Responses')
     );
 
@@ -90,7 +94,7 @@ export class AnswerComponent implements OnInit {
     if (myResponses.length > 0 ) {
       this.myPreviousResponseId = myResponses[0]._id;
      
-      myResponses[0].answers.forEach(answer => {
+      myResponses[0].answers.forEach((answer, idx1, arr1) => {
         
         let formatedAnswer = {};
         let questionId = answer.questionId;
@@ -108,11 +112,49 @@ export class AnswerComponent implements OnInit {
           answer: structured
         }
         this.myPreviousAnswers.push(formatedAnswer);
-      });
+
+        if (idx1 === arr1.length - 1) {
+
+          this.DoneQuestions = Number(this.myPreviousAnswers.length);
+
+          // Check if there is any skipped questions that had been done
+          this.myPreviousAnswers.forEach((ans, ind2, arr2) => {
+
+            for(let quiz of this.questions) {
+              if (quiz._id === ans.questionId) {
+                if (quiz.linked === true) {
+                  this.DoneQuestions = this.DoneQuestions + 1;
+                }
+              }
+            }
+
+            if(ind2 === arr2.length - 1) {
+
+              this.structureQuestions();
+              this.continuationFromBefore(this.DoneQuestions);
+            }
+
+          }); // 
+
+        } // if (idx1 === arr1.length - 1) {
+
+      }); // end of  myResponses[0].answers.forEach((answer, idx1, arr1) => {
       
-      this.DoneQuestions = Number(this.myPreviousAnswers.length);
-      this.structureQuestions();
-      this.continuationFromBefore(this.DoneQuestions);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     } else {
 
       this.DoneQuestions = 0;
@@ -241,6 +283,8 @@ export class AnswerComponent implements OnInit {
      }else{
        this.multiAnswers.push(ans.answer);
      }
+
+
      let value = this.multiAnswers[0];
      if(this.multiAnswers.length>1){
        for(var i = 1; i<this.multiAnswers.length; i++){
@@ -664,6 +708,10 @@ async proceedToNext(id){
           this.response = ans.answer[0].answer ? 
                           ans.answer[0].answer.answer ? ans.answer[0].answer.answer : ans.answer[0].answer
                           : ans.answer[0] 
+          
+          let x = this.response.split(' , ');
+         if(x[1]){this.multiAnswers = x;}
+          
         break;
       }
     }
