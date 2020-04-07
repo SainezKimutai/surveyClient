@@ -116,6 +116,7 @@ export class ReportsComponent implements OnInit {
                               
                                question['surveyId'] = responseObj.surveyId,
                                question['open'] = questions.open_question,
+                               question['position'] = answr.position,
 
                                
                               
@@ -137,6 +138,7 @@ export class ReportsComponent implements OnInit {
                                       question['recom'] = answr.answer.recom;
                                       question['level'] = answr.answer.level;
                                       question['threat'] = answr.answer.threatId ?  answr.answer.threat : '';
+                                      
                                      }
                                     });
 
@@ -179,6 +181,8 @@ export class ReportsComponent implements OnInit {
             },
             error => console.log('Error getting all surveys')
         );
+        
+        resolve();
       
      });
     }
