@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { QuestionService } from 'src/app/shared/services/questions.service';
 import { ResponseService } from 'src/app/shared/services/responses.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ThreatService } from 'src/app/shared/services/threats.service';
 import { async } from '@angular/core/testing';
+import { ModalDirective, ModalOptions, ModalModule } from 'ngx-bootstrap';
 @Component({
   selector: 'app-answer',
   templateUrl: './answer.component.html',
@@ -21,7 +22,9 @@ export class AnswerComponent implements OnInit {
               private threatService: ThreatService,
               private notification: NotificationService
               ) { }
+//Modal
 
+@ViewChild('termsModal', {static: true}) addTermsModal: ModalDirective;
 
     public AllResponses = [];
     public DoneQuestions = null;
@@ -101,21 +104,7 @@ export class AnswerComponent implements OnInit {
       }, err => console.log(err));
 
 
-
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -125,10 +114,11 @@ export class AnswerComponent implements OnInit {
   
 
     if (myResponses.length > 0 ) {
+     
       this.myPreviousResponseId = myResponses[0]._id;
      
       myResponses[0].answers.forEach((answer, idx1, arr1) => {
-        
+
         let formatedAnswer = {};
         let questionId = answer.questionId;
         let position = answer.position;
@@ -173,23 +163,15 @@ export class AnswerComponent implements OnInit {
 
       }); // end of  myResponses[0].answers.forEach((answer, idx1, arr1) => {
       
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      this.DoneQuestions = Number(this.myPreviousAnswers.length);
+      this.structureQuestions();
+      this.continuationFromBefore(this.DoneQuestions);
     } else {
-    
+       
+      setTimeout(()=>{
+        this.addTermsModal.show();
+      }, 50);
+      
       this.DoneQuestions = 0;
       this.getAndSetQuestions();
       this.structureQuestions();

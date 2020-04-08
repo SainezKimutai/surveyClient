@@ -118,5 +118,31 @@
     
     </main>
     
+<div bsModal #termsModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    [config]="{backdrop: 'static',  keyboard: false}" >
+        <div class="modal-dialog termsModal modal-md" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Terms and conditions</h4>
+            </div>
+            <div class="modal-body" >
+                 <div>
+                     I am happy for Tactive Consulting to process my personal data for the purpose of this 
+                     assessment as further described
+                     in the <a href="#">Privacy Statement</a> in order to receive personalized resposes and recommendations.
+                      I consent to my email address being 
+                     shared with Tactive Consulting contacts in a local territory member firm.
+                     I concent that Tactive Consulting can contact me to discuss my resonses and 
+                     provide me with information that may be of interest 
+                     to me.
+                 </div>
+            </div>
+            <div class="modal-footer">
+                <button   type="button" class="btn btn-cancel" (click)="termsModal.hide(); back();">Decline</button>
+                <button   type="button" class="btn btn-confirm" (click)="termsModal.hide()">Accept</button>
+            </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
     
     

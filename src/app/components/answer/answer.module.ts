@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { AnswerComponent } from './answer.component';
 import { AnswerRoutingModule } from './answer-routing.module';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
 
@@ -21,6 +22,7 @@ import { AnswerRoutingModule } from './answer-routing.module';
       FontAwesomeModule,
       ReactiveFormsModule,
       FormsModule,
+      ModalModule.forRoot(),
       ToastrModule.forRoot({
         timeOut: 5000,
         positionClass: 'toast-bottom-right',
