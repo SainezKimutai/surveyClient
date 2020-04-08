@@ -25,6 +25,7 @@ import { RegisterRoutingModule } from './register-routing.module';
       FontAwesomeModule,
       ReactiveFormsModule,
       FormsModule,
+      ModalModule.forRoot(),
       ToastrModule.forRoot({
         timeOut: 5000,
         positionClass: 'toast-bottom-right',
