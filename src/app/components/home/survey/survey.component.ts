@@ -98,12 +98,38 @@ export class SurveyComponent implements OnInit {
         if (myResponses.length > 0) {
         let allQuizs = this.AllQuestions.filter((q) => q.surveyId === surv._id).map(e => e);
         let allAnswers = myResponses[0].answers;
-        let myCompletionValue = (( Number(allAnswers.length) * 100 ) / Number(allQuizs.length)).toFixed(0);
-        surv.done = Number(myCompletionValue);
+        let allAnswersNumber = Number(allAnswers.length);
+        console.log(allAnswersNumber);
+
+        let nextQuiz = 0;
+
+        allQuizs.forEach((quiz, ind2, arr2) => {
+
+          if (nextQuiz === 1) {
+            let isAnswerPresent = allAnswers.filter((ans) => ans.questionId === quiz._id ).map(e => e );
+            if (isAnswerPresent.length === 0) {allAnswersNumber = Number(allAnswersNumber) + 1; console.log(isAnswerPresent.length); }
+            nextQuiz = 0;
+          }
+          if (quiz.linked === true) {
+            nextQuiz = nextQuiz + 1;
+          }
+
+          if ( ind2 === arr2.length - 1) {
+
+
+            let myCompletionValue = Number((( Number(allAnswersNumber) * 100 ) / Number(allQuizs.length)).toFixed(0));
+
+            surv.done = Number(myCompletionValue);
+
+            this.pageProgress = 100; }
+
+        });
+
+
         } else {
           surv.done = 0;
+          if (ind === arr.length - 1) { this.pageProgress = 100; }
         }
-        if (ind === arr.length - 1) { this.pageProgress = 100; }
         return true;
       }).map( e => e);
 

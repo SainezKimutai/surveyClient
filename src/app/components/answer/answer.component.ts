@@ -95,7 +95,6 @@ export class AnswerComponent implements OnInit {
     this.questionService.getQuestionsInASurvey(this.surveyId).
      subscribe(data => {
        this.questions = data.sort((a, b) =>  a.position - b.position); 
-        console.log(this.questions)
        this.responseService.getByUserIdCompanyIdSurveyId(dataToSend).subscribe(
         data => {this.AllResponses = data; this.checkIfSurveyHadBeenAnsweredBefore(); },
         error => console.log('Error geting all Responses')
@@ -145,15 +144,19 @@ export class AnswerComponent implements OnInit {
           this.questions.forEach((quiz, ind2, arr2) => {
             
             if (nextQuiz === 1) {
-              let isAnswerPresent = this.myPreviousAnswers.filter((ans) => {ans.questionId === quiz._id; nextQuiz = 0}).map(e => e)
-              if (isAnswerPresent.length === 0) {this.DoneQuestions = this.DoneQuestions + 1; }
+           
+              let isAnswerPresent = this.myPreviousAnswers.filter((ans) => ans.questionId === quiz._id).map(e => e)
+              if (isAnswerPresent.length === 0) {this.DoneQuestions = this.DoneQuestions + 1;}
+              nextQuiz = 0;
             }
             if (quiz.linked === true) {
               nextQuiz = nextQuiz + 1
             }
-            if (ind2 === arr2.length - 1 ) {    
+            if (ind2 === arr2.length - 1 ) {   
               this.structureQuestions();
+            
               this.continuationFromBefore(this.DoneQuestions);
+
             }
 
           })
@@ -162,10 +165,7 @@ export class AnswerComponent implements OnInit {
         } // if (idx1 === arr1.length - 1) {
 
       }); // end of  myResponses[0].answers.forEach((answer, idx1, arr1) => {
-      
-      this.DoneQuestions = Number(this.myPreviousAnswers.length);
-      this.structureQuestions();
-      this.continuationFromBefore(this.DoneQuestions);
+
     } else {
        
       setTimeout(()=>{
@@ -353,7 +353,6 @@ export class AnswerComponent implements OnInit {
 
 
   formatQuestions2(myId) {
-
     if (this.questions.length > 0) {
       this.questionTag = this.questions[myId].question;
       this.skip = this.questions[myId].skip;
@@ -764,7 +763,7 @@ async proceedToNext(id){
 
 
   updatePreviousAnswers() {
-    this.previousSteps = this.previousSteps - 1;
+   
 
     if (this.answerHasChange) {
 
@@ -773,8 +772,9 @@ async proceedToNext(id){
 
     }
     if (!this.answerHasChange) {
+      this.previousSteps = this.previousSteps - 1;
       let id = this.pageNumber;
-  
+      this.previousSteps = id - this.previousSteps;
       this.questionTag = this.questions[id].question;
       this.skip = (this.questions[id].skip ? true: false);
       this.open = this.questions[id].open_question;
@@ -874,21 +874,21 @@ async proceedToNext(id){
     if(this.questions[id-1].linked){ 
         //check if linked == true
           if(this.responseArray[0].skipNext){
-            this.moveTotheNextQustionOnEdit(id + 1 )
+            this.moveTotheNextQustionOnEdit(id , 1 )
             this.removeSkipedQuizOnEdit(id) 
 
           }else{//if skipNext !=true
-            this.moveTotheNextQustionOnEdit(id)
+            this.moveTotheNextQustionOnEdit(id, 0)
           }
 
     }else{ //not linked, continue as normal.
-      this.moveTotheNextQustionOnEdit(id)
+      this.moveTotheNextQustionOnEdit(id, 0)
 
     }
 
    }, error =>{
    console.log("error")
-   this.moveTotheNextQustionOnEdit(id)
+   this.moveTotheNextQustionOnEdit(id, 0)
   });
 
   }else{//if question does not have a threat..
@@ -905,16 +905,16 @@ async proceedToNext(id){
       
         if(this.responseArray[0].skipNext){//check if  skipNext == true
        
-          this.moveTotheNextQustionOnEdit(id + 1)
+          this.moveTotheNextQustionOnEdit(id, 1)
           this.removeSkipedQuizOnEdit(id) 
 
         }else{//if skipNext !=true
-          this.moveTotheNextQustionOnEdit(id)
+          this.moveTotheNextQustionOnEdit(id, 0)
         }
 
       }
       else{ //not linked, continue as normal.
-        this.moveTotheNextQustionOnEdit(id)
+        this.moveTotheNextQustionOnEdit(id, 0)
       }
   }
 }
@@ -922,28 +922,203 @@ async proceedToNext(id){
 
 
 
-moveTotheNextQustionOnEdit(id) {
-  
+
+
+
+
+
+// async structureEditedAnswers(id) {
+//   if(this.questions[id-1].threat){
+//     // console.log(this.questions[id-1]);
+//     await this.threatService.getOneThreat(this.questions[id-1].threat).subscribe(async data => {
+//       this.threat = data; 
+//       await this.getThreatInference();
+
+//      const answer = {
+//       questionId: this.questions[id - 1]._id,
+//       position: this.questions[id-1].position,
+//       answer : this.responseArray
+//     };
+
+   
+//     await this.answers.push(answer);
+
+//     if(this.questions[id-1].linked){ 
+//     //check if linked == true
+//       if(this.responseArray[0].skipNext){
+//         //check if  skipNext == true
+//         if (id === this.totalPages-1) { 
+//           // check if the next question after skip is the last..
+//            this.isLast = true;
+//            this.proceedToNext(id)
+//         } 
+//         if (this.questions[id+1]==null) { 
+//           // current question is the last question
+         
+//            this.ImprintLoader = true;
+//            this.answerStructure.answers = this.answers;
+//            await this.postAnswers(this.answerStructure);
+//         }
+//         this.responseArray = [];
+//         this.skip = false;
+//         this.response = '';
+//         this.proceedToNext(id)
+
+//       }else{//if skipNext !=true
+//         if (id === this.totalPages - 1) {
+//           this.isLast = true;
+//           this.proceedToNext(id)
+//         } 
+//         if (id === this.totalPages) {
+//           this.ImprintLoader = true;
+//           this.answerStructure.answers = this.answers;
+//           await this.postAnswers(this.answerStructure);
+//         }
+//       }
+//       this.responseArray = [];
+//       this.skip = false;
+//       this.response = '';
+//       this.proceedToNext(id)
+
+//     }
+//     else{ //not linked, continue as normal.
+//       if (id === this.totalPages - 1) {
+//         this.isLast = true;
+//         this.proceedToNext(id);
+//       }
+//       if (id === this.totalPages) {
+//         this.ImprintLoader = true;
+//         this.answerStructure.answers = this.answers;
+//         await this.postAnswers(this.answerStructure);
+//       }
+
+//       this.responseArray = [];
+//       this.skip = false;
+//       this.response = '';
+//       this.proceedToNext(id)
+
+//     }
+    
+//     this.responseArray = [];
+//     this.response = '';
+//     // console.log("Goind to next")
+//     // this.proceedToNext(id)
+
+//    }, error =>{
+//    console.log("error")
+//    this.proceedToNext(id)
+//   });
+//   }else{//if question does not have a threat..
+//     const answer = {
+//       questionId: this.questions[id - 1]._id,
+//       position: this.questions[id - 1].position,
+//       answer : this.responseArray
+//     };
+     
+//     await this.answers.push(answer);
+
+//     if(this.questions[id-1].linked){ 
+//       //check if linked == true
+//         if(this.responseArray[0].skipNext){//check if  skipNext == true
+//           if (id === this.totalPages-1) { // check if the next question after skip is the last..
+//              this.isLast = true;
+//              this.proceedToNext(id)
+//           }
+//           if (this.questions[id+1]==null) { // current question is the last question
+//              this.ImprintLoader = true;
+//              this.answerStructure.answers = this.answers;
+//              await this.postAnswers(this.answerStructure);
+//           }
+//           this.responseArray = [];
+//           this.skip = false;
+//           this.response = '';
+//           this.proceedToNext(id)
+
+//         }else{//if skipNext !=true
+//           if (id === this.totalPages - 1) {
+//             this.isLast = true;
+//             this.proceedToNext(id)
+//           } 
+//           if (id === this.totalPages) {
+//             this.ImprintLoader = true;
+//             this.answerStructure.answers = this.answers;
+//             await this.postAnswers(this.answerStructure);
+//           }
+//         }
+//         this.responseArray = [];
+//         this.skip = false;
+//         this.response = '';
+//         this.proceedToNext(id)
+
+//       }
+//       else{ //not linked, continue as normal.
+//         if (id === this.totalPages - 1) {
+//           this.isLast = true;
+//           this.proceedToNext(id);
+//         }
+//         if (id === this.totalPages) {
+//           this.ImprintLoader = true;
+//           this.answerStructure.answers = this.answers;
+//           await this.postAnswers(this.answerStructure);
+//         }
+
+//         this.responseArray = [];
+//         this.skip = false;
+//         this.response = '';
+//         this.proceedToNext(id)
+//       }
+// }
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+moveTotheNextQustionOnEdit(a, b) {
+  let id = a + b;
+  this.previousSteps = this.previousSteps  - (b + 1);
+
   this.questionTag = this.questions[id].question;
   this.skip = (this.questions[id].skip ? true: false);
   this.open = this.questions[id].open_question;
   this.multiple = this.questions[id].multiple_choice;
   this.type = this.questions[id].choice_type;
   this.options = this.questions[id].choices;
-  this.pageNumber = this.pageNumber + 1;
+  this.pageNumber = id + 1;
   this.totalPages = this.questions.length;
   this.quizIdOfAnswerOnEdit =  this.questions[id]._id
 
   if (this.previousSteps !== 0) {
     this.quizIdOfAnswerOnEdit = this.questions[id]._id
-    for (let ans of this.answers) {
+    let isAnserThere = false;
+    this.answers.forEach((ans, ind, arr) => {
       if (ans.questionId === this.quizIdOfAnswerOnEdit) { 
+          isAnserThere = true;
           this.response = ans.answer[0].answer ? 
                           ans.answer[0].answer.answer ? ans.answer[0].answer.answer : ans.answer[0].answer
                           : ans.answer[0] 
-        break;
+       
       }
-    }
+      if (ind === arr.length - 1 && !isAnserThere) {
+        this.response = '';
+      }
+    })
   }
 
 
