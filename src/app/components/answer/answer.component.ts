@@ -26,6 +26,8 @@ export class AnswerComponent implements OnInit {
 
 @ViewChild('termsModal', {static: true}) addTermsModal: ModalDirective;
 
+    public pageProgress = 0;
+    public notificationForm = false; 
     public AllResponses = [];
     public DoneQuestions = null;
     public myPreviousAnswers = [];
@@ -91,9 +93,10 @@ export class AnswerComponent implements OnInit {
     
     this.questionService.getQuestionsInASurvey(this.surveyId).
      subscribe(data => {
+       this.pageProgress = 10
        this.questions = data.sort((a, b) =>  a.position - b.position); 
        this.responseService.getByUserIdCompanyIdSurveyId(dataToSend).subscribe(
-        data => {this.AllResponses = data; this.checkIfSurveyHadBeenAnsweredBefore(); },
+        data => {this.AllResponses = data; this.pageProgress = 20; this.checkIfSurveyHadBeenAnsweredBefore(); },
         error => console.log('Error geting all Responses')
       );
       
@@ -151,6 +154,7 @@ export class AnswerComponent implements OnInit {
             }
             if (ind2 === arr2.length - 1 ) {   
               // this.structureQuestions();
+              this.pageProgress = 50
               this.formatQuestions2(this.DoneQuestions); 
               this.structureAnswers2(this.DoneQuestions);
               this.structureQuestions();
@@ -172,6 +176,7 @@ export class AnswerComponent implements OnInit {
         this.addTermsModal.show();
       }, 50);
       
+      this.pageProgress = 50;
       this.DoneQuestions = 0;
       this.formatQuestions();
       this.structureQuestions();
@@ -186,6 +191,7 @@ export class AnswerComponent implements OnInit {
 
 
   async formatQuestions() {
+    this.pageProgress = 100
     if (this.questions.length > 0) {
       
       this.questionTag = this.questions[0].question;
@@ -327,7 +333,7 @@ export class AnswerComponent implements OnInit {
 
 
   async next(id) {
-     
+     this.ImprintLoader = true;
 
     if(this.responseArray.length === 0){
      
@@ -353,6 +359,7 @@ export class AnswerComponent implements OnInit {
 
 
   formatQuestions2(myId) {
+    this.pageProgress = 100
     if (this.questions.length > 0) {
       this.questionTag = this.questions[myId].question;
       this.skip = this.questions[myId].skip;
@@ -428,6 +435,8 @@ async proceedToNext(id){
    }
    
  }
+
+ this.ImprintLoader = false;
 //  this.holderResponseArray = []
 }
 
@@ -605,17 +614,18 @@ async proceedToNext(id){
   }
 
   async postAnswers(answers) {
-    
+    this.ImprintLoader = true;
     if ( this.DoneQuestions === 0 ) {
     await this.responseService.createResponse(answers).subscribe(
       data => {
         this.ImprintLoader = false;
-        this.notification.showSuccess('Survey responses submited', 'Success');
-        this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
+        this.notificationForm = true;
+        // this.notification.showSuccess('Survey responses submited', 'Success');
+        // this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
 
-        if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
-        if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
-        if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/reports']); }, 3000);  }
+        if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
+        if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
+        if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/reports']); }, 4000);  }
 
 
       }, err => {{this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }});
@@ -625,12 +635,13 @@ async proceedToNext(id){
       this.responseService.updateResponse(this.myPreviousResponseId, {answers: this.answers} ).subscribe(
         data => {
           this.ImprintLoader = false;
-          this.notification.showSuccess('Survey responses submited', 'Success');
-          this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
+          this.notificationForm = true;
+          // this.notification.showSuccess('Survey responses submited', 'Success');
+          // this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
 
-          if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
-          if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
-          if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 3000);  }
+          if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
+          if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
+          if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 4000);  }
 
         },
         error => {this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }
@@ -652,12 +663,13 @@ async proceedToNext(id){
       this.responseService.createResponse(this.answerStructure).subscribe(
         data => {
           this.ImprintLoader = false;
-          this.notification.showSuccess('Survey responses submited', 'Success');
-          this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
+          this.notificationForm = true;
+          // this.notification.showSuccess('Survey responses submited', 'Success');
+          // this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
 
-          if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
-          if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
-          if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 3000);  }
+          if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
+          if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
+          if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 4000);  }
 
         }, err => {{this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }});
       }
@@ -666,12 +678,13 @@ async proceedToNext(id){
         this.responseService.updateResponse(this.myPreviousResponseId, {answers: this.answers} ).subscribe(
           data => {
             this.ImprintLoader = false;
-            this.notification.showSuccess('Survey responses submited', 'Success');
-            this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
+            this.notificationForm = true;
+            // this.notification.showSuccess('Survey responses submited', 'Success');
+            // this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
 
-            if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
-            if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 3000);  }
-            if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 3000);  }
+            if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
+            if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
+            if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 4000);  }
 
           },
           error => {this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }
@@ -764,6 +777,7 @@ async proceedToNext(id){
 
   updatePreviousAnswers() {
    
+    this.ImprintLoader = true;
 
     if (this.answerHasChange) {
 
@@ -772,6 +786,7 @@ async proceedToNext(id){
 
     }
     if (!this.answerHasChange) {
+      
       this.previousSteps = this.previousSteps - 1;
       let id = this.pageNumber;
       this.previousSteps = id - this.previousSteps;
@@ -790,6 +805,7 @@ async proceedToNext(id){
       let ansPresent = false;
       let getQuizAnswers = new Promise((resolve, reject) => {
        this.answers.forEach((ans, ind, arr) =>{
+      
           if (ans.questionId === this.questions[id]._id) { 
               this.response = ans.answer[0].answer ? 
                               ans.answer[0].answer.answer ? ans.answer[0].answer.answer : ans.answer[0].answer
@@ -810,10 +826,12 @@ async proceedToNext(id){
     
     
       getQuizAnswers.then((e)=> {
+     
         if(!ansPresent){
           if (this.questions[id].linked){ this.updatePreviousAnswers() }
-          if (!this.questions[id].linked){ this.response = '' }
-        }
+          if (!this.questions[id].linked){ this.response = '', this.ImprintLoader = false }
+        } else { this.ImprintLoader = false}
+        
       })
   
   
@@ -951,19 +969,21 @@ moveTotheNextQustionOnEdit(a, b) {
     this.answers.forEach((ans, ind, arr) => {
       if (ans.questionId === this.quizIdOfAnswerOnEdit) { 
           isAnserThere = true;
+          console.log('There')
           this.response = ans.answer[0].answer ? 
                           ans.answer[0].answer.answer ? ans.answer[0].answer.answer : ans.answer[0].answer
                           : ans.answer[0] 
        
       }
       if (ind === arr.length - 1 && !isAnserThere) {
-        this.response = '';
+        this.response = ''; console.log('Here!!!')
       }
     })
   }
 
 
   this.answerHasChange = false;
+  this.ImprintLoader = false;
 
 }
 

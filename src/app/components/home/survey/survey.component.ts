@@ -99,7 +99,6 @@ export class SurveyComponent implements OnInit {
         let allQuizs = this.AllQuestions.filter((q) => q.surveyId === surv._id).map(e => e);
         let allAnswers = myResponses[0].answers;
         let allAnswersNumber = Number(allAnswers.length);
-        console.log(allAnswersNumber);
 
         let nextQuiz = 0;
 
@@ -107,7 +106,7 @@ export class SurveyComponent implements OnInit {
 
           if (nextQuiz === 1) {
             let isAnswerPresent = allAnswers.filter((ans) => ans.questionId === quiz._id ).map(e => e );
-            if (isAnswerPresent.length === 0) {allAnswersNumber = Number(allAnswersNumber) + 1; console.log(isAnswerPresent.length); }
+            if (isAnswerPresent.length === 0) {allAnswersNumber = Number(allAnswersNumber) + 1; }
             nextQuiz = 0;
           }
           if (quiz.linked === true) {
@@ -148,7 +147,8 @@ export class SurveyComponent implements OnInit {
 
 
   resetSurvey() {
-
+    this.deletePromptModal.hide();
+    this.ImprintLoader = true;
     for (let resp of this.AllResponses) {
       if (resp.companyId === localStorage.getItem('loggedCompanyId') && resp.surveyId === this.surveyTobeErased && resp.userId === localStorage.getItem('loggedUserID') ) {
 
@@ -156,11 +156,11 @@ export class SurveyComponent implements OnInit {
           data => {
             this.updatePage().then(() => {
               this.checkForCompletedSurveys();
+              this.ImprintLoader = false;
               this.notifyService.showSuccess('Survey Reset', 'Success');
-              this.deletePromptModal.hide();
             });
           },
-          error => this.notifyService.showError('Could not clear responses', 'Failed')
+          error => { this.ImprintLoader = false; this.notifyService.showError('Could not clear responses', 'Failed'); }
         );
         break;
       }

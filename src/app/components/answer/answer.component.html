@@ -43,8 +43,22 @@
     
     
             <form class="form">
+
+                <div *ngIf="pageProgress !== 100" class="progress-wrap">
+                    <circle-progress [percent]="pageProgress" ></circle-progress>
+                </div>
+
+
+                <div *ngIf="notificationForm" class="notificationForm">
+                    <div class="wrap-success"> <h5>Success !!</h5>
+                       <p> Survey responses submited</p>
+                    </div>
+                    <div class="wrap-thank-you"> <h5>Thank you</h5>
+                        <p>for choosing to answer ours survey</p>
+                    </div>
+                </div>
     
-                <div *ngIf="questions.length > 0" [ngClass]="'dynamic-wrapper'">
+                <div *ngIf="questions.length > 0 && pageProgress === 100 && !notificationForm" [ngClass]="'dynamic-wrapper'">
 
                     <div class="head">
                         <h4>Answer section</h4>
