@@ -82,10 +82,7 @@ export class AnswerComponent implements OnInit {
           this.surveyId = params.surveyId;
           this.surveyName = params.surveyName;
     });
-    // this.responseService.getAllResponses().subscribe(
-    //   data => {this.AllResponses = data; this.checkIfSurveyHadBeenAnsweredBefore(); },
-    //   error => console.log('Error geting all Responses')
-    // );
+
     let dataToSend = {
       surveyId: this.surveyId,
       companyId: localStorage.getItem('loggedCompanyId'),
@@ -108,7 +105,7 @@ export class AnswerComponent implements OnInit {
 
 
   checkIfSurveyHadBeenAnsweredBefore() {
-    // const myResponses = this.AllResponses.filter((resp) => (resp.companyId === localStorage.getItem('loggedCompanyId') && resp.surveyId === this.surveyId) && resp.userId === localStorage.getItem('loggedUserID') ).map( e => e);
+ 
     const myResponses = this.AllResponses;
   
 
@@ -814,7 +811,8 @@ async proceedToNext(id){
     
       getQuizAnswers.then((e)=> {
         if(!ansPresent){
-          this.updatePreviousAnswers()
+          if (this.questions[id].linked){ this.updatePreviousAnswers() }
+          if (!this.questions[id].linked){ this.response = '' }
         }
       })
   
