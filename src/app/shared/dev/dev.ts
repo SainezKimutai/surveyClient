@@ -7,13 +7,13 @@ export const header = new HttpHeaders().set(
 
 // ip address pointing the server
 
-export const dev = {
-    connect: 'http://localhost:4111/',
-};
-
 // export const dev = {
-//     connect: 'https://surveyserver.imprintafrica.co.ke/',
+//     connect: 'http://localhost:4111/',
 // };
+
+export const dev = {
+    connect: 'https://surveyserver.imprintafrica.co.ke/',
+};
 
 // export const dev = {
 //   connect: 'http://167.172.26.3:4116/',
