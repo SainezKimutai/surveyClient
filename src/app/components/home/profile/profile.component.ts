@@ -41,6 +41,9 @@ export class ProfileComponent implements OnInit {
 
 
   public ImprintLoader = false;
+  public ZeroSurveyDone = false;
+  public noteOne = ''
+  public noteTwo = '';
 
 
   // icon
@@ -151,7 +154,7 @@ export class ProfileComponent implements OnInit {
     localStorage.setItem('ActiveNav', 'profile');
     this.loggedUserEmail = localStorage.getItem('loggedUserEmail');
 
-    this.updatePage().then(() => {this.computeCompanyRiskRates();  this.riskIssuesFunction(); });
+    this.updatePage().then(() => {this.computeCompanyRiskRates();  this.riskIssuesFunction();  this.checkIfNoSuverysHaveBeenDone()});
 
   }
 
@@ -235,6 +238,18 @@ export class ProfileComponent implements OnInit {
 
 
   });
+  }
+
+
+
+
+  checkIfNoSuverysHaveBeenDone() {
+    let doneSurvey = this.AllResponses.filter((rsp) => rsp.companyId === this.myCompany._id).map(e => e)
+    if (doneSurvey.length === 0 ) {
+      this.ZeroSurveyDone = true;
+      this.noteOne ="No Surveys Done"
+      this.noteTwo = 'You have taken no survey yet, please proceed to survey to be able to see your reports'
+    }
   }
 
 
@@ -582,8 +597,7 @@ export class ProfileComponent implements OnInit {
 
   riskIssuesFunction() {
     this.chartsProgress = 80;
-    this.AllThreats.forEach((threat) => {
-
+    this.AllThreats.forEach((threat, idx1, arr1) => {
 
       for (let trtCategory of this.AllThreatCategorys) {
 
@@ -627,9 +641,19 @@ export class ProfileComponent implements OnInit {
         }
       }
 
+      if(idx1 === arr1.length - 1 && this.chartsProgress === 80) {
+        let doneSurvey = this.AllResponses.filter((rsp) => rsp.companyId === this.myCompany._id).map(e => e)
+        if (doneSurvey.length > 0 ) {
+          this.ZeroSurveyDone = true;
+          this.noteOne = 'No Threat associated with surveys / Questions done'
+          this.noteTwo = 'Sorry the suveys you might have done does not contain any threat paramenters.'
+        }
+
+      }
+
     });
 
-
+ 
   }
 
 
