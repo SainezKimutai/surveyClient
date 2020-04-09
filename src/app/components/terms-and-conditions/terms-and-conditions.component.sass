@@ -7,19 +7,32 @@
   .main-top 
     background-color: colorTheme(primaryTheme)
     width: 100%
-    height: 400px
+    min-height: 450px
     padding: 1em
     display: flex
     flex-direction: column
+
+    @include desktop_sm
+      height: 500px
+ 
 
     .head
       margin: .5em auto
       width: 100%
       max-width: $desktop_lg
       text-align: left
+      display: flex
+      align-items: stretch
+
+      @include desktop_sm
+        display: flex
+        flex-direction: column
 
       img 
         width: 10rem
+
+      .btn 
+        height: 3em
 
     .title
       margin: .5em auto
@@ -107,7 +120,9 @@
 .main .main-body .inner-body-wrap ol
     li 
       font-size: 13px
+      margin: .5em 0
 
 .main .main-body .inner-body-wrap ul
     li 
       font-size: 13px
+      margin: .5em 0
