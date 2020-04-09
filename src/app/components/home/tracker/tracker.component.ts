@@ -753,7 +753,7 @@ viewWeeklyReportRecommendations() {
   const value = this.MyReports.reduce( (previous, current) => previous + current.value, 0);
   const target = this.trackerOnView.kpiTarget
   const expected_capacity = target / 4;
-  const attained_capacity = value / expected_capacity * 100;
+  const attained_capacity = Math.floor(value / expected_capacity * 100);
   if (attained_capacity < 50) {
     this.observation = 'Mapped risk is high due to low productivity('+ attained_capacity +'%)';
     this.recommendation = 'Escalate to management.';

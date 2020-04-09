@@ -778,6 +778,7 @@ switchGraphDataset(num) {
   }
 
   this.activeRisk = this.riskIssueArrayToGraph[num];
+  this.graphDatasets[0].label = this.riskIssueArrayToGraph[num];
   this.graphDatasets[0].data = [ lowValue, mediumValue, highValue];
 
 }

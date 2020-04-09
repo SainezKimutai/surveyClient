@@ -5,7 +5,7 @@ export const header = new HttpHeaders().set(
     'Authorization', `Bearer ${window.localStorage.getItem('loggedUserToken')}`
   );
 
-// link point the server
+// ip address pointing the server
 
 // export const dev = {
 //     connect: 'http://localhost:4111/',
