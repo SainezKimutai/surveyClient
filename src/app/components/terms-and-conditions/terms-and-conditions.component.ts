@@ -15,8 +15,9 @@ export class TermsAndConditionsComponent implements OnInit {
               private router: Router,
               private notification: NotificationService
               ) { }
-//Modal
 
+public today = new Date();
+public thisYear = this.today.getFullYear();
 
   ngOnInit() {
 
