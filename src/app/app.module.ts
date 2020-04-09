@@ -2,13 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { ChartsModule } from 'ng2-charts';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UserService } from './shared/services/user.service';
@@ -29,7 +28,7 @@ import { TrackerReasonService } from './shared/services/trackerReasons.service';
 import { IndustryService } from './shared/services/industry.service';
 import { ThreatCategoryService } from './shared/services/threatCategory.service';
 
- // tslint:disable: max-line-length
+// tslint:disable: max-line-length
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,7 +56,7 @@ import { ThreatCategoryService } from './shared/services/threatCategory.service'
 
   providers: [AppCustomPreloader, TokenGuard, AdminGuard, CustomerGuard, NotificationService, UserService, CompanyProfileService, SurveyService, QuestionService,
     ResponseService, FileUploadService, ThreatService, ThreatCategoryService, TrackerService, TrackerReasonService, IndustryService
-    ],
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -9,8 +9,8 @@ import { EditorialComponent } from './editorial.component';
 import { EditorialRoutingModule } from './editorial-routing.module';
 import { ModalModule } from 'ngx-bootstrap';
 import { MatStepperModule } from '@angular/material/stepper';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule} from '@angular/material/input';
+import { MatFormFieldModule} from '@angular/material/form-field';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 @NgModule({
 
