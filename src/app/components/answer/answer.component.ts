@@ -789,7 +789,7 @@ async proceedToNext(id){
       
       this.previousSteps = this.previousSteps - 1;
       let id = this.pageNumber;
-      this.previousSteps = id - this.previousSteps;
+      // this.previousSteps = id - this.previousSteps;
       this.questionTag = this.questions[id].question;
       this.skip = (this.questions[id].skip ? true: false);
       this.open = this.questions[id].open_question;
@@ -952,6 +952,7 @@ async proceedToNext(id){
 moveTotheNextQustionOnEdit(a, b) {
   let id = a + b;
   this.previousSteps = this.previousSteps - (b + 1);
+  console.log(this.previousSteps)
 
   this.questionTag = this.questions[id].question;
   this.skip = (this.questions[id].skip ? true: false);
