@@ -16,6 +16,7 @@ export class TermsAndConditionsComponent implements OnInit {
               private notification: NotificationService
               ) { }
 
+public ImprintLoader = false;         
 public today = new Date();
 public thisYear = this.today.getFullYear();
 
