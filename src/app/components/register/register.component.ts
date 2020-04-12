@@ -68,11 +68,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
     };
 
     this.userService.getAllUsers().subscribe(
-      data => 
+      data =>
       {
         const allUsers = data;
         allUsers.forEach(user => {
-          if(user.userType === 'thirdparty'){
+          if (user.userType === 'thirdparty') {
             this.AllInstitutions.push(user);
           }
         });
@@ -84,7 +84,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       error => console.log('Error getting all industries')
     );
 
-    setTimeout(()=>{
+    setTimeout(() => {
       this.addTermsModal.show();
     }, 50);
     // this.superAdmin();
