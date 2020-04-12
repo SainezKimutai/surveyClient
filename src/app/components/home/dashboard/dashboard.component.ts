@@ -1014,8 +1014,6 @@ openAnswersModal(companyName, surveyName, surveyId, responseId) {
   for (let resp of this.AllResponses) {
    if ( resp._id === responseId) {
     
-    let x = resp.answers.filter((a) => a.answer[0].answer === "Not answered").map(e => e);
-    console.log(x)
     resp.answers.forEach((ans) => {
       
 
