@@ -1013,10 +1013,15 @@ openAnswersModal(companyName, surveyName, surveyId, responseId) {
 
   for (let resp of this.AllResponses) {
    if ( resp._id === responseId) {
-
+    
+    let x = resp.answers.filter((a) => a.answer[0].answer === "Not answered").map(e => e);
+    console.log(x)
     resp.answers.forEach((ans) => {
+      
+
 
       for (let quiz of this.AllQuestions) {
+       
         if (ans.questionId === quiz._id) {
           let theQuestions = {
             question: quiz.question,
@@ -1024,22 +1029,50 @@ openAnswersModal(companyName, surveyName, surveyId, responseId) {
           };
 
           quiz.choices.forEach((myAns, key, arr) => {
-
+            
             ans.answer.forEach((a) => {
-              if (a.answer === myAns.answer ) {
-                theQuestions.answers.push({picked: true, answer: myAns.answer });
-
-                if (Object.is(arr.length - 1, key)) {
-                  this.QuestionsOnView.push(theQuestions);
-
-                }
-              } else {
-                theQuestions.answers.push({picked: false, answer: myAns.answer });
-                if (Object.is(arr.length - 1, key)) {
-
-                  this.QuestionsOnView.push(theQuestions);
+              if (a.answer) {
+                
+                if (a.answer._id){
+                
+                  if (a.answer.answer === myAns.answer ) {
+                    theQuestions.answers.push({picked: true, answer: myAns.answer });
+    
+                    if (Object.is(arr.length - 1, key)) {
+                      this.QuestionsOnView.push(theQuestions);
+    
+                    }
+                  } else {
+                    
+                    theQuestions.answers.push({picked: false, answer: myAns.answer });
+                    if (Object.is(arr.length - 1, key)) {
+    
+                      this.QuestionsOnView.push(theQuestions);
+                    }
+                  }
+                }else {
+                  if (a.answer === myAns.answer ) {
+                    theQuestions.answers.push({picked: true, answer: myAns.answer });
+    
+                    if (Object.is(arr.length - 1, key)) {
+                      this.QuestionsOnView.push(theQuestions);
+    
+                    }
+                  } else {
+                   
+                    theQuestions.answers.push({picked: false, answer: myAns.answer });
+                    if (Object.is(arr.length - 1, key)) {
+    
+                      this.QuestionsOnView.push(theQuestions);
+                    }
+                  }
+  
                 }
               }
+
+
+
+
             });
 
           });
