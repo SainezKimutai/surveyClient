@@ -68,8 +68,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     };
 
     this.userService.getAllUsers().subscribe(
-      data =>
-      {
+      data => {
         const allUsers = data;
         allUsers.forEach(user => {
           if (user.userType === 'thirdparty') {
