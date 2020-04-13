@@ -365,10 +365,6 @@ export class ReportsComponent implements OnInit {
 
                
 
-
-
-
-
                 if (Object.is(arr.length - 1, key)) {
 
                   pdf.save('RiskAnalysisReport.pdf');
