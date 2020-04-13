@@ -1023,12 +1023,14 @@ openAnswersModal(companyName, surveyName, surveyId, responseId) {
         if (ans.questionId === quiz._id) {
           let theQuestions = {
             question: quiz.question,
+            wasSkipped: false,
             answers: []
           };
 
           quiz.choices.forEach((myAns, key, arr) => {
-            
+          
             ans.answer.forEach((a) => {
+
               if (a.answer) {
                 
                 if (a.answer._id){
@@ -1041,8 +1043,11 @@ openAnswersModal(companyName, surveyName, surveyId, responseId) {
     
                     }
                   } else {
+                   
+                    if (a.answer.answer === 'Not answered') {theQuestions.wasSkipped = true; }
                     
-                    theQuestions.answers.push({picked: false, answer: myAns.answer });
+                    if (a.answer.answer.includes(myAns.answer)) {  theQuestions.answers.push({picked: true, answer: myAns.answer })}
+                    if (!a.answer.answer.includes(myAns.answer)) {  theQuestions.answers.push({picked: false, answer: myAns.answer })}
                     if (Object.is(arr.length - 1, key)) {
     
                       this.QuestionsOnView.push(theQuestions);
@@ -1057,10 +1062,12 @@ openAnswersModal(companyName, surveyName, surveyId, responseId) {
     
                     }
                   } else {
-                   
-                    theQuestions.answers.push({picked: false, answer: myAns.answer });
+                    if (a.answer.includes(myAns.answer)) {  theQuestions.answers.push({picked: true, answer: myAns.answer })}
+                    if (!a.answer.includes(myAns.answer)) {  theQuestions.answers.push({picked: false, answer: myAns.answer })}
+                    if (a.answer === 'Not answered') {theQuestions.wasSkipped = true; }
+                  
                     if (Object.is(arr.length - 1, key)) {
-    
+                     
                       this.QuestionsOnView.push(theQuestions);
                     }
                   }

@@ -361,9 +361,9 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class="question-wrap" *ngFor="let item of QuestionsOnView">
+                    <div class="question-wrap" *ngFor="let item of QuestionsOnView; let x = index">
 
-                        <div class="question">{{item.question}}</div>
+                        <div [ngClass]="item.wasSkipped ? 'question skipped' : 'question'">{{item.question}} <span *ngIf="item.wasSkipped">skipped</span> </div>
 
                         <div class="answer-wrap">
                             <div *ngFor="let ans of item.answers" [ngClass]="ans.picked ? 'answer picked' : 'answer'"

@@ -636,6 +636,14 @@
                     font-size: 15px
                     color: black
 
+                    &.skipped 
+                        font-style: italic
+                        color: grayColor(g600)
+
+                        span 
+                            color: colorTheme(warning)
+                            font-style: 12px
+
                 .answer-wrap
                     width: 100%
                     display: grid
@@ -656,7 +664,8 @@
                         font-style: italic
 
                         &.picked
-                            background-color: colorTheme(secondaryTheme)
+                            background-color: colorTheme(info)
+                            color: white
 
                     
 
