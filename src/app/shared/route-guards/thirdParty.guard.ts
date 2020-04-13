@@ -8,13 +8,13 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
     // tslint:disable: max-line-length
 
 
-export class AdminGuard implements CanActivate {
+export class ThirdPartyGuard implements CanActivate {
 
     constructor( private router: Router) {}
 
     canActivate( next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
-        if (localStorage.getItem('permissionStatus') === 'isAdmin') {
+        if (localStorage.getItem('permissionStatus') === 'isThirdParty') {
         return true;
         }
 

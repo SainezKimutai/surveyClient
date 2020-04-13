@@ -53,6 +53,7 @@ public editorialNavBarActive = false;
 public reportsNavBarActive = false;
 public trackerNavBarActive = false;
 public usersNavBarActive = false;
+public adminNavBarActive = false;
 
 public myInterval;
 
@@ -97,6 +98,7 @@ CheckActiveNavBar() {
   this.reportsNavBarActive = false;
   this.trackerNavBarActive = false;
   this.usersNavBarActive = false;
+  this.adminNavBarActive = false;
   if (localStorage.getItem('ActiveNav') === 'dashboard') {this.dashboardNavBarActive = true; }
   if (localStorage.getItem('ActiveNav') === 'survey') {this.surveyNavBarActive = true; }
   if (localStorage.getItem('ActiveNav') === 'profile') {this.profileNavBarActive = true; }
@@ -104,6 +106,7 @@ CheckActiveNavBar() {
   if (localStorage.getItem('ActiveNav') === 'reports') {this.reportsNavBarActive = true; }
   if (localStorage.getItem('ActiveNav') === 'tracker') {this.trackerNavBarActive = true; }
   if (localStorage.getItem('ActiveNav') === 'users') {this.usersNavBarActive = true; }
+  if (localStorage.getItem('ActiveNav') === 'admin') {this.adminNavBarActive = true; }
 }
 
 

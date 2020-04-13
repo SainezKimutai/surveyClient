@@ -112,6 +112,7 @@ export class DashboardComponent implements OnInit {
   public riskIssueArray = [];
   public riskIssueArrayToGraph = [];
   public activeRisk;
+  public surveyStatus = 0;
 
 
 
@@ -119,12 +120,7 @@ export class DashboardComponent implements OnInit {
 
     localStorage.setItem('ActiveNav', 'dashboard');
 
-    if (localStorage.getItem('permissionStatus') === 'isAdmin') {
-      this.updatePage().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFunction(); } );
-    } else if (localStorage.getItem('permissionStatus') === 'isThirdParty') {
-      this.updatePage2().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFunction(); } );
-    }
-
+    this.updatePage().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFunction(); } );
 
 
   }
@@ -133,69 +129,10 @@ export class DashboardComponent implements OnInit {
 
 
 
+
+
+
 updatePage() {
-
-  return new Promise((resolve, reject) => {
-
-    this.userService.getAllUsers().subscribe( datauser => {
-      this.AllUsers = datauser;
-      this.chartsProgress = 10
-
-      this.companyProfileService.getAllCompanyProfiles().subscribe( dataCompanies => {
-
-        this.AllCompanies = dataCompanies;
-        this.chartsProgress = 20
-
-        this.surveyService.getAllInstitutionSurveysAdmin().subscribe( dataSurvey => {
-        
-          this.AllSurveys = dataSurvey;
-          this.chartsProgress = 30
-
-          this.questionService.getAllQuestions().subscribe( dataQuestion => {
-            this.AllQuestions = dataQuestion;
-            this.chartsProgress = 40
-
-            this.threatService.getAllInstitutionThreats().subscribe( dataThreats => {
-              this.AllThreats = dataThreats;
-
-              this.chartsProgress = 50
-              this.responseService.getAllResponses().subscribe( dataResponse => {
-                this.AllResponses = dataResponse;
-                this.chartsProgress = 60
-                this.threatCategoryService.getAllByInstitutions().subscribe ( dataThreatCat => {
-                  this.AllThreatCategorys = dataThreatCat; resolve();
-                  this.chartsProgress = 70
-                }, error => console.log('Error getting all threat Categories'));
-
-
-              }, error => console.log('Error getting all responses'));
-
-
-            }, error => console.log('Error getting all threats') );
-
-          }, error => console.log('Error getting all questions'));
-
-
-        }, error => console.log('Error getting all surveys'));
-
-
-      }, error => console.log('Error getting all companies'));
-
-    }, error => console.log('Error getting all users'));
-
-  });
-}
-
-
-
-
-
-
-
-
-
-
-updatePage2() {
 
   return new Promise((resolve, reject) => {
 
@@ -1095,6 +1032,41 @@ openAnswersModal(companyName, surveyName, surveyId, responseId) {
   this.viewAnswersModal.show();
 }
 
+
+
+
+
+checkSurveyProgress(surveyId, responseId) {
+  const myResponses = this.AllResponses.filter((resp) => resp._id === responseId ).map( e => e);
+  let allQuizs = this.AllQuestions.filter((q) => q.surveyId === surveyId).map(e => e);
+  let allAnswers = myResponses[0].answers;
+  let allAnswersNumber = Number(allAnswers.length);
+
+  let nextQuiz = 0;
+
+  allQuizs.forEach((quiz, ind2, arr2) => {
+
+    if (nextQuiz === 1) {
+      let isAnswerPresent = allAnswers.filter((ans) => ans.questionId === quiz._id ).map(e => e );
+      if (isAnswerPresent.length === 0) {allAnswersNumber = Number(allAnswersNumber) + 1; }
+      nextQuiz = 0;
+    }
+    if (quiz.linked === true) {
+      nextQuiz = nextQuiz + 1;
+    }
+
+    if ( ind2 === arr2.length - 1) {
+
+
+      let myCompletionValue = Number((( Number(allAnswersNumber) * 100 ) / Number(allQuizs.length)).toFixed(0));
+
+      this.surveyStatus = Number(myCompletionValue);
+
+      }
+
+  });
+
+}
 
 
 
