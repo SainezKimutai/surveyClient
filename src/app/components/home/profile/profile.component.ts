@@ -41,6 +41,9 @@ export class ProfileComponent implements OnInit {
 
 
   public ImprintLoader = false;
+  public ZeroSurveyDone = false;
+  public noteOne = ''
+  public noteTwo = '';
 
 
   // icon
@@ -151,7 +154,7 @@ export class ProfileComponent implements OnInit {
     localStorage.setItem('ActiveNav', 'profile');
     this.loggedUserEmail = localStorage.getItem('loggedUserEmail');
 
-    this.updatePage().then(() => {this.computeCompanyRiskRates();  this.riskIssuesFunction(); });
+    this.updatePage().then(() => {this.computeCompanyRiskRates();  this.riskIssuesFunction();  this.checkIfNoSuverysHaveBeenDone()});
 
   }
 
@@ -235,6 +238,18 @@ export class ProfileComponent implements OnInit {
 
 
   });
+  }
+
+
+
+
+  checkIfNoSuverysHaveBeenDone() {
+    let doneSurvey = this.AllResponses.filter((rsp) => rsp.companyId === this.myCompany._id).map(e => e)
+    if (doneSurvey.length === 0 ) {
+      this.ZeroSurveyDone = true;
+      this.noteOne ="No Surveys Done"
+      this.noteTwo = 'You have taken no survey yet, please proceed to survey to be able to see your reports'
+    }
   }
 
 
@@ -418,21 +433,61 @@ export class ProfileComponent implements OnInit {
           if (ans.questionId === quiz._id) {
             const theQuestions = {
               question: quiz.question,
+              wasSkipped: false,
               answers: []
             };
 
             quiz.choices.forEach((myAns, key, arr) => {
-              if (ans.answer.includes(myAns.answer)) {
-                theQuestions.answers.push({picked: true, answer: myAns.answer });
-                if (Object.is(arr.length - 1, key)) {
-                  this.QuestionsOnView.push(theQuestions);
+              ans.answer.forEach((a) => {
+
+                if (a.answer) {
+                  
+                  if (a.answer._id){
+                  
+                    if (a.answer.answer === myAns.answer ) {
+                      theQuestions.answers.push({picked: true, answer: myAns.answer });
+      
+                      if (Object.is(arr.length - 1, key)) {
+                        this.QuestionsOnView.push(theQuestions);
+      
+                      }
+                    } else {
+                     
+                      if (a.answer.answer === 'Not answered') {theQuestions.wasSkipped = true; }
+                      
+                      if (a.answer.answer.includes(myAns.answer)) {  theQuestions.answers.push({picked: true, answer: myAns.answer })}
+                      if (!a.answer.answer.includes(myAns.answer)) {  theQuestions.answers.push({picked: false, answer: myAns.answer })}
+                      if (Object.is(arr.length - 1, key)) {
+      
+                        this.QuestionsOnView.push(theQuestions);
+                      }
+                    }
+                  }else {
+                    if (a.answer === myAns.answer ) {
+                      theQuestions.answers.push({picked: true, answer: myAns.answer });
+      
+                      if (Object.is(arr.length - 1, key)) {
+                        this.QuestionsOnView.push(theQuestions);
+      
+                      }
+                    } else {
+                      if (a.answer.includes(myAns.answer)) {  theQuestions.answers.push({picked: true, answer: myAns.answer })}
+                      if (!a.answer.includes(myAns.answer)) {  theQuestions.answers.push({picked: false, answer: myAns.answer })}
+                      if (a.answer === 'Not answered') {theQuestions.wasSkipped = true; }
+                    
+                      if (Object.is(arr.length - 1, key)) {
+                       
+                        this.QuestionsOnView.push(theQuestions);
+                      }
+                    }
+    
+                  }
                 }
-              } else {
-                theQuestions.answers.push({picked: false, answer: myAns.answer });
-                if (Object.is(arr.length - 1, key)) {
-                  this.QuestionsOnView.push(theQuestions);
-                }
-              }
+  
+  
+  
+  
+              });
             });
 
             // break;
@@ -582,8 +637,7 @@ export class ProfileComponent implements OnInit {
 
   riskIssuesFunction() {
     this.chartsProgress = 80;
-    this.AllThreats.forEach((threat) => {
-
+    this.AllThreats.forEach((threat, idx1, arr1) => {
 
       for (let trtCategory of this.AllThreatCategorys) {
 
@@ -627,9 +681,19 @@ export class ProfileComponent implements OnInit {
         }
       }
 
+      if(idx1 === arr1.length - 1 && this.chartsProgress === 80) {
+        let doneSurvey = this.AllResponses.filter((rsp) => rsp.companyId === this.myCompany._id).map(e => e)
+        if (doneSurvey.length > 0 ) {
+          this.ZeroSurveyDone = true;
+          this.noteOne = 'No Threat associated with surveys / Questions done'
+          this.noteTwo = 'Sorry the suveys you might have done does not contain any threat paramenters.'
+        }
+
+      }
+
     });
 
-
+ 
   }
 
 

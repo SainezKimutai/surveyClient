@@ -17,7 +17,7 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav nav-pills mr-auto">
-      <li *ngIf="toAdmin || toThirdParty" [ngClass]="dashboardNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
+      <li *ngIf="toThirdParty" [ngClass]="dashboardNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
         <a routerLink="/home/dashboard" [ngClass]=" dashboardNavBarActive ? 'nav-link active' : 'nav-link'">
           <fa-icon [icon]="faChartLine"></fa-icon> <span>Dashboard</span>
         </a>
@@ -49,9 +49,16 @@
         </a>
       </li>
   
-      <li *ngIf="toAdmin || toThirdParty"  [ngClass]="editorialNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
+      <li *ngIf="toThirdParty"  [ngClass]="editorialNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
         <a routerLink="/home/editorial" [ngClass]=" editorialNavBarActive ? 'nav-link active' : 'nav-link'">
           <fa-icon [icon]="faEdit"></fa-icon> <span>Editorial</span>
+        </a>
+      </li>
+
+      
+      <li *ngIf="toAdmin" [ngClass]="adminNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent">
+        <a routerLink="/home/admin" [ngClass]=" adminNavBarActive ? 'nav-link active' : 'nav-link'">
+          <fa-icon [icon]="faChartLine"></fa-icon> <span>Dashboard</span>
         </a>
       </li>
 
@@ -94,7 +101,7 @@
     <ul class="navbar-nav nav-pills">
 
 
-      <li  *ngIf="toAdmin || toThirdParty" [ngClass]="dashboardNavBarActive ? 'nav-item active' : 'nav-item'" >
+      <li  *ngIf="toThirdParty" [ngClass]="dashboardNavBarActive ? 'nav-item active' : 'nav-item'" >
           <a routerLink="/home/dashboard" [ngClass]=" dashboardNavBarActive ? 'nav-link active' : 'nav-link'">
             <fa-icon [icon]="faChartLine"></fa-icon> <span>Dashboard</span>
           </a>
@@ -125,9 +132,15 @@
           </a>
         </li>
     
-        <li  *ngIf="toAdmin || toThirdParty" [ngClass]="editorialNavBarActive ? 'nav-item active' : 'nav-item'" >
+        <li  *ngIf="toThirdParty" [ngClass]="editorialNavBarActive ? 'nav-item active' : 'nav-item'" >
           <a routerLink="/home/editorial" [ngClass]=" editorialNavBarActive ? 'nav-link active' : 'nav-link'">
             <fa-icon [icon]="faEdit"></fa-icon> <span>Editorial</span>
+          </a>
+        </li>
+
+        <li *ngIf="toAdmin" [ngClass]="adminNavBarActive ? 'nav-item active' : 'nav-item'" >
+          <a routerLink="/home/admin" [ngClass]=" adminNavBarActive ? 'nav-link active' : 'nav-link'">
+            <fa-icon [icon]="faChartLine"></fa-icon> <span>Dashboard</span>
           </a>
         </li>
 
@@ -136,6 +149,7 @@
             <fa-icon [icon]="faUsers"></fa-icon> <span>Users</span>
           </a>
         </li>
+
 
         <li class="nav-item" >
           <a (click)="logout()" class="nav-link">

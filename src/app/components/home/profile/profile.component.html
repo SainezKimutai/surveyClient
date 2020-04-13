@@ -22,7 +22,17 @@
 
 <section class="body-section">
 
-    <section class="info-section">
+    <section *ngIf="ZeroSurveyDone" class="info-section zero-survey-one">
+
+        <div class="wrap">
+            <h4>Analitics</h4>
+            <h5>{{noteOne}}</h5>
+            <p>{{noteTwo}}</p>
+        </div>
+
+    </section>
+
+    <section *ngIf="!ZeroSurveyDone" class="info-section">
 
 
 
@@ -401,7 +411,8 @@
      
           <div class="question-wrap" *ngFor="let item of QuestionsOnView">
   
-            <div class="question">{{item.question}}</div>
+            <div [ngClass]="item.wasSkipped ? 'question skipped' : 'question'">{{item.question}} <span *ngIf="item.wasSkipped">skipped</span> </div>
+
   
             <div class="answer-wrap" >
               <div *ngFor="let ans of item.answers" [ngClass]="ans.picked ? 'answer picked' : 'answer'" class="answer">{{ans.answer}}</div>

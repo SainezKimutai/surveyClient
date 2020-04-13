@@ -68,6 +68,8 @@
     width: 100%
 
 
+
+
     .survey-info-wrap, .account-status-wrap
         background-color: white
         width: 100%
@@ -125,6 +127,49 @@
                             color: colorTheme(primaryTheme)
 
                 
+
+
+
+.body-section .info-section 
+
+    &.zero-survey-one
+        background-color: white
+        width: 100%
+        height: 100%
+        border-radius: 5px
+
+        .wrap 
+            height: 620px
+            background-size: cover
+
+        
+
+            h4 
+                font-size: 22px
+                width: 100%
+                text-align: center 
+                padding: 4em 1em
+                font-weight: bold 
+                color: colorTheme(primaryTheme)
+                text-transform: uppercase
+
+
+            h5 
+                font-size: 12px
+                width: 100%
+                text-align: center 
+                padding: 1em
+                font-weight: bold 
+                color: black
+                text-transform: uppercase
+
+            p 
+                text-align: center
+                width: 100%
+                font-size: 12px
+
+
+
 
 
 
@@ -625,9 +670,9 @@
             .modal-title
                 color: white
                 font-size: 14px
-                text-transform: uppercase
 
                 span 
+                    margin: 0 .5em
                     color: black
 
     
@@ -647,6 +692,14 @@
                 .question
                     font-size: 15px
                     color: black
+
+                    &.skipped 
+                        font-style: italic
+                        color: grayColor(g600)
+
+                        span 
+                            color: colorTheme(warning)
+                            font-style: 12px
 
                 .answer-wrap
                     width: 100%
@@ -668,8 +721,10 @@
                         font-style: italic
 
                         &.picked
-                            background-color: colorTheme(secondaryTheme)
+                            background-color: colorTheme(info)
+                            color: white
 
+     
                     
 
 

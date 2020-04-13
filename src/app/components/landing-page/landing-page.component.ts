@@ -42,8 +42,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.ImprintLoader = true;
     this.userService.loginUser(this.loginForm).subscribe(
       dataUser => {
-        console.log()
-
         if (dataUser.userType === 'customer') {
           localStorage.setItem('loggedUserToken', dataUser.token);
           localStorage.setItem('loggedUserName', dataUser.name);
@@ -63,7 +61,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
           localStorage.setItem('loggedUserEmail', dataUser.email);
           localStorage.setItem('loggedUserID', dataUser._id);
           localStorage.setItem('permissionStatus', 'isAdmin');
-          this.router.navigate(['/home/dashboard']);
+          this.router.navigate(['/home/admin']);
         }
 
         if (dataUser.userType === 'thirdparty') {

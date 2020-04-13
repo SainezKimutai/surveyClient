@@ -1,6 +1,6 @@
 <div class="page-header">
 
-    <h4>Dashboard</h4>
+    <h4>Admin Dashboard</h4>
 
 </div>
 
@@ -14,11 +14,11 @@
 
         <div class="card first">
             <div class="card-title">
-                <h4>Surveys</h4>
+                <h4>Third Parties</h4>
                 <fa-icon [icon]="faListAlt"></fa-icon>
             </div>
             <div class="card-info">
-                <h4>{{AllSurveys.length}}</h4>
+                <h4>{{AllThirdParties.length}}</h4>
             </div>
             <div class="card-body">
                 <canvas *ngIf="cardOneType" baseChart class="chart" [chartType]="cardOneType" [labels]="cardOneLabels"
@@ -39,6 +39,94 @@
                     [datasets]="cardTwoDatasets" [options]="topCardsChart"></canvas>
             </div>
         </div>
+
+
+    </section><!-- top_cards_section -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section id="graph_section" class="card-group">
+        <div class="card">
+            <div class="title d-flex"> <span>List of Third Parties</span>
+                <div class=" graph-switch d-flex ml-auto">
+                    <span (click)="listTirdPartyToGraph()"><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
+                    <span (click)="listTirdPartyToList()"><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span>
+                </div>
+            </div>
+            <div class="body">
+                <div class="body w-10 d-flex" *ngIf="!graphType">
+                    <div class="spinner-div spinner-border mx-auto" role="status"></div>
+                </div>
+                <div *ngIf="graphType" class="datasets-wrap">
+                    <div *ngFor="let item of AllThirdParties; let x = index" 
+                    [ngClass]="thirrdPartyDatasets[0].label === item.name ? 'dataset-item active' : 'dataset-item' "
+                    (click)="listThirdPartyCompaniesAndSurveys(x)">
+                       {{item.name}}
+                    </div>
+                </div>
+
+
+                <div id="companySurveyList" *ngIf="!listTirdPartyIsGraph" >
+                    <div class="survey-title">Surveys</div>
+                    <div class="survey-item" *ngFor="let item of thirrdPartySurveys">{{item.surveyName}}</div>
+                    <div class="survey-item" *ngIf="thirrdPartySurveys.length === 0">---</div>
+
+
+                    <div class="company-title mt-4">Companies</div>
+                    <div class="company-item" *ngFor="let item of thirrdPartyCompanys">{{item.companyName}}</div>
+                    <div class="company-item" *ngIf="thirrdPartyCompanys.length === 0">---</div>
+
+
+                </div>
+
+                <div class="canvas-wrap" *ngIf="listTirdPartyIsGraph" >
+                    <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
+                    <canvas *ngIf="thirrdPartyType" baseChart class="chart" [chartType]="thirrdPartyType" [labels]="thirrdPartyLabels"
+                    [datasets]="thirrdPartyDatasets" [options]="thirrdPartyChart"></canvas>
+                </div>
+       
+            </div>
+
+        </div>
+    </section> <!-- graph_section -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section id="top_cards_section" class="card-group">
 
         <div class="card third">
             <div class="card-title">
@@ -70,6 +158,22 @@
 
 
     </section><!-- top_cards_section -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -340,7 +444,6 @@
 
         </div>
     </section> <!-- list_section_two -->
-
 
 
 
