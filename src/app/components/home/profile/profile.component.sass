@@ -670,9 +670,9 @@
             .modal-title
                 color: white
                 font-size: 14px
-                text-transform: uppercase
 
                 span 
+                    margin: 0 .5em
                     color: black
 
     
@@ -692,6 +692,14 @@
                 .question
                     font-size: 15px
                     color: black
+
+                    &.skipped 
+                        font-style: italic
+                        color: grayColor(g600)
+
+                        span 
+                            color: colorTheme(warning)
+                            font-style: 12px
 
                 .answer-wrap
                     width: 100%
@@ -713,8 +721,10 @@
                         font-style: italic
 
                         &.picked
-                            background-color: colorTheme(secondaryTheme)
+                            background-color: colorTheme(info)
+                            color: white
 
+     
                     
 
 

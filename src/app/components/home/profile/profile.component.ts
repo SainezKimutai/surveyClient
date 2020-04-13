@@ -433,21 +433,61 @@ export class ProfileComponent implements OnInit {
           if (ans.questionId === quiz._id) {
             const theQuestions = {
               question: quiz.question,
+              wasSkipped: false,
               answers: []
             };
 
             quiz.choices.forEach((myAns, key, arr) => {
-              if (ans.answer.includes(myAns.answer)) {
-                theQuestions.answers.push({picked: true, answer: myAns.answer });
-                if (Object.is(arr.length - 1, key)) {
-                  this.QuestionsOnView.push(theQuestions);
+              ans.answer.forEach((a) => {
+
+                if (a.answer) {
+                  
+                  if (a.answer._id){
+                  
+                    if (a.answer.answer === myAns.answer ) {
+                      theQuestions.answers.push({picked: true, answer: myAns.answer });
+      
+                      if (Object.is(arr.length - 1, key)) {
+                        this.QuestionsOnView.push(theQuestions);
+      
+                      }
+                    } else {
+                     
+                      if (a.answer.answer === 'Not answered') {theQuestions.wasSkipped = true; }
+                      
+                      if (a.answer.answer.includes(myAns.answer)) {  theQuestions.answers.push({picked: true, answer: myAns.answer })}
+                      if (!a.answer.answer.includes(myAns.answer)) {  theQuestions.answers.push({picked: false, answer: myAns.answer })}
+                      if (Object.is(arr.length - 1, key)) {
+      
+                        this.QuestionsOnView.push(theQuestions);
+                      }
+                    }
+                  }else {
+                    if (a.answer === myAns.answer ) {
+                      theQuestions.answers.push({picked: true, answer: myAns.answer });
+      
+                      if (Object.is(arr.length - 1, key)) {
+                        this.QuestionsOnView.push(theQuestions);
+      
+                      }
+                    } else {
+                      if (a.answer.includes(myAns.answer)) {  theQuestions.answers.push({picked: true, answer: myAns.answer })}
+                      if (!a.answer.includes(myAns.answer)) {  theQuestions.answers.push({picked: false, answer: myAns.answer })}
+                      if (a.answer === 'Not answered') {theQuestions.wasSkipped = true; }
+                    
+                      if (Object.is(arr.length - 1, key)) {
+                       
+                        this.QuestionsOnView.push(theQuestions);
+                      }
+                    }
+    
+                  }
                 }
-              } else {
-                theQuestions.answers.push({picked: false, answer: myAns.answer });
-                if (Object.is(arr.length - 1, key)) {
-                  this.QuestionsOnView.push(theQuestions);
-                }
-              }
+  
+  
+  
+  
+              });
             });
 
             // break;
