@@ -317,6 +317,7 @@ export class AnswerComponent implements OnInit {
     }else{
       this.responseArray = [];
     }
+    console.log(this.multiAnswers);
      
   }
 
@@ -343,6 +344,10 @@ export class AnswerComponent implements OnInit {
       
        this.responseArray[0]="Not answered";
     }
+    if(this.multiAnswers.length > 0){
+      this.multiAnswers=[];
+    }
+
     this.holderResponseArray = this.responseArray;
    
     await this.structureAnswers(id);
@@ -521,8 +526,9 @@ async proceedToNext(id){
       // this.proceedToNext(id)
 
      }, error =>{
-     console.log("error")
-     this.proceedToNext(id)
+     console.log("error");
+     this.ImprintLoader = false;
+     this.notification.showError("A resource linked to this question could not be loaded. Please check your internet connection.", "Network failed")
     });
     }else{//if question does not have a threat..
       const answer = {
@@ -730,6 +736,7 @@ async proceedToNext(id){
     this.answerHasChange = false;
 
     let ansPresent = false;
+
     let getQuizAnswers = new Promise((resolve, reject) => {
      this.answers.forEach((ans, ind, arr) =>{
         if (ans.questionId === this.quizIdOfAnswerOnEdit) { 
