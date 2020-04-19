@@ -103,6 +103,7 @@ export class ReportsComponent implements OnInit {
             { 
              this.AllSurveys = [];
              this.pageProgress = 10;
+             console.log(data)
               data.forEach((responseObj, ind1, arr1) => {
                     this.surveyService.getOneSurvey(responseObj.surveyId).subscribe(
                      survey =>{

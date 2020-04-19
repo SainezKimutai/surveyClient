@@ -622,6 +622,10 @@ async proceedToNext(id){
   async postAnswers(answers) {
     this.ImprintLoader = true;
     if ( this.DoneQuestions === 0 ) {
+      answers = {
+        ...answers,
+        dateCreated: new Date()
+      }
     await this.responseService.createResponse(answers).subscribe(
       data => {
         this.ImprintLoader = false;
@@ -666,6 +670,10 @@ async proceedToNext(id){
     this.ImprintLoader = true;
     this.answerStructure.answers = this.answers;
     if ( this.DoneQuestions === 0 ) {
+      this.answerStructure = {
+        ...this.answerStructure,
+        dateCreated: new Date()
+      }
       this.responseService.createResponse(this.answerStructure).subscribe(
         data => {
           this.ImprintLoader = false;

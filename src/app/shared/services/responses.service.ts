@@ -24,6 +24,7 @@ export class ResponseService {
             surveyId: data.surveyId,
             userId : data.userId,
             companyId: data.companyId,
+            dateCreated: data.dateCreated,
             answers: []
           };
         

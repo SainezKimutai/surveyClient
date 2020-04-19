@@ -10,12 +10,14 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { ChartsModule } from 'ng2-charts';
 import { ModalModule } from 'ngx-bootstrap';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { OperationalDashboardComponent } from './operational-dashboard/operational-dashboard.component';
+import { MarketDashboardComponent } from './market-dashboard/market-dashboard.component';
 
 
 @NgModule({
 
   declarations: [
-      DashboardComponent
+      DashboardComponent, OperationalDashboardComponent, MarketDashboardComponent
           ],
 
     imports: [

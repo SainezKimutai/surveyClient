@@ -1,0 +1,341 @@
+
+
+<section class="body-section">
+
+
+
+
+    <section id="top_cards_section" class="card-group">
+
+        <div class="card first">
+
+        </div>
+
+        <div class="card second">
+
+        </div>
+
+        <div class="card third">
+
+        </div>
+
+        <div class="card forth">
+
+        </div>
+
+
+    </section><!-- top_cards_section -->
+
+
+
+
+
+
+    <section id="second_cards_section" class="card-group">
+        <div class="card">
+            <div class="title d-flex"> <span>Risk Categories</span>
+                <div class=" graph-switch d-flex ml-auto">
+                  
+                    <span ><fa-icon [icon]="faChartLine" class="active" ></fa-icon></span> 
+                    <span ><fa-icon [icon]="faChartBar" ></fa-icon></span>
+                    <span > <fa-icon [icon]="faChartPie"></fa-icon> </span>
+                </div>
+            </div>
+            <div class="body-wrapper">
+    
+            </div>
+
+        </div>
+
+        <div class="card">
+            <div class="title d-flex"> <span>General Risk Representation</span>
+                <div class=" graph-switch d-flex ml-auto">
+                    <span ><fa-icon [icon]="faChartLine" class="active" ></fa-icon></span> 
+                    <span ><fa-icon [icon]="faChartBar" ></fa-icon></span>
+                    <span > <fa-icon [icon]="faChartPie"></fa-icon> </span>
+                </div>
+            </div>
+
+            <div class="body-wrapper">
+   
+            </div>
+
+        </div>
+    </section><!-- second_cards_section -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section id="graph_section" class="card-group">
+        <div class="card">
+            <div class="title d-flex"> <span>Specific Risks Representations</span>
+                <div class=" graph-switch d-flex ml-auto">
+                    <span ><fa-icon [icon]="faChartLine" class="active" ></fa-icon></span> 
+                    <span ><fa-icon [icon]="faChartBar" ></fa-icon></span>
+                    <span > <fa-icon [icon]="faChartPie"></fa-icon> </span>
+                </div>
+            </div>
+            <div class="body">
+                <div class="body w-10 d-flex" *ngIf="!graphType">
+                    <div class="spinner-div spinner-border mx-auto" role="status"></div>
+                </div>
+                <div  class="datasets-wrap">
+                    <div >
+                      Items
+                    </div>
+                </div>
+                <div class="canvas-wrap">
+                  
+                </div>
+       
+            </div>
+
+        </div>
+    </section> <!-- graph_section -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section id="third_cards_section" class="card-group">
+       
+        <div class="card">
+            <div class="title">List of Risk Issues among Companies</div>
+
+            <div class="body-wrapper">
+                <div class="body-title">
+
+                    <div class="body-item d-flex">
+                        <div class="mx-auto ">Threat</div>
+                        <div class="mx-auto ">Company</div>
+                        <div class="mx-auto ">Severity</div>
+                        <!-- <div class="rate">Intervention</div> -->
+                    </div>
+
+                </div>
+
+                <div class="body d-flex" *ngIf="CompnayRiskRates">
+                    <div class="spinner-div spinner-border mx-auto" role="status"></div>
+                </div>
+
+                <div class="body" >
+
+                  
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+
+        <div class="card">
+            <div class="title">List of Company Risk Rates Per Survey Template</div>
+            <div class="body-wrapper">
+                <div class="body-title">
+
+                    <div class="body-item d-flex">
+                        <div class="mx-auto ">Comapany Name</div>
+                        <div class="mx-auto ">Survey Name</div>
+                        <div class="mx-auto ">Risk rate</div>
+                        <!-- <div class="rate">Recommendation</div> -->
+                    </div>
+
+                </div>
+
+                <div class="body d-flex" *ngIf="CompnayRiskRates">
+                    <div class="spinner-div spinner-border mx-auto" role="status"></div>
+                </div>
+
+                <div class="body" >
+
+
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </section><!-- third_cards_section -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <section hidden id="list_section_one" class="card-group">
+        <div class="card">
+
+        </div>
+    </section> <!-- list_section_one -->
+
+
+
+
+
+
+
+
+
+    <section hidden id="list_section_two" class="card-group">
+        <div class="card">
+
+        </div>
+    </section> <!-- list_section_two -->
+
+
+
+
+
+
+
+
+    <div bsModal #viewAnswersModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog viewAnswersModal modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <h4 class="modal-title ">Responses of <span>{{companyNameOnView}}</span> on
+                        <span>{{surveyNameOnView}} survey</span>: 
+                    </h4>
+                    <button type="button" class="btn close" (click)="viewAnswersModal.hide()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+                <div class="surveyStatus-wrap ">
+                    <span *ngIf="100 > surveyStatus" class="surveyStatus text-primary">In progress, ({{surveyStatus}}%)</span> 
+                    <span *ngIf="surveyStatus > 99" class="surveyStatus text-success">Completed</span> 
+                </div>
+                <div class="modal-body">
+
+                    <div class="question-wrap" *ngFor="let item of QuestionsOnView; let x = index">
+
+                        <div [ngClass]="item.wasSkipped ? 'question skipped' : 'question'"> <span class="num">{{x+1}})</span> {{item.question}} <span class="skip" *ngIf="item.wasSkipped">skipped</span> </div>
+
+                        <div class="answer-wrap">
+                            <div *ngFor="let ans of item.answers" [ngClass]="ans.picked ? 'answer picked' : 'answer'"
+                                class="answer">{{ans.answer}}</div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+
+
+
+
+
+
+
+
+
+</section><!-- body-section -->
+
+
+
+
+
+
+
+
+<div class="page-footer">
+
+    <h5>Survey System &copy; {{thisYear}} <span>Tactive</span></h5>
+
+    <h6>Powered by <span>Imprint Africa</span></h6>
+
+</div>

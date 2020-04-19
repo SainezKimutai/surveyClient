@@ -11,18 +11,18 @@ import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.se
 import { NotificationService } from 'src/app/shared/services/notification.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.sass']
+  selector: 'app-market-dashboard',
+  templateUrl: './market-dashboard.component.html',
+  styleUrls: ['./market-dashboard.component.sass']
 })
-export class DashboardComponent implements OnInit {
+export class MarketDashboardComponent implements OnInit {
 // tslint:disable
 // tslint:disable: prefer-const
 
+public faChartLine = faChartLine;
+public faChartBar = faChartBar;
+public faChartPie = faChartPie;
 
-// status
-public OperationDashboardStatus = true;
-public MarketDashboardStatus = false;
 
 
 
@@ -38,19 +38,7 @@ public MarketDashboardStatus = false;
   ) { }
 
  ngOnInit() {
-  localStorage.setItem('ActiveNav', 'dashboard');
- }
-
-
-
- toOperationDashboard() {
-  this.OperationDashboardStatus = true;
-  this.MarketDashboardStatus = false;
- }
-
- toMarketDashboard() {
-  this.OperationDashboardStatus = false;
-  this.MarketDashboardStatus = true;
+   
  }
 
 
