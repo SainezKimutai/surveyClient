@@ -4,7 +4,7 @@
 
     <div class="btn-wrap">
         <button [ngClass]="OperationDashboardStatus ? 'active' : ''" (click)="toOperationDashboard()">Operations <span>Analytics</span> </button>
-        <button [ngClass]="MarketDashboardStatus ? 'active' : ''"  (click)="toMarketDashboard()">Market <span>Analytics</span> </button>
+        <button disabled [ngClass]="MarketDashboardStatus ? 'active' : ''"  (click)="toMarketDashboard()">Market <span>Analytics</span> </button>
     </div>
 
 </div>
