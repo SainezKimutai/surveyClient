@@ -13,6 +13,8 @@ const routes: Routes = [
 
   { path: 'register', loadChildren: 'src/app/components/register/register.module#RegisterModule', data: {preload: true}},
 
+  { path: 'traffic', loadChildren: 'src/app/components/traffic/traffic.module#TrafficModule'},
+
   { path: 'answer', loadChildren: 'src/app/components/answer/answer.module#AnswerModule', canActivate: [TokenGuard]  },
 
   { path: 'terms-and-conditions', loadChildren: 'src/app/components/terms-and-conditions/terms-and-conditions.module#TermsAndConditionsModule' },
