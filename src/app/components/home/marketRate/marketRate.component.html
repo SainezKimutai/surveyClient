@@ -1,0 +1,218 @@
+<article *ngIf="ImprintLoader" class="imprint-loader home">
+    <div class="imprint-loader-wrap">
+        <div class="imprint-loader-main">
+        <div class="imprint-loader-ball ball-one"></div>
+        <div class="imprint-loader-ball ball-two"></div>
+        <div class="imprint-loader-ball ball-three"></div>
+        <div class="imprint-loader-ball ball-four"></div>
+        </div>
+    </div>
+</article>
+
+
+
+<div class="page-title d-flex">
+    <h4>Market Data Rates</h4>
+</div>
+
+
+
+<main>
+    
+    <ul class="nav nav-tabs d-flex" id="myTab" role="tablist">
+
+        <li class="nav-item">
+            <a class="nav-link active" id="exchange-tab" data-toggle="tab" href="#exchange" role="tab" aria-controls="exchange" aria-selected="true" >Exchange Rates</a>
+        </li>  
+    
+        <li class="nav-item">
+            <a class="nav-link" id="gdp-tab" data-toggle="tab" href="#gdp" role="tab" aria-controls="gdp"  aria-selected="false" >GDP Growth Rate</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link " id="recom-tab" data-toggle="tab" href="#interest" role="tab" aria-controls="interest" aria-selected="true">Interest Rates</a>
+        </li>  
+    
+    </ul>
+
+    <div class="tab-content" id="myTabContent">
+        
+        <!-- Exchange Rates -->
+        <div class="tab-pane fade show active" id="exchange" role="tabpanel"aria-labelledby="exchange-tab" *ngIf="ExchangeRates.length > 0">
+            <div class="title">
+                <h4>Exchange Rates <span> Base Currency: {{ExchangeRates[0].baseCurrency}}</span></h4>
+            </div>
+
+            <div class="model">
+                <div class="model-item" *ngFor="let item of ExchangeRates[0].countryRate">
+                    <span class="code">{{item.code}}</span>
+                    <span class="value">{{item.value}}</span>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+        <!-- GDB   -->
+        <div class="tab-pane fade" id="gdp" role="tabpanel"aria-labelledby="gdp-tab" >
+            <div class="title">
+                <h4>GDP Growth Rate</h4>
+            </div>
+
+            <div class="model">
+                <div class="model-title d-flex">
+
+                    <div class="d-flex mr-auto year-switch">
+                        <span *ngFor="let item of YearRange" [ngClass]="item === currentYearActive? 'year active' : 'year' "
+                        (click)="switchYear(item)">{{item}} </span>
+                    </div>
+                    
+                    <span class="add ml-auto" (click)="addGDPModal.show()"> <fa-icon [icon]="faPlus"></fa-icon> </span>
+                </div>
+                <div class="model-head" >
+                    <span class="head">Country</span>
+                    <span class="head">First Quarter</span>
+                    <span class="head">Second Quarter</span>
+                    <span class="head">Third Quarter</span>
+                    <span class="head">Forth Quarter</span>
+                    
+                </div>
+                <div class="model-item" *ngFor="let item of MyFormatedGDP">
+                    <span class="item">{{item.code}}</span>
+                    <span class="item">{{item.firstQ}} %</span>
+                    <span class="item">{{item.secondQ}} %</span>
+                    <span class="item">{{item.thirdQ}} %</span>
+                    <span class="item">{{item.fourthQ}} %</span>
+                
+                </div>
+
+            </div>  
+
+        </div>
+
+
+
+
+
+        <!-- Interates Rates   -->
+        <div class="tab-pane fade " id="interest" role="tabpanel"aria-labelledby="interest-tab" >
+             
+            <div class="title">
+                <h4>Interest Rate</h4>
+            </div>
+
+            <form class="form" *ngIf="!InterestRates[0]">
+
+                <div class="form-group">
+                    <label for="">Interest Rate</label>
+                    <input type="number" name="interestInput" [(ngModel)]="interestInput">
+                    <button class="btn btn-sm btn-outline-success"
+                    [disabled]="interestRate === ''" (click)="createInterestRate()">Send</button>
+                </div>
+
+            </form>
+
+            <div class="list-card d-flex" *ngIf="InterestRates[0]">
+                <span class="mr-auto">{{InterestRates[0].rate}} %</span>
+
+                <fa-icon class="ml-auto" [icon]="faTrash" (click)="deteInterest(InterestRates[0]._id)">{{item}}</fa-icon >
+            </div>
+
+        </div>
+    </div>
+    
+
+
+
+</main>
+
+
+
+
+
+
+
+
+
+
+<div bsModal #addGDPModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog addGDPModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title">Add GDP</h4>
+            <button type="button" class="btn close" (click)="addGDPModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+
+            <form class="form">
+                <div class="form-group">
+                    <label>Year</label>
+                   <select name="year" [(ngModel)]="gdpForm.meta.year">
+                       <option disabled selected hidden value=""></option>
+                       <option  *ngFor="let year of YearRange" [value]="year">{{year}}</option>
+                     
+                   </select>
+                </div>
+                <div class="form-group">
+                    <label>Period</label>
+                   <select name="quarter" [(ngModel)]="gdpForm.meta.quarter">
+                       <option disabled selected hidden value=""></option>
+                       <option value="1">First Quarter</option>
+                       <option value="2">Second Quarter</option>
+                       <option value="3">Third Quarter</option>
+                       <option value="4">Fourth Quarter</option>
+                   </select>
+                </div>
+
+
+                <div class="preview-wrap w-100">
+                    <div class="country-item w-100 d-flex" *ngFor="let item of gdpForm.countryRate; let x = index">
+                        <span class="mr-auto">{{item.code}}</span>
+                        <span class="mx-auto">{{item.value}}</span>
+                        <fa-icon [icon]="faTrash" (click)="removeCountry(x)" class="ml-auto">{{item}}</fa-icon >
+                    </div>
+                </div>
+
+                <div class="d-flex">
+                  
+                    <div class="form-group">
+                        <label>Country Code</label>
+                       <select name="code" [(ngModel)]="countryRateObj.code">
+                            <option disabled selected hidden value=""></option>
+                            <option value="KEN">Kenya</option>
+                            <option value="UGA">Uganda</option>
+                            <option value="TZA">Tanzania</option>
+                            <option value="RWA">Rwanda</option>
+                            <option value="BDI">Burundi</option>
+                            <option value="ETH">Ethiopia</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>GDP</label>
+                       <input type="number" name="value" [(ngModel)]="countryRateObj.value">
+                    </div>
+
+                </div>
+
+                <div class="btn-wrap w-100">
+                    <button class="btn"
+                    [disabled]="countryRateObj.code === '' || countryRateObj.value === null"
+                     (click)="pushGDP()">  <fa-icon [icon]="faPlus"></fa-icon> </button>
+                </div>
+              
+            </form>
+
+
+        </div>
+        <div class="modal-footer">
+            <button [disabled]="gdpForm.meta.year === null || gdpForm.meta.quarter === null || gdpForm.countryRate.length === 0" 
+            type="button" class="btn btn-confirm" (click)="addGDP()">Add</button>
+        </div>
+        </div>
+    </div>
+</div>

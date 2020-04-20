@@ -33,7 +33,7 @@
 
     <section id="second_cards_section" class="card-group">
         <div class="card">
-            <div class="title d-flex"> <span>Risk Categories</span>
+            <div class="title d-flex"> <span>GDP</span>
                 <div class=" graph-switch d-flex ml-auto">
                   
                     <span ><fa-icon [icon]="faChartLine" class="active" ></fa-icon></span> 
@@ -42,13 +42,14 @@
                 </div>
             </div>
             <div class="body-wrapper">
-    
+                <canvas *ngIf="gdpType" baseChart class="chart" [chartType]="gdpType" [labels]="gdpLabels"
+                [datasets]="gdpDatasets" [options]="gdpChartOptions"></canvas>
             </div>
 
         </div>
 
         <div class="card">
-            <div class="title d-flex"> <span>General Risk Representation</span>
+            <div class="title d-flex"> <span>Exchange Rates</span>
                 <div class=" graph-switch d-flex ml-auto">
                     <span ><fa-icon [icon]="faChartLine" class="active" ></fa-icon></span> 
                     <span ><fa-icon [icon]="faChartBar" ></fa-icon></span>
@@ -57,7 +58,8 @@
             </div>
 
             <div class="body-wrapper">
-   
+                <canvas *ngIf="exchangeType" baseChart class="chart" [chartType]="exchangeType" [labels]="exchangeLabels"
+                [datasets]="exchangeDatasets" [options]="exchangeChartOptions"></canvas>
             </div>
 
         </div>
@@ -75,9 +77,9 @@
 
 
 
-    <section id="graph_section" class="card-group">
+    <section hidden id="graph_section" class="card-group">
         <div class="card">
-            <div class="title d-flex"> <span>Specific Risks Representations</span>
+            <div class="title d-flex"> <span>----------</span>
                 <div class=" graph-switch d-flex ml-auto">
                     <span ><fa-icon [icon]="faChartLine" class="active" ></fa-icon></span> 
                     <span ><fa-icon [icon]="faChartBar" ></fa-icon></span>
@@ -85,18 +87,8 @@
                 </div>
             </div>
             <div class="body">
-                <div class="body w-10 d-flex" *ngIf="!graphType">
-                    <div class="spinner-div spinner-border mx-auto" role="status"></div>
-                </div>
-                <div  class="datasets-wrap">
-                    <div >
-                      Items
-                    </div>
-                </div>
-                <div class="canvas-wrap">
-                  
-                </div>
-       
+                <canvas *ngIf="exchangeType" baseChart class="chart" [chartType]="exchangeType" [labels]="exchangeLabels"
+                [datasets]="exchangeDatasets" [options]="exchangeChartOptions"></canvas>
             </div>
 
         </div>
@@ -122,7 +114,7 @@
 
 
 
-    <section id="third_cards_section" class="card-group">
+    <section hidden id="third_cards_section" class="card-group">
        
         <div class="card">
             <div class="title">List of Risk Issues among Companies</div>

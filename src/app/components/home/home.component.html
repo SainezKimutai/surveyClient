@@ -48,12 +48,19 @@
           <fa-icon [icon]="faUser"></fa-icon> <span>Profile</span>
         </a>
       </li>
+
+      <li  *ngIf="toThirdParty" [ngClass]="marketRateBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent"  >
+        <a routerLink="/home/market_rate" [ngClass]=" marketRateBarActive ? 'nav-link active' : 'nav-link'">
+          <fa-icon [icon]="faEdit"></fa-icon> <span>Market Rates</span>
+        </a>
+      </li>
   
       <li *ngIf="toThirdParty"  [ngClass]="editorialNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
         <a routerLink="/home/editorial" [ngClass]=" editorialNavBarActive ? 'nav-link active' : 'nav-link'">
           <fa-icon [icon]="faEdit"></fa-icon> <span>Editorial</span>
         </a>
       </li>
+
 
       
       <li *ngIf="toAdmin" [ngClass]="adminNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent">
@@ -132,6 +139,12 @@
           </a>
         </li>
     
+        <li  *ngIf="toThirdParty" [ngClass]="marketRateBarActive ? 'nav-item active' : 'nav-item'" >
+          <a routerLink="/home/market_rate" [ngClass]=" marketRateBarActive ? 'nav-link active' : 'nav-link'">
+            <fa-icon [icon]="faEdit"></fa-icon> <span>Market Rates</span>
+          </a>
+        </li>
+
         <li  *ngIf="toThirdParty" [ngClass]="editorialNavBarActive ? 'nav-item active' : 'nav-item'" >
           <a routerLink="/home/editorial" [ngClass]=" editorialNavBarActive ? 'nav-link active' : 'nav-link'">
             <fa-icon [icon]="faEdit"></fa-icon> <span>Editorial</span>

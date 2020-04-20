@@ -23,6 +23,7 @@ const routes: Routes = [
         { path: 'reports', loadChildren: 'src/app/components/home/reports/reports.module#ReportsModule', canActivate: [CustomerGuard], data: {preload: true}},
         { path: 'tracker', loadChildren: 'src/app/components/home/tracker/tracker.module#TrackerModule', canActivate: [CustomerGuard], data: {preload: true}},
         { path: 'profile', loadChildren: 'src/app/components/home/profile/profile.module#ProfileModule', canActivate: [CustomerGuard],  data: {preload: true}},
+        { path: 'market_rate', loadChildren: 'src/app/components/home/marketRate/marketRate.module#MarketRateModule', canActivate: [ThirdPartyGuard],  data: {preload: true}},
         { path: 'editorial', loadChildren: 'src/app/components/home/editorial/editorial.module#EditorialModule', canActivate: [ThirdPartyGuard], data: {preload: true}},
         { path: 'users', loadChildren: 'src/app/components/home/users/users.module#UsersModule', data: {preload: true}},
       ]

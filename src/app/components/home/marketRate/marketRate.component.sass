@@ -1,0 +1,267 @@
+@import 'src/styles.sass'
+
+    
+.page-title
+    width: 100%
+    padding: 1em 2em
+
+    h4 
+        font-size: 18px 
+        font-weight: bold
+        text-transform: uppercase
+        text-shadow: 1px -1px 1px white
+        -moz-text-shadow: 1px -1px 1px white
+        -webkit-text-shadow: 1px -1px 1px white
+
+main 
+    margin: 1em
+
+main .nav.nav-tabs 
+    background: grayColor(g200)
+    text-align: center
+    display: flex
+    align-items: stretch
+    border: none
+    margin: 0px
+    padding: 0px
+    width: 100%
+    text-align: center
+
+
+main .nav.nav-tabs li 
+    display: inline-block
+    margin: .5em auto
+    padding: 0px
+
+main .nav.nav-tabs li a 
+    border: none
+    background: #fff
+    width: 14em
+    border: none
+    border-radius: 0px
+    padding: .5em
+    color: gray
+    font-size: 14px
+    font-weight: normal
+
+main .nav.nav-tabs li a.active 
+    background: rgba(242, 106, 75, 1.0)
+    color: #fff
+    border-color: blue
+
+
+
+main .tab-content 
+    width: 100%
+    height: fit-content
+    background-color: transparent
+    padding: 0 1em
+    display: flex
+    text-align: center
+    justify-content: center
+
+main .tab-content .tab-pane
+    width: 100%
+    max-width: $desktop_md
+
+main .tab-content .tab-pane .title
+    width: 100%
+    background-color: colorTheme(primaryTheme)
+
+    h4 
+        padding: 1em
+        width: 100%
+        text-align: left
+        font-size: 14px
+        color: white
+
+        span 
+            color: grayColor(g200)
+            font-size: 12px
+            font-style: italic
+
+main .tab-content .tab-pane .model
+    width: 100%
+    height: 500px
+    overflow-y: scroll
+    background-color: white
+
+main .tab-content .tab-pane .model .model-item
+    width: 100%
+    display: flex
+    align-items: stretch
+    font-size: 15px
+    margin: 0 0 1em 0
+    padding: 1em
+    background-image: linear-gradient(to right, darken( white, 10)  , darken( white, 0) )
+
+    .item
+        width: 100%   
+        text-align: left
+        padding: 0 1em 
+
+    .code 
+        margin-right: auto
+
+    .value 
+        margin-left: auto
+
+
+
+
+#gdp .model-title
+    width: 100%
+    padding: 1em
+    background-color: grayColor(g300)
+
+    .year-switch
+        .year
+            padding: 0 1em
+            cursor: pointer
+            &.active
+                color: colorTheme(primaryTheme)
+                border-bottom: solid 2px colorTheme(primaryTheme)
+
+
+    .add 
+        background-color: grayColor(g100)
+        height: 2em
+        width: 2em
+        padding: .2em 0 0 0
+        border-radius: 50%
+        cursor: pointer
+
+        fa-icon 
+            font-size: 12px
+            color: colorTheme(success)
+
+
+
+#gdp .model-head
+    width: 100%
+    padding: 1em
+    background-color: grayColor(g200)
+    display: flex 
+    align-items: stretch
+    font-size: 12px
+    margin: 0 0 .5em 0
+
+    .head 
+        width: 100%
+        text-align: left
+        padding: 0 0 0 1em
+        text-transform: uppercase
+
+
+
+
+.addGDPModal
+    border: none
+
+.addGDPModal .modal-content 
+    border: none
+
+.addGDPModal .modal-content .modal-header
+    border: none
+    background-color: colorTheme(success)
+
+    .modal-title
+        font-size: 12px
+        font-weight: bold
+        color: white
+
+.addGDPModal .modal-content .modal-body form 
+    width: 100%
+
+    .form-group
+        width: 100%
+        padding: 1em 2em
+        display: flex
+        flex-direction: column
+
+        label
+            padding: 0
+            font-size: 13px 
+            font-weight: bold
+            color: grayColor(g600)
+
+
+        input, select
+            width: 100%
+            border-radius: 2px
+            padding: .5em
+            border: none
+            outline: none
+            background-color: grayColor(g100)
+            font-size: 12px
+
+    .preview-wrap
+        padding: 1em 2em
+        width: 100%
+        font-size: 12px
+
+        fa-icon 
+            cursor: pointer
+            color: colorTheme(danger)
+
+
+    .btn-wrap 
+        width: 100%
+        text-align: center
+        padding: 1em 2em
+
+        button
+            border: none 
+            outline: none
+            border-radius: 50%
+            color: colorTheme(success)
+
+.addGDPModal .modal-content .modal-footer
+    width: 100%
+
+    .btn
+        background-color: colorTheme(success)
+        color: white
+        font-size: 12px
+
+
+
+#interest form
+    background-color: white
+    width: 100%
+
+    .form-group
+        width: 100%
+        padding: 1em 2em
+        display: flex
+        flex-direction: column
+        text-align: center
+
+        label
+            padding: 0
+            font-size: 13px 
+            font-weight: bold
+            color: grayColor(g600)
+
+
+        input, select
+            width: 100%
+            border-radius: 2px
+            padding: .5em
+            border: none
+            outline: none
+            background-color: grayColor(g100)
+            font-size: 12px
+
+        button
+            max-width: 7em
+            margin: 1em auto
+
+
+    .list-card
+        background-color: white
+        margin: 1em 0 0 0 
+        padding: 1em
+        text-align: center
+        font-size: 18px
+        font-weight: bold
