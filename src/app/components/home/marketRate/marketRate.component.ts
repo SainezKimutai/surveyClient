@@ -31,7 +31,9 @@ export class MarketRateComponent implements OnInit {
   public currentYear = this.currentDay.getFullYear();
 
 
-  public YearRange = [this.currentYear, (this.currentYear - 1),(this.currentYear - 2),];
+  // incase of need for gdp for previous years
+  // public YearRange = [this.currentYear, (this.currentYear - 1),(this.currentYear - 2),];
+  public YearRange = [this.currentYear];
 
   public ExchangeRates = [];
   public GDPGrowthRates = [];
@@ -321,6 +323,11 @@ export class MarketRateComponent implements OnInit {
       data => {
         this.updatePage();
         this.addGDPModal.hide();
+        this.gdpForm = {
+          dateUpdated: Date,
+          meta:{quarter: null, year: null},
+          countryRate: []
+        }
         this.notifyService.showSuccess('GDP Addedd', 'Success')
       },
       error => this.notifyService.showError('Could Not add GDP', 'Failed')

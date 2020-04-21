@@ -39,7 +39,8 @@ public faChartPie = faChartPie;
 
 
 
-
+public exchangeProgress = 0;
+public gdpProgress = 0;
 
 
 
@@ -80,16 +81,17 @@ public faChartPie = faChartPie;
 
   public gdpType;
   public gdpLabels;
+  public gdpCountrys;
   public gdpDatasets;
   public gdpChartOptions;
+  public gdpBgColors = [];
 
 
   public exchangeType;
   public exchangeLabels;
   public exchangeDatasets;
   public exchangeChartOptions;
-
-
+  public exchangeBgColors = []
 
 
 
@@ -116,9 +118,12 @@ public faChartPie = faChartPie;
 
 
   updatePage() {
+    this.exchangeProgress = 40;
+    this.gdpProgress = 40; 
     return new Promise((resolve, reject) => {
       this.gdpGrowthRateService.getAllGDP().subscribe(
         data => {
+          this.gdpProgress = 80;
           this.GDPGrowthRates = data;
           this.formartCounrtyCode();
         },
@@ -135,6 +140,7 @@ public faChartPie = faChartPie;
 
       this.exchangerateService.getAllExchangerates().subscribe(
         dataExch => {
+          this.exchangeProgress = 80;
           this.ExchangeRates = dataExch;
           this.ExchangeRatesGraph();
           resolve();
@@ -159,6 +165,7 @@ public faChartPie = faChartPie;
     })
 
     this.AllCountryCode = Array.from(new Set(unsortedCountries));
+    if(this.AllCountryCode.length === 0) {this.gdpProgress = 100}
 
     this.forMartGDP()
   }
@@ -276,57 +283,59 @@ public faChartPie = faChartPie;
 
 
 
+  gdpGraphToLine() {
+    this.gdpType = 'line';
+    this.gdpChartOptions.legend.display = false;
+    this.gdpChartOptions.scales.xAxes[0].display = true;
+    this.gdpDatasets[0].backgroundColor = 'whitesmoke'; 
+    this.gdpDatasets[0].borderColor = 'gray';
+    this.gdpDatasets[0].pointBorderColor = 'black';
+  }
+  gdpGraphToBar() {
+    this.gdpType = 'bar';
+    this.gdpChartOptions.legend.display = false;
+    this.gdpChartOptions.scales.xAxes[0].display = true;
+    this.gdpDatasets[0].backgroundColor = ['#02b0cc','#074BFB', '#ffc107', '#f86c6b'];
+    this.gdpDatasets[0].borderColor = 'transparent';
+    this.gdpDatasets[0].pointBorderColor = 'white';
+  }
+  gdpGraphToPie() {
+    this.gdpType = 'pie';
+    this.gdpChartOptions.legend.display = true;
+    this.gdpChartOptions.scales.xAxes[0].display = false;
+    this.gdpDatasets[0].backgroundColor = ['#02b0cc','#074BFB', '#ffc107', '#f86c6b'];
+    this.gdpDatasets[0].borderColor = 'white';
+    this.gdpDatasets[0].pointBorderColor = 'white';
+
+  }
+  
+
+
+  switchGDPCountry(countryCode) {
+    this.gdpDatasets[0].label = countryCode;
+    let gdpData = this.MyFormatedGDP.filter((c) => c.code === countryCode).map(e => e);
+    this.gdpDatasets[0].data = [gdpData[0].firstQ, gdpData[0].secondQ, gdpData[0].thirdQ, gdpData[0].fourthQ];
+  }
 
 
 
   gdpRatesGraph() {
-
+    this.gdpProgress = 100;
     this.gdpType = 'bar';
 
-    this.gdpLabels = this.MyFormatedGDP.filter(() => true).map(e => e.code);
-    let myGraphLabelColors = [];
+
+    this.gdpCountrys = this.MyFormatedGDP.filter(() => true).map(e => e.code);
+    this.gdpLabels =  ['First Quarter', 'Second Quarter', 'Third Quarter', 'Fourth Quarter'];
+    let gdpData = this.MyFormatedGDP.filter((c) => c.code === 'KEN').map(e => e);
     this.gdpLabels.forEach((e) => {
-      myGraphLabelColors.push(this.getRandomColor());
+      this.gdpBgColors.push(this.getRandomColor());
     });
     this.gdpDatasets = [
       {
-        label: ['First Quarter'],
-        data: this.MyFormatedGDP.filter(() => true).map(e => e.firstQ),
-        backgroundColor: myGraphLabelColors,
-        borderColor: 'teal',
-        borderWidth: 1.5,
-        pointBackgroundColor: 'transparent',
-        pointHoverBackgroundColor: 'transparent',
-        pointBorderColor: 'black',
-        pointHoverBorderColor: 'gray'
-      },
-      {
-        label: ['Second Quarter'],
-        data: this.MyFormatedGDP.filter(() => true).map(e => e.secondQ),
-        backgroundColor: myGraphLabelColors,
-        borderColor: 'teal',
-        borderWidth: 1.5,
-        pointBackgroundColor: 'transparent',
-        pointHoverBackgroundColor: 'transparent',
-        pointBorderColor: 'black',
-        pointHoverBorderColor: 'gray'
-      },
-      {
-        label: ['Third Quarter'],
-        data: this.MyFormatedGDP.filter(() => true).map(e => e.thirdQ),
-        backgroundColor: myGraphLabelColors,
-        borderColor: 'teal',
-        borderWidth: 1.5,
-        pointBackgroundColor: 'transparent',
-        pointHoverBackgroundColor: 'transparent',
-        pointBorderColor: 'black',
-        pointHoverBorderColor: 'gray'
-      },
-      {
-        label: ['Fourth Quarter'],
-        data: this.MyFormatedGDP.filter(() => true).map(e => e.fourthQ),
-        backgroundColor: myGraphLabelColors,
-        borderColor: 'teal',
+        label: 'KEN',
+        data: [gdpData[0].firstQ, gdpData[0].secondQ, gdpData[0].thirdQ, gdpData[0].fourthQ],
+        backgroundColor: ['#02b0cc','#074BFB', '#ffc107', '#f86c6b'],
+        borderColor: 'transparent',
         borderWidth: 1.5,
         pointBackgroundColor: 'transparent',
         pointHoverBackgroundColor: 'transparent',
@@ -359,12 +368,12 @@ public faChartPie = faChartPie;
       },
       scales: {
         yAxes: [{
-            display: false,
+            display: true,
             gridLines: {
                 drawBorder: false,
                 display: false
             },
-            stacked: true,
+            stacked: false,
             ticks: {
                 beginAtZero: true
             }
@@ -372,7 +381,7 @@ public faChartPie = faChartPie;
         xAxes: [{
             barPercentage: 0.4,
             display: true,
-            stacked: true,
+            stacked: false,
             gridLines: {
                 drawBorder: true,
                 display: false
@@ -414,17 +423,51 @@ public faChartPie = faChartPie;
 
 
 
+
+
+
+
+
+  exchangeGraphToLine() {
+    this.exchangeType = 'line';
+    this.exchangeChartOptions.legend.display = false;
+    this.exchangeChartOptions.scales.xAxes[0].display = true;
+    this.exchangeDatasets[0].backgroundColor = 'whitesmoke';
+    this.exchangeDatasets[0].borderColor = 'gray';
+    this.exchangeDatasets[0].pointBorderColor = 'black';
+  }
+  exchangeGraphToBar() {
+    this.exchangeType = 'bar';
+    this.exchangeChartOptions.legend.display = false;
+    this.exchangeChartOptions.scales.xAxes[0].display = true;
+    this.exchangeDatasets[0].backgroundColor = this.exchangeBgColors;
+    this.exchangeDatasets[0].borderColor = 'white';
+    this.exchangeDatasets[0].pointBorderColor = 'white';
+  }
+  exchangeGraphToPie() {
+    this.exchangeType = 'pie';
+    this.exchangeChartOptions.legend.display = true;
+    this.exchangeChartOptions.scales.xAxes[0].display = false;
+    this.exchangeDatasets[0].backgroundColor = this.exchangeBgColors;
+    this.exchangeDatasets[0].borderColor = 'white';
+    this.exchangeDatasets[0].pointBorderColor = 'white';
+  }
+  
+
+
+
   ExchangeRatesGraph() {
 
+    this.exchangeProgress = 100;
     this.exchangeType = 'bar';
 
     this.exchangeLabels = this.ExchangeRates[0].countryRate.filter((ctr) => 
       ((ctr.code === 'KES') || (ctr.code === 'TZS') || (ctr.code === 'UGX') || (ctr.code === 'ZMW') ||
       (ctr.code === 'AED') || (ctr.code === 'EGP') || (ctr.code === 'EUR') || (ctr.code === 'NZD'))
     ).map(e => e.code);
-    let myGraphLabelColors = [];
+    this.exchangeBgColors = [];
     this.exchangeLabels.forEach((e) => {
-      myGraphLabelColors.push(this.getRandomColor());
+      this.exchangeBgColors.push(this.getRandomColor());
     });
     this.exchangeDatasets = [
       {
@@ -433,7 +476,7 @@ public faChartPie = faChartPie;
         ((ctr.code === 'KES') || (ctr.code === 'TZS') || (ctr.code === 'UGX') || (ctr.code === 'ZMW') ||
         (ctr.code === 'AED') || (ctr.code === 'EGP') || (ctr.code === 'EUR') || (ctr.code === 'NZD'))
         ).map(e => e.value),
-        backgroundColor: myGraphLabelColors,
+        backgroundColor: this.exchangeBgColors,
         borderColor: 'teal',
         borderWidth: 1.5,
         pointBackgroundColor: 'transparent',
