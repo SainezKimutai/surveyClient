@@ -1,13 +1,4 @@
-<article *ngIf="ImprintLoader" class="imprint-loader home">
-    <div class="imprint-loader-wrap">
-        <div class="imprint-loader-main">
-        <div class="imprint-loader-ball ball-one"></div>
-        <div class="imprint-loader-ball ball-two"></div>
-        <div class="imprint-loader-ball ball-three"></div>
-        <div class="imprint-loader-ball ball-four"></div>
-        </div>
-    </div>
-</article>
+
 
 
 
@@ -110,7 +101,7 @@
                     <label for="">Interest Rate</label>
                     <input type="number" name="interestInput" [(ngModel)]="interestInput">
                     <button class="btn btn-sm btn-outline-success"
-                    [disabled]="interestRate === ''" (click)="createInterestRate()">Send</button>
+                    [disabled]="interestInput === ''" (click)="createInterestRate()">Send</button>
                 </div>
 
             </form>
@@ -118,7 +109,7 @@
             <div class="list-card d-flex" *ngIf="InterestRates[0]">
                 <span class="mr-auto">{{InterestRates[0].rate}} %</span>
 
-                <fa-icon class="ml-auto" [icon]="faTrash" (click)="deteInterest(InterestRates[0]._id)">{{item}}</fa-icon >
+                <fa-icon class="ml-auto" [icon]="faTrash" (click)="deteInterest(InterestRates[0]._id)"></fa-icon >
             </div>
 
         </div>
