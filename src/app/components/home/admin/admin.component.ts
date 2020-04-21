@@ -9,6 +9,7 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { ThreatService } from 'src/app/shared/services/threats.service';
 import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
+import { TrafficService } from 'src/app/shared/services/traffic.service';
 
 @Component({
   selector: 'app-admin',
@@ -31,7 +32,8 @@ constructor(
   private responseService: ResponseService,
   private threatService: ThreatService,
   private threatCategoryService: ThreatCategoryService,
-  private notification: NotificationService
+  private notification: NotificationService,
+  private trafficService: TrafficService
 ) { }
 
 @ViewChild('viewAnswersModal', {static: true, }) viewAnswersModal: ModalDirective;
@@ -55,6 +57,7 @@ public AllQuestions = [];
 public AllResponses = [];
 public AllThreats = [];
 public AllThreatCategorys = [];
+public AllTraffic = [];
 
 
 // Icons
@@ -127,6 +130,13 @@ public activeRisk;
 
 public surveyStatus = 0;
 
+// trafic
+public trafficType;
+public trafficLabels;
+public trafficDatasets;
+public trafficChartOptions;
+public trafficBgColors = [];
+
 
 
 
@@ -140,7 +150,7 @@ public surveyStatus = 0;
   ngOnInit() {
     localStorage.setItem('ActiveNav', 'admin');
     
-    this.updatePage().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFunction(); } );
+    this.updatePage().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFunction(); this.trafficFunction(); } );
 
   }
 
@@ -184,11 +194,20 @@ public surveyStatus = 0;
                 this.responseService.getAllResponses().subscribe( dataResponse => {
                   this.AllResponses = dataResponse;
                   this.chartsProgress = 60
-                  this.threatCategoryService.getAllThreatCategorys().subscribe ( dataThreatCat => {
-                    this.AllThreatCategorys = dataThreatCat; resolve();
-                    this.chartsProgress = 70
-                  }, error => console.log('Error getting all threat Categories'));
-  
+
+                  this.trafficService.getAllTraffic().subscribe( dataTrafic => {
+                      this.AllTraffic = dataTrafic; 
+                      this.chartsProgress = 65
+
+                      this.threatCategoryService.getAllThreatCategorys().subscribe ( dataThreatCat => {
+                        this.AllThreatCategorys = dataThreatCat; resolve();
+                        this.chartsProgress = 70
+                      }, error => console.log('Error getting all threat Categories'));
+      
+
+                    }, error => console.log('Error getting all threat Categories')
+
+                  )
   
                 }, error => console.log('Error getting all responses'));
   
@@ -1218,6 +1237,131 @@ checkSurveyProgress(surveyId, responseId) {
 
 
 
+
+
+
+
+
+
+
+
+
+  trafficGraphToLine() {
+    this.trafficType = 'line';
+    this.trafficChartOptions.legend.display = false;
+    this.trafficChartOptions.scales.xAxes[0].display = true;
+    this.trafficDatasets[0].backgroundColor = 'whitesmoke';
+    this.trafficDatasets[0].borderColor = 'gray';
+    this.trafficDatasets[0].pointBorderColor = 'black';
+  }
+  trafficGraphToBar() {
+    this.trafficType = 'bar';
+    this.trafficChartOptions.legend.display = false;
+    this.trafficChartOptions.scales.xAxes[0].display = true;
+    this.trafficDatasets[0].backgroundColor = this.trafficBgColors;
+    this.trafficDatasets[0].borderColor = 'white';
+    this.trafficDatasets[0].pointBorderColor = 'white';
+  }
+  trafficGraphToPie() {
+    this.trafficType = 'pie';
+    this.trafficChartOptions.legend.display = true;
+    this.trafficChartOptions.scales.xAxes[0].display = false;
+    this.trafficDatasets[0].backgroundColor = this.trafficBgColors;
+    this.trafficDatasets[0].borderColor = 'white';
+    this.trafficDatasets[0].pointBorderColor = 'white';
+  }
+  
+
+
+
+  trafficFunction() {
+
+    this.trafficType = 'bar';
+
+    let filterAllTrafics = this.AllTraffic.filter(() => true).map(e => e.source);
+
+    this.trafficLabels = Array.from( new Set(filterAllTrafics));
+    this.trafficBgColors = [];
+    let trafficData = [];
+    this.trafficLabels.forEach((e) => {
+      this.trafficBgColors.push(this.getRandomColor());
+      let myTraf = this.AllTraffic.filter((t) => t.source === e ).map(e => e);
+      trafficData.push(myTraf.length);
+    });
+    this.trafficDatasets = [
+      {
+        label: ['Number Of Traffics'],
+        data: trafficData,
+        backgroundColor: this.trafficBgColors,
+        borderColor: 'teal',
+        borderWidth: 1.5,
+        pointBackgroundColor: 'transparent',
+        pointHoverBackgroundColor: 'transparent',
+        pointBorderColor: 'black',
+        pointHoverBorderColor: 'gray'
+      }
+    ];
+  
+  
+  
+  
+    this.trafficChartOptions = {
+      title: {
+        display: false,
+        text: 'Sales',
+        fontSize: 25
+      },
+      legend: {
+        display: false,
+        position: 'right',
+        labels: {
+              fontColor: '#73818f'
+            }
+      },
+      layout: {
+        padding: 10
+      },
+      tooltips: {
+          enabled: true
+      },
+      scales: {
+        yAxes: [{
+            display: false,
+            gridLines: {
+                drawBorder: false,
+                display: false
+            },
+            stacked: false,
+            ticks: {
+                beginAtZero: true
+            }
+        }],
+        xAxes: [{
+            barPercentage: 0.4,
+            display: true,
+            stacked: false,
+            gridLines: {
+                drawBorder: true,
+                display: false
+            },
+            ticks: {
+              beginAtZero: false
+            }
+        }]
+      },
+      maintainAspectRatio: false,
+      responsive: true,
+      plugins: {
+          datalabels: {
+              anchor: 'end',
+              align: 'top',
+              formatter: Math.round,
+              font: { weight: 'bold'}
+          }
+      }
+    };
+
+  }
 
 
 

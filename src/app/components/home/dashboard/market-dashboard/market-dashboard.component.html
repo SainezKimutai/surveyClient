@@ -34,7 +34,7 @@
     <section id="second_cards_section" class="card-group">
         <div class="card">
             <div class="title d-flex"> <span>GDP</span>
-                <div class=" graph-switch d-flex ml-auto">
+                <div *ngIf="gdpProgress === 100 && MyFormatedGDP.length > 0 && gdpType" class=" graph-switch d-flex ml-auto">
                   
                     <span (click)="gdpGraphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="gdpType === 'line' ? 'active' : ''" ></fa-icon></span> 
                     <span (click)="gdpGraphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="gdpType === 'bar' ? 'active' : ''" ></fa-icon></span>
@@ -59,7 +59,7 @@
 
         <div class="card">
             <div class="title d-flex"> <span>Exchange Rates</span>
-                <div class=" graph-switch d-flex ml-auto">
+                <div *ngIf="exchangeProgress === 100 && ExchangeRates.length > 0 && exchangeType" class=" graph-switch d-flex ml-auto">
                     <span (click)="exchangeGraphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="exchangeType === 'line' ? 'active' : ''" ></fa-icon></span> 
                     <span (click)="exchangeGraphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="exchangeType === 'bar' ? 'active' : ''" ></fa-icon></span>
                     <span (click)="exchangeGraphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="exchangeType === 'pie' ? 'active' : ''" ></fa-icon> </span>
