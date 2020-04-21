@@ -96,8 +96,6 @@ public faChartPie = faChartPie;
 
   ngOnInit() {
 
-    localStorage.setItem('ActiveNav', 'marketRates');
-
     this.gdpForm = {
       dateUpdated: Date,
       meta:{quarter: null, year: null},
