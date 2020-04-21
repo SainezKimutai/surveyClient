@@ -96,10 +96,21 @@ main .tab-content .tab-pane .model .model-item
     background-image: linear-gradient(to right, darken( white, 10)  , darken( white, 0) )
 
     .item
-        width: 100%   
+        width: 20%   
         text-align: left
         padding: 0 1em 
+        opacity: 1
 
+        &.hide
+            opacity: 0
+        
+        fa-icon 
+            font-size: 12px
+            color: grayColor(g200)
+            cursor: pointer
+
+            &:hover
+                color: colorTheme(danger)
     .code 
         margin-right: auto
 
@@ -160,6 +171,9 @@ main .tab-content .tab-pane .model .model-item
 
 .addGDPModal .modal-content 
     border: none
+    height: fit-content
+    max-height: 600px
+    overflow-x: scroll
 
 .addGDPModal .modal-content .modal-header
     border: none
@@ -196,13 +210,21 @@ main .tab-content .tab-pane .model .model-item
             font-size: 12px
 
     .preview-wrap
-        padding: 1em 2em
+        padding: 1em 4em
         width: 100%
         font-size: 12px
 
-        fa-icon 
-            cursor: pointer
-            color: colorTheme(danger)
+        .country-item
+            width: 5em
+            text-align: left
+            background-color: grayColor(g100)
+            padding: .5em
+            margin: 0 0 2px 0
+
+
+            fa-icon 
+                cursor: pointer
+                color: colorTheme(danger)
 
 
     .btn-wrap 

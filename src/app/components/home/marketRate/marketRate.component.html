@@ -1,4 +1,15 @@
 
+<article *ngIf="ImprintLoader" class="imprint-loader home">
+    <div class="imprint-loader-wrap">
+        <div class="imprint-loader-main">
+        <div class="imprint-loader-ball ball-one"></div>
+        <div class="imprint-loader-ball ball-two"></div>
+        <div class="imprint-loader-ball ball-three"></div>
+        <div class="imprint-loader-ball ball-four"></div>
+        </div>
+    </div>
+</article>
+
 
 
 
@@ -73,10 +84,14 @@
                 </div>
                 <div class="model-item" *ngFor="let item of MyFormatedGDP">
                     <span class="item">{{item.code}}</span>
-                    <span class="item">{{item.firstQ}} </span>
-                    <span class="item">{{item.secondQ}} </span>
-                    <span class="item">{{item.thirdQ}} </span>
-                    <span class="item">{{item.fourthQ}} </span>
+                    <span [ngClass]="item.firstQ.value === null ? 'item hide' : 'item'" >{{item.firstQ.value}} %
+                         <fa-icon *ngIf="item.firstQ.value !== null" [icon]="faTrash" (click)="romoveGDPRatio(item.firstQ.id)"></fa-icon> </span>
+                    <span [ngClass]="item.secondQ.value === null ? 'item hide' : 'item'" >{{item.secondQ.value}} % 
+                        <fa-icon *ngIf="item.secondQ.value !== null" [icon]="faTrash" (click)="romoveGDPRatio(item.secondQ.id)"></fa-icon></span>
+                    <span [ngClass]="item.thirdQ.value === null ? 'item hide' : 'item'" >{{item.thirdQ.value}} % 
+                        <fa-icon *ngIf="item.thirdQ.value !== null" [icon]="faTrash" (click)="romoveGDPRatio(item.thirdQ.id)"></fa-icon></span>
+                    <span [ngClass]="item.fourthQ.value === null ? 'item hide' : 'item'" >{{item.fourthQ.value}} % 
+                        <fa-icon *ngIf="item.fourthQ.value !== null" [icon]="faTrash" (click)="romoveGDPRatio(item.fourthQ.id)"></fa-icon></span>
                 
                 </div>
 
@@ -163,7 +178,7 @@
 
                 <div class="preview-wrap w-100">
                     <div class="country-item w-100 d-flex" *ngFor="let item of gdpForm.countryRate; let x = index">
-                        <span class="mr-auto">{{item.code}}</span>
+                        <span class="mr-auto">{{item.code}} </span>
                         <span class="mx-auto">{{item.value}}</span>
                         <fa-icon [icon]="faTrash" (click)="removeCountry(x)" class="ml-auto">{{item}}</fa-icon >
                     </div>

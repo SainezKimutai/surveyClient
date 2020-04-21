@@ -24,6 +24,9 @@ export class MarketRateComponent implements OnInit {
     private interetRateService: InterestRateService
   ) { }
 
+
+  public ImprintLoader = false;
+
   @ViewChild('addGDPModal', {static: true}) addGDPModal: ModalDirective;
 
 
@@ -137,6 +140,7 @@ export class MarketRateComponent implements OnInit {
 
   async forMartGDP() {
     this.FormatedGDP = [];
+    this.MyFormatedGDP = [];
 
 
     this.AllCountryCode.forEach((country) => {
@@ -145,10 +149,10 @@ export class MarketRateComponent implements OnInit {
         let myData = {
           year: yearItem,
           code: country,
-          firstQ: null,
-          secondQ: null,
-          thirdQ: null,
-          fourthQ: null
+          firstQ: {id: '', value: null},
+          secondQ: {id: '', value: null},
+          thirdQ: {id: '', value: null},
+          fourthQ: {id: '', value: null},
         }
         this.GDPGrowthRates.forEach((gdpElement) => {
           if(yearItem === gdpElement.meta.year ) {
@@ -158,7 +162,8 @@ export class MarketRateComponent implements OnInit {
               gdpElement.countryRate.forEach((contryItem) => {
                 
                 if (contryItem.code === country){
-                  myData.firstQ = contryItem.value
+                  myData.firstQ.id = contryItem._id;
+                  myData.firstQ.value = contryItem.value;
                  
                 }
               });
@@ -169,7 +174,8 @@ export class MarketRateComponent implements OnInit {
               gdpElement.countryRate.forEach((contryItem) => {
                 
                 if (contryItem.code === country){
-                  myData.secondQ = contryItem.value
+                  myData.secondQ.id = contryItem._id;
+                  myData.secondQ.value = contryItem.value;
                 }
               });
   
@@ -179,7 +185,8 @@ export class MarketRateComponent implements OnInit {
               gdpElement.countryRate.forEach((contryItem) => {
                 
                 if (contryItem.code === country){
-                  myData.thirdQ = contryItem.value
+                  myData.thirdQ.id = contryItem._id;
+                  myData.thirdQ.value = contryItem.value;
                 }
               });            
             }
@@ -188,7 +195,8 @@ export class MarketRateComponent implements OnInit {
               gdpElement.countryRate.forEach((contryItem) => {
                 
                 if (contryItem.code === country){
-                  myData.fourthQ = contryItem.value
+                  myData.fourthQ.id = contryItem._id;
+                  myData.fourthQ.value = contryItem.value;
                 }
               });          
             }
@@ -318,25 +326,67 @@ export class MarketRateComponent implements OnInit {
 
 
   addGDP() {
-    // console.log(this.GDPGrowthRates);
+    this.addGDPModal.hide();
+    this.ImprintLoader = true;
     this.gdpGrowthRateService.createGDP(this.gdpForm).subscribe(
       data => {
-        this.updatePage();
-        this.addGDPModal.hide();
-        this.gdpForm = {
-          dateUpdated: Date,
-          meta:{quarter: null, year: null},
-          countryRate: []
-        }
-        this.notifyService.showSuccess('GDP Addedd', 'Success')
+        this.updatePage().then(()=> {
+          this.gdpForm = {
+            dateUpdated: Date,
+            meta:{quarter: null, year: null},
+            countryRate: []
+          }
+          this.ImprintLoader = false;
+          this.notifyService.showSuccess('GDP Addedd', 'Success')
+        });
+
       },
-      error => this.notifyService.showError('Could Not add GDP', 'Failed')
+      error => {  this.ImprintLoader = false; this.notifyService.showError('Could Not add GDP', 'Failed');}
     )
   }
 
 
 
 
+  async romoveGDPRatio(id) {
+    this.ImprintLoader = true;
+
+    for(let gdp of this.GDPGrowthRates) {
+   
+      let idPresent = gdp.countryRate.map((e) =>  e._id ).indexOf(id);
+
+      if (idPresent !== -1){
+        
+        gdp.countryRate = gdp.countryRate.filter((e)=> e._id !== id).map(e => e);
+
+        if(gdp.countryRate.length === 0){
+          this.gdpGrowthRateService.deleteGDP(gdp._id).subscribe(
+            data => {
+              this.updatePage().then(() => {
+                this.ImprintLoader = false;
+                this.notifyService.showSuccess('GDP rate deleted', 'Success');
+              })
+            },
+            error => {this.ImprintLoader = false; this.notifyService.showError('Could not delete gdp rate', 'Failed')}        
+          )
+        } else {
+        this.gdpGrowthRateService.updateGDP(gdp._id, gdp).subscribe(
+          data => {
+    
+            this.updatePage().then(() => {
+              this.ImprintLoader = false;
+              this.notifyService.showSuccess('GDP rate deleted', 'Success');
+            })
+          },
+          error => {this.ImprintLoader = false; this.notifyService.showError('Could not delete gdp rate', 'Failed')}
+        )
+        }
+
+
+        break;
+      }
+    } 
+  }
 
 
 
