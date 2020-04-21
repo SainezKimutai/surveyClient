@@ -131,9 +131,9 @@
 
                 </div>
 
-                <div class="body d-flex" *ngIf="CompnayRiskRates">
+                <!-- <div class="body d-flex" *ngIf="CompnayRiskRates">
                     <div class="spinner-div spinner-border mx-auto" role="status"></div>
-                </div>
+                </div> -->
 
                 <div class="body" >
 
@@ -163,9 +163,9 @@
 
                 </div>
 
-                <div class="body d-flex" *ngIf="CompnayRiskRates">
+                <!-- <div class="body d-flex" *ngIf="CompnayRiskRates">
                     <div class="spinner-div spinner-border mx-auto" role="status"></div>
-                </div>
+                </div> -->
 
                 <div class="body" >
 
@@ -262,59 +262,6 @@
         </div>
     </section> <!-- list_section_two -->
 
-
-
-
-
-
-
-
-    <div bsModal #viewAnswersModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
-        aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog viewAnswersModal modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header ">
-                    <h4 class="modal-title ">Responses of <span>{{companyNameOnView}}</span> on
-                        <span>{{surveyNameOnView}} survey</span>: 
-                    </h4>
-                    <button type="button" class="btn close" (click)="viewAnswersModal.hide()" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-
-                </div>
-                <div class="surveyStatus-wrap ">
-                    <span *ngIf="100 > surveyStatus" class="surveyStatus text-primary">In progress, ({{surveyStatus}}%)</span> 
-                    <span *ngIf="surveyStatus > 99" class="surveyStatus text-success">Completed</span> 
-                </div>
-                <div class="modal-body">
-
-                    <div class="question-wrap" *ngFor="let item of QuestionsOnView; let x = index">
-
-                        <div [ngClass]="item.wasSkipped ? 'question skipped' : 'question'"> <span class="num">{{x+1}})</span> {{item.question}} <span class="skip" *ngIf="item.wasSkipped">skipped</span> </div>
-
-                        <div class="answer-wrap">
-                            <div *ngFor="let ans of item.answers" [ngClass]="ans.picked ? 'answer picked' : 'answer'"
-                                class="answer">{{ans.answer}}</div>
-                        </div>
-
-                    </div>
-
-
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-
-
-
-
-
-
-
-
-
-
-
 </section><!-- body-section -->
 
 
@@ -326,7 +273,7 @@
 
 <div class="page-footer">
 
-    <h5>Survey System &copy; {{thisYear}} <span>Tactive</span></h5>
+    <!-- <h5>Survey System &copy; {{thisYear}} <span>Tactive</span></h5> -->
 
     <h6>Powered by <span>Imprint Africa</span></h6>
 
