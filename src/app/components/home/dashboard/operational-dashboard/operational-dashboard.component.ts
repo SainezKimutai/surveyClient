@@ -110,9 +110,28 @@ constructor(
 
   public riskIssueArrayUnsorted = [];
   public riskIssueArray = [];
-  public riskIssueArrayToGraph = [];
+  public riskIssueArrayPerRisk = [];
   public activeRisk;
   public surveyStatus = 0;
+
+
+
+  // 
+  public riskIssueArrayPerCompany = []
+  public companyRiskArray = [];
+  public activeCompany;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -698,7 +717,7 @@ switchGraphDataset(num) {
 
   for ( let risk of filterRiskArray) {
 
-    if ( this.riskIssueArrayToGraph[num] === risk ) {
+    if ( this.riskIssueArrayPerRisk[num] === risk ) {
       let myRAray = this.riskIssueArray.filter((r) => r.risk === risk).map(e => e);
       let low = myRAray.filter((r) => r.level === 'Low').map(e => e);
       lowValue = low.length;
@@ -712,8 +731,8 @@ switchGraphDataset(num) {
 
   }
 
-  this.activeRisk = this.riskIssueArrayToGraph[num];
-  this.graphDatasets[0].label = this.riskIssueArrayToGraph[num];
+  this.activeRisk = this.riskIssueArrayPerRisk[num];
+  this.graphDatasets[0].label = this.riskIssueArrayPerRisk[num];
   this.graphDatasets[0].data = [ lowValue, mediumValue, highValue];
 
 }
@@ -737,7 +756,7 @@ graphChartFunction(num) {
 
   for ( let risk of filterRiskArray) {
 
-    if ( this.riskIssueArrayToGraph[num] === risk ) {
+    if ( this.riskIssueArrayPerRisk[num] === risk ) {
       let myRAray = this.riskIssueArray.filter((r) => r.risk === risk).map(e => e);
 
       let low = myRAray.filter((r) => r.level === 'Low').map(e => e);
@@ -754,7 +773,7 @@ graphChartFunction(num) {
   }
 
 
-  this.activeRisk = this.riskIssueArrayToGraph[num];
+  this.activeRisk = this.riskIssueArrayPerRisk[num];
 
   this.graphType = 'line';
 
@@ -764,7 +783,7 @@ graphChartFunction(num) {
   // });
   this.graphDatasets = [
     {
-      label: this.riskIssueArrayToGraph[num],
+      label: this.riskIssueArrayPerRisk[num],
       data: [ lowValue, mediumValue, highValue],
       backgroundColor: '#02b0cc',
       borderColor: 'teal',
@@ -841,6 +860,12 @@ graphChartFunction(num) {
 
 
 
+switchActiveCompany(comp) {
+ 
+  this.activeCompany = this.riskIssueArrayPerCompany[comp];
+  this.companyRiskArray = this.riskIssueArray.filter((r)=> r.company === this.activeCompany ).map(e => e);
+
+}
 
 
 
@@ -904,8 +929,13 @@ riskIssuesFunction() {
                         this.riskIssueArrayUnsorted.push(myRiskIssueObject);
                         this.riskIssueArray = this.riskIssueArrayUnsorted.sort((a, b) => a.risk.localeCompare(b.risk));
                         let newRiskArray = this.riskIssueArray.filter(() => true ).map(e => e.risk);
-                        this.riskIssueArrayToGraph = Array.from(new Set(newRiskArray));
+                        this.riskIssueArrayPerRisk = Array.from(new Set(newRiskArray));
+                        let newRiskArrayPerCompany = this.riskIssueArray.filter(() => true ).map(e => e.company);
+                        this.riskIssueArrayPerCompany = Array.from(new Set(newRiskArrayPerCompany));
+                        this.activeCompany = this.riskIssueArrayPerCompany[0]
+                        this.companyRiskArray = this.riskIssueArray.filter((r)=> r.company === this.activeCompany ).map(e => e);
                         this.chartsProgress = 95;
+
 
                         this.graphChartFunction(0);
                         this.thirdSectionGraphsFunction();
