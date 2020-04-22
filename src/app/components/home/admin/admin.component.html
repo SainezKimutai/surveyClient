@@ -244,7 +244,7 @@
                 </div>
                 <div *ngIf="graphType" class="datasets-wrap">
                     <div *ngFor="let item of riskIssueArrayPerRisk; let x = index" 
-                    [ngClass]="activeRisk2 === item ? 'dataset-item active' : 'dataset-item' "
+                    [ngClass]="activeRisk === item ? 'dataset-item active' : 'dataset-item' "
                     (click)="switchGraphDataset(x)">
                        {{item}}
                     </div>
