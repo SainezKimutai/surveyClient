@@ -24,6 +24,10 @@ export class DashboardComponent implements OnInit {
 public OperationDashboardStatus = true;
 public MarketDashboardStatus = false;
 
+public today = new Date();
+public thisYear = this.today.getFullYear();
+
+
 
 
   constructor(

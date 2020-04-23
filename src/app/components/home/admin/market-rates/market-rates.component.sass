@@ -1,0 +1,123 @@
+@import 'src/styles.sass'
+
+
+#market_rates_cards_section
+    display: flex
+    align-items: stretch
+    width: 100%
+    height: 100%
+    
+    @include desktop_sm
+        display: flex
+        flex-direction: column
+
+
+#market_rates_cards_section .card
+    border: none
+    border-radius: 5px
+    max-width: 50%
+    height: 400px
+    margin: 0 1.5em 1em 0
+    padding: 1em 2em 0 2em
+    // box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    // -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    // -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    transition: all 0.3s ease
+    cursor: pointer
+   
+    
+    &:hover
+      transform: translateY(-5px)
+      box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
+
+    @include desktop_md
+        max-width: 100%
+    
+    @include desktop_sm
+        width: 100%
+
+
+
+
+    .title
+        width: 100%
+        padding: .5em 1em 2em 1em
+        font-size: 12px
+        color: grayColor(g600)
+        font-weight: bold
+
+
+    .body-wrapper
+        width: 100%
+        min-height: 250px
+        height: fit-content
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+
+        .no-data
+            h6 
+                font-size: 22px
+                font-weight: bold
+                color: grayColor(g600)
+
+        canvas
+            height: 250px
+
+    .footer-label
+        width: 100%
+        overflow-x: scroll
+        display: flex
+        align-items: stretch
+        margin: .5em 0 0 0
+
+        .item 
+            cursor: pointer
+            width: fit-content
+            min-width: 5em
+            font-size: 14px
+            color: grayColor(g800)
+            text-align: center
+            margin: 0 2px
+            background-color: grayColor(g100)
+
+            &.active
+                background-color: colorTheme(primary)
+
+
+
+
+
+.graph-switch
+    display: flex
+    align-items: center
+    justify-content: center
+
+    span 
+        border: none
+        padding: 5px
+
+        &.toggle-legend
+            background-color: transparent
+            color: black
+            font-size: 12px
+
+        &:hover
+            background-color: grayColor(g600)
+
+            fa-icon 
+                color: white
+
+
+        fa-icon
+            margin: auto
+            font-size: 14px
+            margin: 5px
+            cursor: pointer
+            color: grayColor(g400)
+
+            &.active 
+                color: colorTheme(primaryTheme)
+                font-size: 16px
+

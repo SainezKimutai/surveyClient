@@ -10,12 +10,12 @@ import { ModalModule } from 'ngx-bootstrap';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
-
+import {AdminMarketRateComponent } from './market-rates/market-rates.component';
 
 @NgModule({
 
   declarations: [
-      AdminComponent
+      AdminComponent, AdminMarketRateComponent
           ],
 
     imports: [

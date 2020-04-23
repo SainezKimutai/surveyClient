@@ -58,8 +58,7 @@
 
     &.second
         background-color: colorTheme(primaryTheme)
-    
-        
+ 
 
     &.third
         background-color: colorTheme(warning)
@@ -188,8 +187,34 @@
         align-items: center
         justify-content: center
 
+        .no-data
+            h6 
+                font-size: 22px
+                font-weight: bold
+                color: grayColor(g600)
+
         canvas
             height: 250px
+
+    .footer-label
+        width: 100%
+        overflow-x: scroll
+        display: flex
+        align-items: stretch
+        margin: .5em 0 0 0
+
+        .item 
+            cursor: pointer
+            width: fit-content
+            min-width: 5em
+            font-size: 14px
+            color: grayColor(g800)
+            text-align: center
+            margin: 0 2px
+            background-color: grayColor(g100)
+
+            &.active
+                background-color: colorTheme(primary)
 
 
 

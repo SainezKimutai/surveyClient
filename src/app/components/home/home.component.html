@@ -23,6 +23,12 @@
         </a>
       </li>
   
+            
+      <li *ngIf="toAdmin" [ngClass]="adminNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent">
+        <a routerLink="/home/admin" [ngClass]=" adminNavBarActive ? 'nav-link active' : 'nav-link'">
+          <fa-icon [icon]="faChartLine"></fa-icon> <span>Dashboard</span>
+        </a>
+      </li>
 
       <li *ngIf="toCustomer" [ngClass]="surveyNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
         <a routerLink="/home/survey" [ngClass]=" surveyNavBarActive ? 'nav-link active' : 'nav-link'">
@@ -49,7 +55,7 @@
         </a>
       </li>
 
-      <li  *ngIf="toThirdParty" [ngClass]="marketRateBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent"  >
+      <li  *ngIf="toAdmin" [ngClass]="marketRateBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent"  >
         <a routerLink="/home/market_rate" [ngClass]=" marketRateBarActive ? 'nav-link active' : 'nav-link'">
           <fa-icon [icon]="faEdit"></fa-icon> <span>Market Rates</span>
         </a>
@@ -62,12 +68,7 @@
       </li>
 
 
-      
-      <li *ngIf="toAdmin" [ngClass]="adminNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent">
-        <a routerLink="/home/admin" [ngClass]=" adminNavBarActive ? 'nav-link active' : 'nav-link'">
-          <fa-icon [icon]="faChartLine"></fa-icon> <span>Dashboard</span>
-        </a>
-      </li>
+
 
       <li *ngIf="toCustomer || toAdmin" [ngClass]="usersNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent">
         <a routerLink="/home/users" [ngClass]=" usersNavBarActive ? 'nav-link active' : 'nav-link'">
@@ -113,7 +114,11 @@
             <fa-icon [icon]="faChartLine"></fa-icon> <span>Dashboard</span>
           </a>
         </li>
-    
+        <li *ngIf="toAdmin" [ngClass]="adminNavBarActive ? 'nav-item active' : 'nav-item'" >
+          <a routerLink="/home/admin" [ngClass]=" adminNavBarActive ? 'nav-link active' : 'nav-link'">
+            <fa-icon [icon]="faChartLine"></fa-icon> <span>Dashboard</span>
+          </a>
+        </li>
 
         <li *ngIf="toCustomer" [ngClass]="surveyNavBarActive ? 'nav-item active' : 'nav-item'" >
           <a routerLink="/home/survey" [ngClass]=" surveyNavBarActive ? 'nav-link active' : 'nav-link'">
@@ -139,7 +144,7 @@
           </a>
         </li>
     
-        <li  *ngIf="toThirdParty" [ngClass]="marketRateBarActive ? 'nav-item active' : 'nav-item'" >
+        <li  *ngIf="toAdmin" [ngClass]="marketRateBarActive ? 'nav-item active' : 'nav-item'" >
           <a routerLink="/home/market_rate" [ngClass]=" marketRateBarActive ? 'nav-link active' : 'nav-link'">
             <fa-icon [icon]="faEdit"></fa-icon> <span>Market Rates</span>
           </a>
@@ -151,11 +156,6 @@
           </a>
         </li>
 
-        <li *ngIf="toAdmin" [ngClass]="adminNavBarActive ? 'nav-item active' : 'nav-item'" >
-          <a routerLink="/home/admin" [ngClass]=" adminNavBarActive ? 'nav-link active' : 'nav-link'">
-            <fa-icon [icon]="faChartLine"></fa-icon> <span>Dashboard</span>
-          </a>
-        </li>
 
         <li *ngIf="toCustomer || toAdmin" [ngClass]="usersNavBarActive ? 'nav-item active' : 'nav-item'" >
           <a routerLink="/home/users" [ngClass]=" usersNavBarActive ? 'nav-link active' : 'nav-link'">

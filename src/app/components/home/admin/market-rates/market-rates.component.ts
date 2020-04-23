@@ -14,11 +14,11 @@ import { GDPGrowthRateService } from 'src/app/shared/services/gdpGrowthRate.serv
 import { InterestRateService } from 'src/app/shared/services/interetRates.service';
 
 @Component({
-  selector: 'app-market-dashboard',
-  templateUrl: './market-dashboard.component.html',
-  styleUrls: ['./market-dashboard.component.sass']
+  selector: 'app-market-rates',
+  templateUrl: './market-rates.component.html',
+  styleUrls: ['./market-rates.component.sass']
 })
-export class MarketDashboardComponent implements OnInit {
+export class AdminMarketRateComponent implements OnInit {
 // tslint:disable
 // tslint:disable: prefer-const
 
