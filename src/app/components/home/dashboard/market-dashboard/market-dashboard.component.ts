@@ -38,7 +38,8 @@ public faChartPie = faChartPie;
  
 
 
-
+  public NoDataOnDasboard = false;
+  
 public exchangeProgress = 0;
 public gdpProgress = 0;
 

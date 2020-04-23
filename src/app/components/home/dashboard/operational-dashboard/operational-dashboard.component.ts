@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
-import { faChartLine, faChartBar, faChartPie, faListAlt, faBuilding, faFire } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit, ViewChild, HostListener, ElementRef } from '@angular/core';
+import { faChartLine, faChartBar, faChartPie, faListAlt, faBuilding, faLink, faFire, faShare } from '@fortawesome/free-solid-svg-icons';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
 import { UserService } from 'src/app/shared/services/user.service';
@@ -34,8 +34,11 @@ constructor(
     private notification: NotificationService
   ) { }
 
-  @ViewChild('viewAnswersModal', {static: true, }) viewAnswersModal: ModalDirective;
+  @ViewChild('viewAnswersModal', {static: true }) viewAnswersModal: ModalDirective;
+  @ViewChild('shareModal', {static: true } ) shareModal: ModalDirective;
 
+
+  public NoDataOnDasboard = false;
 
   public innerWidth: any;
   public onResizeStatus = false;
@@ -61,6 +64,8 @@ constructor(
   public faChartLine = faChartLine;
   public faChartBar = faChartBar;
   public faChartPie = faChartPie;
+  public faShare = faShare;
+  public faLink = faLink;
 
 // Top Cards variables
   public cardOneType: string;
@@ -122,6 +127,10 @@ constructor(
   public activeCompany;
 
 
+  // 
+  public shareLink;
+
+
 
 
 
@@ -138,6 +147,7 @@ constructor(
   ngOnInit() {
 
     this.updatePage().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFunction(); } );
+    this.shareLink = `https://bcp.tactive.consulting/register?institution=${localStorage.getItem('loggedUserInstitution')}`
 
 
   }
@@ -206,6 +216,28 @@ updatePage() {
 
   });
 }
+
+
+
+
+
+
+
+
+
+copyShareLink(inputElement) {
+  inputElement.select();  
+  document.execCommand('copy');  
+  inputElement.setSelectionRange(0, 0);    
+  this.notification.showInfo(inputElement.value, 'Text Copied !');
+}
+
+
+
+
+
+
+
 
 
 
@@ -906,7 +938,7 @@ computeCompanyRiskRates() {
 
 riskIssuesFunction() {
   this.chartsProgress = 80;
-  this.AllThreats.forEach((threat) => {
+  this.AllThreats.forEach((threat,idx1, arr1) => {
     for (let trtCategory of this.AllThreatCategorys) {
       if (trtCategory._id === threat.category) {
         this.AllCompanies.forEach( (comp) => {
@@ -916,7 +948,7 @@ riskIssuesFunction() {
                 if ((survey._id === response.surveyId)) {
 
                     response.answers.forEach( (respAns, idx2, array2) => {
-                      if (respAns.answer[0].threatId === threat._id) {
+                      if (respAns.answer[0].threatId === threat._id && respAns.answer[0].level) {
                         let myRiskIssueObject = {
                           risk: threat.name,
                           riskCategory: trtCategory.threatCategoryName,
@@ -954,6 +986,12 @@ riskIssuesFunction() {
         });
 
       }
+    }
+
+
+    if(idx1 === arr1.length - 1 && this.chartsProgress === 80) {
+      this.NoDataOnDasboard = true;
+   
     }
 
   });

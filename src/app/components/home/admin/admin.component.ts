@@ -1112,7 +1112,7 @@ switchGraphDataset(num) {
                   if ((survey._id === response.surveyId)) {
   
                       response.answers.forEach( (respAns, idx2, array2) => {
-                        if (respAns.answer[0].threatId === threat._id) {
+                        if (respAns.answer[0].threatId === threat._id && respAns.answer[0].level) {
                           let myRiskIssueObject = {
                             risk: threat.name,
                             riskCategory: trtCategory.threatCategoryName,

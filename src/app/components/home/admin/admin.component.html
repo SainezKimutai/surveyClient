@@ -282,8 +282,8 @@
                 <div class="body-list" *ngIf="riskIssueArray.length !== 0">
 
                     <div *ngFor="let item of companyRiskArray" class="body-item d-flex">
-                        <div class="mx-auto">{{item.risk}}</div>
-                        <!-- <div class="mx-auto">{{item.company}}</div> -->
+                        <div class="mx-auto risk">{{item.risk}}</div>
+                        <div class="mx-auto recom">{{item.recom}}</div>
                         <div class="mx-auto riskRate"
                         [ngClass]="[ 
                         item.level === 'Low' ? 'mx-auto riskRate low' : 'mx-auto riskRate',
@@ -291,7 +291,6 @@
                         item.level === 'High' ? 'mx-auto riskRate high' : 'mx-auto riskRate'
                         ]"
                         >{{item.level}}</div>
-                        <!-- <div class="mx-auto">{{item.recom}}</div> -->
                     </div>
 
                 </div>

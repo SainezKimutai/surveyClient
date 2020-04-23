@@ -5,6 +5,7 @@
 
 
 
+
     <section id="top_cards_section" class="card-group">
 
         <div class="card first">
@@ -24,6 +25,7 @@
         <div class="card second">
             <div class="card-title">
                 <h4>Companies</h4>
+                <fa-icon class="mr-2" (mouseenter)="shareModal.show()" [icon]="faLink"></fa-icon>
                 <fa-icon [icon]="faBuilding"></fa-icon>
             </div>
             <div class="card-info">
@@ -68,10 +70,13 @@
 
 
 
+    <section [hidden]="!NoDataOnDasboard" class="no-data-on-dashboard">
+        <h4>No data yet. Companies have not yet started taking your surveys. </h4>
+    </section>
 
 
 
-    <section id="second_cards_section" class="card-group">
+    <section [hidden]="NoDataOnDasboard" id="second_cards_section" class="card-group">
         <div class="card">
             <div class="title d-flex"> <span>Risk Categories</span>
                 <div class=" graph-switch d-flex ml-auto">
@@ -119,7 +124,7 @@
 
 
 
-    <section id="graph_section" class="card-group">
+    <section [hidden]="NoDataOnDasboard" id="graph_section" class="card-group">
         <div class="card">
             <div class="title d-flex"> <span>Specific Risks Representations</span>
                 <div class=" graph-switch d-flex ml-auto">
@@ -159,7 +164,7 @@
 
 
 
-    <section id="risk_per_company_section" class="card-group">
+    <section [hidden]="NoDataOnDasboard" id="risk_per_company_section" class="card-group">
         <div class="card">
             <div class="title d-flex"> <span>Risk per Companies</span>
             </div>
@@ -178,8 +183,8 @@
                 <div class="body-list" *ngIf="riskIssueArray.length !== 0">
 
                     <div *ngFor="let item of companyRiskArray" class="body-item d-flex">
-                        <div class="mx-auto">{{item.risk}}</div>
-                        <!-- <div class="mx-auto">{{item.company}}</div> -->
+                        <div class="mx-auto risk">{{item.risk}}</div>
+                        <div class="mx-auto recom">{{item.recom}}</div>
                         <div class="mx-auto riskRate"
                         [ngClass]="[ 
                         item.level === 'Low' ? 'mx-auto riskRate low' : 'mx-auto riskRate',
@@ -187,7 +192,6 @@
                         item.level === 'High' ? 'mx-auto riskRate high' : 'mx-auto riskRate'
                         ]"
                         >{{item.level}}</div>
-                        <!-- <div class="mx-auto">{{item.recom}}</div> -->
                     </div>
 
                 </div>
@@ -213,7 +217,7 @@
 
 
 
-    <section id="third_cards_section" class="card-group">
+    <section [hidden]="NoDataOnDasboard" id="third_cards_section" class="card-group">
 
 
 
@@ -258,41 +262,7 @@
 
        
         <div class="card" style="background: transparent;">
-            <!-- <div class="title">List of Risk Issues among Companies</div>
 
-            <div class="body-wrapper">
-                <div class="body-title">
-
-                    <div class="body-item d-flex">
-                        <div class="mx-auto ">Threat</div>
-                        <div class="mx-auto ">Company</div>
-                        <div class="mx-auto ">Severity</div>
-                 
-                    </div>
-
-                </div>
-
-                <div class="body d-flex" *ngIf="riskIssueArray.length === 0">
-                    <div class="spinner-div spinner-border mx-auto" role="status"></div>
-                </div>
-
-                <div class="body" *ngIf="riskIssueArray.length !== 0">
-
-                    <div *ngFor="let item of riskIssueArray" class="body-item d-flex">
-                        <div class="mx-auto">{{item.risk}}</div>
-                        <div class="mx-auto">{{item.company}}</div>
-                        <div class="mx-auto riskRate"
-                        [ngClass]="[ 
-                        item.level === 'Low' ? 'mx-auto riskRate low' : 'mx-auto riskRate',
-                        item.level === 'Medium' ? 'mx-auto riskRate medium' : 'mx-auto riskRate',
-                        item.level === 'High' ? 'mx-auto riskRate high' : 'mx-auto riskRate'
-                        ]"
-                        >{{item.level}}</div>
-                    
-                    </div>
-
-                </div>
-            </div> -->
 
         </div>
 
@@ -315,79 +285,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <section hidden id="list_section_one" class="card-group">
-        <div class="card">
-
-        </div>
-    </section> <!-- list_section_one -->
-
-
-
-
-
-
-
-
-
-    <section hidden id="list_section_two" class="card-group">
-        <div class="card">
-
-        </div>
-    </section> <!-- list_section_two -->
 
 
 
@@ -448,3 +345,19 @@
 
 
 
+<div bsModal #shareModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog shareModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title">Invite Companies by sharing the link below</h4>
+            <button (click)="shareModal.hide()" type="button" class="btn close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <input #userinput readonly  [value]="shareLink">
+            <button class="btn btn-sm btn-secondary" (click)="copyShareLink(userinput); shareModal.hide()">Copy Link</button>
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
