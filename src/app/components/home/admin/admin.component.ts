@@ -166,6 +166,7 @@ public surveyStatus = 0;
         this.companyProfileService.getAllCompanyProfiles().subscribe( dataCompanies => {
   
           this.AllCompanies = dataCompanies;
+          console.log(this.AllCompanies)
           this.chartsProgress = 20
   
           this.surveyService.getAllSurveys().subscribe( dataSurvey => {

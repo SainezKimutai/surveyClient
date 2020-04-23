@@ -3,7 +3,7 @@ import { faBuilding, faUsers, faGlobe, faIndustry, faEnvelope, faKey } from '@fo
 import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { UserService } from 'src/app/shared/services/user.service';
-import { Router } from '@angular/router';
+import { Router , ActivatedRoute, ParamMap} from '@angular/router';
 import { IndustryService } from 'src/app/shared/services/industry.service';
 import { ModalDirective, ModalOptions, ModalModule } from 'ngx-bootstrap';
 
@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private userService: UserService,
     private companyProfileService: CompanyProfileService,
     private industryService: IndustryService,
@@ -35,6 +36,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   public faGlobe = faGlobe;
   public faEnvelope = faEnvelope;
   public faKey = faKey;
+  public thirdParty;
 
   public formOne = true;
   public formTwo = false;
@@ -49,7 +51,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-
+    this.checkIfInvited();
     this.registrationForm = {
       companyName: '',
       logo: {
@@ -90,7 +92,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   }
 
-
+  checkIfInvited(){
+    this.route.queryParams.subscribe(params => {
+      this.thirdParty = params.institution;
+      console.log(this.thirdParty);
+    });
+  }
 
 
 
@@ -147,12 +154,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
       },
       numberOfEmployees: this.registrationForm.numberOfEmployees,
       companyType:  this.registrationForm.companyType,
-      institutionId: this.registrationForm.institutionId,
+      institutionId: this.thirdParty ? this.thirdParty : this.registrationForm.institutionId,
       companyWebsite: this.registrationForm.companyWebsite,
       companyAbout: '',
       companyAddress: '',
       companyEmail: ''
     };
+
     this.companyProfileService.createCompanyProfile(newProfileData).subscribe(
       dataProfile => {
         const newUserData = {
@@ -184,8 +192,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     );
 
   }
-
-
 
 
 

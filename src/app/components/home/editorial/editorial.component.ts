@@ -166,6 +166,7 @@ export class EditorialComponent implements OnInit {
     localStorage.setItem('ActiveNav', 'editorial');
     this.updatePage();
     // this.updater();
+    // this.duplicateQuestionsForThirdParty();
   }
 
 
@@ -937,6 +938,30 @@ export class EditorialComponent implements OnInit {
       error => this.notifyService.showError('Could not delete threat category', 'Failed')
     );
   }
+
+  //Do not remove, may be needed in future
+
+  // async duplicateQuestionsForThirdParty(){
+    
+  //   await this.questionService.getQuestionsInASurvey("{baseSurveyId}").subscribe(data=>
+  //     { 
+  //      data.forEach(question=>{
+  //        delete question._id;
+  //        question['surveyId'] = '{surveyId}';
+  //        if(question['choices'].length>0){
+  //          for(var i =0; i<question['choices'].length; i++){
+  //            delete question['choices'][i]._id
+  //          }
+  //        }
+  //        if(question['surveyId'] === '{surveyId}'){
+  //         //  this.questionService.createQuestion(question).subscribe(data=>{
+  //         //    console.log(data);
+  //         //  }, err=>console.log(err))
+  //        }
+  //      })
+  //      console.log("Done");
+  //     }, err=>console.log(err))
+  // }
 
 } 
 

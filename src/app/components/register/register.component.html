@@ -88,21 +88,21 @@
                         <h4>Personal Info</h4>
                     </div>
 
-                    <div class="form-group">
+                    <div *ngIf="!thirdParty" class="form-group">
                         <fa-icon [icon]="faIndustry"></fa-icon>
                         <select type="text" name="institution" [(ngModel)]="registrationForm.institutionId">
                             <option value="" disabled selected hidden >Associate Institution</option>
                             <option *ngFor="let item of AllInstitutions"  [value]="item._id">{{item.name}}</option>
                         </select>
+            
                     </div>
         
                     <div class="form-group">
                         <fa-icon [icon]="faEnvelope"></fa-icon>
-                        <input type="text" name="email" [(ngModel)]="registrationForm.email" placeholder="Email Address">
+                        <input type="text"  name="email" [(ngModel)]="registrationForm.email" placeholder="Email Address">
                     </div>
                     
                    
-
                     <div class="form-group">
                         <fa-icon [icon]="faKey"></fa-icon>
                         <input type="password" name="password" [(ngModel)]="registrationForm.password" placeholder="Password">
