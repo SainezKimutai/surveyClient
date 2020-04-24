@@ -280,6 +280,7 @@ public activeYear = this.currentYear;
     this.gdpType = 'line';
     this.gdpChartOptions.legend.display = false;
     this.gdpChartOptions.scales.xAxes[0].display = true;
+    this.gdpChartOptions.scales.yAxes[0].display = true;
     this.gdpDatasets[0].backgroundColor = 'whitesmoke'; 
     this.gdpDatasets[0].borderColor = 'gray';
     this.gdpDatasets[0].pointBorderColor = 'black';
@@ -288,6 +289,7 @@ public activeYear = this.currentYear;
     this.gdpType = 'bar';
     this.gdpChartOptions.legend.display = false;
     this.gdpChartOptions.scales.xAxes[0].display = true;
+    this.gdpChartOptions.scales.yAxes[0].display = false;
     this.gdpDatasets[0].backgroundColor = ['#02b0cc','#074BFB', '#ffc107', '#f86c6b'];
     this.gdpDatasets[0].borderColor = 'transparent';
     this.gdpDatasets[0].pointBorderColor = 'white';
@@ -296,6 +298,7 @@ public activeYear = this.currentYear;
     this.gdpType = 'pie';
     this.gdpChartOptions.legend.display = true;
     this.gdpChartOptions.scales.xAxes[0].display = false;
+    this.gdpChartOptions.scales.yAxes[0].display = false;
     this.gdpDatasets[0].backgroundColor = ['#02b0cc','#074BFB', '#ffc107', '#f86c6b'];
     this.gdpDatasets[0].borderColor = 'white';
     this.gdpDatasets[0].pointBorderColor = 'white';
@@ -336,8 +339,6 @@ public activeYear = this.currentYear;
         pointHoverBorderColor: 'gray'
       }
     ];
-  
-  
   
   
     this.gdpChartOptions = {
@@ -395,6 +396,13 @@ public activeYear = this.currentYear;
           }
       }
     };
+
+
+
+    if( 1 > gdpData[0].firstQ || 1 > gdpData[0].secondQ || 1 > gdpData[0].thirdQ && 1 > gdpData[0].fourthQ) {
+      this.gdpGraphToPie();
+    }
+  
 
   }
 

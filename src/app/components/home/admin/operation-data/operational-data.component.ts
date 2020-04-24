@@ -245,7 +245,25 @@ public trafficBgColors = [];
   }
   
   
-  topCardsChartFunction() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  async topCardsChartFunction() {
   
     this.AllThirdParties = this.AllUsers.filter((e) => e.userType === 'thirdparty').map(e => e);
     // Card One
@@ -310,6 +328,47 @@ public trafficBgColors = [];
   
       // Card Three
     let myCardThreeLabels = [];
+
+
+    let myCardThreeCompanyArr = []
+    this.riskIssueArrayPerCompany.forEach((compElem) => {
+
+      let myRiskArray = this.riskIssueArray.filter((r)=> r.company === compElem ).map(e => e);
+
+      let LowRate = myRiskArray.filter((r)=> r.level === 'Low' ).map(e => e);
+      let MediumRate = myRiskArray.filter((r)=> r.level === 'Medium' ).map(e => e);
+      let HighRate = myRiskArray.filter((r)=> r.level === 'High' ).map(e => e);
+      
+      let totalRiskNum = this.companyRiskArray.length;
+      let lowRiskNum = LowRate.length;
+      let mediumRiskNum = MediumRate.length;
+      let highRiskNum = HighRate.length;
+  
+      let lowRiskValue = lowRiskNum * 1;
+      let medumRiskValue = mediumRiskNum * 2;
+      let highRiskValue = highRiskNum * 3;
+      let totalRiskValue = totalRiskNum * 3
+  
+      let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
+  
+
+      let compObj = {
+        companyName: compElem,
+        averageRiskrate: ((myTotalRiskValue * 100) / totalRiskValue).toFixed(1)
+      }
+      myCardThreeCompanyArr.push(compObj)
+
+    })
+
+
+
+
+
+
+
+
+
+
   
   
     let allIndustryTypes = this.AllCompanies.filter((r) => true).map(e => e.companyType);
@@ -317,17 +376,31 @@ public trafficBgColors = [];
   
     let myCardThreeDataSet = [];
     myCardThreeLabels.forEach((ind) => {
-        let myIndustryComp = this.AllCompanies.filter((comp) => comp.companyType === ind ).map(e => e );
-        myCardThreeDataSet.push(myIndustryComp.length);
+      let value = 0;
+      let num = 0;
+      myCardThreeCompanyArr.forEach((dataElm) => {
+        this.AllCompanies.forEach((comp) => {
+          if(dataElm.companyName === comp.companyName && ind === comp.companyType){
+            value = value + Number(dataElm.averageRiskrate)
+            num++
+          } 
+        })
+      })
+      if(num !== 0 && value !== 0) {
+        myCardThreeDataSet.push(value / num)
+      } else {
+        myCardThreeDataSet.push(0)
+      }
+    
     });
   
-  
+
     this.cardThreeType = 'line';
   
     this.cardThreeLabels = myCardThreeLabels;
   
     this.cardThreeDatasets = [{
-        label: 'No of Companies',
+        label: 'A. Risk Rate',
         data: myCardThreeDataSet,
         backgroundColor: 'transparent',
         borderColor: 'white',
@@ -340,6 +413,27 @@ public trafficBgColors = [];
   
   
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
     // card Fours
     let myCardFourLabelArr = []
@@ -448,6 +542,28 @@ public trafficBgColors = [];
   }
   
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
   
   
@@ -756,7 +872,7 @@ public trafficBgColors = [];
   this.thirrdPartySurveys = this.AllSurveys.filter((surv) => surv.institutionId === thirdparties[num]._id).map(e => e);
   this.thirrdPartyCompanys = this.AllCompanies.filter((comp) => comp.institutionId === thirdparties[num]._id).map(e => e);
 
-  this.thirrdPartyType = 'bar';
+  this.thirrdPartyType = 'pie';
   
   this.thirrdPartyLabels = ['Surveys', 'Companies'];
 
@@ -784,7 +900,7 @@ public trafficBgColors = [];
       fontSize: 25
     },
     legend: {
-      display: false,
+      display: true,
       position: 'right',
       labels: {
             fontColor: '#73818f'
@@ -810,7 +926,7 @@ public trafficBgColors = [];
       }],
       xAxes: [{
           barPercentage: 0.4,
-          display: true,
+          display: false,
           stacked: false,
           gridLines: {
               drawBorder: true,

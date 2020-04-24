@@ -225,7 +225,7 @@
 
     <section id="graph_section" class="card-group">
         <div class="card">
-            <div class="title d-flex"> <span>Graphical Comparison of Company Avarage Risk Exposure</span>
+            <div class="title d-flex"> <span>Graphical Comparison of Company Average Risk Exposure</span>
                 <div class=" graph-switch d-flex ml-auto">
                     <span (click)="graphChartToLine()"><fa-icon [icon]="faChartLine" [ngClass]="graphType === 'line' ? 'active' : ''" ></fa-icon></span> 
                     <span (click)="graphChartToBar()"><fa-icon [icon]="faChartBar" [ngClass]="graphType === 'bar' ? 'active' : ''" ></fa-icon></span>
@@ -253,7 +253,7 @@
     <section id="risk_per_company_section" class="card-group">
         <div class="card">
             <div class="title d-flex"> 
-                <span>Individual Company Avarage Risk Exposure</span>
+                <span>Individual Company Average Risk Exposure</span>
              
             </div>
             <div class="body">
@@ -271,7 +271,7 @@
                 <div class="metric-wrap" *ngIf="riskIssueArray.length !== 0">
 
                     <div class="total-risk-wrap">
-                        <h4> Risk Exposure <span [ngClass]="[ 
+                        <h4> Average Risk Rate <span [ngClass]="[ 
                             33 > activeCompanyTotalRiskRate ? 'low' : '',
                             66 > activeCompanyTotalRiskRate && activeCompanyTotalRiskRate > 33 ? 'medium' : '',
                             activeCompanyTotalRiskRate > 66 ? 'high' : ''
