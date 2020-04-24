@@ -158,7 +158,7 @@ public trafficBgColors = [];
 
   ngOnInit() {
     
-    this.updatePage().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFunction(); this.trafficFunction(); } );
+    this.updatePage().then(() => { this.computeCompanyRiskRates(); this.riskIssuesFunction(); this.trafficFunction(); } );
 
   }
 
@@ -342,18 +342,40 @@ public trafficBgColors = [];
   
   
     // card Fours
-    let myCardFourDataSet = [];
-    this.AllCompanies.forEach((comp) => {
-      let allSurveysDone = this.AllResponses.filter((r) => r.companyId === comp._id ).map(e => e.surveyId);
-      // let filteredSurveysDone = Array.from(new Set(allSurveysDone));
-      myCardFourDataSet.push(allSurveysDone.length);
-    });
+    let myCardFourLabelArr = []
+    let myCardFourDataSet = []
+    this.riskIssueArrayPerCompany.forEach((compElem) => {
+
+      let myRiskArray = this.riskIssueArray.filter((r)=> r.company === compElem ).map(e => e);
+
+      let LowRate = myRiskArray.filter((r)=> r.level === 'Low' ).map(e => e);
+      let MediumRate = myRiskArray.filter((r)=> r.level === 'Medium' ).map(e => e);
+      let HighRate = myRiskArray.filter((r)=> r.level === 'High' ).map(e => e);
+      
+      let totalRiskNum = this.companyRiskArray.length;
+      let lowRiskNum = LowRate.length;
+      let mediumRiskNum = MediumRate.length;
+      let highRiskNum = HighRate.length;
+  
+      let lowRiskValue = lowRiskNum * 1;
+      let medumRiskValue = mediumRiskNum * 2;
+      let highRiskValue = highRiskNum * 3;
+      let totalRiskValue = totalRiskNum * 3
+  
+      let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
+  
+      myCardFourLabelArr.push(compElem);
+      myCardFourDataSet.push(((myTotalRiskValue * 100) / totalRiskValue).toFixed(1))
+    })
+
+
+
     this.cardFourType = 'line';
   
-    this.cardFourLabels = this.AllCompanies.filter(() => true ).map(e => e.companyName);
+    this.cardFourLabels = myCardFourLabelArr;
   
     this.cardFourDatasets = [{
-        label: 'Risk',
+        label: 'A. Risk Rate',
         data: myCardFourDataSet,
         backgroundColor: 'transparent',
         borderColor: 'white',
@@ -1162,6 +1184,7 @@ switchGraphDataset(num) {
                           this.companyRiskArray = this.riskIssueArray.filter((r)=> r.company === this.activeCompany ).map(e => e);
                           this.chartsProgress = 95;
   
+                          this.topCardsChartFunction();
                           this.graphChartFunction(0);
                           this.thirdSectionGraphsFunction();
                           this.listThirdPartyCompaniesAndSurveys(0);
