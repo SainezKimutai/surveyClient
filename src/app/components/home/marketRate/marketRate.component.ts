@@ -78,7 +78,7 @@ export class MarketRateComponent implements OnInit {
 
 
     this.updatePage().then(() => {
-      this.fetchExchangeRate();
+      // this.fetchExchangeRate();
     })
 
 
@@ -229,36 +229,36 @@ export class MarketRateComponent implements OnInit {
 
 
 
-  fetchExchangeRate() {
+  // fetchExchangeRate() {
 
-    // let myDate = '2020-04-23'
+  //   // let myDate = '2020-04-23'
 
-    // this.exchangerateService.fetchPastExchangeRates(myDate).subscribe(
-    //   data => {
-    //     let myDataToSent = {
-    //       dateUpdated: new Date(myDate),
-    //       baseCurrency: data.base,
-    //       countryRate: []
-    //     }
+  //   // this.exchangerateService.fetchPastExchangeRates(myDate).subscribe(
+  //   //   data => {
+  //   //     let myDataToSent = {
+  //   //       dateUpdated: new Date(myDate),
+  //   //       baseCurrency: data.base,
+  //   //       countryRate: []
+  //   //     }
 
-    //     let convertToArr =  Object.entries(data.rates)
-    //     convertToArr.forEach((rateItem, ind, arr) => {
-    //       myDataToSent.countryRate.push(
-    //         { code: rateItem[0], 
-    //           value: rateItem[1]   
-    //         } 
-    //       )
+  //   //     let convertToArr =  Object.entries(data.rates)
+  //   //     convertToArr.forEach((rateItem, ind, arr) => {
+  //   //       myDataToSent.countryRate.push(
+  //   //         { code: rateItem[0], 
+  //   //           value: rateItem[1]   
+  //   //         } 
+  //   //       )
 
 
-    //       if(ind === arr.length - 1){
-    //         this.updateExchangeRate(myDataToSent)
-    //       }
+  //   //       if(ind === arr.length - 1){
+  //   //         this.updateExchangeRate(myDataToSent)
+  //   //       }
     
-    //     })
+  //   //     })
         
-    //   },
-    //   error => console.log('Error getting exchange Rates')
-    // )
+  //   //   },
+  //   //   error => console.log('Error getting exchange Rates')
+  //   // )
 
 
   //  this.exchangerateService.fetchExchangeRates().subscribe(
@@ -288,21 +288,19 @@ export class MarketRateComponent implements OnInit {
   //     error => console.log('Error getting exchange Rates')
   //   )
 
-
-
-  }
+  // }
 
 
 
-  updateExchangeRate(data) {
-    this.exchangerateService.createExchangerate(data).subscribe(
-      data => {
-        console.log(data.dateUpdated)
-        this.notifyService.showSuccess('Create', 'Sucess')
-      },
-      error => this.notifyService.showError('Not created', 'Failed')
-    )
-  }
+  // updateExchangeRate(data) {
+  //   this.exchangerateService.createExchangerate(data).subscribe(
+  //     data => {
+  //       console.log(data.dateUpdated)
+  //       this.notifyService.showSuccess('Create', 'Sucess')
+  //     },
+  //     error => this.notifyService.showError('Not created', 'Failed')
+  //   )
+  // }
 
 
 
