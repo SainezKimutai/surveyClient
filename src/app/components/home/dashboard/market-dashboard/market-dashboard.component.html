@@ -1,5 +1,6 @@
 
-
+   
+   
 <section class="body-section">
 
 
@@ -26,12 +27,22 @@
 
     </section><!-- top_cards_section -->
 
-
-
-
-
-
-    <section id="second_cards_section" class="card-group">
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   <section id="market_rates_cards_section" class="card-group">
         <div class="card">
             <div class="title d-flex"> <span>GDP</span>
                 <div *ngIf="gdpProgress === 100 && MyFormatedGDP.length > 0 && gdpType" class=" graph-switch d-flex ml-auto">
@@ -58,11 +69,11 @@
         </div>
 
         <div class="card">
-            <div class="title d-flex"> <span>Exchange Rates</span>
-                <div *ngIf="exchangeProgress === 100 && ExchangeRates.length > 0 && exchangeType" class=" graph-switch d-flex ml-auto">
-                    <span (click)="exchangeGraphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="exchangeType === 'line' ? 'active' : ''" ></fa-icon></span> 
-                    <span (click)="exchangeGraphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="exchangeType === 'bar' ? 'active' : ''" ></fa-icon></span>
-                    <span (click)="exchangeGraphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="exchangeType === 'pie' ? 'active' : ''" ></fa-icon> </span>
+            <div class="title d-flex"> <span>Exchange Rates ( <span class="text-primary"> {{activeCountryCode }}</span> against US dollar )</span>
+                <div class="ml-auto month-switch d-flex">
+                    <fa-icon [icon]="faArrowAltCircleLeft" (click)="swithToPrevMonth()"></fa-icon> 
+                    <h4>{{monthsArray[activeMonth]}}, {{activeYear}}</h4>
+                    <fa-icon [icon]="faArrowAltCircleRight" (click)="swithToNextMonth()"></fa-icon>
                 </div>
             </div>
 
@@ -71,8 +82,15 @@
                 <div *ngIf="exchangeProgress === 100 && ExchangeRates.length === 0" class="no-data d-flex">
                     <h6>No Exchange Rates data yet</h6>
                 </div>
-                <canvas *ngIf="exchangeProgress === 100 && ExchangeRates.length > 0 && exchangeType" baseChart class="chart" [chartType]="exchangeType" [labels]="exchangeLabels"
+
+                <div *ngIf="exchangeProgress === 100 && exchangeDatasets[0].data.length === 0 && exchangeType" class="no-data">
+                    <h4>No Data </h4>
+                </div>
+                <canvas *ngIf="exchangeProgress === 100 && exchangeDatasets[0].data.length > 0 && exchangeType" baseChart class="chart" [chartType]="exchangeType" [labels]="exchangeLabels"
                 [datasets]="exchangeDatasets" [options]="exchangeChartOptions"></canvas>
+            </div>
+            <div *ngIf="exchangeType" class="footer-label">
+                <div *ngFor="let code of exchangeRatesCountryCodes" [ngClass]="code === activeCountryCode ? 'item active' : 'item' " (click)="switchExchangeRateCountry(code)">{{code}}</div>
             </div>
 
         </div>
@@ -83,186 +101,4 @@
 
 
 
-
-
-
-
-
-
-
-    <section hidden id="graph_section" class="card-group">
-        <div class="card">
-            <div class="title d-flex"> <span>----------</span>
-                <div class=" graph-switch d-flex ml-auto">
-                    <span ><fa-icon [icon]="faChartLine" class="active" ></fa-icon></span> 
-                    <span ><fa-icon [icon]="faChartBar" ></fa-icon></span>
-                    <span > <fa-icon [icon]="faChartPie"></fa-icon> </span>
-                </div>
-            </div>
-            <div class="body">
-                <canvas *ngIf="exchangeType" baseChart class="chart" [chartType]="exchangeType" [labels]="exchangeLabels"
-                [datasets]="exchangeDatasets" [options]="exchangeChartOptions"></canvas>
-            </div>
-
-        </div>
-    </section> <!-- graph_section -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <section hidden id="third_cards_section" class="card-group">
-       
-        <div class="card">
-            <div class="title">List of Risk Issues among Companies</div>
-
-            <div class="body-wrapper">
-                <div class="body-title">
-
-                    <div class="body-item d-flex">
-                        <div class="mx-auto ">Threat</div>
-                        <div class="mx-auto ">Company</div>
-                        <div class="mx-auto ">Severity</div>
-                        <!-- <div class="rate">Intervention</div> -->
-                    </div>
-
-                </div>
-
-                <!-- <div class="body d-flex" *ngIf="CompnayRiskRates">
-                    <div class="spinner-div spinner-border mx-auto" role="status"></div>
-                </div> -->
-
-                <div class="body" >
-
-                  
-
-                </div>
-            </div>
-
-        </div>
-
-
-
-
-
-
-        <div class="card">
-            <div class="title">List of Company Risk Rates Per Survey Template</div>
-            <div class="body-wrapper">
-                <div class="body-title">
-
-                    <div class="body-item d-flex">
-                        <div class="mx-auto ">Comapany Name</div>
-                        <div class="mx-auto ">Survey Name</div>
-                        <div class="mx-auto ">Risk rate</div>
-                        <!-- <div class="rate">Recommendation</div> -->
-                    </div>
-
-                </div>
-
-                <!-- <div class="body d-flex" *ngIf="CompnayRiskRates">
-                    <div class="spinner-div spinner-border mx-auto" role="status"></div>
-                </div> -->
-
-                <div class="body" >
-
-
-                </div>
-            </div>
-
-        </div>
-
-
-
-    </section><!-- third_cards_section -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</section><!-- body-section -->
-
-
-
-
-
-
-
-
+</section>
