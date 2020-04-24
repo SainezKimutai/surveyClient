@@ -992,34 +992,6 @@ graphChartToPie() {
 
 
 
-switchGraphDataset(num) {
-  let lowValue = null;
-  let mediumValue = null;
-  let highValue = null;
-  let riskArray = this.riskIssueArray.filter(() => true ).map(e => e.risk);
-  let filterRiskArray = Array.from(new Set(riskArray));
-
-  for ( let risk of filterRiskArray) {
-
-    if ( this.riskIssueArrayPerRisk[num] === risk ) {
-      let myRAray = this.riskIssueArray.filter((r) => r.risk === risk).map(e => e);
-      let low = myRAray.filter((r) => r.level === 'Low').map(e => e);
-      lowValue = low.length;
-      let medium = myRAray.filter((r) => r.level === 'Medium').map(e => e);
-      mediumValue = medium.length;
-      let high = myRAray.filter((r) => r.level === 'High').map(e => e);
-      highValue = high.length;
-
-      break;
-    }
-
-  }
-
-  this.activeRisk = this.riskIssueArrayPerRisk[num];
-  this.graphDatasets[0].label = this.riskIssueArrayPerRisk[num];
-  this.graphDatasets[0].data = [ lowValue, mediumValue, highValue];
-
-}
 
 
 
@@ -1032,7 +1004,7 @@ switchGraphDataset(num) {
   
   
   
-  graphChartFunction(num) {
+  graphChartFunction() {
 
     let graphLabelsArr = [];
     let graphDatasetDataArr = [];
@@ -1301,7 +1273,7 @@ switchGraphDataset(num) {
                           this.chartsProgress = 95;
   
                           this.topCardsChartFunction();
-                          this.graphChartFunction(0);
+                          this.graphChartFunction();
                           this.thirdSectionGraphsFunction();
                           this.listThirdPartyCompaniesAndSurveys(0);
                           this.calculateActiveCompanyTotalRiskRate();

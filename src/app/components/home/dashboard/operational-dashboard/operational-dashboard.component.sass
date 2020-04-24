@@ -277,7 +277,7 @@
 
 
         .datasets-wrap
-            width: 50%
+            width: 100%
             height: 100%
             overflow-x: scroll
             padding: .5em .5em 1em .5em
@@ -308,13 +308,14 @@
                     background-color: grayColor(g200)
 
                 &.active
+
                     background-color: colorTheme(primaryTheme)
                     color: white
 
 
 
         .canvas-wrap
-            width: 50%
+            width: 100%
             padding: .5em
             display: flex
             flex-direction: column
@@ -333,6 +334,7 @@
 
                 @include desktop_md 
                     height: 100%
+
 
 
 
@@ -371,11 +373,6 @@
     transition: all 0.3s ease
     cursor: pointer
 
-    @include desktop_md
-        height: 400px
-
-    @include desktop_sm
-        height: 300px
 
     .title
         width: 100%
@@ -434,50 +431,100 @@
                     color: white
 
 
-        .body-list   
+        .metric-wrap   
             width: 100%
             padding: .5em
             height: 100%
-            overflow-y: scroll
+            overflow: hidden
 
-
-            .body-item 
-               
+            .total-risk-wrap
                 width: 100%
-                padding: .5em
-                margin: 0 0 .5em 0
-                cursor: pointer
-                background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
-                -moz-background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
-                -webkit-background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
-                -moz-background-blend-mode: screen, difference, lighten
-                -webkit-background-blend-mode: screen, difference, lighten
-                background-blend-mode: screen, difference, lighten
+                display: flex 
+                justify-content: center
+                align-items: center
 
-                &:hover
-                    box-shadow: 1px 2px 3px rgba(0, 0, 0, .2)
+                h4 
+                    font-size: 18px
+                    font-weight: bold
+                    display: flex
+                    justify-content: center
+                    align-items: center
 
-                div
-                    font-size: 11px
-                    font-weight: 500px
-                    text-align: left
+                    span 
+                        font-size: 32px
+                        margin: 0 0 0 1em 
+
+                        &.low 
+                            color: colorTheme(success)
+                        &.medium
+                            color: colorTheme(warning)
+                        &.high
+                            color: colorTheme(danger)
+
+            .risk-list-wrap-title
+                width: 100%
+                background-color: grayColor(g200)
+                padding: .5em 0
+                
+                div 
+                    background-color: transparent
                     width: 100%
-                    padding: 0 0 0 1em
+                    text-align: left
+                    font-size: 12px
+                    font-weight: bold
 
                     &.risk
                         max-width: 20em
-
+                    
                     &.riskRate
-                        background-color: grayColor(g100)
-                        color: white
                         max-width: 10em
+                    
 
-                    &.low 
-                        background-color: colorTheme(success)
-                    &.medium
-                        background-color: colorTheme(warning)
-                    &.high
-                        background-color: colorTheme(danger)
+
+            .risk-list-wrap-body
+                height: 100%
+                width: 100%
+                overflow-y: scroll
+
+
+                .risk-list-item 
+                    width: 100%
+                    padding: .5em
+                    margin: 0 0 .5em 0
+                    cursor: pointer
+                    background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
+                    -moz-background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
+                    -webkit-background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
+                    -moz-background-blend-mode: screen, difference, lighten
+                    -webkit-background-blend-mode: screen, difference, lighten
+                    background-blend-mode: screen, difference, lighten
+
+                    &:hover
+                        box-shadow: 1px 2px 3px rgba(0, 0, 0, .2)
+
+                    div
+                        font-size: 11px
+                        font-weight: 500px
+                        text-align: left
+                        width: 100%
+                        padding: 0 0 0 1em
+
+                        &.risk
+                            max-width: 20em
+
+                        &.riskRate
+                            background-color: grayColor(g100)
+                            color: white
+                            max-width: 10em
+
+                        &.low 
+                            background-color: colorTheme(success)
+                        &.medium
+                            background-color: colorTheme(warning)
+                        &.high
+                            background-color: colorTheme(danger)
+
+
 
 
 

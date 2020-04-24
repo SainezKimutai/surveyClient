@@ -40,17 +40,18 @@ constructor(
 
   public NoDataOnDasboard = false;
 
+
   public innerWidth: any;
   public onResizeStatus = false;
   public faListAlt = faListAlt;
   public faBuilding = faBuilding;
   public faFire = faFire;
-
+  
   public today = new Date();
   public thisYear = this.today.getFullYear();
-
-
-
+  
+  
+  
   public AllUsers = [];
   public AllCompanies = [];
   public AllSurveys = [];
@@ -58,19 +59,22 @@ constructor(
   public AllResponses = [];
   public AllThreats = [];
   public AllThreatCategorys = [];
-
-
-// Icons
+  public AllTraffic = [];
+  
+  
+  // Icons
   public faChartLine = faChartLine;
   public faChartBar = faChartBar;
   public faChartPie = faChartPie;
   public faShare = faShare;
   public faLink = faLink;
-
-// Top Cards variables
+  
+  // Top Cards variables
+  public AllThirdParties = [];
   public cardOneType: string;
   public cardOneLabels: Array<any>;
   public cardOneDatasets: Array<any>;
+  
   public cardTwoType: string;
   public cardTwoLabels: Array<any>;
   public cardTwoDatasets: Array<any>;
@@ -81,12 +85,12 @@ constructor(
   public cardFourLabels: Array<any>;
   public cardFourDatasets: Array<any>;
   public topCardsChart: any;
-
-
-
+  
+  
+  
   public CompnayRiskRates = [];
-
-
+  
+  
   // Third Section graph variables
   public chartsProgress = 0;
   public third1Type;
@@ -101,31 +105,53 @@ constructor(
   public third2ChartOptions;
   public third2BgColors = [];
   public third2Legend;
-
-
-// graph variables
+  
+  
+  //
+  public thirrdPartyType: string;
+  public thirrdPartyLabels: Array<any>;
+  public thirrdPartyDatasets: Array<any>;
+  public thirrdPartyChart: any;
+  
+  public thirrdPartySurveys = [];
+  public thirrdPartyCompanys = [];
+  public listTirdPartyIsGraph = true;
+  
+  // graph variables
   public graphType: string;
   public graphLabels: Array<any>;
   public graphDatasets: Array<any>;
   public graphChart: any;
-
+  
   public QuestionsOnView = [];
   public companyNameOnView = '';
   public surveyNameOnView = '';
-
+  
   public riskIssueArrayUnsorted = [];
   public riskIssueArray = [];
   public riskIssueArrayPerRisk = [];
-  public activeRisk;
-  public surveyStatus = 0;
-
-
-
-  // 
   public riskIssueArrayPerCompany = []
+  public activeRisk;
+  public myGraphLabelColors = [];
+  
+  public surveyStatus = 0;
+  
+  // company risk
+  
   public companyRiskArray = [];
   public activeCompany;
-
+  public activeCompanyTotalRiskRate = null;
+  
+  
+  // trafic
+  public trafficType;
+  public trafficLabels;
+  public trafficDatasets;
+  public trafficChartOptions;
+  public trafficBgColors = [];
+  
+  
+  
 
   // 
   public shareLink;
@@ -251,22 +277,22 @@ getRandomColor() {
 }
 
 
-topCardsChartFunction() {
-
-
+async topCardsChartFunction() {
+  
+  this.AllThirdParties = this.AllUsers.filter((e) => e.userType === 'thirdparty').map(e => e);
   // Card One
   let myCardOneDataSet = [];
-  this.AllSurveys.forEach((surv) => {
-    let surveysDone = this.AllResponses.filter((r) => r.surveyId === surv._id ).map(e => e);
-    myCardOneDataSet.push(surveysDone.length);
+  this.AllThirdParties.forEach((thd) => {
+    let myComp = this.AllCompanies.filter((r) => r.institutionId === thd._id ).map(e => e);
+    myCardOneDataSet.push(myComp.length);
   });
 
   this.cardOneType = 'line';
 
-  this.cardOneLabels = this.AllSurveys.filter(() => true ).map(e => e.surveyName);
+  this.cardOneLabels = this.AllUsers.filter((e) => e._id === localStorage.getItem('loggedUserInstitution')).map(e => e.name);
 
   this.cardOneDatasets = [{
-      label: 'Companies',
+      label: 'Associated Companies',
       data: myCardOneDataSet,
       backgroundColor: 'transparent',
       borderColor: 'white',
@@ -318,13 +344,68 @@ topCardsChartFunction() {
   let myCardThreeLabels = [];
 
 
+  let myCardThreeCompanyArr = []
+  this.riskIssueArrayPerCompany.forEach((compElem) => {
+
+    let myRiskArray = this.riskIssueArray.filter((r)=> r.company === compElem ).map(e => e);
+
+    let LowRate = myRiskArray.filter((r)=> r.level === 'Low' ).map(e => e);
+    let MediumRate = myRiskArray.filter((r)=> r.level === 'Medium' ).map(e => e);
+    let HighRate = myRiskArray.filter((r)=> r.level === 'High' ).map(e => e);
+    
+    let totalRiskNum = this.companyRiskArray.length;
+    let lowRiskNum = LowRate.length;
+    let mediumRiskNum = MediumRate.length;
+    let highRiskNum = HighRate.length;
+
+    let lowRiskValue = lowRiskNum * 1;
+    let medumRiskValue = mediumRiskNum * 2;
+    let highRiskValue = highRiskNum * 3;
+    let totalRiskValue = totalRiskNum * 3
+
+    let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
+
+
+    let compObj = {
+      companyName: compElem,
+      averageRiskrate: ((myTotalRiskValue * 100) / totalRiskValue).toFixed(1)
+    }
+    myCardThreeCompanyArr.push(compObj)
+
+  })
+
+
+
+
+
+
+
+
+
+
+
+
   let allIndustryTypes = this.AllCompanies.filter((r) => true).map(e => e.companyType);
   myCardThreeLabels = Array.from(new Set(allIndustryTypes));
 
   let myCardThreeDataSet = [];
   myCardThreeLabels.forEach((ind) => {
-      let myIndustryComp = this.AllCompanies.filter((comp) => comp.companyType === ind ).map(e => e );
-      myCardThreeDataSet.push(myIndustryComp.length);
+    let value = 0;
+    let num = 0;
+    myCardThreeCompanyArr.forEach((dataElm) => {
+      this.AllCompanies.forEach((comp) => {
+        if(dataElm.companyName === comp.companyName && ind === comp.companyType){
+          value = value + Number(dataElm.averageRiskrate)
+          num++
+        } 
+      })
+    })
+    if(num !== 0 && value !== 0) {
+      myCardThreeDataSet.push(value / num)
+    } else {
+      myCardThreeDataSet.push(0)
+    }
+  
   });
 
 
@@ -333,7 +414,7 @@ topCardsChartFunction() {
   this.cardThreeLabels = myCardThreeLabels;
 
   this.cardThreeDatasets = [{
-      label: 'No of Companies',
+      label: 'A. Risk Rate',
       data: myCardThreeDataSet,
       backgroundColor: 'transparent',
       borderColor: 'white',
@@ -347,19 +428,62 @@ topCardsChartFunction() {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // card Fours
-  let myCardFourDataSet = [];
-  this.AllCompanies.forEach((comp) => {
-    let allSurveysDone = this.AllResponses.filter((r) => r.companyId === comp._id ).map(e => e.surveyId);
-    // let filteredSurveysDone = Array.from(new Set(allSurveysDone));
-    myCardFourDataSet.push(allSurveysDone.length);
-  });
+  let myCardFourLabelArr = []
+  let myCardFourDataSet = []
+  this.riskIssueArrayPerCompany.forEach((compElem) => {
+
+    let myRiskArray = this.riskIssueArray.filter((r)=> r.company === compElem ).map(e => e);
+
+    let LowRate = myRiskArray.filter((r)=> r.level === 'Low' ).map(e => e);
+    let MediumRate = myRiskArray.filter((r)=> r.level === 'Medium' ).map(e => e);
+    let HighRate = myRiskArray.filter((r)=> r.level === 'High' ).map(e => e);
+    
+    let totalRiskNum = this.companyRiskArray.length;
+    let lowRiskNum = LowRate.length;
+    let mediumRiskNum = MediumRate.length;
+    let highRiskNum = HighRate.length;
+
+    let lowRiskValue = lowRiskNum * 1;
+    let medumRiskValue = mediumRiskNum * 2;
+    let highRiskValue = highRiskNum * 3;
+    let totalRiskValue = totalRiskNum * 3
+
+    let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
+
+    myCardFourLabelArr.push(compElem);
+    myCardFourDataSet.push(((myTotalRiskValue * 100) / totalRiskValue).toFixed(1))
+  })
+
+
+
   this.cardFourType = 'line';
 
-  this.cardFourLabels = this.AllCompanies.filter(() => true ).map(e => e.companyName);
+  this.cardFourLabels = myCardFourLabelArr;
 
   this.cardFourDatasets = [{
-      label: 'Risk',
+      label: 'A. Risk Rate',
       data: myCardFourDataSet,
       backgroundColor: 'transparent',
       borderColor: 'white',
@@ -430,7 +554,6 @@ topCardsChartFunction() {
   };
 
 }
-
 
 
 
@@ -717,15 +840,15 @@ graphChartToLine() {
   this.graphType = 'line';
   this.graphChart.legend.display = false;
   this.graphChart.scales.xAxes[0].display = true;
-  this.graphDatasets[0].backgroundColor = '#02b0cc';
-  this.graphDatasets[0].borderColor = 'teal';
-  this.graphDatasets[0].pointBorderColor = 'black';
+  this.graphDatasets[0].backgroundColor = 'rgba(2, 176, 204, .5)',
+  this.graphDatasets[0].borderColor = 'rgb(2, 176, 204)',
+  this.graphDatasets[0].pointBorderColor = 'rgba(2, 176, 204, .8)'
 }
 graphChartToBar() {
   this.graphType = 'bar';
   this.graphChart.legend.display = false;
   this.graphChart.scales.xAxes[0].display = true;
-  this.graphDatasets[0].backgroundColor = ['#02b0cc', 'orange', 'red' ];
+  this.graphDatasets[0].backgroundColor = this.myGraphLabelColors;
   this.graphDatasets[0].borderColor = 'white';
   this.graphDatasets[0].pointBorderColor = 'white';
 }
@@ -733,41 +856,13 @@ graphChartToPie() {
   this.graphType = 'pie';
   this.graphChart.legend.display = true;
   this.graphChart.scales.xAxes[0].display = false;
-  this.graphDatasets[0].backgroundColor = ['#02b0cc', 'orange', 'red' ];
+  this.graphDatasets[0].backgroundColor = this.myGraphLabelColors;
   this.graphDatasets[0].borderColor = 'white';
   this.graphDatasets[0].pointBorderColor = 'white';
 }
 
 
 
-switchGraphDataset(num) {
-  let lowValue = null;
-  let mediumValue = null;
-  let highValue = null;
-  let riskArray = this.riskIssueArray.filter(() => true ).map(e => e.risk);
-  let filterRiskArray = Array.from(new Set(riskArray));
-
-  for ( let risk of filterRiskArray) {
-
-    if ( this.riskIssueArrayPerRisk[num] === risk ) {
-      let myRAray = this.riskIssueArray.filter((r) => r.risk === risk).map(e => e);
-      let low = myRAray.filter((r) => r.level === 'Low').map(e => e);
-      lowValue = low.length;
-      let medium = myRAray.filter((r) => r.level === 'Medium').map(e => e);
-      mediumValue = medium.length;
-      let high = myRAray.filter((r) => r.level === 'High').map(e => e);
-      highValue = high.length;
-
-      break;
-    }
-
-  }
-
-  this.activeRisk = this.riskIssueArrayPerRisk[num];
-  this.graphDatasets[0].label = this.riskIssueArrayPerRisk[num];
-  this.graphDatasets[0].data = [ lowValue, mediumValue, highValue];
-
-}
 
 
 
@@ -779,50 +874,60 @@ switchGraphDataset(num) {
 
 
 
-graphChartFunction(num) {
-  let lowValue = null;
-  let mediumValue = null;
-  let highValue = null;
-  let riskArray = this.riskIssueArray.filter(() => true ).map(e => e.risk);
-  let filterRiskArray = Array.from(new Set(riskArray));
+graphChartFunction() {
 
-  for ( let risk of filterRiskArray) {
+  let graphLabelsArr = [];
+  let graphDatasetDataArr = [];
 
-    if ( this.riskIssueArrayPerRisk[num] === risk ) {
-      let myRAray = this.riskIssueArray.filter((r) => r.risk === risk).map(e => e);
+  this.riskIssueArrayPerCompany.forEach((compElem) => {
 
-      let low = myRAray.filter((r) => r.level === 'Low').map(e => e);
-      lowValue = low.length;
-      let medium = myRAray.filter((r) => r.level === 'Medium').map(e => e);
-      mediumValue = medium.length;
-      let high = myRAray.filter((r) => r.level === 'High').map(e => e);
-      highValue = high.length;
+    let myRiskArray = this.riskIssueArray.filter((r)=> r.company === compElem ).map(e => e);
 
-      break;
-    }
+    let LowRate = myRiskArray.filter((r)=> r.level === 'Low' ).map(e => e);
+    let MediumRate = myRiskArray.filter((r)=> r.level === 'Medium' ).map(e => e);
+    let HighRate = myRiskArray.filter((r)=> r.level === 'High' ).map(e => e);
+    
+    let totalRiskNum = this.companyRiskArray.length;
+    let lowRiskNum = LowRate.length;
+    let mediumRiskNum = MediumRate.length;
+    let highRiskNum = HighRate.length;
+
+    let lowRiskValue = lowRiskNum * 1;
+    let medumRiskValue = mediumRiskNum * 2;
+    let highRiskValue = highRiskNum * 3;
+    let totalRiskValue = totalRiskNum * 3
+
+    let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
+
+    graphLabelsArr.push(compElem);
+    graphDatasetDataArr.push(((myTotalRiskValue * 100) / totalRiskValue).toFixed(1))
+  })
 
 
-  }
 
 
-  this.activeRisk = this.riskIssueArrayPerRisk[num];
+
 
   this.graphType = 'line';
 
-  this.graphLabels = ['Low', 'Medium', 'High'];
-  // this.graphLabels.forEach((e) => {
-  //   myGraphLabelColors.push(this.getRandomColor());
-  // });
+  this.graphLabels = graphLabelsArr;
+  this.myGraphLabelColors = [];
+  graphDatasetDataArr.forEach((e) => {
+    if(  33 > e) { this.myGraphLabelColors.push('#4dbd74') }
+    if (e > 33 && 66 > e) { this.myGraphLabelColors.push('#ffc107') }
+    if (e > 66) { this.myGraphLabelColors.push('#f86c6b') }
+  });
+
   this.graphDatasets = [
     {
-      label: this.riskIssueArrayPerRisk[num],
-      data: [ lowValue, mediumValue, highValue],
-      backgroundColor: '#02b0cc',
-      borderColor: 'teal',
+      label: 'Avarage Risk Exposure',
+      data: graphDatasetDataArr,
+      backgroundColor: 'rgba(2, 176, 204, .5)',
+      borderColor: 'rgb(2, 176, 204)',
       borderWidth: 1.5,
       pointBackgroundColor: 'transparent',
       pointHoverBackgroundColor: 'transparent',
-      pointBorderColor: 'black',
+      pointBorderColor: 'rgba(2, 176, 204, .8)',
       pointHoverBorderColor: 'gray'
     }
   ];
@@ -851,7 +956,7 @@ graphChartFunction(num) {
     },
     scales: {
       yAxes: [{
-          display: false,
+          display: true,
           gridLines: {
               drawBorder: false,
               display: false
@@ -892,12 +997,55 @@ graphChartFunction(num) {
 
 
 
+
+
+
+
+
+
+
 switchActiveCompany(comp) {
  
   this.activeCompany = this.riskIssueArrayPerCompany[comp];
   this.companyRiskArray = this.riskIssueArray.filter((r)=> r.company === this.activeCompany ).map(e => e);
+  this.calculateActiveCompanyTotalRiskRate();
 
 }
+
+
+
+calculateActiveCompanyTotalRiskRate(){
+  let LowRate = this.companyRiskArray.filter((r)=> r.level === 'Low' ).map(e => e);
+  let MediumRate = this.companyRiskArray.filter((r)=> r.level === 'Medium' ).map(e => e);
+  let HighRate = this.companyRiskArray.filter((r)=> r.level === 'High' ).map(e => e);
+  
+  let totalRiskNum = this.companyRiskArray.length;
+  let lowRiskNum = LowRate.length;
+  let mediumRiskNum = MediumRate.length;
+  let highRiskNum = HighRate.length;
+
+  let lowRiskValue = lowRiskNum * 1;
+  let medumRiskValue = mediumRiskNum * 2;
+  let highRiskValue = highRiskNum * 3;
+  let totalRiskValue = totalRiskNum * 3
+
+  let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
+
+  this.activeCompanyTotalRiskRate = ((myTotalRiskValue * 100) / totalRiskValue).toFixed(1)
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -938,7 +1086,7 @@ computeCompanyRiskRates() {
 
 riskIssuesFunction() {
   this.chartsProgress = 80;
-  this.AllThreats.forEach((threat,idx1, arr1) => {
+  this.AllThreats.forEach((threat) => {
     for (let trtCategory of this.AllThreatCategorys) {
       if (trtCategory._id === threat.category) {
         this.AllCompanies.forEach( (comp) => {
@@ -960,17 +1108,18 @@ riskIssuesFunction() {
 
                         this.riskIssueArrayUnsorted.push(myRiskIssueObject);
                         this.riskIssueArray = this.riskIssueArrayUnsorted.sort((a, b) => a.risk.localeCompare(b.risk));
-                        let newRiskArray = this.riskIssueArray.filter(() => true ).map(e => e.risk);
-                        this.riskIssueArrayPerRisk = Array.from(new Set(newRiskArray));
+                        let newRiskArrayPerRisk = this.riskIssueArray.filter(() => true ).map(e => e.risk);
+                        this.riskIssueArrayPerRisk = Array.from(new Set(newRiskArrayPerRisk));
                         let newRiskArrayPerCompany = this.riskIssueArray.filter(() => true ).map(e => e.company);
                         this.riskIssueArrayPerCompany = Array.from(new Set(newRiskArrayPerCompany));
                         this.activeCompany = this.riskIssueArrayPerCompany[0]
                         this.companyRiskArray = this.riskIssueArray.filter((r)=> r.company === this.activeCompany ).map(e => e);
                         this.chartsProgress = 95;
 
-
-                        this.graphChartFunction(0);
+                        this.topCardsChartFunction();
+                        this.graphChartFunction();
                         this.thirdSectionGraphsFunction();
+                        this.calculateActiveCompanyTotalRiskRate();
                       }
 
                     });
@@ -988,17 +1137,10 @@ riskIssuesFunction() {
       }
     }
 
-
-    if(idx1 === arr1.length - 1 && this.chartsProgress === 80) {
-      this.NoDataOnDasboard = true;
-   
-    }
-
   });
 
 
 }
-
 
 
 

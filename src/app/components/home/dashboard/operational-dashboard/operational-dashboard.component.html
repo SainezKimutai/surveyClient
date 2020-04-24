@@ -17,8 +17,8 @@
                 <h4>{{AllSurveys.length}}</h4>
             </div>
             <div class="card-body">
-                <canvas *ngIf="cardOneType" baseChart class="chart" [chartType]="cardOneType" [labels]="cardOneLabels"
-                    [datasets]="cardOneDatasets" [options]="topCardsChart"></canvas>
+                <!-- <canvas *ngIf="cardOneType" baseChart class="chart" [chartType]="cardOneType" [labels]="cardOneLabels"
+                    [datasets]="cardOneDatasets" [options]="topCardsChart"></canvas> -->
             </div>
         </div>
 
@@ -126,7 +126,7 @@
 
     <section [hidden]="NoDataOnDasboard" id="graph_section" class="card-group">
         <div class="card">
-            <div class="title d-flex"> <span>Specific Risks Representations</span>
+            <div class="title d-flex"> <span>Graphical Comparison of Company Average Risk Exposure</span>
                 <div class=" graph-switch d-flex ml-auto">
                     <span (click)="graphChartToLine()"><fa-icon [icon]="faChartLine" [ngClass]="graphType === 'line' ? 'active' : ''" ></fa-icon></span> 
                     <span (click)="graphChartToBar()"><fa-icon [icon]="faChartBar" [ngClass]="graphType === 'bar' ? 'active' : ''" ></fa-icon></span>
@@ -136,13 +136,6 @@
             <div class="body">
                 <div class="body w-10 d-flex" *ngIf="!graphType">
                     <div class="spinner-div spinner-border mx-auto" role="status"></div>
-                </div>
-                <div *ngIf="graphType" class="datasets-wrap">
-                    <div *ngFor="let item of riskIssueArrayPerRisk; let x = index" 
-                    [ngClass]="activeRisk === item ? 'dataset-item active' : 'dataset-item' "
-                    (click)="switchGraphDataset(x)">
-                       {{item}}
-                    </div>
                 </div>
                 <div class="canvas-wrap">
                     <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
@@ -164,9 +157,11 @@
 
 
 
-    <section [hidden]="NoDataOnDasboard" id="risk_per_company_section" class="card-group">
+    <section  [hidden]="NoDataOnDasboard" id="risk_per_company_section" class="card-group">
         <div class="card">
-            <div class="title d-flex"> <span>Risk per Companies</span>
+            <div class="title d-flex"> 
+                <span>Individual Company Average Risk Exposure</span>
+             
             </div>
             <div class="body">
                 <div class="body w-10 d-flex" *ngIf="!graphType">
@@ -180,18 +175,36 @@
                     </div>
                 </div>
 
-                <div class="body-list" *ngIf="riskIssueArray.length !== 0">
+                <div class="metric-wrap" *ngIf="riskIssueArray.length !== 0">
 
-                    <div *ngFor="let item of companyRiskArray" class="body-item d-flex">
-                        <div class="mx-auto risk">{{item.risk}}</div>
-                        <div class="mx-auto recom">{{item.recom}}</div>
-                        <div class="mx-auto riskRate"
-                        [ngClass]="[ 
-                        item.level === 'Low' ? 'mx-auto riskRate low' : 'mx-auto riskRate',
-                        item.level === 'Medium' ? 'mx-auto riskRate medium' : 'mx-auto riskRate',
-                        item.level === 'High' ? 'mx-auto riskRate high' : 'mx-auto riskRate'
-                        ]"
-                        >{{item.level}}</div>
+                    <div class="total-risk-wrap">
+                        <h4> Average Risk Rate <span [ngClass]="[ 
+                            33 > activeCompanyTotalRiskRate ? 'low' : '',
+                            66 > activeCompanyTotalRiskRate && activeCompanyTotalRiskRate > 33 ? 'medium' : '',
+                            activeCompanyTotalRiskRate > 66 ? 'high' : ''
+                            ]"
+                            >{{activeCompanyTotalRiskRate}} %</span> </h4>
+                    </div>
+
+                    <div class="risk-list-wrap-title d-flex">
+                        <div class="risk">Risk Name</div>
+                        <div class="recom">Recommendation</div>
+                        <div class="riskRate">Risk Rate</div>
+                    </div>
+
+                    <div class="risk-list-wrap-body" >
+                        <div *ngFor="let item of companyRiskArray" class="risk-list-item d-flex">
+                            <div class="mx-auto risk">{{item.risk}}</div>
+                            <div class="mx-auto recom">{{item.recom}}</div>
+                            <div class="mx-auto riskRate"
+                            [ngClass]="[ 
+                            item.level === 'Low' ? 'mx-auto riskRate low' : 'mx-auto riskRate',
+                            item.level === 'Medium' ? 'mx-auto riskRate medium' : 'mx-auto riskRate',
+                            item.level === 'High' ? 'mx-auto riskRate high' : 'mx-auto riskRate'
+                            ]"
+                            >{{item.level}}</div>
+                        </div>
+
                     </div>
 
                 </div>
@@ -200,6 +213,7 @@
 
         </div>
     </section> <!-- graph_section -->
+
 
 
 
