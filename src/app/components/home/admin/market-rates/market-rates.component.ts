@@ -1,14 +1,6 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
-import { faChartLine, faChartBar, faChartPie, faListAlt, faBuilding, faFire } from '@fortawesome/free-solid-svg-icons';
-import { SurveyService } from 'src/app/shared/services/survey.service';
-import { QuestionService } from 'src/app/shared/services/questions.service';
-import { UserService } from 'src/app/shared/services/user.service';
-import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
-import { ResponseService } from 'src/app/shared/services/responses.service';
-import { ModalDirective } from 'ngx-bootstrap';
-import { ThreatService } from 'src/app/shared/services/threats.service';
-import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
-import { NotificationService } from 'src/app/shared/services/notification.service';
+import { faChartLine, faChartBar, faChartPie, faArrowAltCircleLeft, faArrowAltCircleRight } from '@fortawesome/free-solid-svg-icons';
+
 import { ExchangerateService } from 'src/app/shared/services/exchangeRates.service';
 import { GDPGrowthRateService } from 'src/app/shared/services/gdpGrowthRate.service';
 import { InterestRateService } from 'src/app/shared/services/interetRates.service';
@@ -22,9 +14,6 @@ export class AdminMarketRateComponent implements OnInit {
 // tslint:disable
 // tslint:disable: prefer-const
 
-public faChartLine = faChartLine;
-public faChartBar = faChartBar;
-public faChartPie = faChartPie;
 
 
 
@@ -37,61 +26,64 @@ public faChartPie = faChartPie;
 
  
 
+public faChartLine = faChartLine;
+public faChartBar = faChartBar;
+public faChartPie = faChartPie;
+public faArrowAltCircleLeft = faArrowAltCircleLeft;
+public faArrowAltCircleRight = faArrowAltCircleRight;
 
 
 public exchangeProgress = 0;
 public gdpProgress = 0;
 
+public monthsArray = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+public daysArray = ['', '1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th',
+                    '21st', '22nd', '23rd', '24th', '25th', '26th', '27th', '28th', '29th', '30th', '31st']
+
+
+public currentDay = new Date();
+public currentYear = this.currentDay.getFullYear();
+public currentMonth = this.currentDay.getMonth();
+
+
+public YearRange = [this.currentYear, (this.currentYear - 1),(this.currentYear - 2),];
+
+public ExchangeRates = [];
+public GDPGrowthRates = [];
+public InterestRates = [];
+
+
+public gdpForm;
+public countryRateObj;
+
+public currentYearActive = this.currentYear;
+public FormatedGDP = [];
+public MyFormatedGDP = [];
+public AllCountryCode = [];
+public interestInput;
 
 
 
 
+// chart 
+
+public gdpType;
+public gdpLabels;
+public gdpCountrys;
+public gdpDatasets;
+public gdpChartOptions;
+public gdpBgColors = [];
 
 
-
-
-
-
-
-
-  public currentDay = new Date();
-  public currentYear = this.currentDay.getFullYear();
-
-
-  public YearRange = [this.currentYear, (this.currentYear - 1),(this.currentYear - 2),];
-
-  public ExchangeRates = [];
-  public GDPGrowthRates = [];
-  public InterestRates = [];
-
-
-  public gdpForm;
-  public countryRateObj;
-
-  public currentYearActive = this.currentYear;
-  public FormatedGDP = [];
-  public MyFormatedGDP = [];
-  public AllCountryCode = [];
-  public interestInput;
-
-
-
-
-  // chart 
-
-  public gdpType;
-  public gdpLabels;
-  public gdpCountrys;
-  public gdpDatasets;
-  public gdpChartOptions;
-  public gdpBgColors = [];
-
-
-  public exchangeType;
-  public exchangeLabels;
-  public exchangeDatasets;
-  public exchangeChartOptions;
-  public exchangeBgColors = []
+public exchangeType;
+public exchangeLabels;
+public exchangeDatasets;
+public exchangeChartOptions;
+public exchangeBgColors = []
+public exchangeRatesCountryCodes = []
+public activeCountryCode = 'KES';
+public activeMonth = this.currentMonth;
+public activeYear = this.currentYear;
 
 
 
@@ -141,7 +133,8 @@ public gdpProgress = 0;
       this.exchangerateService.getAllExchangerates().subscribe(
         dataExch => {
           this.exchangeProgress = 80;
-          this.ExchangeRates = dataExch;
+          this.ExchangeRates = dataExch.reverse();
+          this.ExchangeRates[0].countryRate.forEach((ctr) => { this.exchangeRatesCountryCodes.push(ctr.code) });
           this.ExchangeRatesGraph();
           resolve();
         },
@@ -426,62 +419,81 @@ public gdpProgress = 0;
 
 
 
-
-
-  exchangeGraphToLine() {
-    this.exchangeType = 'line';
-    this.exchangeChartOptions.legend.display = false;
-    this.exchangeChartOptions.scales.xAxes[0].display = true;
-    this.exchangeDatasets[0].backgroundColor = 'whitesmoke';
-    this.exchangeDatasets[0].borderColor = 'gray';
-    this.exchangeDatasets[0].pointBorderColor = 'black';
+  swithToPrevMonth() {
+    if( this.activeMonth === 0) {
+      this.activeMonth = 11;
+      this.activeYear = Number(this.activeYear) - 1;
+    } else {
+      this.activeMonth = Number(this.activeMonth) - 1
+    }
+   
+    this.ExchangeRatesGraph();
   }
-  exchangeGraphToBar() {
-    this.exchangeType = 'bar';
-    this.exchangeChartOptions.legend.display = false;
-    this.exchangeChartOptions.scales.xAxes[0].display = true;
-    this.exchangeDatasets[0].backgroundColor = this.exchangeBgColors;
-    this.exchangeDatasets[0].borderColor = 'white';
-    this.exchangeDatasets[0].pointBorderColor = 'white';
+
+  swithToNextMonth() {
+    if( this.activeMonth === 11) {
+      this.activeMonth = 0;
+      this.activeYear = Number(this.activeYear) + 1;
+    } else {
+      this.activeMonth = Number(this.activeMonth) + 1
+    }
+    this.ExchangeRatesGraph();
   }
-  exchangeGraphToPie() {
-    this.exchangeType = 'pie';
-    this.exchangeChartOptions.legend.display = true;
-    this.exchangeChartOptions.scales.xAxes[0].display = false;
-    this.exchangeDatasets[0].backgroundColor = this.exchangeBgColors;
-    this.exchangeDatasets[0].borderColor = 'white';
-    this.exchangeDatasets[0].pointBorderColor = 'white';
+
+  switchExchangeRateCountry(code) {
+    this.activeCountryCode = code;
+    this.ExchangeRatesGraph();
   }
   
 
 
 
-  ExchangeRatesGraph() {
+  async ExchangeRatesGraph() {
 
     this.exchangeProgress = 100;
-    this.exchangeType = 'bar';
+    this.exchangeType = 'line';
 
-    this.exchangeLabels = this.ExchangeRates[0].countryRate.filter((ctr) => 
-      ((ctr.code === 'KES') || (ctr.code === 'TZS') || (ctr.code === 'UGX') || (ctr.code === 'ZMW') ||
-      (ctr.code === 'AED') || (ctr.code === 'EGP') || (ctr.code === 'EUR') || (ctr.code === 'NZD'))
-    ).map(e => e.code);
+
+
+
+    this.exchangeLabels = []
+    const exchangeDatasetsArr = []
+
+    let minNumber = 1;
+    let maxNum = 31; 
+    this.ExchangeRates.forEach((exch) => {
+      let myDate = new Date(exch.dateUpdated)
+      let date = myDate.getDate();
+      let month = myDate.getMonth();
+      let year = myDate.getFullYear();
+      if (year === this.activeYear && month === this.activeMonth) {
+
+        let dateLabel = `${this.daysArray[date]}`;
+        this.exchangeLabels.unshift(dateLabel)
+        minNumber ++
+
+         for( let ctr of exch.countryRate ) {
+           if (ctr.code === this.activeCountryCode){
+            exchangeDatasetsArr.unshift(ctr.value)
+            break;
+           }
+         }
+      }
+    })
+
     this.exchangeBgColors = [];
     this.exchangeLabels.forEach((e) => {
       this.exchangeBgColors.push(this.getRandomColor());
     });
     this.exchangeDatasets = [
       {
-        label: ['Exchange Rates'],
-        data: this.ExchangeRates[0].countryRate.filter((ctr) => 
-        ((ctr.code === 'KES') || (ctr.code === 'TZS') || (ctr.code === 'UGX') || (ctr.code === 'ZMW') ||
-        (ctr.code === 'AED') || (ctr.code === 'EGP') || (ctr.code === 'EUR') || (ctr.code === 'NZD'))
-        ).map(e => e.value),
-        backgroundColor: this.exchangeBgColors,
-        borderColor: 'teal',
+        data: exchangeDatasetsArr,
+        backgroundColor: 'rgba(2, 176, 204, .5)',
+        borderColor: 'rgb(2, 176, 204)',
         borderWidth: 1.5,
         pointBackgroundColor: 'transparent',
         pointHoverBackgroundColor: 'transparent',
-        pointBorderColor: 'black',
+        pointBorderColor: 'rgba(2, 176, 204, .8)',
         pointHoverBorderColor: 'gray'
       }
     ];
@@ -517,7 +529,7 @@ public gdpProgress = 0;
             },
             stacked: false,
             ticks: {
-                beginAtZero: true
+                beginAtZero: false
             }
         }],
         xAxes: [{

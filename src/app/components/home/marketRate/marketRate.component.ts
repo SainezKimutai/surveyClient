@@ -78,7 +78,7 @@ export class MarketRateComponent implements OnInit {
 
 
     this.updatePage().then(() => {
-      this.checkExchangeRate();
+      this.fetchExchangeRate();
     })
 
 
@@ -107,8 +107,7 @@ export class MarketRateComponent implements OnInit {
 
       this.exchangerateService.getAllExchangerates().subscribe(
         dataExch => {
-          this.ExchangeRates = dataExch;
-
+          this.ExchangeRates = dataExch.reverse();
           resolve();
         },
         error => console.log('Error getting exchange rate')
@@ -219,20 +218,7 @@ export class MarketRateComponent implements OnInit {
 
 
 
-  checkExchangeRate() {
-    if(this.ExchangeRates.length === 0) {
-      this.fetchExchangeRate();
-    }
-    else {
-      let today = new Date();
-      let HasBeenUpdated = (today.toDateString() === new Date(this.ExchangeRates[0].dateUpdated).toDateString());
 
-      if(!HasBeenUpdated){
-        this.fetchExchangeRate()
-      }
-      
-    }
-  }
 
 
 
@@ -245,61 +231,77 @@ export class MarketRateComponent implements OnInit {
 
   fetchExchangeRate() {
 
+    // let myDate = '2020-04-23'
 
-    this.exchangerateService.fetchExchangeRates().subscribe(
-      data => {
-        let myDataToSent = {
-          dateUpdated: new Date,
-          baseCurrency: data.base,
-          countryRate: []
-        }
+    // this.exchangerateService.fetchPastExchangeRates(myDate).subscribe(
+    //   data => {
+    //     let myDataToSent = {
+    //       dateUpdated: new Date(myDate),
+    //       baseCurrency: data.base,
+    //       countryRate: []
+    //     }
 
-        let convertToArr =  Object.entries(data.rates)
-        convertToArr.forEach((rateItem, ind, arr) => {
-          myDataToSent.countryRate.push(
-            { code: rateItem[0], 
-              value: rateItem[1]   
-            } 
-          )
+    //     let convertToArr =  Object.entries(data.rates)
+    //     convertToArr.forEach((rateItem, ind, arr) => {
+    //       myDataToSent.countryRate.push(
+    //         { code: rateItem[0], 
+    //           value: rateItem[1]   
+    //         } 
+    //       )
 
 
-          if(ind === arr.length - 1){
-            this.updateExchangeRate(myDataToSent)
-          }
+    //       if(ind === arr.length - 1){
+    //         this.updateExchangeRate(myDataToSent)
+    //       }
     
-        })
+    //     })
         
-      },
-      error => console.log('Error getting exchange Rates')
-    )
+    //   },
+    //   error => console.log('Error getting exchange Rates')
+    // )
+
+
+  //  this.exchangerateService.fetchExchangeRates().subscribe(
+  //     data => {
+  //       let myDataToSent = {
+  //         dateUpdated: new Date(),
+  //         baseCurrency: data.base,
+  //         countryRate: []
+  //       }
+
+  //       let convertToArr =  Object.entries(data.rates)
+  //       convertToArr.forEach((rateItem, ind, arr) => {
+  //         myDataToSent.countryRate.push(
+  //           { code: rateItem[0], 
+  //             value: rateItem[1]   
+  //           } 
+  //         )
+
+
+  //         if(ind === arr.length - 1){
+  //           this.updateExchangeRate(myDataToSent)
+  //         }
+    
+  //       })
+        
+  //     },
+  //     error => console.log('Error getting exchange Rates')
+  //   )
+
+
 
   }
 
 
 
   updateExchangeRate(data) {
-
-    if(this.ExchangeRates.length === 0) {
-      // create new Exchange rates
-      this.exchangerateService.createExchangerate(data).subscribe(
-        data => {
-          this.updatePage();
-          this.notifyService.showSuccess('Create', 'New')
-        },
-        error => console.log('Error Creating Rates')
-      )
-    }
-
-    if(this.ExchangeRates.length > 0) {
-      // Update existing Exchange rates
-      this.exchangerateService.updateExchangerate( this.ExchangeRates[0]._id, data).subscribe(
-        data => {
-          this.updatePage();
-          this.notifyService.showInfo('Updated', 'Update')
-        },
-        error => console.log('Error updating Rates')
-      )
-    }
+    this.exchangerateService.createExchangerate(data).subscribe(
+      data => {
+        console.log(data.dateUpdated)
+        this.notifyService.showSuccess('Create', 'Sucess')
+      },
+      error => this.notifyService.showError('Not created', 'Failed')
+    )
   }
 
 

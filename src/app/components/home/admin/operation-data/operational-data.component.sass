@@ -1,0 +1,885 @@
+@import 'src/styles.sass'
+
+
+.page-header
+    width: 100%
+    padding: .5em 1em
+    background-color: white
+
+    h4 
+        font-size: 14px 
+        font-weight: bold
+        text-transform: uppercase
+        text-shadow: 1px -1px 1px white
+        -moz-text-shadow: 1px -1px 1px white
+        -webkit-text-shadow: 1px -1px 1px white
+
+
+
+
+
+.body-section
+    margin: 1em
+    background-color: transparent
+
+    
+.spinner-div
+    margin: auto
+    color: grayColor(g100)
+
+
+
+
+
+
+
+
+
+
+
+#top_cards_section
+    display: flex
+    align-items: stretch
+    
+    @include desktop_sm
+        display: flex
+        flex-direction: column
+
+
+#top_cards_section .card
+    border: none
+    border-radius: 5px
+    min-width: 40%
+    max-width: 50%
+    height: 150px
+    // height: fit-content
+    margin: 0 1.5em 1em 0
+    padding: 1em 2em 0 2em
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+   
+
+    @include desktop_md
+        max-width: 100%
+    
+    @include desktop_sm
+        width: 100%
+
+
+    &.first
+        background-color: colorTheme(primary)
+        
+
+    &.second
+        background-color: colorTheme(primaryTheme)
+    
+        
+
+    &.third
+        background-color: colorTheme(warning)
+ 
+
+    &.forth
+        background-color: colorTheme(danger)
+
+    
+
+
+
+#top_cards_section .card .card-title
+    display: flex
+    align-items: stretch
+    margin: 0 0 .5em 0
+    padding: 0
+
+    h4
+        margin: 0 auto 0 0
+        font-family: Montserrat
+        font-size: 18px
+        color: white
+        font-weight: bold
+
+    fa-icon
+        margin-left: 0 0 0 auto
+        font-family: Montserrat
+        font-size: 14px
+        color: white
+        cursor: pointer
+
+    .dropdown-menu
+        left: 50%
+        right: auto
+        text-align: center
+        transform: translate(-50%, 0)
+        a 
+            font-family: Montserrat
+            font-size: 10px
+            color: black
+
+#top_cards_section .card .card-info
+    text-align: left
+    margin: 0
+    padding: 0
+    h4
+        font-family: Montserrat
+        font-size: 14px
+        color: white
+        text-transform: capitalize
+        
+#top_cards_section .card .card-body
+    height: 90px
+    padding: 0
+    margin: 0
+
+    canvas
+        max-width: 100%
+        max-height: 100%
+        margin: 0
+        background-color: transparent
+
+
+
+
+
+
+
+
+
+
+
+#second_cards_section, #traffic_cards_section
+    display: flex
+    align-items: stretch
+    width: 100%
+    height: 100%
+    
+    @include desktop_sm
+        display: flex
+        flex-direction: column
+
+
+#second_cards_section .card, #traffic_cards_section .card
+    border: none
+    border-radius: 5px
+    max-width: 50%
+    height: 400px
+    margin: 0 1.5em 1em 0
+    padding: 1em 2em 0 2em
+    // box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    // -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    // -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    transition: all 0.3s ease
+    cursor: pointer
+   
+    
+    &:hover
+      transform: translateY(-5px)
+      box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
+
+    @include desktop_md
+        max-width: 100%
+    
+    @include desktop_sm
+        width: 100%
+
+
+
+
+    .title
+        width: 100%
+        padding: .5em 1em 2em 1em
+        font-size: 12px
+        color: grayColor(g600)
+        font-weight: bold
+
+
+    .body-wrapper
+        width: 100%
+        min-height: 250px
+        height: fit-content
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+
+        canvas
+            height: 250px
+
+
+
+
+
+
+
+
+#companySurveyList 
+    width: 100%
+    height: 300px
+    overflow-y: scroll
+    padding: 0 0 1em 0
+
+    .survey-title, .company-title
+        width: 100%
+        padding: .5em 1em
+        text-align: left 
+        font-size: 13px
+        font-weight: bold
+        color: black
+        background-color: grayColor(g100)
+
+    .survey-item, .company-item
+        width: 100%
+        text-align: left 
+        padding: .5em 1em
+        margin: 0 0 .5em 0
+        font-size: 12px
+        cursor: pointer
+        background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
+        -moz-background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
+        -webkit-background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
+        -moz-background-blend-mode: screen, difference, lighten
+        -webkit-background-blend-mode: screen, difference, lighten
+        background-blend-mode: screen, difference, lighten
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#graph_section
+    border-radius: 5px
+    border: none
+    display: flex
+    align-items: stretch
+    width: 100%
+    margin: 0 0 1em 0
+    background-color: white
+
+
+
+
+#graph_section .card
+    border-radius: 5px
+    border: none
+    width: 100%
+    height: 500px
+    margin: 0 1.5em 1em 0
+    padding: 1em 2em 0 2em
+    transition: all 0.3s ease
+    cursor: pointer
+
+    
+    // &:hover
+    //   transform: translateY(-5px)
+    //   box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
+
+    @include desktop_md
+        height: 400px
+
+    @include desktop_sm
+        height: 300px
+
+    .title
+        width: 100%
+        padding: .5em 1em 2em 1em
+        font-size: 12px
+        color: grayColor(g600)
+        font-weight: bold
+
+    .body 
+        width: 100%
+        padding: .5em
+        height: 90%
+        // overflow-y: scroll
+        display: flex
+        padding: 0 0 1em 0
+
+        @include desktop_md 
+            display: flex 
+            flex-direction: column
+
+
+        .datasets-wrap
+            width: 100%
+            height: 100%
+            overflow-x: scroll
+            padding: .5em .5em 1em .5em
+            // border: solid 1px red
+
+            @include desktop_md 
+                width: 100%
+                height: 100%
+                display: flex 
+                align-items: stretch
+                overflow-y: scroll
+
+
+            .dataset-item
+                width: 100%
+                // height: 3.5em
+                padding: 1em
+                margin: 0 0 .5em 0
+                cursor: pointer
+                font-size: 12px
+                background-color: whitesmoke
+                
+                @include desktop_md 
+                    width: 200px
+
+
+                &:hover
+                    background-color: grayColor(g200)
+
+                &.active
+
+                    background-color: colorTheme(primaryTheme)
+                    color: white
+
+
+
+        .canvas-wrap
+            width: 100%
+            padding: .5em
+            display: flex
+            flex-direction: column
+            align-items: center
+            justify-content: center
+
+            @include desktop_md 
+                width: 100%
+                height: 200px
+                margin: 1em 0 0 0
+
+            canvas
+                width: 100%
+                margin: 0
+                border-radius: 5px
+
+                @include desktop_md 
+                    height: 100%
+
+
+
+
+
+
+
+
+
+
+
+
+#risk_per_company_section
+    border-radius: 5px
+    border: none
+    display: flex
+    align-items: stretch
+    width: 100%
+    margin: 0 0 1em 0
+    background-color: white
+
+
+
+
+#risk_per_company_section .card
+    border-radius: 5px
+    border: none
+    width: 100%
+    height: 500px
+    margin: 0 1.5em 1em 0
+    padding: 1em 2em 0 2em
+    transition: all 0.3s ease
+    cursor: pointer
+
+    
+    // &:hover
+    //   transform: translateY(-5px)
+    //   box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
+
+    @include desktop_md
+        height: 400px
+
+    @include desktop_sm
+        height: 300px
+
+    .title
+        width: 100%
+        padding: .5em 1em 2em 1em
+        font-size: 12px
+        color: grayColor(g600)
+        font-weight: bold
+
+    .body 
+        width: 100%
+        padding: .5em
+        height: 90%
+        // overflow-y: scroll
+        display: flex
+        padding: 0 0 1em 0
+
+        @include desktop_md 
+            display: flex 
+            flex-direction: column
+
+
+        .datasets-wrap
+            width: 15em
+            height: 100%
+            overflow-x: scroll
+            padding: .5em .5em 1em .5em
+            // border: solid 1px red
+
+            @include desktop_md 
+                width: 100%
+                height: 100%
+                display: flex 
+                align-items: stretch
+                overflow-y: scroll
+
+
+            .dataset-item
+                width: 100%
+                // height: 3.5em
+                padding: 1em
+                margin: 0 0 .5em 0
+                cursor: pointer
+                font-size: 12px
+                background-color: whitesmoke
+                
+                @include desktop_md 
+                    width: 200px
+
+
+                &:hover
+                    background-color: grayColor(g200)
+
+                &.active
+
+                    background-color: colorTheme(primaryTheme)
+                    color: white
+
+
+        .body-list   
+            width: 100%
+            padding: .5em
+            height: 100%
+            overflow-y: scroll
+
+
+            .body-item 
+               
+                width: 100%
+                padding: .5em
+                margin: 0 0 .5em 0
+                cursor: pointer
+                background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
+                -moz-background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
+                -webkit-background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
+                -moz-background-blend-mode: screen, difference, lighten
+                -webkit-background-blend-mode: screen, difference, lighten
+                background-blend-mode: screen, difference, lighten
+
+                &:hover
+                    box-shadow: 1px 2px 3px rgba(0, 0, 0, .2)
+
+                div
+                    font-size: 11px
+                    font-weight: 500px
+                    text-align: left
+                    width: 100%
+                    padding: 0 0 0 1em
+
+                    &.risk
+                        max-width: 20em
+
+                    &.riskRate
+                        background-color: grayColor(g100)
+                        color: white
+                        max-width: 10em
+
+                    &.low 
+                        background-color: colorTheme(success)
+                    &.medium
+                        background-color: colorTheme(warning)
+                    &.high
+                        background-color: colorTheme(danger)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#third_cards_section
+    display: flex
+    align-items: stretch
+    width: 100%
+    height: 100%
+    
+    @include desktop_sm
+        display: flex
+        flex-direction: column
+
+
+#third_cards_section .card
+    border: none
+    border-radius: 5px
+    max-width: 50%
+    height: 400px
+    margin: 0 1.5em 1em 0
+    padding: 1em 2em 0 2em
+    // box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    // -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    // -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    transition: all 0.3s ease
+    cursor: pointer
+   
+    
+    &:hover
+      transform: translateY(-5px)
+      box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
+
+    @include desktop_md
+        max-width: 100%
+    
+    @include desktop_sm
+        width: 100%
+
+
+
+
+    .title
+        width: 100%
+        padding: .5em 1em 2em 1em
+        font-size: 12px
+        color: grayColor(g600)
+        font-weight: bold
+
+
+    .body-wrapper
+        width: 100%
+        height: 300px
+        overflow-y: scroll
+        padding: 0 0 1em 0
+        display: flex
+        flex-direction: column
+        align-items: center
+        justify-content: center
+
+        .body-title
+            width: 100%
+            padding: .5em
+            height: fit-content
+            max-height: 100px
+            min-width: 400px  
+            
+            .body-item 
+                height: 100%         
+                width: 100%
+                padding: .5em
+                margin: 0 0 .5em 0
+                cursor: pointer
+                background-color: grayColor(g100)
+
+                div
+                    height: 100%
+                    font-size: 11px
+                    font-weight: 500px
+                    text-align: left
+                    padding: 0 0 0 1em
+                    width: 100%
+                    
+
+        .body   
+            width: 100%
+            padding: .5em
+            height: 300px
+            min-width: 400px
+
+            .body-item 
+               
+                width: 100%
+                padding: .5em
+                margin: 0 0 .5em 0
+                cursor: pointer
+                background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
+                -moz-background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
+                -webkit-background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
+                -moz-background-blend-mode: screen, difference, lighten
+                -webkit-background-blend-mode: screen, difference, lighten
+                background-blend-mode: screen, difference, lighten
+
+                &:hover
+                    box-shadow: 1px 2px 3px rgba(0, 0, 0, .2)
+
+                div
+                    font-size: 11px
+                    font-weight: 500px
+                    text-align: left
+                    width: 100%
+                    padding: 0 0 0 1em
+
+                    &.riskRate
+                        background-color: grayColor(g100)
+                        color: white
+
+                    &.low 
+                        background-color: colorTheme(success)
+                    &.medium
+                        background-color: colorTheme(warning)
+                    &.high
+                        background-color: colorTheme(danger)
+
+
+
+
+
+
+
+.graph-switch
+    display: flex
+    align-items: center
+    justify-content: center
+
+    span 
+        border: none
+        padding: 5px
+
+        &.toggle-legend
+            background-color: transparent
+            color: black
+            font-size: 12px
+
+        &:hover
+            background-color: grayColor(g600)
+
+            fa-icon 
+                color: white
+
+
+        fa-icon
+            margin: auto
+            font-size: 14px
+            margin: 5px
+            cursor: pointer
+            color: grayColor(g400)
+
+            &.active 
+                color: colorTheme(primaryTheme)
+                font-size: 16px
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#list_section_one
+    border-radius: 3px
+    display: flex
+    align-items: stretch
+    width: 100%
+    overflow-y: scroll
+    margin: 0 0 1em 0
+    background-color: white
+    border: solid 1px grayColor(g300)
+
+
+#list_section_one .card
+    border: none
+    border-radius: 3px
+    min-width: $desktop_md
+    width: 100%
+    height: 500px
+    margin: 0 1.5em 1em 0
+    padding: 1em 2em 0 2em
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#list_section_two
+    border-radius: 3px
+    display: flex
+    align-items: stretch
+    width: 100%
+    overflow-y: scroll
+    margin: 0 0 1em 0
+    background-color: white
+    border: solid 1px grayColor(g300)
+
+
+#list_section_two .card
+    border: none
+    border-radius: 3px
+    min-width: $desktop_md
+    width: 100%
+    height: 500px
+    margin: 0 1.5em 1em 0
+    padding: 1em 2em 0 2em
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.viewAnswersModal
+    border: none
+
+    .modal-content
+        width: 100%
+        border: none
+  
+        .modal-header 
+            border: none
+            background-color: colorTheme(primary)
+
+            .modal-title
+                color: white
+                font-size: 14px
+
+                span 
+                    margin: 0 .5em
+                    color: black
+
+        .surveyStatus-wrap
+            width: 100%
+            padding: 0 1em
+            font-size: 12px
+
+    
+        .modal-body
+            width: 100%
+            height: 500px
+            overflow-x: scroll
+            border: none
+
+
+            .question-wrap
+                width: 100%
+                padding: 1em
+                border-radius: 5px
+                margin: 0 0 2em 0
+
+                .question
+                    font-size: 13px
+                    color: black
+                    margin: 0 0 .5em 0
+
+                    .num 
+                        font-size: 10px
+                        margin-right: .5em
+                    
+                    &.skipped 
+                        font-style: italic
+                        color: grayColor(g600)
+
+                        .skip 
+                            color: colorTheme(warning)
+                            font-style: 12px
+
+                .answer-wrap
+                    width: 100%
+                    display: grid
+                    grid-template-columns: repeat(2, 1fr)
+                    grid-gap: 10px
+                    padding: 0 0 0 1em
+
+
+                    .answer
+                        width: 100%
+                        overflow: hidden
+                        text-overflow: ellipsis
+                        display: block
+                        padding: 2px
+                        font-size: 12px
+                        padding: 5px
+                        border: solid 1px grayColor(g100)
+                        border-radius: 5px
+                        font-style: italic
+
+                        &.picked
+                            background-color: colorTheme(info)
+                            color: white
+
+                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
