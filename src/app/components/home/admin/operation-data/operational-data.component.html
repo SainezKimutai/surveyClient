@@ -225,7 +225,7 @@
 
     <section id="graph_section" class="card-group">
         <div class="card">
-            <div class="title d-flex"> <span>Specific Risks Representations</span>
+            <div class="title d-flex"> <span>Graphical Comparison of Company Avarage Risk Exposure</span>
                 <div class=" graph-switch d-flex ml-auto">
                     <span (click)="graphChartToLine()"><fa-icon [icon]="faChartLine" [ngClass]="graphType === 'line' ? 'active' : ''" ></fa-icon></span> 
                     <span (click)="graphChartToBar()"><fa-icon [icon]="faChartBar" [ngClass]="graphType === 'bar' ? 'active' : ''" ></fa-icon></span>
@@ -235,13 +235,6 @@
             <div class="body">
                 <div class="body w-10 d-flex" *ngIf="!graphType">
                     <div class="spinner-div spinner-border mx-auto" role="status"></div>
-                </div>
-                <div *ngIf="graphType" class="datasets-wrap">
-                    <div *ngFor="let item of riskIssueArrayPerRisk; let x = index" 
-                    [ngClass]="activeRisk === item ? 'dataset-item active' : 'dataset-item' "
-                    (click)="switchGraphDataset(x)">
-                       {{item}}
-                    </div>
                 </div>
                 <div class="canvas-wrap">
                     <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
@@ -260,7 +253,7 @@
     <section id="risk_per_company_section" class="card-group">
         <div class="card">
             <div class="title d-flex"> 
-                <span>Risk per Companies</span>
+                <span>Individual Company Avarage Risk Exposure</span>
              
             </div>
             <div class="body">

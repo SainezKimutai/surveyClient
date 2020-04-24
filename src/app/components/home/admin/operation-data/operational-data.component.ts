@@ -128,6 +128,7 @@ public riskIssueArray = [];
 public riskIssueArrayPerRisk = [];
 public riskIssueArrayPerCompany = []
 public activeRisk;
+public myGraphLabelColors = [];
 
 public surveyStatus = 0;
 
@@ -736,9 +737,7 @@ public trafficBgColors = [];
   this.thirrdPartyType = 'bar';
   
   this.thirrdPartyLabels = ['Surveys', 'Companies'];
-  // this.graphLabels.forEach((e) => {
-  //   myGraphLabelColors.push(this.getRandomColor());
-  // });
+
   this.thirrdPartyDatasets = [
     {
       label: thirdparties[num].name,
@@ -832,15 +831,15 @@ graphChartToLine() {
   this.graphType = 'line';
   this.graphChart.legend.display = false;
   this.graphChart.scales.xAxes[0].display = true;
-  this.graphDatasets[0].backgroundColor = '#02b0cc';
-  this.graphDatasets[0].borderColor = 'teal';
-  this.graphDatasets[0].pointBorderColor = 'black';
+  this.graphDatasets[0].backgroundColor = 'rgba(2, 176, 204, .5)',
+  this.graphDatasets[0].borderColor = 'rgb(2, 176, 204)',
+  this.graphDatasets[0].pointBorderColor = 'rgba(2, 176, 204, .8)'
 }
 graphChartToBar() {
   this.graphType = 'bar';
   this.graphChart.legend.display = false;
   this.graphChart.scales.xAxes[0].display = true;
-  this.graphDatasets[0].backgroundColor = ['#02b0cc', 'orange', 'red' ];
+  this.graphDatasets[0].backgroundColor = this.myGraphLabelColors;
   this.graphDatasets[0].borderColor = 'white';
   this.graphDatasets[0].pointBorderColor = 'white';
 }
@@ -848,7 +847,7 @@ graphChartToPie() {
   this.graphType = 'pie';
   this.graphChart.legend.display = true;
   this.graphChart.scales.xAxes[0].display = false;
-  this.graphDatasets[0].backgroundColor = ['#02b0cc', 'orange', 'red' ];
+  this.graphDatasets[0].backgroundColor = this.myGraphLabelColors;
   this.graphDatasets[0].borderColor = 'white';
   this.graphDatasets[0].pointBorderColor = 'white';
 }
@@ -896,49 +895,59 @@ switchGraphDataset(num) {
   
   
   graphChartFunction(num) {
-    let lowValue = null;
-    let mediumValue = null;
-    let highValue = null;
-    let riskArray = this.riskIssueArray.filter(() => true ).map(e => e.risk);
-    let filterRiskArray = Array.from(new Set(riskArray));
+
+    let graphLabelsArr = [];
+    let graphDatasetDataArr = [];
+
+    this.riskIssueArrayPerCompany.forEach((compElem) => {
+
+      let myRiskArray = this.riskIssueArray.filter((r)=> r.company === compElem ).map(e => e);
+
+      let LowRate = myRiskArray.filter((r)=> r.level === 'Low' ).map(e => e);
+      let MediumRate = myRiskArray.filter((r)=> r.level === 'Medium' ).map(e => e);
+      let HighRate = myRiskArray.filter((r)=> r.level === 'High' ).map(e => e);
+      
+      let totalRiskNum = this.companyRiskArray.length;
+      let lowRiskNum = LowRate.length;
+      let mediumRiskNum = MediumRate.length;
+      let highRiskNum = HighRate.length;
   
-    for ( let risk of filterRiskArray) {
+      let lowRiskValue = lowRiskNum * 1;
+      let medumRiskValue = mediumRiskNum * 2;
+      let highRiskValue = highRiskNum * 3;
+      let totalRiskValue = totalRiskNum * 3
   
-      if ( this.riskIssueArrayPerRisk[num] === risk ) {
-        let myRAray = this.riskIssueArray.filter((r) => r.risk === risk).map(e => e);
+      let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
   
-        let low = myRAray.filter((r) => r.level === 'Low').map(e => e);
-        lowValue = low.length;
-        let medium = myRAray.filter((r) => r.level === 'Medium').map(e => e);
-        mediumValue = medium.length;
-        let high = myRAray.filter((r) => r.level === 'High').map(e => e);
-        highValue = high.length;
-  
-        break;
-      }
-  
-  
-    }
-  
-  
-    this.activeRisk = this.riskIssueArrayPerRisk[num];
-  
+      graphLabelsArr.push(compElem);
+      graphDatasetDataArr.push(((myTotalRiskValue * 100) / totalRiskValue).toFixed(1))
+    })
+
+
+
+
+
+
     this.graphType = 'line';
   
-    this.graphLabels = ['Low', 'Medium', 'High'];
-    // this.graphLabels.forEach((e) => {
-    //   myGraphLabelColors.push(this.getRandomColor());
-    // });
+    this.graphLabels = graphLabelsArr;
+    this.myGraphLabelColors = [];
+    graphDatasetDataArr.forEach((e) => {
+      if(  33 > e) { this.myGraphLabelColors.push('#4dbd74') }
+      if (e > 33 && 66 > e) { this.myGraphLabelColors.push('#ffc107') }
+      if (e > 66) { this.myGraphLabelColors.push('#f86c6b') }
+    });
+
     this.graphDatasets = [
       {
-        label: this.riskIssueArrayPerRisk[num],
-        data: [ lowValue, mediumValue, highValue],
-        backgroundColor: '#02b0cc',
-        borderColor: 'teal',
+        label: 'Avarage Risk Exposure',
+        data: graphDatasetDataArr,
+        backgroundColor: 'rgba(2, 176, 204, .5)',
+        borderColor: 'rgb(2, 176, 204)',
         borderWidth: 1.5,
         pointBackgroundColor: 'transparent',
         pointHoverBackgroundColor: 'transparent',
-        pointBorderColor: 'black',
+        pointBorderColor: 'rgba(2, 176, 204, .8)',
         pointHoverBorderColor: 'gray'
       }
     ];
@@ -967,7 +976,7 @@ switchGraphDataset(num) {
       },
       scales: {
         yAxes: [{
-            display: false,
+            display: true,
             gridLines: {
                 drawBorder: false,
                 display: false
