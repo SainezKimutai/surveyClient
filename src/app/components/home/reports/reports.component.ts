@@ -515,7 +515,7 @@ export class ReportsComponent implements OnInit {
    let threatArray3 =  this.riskIssueArray.filter(() => true ).map(e => e.risk);
    let newThreatArray3 = Array.from(new Set(threatArray3));
 
-   this.chart3Type = 'bar';
+   this.chart3Type = 'line';
 
    this.chart3Labels = newThreatArray3;
    let mychart3Datasets = [];
@@ -539,8 +539,8 @@ export class ReportsComponent implements OnInit {
    this.chart3Datasets = [{
    label: 'Risk',
    data: mychart3Datasets,
-   backgroundColor: this.chart3BgColors,
-   borderColor: 'white',
+   backgroundColor: 'whitesmoke',
+   borderColor: 'gray',
    borderWidth: 1.5,
    pointBackgroundColor: 'transparent',
    pointHoverBackgroundColor: 'transparent',

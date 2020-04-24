@@ -135,6 +135,7 @@ public surveyStatus = 0;
 
 public companyRiskArray = [];
 public activeCompany;
+public activeCompanyTotalRiskRate = null;
 
 
 // trafic
@@ -1030,11 +1031,32 @@ switchGraphDataset(num) {
  
     this.activeCompany = this.riskIssueArrayPerCompany[comp];
     this.companyRiskArray = this.riskIssueArray.filter((r)=> r.company === this.activeCompany ).map(e => e);
+    this.calculateActiveCompanyTotalRiskRate();
 
   }
   
   
   
+  calculateActiveCompanyTotalRiskRate(){
+    let LowRate = this.companyRiskArray.filter((r)=> r.level === 'Low' ).map(e => e);
+    let MediumRate = this.companyRiskArray.filter((r)=> r.level === 'Medium' ).map(e => e);
+    let HighRate = this.companyRiskArray.filter((r)=> r.level === 'High' ).map(e => e);
+    
+    let totalRiskNum = this.companyRiskArray.length;
+    let lowRiskNum = LowRate.length;
+    let mediumRiskNum = MediumRate.length;
+    let highRiskNum = HighRate.length;
+
+    let lowRiskValue = lowRiskNum * 1;
+    let medumRiskValue = mediumRiskNum * 2;
+    let highRiskValue = highRiskNum * 3;
+    let totalRiskValue = totalRiskNum * 3
+
+    let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
+
+    this.activeCompanyTotalRiskRate = ((myTotalRiskValue * 100) / totalRiskValue).toFixed(1)
+
+  }
   
   
     
@@ -1134,6 +1156,7 @@ switchGraphDataset(num) {
                           this.graphChartFunction(0);
                           this.thirdSectionGraphsFunction();
                           this.listThirdPartyCompaniesAndSurveys(0);
+                          this.calculateActiveCompanyTotalRiskRate();
                         }
   
                       });
