@@ -72,8 +72,9 @@
         </div>
 
         <div class="card">
-            <div class="title"> <span>Exchange Rates ( <span class="text-primary"> {{activeCountryCode }}</span> against US dollar )</span>
-                <div class="ml-auto month-switch d-flex">
+            <div class="title">
+                 <span class="mb-2">Exchange Rates ( <span class="text-primary"> {{activeCountryCode }}</span> against US dollar )</span>
+                <div class="ml-auto mb-2 month-switch d-flex">
                     <fa-icon [icon]="faArrowAltCircleLeft" (click)="swithToPrevMonth()"></fa-icon> 
                     <h4>{{monthsArray[activeMonth]}}, {{activeYear}}</h4>
                     <fa-icon [icon]="faArrowAltCircleRight" (click)="swithToNextMonth()"></fa-icon>
