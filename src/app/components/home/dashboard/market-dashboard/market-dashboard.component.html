@@ -44,7 +44,14 @@
    
    <section id="market_rates_cards_section" class="card-group">
         <div class="card">
-            <div class="title d-flex"> <span>GDP</span>
+            <div class="title d-flex"> 
+                <span>GDP</span>
+
+                <div class="mx-auto">
+                    <span *ngFor="let item of YearRange">{{item}}</span>
+
+                </div>
+
                 <div *ngIf="gdpProgress === 100 && MyFormatedGDP.length > 0 && gdpType" class=" graph-switch d-flex ml-auto">
                   
                     <span (click)="gdpGraphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="gdpType === 'line' ? 'active' : ''" ></fa-icon></span> 

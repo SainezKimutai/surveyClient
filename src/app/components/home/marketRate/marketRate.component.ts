@@ -35,8 +35,8 @@ export class MarketRateComponent implements OnInit {
 
 
   // incase of need for gdp for previous years
-  // public YearRange = [this.currentYear, (this.currentYear - 1),(this.currentYear - 2),];
-  public YearRange = [this.currentYear];
+  public YearRange = [this.currentYear, (this.currentYear - 1),(this.currentYear - 2),(this.currentYear - 3)];
+  // public YearRange = [this.currentYear];
 
   public ExchangeRates = [];
   public GDPGrowthRates = [];

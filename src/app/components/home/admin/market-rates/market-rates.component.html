@@ -44,7 +44,13 @@
    
    <section id="market_rates_cards_section" class="card-group">
         <div class="card">
-            <div class="title d-flex"> <span>GDP</span>
+            <div class="title d-flex"> 
+                <span>GDP</span>
+
+                <div class="mx-auto switch-year-wrap ">
+                    <span *ngFor="let item of YearRange" [ngClass]="item === currentYearActive ? 'active' : ''" (click)="switchYear(item)">{{item}}</span>
+                </div>
+
                 <div *ngIf="gdpProgress === 100 && MyFormatedGDP.length > 0 && gdpType" class=" graph-switch d-flex ml-auto">
                   
                     <span (click)="gdpGraphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="gdpType === 'line' ? 'active' : ''" ></fa-icon></span> 
@@ -54,11 +60,9 @@
             </div>
             <div class="body-wrapper">
                 <circle-progress [hidden]="gdpProgress === 100" [percent]="gdpProgress" ></circle-progress>
-                <div *ngIf="gdpProgress === 100 && MyFormatedGDP.length === 0" class="no-data d-flex">
-                    <h6>No GDP data yet</h6>
-                </div>
+    
 
-                <canvas *ngIf="gdpProgress === 100 && MyFormatedGDP.length > 0 && gdpType" baseChart class="chart" [chartType]="gdpType" [labels]="gdpLabels"
+                <canvas *ngIf="gdpProgress === 100 && gdpType" baseChart class="chart" [chartType]="gdpType" [labels]="gdpLabels"
                 [datasets]="gdpDatasets" [options]="gdpChartOptions"></canvas>
             </div>
 

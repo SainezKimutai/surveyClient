@@ -46,7 +46,7 @@ public currentYear = this.currentDay.getFullYear();
 public currentMonth = this.currentDay.getMonth();
 
 
-public YearRange = [this.currentYear, (this.currentYear - 1),(this.currentYear - 2),];
+public YearRange = [this.currentYear, (this.currentYear - 1),(this.currentYear - 2),(this.currentYear - 3)];
 
 public ExchangeRates = [];
 public GDPGrowthRates = [];
@@ -55,6 +55,7 @@ public InterestRates = [];
 
 public gdpForm;
 public countryRateObj;
+
 
 public currentYearActive = this.currentYear;
 public FormatedGDP = [];
@@ -258,6 +259,7 @@ public activeYear = this.currentYear;
   switchYear(y) {
     this.currentYearActive = y;
     this.MyFormatedGDP = this.FormatedGDP.filter((gdp) => gdp.year === this.currentYearActive).map((e) => e);
+    this.gdpRatesGraph()
   }
 
 

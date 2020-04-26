@@ -46,7 +46,7 @@ public currentYear = this.currentDay.getFullYear();
 public currentMonth = this.currentDay.getMonth();
 
 
-public YearRange = [this.currentYear, (this.currentYear - 1),(this.currentYear - 2),];
+public YearRange = [this.currentYear, (this.currentYear - 1),(this.currentYear - 2),(this.currentYear - 3)];
 
 public ExchangeRates = [];
 public GDPGrowthRates = [];
