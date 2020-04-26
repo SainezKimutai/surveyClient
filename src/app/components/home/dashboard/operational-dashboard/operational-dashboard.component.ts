@@ -1086,7 +1086,7 @@ computeCompanyRiskRates() {
 
 riskIssuesFunction() {
   this.chartsProgress = 80;
-  this.AllThreats.forEach((threat) => {
+  this.AllThreats.forEach((threat, idx1, arr1) => {
     for (let trtCategory of this.AllThreatCategorys) {
       if (trtCategory._id === threat.category) {
         this.AllCompanies.forEach( (comp) => {
@@ -1137,7 +1137,13 @@ riskIssuesFunction() {
       }
     }
 
+    if(idx1 === arr1.length - 1 && this.chartsProgress === 80) {
+      this.NoDataOnDasboard = true;
+    }
+
   });
+
+  
 
 
 }

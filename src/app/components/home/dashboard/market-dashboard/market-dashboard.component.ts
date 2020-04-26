@@ -258,6 +258,7 @@ public activeYear = this.currentYear;
   switchYear(y) {
     this.currentYearActive = y;
     this.MyFormatedGDP = this.FormatedGDP.filter((gdp) => gdp.year === this.currentYearActive).map((e) => e);
+    this.gdpRatesGraph();
   }
 
 

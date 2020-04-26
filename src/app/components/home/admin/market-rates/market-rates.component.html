@@ -44,7 +44,7 @@
    
    <section id="market_rates_cards_section" class="card-group">
         <div class="card">
-            <div class="title d-flex"> 
+            <div class="title"> 
                 <span>GDP</span>
 
                 <div class="mx-auto switch-year-wrap ">
@@ -61,7 +61,6 @@
             <div class="body-wrapper">
                 <circle-progress [hidden]="gdpProgress === 100" [percent]="gdpProgress" ></circle-progress>
     
-
                 <canvas *ngIf="gdpProgress === 100 && gdpType" baseChart class="chart" [chartType]="gdpType" [labels]="gdpLabels"
                 [datasets]="gdpDatasets" [options]="gdpChartOptions"></canvas>
             </div>
@@ -73,7 +72,7 @@
         </div>
 
         <div class="card">
-            <div class="title d-flex"> <span>Exchange Rates ( <span class="text-primary"> {{activeCountryCode }}</span> against US dollar )</span>
+            <div class="title"> <span>Exchange Rates ( <span class="text-primary"> {{activeCountryCode }}</span> against US dollar )</span>
                 <div class="ml-auto month-switch d-flex">
                     <fa-icon [icon]="faArrowAltCircleLeft" (click)="swithToPrevMonth()"></fa-icon> 
                     <h4>{{monthsArray[activeMonth]}}, {{activeYear}}</h4>

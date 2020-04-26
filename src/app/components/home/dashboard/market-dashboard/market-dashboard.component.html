@@ -44,12 +44,12 @@
    
    <section id="market_rates_cards_section" class="card-group">
         <div class="card">
-            <div class="title d-flex"> 
+            <div class="title"> 
                 <span>GDP</span>
 
-                <div class="mx-auto">
-                    <span *ngFor="let item of YearRange">{{item}}</span>
-
+                
+                <div class="mx-auto switch-year-wrap ">
+                    <span *ngFor="let item of YearRange" [ngClass]="item === currentYearActive ? 'active' : ''" (click)="switchYear(item)">{{item}}</span>
                 </div>
 
                 <div *ngIf="gdpProgress === 100 && MyFormatedGDP.length > 0 && gdpType" class=" graph-switch d-flex ml-auto">
@@ -76,7 +76,7 @@
         </div>
 
         <div class="card">
-            <div class="title d-flex"> <span>Exchange Rates ( <span class="text-primary"> {{activeCountryCode }}</span> against US dollar )</span>
+            <div class="title"> <span>Exchange Rates ( <span class="text-primary"> {{activeCountryCode }}</span> against US dollar )</span>
                 <div class="ml-auto month-switch d-flex">
                     <fa-icon [icon]="faArrowAltCircleLeft" (click)="swithToPrevMonth()"></fa-icon> 
                     <h4>{{monthsArray[activeMonth]}}, {{activeYear}}</h4>
