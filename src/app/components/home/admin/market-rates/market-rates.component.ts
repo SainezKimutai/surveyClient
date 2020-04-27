@@ -57,7 +57,7 @@ public gdpForm;
 public countryRateObj;
 
 
-public currentYearActive = this.currentYear;
+public currentYearActive = this.currentYear - 1;
 public FormatedGDP = [];
 public MyFormatedGDP = [];
 public MyFormatedGDP2 = [];
@@ -338,7 +338,7 @@ public activeYear = this.currentYear;
 
   gdpRatesGraph() {
     this.gdpProgress = 100;
-    this.gdpType = 'bar';
+    this.gdpType = 'line';
 
 
     this.gdpCountrys = this.MyFormatedGDP.filter(() => true).map(e => e.code);
@@ -351,8 +351,8 @@ public activeYear = this.currentYear;
       {
         label: 'KEN',
         data: [gdpData[0].firstQ, gdpData[0].secondQ, gdpData[0].thirdQ, gdpData[0].fourthQ],
-        backgroundColor: ['#02b0cc','#074BFB', '#ffc107', '#f86c6b'],
-        borderColor: 'transparent',
+        backgroundColor: 'whitesmoke',
+        borderColor: 'gray',
         borderWidth: 1.5,
         pointBackgroundColor: 'transparent',
         pointHoverBackgroundColor: 'transparent',

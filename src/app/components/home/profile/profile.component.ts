@@ -1040,35 +1040,52 @@ export class ProfileComponent implements OnInit {
 
 
 
-   // on the bottom
-    let threatArray3 =  this.riskIssueArray.filter(() => true ).map(e => e.risk);
-    let newThreatArray3 = Array.from(new Set(threatArray3));
+    let getSurveys = this.riskIssueArray.filter(() => true ).map(e => e.surveyName)
+    let SurveyInvolve = Array.from( new Set(getSurveys));
+    let mychart3Datasets = [];
+
+    SurveyInvolve.forEach((surveyElem) => {
+        
+        let getMyRisk = this.riskIssueArray.filter((r) => r.surveyName === surveyElem ).map(e => e)
+        let LowRate = getMyRisk.filter((r)=> r.level === 'Low' ).map(e => e);
+        let MediumRate = getMyRisk.filter((r)=> r.level === 'Medium' ).map(e => e);
+        let HighRate = getMyRisk.filter((r)=> r.level === 'High' ).map(e => e);
+        
+        let totalRiskNum = getMyRisk.length;
+        let lowRiskNum = LowRate.length;
+        let mediumRiskNum = MediumRate.length;
+        let highRiskNum = HighRate.length;
+      
+        let lowRiskValue = lowRiskNum * 1;
+        let medumRiskValue = mediumRiskNum * 2;
+        let highRiskValue = highRiskNum * 3;
+        let totalRiskValue = totalRiskNum * 3
+      
+        let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
+      
+        let total = ((myTotalRiskValue * 100) / totalRiskValue).toFixed(1)
+        mychart3Datasets.push(total)
+
+    })
 
     this.chart3Type = 'bar';
 
-    this.chart3Labels = newThreatArray3;
-    let mychart3Datasets = [];
+    this.chart3Labels = SurveyInvolve;
+   
     this.chart3BgColors = [];
 
-    this.chart3Labels.forEach((riskEl) => {
-    //  this.chart3BgColors.push(this.getRandomColor());
-    //  let myArr3 = this.riskIssueArray.filter((rsk) => rsk.risk === riskEl ).map(e => e);
-    //  mychart3Datasets.push(myArr3.length);
-    for (let rsk of this.riskIssueArray) {
-      if (rsk.risk === riskEl) {
-        if (rsk.level === 'Low') { mychart3Datasets.push(1); this.chart3BgColors.push('#4dbd74'); }
-        if (rsk.level === 'Medium') { mychart3Datasets.push(2); this.chart3BgColors.push('#ffc107'); }
-        if (rsk.level === 'High') { mychart3Datasets.push(3); this.chart3BgColors.push('#f86c6b'); }
-        break;
-      }
-    }
+    mychart3Datasets.forEach((num) => {
 
+        if (33 > num ) {  this.chart3BgColors.push('#4dbd74'); }
+        if (num > 33 && 66 > num) { this.chart3BgColors.push('#ffc107'); }
+        if (num > 66) { this.chart3BgColors.push('#f86c6b'); }
+  
 
 
     });
 
     this.chart3Datasets = [{
-    label: 'Risk',
+    label: 'Avarage Risk Rate',
     data: mychart3Datasets,
     backgroundColor: this.chart3BgColors,
     borderColor: 'white',
@@ -1096,15 +1113,7 @@ export class ProfileComponent implements OnInit {
       padding: 10
     },
     tooltips: {
-        enabled: true,
-        callbacks: {
-          label(tooltipItem, data) {
-
-            if (tooltipItem.yLabel === 1 ) { return 'Low'; }
-            if (tooltipItem.yLabel === 2 ) { return 'Medium'; }
-            if (tooltipItem.yLabel === 3 ) { return 'High'; }
-          },
-      }
+      enabled: true
     },
     scales: {
       yAxes: [{
@@ -1173,7 +1182,35 @@ export class ProfileComponent implements OnInit {
 
 
 
+  calculateTatalSurveyRisk(){
+    let getSurveys = this.riskIssueArray.filter(() => true ).map(e => e.surveyName)
+    let SurveyInvolve = Array.from( new Set(getSurveys));
+    this.MyComparisonDataSet = []
 
+    SurveyInvolve.forEach((surveyElem) => {
+        
+        let getMyRisk = this.riskIssueArray.filter((r) => r.surveyName === surveyElem ).map(e => e)
+        let LowRate = getMyRisk.filter((r)=> r.level === 'Low' ).map(e => e);
+        let MediumRate = getMyRisk.filter((r)=> r.level === 'Medium' ).map(e => e);
+        let HighRate = getMyRisk.filter((r)=> r.level === 'High' ).map(e => e);
+        
+        let totalRiskNum = getMyRisk.length;
+        let lowRiskNum = LowRate.length;
+        let mediumRiskNum = MediumRate.length;
+        let highRiskNum = HighRate.length;
+      
+        let lowRiskValue = lowRiskNum * 1;
+        let medumRiskValue = mediumRiskNum * 2;
+        let highRiskValue = highRiskNum * 3;
+        let totalRiskValue = totalRiskNum * 3
+      
+        let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
+      
+        let total = ((myTotalRiskValue * 100) / totalRiskValue).toFixed(1)
+
+    })
+  
+  }
 
 
 
