@@ -793,6 +793,7 @@ export class ProfileComponent implements OnInit {
   chart3graphToLine() {
     this.chart3Type = 'line';
     this.chart3ChartOptions.legend.display = false;
+    this.chart3ChartOptions.scales.yAxes[0].display = true;
     this.chart3ChartOptions.scales.xAxes[0].display = true;
     this.chart3Datasets[0].backgroundColor = 'whitesmoke';
     this.chart3Datasets[0].borderColor = 'gray';
@@ -801,6 +802,7 @@ export class ProfileComponent implements OnInit {
   chart3graphToBar() {
     this.chart3Type = 'bar';
     this.chart3ChartOptions.legend.display = false;
+    this.chart3ChartOptions.scales.yAxes[0].display = true;
     this.chart3ChartOptions.scales.xAxes[0].display = true;
     this.chart3Datasets[0].backgroundColor = this.chart3BgColors;
     this.chart3Datasets[0].borderColor = 'white';
@@ -809,6 +811,7 @@ export class ProfileComponent implements OnInit {
   chart3graphToPie() {
     this.chart3Type = 'pie';
     this.chart3ChartOptions.legend.display = true;
+    this.chart3ChartOptions.scales.yAxes[0].display = false;
     this.chart3ChartOptions.scales.xAxes[0].display = false;
     this.chart3Datasets[0].backgroundColor = this.chart3BgColors;
     this.chart3Datasets[0].borderColor = 'white';
@@ -1117,7 +1120,7 @@ export class ProfileComponent implements OnInit {
     },
     scales: {
       yAxes: [{
-          display: false,
+          display: true,
           gridLines: {
               drawBorder: false,
               display: false
