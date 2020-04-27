@@ -69,6 +69,7 @@ export class SurveyComponent implements OnInit {
             this.AllQuestions = dataQuiz;
             this.pageProgress = 50;
 
+
             this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
               dataRsp => {
 
@@ -94,9 +95,10 @@ export class SurveyComponent implements OnInit {
 
   checkForCompletedSurveys() {
      this.AllSurveys =  this.AllSurveys.filter((surv, ind, arr) => {
-        const myResponses = this.AllResponses;
+        let myResponses = this.AllResponses.filter((r) => r.surveyId === surv._id).map(e => e);
         if (myResponses.length > 0) {
         let allQuizs = this.AllQuestions.filter((q) => q.surveyId === surv._id).map(e => e);
+
         let allAnswers = myResponses[0].answers;
         let allAnswersNumber = Number(allAnswers.length);
 
@@ -115,7 +117,6 @@ export class SurveyComponent implements OnInit {
 
           if ( ind2 === arr2.length - 1) {
 
-
             let myCompletionValue = Number((( Number(allAnswersNumber) * 100 ) / Number(allQuizs.length)).toFixed(0));
 
             surv.done = Number(myCompletionValue);
@@ -126,6 +127,7 @@ export class SurveyComponent implements OnInit {
 
 
         } else {
+          this.notifyService.showInfo('shjd', 'sdhjsd');
           surv.done = 0;
           if (ind === arr.length - 1) { this.pageProgress = 100; }
         }

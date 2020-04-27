@@ -251,7 +251,11 @@
     </section>
 
 
-    <section class="profile-section">
+    <section [ngClass]="profileMinimized ? 'profile-section minimize' : 'profile-section'">
+
+        <div class="profile-switch">
+            <fa-icon [icon]="profileMinimized ? faArrowCircleLeft : faArrowCircleRight" (click)="minimizeProfile()"></fa-icon>
+        </div>
 
         <div class="company-info">
 

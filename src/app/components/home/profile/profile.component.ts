@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { faBuilding, faFire, faComment, faEnvelope, faKey , faGlobe , faAddressBook,
-  faEdit, faCheck, faListAlt, faBookReader, faTrash, faChartLine, faChartBar, faChartPie } from '@fortawesome/free-solid-svg-icons';
+  faEdit, faCheck, faListAlt, faBookReader, faTrash, faChartLine, faChartBar, faChartPie,
+  faArrowCircleRight, faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
@@ -45,6 +46,8 @@ export class ProfileComponent implements OnInit {
   public noteOne = ''
   public noteTwo = '';
 
+  public profileMinimized = false;
+
 
   // icon
     public faEnvelope = faEnvelope;
@@ -59,6 +62,8 @@ export class ProfileComponent implements OnInit {
     public faListAlt = faListAlt;
     public faBookReader = faBookReader;
     public faTrash = faTrash;
+    public faArrowCircleRight = faArrowCircleRight;
+    public faArrowCircleLeft = faArrowCircleLeft;
     // Icons
     public faChartLine = faChartLine;
     public faChartBar = faChartBar;
@@ -239,6 +244,24 @@ export class ProfileComponent implements OnInit {
 
   });
   }
+
+
+
+
+
+
+
+  minimizeProfile() {
+    this.profileMinimized = !this.profileMinimized;
+  }
+
+
+
+
+
+
+
+
 
 
 
