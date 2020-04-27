@@ -21,8 +21,8 @@ export class AdminComponent implements OnInit {
 
 
 // status
-public OperationDashboardStatus = false;
-public MarketDashboardStatus = true;
+public OperationDashboardStatus = true;
+public MarketDashboardStatus = false;
 
 public today = new Date();
 public thisYear = this.today.getFullYear();

@@ -45,7 +45,7 @@
    <section id="market_rates_cards_section" class="card-group">
         <div class="card">
             <div class="title"> 
-                <span>GDP</span>
+                <span>GDP Annual Basis</span>
 
                 <div class="mx-auto switch-year-wrap ">
                     <span *ngFor="let item of YearRange" [ngClass]="item === currentYearActive ? 'active' : ''" (click)="switchYear(item)">{{item}}</span>
@@ -65,12 +65,61 @@
                 [datasets]="gdpDatasets" [options]="gdpChartOptions"></canvas>
             </div>
 
-            <div *ngIf="gdpProgress === 100 && MyFormatedGDP.length > 0 && gdpType" class="footer-label">
+            <div *ngIf="gdpProgress === 100 && gdpType" class="footer-label">
                 <div *ngFor="let cntry of gdpCountrys" [ngClass]="cntry === gdpDatasets[0].label ? 'item active' : 'item' " (click)="switchGDPCountry(cntry)">{{cntry}}</div>
             </div>
 
         </div>
 
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+        <div class="card">
+            <div class="title"> 
+                <span>GDP Quarterly Basis</span>
+            </div>
+            <div class="body-wrapper">
+                <circle-progress [hidden]="gdpProgress === 100" [percent]="gdpProgress" ></circle-progress>
+    
+                <canvas *ngIf="gdpProgress === 100 && gdp2Type" baseChart class="chart" [chartType]="gdp2Type" [labels]="gdp2Labels"
+                [datasets]="gdp2Datasets" [options]="gdp2ChartOptions"></canvas>
+            </div>
+
+            <div *ngIf="gdpProgress === 100 && gdpType" class="footer-label">
+                <div *ngFor="let cntry of gdpCountrys" [ngClass]="cntry === gdp2ActiveCountry ? 'item active' : 'item' " (click)="switchGDP2Country(cntry)">{{cntry}}</div>
+            </div>
+
+        </div>
+
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
         <div class="card">
             <div class="title">
                  <span class="mb-2">Exchange Rates ( <span class="text-primary"> {{activeCountryCode }}</span> against US dollar )</span>

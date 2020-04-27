@@ -60,6 +60,7 @@ public countryRateObj;
 public currentYearActive = this.currentYear;
 public FormatedGDP = [];
 public MyFormatedGDP = [];
+public MyFormatedGDP2 = [];
 public AllCountryCode = [];
 public interestInput;
 
@@ -74,6 +75,13 @@ public gdpCountrys;
 public gdpDatasets;
 public gdpChartOptions;
 public gdpBgColors = [];
+public gdp2Type;
+public gdp2Labels;
+public gdp2Countrys;
+public gdp2Datasets;
+public gdp2ChartOptions;
+public gdp2BgColors = [];
+public gdp2ActiveCountry;
 
 
 public exchangeType;
@@ -171,9 +179,9 @@ public activeYear = this.currentYear;
     this.FormatedGDP = [];
 
 
-    this.AllCountryCode.forEach((country) => {
+    this.AllCountryCode.forEach((country, ind, arr) => {
 
-      this.YearRange.forEach((yearItem, ind, arr) => {
+      this.YearRange.forEach((yearItem) => {
         let myData = {
           year: yearItem,
           code: country,
@@ -232,10 +240,21 @@ public activeYear = this.currentYear;
   
 
         this.FormatedGDP.push(myData);
-        this.MyFormatedGDP = this.FormatedGDP.filter((gdp) => gdp.year === this.currentYearActive).map((e) => e);
-        this.gdpRatesGraph();
   
       })
+
+      if(ind === arr.length - 1) {
+
+        setTimeout(() => {
+          this.MyFormatedGDP = this.FormatedGDP.filter((gdp) => gdp.year === this.currentYearActive).map((e) => e);
+          this.MyFormatedGDP2 = this.FormatedGDP.filter((gdp) => gdp.code === 'KEN').map((e) => e);
+          this.gdp2ActiveCountry = 'KEN'
+          this.gdpRatesGraph();
+          this.gdp2RatesGraph();         
+        }, 1000);
+
+
+      }
 
     })
   }
@@ -407,6 +426,160 @@ public activeYear = this.currentYear;
   
 
   }
+
+
+
+
+
+
+
+
+  switchGDP2Country(countryCode) {
+    this.MyFormatedGDP2 = this.FormatedGDP.filter((gdp) => gdp.code === countryCode).map((e) => e);
+    this.gdp2RatesGraph()
+    this.gdp2ActiveCountry = countryCode;
+  }
+
+
+
+  gdp2RatesGraph() {
+    this.gdpProgress = 100;
+    this.gdp2Type = 'bar';
+
+    let year3 = this.MyFormatedGDP2.filter((gd) => gd.year === this.YearRange[3]).map(e => e);
+    let year2 = this.MyFormatedGDP2.filter((gd) => gd.year === this.YearRange[2]).map(e => e);
+    let year1 = this.MyFormatedGDP2.filter((gd) => gd.year === this.YearRange[1]).map(e => e);
+    let year0 = this.MyFormatedGDP2.filter((gd) => gd.year === this.YearRange[0]).map(e => e);
+
+
+    this.gdp2Labels =  ['First Quarter', 'Second Quarter', 'Third Quarter', 'Fourth Quarter'];
+
+    this.gdp2Datasets = [
+      {
+        label: `${this.YearRange[3]}`,
+        data: [year3[0].firstQ, year3[0].secondQ, year3[0].thirdQ, year3[0].fourthQ],
+        backgroundColor: ['#f86c6b', '#f86c6b', '#f86c6b', '#f86c6b', '#f86c6b'],
+        borderColor: 'transparent',
+        borderWidth: 1.5,
+        pointBackgroundColor: 'transparent',
+        pointHoverBackgroundColor: 'transparent',
+        pointBorderColor: 'black',
+        pointHoverBorderColor: 'gray'
+      },
+      {
+        label: `${this.YearRange[2]}`,
+        data: [year2[0].firstQ, year2[0].secondQ, year2[0].thirdQ, year2[0].fourthQ],
+        backgroundColor: ['#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107'],
+        borderColor: 'transparent',
+        borderWidth: 1.5,
+        pointBackgroundColor: 'transparent',
+        pointHoverBackgroundColor: 'transparent',
+        pointBorderColor: 'black',
+        pointHoverBorderColor: 'gray'
+      },
+      {
+        label: `${this.YearRange[1]}`,
+        data: [year1[0].firstQ, year1[0].secondQ, year1[0].thirdQ, year1[0].fourthQ],
+        backgroundColor: ['#074BFB', '#074BFB', '#074BFB', '#074BFB', '#074BFB'],
+        borderColor: 'transparent',
+        borderWidth: 1.5,
+        pointBackgroundColor: 'transparent',
+        pointHoverBackgroundColor: 'transparent',
+        pointBorderColor: 'black',
+        pointHoverBorderColor: 'gray'
+      },
+      {
+        label: `${this.YearRange[0]}`,
+        data: [year0[0].firstQ, year0[0].secondQ, year0[0].thirdQ, year0[0].fourthQ],
+        backgroundColor: ['#02b0cc', '#02b0cc', '#02b0cc', '#02b0cc', '#02b0cc'],
+        borderColor: 'transparent',
+        borderWidth: 1.5,
+        pointBackgroundColor: 'transparent',
+        pointHoverBackgroundColor: 'transparent',
+        pointBorderColor: 'black',
+        pointHoverBorderColor: 'gray'
+      }
+    ];
+  
+  
+    this.gdp2ChartOptions = {
+      title: {
+        display: false,
+        text: 'Sales',
+        fontSize: 25
+      },
+      legend: {
+        display: true,
+        position: 'right',
+        labels: {
+              fontColor: '#73818f'
+            }
+      },
+      layout: {
+        padding: 10
+      },
+      tooltips: {
+          enabled: true
+      },
+      scales: {
+        yAxes: [{
+            display: false,
+            gridLines: {
+                drawBorder: false,
+                display: false
+            },
+            stacked: false,
+            ticks: {
+                beginAtZero: true
+            }
+        }],
+        xAxes: [{
+            barPercentage: 0.4,
+            display: true,
+            stacked: false,
+            gridLines: {
+                drawBorder: true,
+                display: false
+            },
+            ticks: {
+              beginAtZero: false
+            }
+        }]
+      },
+      maintainAspectRatio: false,
+      responsive: true,
+      plugins: {
+          datalabels: {
+              anchor: 'end',
+              align: 'top',
+              formatter: Math.round,
+              font: { weight: 'bold'}
+          }
+      }
+    };
+
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
