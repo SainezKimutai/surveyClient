@@ -56,7 +56,7 @@ public InterestRates = [];
 public gdpForm;
 public countryRateObj;
 
-public currentYearActive = this.currentYear;
+public currentYearActive = this.currentYear - 1;
 public FormatedGDP = [];
 public MyFormatedGDP = [];
 public MyFormatedGDP2 = [];
