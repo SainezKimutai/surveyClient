@@ -105,6 +105,23 @@
 
 
 
+        <section class="risk-graph-section">
+        
+            <div class="title d-flex"> <span>General Risk Representation</span>
+                <div class=" graph-switch d-flex ml-auto">
+                    <span (click)="comparisonChartToLine()"><fa-icon [icon]="faChartLine" [ngClass]="comparisonChartType === 'line' ? 'active' : ''" ></fa-icon></span> 
+                    <span (click)="comparisonChartToBar()"><fa-icon [icon]="faChartBar" [ngClass]="comparisonChartType === 'bar' ? 'active' : ''" ></fa-icon></span>
+                    <span (click)="comparisonChartToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="comparisonChartType === 'pie' ? 'active' : ''" ></fa-icon> </span>
+                </div>
+            </div>
+
+            <div class="body-wrapper">
+                <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
+                <canvas *ngIf="comparisonChartType" baseChart class="chart" [chartType]="comparisonChartType" [labels]="comparisonChartLabels"
+                [datasets]="comparisonChartDatasets" [options]="comparisonChartOptions"></canvas>
+            </div>
+   
+    </section>
 
 
 

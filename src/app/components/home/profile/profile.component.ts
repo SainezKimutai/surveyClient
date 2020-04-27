@@ -46,7 +46,7 @@ export class ProfileComponent implements OnInit {
   public noteOne = ''
   public noteTwo = '';
 
-  public profileMinimized = false;
+  public profileMinimized = true;
 
 
   // icon
@@ -142,6 +142,13 @@ export class ProfileComponent implements OnInit {
 
 
 
+    // 
+    public comparisonChartType;
+    public comparisonChartLabels;
+    public comparisonChartDatasets;
+    public comparisonChartOptions;
+    public comparisonChartBGColors = [];
+    public MyComparisonDataSet = [];
 
 
 
@@ -689,6 +696,7 @@ export class ProfileComponent implements OnInit {
                           this.riskIssueArray = this.riskIssueArrayUnsorted.sort((a, b) => a.risk.localeCompare(b.risk));
                           this.chartsProgress = 90;
                           this.chartSectionGraphsFunction();
+                          this.comparisonChartFunction();
                         }
 
                       });
@@ -1165,6 +1173,233 @@ export class ProfileComponent implements OnInit {
 
 
 
+
+
+
+
+  
+  comparisonChartToLine() {
+    this.comparisonChartType = 'line';
+    this.comparisonChartOptions.legend.display = false;
+    this.comparisonChartOptions.scales.xAxes[0].display = true;
+    this.comparisonChartFunction()
+  }
+
+
+  comparisonChartToBar() {
+    this.comparisonChartType = 'bar';
+    this.comparisonChartOptions.legend.display = true;
+    this.comparisonChartOptions.scales.xAxes[0].display = true;
+    this.comparisonChartDatasets.forEach((dataSet) => {
+      dataSet.backgroundColor = [];
+      dataSet.borderColor = 'white';
+      dataSet.pointBorderColor = 'white';
+      dataSet.data.forEach((d) => {
+        if (d === 1) { dataSet.backgroundColor.push('#4dbd74'); }
+        if (d === 2) { dataSet.backgroundColor.push('#ffc107'); }
+        if (d === 3) { dataSet.backgroundColor.push('#f86c6b'); }
+      })
+    })
+
+
+
+    
+  }
+
+
+
+  comparisonChartToPie() {
+    this.comparisonChartType = 'pie';
+    this.comparisonChartOptions.legend.display = true;
+    this.comparisonChartOptions.scales.xAxes[0].display = false;
+    this.comparisonChartDatasets.forEach((dataSet) => {
+      dataSet.backgroundColor = [];
+      dataSet.borderColor = 'white';
+      dataSet.pointBorderColor = 'white';
+      dataSet.data.forEach((d) => {
+        if (d === 1) { dataSet.backgroundColor.push('#4dbd74'); }
+        if (d === 2) { dataSet.backgroundColor.push('#ffc107'); }
+        if (d === 3) { dataSet.backgroundColor.push('#f86c6b'); }
+      })
+    })
+
+
+  }
+
+
+
+
+
+  random_rgba() {
+      let o = Math.round, r = Math.random, s = 255;
+      let p = o(r()*s);
+      let pp = o(r()*s);
+      let ppp = o(r()*s);
+      let color = {
+        light:  'rgba(' + p + ',' + pp + ',' + ppp + ',' + .3 + ')',
+        mild:  'rgba(' + p + ',' + pp + ',' + ppp + ',' + .7 + ')',
+        dark:  'rgba(' + p + ',' + pp + ',' + ppp + ',' + 1 + ')'
+      }
+      
+     
+      return color
+  }
+  
+
+
+
+
+
+  async comparisonChartFunction() {
+
+    let getSurveys = this.riskIssueArray.filter(() => true ).map(e => e.surveyName)
+    let SurveyInvolve = Array.from( new Set(getSurveys));
+    let getRisk = this.riskIssueArray.filter(() => true ).map(e => e.risk);
+    let RiskInvolved = Array.from( new Set(getRisk));
+
+    this.MyComparisonDataSet = []
+
+    SurveyInvolve.forEach((surveyElem) => {
+      let dataOnj = {
+        label: surveyElem,
+        data : []
+      }
+      RiskInvolved.forEach((riskElm) => {
+        
+        let getMyRisk = this.riskIssueArray.filter((r) => r.risk === riskElm && r.surveyName === surveyElem ).map(e => e)
+        let getLowRisk = getMyRisk.filter((r) => r.level === 'Low' ).map(e => e)
+        let getMediumRisk = getMyRisk.filter((r) => r.level === 'Medium' ).map(e => e)
+        let getHighRisk = getMyRisk.filter((r) => r.level === 'High' ).map(e => e)
+
+        let totalLowRiskNum = getLowRisk.length;
+        let totalMediumRiskNum = getMediumRisk.length;
+        let totalHighRiskNum = getHighRisk.length;
+
+        let totalPoints = ((totalLowRiskNum * 1) + (totalMediumRiskNum * 2) + (totalHighRiskNum * 3))
+        let totalRiskNum = totalLowRiskNum + totalMediumRiskNum + totalHighRiskNum
+        
+        let finalValue = Math.round(totalPoints / totalRiskNum)
+        if(!finalValue) {finalValue = 1}
+        dataOnj.data.push(finalValue)
+
+      })
+
+      this.MyComparisonDataSet.push(dataOnj)
+
+    })
+
+
+    // let RiskInvolved = ['Risk 1','Risk 2', 'Risk 3', 'Risk 4', 'Risk 5',]
+    // MyComparisonDataSet = [{label: 'Suv 1', data: [2, 1, 3, 2, 2]}, {label: 'Suv 2', data: [1, 2, 3, 3, 2]}, {label: 'Suv 3', data: [2, 1, 3, 2, 2]}]
+
+    this.comparisonChartType = 'line';
+
+    this.comparisonChartLabels = RiskInvolved;
+
+
+    this.comparisonChartDatasets = [];
+
+
+    this.MyComparisonDataSet.forEach((dataElem) => {
+
+      this.comparisonChartBGColors = []
+
+      dataElem.data.forEach((d) => {
+        if (d === 1) { this.comparisonChartBGColors.push('#4dbd74'); }
+        if (d === 2) { this.comparisonChartBGColors.push('#ffc107'); }
+        if (d === 3) { this.comparisonChartBGColors.push('#f86c6b'); }
+      })
+
+      let bgColors = []
+      let color = this.random_rgba();
+
+        bgColors.push(color.light);
+
+        let dataSet = {
+          label: dataElem.label,
+          data: dataElem.data,
+          backgroundColor: bgColors,
+          borderColor: color.mild,
+          borderWidth: 1.5,
+          pointBackgroundColor: 'transparent',
+          pointHoverBackgroundColor: 'transparent',
+          pointBorderColor: color.dark,
+          pointHoverBorderColor: 'black'
+        }
+        this.comparisonChartDatasets.push(dataSet)
+
+    })
+
+    this.comparisonChartOptions = {
+      title: {
+        display: false,
+        text: 'Risks',
+        fontSize: 25
+      },
+      legend: {
+        display: true,
+        position: 'top',
+        labels: {
+              fontColor: '#73818f'
+            }
+      },
+      layout: {
+        padding: 10
+      },
+      tooltips: {
+          enabled: true
+      },
+      scales: {
+        yAxes: [{
+            display: false,
+            gridLines: {
+                drawBorder: false,
+                display: false
+            },
+            stacked: false,
+            ticks: {
+                beginAtZero: true
+            }
+        }],
+        xAxes: [{
+            barPercentage: 0.4,
+            display: true,
+            stacked: false,
+            gridLines: {
+                drawBorder: true,
+                display: false
+            },
+            ticks: {
+              beginAtZero: false
+            }
+        }]
+      },
+      maintainAspectRatio: false,
+      responsive: true,
+      plugins: {
+          datalabels: {
+              anchor: 'end',
+              align: 'top',
+              formatter: Math.round,
+              font: { weight: 'bold'}
+          }
+      }
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }
 
 
 
