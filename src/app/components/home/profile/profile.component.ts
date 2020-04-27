@@ -46,7 +46,7 @@ export class ProfileComponent implements OnInit {
   public noteOne = ''
   public noteTwo = '';
 
-  public profileMinimized = true;
+  public profileMinimized = false;
 
 
   // icon
