@@ -168,20 +168,6 @@ export class ProfileComponent implements OnInit {
 
     this.updatePage().then(() => { this.riskIssuesFunction();  this.checkIfNoSuverysHaveBeenDone()});
 
-
-    let myArr = ['Oranges', 'Bananas', 'Apple', 'appl e'];
-
-    let newArray = myArr.reduce((unique, item) => {
-   
-      let unique1 =  unique.filter(() => true).map(e => e.toLowerCase().replace(/ /g,''))
-      let item2 = item.toLowerCase().replace(/ /g,''); 
-
-      return unique1.includes(item2) ? unique : [...unique, item]
-    }, []);
-
-    setTimeout(() => {
-      console.log(newArray)
-    }, 2000);
   }
 
 
