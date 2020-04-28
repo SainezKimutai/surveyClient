@@ -137,6 +137,7 @@ main .side-bg
 
         p 
             color: whitesmoke 
+            font-size: 15px
 
             span 
                 font-weight: bolder
@@ -151,6 +152,7 @@ main .side-bg
 
         h6 
             color: whitesmoke
+            font-size: 15px
 
             span 
                 cursor: pointer
@@ -251,4 +253,169 @@ main .side-bg
 
     a 
         font-size: 12px
+
+
+
+
+
+
+::-webkit-scrollbar
+    width: 0px
+    background: transparent
+
+::-webkit-scrollbar-thumb 
+    background-color: colorTheme(primaryTheme)
+    width: 1px
+.modal-backdrop.in 
+    background: transparent !important
+
+.infoModal
+    border: none
+    border-radius: 5px
+    width: 100%
+    max-width: 900px
+    height: 70%
+    overflow-y: scroll
+    margin: 6em auto
+    display: flex
+    align-items: stretch
+    -ms-overflow-style: none
+    background-color: transparent
+    scrollbar-width: none
+    padding: 0
+
+    &.modal-backdrop.in 
+        background: transparent !important
+
+
+    @include desktop_md
+        margin: 6em auto
+        display: flex
+        flex-direction: column
+        height: 700px
+
+
+    .modal-content 
+        border: none
+        background-color: transparent
+        padding: 0 !important
+
+
+        .modal-body
+            margin: auto
+            width: 100%
+            height: 100%
+            padding: 1em
+            display: flex
+            align-items: stretch  
+
+            @include desktop_md
+                display: flex 
+                flex-direction: column
+                
+                .wrap-one
+                    height: 400px
+            
+            .wrap-one
+                background: url("../../../assets/images/logo5.jpg") no-repeat
+                background-position: center center
+                background-size: cover
+                width: 50%
+                -webkit-transform: scaleX(-1)
+                -moz-transform: scaleX(-1)
+                transform: scaleX(-1)
+
+
+                @include desktop_md
+                    width: 100%
+
+            .wrap-two
+                background-color: colorTheme(primaryTheme)
+                padding: 1em
+                width: 50%
+
+                @include desktop_md
+                    width: 100%
+
+                .cancel-wrap
+                    width: 100%
+                    display: flex
+                    align-items: stretch
+                        
+                    div 
+                        background-color: transparent
+                        border-radius: 50%
+                        width: 2em
+                        height: 2em
+                        margin-left: auto
+                        padding: .2em 0 0 .8em
+                        cursor: pointer
+
+                        &.hover
+                            
+                            background-color: white
+
+                        fa-icon 
+                            font-size: 15px
+                            color: white
+
+                        
+
+
+                .top-paragraph
+                    width: 100%
+
+                    p 
+                        font-weight: 400 !important
+                        font-size: 15px
+                        color: whitesmoke
+
+                        span 
+                            font-weight: bolder
+                            color: #f7b307
+
+                .line-wrap
+                    width: 6em
+
+                    .line 
+                        margin: 1.5em 0 2.2em 0 !important
+                        width: 100%
+                        border: solid 2px #f7b307
+                    
+
+                .mid-paragraph
+                    padding: 0 0 0 4em
+
+                    @include desktop_xm
+                        padding: 0
+
+                    p 
+                        color: whitesmoke 
+                        font-size: 15px
+
+                        span 
+                            font-weight: bolder
+                            color: #f7b307
+
+
+                .bottom-paragraph
+                    padding: 1em 0 0 4em
+                    
+                    @include desktop_xm
+                        padding: 0
+
+                    h6 
+                        color: whitesmoke
+                        font-size: 15px
+
+                        span 
+                            cursor: pointer
+                            font-weight: bold
+                            color: white
+
+                            &.hover
+                                color: #f7b307
+
+
+
 

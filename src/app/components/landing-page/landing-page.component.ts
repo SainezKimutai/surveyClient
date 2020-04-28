@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { faEnvelope, faKey, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from 'src/app/shared/services/user.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { Router } from '@angular/router';
+import { ModalDirective } from 'ngx-bootstrap';
 
 
 @Component({
@@ -18,12 +19,15 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     private notifyService: NotificationService
   ) { }
 
+  @ViewChild('infoModal', {static: true}) infoModal: ModalDirective;
+
   // loader
   public ImprintLoader = false;
 
   // icon
   public faEnvelope = faEnvelope;
   public faKey = faKey;
+  public faTimes = faTimes;
 
   public loginForm;
 
@@ -34,6 +38,10 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       email: '',
       password: ''
     };
+
+    setTimeout(() => {
+      this.infoModal.show();
+    }, 50);
 
   }
 
@@ -82,6 +90,9 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
 
 
+  toLogin() {
+    this.infoModal.hide();
+  }
 
 
   ngOnDestroy() {

@@ -38,38 +38,13 @@
     
     
             <div class="logo-section">
-                <!-- <div class="wrap">
-                    <h4>Welcome Back</h4>
+                <div class="wrap">
+                    <h4>Welcome</h4>
     
                     <img src="../../../assets/images/logo1.png" alt="" >
                 </div>
-     -->
-            <div class="wrap">
-
-                <div class="top-paragraph">
-                    <p>
-                        As a business leader today, <span>identifying your risk</span> is the first and most crucial step 
-                        towards re-organizing or even rebuilding your market strategies to mitigate against revenue 
-                        losses and ensure business continuity when faced with disruptions in your business environment. 
-                    </p>
-                </div>
-                <div class="line-wrap d-flex">
-                    <hr class="line mr-auto">
-                </div>
-              
-                <div class="mid-paragraph">
-                    <p>
-                        By completing a short survey, <span>our automated  Business Continuity Planning  platform,</span> will generate a risk assessment report 
-                        for your business. You will <span>immediately</span> receive recommendations on areas that require continuity 
-                        planning to ensure your business’s survival in this volatile environment.
-                    </p>
-                </div>
-                <div class="bottom-paragraph">
-                    <h6>
-                        Click on <span routerLink="/register">Register</span> to start the survey
-                    </h6>
-                </div>
-            </div>
+    
+           
 
 
             </div>
@@ -123,6 +98,9 @@
             </div>
     
         </div>
+
+
+        
     
     
     </section>
@@ -138,8 +116,62 @@
 
 
 
+    <div bsModal  #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    [config]="{backdrop: 'static',  keyboard: false}" >
+        <div class="modal-dialog infoModal modal-xl" role="document">
+            <div class="modal-content">
+            <!-- <div class="modal-header ">
+                <button (click)="infoModal.hide()" type="button" class="btn close" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div> -->
+            <div class="modal-body" >
 
+                <div class="wrap-one">
+                    .
+                </div>
 
+                <div class="wrap-two">
+
+                    <div class="cancel-wrap">
+                        <div (click)="toLogin()">
+                            <fa-icon [icon]="faTimes"></fa-icon>
+                        </div>
+                    </div>
+
+                    <div class="top-paragraph">
+                        <p>
+                            As a business leader today, <span>identifying your risk</span> is the first and most crucial step 
+                            towards re-organizing or even rebuilding your market strategies to mitigate against revenue 
+                            losses and ensure business continuity when faced with disruptions in your business environment. 
+                        </p>
+                    </div>
+                    <div class="line-wrap d-flex">
+                        <hr class="line mr-auto">
+                    </div>
+                  
+                    <div class="mid-paragraph">
+                        <p>
+                            By completing a short survey, <span>our automated  Business Continuity Planning  platform,</span> will generate a risk assessment report 
+                            for your business. You will <span>immediately</span> receive recommendations on areas that require continuity 
+                            planning to ensure your business’s survival in this volatile environment.
+                        </p>
+                    </div>
+                    <div class="bottom-paragraph">
+                        <h6>
+                            Click on <span routerLink="/register">Register</span> to start the survey.
+                        </h6>
+                        <!-- <h6>
+                            Click on <span (click)="toLogin()">Login</span> if you have an account.
+                        </h6> -->
+                    </div>
+                </div>
+
+            </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    
 
 
 
