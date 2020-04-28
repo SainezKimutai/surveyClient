@@ -578,7 +578,7 @@ this.AllSurveys.forEach((surveyElem) => {
   }
   RiskInvolved.forEach((riskElm) => {
     
-    let getMyRisk = this.riskIssueArray.filter((r) => r.risk === riskElm ).map(e => e)
+    let getMyRisk = this.riskIssueArray.filter((r) => r.risk.toLowerCase().replace(/ /g,'') === riskElm.toLowerCase().replace(/ /g,'') ).map(e => e)
     let getLowRisk = getMyRisk.filter((r) => r.level === 'Low' ).map(e => e)
     let getMediumRisk = getMyRisk.filter((r) => r.level === 'Medium' ).map(e => e)
     let getHighRisk = getMyRisk.filter((r) => r.level === 'High' ).map(e => e)
@@ -591,6 +591,7 @@ this.AllSurveys.forEach((surveyElem) => {
     let totalRiskNum = totalLowRiskNum + totalMediumRiskNum + totalHighRiskNum
     
     let finalValue = Math.round(totalPoints / totalRiskNum)
+
     if(!finalValue) {finalValue = 1}
     dataOnj.data.push(finalValue)
 

@@ -982,7 +982,7 @@ export class ProfileComponent implements OnInit {
       }
       RiskInvolved.forEach((riskElm) => {
         
-        let getMyRisk = this.riskIssueArray.filter((r) => r.risk === riskElm && r.surveyName === surveyElem ).map(e => e)
+        let getMyRisk = this.riskIssueArray.filter((r) => r.risk.toLowerCase().replace(/ /g,'') === riskElm.toLowerCase().replace(/ /g,'') && r.surveyName === surveyElem ).map(e => e)
         let getLowRisk = getMyRisk.filter((r) => r.level === 'Low' ).map(e => e)
         let getMediumRisk = getMyRisk.filter((r) => r.level === 'Medium' ).map(e => e)
         let getHighRisk = getMyRisk.filter((r) => r.level === 'High' ).map(e => e)
@@ -1382,7 +1382,7 @@ export class ProfileComponent implements OnInit {
       }
       RiskInvolved.forEach((riskElm) => {
         
-        let getMyRisk = this.riskIssueArray.filter((r) => r.risk === riskElm && r.surveyName === surveyElem ).map(e => e)
+        let getMyRisk = this.riskIssueArray.filter((r) => r.risk.toLowerCase().replace(/ /g,'') === riskElm.toLowerCase().replace(/ /g,'') && r.surveyName === surveyElem ).map(e => e)
         let getLowRisk = getMyRisk.filter((r) => r.level === 'Low' ).map(e => e)
         let getMediumRisk = getMyRisk.filter((r) => r.level === 'Medium' ).map(e => e)
         let getHighRisk = getMyRisk.filter((r) => r.level === 'High' ).map(e => e)
@@ -1395,8 +1395,11 @@ export class ProfileComponent implements OnInit {
         let totalRiskNum = totalLowRiskNum + totalMediumRiskNum + totalHighRiskNum
         
         let finalValue = Math.round(totalPoints / totalRiskNum)
+
         if(!finalValue) {finalValue = 1}
         dataOnj.data.push(finalValue)
+
+
 
       })
 
@@ -1405,8 +1408,6 @@ export class ProfileComponent implements OnInit {
     })
 
 
-    // let RiskInvolved = ['Risk 1','Risk 2', 'Risk 3', 'Risk 4', 'Risk 5',]
-    // MyComparisonDataSet = [{label: 'Suv 1', data: [2, 1, 3, 2, 2]}, {label: 'Suv 2', data: [1, 2, 3, 3, 2]}, {label: 'Suv 3', data: [2, 1, 3, 2, 2]}]
 
     this.comparisonChartType = 'line';
 
