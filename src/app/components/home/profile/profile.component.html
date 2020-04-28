@@ -41,7 +41,7 @@
 
         <section id="chart_section" class="card-group">
             <div class="card">
-                <div class="title d-flex"> <span>Risk Categories</span>
+                <div class="title d-flex"> <span>Number of risks that have been measured under each category</span>
                     <div class=" graph-switch d-flex ml-auto">
                         <span (click)="chart1graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart1Type === 'line' ? 'active' : ''" ></fa-icon></span> 
                         <span (click)="chart1graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="chart1Type === 'bar' ? 'active' : ''" ></fa-icon></span>
@@ -57,7 +57,7 @@
             </div>
     
             <div class="card">
-                <div class="title d-flex"> <span>General Risk Representation</span>
+                <div class="title d-flex"> <span>Average risk rate for specific risk type based on all survey</span>
                     <div class=" graph-switch d-flex ml-auto">
                         <span (click)="chart2graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart2Type === 'line' ? 'active' : ''" ></fa-icon></span> 
                         <span (click)="chart2graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="chart2Type === 'bar' ? 'active' : ''" ></fa-icon></span>
@@ -86,7 +86,7 @@
 
         <section class="risk-graph-section">
         
-                <div class="title d-flex"> <span>Survey's Average Risk Rate</span>
+                <div class="title d-flex"> <span>Total average risk rate on each survey </span>
                     <div class=" graph-switch d-flex ml-auto">
                         <span (click)="chart3graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart3Type === 'line' ? 'active' : ''" ></fa-icon></span> 
                         <span (click)="chart3graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="chart3Type === 'bar' ? 'active' : ''" ></fa-icon></span>
@@ -107,11 +107,11 @@
 
         <section class="risk-graph-section">
         
-            <div class="title d-flex"> <span>Average Risk Rate per Survey</span>
+            <div class="title d-flex"> <span>Average risk rate for specific risk type under each survey</span>
                 <div class=" graph-switch d-flex ml-auto">
                     <span (click)="comparisonChartToLine()"><fa-icon [icon]="faChartLine" [ngClass]="comparisonChartType === 'line' ? 'active' : ''" ></fa-icon></span> 
                     <span (click)="comparisonChartToBar()"><fa-icon [icon]="faChartBar" [ngClass]="comparisonChartType === 'bar' ? 'active' : ''" ></fa-icon></span>
-                    <span (click)="comparisonChartToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="comparisonChartType === 'pie' ? 'active' : ''" ></fa-icon> </span>
+                    <!-- <span (click)="comparisonChartToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="comparisonChartType === 'pie' ? 'active' : ''" ></fa-icon> </span> -->
                 </div>
             </div>
 
@@ -137,7 +137,7 @@
 
 
         <div class="risk-section">
-            <div class="title">You risk maping</div>
+            <div class="title">List of all risk types on all surveys done</div>
 
             <div class="body-wrapper">
                 <div class="body-title">
@@ -182,7 +182,7 @@
 
         <div class="account-status-wrap">
           
-                <div class="title">Your Risk Rates Per Survey Template</div>
+                <div class="title">List of surveys done and their total average risk rate</div>
                 <div class="body-wrapper">
                 <div class="body-title" >
           

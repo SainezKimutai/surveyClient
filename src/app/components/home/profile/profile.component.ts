@@ -766,7 +766,7 @@ export class ProfileComponent implements OnInit {
 
   chart3graphToLine() {
     this.chart3Type = 'line';
-    this.chart3ChartOptions.legend.display = false;
+    this.chart3ChartOptions.legend.display = true;
     this.chart3ChartOptions.scales.yAxes[0].display = true;
     this.chart3ChartOptions.scales.xAxes[0].display = true;
     this.chart3Datasets[0].backgroundColor = 'whitesmoke';
@@ -775,7 +775,7 @@ export class ProfileComponent implements OnInit {
   }
   chart3graphToBar() {
     this.chart3Type = 'bar';
-    this.chart3ChartOptions.legend.display = false;
+    this.chart3ChartOptions.legend.display = true;
     this.chart3ChartOptions.scales.yAxes[0].display = true;
     this.chart3ChartOptions.scales.xAxes[0].display = true;
     this.chart3Datasets[0].backgroundColor = this.chart3BgColors;
@@ -832,19 +832,46 @@ export class ProfileComponent implements OnInit {
     // on the left
     this.chart1Type = 'pie';
 
+
     let threatCatArray =  this.riskIssueArray.filter(() => true ).map(e => e.riskCategory);
     let newThreatCatArray = Array.from(new Set(threatCatArray));
-    this.chart1Labels = newThreatCatArray;
+
+    let newThreatRisk = this.riskIssueArray.filter(() => true ).map(e => e.risk);
+    let newThreat1 = Array.from( new Set(newThreatRisk));
+
+    let ThreatRiskInvolved =  newThreat1.reduce((unique, item) => {
+      let unique1 =  unique.filter(() => true).map(e => e.toLowerCase().replace(/ /g,''))
+      let item2 = item.toLowerCase().replace(/ /g,''); 
+      return unique1.includes(item2) ? unique : [...unique, item]
+    }, []);
+
+    let ThreatRiskAndCat = []
+
+    ThreatRiskInvolved.forEach((trt) => {
+      let x = {
+        risk: trt,
+        category: ''
+      }
+      this.riskIssueArray.forEach((rsk) => { 
+        if (rsk.risk === trt && x.category === '' && rsk.category !== '') {
+          x.category = rsk.riskCategory
+          ThreatRiskAndCat.push(x)
+        }
+      })
+    })
+
+
     let mychart1Datasets = [];
     this.chart1BgColors = [];
-
-    this.chart1Labels.forEach((riskCatEl) => {
+    newThreatCatArray.forEach((trtCat) => {
+      let y = ThreatRiskAndCat.filter((c) => c.category === trtCat).map(e => e)
       this.chart1BgColors.push(this.getRandomColor());
-      let myArr = this.riskIssueArray.filter((rsk) => rsk.riskCategory === riskCatEl ).map(e => e);
-      mychart1Datasets.push(myArr.length);
+      mychart1Datasets.push(y.length);
+    })
 
 
-      });
+    this.chart1Labels = newThreatCatArray;
+
 
     this.chart1Datasets = [{
       label: 'Risk',
@@ -931,21 +958,98 @@ export class ProfileComponent implements OnInit {
       return unique1.includes(item2) ? unique : [...unique, item]
     }, []);
 
+
+
+
+    let surveysOnrisk = this.riskIssueArray.filter(() => true ).map(e => e.surveyName)
+    let surveyArr = Array.from( new Set(surveysOnrisk));
+    let getRisk = this.riskIssueArray.filter(() => true ).map(e => e.risk);
+    let RiskInvolved1 = Array.from( new Set(getRisk));
+
+    let RiskInvolved =  RiskInvolved1.reduce((unique, item) => {
+      let unique1 =  unique.filter(() => true).map(e => e.toLowerCase().replace(/ /g,''))
+      let item2 = item.toLowerCase().replace(/ /g,''); 
+      return unique1.includes(item2) ? unique : [...unique, item]
+    }, []);
+
+
+    let mychart2Datasets = []
+
+    surveyArr.forEach((surveyElem) => {
+      let dataOnj = {
+        sulvey: surveyElem,
+        data : []
+      }
+      RiskInvolved.forEach((riskElm) => {
+        
+        let getMyRisk = this.riskIssueArray.filter((r) => r.risk === riskElm && r.surveyName === surveyElem ).map(e => e)
+        let getLowRisk = getMyRisk.filter((r) => r.level === 'Low' ).map(e => e)
+        let getMediumRisk = getMyRisk.filter((r) => r.level === 'Medium' ).map(e => e)
+        let getHighRisk = getMyRisk.filter((r) => r.level === 'High' ).map(e => e)
+
+        let totalLowRiskNum = getLowRisk.length;
+        let totalMediumRiskNum = getMediumRisk.length;
+        let totalHighRiskNum = getHighRisk.length;
+
+        let totalPoints = ((totalLowRiskNum * 1) + (totalMediumRiskNum * 2) + (totalHighRiskNum * 3))
+        let totalRiskNum = totalLowRiskNum + totalMediumRiskNum + totalHighRiskNum
+        
+        let finalValue = Math.round(totalPoints / totalRiskNum)
+        if(!finalValue) {finalValue = 1}
+
+        let riskObj = {
+          risk: riskElm,
+          value: finalValue
+        }
+
+        dataOnj.data.push(riskObj)
+
+      })
+
+      mychart2Datasets.push(dataOnj)
+
+    })
+
+
+    let unFilterednewRiskArray = []
+
+    mychart2Datasets.forEach((riskData) => {
+      riskData.data.forEach((e) => unFilterednewRiskArray.push(e.risk))
+    })
+    let newRiskArray = Array.from( new Set(unFilterednewRiskArray));
+
+    this.chart2BgColors = [];
+    let newDatasetChart2 = [];
+    newRiskArray.forEach((riskItem) => {
+      let riskValuearr = []
+      mychart2Datasets.forEach((riskData) => {
+        riskData.data.forEach((r) => r.risk === riskItem ? riskValuearr.push(r.value) : '')
+
+      })
+
+      let sumRiskValue =  riskValuearr.reduce((a,b) => a + b, 0);
+      let totalvalue = Math.ceil(sumRiskValue / riskValuearr.length)
+        if (totalvalue === 1 ) { this.chart2BgColors.push('#4dbd74'); }
+        if (totalvalue === 2 ) { this.chart2BgColors.push('#ffc107'); }
+        if (totalvalue === 3 ) { this.chart2BgColors.push('#f86c6b'); }
+
+      newDatasetChart2.push(totalvalue)
+    })
+
+
+
+
+
+
     this.chart2Type = 'line';
 
-    this.chart2Labels = newThreatArray;
-    let mychart2Datasets = [];
-    this.chart2BgColors = [];
+    this.chart2Labels = newRiskArray;
 
-    this.chart2Labels.forEach((riskEl) => {
-      this.chart2BgColors.push(this.getRandomColor());
-      let myArr2 = this.riskIssueArray.filter((rsk) => rsk.risk === riskEl ).map(e => e);
-      mychart2Datasets.push(myArr2.length);
-     });
+
 
     this.chart2Datasets = [{
      label: 'Risk',
-     data: mychart2Datasets,
+     data: newDatasetChart2,
      backgroundColor: 'whitesmoke',
      borderColor: 'gray',
      borderWidth: 1.5,
@@ -962,7 +1066,7 @@ export class ProfileComponent implements OnInit {
        fontSize: 25
      },
      legend: {
-       display: true,
+       display: false,
        position: 'right',
        labels: {
              fontColor: '#73818f'
@@ -972,7 +1076,15 @@ export class ProfileComponent implements OnInit {
        padding: 10
      },
      tooltips: {
-         enabled: true
+         enabled: true,
+         callbacks: {
+          label: function(tooltipItem, data) {
+            if(Number(tooltipItem.yLabel) === 3) {return 'High Risk'}
+            if(Number(tooltipItem.yLabel) === 2) {return 'Medium Risk'}
+            if(Number(tooltipItem.yLabel) === 1) {return 'Low Risk'}
+          },
+      }
+
      },
      scales: {
        yAxes: [{
@@ -1092,7 +1204,7 @@ export class ProfileComponent implements OnInit {
       fontSize: 25
     },
     legend: {
-      display: false,
+      display: true,
       position: 'right',
       labels: {
             fontColor: '#73818f'
@@ -1351,7 +1463,14 @@ export class ProfileComponent implements OnInit {
         padding: 10
       },
       tooltips: {
-          enabled: true
+          enabled: true,
+          callbacks: {
+            label: function(tooltipItem, data) {
+              if(Number(tooltipItem.yLabel) === 3) {return 'High Risk'}
+              if(Number(tooltipItem.yLabel) === 2) {return 'Medium Risk'}
+              if(Number(tooltipItem.yLabel) === 1) {return 'Low Risk'}
+            },
+        }
       },
       scales: {
         yAxes: [{
