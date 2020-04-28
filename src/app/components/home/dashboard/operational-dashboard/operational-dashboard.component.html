@@ -256,9 +256,8 @@
 
                 <div class="body" *ngIf="CompnayRiskRates.length !== 0">
 
-                    
-                    <!-- (click)="openAnswersModal(comp.companyName, comp.surveyName, comp.surveyId, comp.responseId); checkSurveyProgress(comp.surveyId, comp.responseId)" -->
-                    <div *ngFor="let comp of CompnayRiskRates" class="body-item d-flex">
+                    <div *ngFor="let comp of CompnayRiskRates" class="body-item d-flex"
+                        (click)="openAnswersModal(comp.companyName, comp.surveyName, comp.surveyId, comp.responseId); checkSurveyProgress(comp.surveyId, comp.responseId)">
                         <div class="mx-auto companyName">{{comp.companyName}}</div>
                         <div class="mx-auto surveyName">{{comp.surveyName}}</div>
                  

@@ -200,8 +200,7 @@
                 
                       <div class="body" *ngIf="CompanyRiskRates.length !== 0">
             
-                        <!-- (click)="openAnswersModal(comp.companyName, comp.surveyName, comp.surveyId, comp.responseId)" -->
-                        <div *ngFor="let comp of CompanyRiskRates" class="body-item d-flex" >
+                        <div *ngFor="let comp of CompanyRiskRates" class="body-item d-flex">
                       
                           <div class="mx-auto surveyName">{{comp.surveyName}}</div>
                           <div *ngIf="comp.riskRate > 66" class="mx-auto riskRate-high">{{comp.riskRate}} %</div>

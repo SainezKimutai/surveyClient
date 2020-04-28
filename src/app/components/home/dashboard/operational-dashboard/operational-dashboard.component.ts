@@ -1161,7 +1161,11 @@ computeCompanyRiskRates() {
   this.CompnayRiskRates = [];
   this.AllCompanies.forEach( (comp) => {
 
+
     for (let surv of this.AllSurveys) {
+      for (let resp of this.AllResponses) {
+
+      if (resp.surveyId === surv._id && resp.companyId === comp._id) {
         let getMyRisk = this.riskIssueArray.filter((r) => r.surveyName === surv.surveyName && r.company === comp.companyName ).map(e => e)
         
         let LowRate = getMyRisk.filter((r)=> r.level === 'Low' ).map(e => e);
@@ -1186,11 +1190,16 @@ computeCompanyRiskRates() {
           let obj = {
             companyName: comp.companyName,
             surveyName: surv.surveyName,
-            riskRate: total
+            riskRate: total,
+            surveyId: surv._id,
+            responseId: resp._id
           }
           this.CompnayRiskRates.push(obj)
         }
       }
+    }
+    }
+
   });
 
 }
@@ -1370,12 +1379,14 @@ openAnswersModal(companyName, surveyName, surveyId, responseId) {
 checkSurveyProgress(surveyId, responseId) {
   const myResponses = this.AllResponses.filter((resp) => resp._id === responseId ).map( e => e);
   let allQuizs = this.AllQuestions.filter((q) => q.surveyId === surveyId).map(e => e);
+  let allQuizs2 = allQuizs.sort((a, b) =>  b.position - a.position);
+  let allQuizs3 = allQuizs2.reverse();
   let allAnswers = myResponses[0].answers;
   let allAnswersNumber = Number(allAnswers.length);
 
   let nextQuiz = 0;
 
-  allQuizs.forEach((quiz, ind2, arr2) => {
+  allQuizs3.forEach((quiz, ind2, arr2) => {
 
     if (nextQuiz === 1) {
       let isAnswerPresent = allAnswers.filter((ans) => ans.questionId === quiz._id ).map(e => e );

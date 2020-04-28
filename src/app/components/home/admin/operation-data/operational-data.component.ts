@@ -1316,7 +1316,11 @@ graphChartToPie() {
     this.CompnayRiskRates = [];
     this.AllCompanies.forEach( (comp) => {
   
+  
       for (let surv of this.AllSurveys) {
+        for (let resp of this.AllResponses) {
+  
+        if (resp.surveyId === surv._id && resp.companyId === comp._id) {
           let getMyRisk = this.riskIssueArray.filter((r) => r.surveyName === surv.surveyName && r.company === comp.companyName ).map(e => e)
           
           let LowRate = getMyRisk.filter((r)=> r.level === 'Low' ).map(e => e);
@@ -1341,11 +1345,16 @@ graphChartToPie() {
             let obj = {
               companyName: comp.companyName,
               surveyName: surv.surveyName,
-              riskRate: total
+              riskRate: total,
+              surveyId: surv._id,
+              responseId: resp._id
             }
             this.CompnayRiskRates.push(obj)
           }
         }
+      }
+      }
+  
     });
   
   }
