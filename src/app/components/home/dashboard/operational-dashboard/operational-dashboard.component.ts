@@ -920,7 +920,7 @@ graphChartFunction() {
 
   this.graphDatasets = [
     {
-      label: 'Avarage Risk Exposure',
+      label: 'Average Risk Exposure',
       data: graphDatasetDataArr,
       backgroundColor: 'rgba(2, 176, 204, .5)',
       borderColor: 'rgb(2, 176, 204)',
