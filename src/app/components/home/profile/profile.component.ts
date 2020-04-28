@@ -166,7 +166,7 @@ export class ProfileComponent implements OnInit {
     localStorage.setItem('ActiveNav', 'profile');
     this.loggedUserEmail = localStorage.getItem('loggedUserEmail');
 
-    this.updatePage().then(() => {this.computeCompanyRiskRates();  this.riskIssuesFunction();  this.checkIfNoSuverysHaveBeenDone()});
+    this.updatePage().then(() => { this.riskIssuesFunction();  this.checkIfNoSuverysHaveBeenDone()});
 
 
     let myArr = ['Oranges', 'Bananas', 'Apple', 'appl e'];
@@ -431,32 +431,6 @@ export class ProfileComponent implements OnInit {
 
 
 
-  computeCompanyRiskRates() {
-
-      // this.AllResponses.forEach((resp) => {
-      //   if (this.myCompany._id === resp.companyId) {
-
-      //     for (const surv of this.AllSurveys) {
-      //       if (resp.surveyId === surv._id) {
-
-      //         const data = {
-      //           companyId: this.myCompany._id,
-      //           surveyId: surv._id,
-      //           responseId: resp._id,
-      //           companyName: this.myCompany.companyName,
-      //           surveyName: surv.surveyName,
-      //           riskRate: 'To be determined',
-      //           recommendation: 'Awaiting...'
-      //         };
-
-      //         this.CompanyRiskRates.push(data);
-
-      //       }
-      //     }
-      //   }
-      // });
-
-  }
 
 
 

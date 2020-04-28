@@ -172,7 +172,7 @@ constructor(
 
   ngOnInit() {
 
-    this.updatePage().then(() => {this.topCardsChartFunction(); this.computeCompanyRiskRates(); this.riskIssuesFunction(); } );
+    this.updatePage().then(() => {this.topCardsChartFunction();  this.riskIssuesFunction(); } );
     this.shareLink = `https://bcp.tactive.consulting/register?institution=${localStorage.getItem('loggedUserInstitution')}`
 
 
@@ -1052,33 +1052,108 @@ calculateActiveCompanyTotalRiskRate(){
 
 
 computeCompanyRiskRates() {
-
+  this.CompnayRiskRates = [];
   this.AllCompanies.forEach( (comp) => {
-    this.AllResponses.forEach((resp) => {
-      if (comp._id === resp.companyId) {
-        for (let surv of this.AllSurveys) {
-          if (resp.surveyId === surv._id) {
 
-            let data = {
-              companyId: comp._id,
-              surveyId: surv._id,
-              responseId: resp._id,
-              companyName: comp.companyName,
-              surveyName: surv.surveyName,
-              riskRate: 'To be determined',
-              recommendation: 'Awaiting...'
-            };
+    for (let surv of this.AllSurveys) {
+        let getMyRisk = this.riskIssueArray.filter((r) => r.surveyName === surv.surveyName && r.company === comp.companyName ).map(e => e)
+        
+        let LowRate = getMyRisk.filter((r)=> r.level === 'Low' ).map(e => e);
+        let MediumRate = getMyRisk.filter((r)=> r.level === 'Medium' ).map(e => e);
+        let HighRate = getMyRisk.filter((r)=> r.level === 'High' ).map(e => e);
+        
+        let totalRiskNum = getMyRisk.length;
+        let lowRiskNum = LowRate.length;
+        let mediumRiskNum = MediumRate.length;
+        let highRiskNum = HighRate.length;
+      
+        let lowRiskValue = lowRiskNum * 1;
+        let medumRiskValue = mediumRiskNum * 2;
+        let highRiskValue = highRiskNum * 3;
+        let totalRiskValue = totalRiskNum * 3
+      
+        let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
+      
+        let total = ((myTotalRiskValue * 100) / totalRiskValue).toFixed(1)
 
-            this.CompnayRiskRates.push(data);
-
+        if (getMyRisk.length > 0) {
+          let obj = {
+            companyName: comp.companyName,
+            surveyName: surv.surveyName,
+            riskRate: total
           }
+          this.CompnayRiskRates.push(obj)
         }
       }
-    });
   });
+
 }
 
 
+computeCompanyRiskRates2() {
+
+// risk: threat.name,
+//   riskCategory: trtCategory.threatCategoryName,
+//   level: respAns.answer[0].level,
+//   recom: respAns.answer[0].recom,
+//   surveyName: survey.surveyName,
+//   company: comp.companyName,
+
+  // this.AllResponses.forEach((resp) => {
+  //   if (this.myCompany._id === resp.companyId) {
+
+  //     for (const surv of this.AllSurveys) {
+  //       if (resp.surveyId === surv._id) {
+
+  //         const data = {
+  //           companyId: this.myCompany._id,
+  //           surveyId: surv._id,
+  //           responseId: resp._id,
+  //           companyName: this.myCompany.companyName,
+  //           surveyName: surv.surveyName,
+  //           riskRate: 'To be determined',
+  //           recommendation: 'Awaiting...'
+  //         };
+
+  //         this.CompanyRiskRates.push(data);
+
+  //       }
+  //     }
+  //   }
+  // });
+
+  // this.CompanyRiskRates = [];
+  // SurveyInvolve.forEach((surveyElem) => {
+      
+  //     let getMyRisk = this.riskIssueArray.filter((r) => r.surveyName === surveyElem ).map(e => e)
+  //     let LowRate = getMyRisk.filter((r)=> r.level === 'Low' ).map(e => e);
+  //     let MediumRate = getMyRisk.filter((r)=> r.level === 'Medium' ).map(e => e);
+  //     let HighRate = getMyRisk.filter((r)=> r.level === 'High' ).map(e => e);
+      
+  //     let totalRiskNum = getMyRisk.length;
+  //     let lowRiskNum = LowRate.length;
+  //     let mediumRiskNum = MediumRate.length;
+  //     let highRiskNum = HighRate.length;
+    
+  //     let lowRiskValue = lowRiskNum * 1;
+  //     let medumRiskValue = mediumRiskNum * 2;
+  //     let highRiskValue = highRiskNum * 3;
+  //     let totalRiskValue = totalRiskNum * 3
+    
+  //     let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
+    
+  //     let total = ((myTotalRiskValue * 100) / totalRiskValue).toFixed(1)
+  //     mychart3Datasets.push(total)
+
+  //     let obj = {
+  //       surveyName: surveyElem,
+  //       riskRate: total
+  //     }
+  //     this.CompanyRiskRates.push(obj)
+
+  // })
+
+}
 
 
 
@@ -1120,6 +1195,7 @@ riskIssuesFunction() {
                         this.graphChartFunction();
                         this.thirdSectionGraphsFunction();
                         this.calculateActiveCompanyTotalRiskRate();
+                        this.computeCompanyRiskRates();
                       }
 
                     });

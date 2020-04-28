@@ -158,7 +158,7 @@ public trafficBgColors = [];
 
   ngOnInit() {
     
-    this.updatePage().then(() => { this.computeCompanyRiskRates(); this.riskIssuesFunction(); this.trafficFunction(); } );
+    this.updatePage().then(() => { this.riskIssuesFunction(); this.trafficFunction(); } );
 
   }
 
@@ -1208,31 +1208,43 @@ graphChartToPie() {
   
   
   computeCompanyRiskRates() {
-  
+    this.CompnayRiskRates = [];
     this.AllCompanies.forEach( (comp) => {
-      this.AllResponses.forEach((resp) => {
-        if (comp._id === resp.companyId) {
-          for (let surv of this.AllSurveys) {
-            if (resp.surveyId === surv._id) {
   
-              let data = {
-                companyId: comp._id,
-                surveyId: surv._id,
-                responseId: resp._id,
-                companyName: comp.companyName,
-                surveyName: surv.surveyName,
-                riskRate: 'To be determined',
-                recommendation: 'Awaiting...'
-              };
+      for (let surv of this.AllSurveys) {
+          let getMyRisk = this.riskIssueArray.filter((r) => r.surveyName === surv.surveyName && r.company === comp.companyName ).map(e => e)
+          
+          let LowRate = getMyRisk.filter((r)=> r.level === 'Low' ).map(e => e);
+          let MediumRate = getMyRisk.filter((r)=> r.level === 'Medium' ).map(e => e);
+          let HighRate = getMyRisk.filter((r)=> r.level === 'High' ).map(e => e);
+          
+          let totalRiskNum = getMyRisk.length;
+          let lowRiskNum = LowRate.length;
+          let mediumRiskNum = MediumRate.length;
+          let highRiskNum = HighRate.length;
+        
+          let lowRiskValue = lowRiskNum * 1;
+          let medumRiskValue = mediumRiskNum * 2;
+          let highRiskValue = highRiskNum * 3;
+          let totalRiskValue = totalRiskNum * 3
+        
+          let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
+        
+          let total = ((myTotalRiskValue * 100) / totalRiskValue).toFixed(1)
   
-              this.CompnayRiskRates.push(data);
-  
+          if (getMyRisk.length > 0) {
+            let obj = {
+              companyName: comp.companyName,
+              surveyName: surv.surveyName,
+              riskRate: total
             }
+            this.CompnayRiskRates.push(obj)
           }
         }
-      });
     });
+  
   }
+  
   
   
   
@@ -1277,6 +1289,7 @@ graphChartToPie() {
                           this.thirdSectionGraphsFunction();
                           this.listThirdPartyCompaniesAndSurveys(0);
                           this.calculateActiveCompanyTotalRiskRate();
+                          this.computeCompanyRiskRates();
                         }
   
                       });

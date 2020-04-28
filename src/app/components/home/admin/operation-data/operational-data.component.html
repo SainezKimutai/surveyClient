@@ -350,8 +350,9 @@
                         (click)="openAnswersModal(comp.companyName, comp.surveyName, comp.surveyId, comp.responseId); checkSurveyProgress(comp.surveyId, comp.responseId)">
                         <div class="mx-auto companyName">{{comp.companyName}}</div>
                         <div class="mx-auto surveyName">{{comp.surveyName}}</div>
-                        <div class="mx-auto riskRate">{{comp.riskRate}}</div>
-                        <!-- <div class="mx-auto recommendation">{{comp.recommendation}}</div> -->
+                        <div *ngIf="comp.riskRate > 66" class="mx-auto riskRate high">{{comp.riskRate}} %</div>
+                        <div *ngIf="66 > comp.riskRate && comp.riskRate > 33" class="mx-auto riskRate medium">{{comp.riskRate}} %</div>
+                        <div *ngIf="33 > comp.riskRate" class="mx-auto riskRate low">{{comp.riskRate}} %</div>
                     </div>
 
                 </div>
