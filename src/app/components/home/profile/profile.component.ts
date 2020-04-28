@@ -162,12 +162,26 @@ export class ProfileComponent implements OnInit {
 
 
 
-  ngOnInit() {
+  async ngOnInit() {
     localStorage.setItem('ActiveNav', 'profile');
     this.loggedUserEmail = localStorage.getItem('loggedUserEmail');
 
     this.updatePage().then(() => {this.computeCompanyRiskRates();  this.riskIssuesFunction();  this.checkIfNoSuverysHaveBeenDone()});
 
+
+    let myArr = ['Oranges', 'Bananas', 'Apple', 'appl e'];
+
+    let newArray = myArr.reduce((unique, item) => {
+   
+      let unique1 =  unique.filter(() => true).map(e => e.toLowerCase().replace(/ /g,''))
+      let item2 = item.toLowerCase().replace(/ /g,''); 
+
+      return unique1.includes(item2) ? unique : [...unique, item]
+    }, []);
+
+    setTimeout(() => {
+      console.log(newArray)
+    }, 2000);
   }
 
 
@@ -259,7 +273,7 @@ export class ProfileComponent implements OnInit {
 
 
   minimizeProfile() {
-    this.profileMinimized = !this.profileMinimized;
+    // this.profileMinimized = !this.profileMinimized;
   }
 
 
@@ -419,28 +433,28 @@ export class ProfileComponent implements OnInit {
 
   computeCompanyRiskRates() {
 
-      this.AllResponses.forEach((resp) => {
-        if (this.myCompany._id === resp.companyId) {
+      // this.AllResponses.forEach((resp) => {
+      //   if (this.myCompany._id === resp.companyId) {
 
-          for (const surv of this.AllSurveys) {
-            if (resp.surveyId === surv._id) {
+      //     for (const surv of this.AllSurveys) {
+      //       if (resp.surveyId === surv._id) {
 
-              const data = {
-                companyId: this.myCompany._id,
-                surveyId: surv._id,
-                responseId: resp._id,
-                companyName: this.myCompany.companyName,
-                surveyName: surv.surveyName,
-                riskRate: 'To be determined',
-                recommendation: 'Awaiting...'
-              };
+      //         const data = {
+      //           companyId: this.myCompany._id,
+      //           surveyId: surv._id,
+      //           responseId: resp._id,
+      //           companyName: this.myCompany.companyName,
+      //           surveyName: surv.surveyName,
+      //           riskRate: 'To be determined',
+      //           recommendation: 'Awaiting...'
+      //         };
 
-              this.CompanyRiskRates.push(data);
+      //         this.CompanyRiskRates.push(data);
 
-            }
-          }
-        }
-      });
+      //       }
+      //     }
+      //   }
+      // });
 
   }
 
@@ -887,7 +901,7 @@ export class ProfileComponent implements OnInit {
     this.chart1ChartOptions = {
       title: {
         display: false,
-        text: 'Sales',
+        text: 'Risk',
         fontSize: 25
       },
       legend: {
@@ -950,7 +964,12 @@ export class ProfileComponent implements OnInit {
 
    // on the right
     let threatArray =  this.riskIssueArray.filter(() => true ).map(e => e.risk);
-    let newThreatArray = Array.from(new Set(threatArray));
+    let newThreatArray1 = Array.from(new Set(threatArray));
+    let newThreatArray =  newThreatArray1.reduce((unique, item) => {
+      let unique1 =  unique.filter(() => true).map(e => e.toLowerCase().replace(/ /g,''))
+      let item2 = item.toLowerCase().replace(/ /g,''); 
+      return unique1.includes(item2) ? unique : [...unique, item]
+    }, []);
 
     this.chart2Type = 'line';
 
@@ -979,7 +998,7 @@ export class ProfileComponent implements OnInit {
     this.chart2ChartOptions = {
      title: {
        display: false,
-       text: 'Sales',
+       text: 'Risk',
        fontSize: 25
      },
      legend: {
@@ -1046,7 +1065,7 @@ export class ProfileComponent implements OnInit {
     let getSurveys = this.riskIssueArray.filter(() => true ).map(e => e.surveyName)
     let SurveyInvolve = Array.from( new Set(getSurveys));
     let mychart3Datasets = [];
-
+    this.CompanyRiskRates = [];
     SurveyInvolve.forEach((surveyElem) => {
         
         let getMyRisk = this.riskIssueArray.filter((r) => r.surveyName === surveyElem ).map(e => e)
@@ -1069,6 +1088,12 @@ export class ProfileComponent implements OnInit {
         let total = ((myTotalRiskValue * 100) / totalRiskValue).toFixed(1)
         mychart3Datasets.push(total)
 
+        let obj = {
+          surveyName: surveyElem,
+          riskRate: total
+        }
+        this.CompanyRiskRates.push(obj)
+
     })
 
     this.chart3Type = 'pie';
@@ -1089,7 +1114,7 @@ export class ProfileComponent implements OnInit {
     // });
 
     this.chart3Datasets = [{
-    label: 'Avarage Risk Rate',
+    label: 'Average Risk Rate',
     data: mychart3Datasets,
     backgroundColor: this.chart3BgColors,
     borderColor: 'white',
@@ -1103,7 +1128,7 @@ export class ProfileComponent implements OnInit {
     this.chart3ChartOptions = {
     title: {
       display: false,
-      text: 'Sales',
+      text: 'Risk',
       fontSize: 25
     },
     legend: {
@@ -1268,28 +1293,13 @@ export class ProfileComponent implements OnInit {
     let SurveyInvolve = Array.from( new Set(getSurveys));
     let getRisk = this.riskIssueArray.filter(() => true ).map(e => e.risk);
     let RiskInvolved1 = Array.from( new Set(getRisk));
-    let RiskInvolved2 = Array.from( new Set(getRisk));
-    let RiskInvolved = Array.from( new Set(getRisk));
 
-    // RiskInvolved.reduce((unique, item) => {
-   
-    //   let unique1 =  unique.filter(() => true).map(e => e.toLowerCase().replace(/ /g,''))
-    //   let item2 = item.toLowerCase().replace(/ /g,''); 
+    let RiskInvolved =  RiskInvolved1.reduce((unique, item) => {
+      let unique1 =  unique.filter(() => true).map(e => e.toLowerCase().replace(/ /g,''))
+      let item2 = item.toLowerCase().replace(/ /g,''); 
+      return unique1.includes(item2) ? unique : [...unique, item]
+    }, []);
 
-    //   return unique1.includes(item2) ? unique : [...unique, item]
-    // }, []);
-
-    // // RiskInvolved1.forEach((item1) => {
-    // //   RiskInvolved2.forEach((item2) => {
-    // //     let x = item1.toLowerCase().replace(/ /g,'');
-    // //     let y = item2.toLowerCase().replace(/ /g,'');
-    // //     if(x === y ){
-
-    // //     }
-    // //   })
-
-    
-    // // })
 
     this.MyComparisonDataSet = []
 

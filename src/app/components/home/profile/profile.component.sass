@@ -391,7 +391,7 @@
 
     .body-wrapper
         width: 100%
-        height: 450px
+        height: 320px
         display: flex
         flex-direction: column
         align-items: center
@@ -500,8 +500,14 @@
                     width: 100%
                     padding: 0 0 0 1em
 
-                    &.riskRate
+                    &.riskRate-high
+                        background-color: colorTheme(danger)
+                        color: white
+                    &.riskRate-medium
                         background-color: orange
+                        color: white
+                    &.riskRate-low
+                        background-color: colorTheme(success)
                         color: white
 
 
