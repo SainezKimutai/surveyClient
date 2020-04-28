@@ -274,10 +274,9 @@ main .side-bg
     border-radius: 5px
     width: 100%
     max-width: 900px
-    min-height: 70%
-    height: fit-content
+    height: 80%
     overflow-y: scroll
-    margin: 5em auto
+    margin: 3em auto
     display: flex
     align-items: stretch
     -ms-overflow-style: none
@@ -325,10 +324,29 @@ main .side-bg
                 -webkit-transform: scaleX(-1)
                 -moz-transform: scaleX(-1)
                 transform: scaleX(-1)
+                display: flex
+                flex-direction: column
 
 
                 @include desktop_md
                     width: 100%
+
+                .image-wrap
+                    margin: auto auto 1em auto
+                    width: fit-content
+                    height: 200px
+                    display: flex
+                    flex-direction: column
+                    justify-content: center
+
+
+                    img 
+                        -webkit-transform: scaleX(-1)
+                        -moz-transform: scaleX(-1)
+                        transform: scaleX(-1)
+                        width: 170px 
+                        height: 100px
+
 
             .wrap-two
                 background-color: colorTheme(primaryTheme)
