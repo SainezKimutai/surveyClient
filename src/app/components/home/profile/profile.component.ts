@@ -1071,21 +1071,22 @@ export class ProfileComponent implements OnInit {
 
     })
 
-    this.chart3Type = 'bar';
+    this.chart3Type = 'pie';
 
     this.chart3Labels = SurveyInvolve;
    
     this.chart3BgColors = [];
 
-    mychart3Datasets.forEach((num) => {
+    this.chart3Labels.forEach(() => {
+      this.chart3BgColors.push(this.getRandomColor())
+    })
 
-        if (33 > num ) {  this.chart3BgColors.push('#4dbd74'); }
-        if (num > 33 && 66 > num) { this.chart3BgColors.push('#ffc107'); }
-        if (num > 66) { this.chart3BgColors.push('#f86c6b'); }
-  
+    // mychart3Datasets.forEach((num) => {
 
-
-    });
+    //     if (33 > num ) {  this.chart3BgColors.push('#4dbd74'); }
+    //     if (num > 33 && 66 > num) { this.chart3BgColors.push('#ffc107'); }
+    //     if (num > 66) { this.chart3BgColors.push('#f86c6b'); }
+    // });
 
     this.chart3Datasets = [{
     label: 'Avarage Risk Rate',
@@ -1185,35 +1186,6 @@ export class ProfileComponent implements OnInit {
 
 
 
-  calculateTatalSurveyRisk(){
-    let getSurveys = this.riskIssueArray.filter(() => true ).map(e => e.surveyName)
-    let SurveyInvolve = Array.from( new Set(getSurveys));
-    this.MyComparisonDataSet = []
-
-    SurveyInvolve.forEach((surveyElem) => {
-        
-        let getMyRisk = this.riskIssueArray.filter((r) => r.surveyName === surveyElem ).map(e => e)
-        let LowRate = getMyRisk.filter((r)=> r.level === 'Low' ).map(e => e);
-        let MediumRate = getMyRisk.filter((r)=> r.level === 'Medium' ).map(e => e);
-        let HighRate = getMyRisk.filter((r)=> r.level === 'High' ).map(e => e);
-        
-        let totalRiskNum = getMyRisk.length;
-        let lowRiskNum = LowRate.length;
-        let mediumRiskNum = MediumRate.length;
-        let highRiskNum = HighRate.length;
-      
-        let lowRiskValue = lowRiskNum * 1;
-        let medumRiskValue = mediumRiskNum * 2;
-        let highRiskValue = highRiskNum * 3;
-        let totalRiskValue = totalRiskNum * 3
-      
-        let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
-      
-        let total = ((myTotalRiskValue * 100) / totalRiskValue).toFixed(1)
-
-    })
-  
-  }
 
 
 
@@ -1295,7 +1267,29 @@ export class ProfileComponent implements OnInit {
     let getSurveys = this.riskIssueArray.filter(() => true ).map(e => e.surveyName)
     let SurveyInvolve = Array.from( new Set(getSurveys));
     let getRisk = this.riskIssueArray.filter(() => true ).map(e => e.risk);
+    let RiskInvolved1 = Array.from( new Set(getRisk));
+    let RiskInvolved2 = Array.from( new Set(getRisk));
     let RiskInvolved = Array.from( new Set(getRisk));
+
+    // RiskInvolved.reduce((unique, item) => {
+   
+    //   let unique1 =  unique.filter(() => true).map(e => e.toLowerCase().replace(/ /g,''))
+    //   let item2 = item.toLowerCase().replace(/ /g,''); 
+
+    //   return unique1.includes(item2) ? unique : [...unique, item]
+    // }, []);
+
+    // // RiskInvolved1.forEach((item1) => {
+    // //   RiskInvolved2.forEach((item2) => {
+    // //     let x = item1.toLowerCase().replace(/ /g,'');
+    // //     let y = item2.toLowerCase().replace(/ /g,'');
+    // //     if(x === y ){
+
+    // //     }
+    // //   })
+
+    
+    // // })
 
     this.MyComparisonDataSet = []
 
