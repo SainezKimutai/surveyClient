@@ -78,7 +78,7 @@
 
     <section [hidden]="NoDataOnDasboard" id="second_cards_section" class="card-group">
         <div class="card">
-            <div class="title d-flex"> <span>Risk Categories</span>
+            <div class="title d-flex"> <span>Number of risks that have been measured under each category</span>
                 <div class=" graph-switch d-flex ml-auto">
                   
                     <span (click)="third1graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="third1Type === 'line' ? 'active' : ''" ></fa-icon></span> 
@@ -95,11 +95,11 @@
         </div>
 
         <div class="card">
-            <div class="title d-flex"> <span>General Risk Representation</span>
+            <div class="title d-flex"> <span>Average risk rate for specific risk type based on all survey</span>
                 <div class=" graph-switch d-flex ml-auto">
                     <span (click)="third2graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="third2Type === 'line' ? 'active' : ''" ></fa-icon></span> 
                     <span (click)="third2graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="third2Type === 'bar' ? 'active' : ''" ></fa-icon></span>
-                    <span (click)="third2graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="third2Type === 'pie' ? 'active' : ''" ></fa-icon> </span>
+                    <!-- <span (click)="third2graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="third2Type === 'pie' ? 'active' : ''" ></fa-icon> </span> -->
                 </div>
             </div>
 
@@ -237,7 +237,7 @@
 
         
         <div class="card">
-            <div class="title">List of Company Risk Rates Per Survey Template</div>
+            <div class="title">List of Company Risk Rates Per Survey</div>
             <div class="body-wrapper">
                 <div class="body-title">
 

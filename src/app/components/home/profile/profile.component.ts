@@ -950,15 +950,6 @@ export class ProfileComponent implements OnInit {
 
 
    // on the right
-    let threatArray =  this.riskIssueArray.filter(() => true ).map(e => e.risk);
-    let newThreatArray1 = Array.from(new Set(threatArray));
-    let newThreatArray =  newThreatArray1.reduce((unique, item) => {
-      let unique1 =  unique.filter(() => true).map(e => e.toLowerCase().replace(/ /g,''))
-      let item2 = item.toLowerCase().replace(/ /g,''); 
-      return unique1.includes(item2) ? unique : [...unique, item]
-    }, []);
-
-
 
 
     let surveysOnrisk = this.riskIssueArray.filter(() => true ).map(e => e.surveyName)
