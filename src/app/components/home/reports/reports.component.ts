@@ -103,7 +103,7 @@ export class ReportsComponent implements OnInit {
             { 
              this.AllSurveys = [];
              this.pageProgress = 10;
-             console.log(data)
+          
               data.forEach((responseObj, ind1, arr1) => {
                     this.surveyService.getOneSurvey(responseObj.surveyId).subscribe(
                      survey =>{
@@ -134,11 +134,19 @@ export class ReportsComponent implements OnInit {
                                   
                                     
                                      if(typeof(question['answer']) === 'object') {
+                                      // Here was chnaged from 
                                       
-                                      question['answer'] = answr.answer.answer;
-                                      question['recom'] = answr.answer.recom;
-                                      question['level'] = answr.answer.level;
-                                      question['threat'] = answr.answer.threatId ?  answr.answer.threat : '';
+                                      // question['answer'] = answr.answer.answer;
+                                      // question['recom'] = answr.answer.recom;
+                                      // question['level'] = answr.answer.level;
+                                      // question['threat'] = answr.answer.threatId ?  answr.answer.threat : '';
+                                       // Here was chnaged from 
+
+                                      // to 
+                                      question['answer'] = answr.answer ? answr.answer.answer: answr.answer;
+                                      question['recom'] = answr.recom;
+                                      question['level'] = answr.level;
+                                      question['threat'] = answr.threatId ?  answr.threat : '';
                                       
                                      }
                                     });
@@ -509,44 +517,133 @@ export class ReportsComponent implements OnInit {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+  random_rgba() {
+    let o = Math.round, r = Math.random, s = 255;
+    let p = o(r()*s);
+    let pp = o(r()*s);
+    let ppp = o(r()*s);
+    let color = {
+      light:  'rgba(' + p + ',' + pp + ',' + ppp + ',' + .3 + ')',
+      mild:  'rgba(' + p + ',' + pp + ',' + ppp + ',' + .7 + ')',
+      dark:  'rgba(' + p + ',' + pp + ',' + ppp + ',' + 1 + ')'
+    }
+    
+   
+    return color
+}
+
+
+
+
+
+
+
+
+
+
   chartSectionGraphsFunction() {
 
-   // on the bottom
-   let threatArray3 =  this.riskIssueArray.filter(() => true ).map(e => e.risk);
-   let newThreatArray3 = Array.from(new Set(threatArray3));
+let getRisk = this.riskIssueArray.filter(() => true ).map(e => e.risk);
+let RiskInvolved1 = Array.from( new Set(getRisk));
 
-   this.chart3Type = 'line';
+let RiskInvolved =  RiskInvolved1.reduce((unique, item) => {
+  let unique1 =  unique.filter(() => true).map(e => e.toLowerCase().replace(/ /g,''))
+  let item2 = item.toLowerCase().replace(/ /g,''); 
+  return unique1.includes(item2) ? unique : [...unique, item]
+}, []);
 
-   this.chart3Labels = newThreatArray3;
-   let mychart3Datasets = [];
-   this.chart3BgColors = [];
 
-   this.chart3Labels.forEach((riskEl) => {
+let MyComparisonDataSet = []
 
-   for (let rsk of this.riskIssueArray) {
-     if (rsk.risk === riskEl) {
-       if (rsk.level === 'Low') { mychart3Datasets.push(1); this.chart3BgColors.push('#4dbd74'); }
-       if (rsk.level === 'Medium') { mychart3Datasets.push(2); this.chart3BgColors.push('#ffc107'); }
-       if (rsk.level === 'High') { mychart3Datasets.push(3); this.chart3BgColors.push('#f86c6b'); }
-       break;
-     }
-   }
+this.AllSurveys.forEach((surveyElem) => {
+
+  if(this.TemplateOneViewId === surveyElem._id ) {
 
 
 
-   });
+  let dataOnj = {
+    label: surveyElem,
+    data : []
+  }
+  RiskInvolved.forEach((riskElm) => {
+    
+    let getMyRisk = this.riskIssueArray.filter((r) => r.risk === riskElm ).map(e => e)
+    let getLowRisk = getMyRisk.filter((r) => r.level === 'Low' ).map(e => e)
+    let getMediumRisk = getMyRisk.filter((r) => r.level === 'Medium' ).map(e => e)
+    let getHighRisk = getMyRisk.filter((r) => r.level === 'High' ).map(e => e)
+
+    let totalLowRiskNum = getLowRisk.length;
+    let totalMediumRiskNum = getMediumRisk.length;
+    let totalHighRiskNum = getHighRisk.length;
+
+    let totalPoints = ((totalLowRiskNum * 1) + (totalMediumRiskNum * 2) + (totalHighRiskNum * 3))
+    let totalRiskNum = totalLowRiskNum + totalMediumRiskNum + totalHighRiskNum
+    
+    let finalValue = Math.round(totalPoints / totalRiskNum)
+    if(!finalValue) {finalValue = 1}
+    dataOnj.data.push(finalValue)
+
+  })
+
+  MyComparisonDataSet.push(dataOnj)
+  }
+})
+
+
+
+this.chart3Type = 'line';
+
+this.chart3Labels = RiskInvolved;
+
+
+this.chart3Datasets = [];
+
+
+
+
+this.chart3BgColors = []
+
+  MyComparisonDataSet[0].data.forEach((d) => {
+    if (d === 1) { this.chart3BgColors.push('#4dbd74'); }
+    if (d === 2) { this.chart3BgColors.push('#ffc107'); }
+    if (d === 3) { this.chart3BgColors.push('#f86c6b'); }
+  })
+
+
+  let color = this.random_rgba();
+
+
+
 
    this.chart3Datasets = [{
-   label: 'Risk',
-   data: mychart3Datasets,
-   backgroundColor: 'whitesmoke',
-   borderColor: 'gray',
-   borderWidth: 1.5,
-   pointBackgroundColor: 'transparent',
-   pointHoverBackgroundColor: 'transparent',
-   pointBorderColor: 'white',
-   pointHoverBorderColor: 'gray'
+    label: MyComparisonDataSet[0].label,
+    data: MyComparisonDataSet[0].data,
+    backgroundColor: color.light,
+    borderColor: color.mild,
+    borderWidth: 1.5,
+    pointBackgroundColor: 'transparent',
+    pointHoverBackgroundColor: 'transparent',
+    pointBorderColor: color.dark,
+    pointHoverBorderColor: 'black'
  }];
+
+
+
+
+
+
+
 
    this.chart3ChartOptions = {
    title: {
@@ -625,6 +722,23 @@ export class ReportsComponent implements OnInit {
   this.onResizeStatus = true;
   this.onResize();
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
