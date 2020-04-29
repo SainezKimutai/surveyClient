@@ -769,27 +769,42 @@ export class ProfileComponent implements OnInit {
     this.chart3ChartOptions.legend.display = true;
     this.chart3ChartOptions.scales.yAxes[0].display = true;
     this.chart3ChartOptions.scales.xAxes[0].display = true;
-    this.chart3Datasets[0].backgroundColor = 'whitesmoke';
-    this.chart3Datasets[0].borderColor = 'gray';
-    this.chart3Datasets[0].pointBorderColor = 'black';
+    this.chart3ChartOptions.scales.yAxes[0].stacked = true;
+    this.chart3ChartOptions.scales.xAxes[0].stacked = true;
+    this.chart3Datasets[0].backgroundColor = 'rgba(248, 108, 107, .7)';
+    this.chart3Datasets[0].borderColor = 'white';
+    this.chart3Datasets[0].pointBorderColor = 'white';
+    this.chart3Datasets[1].backgroundColor = 'rgba(77, 189, 116, .4)';
+    this.chart3Datasets[1].borderColor = 'white';
+    this.chart3Datasets[1].pointBorderColor = 'white';
   }
   chart3graphToBar() {
     this.chart3Type = 'bar';
     this.chart3ChartOptions.legend.display = true;
     this.chart3ChartOptions.scales.yAxes[0].display = true;
     this.chart3ChartOptions.scales.xAxes[0].display = true;
-    this.chart3Datasets[0].backgroundColor = this.chart3BgColors;
+    this.chart3ChartOptions.scales.yAxes[0].stacked = false;
+    this.chart3ChartOptions.scales.xAxes[0].stacked = false;
+    this.chart3Datasets[0].backgroundColor = this.chart3BgColors[0];
     this.chart3Datasets[0].borderColor = 'white';
     this.chart3Datasets[0].pointBorderColor = 'white';
+    this.chart3Datasets[1].backgroundColor = this.chart3BgColors[1];
+    this.chart3Datasets[1].borderColor = 'white';
+    this.chart3Datasets[1].pointBorderColor = 'white';
   }
   chart3graphToPie() {
     this.chart3Type = 'pie';
     this.chart3ChartOptions.legend.display = true;
     this.chart3ChartOptions.scales.yAxes[0].display = false;
     this.chart3ChartOptions.scales.xAxes[0].display = false;
-    this.chart3Datasets[0].backgroundColor = this.chart3BgColors;
+    this.chart3ChartOptions.scales.yAxes[0].stacked = true;
+    this.chart3ChartOptions.scales.xAxes[0].stacked = true;
+    this.chart3Datasets[0].backgroundColor = this.chart3BgColors[0];
     this.chart3Datasets[0].borderColor = 'white';
     this.chart3Datasets[0].pointBorderColor = 'white';
+    this.chart3Datasets[1].backgroundColor = this.chart3BgColors[1];
+    this.chart3Datasets[1].borderColor = 'white';
+    this.chart3Datasets[1].pointBorderColor = 'white';
   }
 
 
@@ -1129,7 +1144,8 @@ export class ProfileComponent implements OnInit {
 
     let getSurveys = this.riskIssueArray.filter(() => true ).map(e => e.surveyName)
     let SurveyInvolve = Array.from( new Set(getSurveys));
-    let mychart3Datasets = [];
+    let mychart3Datasets1 = [];
+    let mychart3Datasets2 = [];
     this.CompanyRiskRates = [];
     SurveyInvolve.forEach((surveyElem) => {
         
@@ -1151,7 +1167,11 @@ export class ProfileComponent implements OnInit {
         let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
       
         let total = ((myTotalRiskValue * 100) / totalRiskValue).toFixed(1)
-        mychart3Datasets.push(total)
+
+
+
+        mychart3Datasets1.push(myTotalRiskValue)
+        mychart3Datasets2.push(totalRiskValue)
 
         let obj = {
           surveyName: surveyElem,
@@ -1161,34 +1181,35 @@ export class ProfileComponent implements OnInit {
 
     })
 
-    this.chart3Type = 'pie';
+    this.chart3Type = 'bar';
 
     this.chart3Labels = SurveyInvolve;
    
-    this.chart3BgColors = [];
-
-    this.chart3Labels.forEach(() => {
-      this.chart3BgColors.push(this.getRandomColor())
-    })
-
-    // mychart3Datasets.forEach((num) => {
-
-    //     if (33 > num ) {  this.chart3BgColors.push('#4dbd74'); }
-    //     if (num > 33 && 66 > num) { this.chart3BgColors.push('#ffc107'); }
-    //     if (num > 66) { this.chart3BgColors.push('#f86c6b'); }
-    // });
+    this.chart3BgColors = ['#f86c6b', '#4dbd74' ];
 
     this.chart3Datasets = [{
-    label: 'Average Risk Rate',
-    data: mychart3Datasets,
-    backgroundColor: this.chart3BgColors,
+    label: 'Your Risk level',
+    data: mychart3Datasets1,
+    backgroundColor: this.chart3BgColors[0],
     borderColor: 'white',
     borderWidth: 1.5,
     pointBackgroundColor: 'transparent',
     pointHoverBackgroundColor: 'transparent',
     pointBorderColor: 'white',
     pointHoverBorderColor: 'gray'
-  }];
+  },
+  {
+    label: 'Highest Risk level',
+    data: mychart3Datasets2,
+    backgroundColor: this.chart3BgColors[1],
+    borderColor: 'white',
+    borderWidth: 1.5,
+    pointBackgroundColor: 'transparent',
+    pointHoverBackgroundColor: 'transparent',
+    pointBorderColor: 'white',
+    pointHoverBorderColor: 'gray'
+  }
+];
 
     this.chart3ChartOptions = {
     title: {
