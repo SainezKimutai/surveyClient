@@ -1237,20 +1237,12 @@ export class ProfileComponent implements OnInit {
       text: 'Risk',
       fontSize: 25
     },
-    legend: { display: false },
-    legendCallback: function(chart) {
-        var legendHtml = [];
-        legendHtml.push('<ul>');
-        var item = chart.data.datasets[0];
-        for (var i=0; i < item.data.length; i++) {
-            legendHtml.push('<li>');
-            legendHtml.push('<span class="chart-legend" style="background-color:' + item.backgroundColor[i] +'"></span>');
-            legendHtml.push('<span class="chart-legend-label-text">' + item.data[i] + ' person - '+chart.data.labels[i]+' times</span>');
-            legendHtml.push('</li>');
-        }
-
-        legendHtml.push('</ul>');
-        return legendHtml.join("");
+    legend: {
+      display: true,
+      position: 'right',
+      labels: {
+            fontColor: '#73818f'
+          }
     },
     layout: {
       padding: 10
@@ -1337,7 +1329,7 @@ export class ProfileComponent implements OnInit {
 
 
     this.onResizeStatus = true;
-    // this.onResize();
+    this.onResize();
 
   } // end of chartSectionGraphsFunction
 
