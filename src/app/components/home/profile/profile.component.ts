@@ -785,10 +785,10 @@ export class ProfileComponent implements OnInit {
     this.chart3ChartOptions.scales.xAxes[0].display = true;
     this.chart3ChartOptions.scales.yAxes[0].stacked = false;
     this.chart3ChartOptions.scales.xAxes[0].stacked = false;
-    this.chart3Datasets[0].backgroundColor = this.chart3BgColors[0];
+    this.chart3Datasets[0].backgroundColor = this.chart3BgColors;
     this.chart3Datasets[0].borderColor = 'white';
     this.chart3Datasets[0].pointBorderColor = 'white';
-    this.chart3Datasets[1].backgroundColor = this.chart3BgColors[1];
+    this.chart3Datasets[1].backgroundColor = '#73818f';
     this.chart3Datasets[1].borderColor = 'white';
     this.chart3Datasets[1].pointBorderColor = 'white';
   }
@@ -799,10 +799,10 @@ export class ProfileComponent implements OnInit {
     this.chart3ChartOptions.scales.xAxes[0].display = false;
     this.chart3ChartOptions.scales.yAxes[0].stacked = true;
     this.chart3ChartOptions.scales.xAxes[0].stacked = true;
-    this.chart3Datasets[0].backgroundColor = this.chart3BgColors[0];
+    this.chart3Datasets[0].backgroundColor = this.chart3BgColors;
     this.chart3Datasets[0].borderColor = 'white';
     this.chart3Datasets[0].pointBorderColor = 'white';
-    this.chart3Datasets[1].backgroundColor = this.chart3BgColors[1];
+    this.chart3Datasets[1].backgroundColor = '#73818f';
     this.chart3Datasets[1].borderColor = 'white';
     this.chart3Datasets[1].pointBorderColor = 'white';
   }
@@ -1146,6 +1146,7 @@ export class ProfileComponent implements OnInit {
     let SurveyInvolve = Array.from( new Set(getSurveys));
     let mychart3Datasets1 = [];
     let mychart3Datasets2 = [];
+    let mmychart3Datasets3 = [];
     this.CompanyRiskRates = [];
     SurveyInvolve.forEach((surveyElem) => {
         
@@ -1168,10 +1169,14 @@ export class ProfileComponent implements OnInit {
       
         let total = ((myTotalRiskValue * 100) / totalRiskValue).toFixed(1)
 
-
+        let xObj = {
+          val: myTotalRiskValue,
+          tot: totalRiskValue
+        }
 
         mychart3Datasets1.push(myTotalRiskValue)
         mychart3Datasets2.push(totalRiskValue)
+        mmychart3Datasets3.push(xObj)
 
         let obj = {
           surveyName: surveyElem,
@@ -1185,12 +1190,27 @@ export class ProfileComponent implements OnInit {
 
     this.chart3Labels = SurveyInvolve;
    
-    this.chart3BgColors = ['#f86c6b', '#4dbd74' ];
+
+    this.chart3BgColors = []
+
+    mmychart3Datasets3.forEach((rEl) => {
+      rEl
+      let myValue = rEl.val
+      let myHighValue = rEl.tot
+      let mySetCat = (myHighValue / 3)
+      let lowCatOff = mySetCat;
+      let mediumCatOff = mySetCat * 2;
+
+      if (myValue < lowCatOff || myValue === lowCatOff ) { this.chart3BgColors.push('#4dbd74')}
+      if ((myValue > lowCatOff && myValue < mediumCatOff) || myValue === mediumCatOff ) { this.chart3BgColors.push('#ffc107')}
+      if (myValue > mediumCatOff) { this.chart3BgColors.push('#f86c6b')}
+    })
+
 
     this.chart3Datasets = [{
     label: 'Your Risk level',
     data: mychart3Datasets1,
-    backgroundColor: this.chart3BgColors[0],
+    backgroundColor: this.chart3BgColors,
     borderColor: 'white',
     borderWidth: 1.5,
     pointBackgroundColor: 'transparent',
@@ -1201,7 +1221,7 @@ export class ProfileComponent implements OnInit {
   {
     label: 'Highest Possible Risk level',
     data: mychart3Datasets2,
-    backgroundColor: this.chart3BgColors[1],
+    backgroundColor: '#73818f',
     borderColor: 'white',
     borderWidth: 1.5,
     pointBackgroundColor: 'transparent',
