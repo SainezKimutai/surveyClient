@@ -780,7 +780,7 @@ export class ProfileComponent implements OnInit {
   }
   chart3graphToBar() {
     this.chart3Type = 'bar';
-    this.chart3ChartOptions.legend.display = true;
+    this.chart3ChartOptions.legend.display = false;
     this.chart3ChartOptions.scales.yAxes[0].display = true;
     this.chart3ChartOptions.scales.xAxes[0].display = true;
     this.chart3ChartOptions.scales.yAxes[0].stacked = false;
@@ -1238,7 +1238,7 @@ export class ProfileComponent implements OnInit {
       fontSize: 25
     },
     legend: {
-      display: true,
+      display: false,
       position: 'right',
       labels: {
             fontColor: '#73818f'
