@@ -1264,9 +1264,9 @@ export class ProfileComponent implements OnInit {
           let lowCatOff = mySetCat;
           let mediumCatOff = mySetCat * 2;
 
-          if (myValue < lowCatOff || myValue === lowCatOff ) { return 'Low Risk'}
-          if ((myValue > lowCatOff && myValue < mediumCatOff) || myValue === mediumCatOff ) { return 'Medium Risk'}
-          if (myValue > mediumCatOff) { return ['High Risk']}
+          if (myValue < lowCatOff || myValue === lowCatOff ) { return 'Low'}
+          if ((myValue > lowCatOff && myValue < mediumCatOff) || myValue === mediumCatOff ) { return 'Medium'}
+          if (myValue > mediumCatOff) { return ['High']}
         },
     }
     },

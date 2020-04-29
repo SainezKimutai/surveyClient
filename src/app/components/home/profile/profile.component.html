@@ -93,7 +93,16 @@
                         <!-- <span (click)="chart3graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="chart3Type === 'pie' ? 'active' : ''" ></fa-icon> </span> -->
                     </div>
                 </div>
-    
+                <div *ngIf="chart3Type" id="chart_key" >
+                    <div class="wrap">
+                        <div> <span class="color" style="background-color: #f86c6b;">.</span> <span class="text">High risk</span> </div>
+                        <div> <span class="color" style="background-color: #ffc107;"></span> <span class="text">Medium risk</span></div>
+                        <div> <span class="color" style="background-color: #4dbd74;"></span> <span class="text">Low risk</span></div>
+                        <div> <span class="color" style="background-color: #73818f;"></span> <span class="text">Highest Possible Level</span></div>
+                    </div>
+                   
+                </div>
+
                 <div class="body-wrapper">
                     <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
                     <canvas *ngIf="chart3Type" baseChart class="chart" [chartType]="chart3Type" [labels]="chart3Labels"
