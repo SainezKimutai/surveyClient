@@ -319,8 +319,8 @@
                      <img *ngIf="myCompany.logo.url !== ''" [src]="myCompany.logo.url" alt="logo" class="company-logo">
                 </div>
                 <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="previewCompLogo = 'sd'"></fa-icon>
-                <input *ngIf="previewCompLogo" class="edit-input" type="text" type="file" name="fileUploaded" (change)="uploadLogo($event)">
-                <button *ngIf="previewCompLogo" id="faCheck" [disabled]="previewCompLogo === ''" (click)="saveCompanyProfile()" class="save-btn">Save</button>
+                <input style="width: 5em !important;" *ngIf="editProfileSwitch && previewCompLogo" class="edit-input" type="text" type="file" name="fileUploaded" (change)="uploadLogo($event)">
+                <button *ngIf="editProfileSwitch && previewCompLogo" id="faCheck" [disabled]="previewCompLogo === ''" (click)="saveCompanyProfile()" class="save-btn">Save</button>
             </div>
 
 
@@ -331,22 +331,22 @@
                     <fa-icon [icon]="faEnvelope"></fa-icon>
                     <span *ngIf="myCompany">{{myCompany.companyEmail}}</span>           
                     <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="companyEmailInputStatus = !companyEmailInputStatus"></fa-icon>
-                    <input *ngIf="companyEmailInputStatus" class="edit-input" type="text" name="companyEmailInput" [(ngModel)]="companyEmailInput">
-                    <button *ngIf="companyEmailInputStatus" id="faCheck" [disabled]="companyEmailInput === ''" (click)="changeCompanyEmail()" class="save-btn">Save</button>
+                    <input *ngIf="editProfileSwitch && companyEmailInputStatus" class="edit-input" type="text" name="companyEmailInput" [(ngModel)]="companyEmailInput">
+                    <button *ngIf="editProfileSwitch && companyEmailInputStatus" id="faCheck" [disabled]="companyEmailInput === ''" (click)="changeCompanyEmail()" class="save-btn">Save</button>
                 </div>
                 <div class="item-info"> 
                     <fa-icon [icon]="faGlobe"></fa-icon>
                     <span *ngIf="myCompany">{{myCompany.companyWebsite}}</span>    
                     <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="companyWebsiteInputStatus = !companyWebsiteInputStatus"></fa-icon>
-                    <input *ngIf="companyWebsiteInputStatus" class="edit-input" type="text" name="companyWebsiteInput" [(ngModel)]="companyWebsiteInput">
-                    <button *ngIf="companyWebsiteInputStatus" id="faCheck" [disabled]="companyWebsiteInput === ''" (click)="changeCompanyWebsite()" class="save-btn">Save</button>
+                    <input *ngIf="editProfileSwitch && companyWebsiteInputStatus" class="edit-input" type="text" name="companyWebsiteInput" [(ngModel)]="companyWebsiteInput">
+                    <button *ngIf="editProfileSwitch && companyWebsiteInputStatus" id="faCheck" [disabled]="companyWebsiteInput === ''" (click)="changeCompanyWebsite()" class="save-btn">Save</button>
                 </div>
                 <div class="item-info"> 
                     <fa-icon [icon]="faAddressBook"></fa-icon>
                     <span *ngIf="myCompany">{{myCompany.companyAddress}}</span> 
                     <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="companyAddressInputStatus = !companyAddressInputStatus"></fa-icon>
-                    <input *ngIf="companyAddressInputStatus" class="edit-input" type="text" name="companyAddressInput" [(ngModel)]="companyAddressInput">
-                    <button *ngIf="companyAddressInputStatus" id="faCheck" [disabled]="companyAddressInput === ''" (click)="changeCompanyAddress()" class="save-btn">Save</button>
+                    <input *ngIf="editProfileSwitch && companyAddressInputStatus" class="edit-input" type="text" name="companyAddressInput" [(ngModel)]="companyAddressInput">
+                    <button *ngIf="editProfileSwitch && companyAddressInputStatus" id="faCheck" [disabled]="companyAddressInput === ''" (click)="changeCompanyAddress()" class="save-btn">Save</button>
                 </div>
 
             </div>
@@ -388,8 +388,8 @@
                 <fa-icon [icon]="faKey"></fa-icon>
                 <span>**********</span>
                 <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="userPasswordInputStatus = !userPasswordInputStatus"></fa-icon>
-                <input *ngIf="userPasswordInputStatus" class="edit-input" type="text" name="userPasswordInput" [(ngModel)]="userPasswordInput">
-                <button *ngIf="userPasswordInputStatus" id="faCheck" [disabled]="userPasswordInput === ''" (click)="changeUserPasswordInput()" class="save-btn">Save</button>
+                <input *ngIf="editProfileSwitch && userPasswordInputStatus" class="edit-input" type="text" name="userPasswordInput" [(ngModel)]="userPasswordInput">
+                <button *ngIf="editProfileSwitch && userPasswordInputStatus" id="faCheck" [disabled]="userPasswordInput === ''" (click)="changeUserPasswordInput()" class="save-btn">Save</button>
             </div>
         </div>
 

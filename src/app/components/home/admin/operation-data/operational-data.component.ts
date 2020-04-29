@@ -768,102 +768,129 @@ public trafficBgColors = [];
    // on the right
   
   
-   let surveysOnrisk = this.riskIssueArray.filter(() => true ).map(e => e.surveyName)
-   let surveyArr = Array.from( new Set(surveysOnrisk));
-   let getRisk = this.riskIssueArray.filter(() => true ).map(e => e.risk);
-   let RiskInvolved1 = Array.from( new Set(getRisk));
+  //  let surveysOnrisk = this.riskIssueArray.filter(() => true ).map(e => e.surveyName)
+  //  let surveyArr = Array.from( new Set(surveysOnrisk));
+  //  let getRisk = this.riskIssueArray.filter(() => true ).map(e => e.risk);
+  //  let RiskInvolved1 = Array.from( new Set(getRisk));
   
-   let RiskInvolved =  RiskInvolved1.reduce((unique, item) => {
-     let unique1 =  unique.filter(() => true).map(e => e.toLowerCase().replace(/ /g,''))
-     let item2 = item.toLowerCase().replace(/ /g,''); 
-     return unique1.includes(item2) ? unique : [...unique, item]
-   }, []);
+  //  let RiskInvolved =  RiskInvolved1.reduce((unique, item) => {
+  //    let unique1 =  unique.filter(() => true).map(e => e.toLowerCase().replace(/ /g,''))
+  //    let item2 = item.toLowerCase().replace(/ /g,''); 
+  //    return unique1.includes(item2) ? unique : [...unique, item]
+  //  }, []);
   
   
-   let mychart2Datasets = []
+  //  let mychart2Datasets = []
   
-   surveyArr.forEach((surveyElem) => {
-     let dataOnj = {
-       sulvey: surveyElem,
-       data : []
-     }
-     RiskInvolved.forEach((riskElm) => {
+  //  surveyArr.forEach((surveyElem) => {
+  //    let dataOnj = {
+  //      sulvey: surveyElem,
+  //      data : []
+  //    }
+  //    RiskInvolved.forEach((riskElm) => {
        
-       let getMyRisk = this.riskIssueArray.filter((r) => r.risk.toLowerCase().replace(/ /g,'') === riskElm.toLowerCase().replace(/ /g,'') && r.surveyName === surveyElem ).map(e => e)
-       let getLowRisk = getMyRisk.filter((r) => r.level === 'Low' ).map(e => e)
-       let getMediumRisk = getMyRisk.filter((r) => r.level === 'Medium' ).map(e => e)
-       let getHighRisk = getMyRisk.filter((r) => r.level === 'High' ).map(e => e)
+  //      let getMyRisk = this.riskIssueArray.filter((r) => r.risk.toLowerCase().replace(/ /g,'') === riskElm.toLowerCase().replace(/ /g,'') && r.surveyName === surveyElem ).map(e => e)
+  //      let getLowRisk = getMyRisk.filter((r) => r.level === 'Low' ).map(e => e)
+  //      let getMediumRisk = getMyRisk.filter((r) => r.level === 'Medium' ).map(e => e)
+  //      let getHighRisk = getMyRisk.filter((r) => r.level === 'High' ).map(e => e)
   
-       let totalLowRiskNum = getLowRisk.length;
-       let totalMediumRiskNum = getMediumRisk.length;
-       let totalHighRiskNum = getHighRisk.length;
+  //      let totalLowRiskNum = getLowRisk.length;
+  //      let totalMediumRiskNum = getMediumRisk.length;
+  //      let totalHighRiskNum = getHighRisk.length;
   
-       let totalPoints = ((totalLowRiskNum * 1) + (totalMediumRiskNum * 2) + (totalHighRiskNum * 3))
-       let totalRiskNum = totalLowRiskNum + totalMediumRiskNum + totalHighRiskNum
+  //      let totalPoints = ((totalLowRiskNum * 1) + (totalMediumRiskNum * 2) + (totalHighRiskNum * 3))
+  //      let totalRiskNum = totalLowRiskNum + totalMediumRiskNum + totalHighRiskNum
        
-       let finalValue = Math.round(totalPoints / totalRiskNum)
-       if(!finalValue) {finalValue = 0}
+  //      let finalValue = Math.round(totalPoints / totalRiskNum)
+  //      if(!finalValue) {finalValue = 0}
   
-       let riskObj = {
-         risk: riskElm,
-         value: finalValue
-       }
+  //      let riskObj = {
+  //        risk: riskElm,
+  //        value: finalValue
+  //      }
   
-       dataOnj.data.push(riskObj)
+  //      dataOnj.data.push(riskObj)
   
-     })
+  //    })
   
-     mychart2Datasets.push(dataOnj)
+  //    mychart2Datasets.push(dataOnj)
   
-   })
-  
-  
-   let unFilterednewRiskArray = []
-  
-   mychart2Datasets.forEach((riskData) => {
-     riskData.data.forEach((e) => unFilterednewRiskArray.push(e.risk))
-   })
-   let newRiskArray = Array.from( new Set(unFilterednewRiskArray));
-  
-   this.third2BgColors = [];
-   let newDatasetChart2 = [];
-   newRiskArray.forEach((riskItem) => {
-     let riskValuearr = []
-     mychart2Datasets.forEach((riskData) => {
-       riskData.data.forEach((r) => r.risk === riskItem ? riskValuearr.push(r.value) : '')
-  
-     })
-  
-     let sumRiskValue =  riskValuearr.reduce((a,b) => a + b, 0);
-     let totalvalue = Math.ceil(sumRiskValue / riskValuearr.length)
-       if (totalvalue === 1 ) { this.third2BgColors.push('#4dbd74'); }
-       if (totalvalue === 2 ) { this.third2BgColors.push('#ffc107'); }
-       if (totalvalue === 3 ) { this.third2BgColors.push('#f86c6b'); }
-  
-     newDatasetChart2.push(totalvalue)
-   })
+  //  })
   
   
+  //  let unFilterednewRiskArray = []
+  
+  //  mychart2Datasets.forEach((riskData) => {
+  //    riskData.data.forEach((e) => unFilterednewRiskArray.push(e.risk))
+  //  })
+  //  let newRiskArray = Array.from( new Set(unFilterednewRiskArray));
+  
+  //  this.third2BgColors = [];
+  //  let newDatasetChart2 = [];
+  //  newRiskArray.forEach((riskItem) => {
+  //    let riskValuearr = []
+  //    mychart2Datasets.forEach((riskData) => {
+  //      riskData.data.forEach((r) => r.risk === riskItem ? riskValuearr.push(r.value) : '')
+  
+  //    })
+  
+  //    let sumRiskValue =  riskValuearr.reduce((a,b) => a + b, 0);
+  //    let totalvalue = Math.ceil(sumRiskValue / riskValuearr.length)
+  //      if (totalvalue === 1 ) { this.third2BgColors.push('#4dbd74'); }
+  //      if (totalvalue === 2 ) { this.third2BgColors.push('#ffc107'); }
+  //      if (totalvalue === 3 ) { this.third2BgColors.push('#f86c6b'); }
+  
+  //    newDatasetChart2.push(totalvalue)
+  //  })
   
   
   
   
-   this.third2Type = 'line';
   
-   this.third2Labels = newRiskArray;
   
+  //  this.third2Type = 'line';
+  
+  //  this.third2Labels = newRiskArray;
+  
+  //   this.third2Datasets = [{
+  //     label: 'Risk',
+  //     data: newDatasetChart2,
+  //     backgroundColor: 'whitesmoke',
+  //     borderColor: 'gray',
+  //     borderWidth: 1.5,
+  //     pointBackgroundColor: 'transparent',
+  //     pointHoverBackgroundColor: 'transparent',
+  //     pointBorderColor: 'black',
+  //     pointHoverBorderColor: 'gray'
+  //  }];
+  
+    let threatArray =  this.riskIssueArray.filter(() => true ).map(e => e.risk);
+    let newThreatArray = Array.from(new Set(threatArray));
+
+    this.third2Type = 'bar';
+
+    this.third2Labels = newThreatArray;
+    let mythird2Datasets = [];
+    this.third2BgColors = [];
+
+    this.third2Labels.forEach((riskEl) => {
+      this.third2BgColors.push(this.getRandomColor());
+      let myArr2 = this.riskIssueArray.filter((rsk) => rsk.risk === riskEl ).map(e => e);
+      mythird2Datasets.push(myArr2.length);
+    });
+
     this.third2Datasets = [{
-      label: 'Risk',
-      data: newDatasetChart2,
-      backgroundColor: 'whitesmoke',
-      borderColor: 'gray',
-      borderWidth: 1.5,
-      pointBackgroundColor: 'transparent',
-      pointHoverBackgroundColor: 'transparent',
-      pointBorderColor: 'black',
-      pointHoverBorderColor: 'gray'
-   }];
-  
+    label: 'Risk',
+    data: mythird2Datasets,
+    backgroundColor: this.third2BgColors,
+    borderColor: 'white',
+    borderWidth: 1.5,
+    pointBackgroundColor: 'transparent',
+    pointHoverBackgroundColor: 'transparent',
+    pointBorderColor: 'white',
+    pointHoverBorderColor: 'gray'
+  }];
+
     this.third2ChartOptions = {
      title: {
        display: false,
@@ -882,15 +909,15 @@ public trafficBgColors = [];
        padding: 10
      },
      tooltips: {
-      enabled: true,
-      callbacks: {
-       label: function(tooltipItem, data) {
-         if(Number(tooltipItem.yLabel) === 3) {return 'High Risk'}
-         if(Number(tooltipItem.yLabel) === 2) {return 'Medium Risk'}
-         if(Number(tooltipItem.yLabel) === 1) {return 'Low Risk'}
-         if(Number(tooltipItem.yLabel) === 0) {return 'Not Assessed'}
-       },
-    }
+      enabled: true
+    //   callbacks: {
+    //    label: function(tooltipItem, data) {
+    //      if(Number(tooltipItem.yLabel) === 3) {return 'High Risk'}
+    //      if(Number(tooltipItem.yLabel) === 2) {return 'Medium Risk'}
+    //      if(Number(tooltipItem.yLabel) === 1) {return 'Low Risk'}
+    //      if(Number(tooltipItem.yLabel) === 0) {return 'Not Assessed'}
+    //    },
+    // }
     },
      scales: {
        yAxes: [{

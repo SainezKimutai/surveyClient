@@ -986,7 +986,8 @@ export class ProfileComponent implements OnInit {
         let totalRiskNum = totalLowRiskNum + totalMediumRiskNum + totalHighRiskNum
         
         let finalValue = Math.round(totalPoints / totalRiskNum)
-        if(!finalValue) {finalValue = 0}
+        // console.log(finalValue)
+        if(!finalValue) { finalValue = 1}
 
         let riskObj = {
           risk: riskElm,
