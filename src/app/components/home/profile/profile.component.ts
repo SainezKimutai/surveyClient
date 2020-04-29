@@ -1237,12 +1237,20 @@ export class ProfileComponent implements OnInit {
       text: 'Risk',
       fontSize: 25
     },
-    legend: {
-      display: true,
-      position: 'right',
-      labels: {
-            fontColor: '#73818f'
-          }
+    legend: { display: false },
+    legendCallback: function(chart) {
+        var legendHtml = [];
+        legendHtml.push('<ul>');
+        var item = chart.data.datasets[0];
+        for (var i=0; i < item.data.length; i++) {
+            legendHtml.push('<li>');
+            legendHtml.push('<span class="chart-legend" style="background-color:' + item.backgroundColor[i] +'"></span>');
+            legendHtml.push('<span class="chart-legend-label-text">' + item.data[i] + ' person - '+chart.data.labels[i]+' times</span>');
+            legendHtml.push('</li>');
+        }
+
+        legendHtml.push('</ul>');
+        return legendHtml.join("");
     },
     layout: {
       padding: 10
@@ -1250,6 +1258,11 @@ export class ProfileComponent implements OnInit {
     tooltips: {
       enabled: true,
       callbacks: {
+        title: function(tooltipItems, data) {
+          let dataIndex = tooltipItems[0].datasetIndex;
+          let label = data.datasets[dataIndex].label
+          return label
+        },
         label: function(tooltipItem, data) {
           let myValue = tooltipItem.yLabel
           let myDataSet = tooltipItem.label
@@ -1261,7 +1274,7 @@ export class ProfileComponent implements OnInit {
 
           if (myValue < lowCatOff || myValue === lowCatOff ) { return 'Low Risk'}
           if ((myValue > lowCatOff && myValue < mediumCatOff) || myValue === mediumCatOff ) { return 'Medium Risk'}
-          if (myValue > mediumCatOff) { return 'High Risk'}
+          if (myValue > mediumCatOff) { return ['High Risk']}
         },
     }
     },
@@ -1324,7 +1337,7 @@ export class ProfileComponent implements OnInit {
 
 
     this.onResizeStatus = true;
-    this.onResize();
+    // this.onResize();
 
   } // end of chartSectionGraphsFunction
 
