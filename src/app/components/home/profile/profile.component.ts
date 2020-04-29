@@ -1199,7 +1199,7 @@ export class ProfileComponent implements OnInit {
     pointHoverBorderColor: 'gray'
   },
   {
-    label: 'Highest Risk level',
+    label: 'Highest Possible Risk level',
     data: mychart3Datasets2,
     backgroundColor: this.chart3BgColors[1],
     borderColor: 'white',
@@ -1228,7 +1228,22 @@ export class ProfileComponent implements OnInit {
       padding: 10
     },
     tooltips: {
-      enabled: true
+      enabled: true,
+      callbacks: {
+        label: function(tooltipItem, data) {
+          let myValue = tooltipItem.yLabel
+          let myDataSet = tooltipItem.label
+          let myPosition = data.labels.indexOf(myDataSet)
+          let myHighValue = data.datasets[1].data[myPosition]
+          let mySetCat = (myHighValue / 3)
+          let lowCatOff = mySetCat;
+          let mediumCatOff = mySetCat * 2;
+
+          if (myValue < lowCatOff || myValue === lowCatOff ) { return 'Low Risk'}
+          if ((myValue > lowCatOff && myValue < mediumCatOff) || myValue === mediumCatOff ) { return 'Medium Risk'}
+          if (myValue > mediumCatOff) { return 'High Risk'}
+        },
+    }
     },
     scales: {
       yAxes: [{
