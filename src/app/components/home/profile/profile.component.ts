@@ -986,7 +986,7 @@ export class ProfileComponent implements OnInit {
         let totalRiskNum = totalLowRiskNum + totalMediumRiskNum + totalHighRiskNum
         
         let finalValue = Math.round(totalPoints / totalRiskNum)
-        if(!finalValue) {finalValue = 1}
+        if(!finalValue) {finalValue = 0}
 
         let riskObj = {
           risk: riskElm,
@@ -1073,6 +1073,7 @@ export class ProfileComponent implements OnInit {
             if(Number(tooltipItem.yLabel) === 3) {return 'High Risk'}
             if(Number(tooltipItem.yLabel) === 2) {return 'Medium Risk'}
             if(Number(tooltipItem.yLabel) === 1) {return 'Low Risk'}
+            if(Number(tooltipItem.yLabel) === 0) {return 'Not Assessed'}
           },
       }
 
@@ -1386,8 +1387,7 @@ export class ProfileComponent implements OnInit {
         let totalRiskNum = totalLowRiskNum + totalMediumRiskNum + totalHighRiskNum
         
         let finalValue = Math.round(totalPoints / totalRiskNum)
-
-        if(!finalValue) {finalValue = 1}
+        if(!finalValue) {finalValue = 0}
         dataOnj.data.push(finalValue)
 
 
@@ -1461,6 +1461,7 @@ export class ProfileComponent implements OnInit {
               if(Number(tooltipItem.yLabel) === 3) {return 'High Risk'}
               if(Number(tooltipItem.yLabel) === 2) {return 'Medium Risk'}
               if(Number(tooltipItem.yLabel) === 1) {return 'Low Risk'}
+              if(Number(tooltipItem.yLabel) === 0) {return 'Not Assessed'}
             },
         }
       },

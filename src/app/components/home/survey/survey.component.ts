@@ -128,7 +128,6 @@ export class SurveyComponent implements OnInit {
 
 
         } else {
-          this.notifyService.showInfo('shjd', 'sdhjsd');
           surv.done = 0;
           if (ind === arr.length - 1) { this.pageProgress = 100; }
         }

@@ -793,7 +793,7 @@ thirdSectionGraphsFunction() {
      let totalRiskNum = totalLowRiskNum + totalMediumRiskNum + totalHighRiskNum
      
      let finalValue = Math.round(totalPoints / totalRiskNum)
-     if(!finalValue) {finalValue = 1}
+     if(!finalValue) {finalValue = 0}
 
      let riskObj = {
        risk: riskElm,
@@ -880,6 +880,7 @@ thirdSectionGraphsFunction() {
        if(Number(tooltipItem.yLabel) === 3) {return 'High Risk'}
        if(Number(tooltipItem.yLabel) === 2) {return 'Medium Risk'}
        if(Number(tooltipItem.yLabel) === 1) {return 'Low Risk'}
+       if(Number(tooltipItem.yLabel) === 0) {return 'Not Assessed'}
      },
   }
   },
@@ -1283,94 +1284,133 @@ riskIssuesFunction() {
 
 
 
+
+
+
+
+
+
+
 openAnswersModal(companyName, surveyName, surveyId, responseId) {
   this.companyNameOnView = companyName;
   this.surveyNameOnView = surveyName;
-  this.QuestionsOnView = [];
+  this.QuestionsOnView = []
+  return new Promise((resolve, reject) => {
 
-  for (let resp of this.AllResponses) {
-   if ( resp._id === responseId) {
-    
-    resp.answers.forEach((ans) => {
-      
+        this.AllResponses.forEach((responseObj, ind1, arr1) => {
+          if(responseObj._id === responseId ) {
 
+               responseObj.answers.forEach((answr , ind2, arr2) => {
+                const question = {};
+            
+                  let quizArr = this.AllQuestions.filter((q) => q._id === answr.questionId).map(e => e)
+                  let questions = quizArr[0];
 
-      for (let quiz of this.AllQuestions) {
-       
-        if (ans.questionId === quiz._id) {
-          let theQuestions = {
-            question: quiz.question,
-            wasSkipped: false,
-            answers: []
-          };
+                  if (questions) {
+                         question['surveyId'] = responseObj.surveyId,
+                         question['open'] = questions.open_question,
+                         question['position'] = answr.position,
 
-          quiz.choices.forEach((myAns, key, arr) => {
-          
-            ans.answer.forEach((a) => {
+                         
+                        
+                         question['question'] = questions.question
+                            if(answr.answer.length == 1){
+                            
+                            
+                            answr.answer.forEach(answr => {
+                              
+                              question['answer'] = answr.answer ? answr.answer: answr;
+                              question['recom'] = answr.recom ? answr.recom: '';
+                              question['level'] = answr.level ? answr.level : '';
+                              question['threat'] = answr.threatId ? answr.threat: '';
+                            
+                              
+                               if(typeof(question['answer']) === 'object') {
+                                // Here was chnaged from 
+                                
+                                // question['answer'] = answr.answer.answer;
+                                // question['recom'] = answr.answer.recom;
+                                // question['level'] = answr.answer.level;
+                                // question['threat'] = answr.answer.threatId ?  answr.answer.threat : '';
+                                 // Here was chnaged from 
 
-              if (a.answer) {
-                
-                if (a.answer._id){
-                
-                  if (a.answer.answer === myAns.answer ) {
-                    theQuestions.answers.push({picked: true, answer: myAns.answer });
-    
-                    if (Object.is(arr.length - 1, key)) {
-                      this.QuestionsOnView.push(theQuestions);
-    
-                    }
-                  } else {
-                   
-                    if (a.answer.answer === 'Not answered') {theQuestions.wasSkipped = true; }
-                    
-                    if (a.answer.answer.includes(myAns.answer)) {  theQuestions.answers.push({picked: true, answer: myAns.answer })}
-                    if (!a.answer.answer.includes(myAns.answer)) {  theQuestions.answers.push({picked: false, answer: myAns.answer })}
-                    if (Object.is(arr.length - 1, key)) {
-    
-                      this.QuestionsOnView.push(theQuestions);
-                    }
-                  }
-                }else {
-                  if (a.answer === myAns.answer ) {
-                    theQuestions.answers.push({picked: true, answer: myAns.answer });
-    
-                    if (Object.is(arr.length - 1, key)) {
-                      this.QuestionsOnView.push(theQuestions);
-    
-                    }
-                  } else {
-                    if (a.answer.includes(myAns.answer)) {  theQuestions.answers.push({picked: true, answer: myAns.answer })}
-                    if (!a.answer.includes(myAns.answer)) {  theQuestions.answers.push({picked: false, answer: myAns.answer })}
-                    if (a.answer === 'Not answered') {theQuestions.wasSkipped = true; }
+                                // to 
+                                question['answer'] = answr.answer ? answr.answer.answer: answr.answer;
+                                question['recom'] = answr.recom;
+                                question['level'] = answr.level;
+                                question['threat'] = answr.threatId ?  answr.threat : '';
+                                
+                               }
+                              });
+
+                              this.QuestionsOnView.push(question)
+                               
+                            
+                          
+                            };
+                            if(answr.answer.length>1){
+
+                                  question['answer'] = '';
+                                  question['recom'] = '';
+                                  question['level'] = '';
+                                  question['threat'] = '';
+
+                                  for(var i =0; i < answr.answer.length ; i++){
+                                    
+
+                                    question['answer'] = answr.answer[i].answer ? question['answer'] +" "+answr.answer[i].answer: '';
+                                    question['recom'] = answr.answer[i].recom ? question['recom'] + " " + answr.answer[i].recom: '';
+                                    question['level'] = answr.answer[i].level ? question['level'] + " " + answr.answer[i].level : '';
+                                  
+                                    
+                                    if(i === answr.answer.length-1){
+                                    this.QuestionsOnView.push(question);
+                                    }
+                                  }
                   
-                    if (Object.is(arr.length - 1, key)) {
-                     
-                      this.QuestionsOnView.push(theQuestions);
-                    }
+                            }
+                          // check for last loop
+                          if ((ind1 === arr1.length - 1) && (ind2 === arr2.length - 1)){
+                          
+                            resolve();
+                            this.viewAnswersModal.show();
+                       
+                          }
                   }
+              }); // responseObj.answers.forEach(answr => {
+
+                resolve();
+                this.viewAnswersModal.show();
+
+          }
+        });   // data.forEach(responseObj => {
+      
   
-                }
-              }
 
 
-
-
-            });
-
-          });
-
-          // break;
-        }
-      }
-
-    });
-    // break;
-   }
- }
-
-
-  this.viewAnswersModal.show();
+});
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1400,7 +1440,7 @@ checkSurveyProgress(surveyId, responseId) {
     if ( ind2 === arr2.length - 1) {
 
 
-      let myCompletionValue = Number((( Number(allAnswersNumber) * 100 ) / Number(allQuizs.length)).toFixed(0));
+      let myCompletionValue = Number((( Number(allAnswersNumber) * 100 ) / Number(allQuizs3.length)).toFixed(0));
 
       this.surveyStatus = Number(myCompletionValue);
 

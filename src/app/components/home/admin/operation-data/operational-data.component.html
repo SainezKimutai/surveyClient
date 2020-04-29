@@ -460,7 +460,7 @@
             <div class="modal-content">
                 <div class="modal-header ">
                     <h4 class="modal-title ">Responses of <span>{{companyNameOnView}}</span> on
-                        <span>{{surveyNameOnView}} survey</span>: 
+                        <span>{{surveyNameOnView}} survey</span>
                     </h4>
                     <button type="button" class="btn close" (click)="viewAnswersModal.hide()" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -473,16 +473,24 @@
                 </div>
                 <div class="modal-body">
 
-                    <div class="question-wrap" *ngFor="let item of QuestionsOnView; let x = index">
-
-                        <div [ngClass]="item.wasSkipped ? 'question skipped' : 'question'"> <span class="num">{{x+1}})</span> {{item.question}} <span class="skip" *ngIf="item.wasSkipped">skipped</span> </div>
-
-                        <div class="answer-wrap">
-                            <div *ngFor="let ans of item.answers" [ngClass]="ans.picked ? 'answer picked' : 'answer'"
-                                class="answer">{{ans.answer}}</div>
+                    <div class="question-wrap"  *ngFor="let item of QuestionsOnView; let i = index" id="quiz{{i}}" >
+                        <div class="question d-flex w-100">{{i+1}}. {{item.question}}</div>
+                        <div class="choices-wrapper">
+                        <div class="choices answer">
+                            <span>{{item.answer}}</span>
                         </div>
-
+                        <div class="choices recom" *ngIf="item.level">
+                            <span>Mapped Risk: <span class="span-inner">{{item.threat}}</span> </span>
+                        </div>
+                        <div class="choices threat" *ngIf="item.level">
+                            <span>Threat Level: <span class="{{item.level}}">{{item.level}}</span> </span>
+                        </div>
+                        <div class="choices recom" *ngIf="item.recom">
+                            <span>Recommendation: <span class="span-inner">{{item.recom}}</span> </span>
+                        </div>
+                        </div>
                     </div>
+
 
 
                 </div>

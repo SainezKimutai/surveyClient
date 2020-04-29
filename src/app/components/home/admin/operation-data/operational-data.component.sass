@@ -862,54 +862,100 @@
             border: none
 
 
-            .question-wrap
+
+.viewAnswersModal .modal-content .modal-body .question-wrap
+    background-color: white
+    margin: 4px 0
+    padding: 5px 1em
+    min-height: 4em
+    height: fit-content
+
+    &:hover
+        // background-color: colorTheme(secondaryTheme)
+        // color: white
+
+    .question
+        font-size: 12px
+        font-weight: bold
+
+    .choices-wrapper
+        width: 100%
+        padding: 1em
+        border-radius: 5px
+        background-color: grayColor(g100) 
+
+        .choices
+            width: 100%   
+            margin: 0 0 12px 0
+
+            &.answer        
+                border-radius: 3px
+                width: fit-content
+                font-weight: bold
+
+            &.threat
+                border-radius: 3px
+                width: fit-content
+                
+
+                span 
+                    display: flex
+                    flex-direction: column
+                    font-style: italic
+
+                    .span-inner
+                        font-style: normal
+                        margin: 0 0 0 1em
+                        border-radius: 0px
+                        padding: .4em .7em
+                        border-left: solid 4px orange
+                    .Low
+                        font-style: normal
+                        margin: 0 0 0 1em
+                        border-radius: 0px
+                        padding: .4em .7em
+                        border-left: solid 4px colorTheme(success)
+                    .Medium
+                        font-style: normal
+                        margin: 0 0 0 1em
+                        border-radius: 0px
+                        padding: .4em .7em
+                        border-left: solid 4px orange
+                    .High
+                        font-style: normal
+                        margin: 0 0 0 1em
+                        border-radius: 0px
+                        padding: .4em .7em
+                        border-left: solid 4px red
+
+
+            &.recom
+                border-radius: 3px
+                width: fit-content
+                
+
+                span 
+                    display: flex
+                    flex-direction: column
+                    font-style: italic
+
+                    .span-inner
+                        font-style: normal
+                        margin: 0 0 0 1em
+                        border-radius: 0px
+                        padding: .4em .7em
+                        border-left: solid 4px colorTheme(secondaryTheme)
+
+
+            span 
+                font-size: 12px
                 width: 100%
-                padding: 1em
-                border-radius: 5px
-                margin: 0 0 2em 0
-
-                .question
-                    font-size: 13px
-                    color: black
-                    margin: 0 0 .5em 0
-
-                    .num 
-                        font-size: 10px
-                        margin-right: .5em
-                    
-                    &.skipped 
-                        font-style: italic
-                        color: grayColor(g600)
-
-                        .skip 
-                            color: colorTheme(warning)
-                            font-style: 12px
-
-                .answer-wrap
-                    width: 100%
-                    display: grid
-                    grid-template-columns: repeat(2, 1fr)
-                    grid-gap: 10px
-                    padding: 0 0 0 1em
+                margin: 0 1em
 
 
-                    .answer
-                        width: 100%
-                        overflow: hidden
-                        text-overflow: ellipsis
-                        display: block
-                        padding: 2px
-                        font-size: 12px
-                        padding: 5px
-                        border: solid 1px grayColor(g100)
-                        border-radius: 5px
-                        font-style: italic
 
-                        &.picked
-                            background-color: colorTheme(info)
-                            color: white
 
-                    
+
 
 
 
