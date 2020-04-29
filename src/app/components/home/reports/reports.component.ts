@@ -592,7 +592,7 @@ this.AllSurveys.forEach((surveyElem) => {
     
     let finalValue = Math.round(totalPoints / totalRiskNum)
 
-    if(!finalValue) {finalValue = 1}
+    if(!finalValue) {finalValue = 0}
     dataOnj.data.push(finalValue)
 
   })
@@ -666,7 +666,7 @@ this.chart3BgColors = []
        enabled: true,
        callbacks: {
          label(tooltipItem, data) {
-
+           if (tooltipItem.yLabel === 0) {return 'Not Assessed'}
            if (tooltipItem.yLabel === 1 ) { return 'Low'; }
            if (tooltipItem.yLabel === 2 ) { return 'Medium'; }
            if (tooltipItem.yLabel === 3 ) { return 'High'; }
