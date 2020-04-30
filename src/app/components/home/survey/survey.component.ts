@@ -75,6 +75,7 @@ export class SurveyComponent implements OnInit {
 
               this.AllResponses = dataRsp;
               this.pageProgress = 75;
+              if (this.AllResponses.length === 0) { this.pageProgress = 100; }
               resolve();
 
               },
@@ -94,6 +95,7 @@ export class SurveyComponent implements OnInit {
 
 
   checkForCompletedSurveys() {
+
      this.AllSurveys =  this.AllSurveys.filter((surv, ind, arr) => {
         let myResponses = this.AllResponses.filter((r) => r.surveyId === surv._id).map(e => e);
         if (myResponses.length > 0) {
@@ -130,7 +132,9 @@ export class SurveyComponent implements OnInit {
         } else {
           surv.done = 0;
           if (ind === arr.length - 1) { this.pageProgress = 100; }
+
         }
+        this.pageProgress = 100;
         return true;
       }).map( e => e);
 
