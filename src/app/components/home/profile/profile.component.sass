@@ -625,7 +625,7 @@
         
 
         
-    .wrap-two
+    .wrap-one
         text-align: center
         width: 100%
         display: flex
@@ -682,13 +682,20 @@
         text-align: left
         margin: 0 0 1em 0
 
+        .title
+            font-size: 12px
+            font-weight: bold
+            width: 15em
+
+
         fa-icon
             font-size: 12px
-            margin: 0 1em 0 0 
+            margin: 0 1em 0 1em 
             
 
         span 
             font-size: 12px
+            margin-right: 1em
 
 
 .body-section .profile-section .personal-info
@@ -791,8 +798,72 @@
                             background-color: colorTheme(info)
                             color: white
 
-     
-                    
+.department-section
+    width: 100%
+
+    .head 
+        padding: .5em
+        background-color: grayColor(g200)
+        width: 100%
+        display: flex
+
+        h4 
+            font-size: 14px
+            margin-right: auto
+            font-weight: bold
+
+        .wrap
+            margin-left: auto
+            height: 1em
+            width: 1em
+            color: grayColor(g300)
+            border-radius: 50%
+            padding: .2em 0 0 .5em
+            cursor: pointer
+
+
+            fa-icon 
+                font-size: 14px
+                color: colorTheme(success)
+          
+    .body-wrap-dp
+        width: 100%
+    
+           
+        .item-list
+            padding: .5em
+            background-color: whitesmoke
+            width: 100%
+            display: flex
+            margin: 0 0 .5em 0
+
+            span 
+                font-size: 14px
+                margin-right: auto
+                width: 100%
+
+
+            .wrap-item
+                margin-left: auto 
+                text-align: right
+                
+
+                fa-icon 
+                    margin: 0 1em 0 0
+                    font-size: 12px
+                    margin-left: auto 
+                    color: grayColor(g300)
+                    cursor: pointer
+
+                    &:hover
+
+                        &.fa-edit
+                            color: colorTheme(primary)
+
+                        &.fa-delete
+                            color: colorTheme(danger)
+    
+
 
 
 

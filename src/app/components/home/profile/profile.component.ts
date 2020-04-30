@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { faBuilding, faFire, faComment, faEnvelope, faKey , faGlobe , faAddressBook,
   faEdit, faCheck, faListAlt, faBookReader, faTrash, faChartLine, faChartBar, faChartPie,
-  faArrowCircleRight, faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons';
+  faArrowCircleRight, faArrowCircleLeft, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
@@ -13,6 +13,7 @@ import { dev } from 'src/app/shared/dev/dev';
 import { ModalDirective } from 'ngx-bootstrap';
 import { ThreatService } from 'src/app/shared/services/threats.service';
 import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
+import { IndustryService } from 'src/app/shared/services/industry.service';
 
 @Component({
   selector: 'app-profile',
@@ -32,7 +33,8 @@ export class ProfileComponent implements OnInit {
     private responseService: ResponseService,
     private fileUploadServcie: FileUploadService,
     private threatService: ThreatService,
-    private threatCategoryService: ThreatCategoryService
+    private threatCategoryService: ThreatCategoryService,
+    private industryService: IndustryService
 
   ) { }
   @ViewChild('viewAnswersModal', {static: true, }) viewAnswersModal: ModalDirective;
@@ -68,6 +70,7 @@ export class ProfileComponent implements OnInit {
     public faChartLine = faChartLine;
     public faChartBar = faChartBar;
     public faChartPie = faChartPie;
+    public faPlus = faPlus;
 
     public AllUsers = [];
     public AllCompanies = [];
@@ -76,24 +79,27 @@ export class ProfileComponent implements OnInit {
     public AllResponses = [];
     public AllThreats = [];
     public AllThreatCategorys = [];
+    public AllIndustrys = []
 
     public riskIssueArray = [];
     public riskIssueArrayUnsorted = [];
 
     public loggedUserEmail = '';
     public myCompany;
-
+    public MyUserName = '---';
 
     public companyNameInputStatus = false;
     public companyNameInput = '';
     public companyAboutInputStatus = false;
     public companyAboutInput = '';
-    public companyEmailInputStatus = false;
-    public companyEmailInput = '';
+    public companyTypeInputStatus = false;
+    public companyTypeInput = '';
     public companyWebsiteInputStatus = false;
     public companyWebsiteInput = '';
-    public companyAddressInputStatus = false;
-    public companyAddressInput = '';
+    public myUserNameInputStatus = false;
+    public myUserNameInput = '';
+    public numberOfEmployeesInputStatus = false;
+    public numberOfEmployeesInput = '';
     public userPasswordInputStatus = false;
     public userPasswordInput = '';
     public previewCompLogo = null;
@@ -193,12 +199,18 @@ export class ProfileComponent implements OnInit {
     this.userService.getAllUsers().subscribe(
       dataUser => {
         this.AllUsers = dataUser;
+        this.AllUsers.forEach((u) => {
+          if(u._id === localStorage.getItem('loggedUserID') ) {
+            this.MyUserName = u.name;
+          }
+        })
         this.chartsProgress = 10;
 
         this.companyProfileService.getAllCompanyProfiles().subscribe(
           dataComp => {
             this.AllCompanies = dataComp;
             for (const comp of this.AllCompanies) { if (comp._id === localStorage.getItem('loggedCompanyId')) { this.myCompany = comp; break; }}
+
             this.chartsProgress = 20;
 
             this.surveyService.getAllSurveys().subscribe(
@@ -221,10 +233,34 @@ export class ProfileComponent implements OnInit {
                           this.AllThreatCategorys = dataTrtCat;
                           this.chartsProgress = 60;
 
-                          this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
-                            data => {this.AllResponses = data; resolve(); this.chartsProgress = 70; },
-                            error => console.log('Error geting all Responses')
-                          );
+                          this.industryService.getAllIndustrys().subscribe(
+                            data => {
+                              this.AllIndustrys = data;
+
+                              this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
+                                data => {
+                                  
+                                  this.AllResponses = data; 
+                                  
+                                  for(let user of this.AllUsers) {
+                                    
+                                    if (user._id === this.myCompany.institutionId) {
+                                      this.myCompany.institutionName = user.name
+                                    }
+                                  }
+                             
+                                  
+                                  this.chartsProgress = 70;
+                                  resolve(); 
+                                },
+                                error => console.log('Error geting all Responses')
+                              );
+
+                            },
+                            error => console.log('Cannot get all Industries')
+                          )
+
+                       
 
                         },
                         error => console.log('Error geting all threats')
@@ -296,77 +332,19 @@ export class ProfileComponent implements OnInit {
     );
   }
 
-  changeCompanyAbout() {
-    this.companyProfileService.updateCompanyProfile( localStorage.getItem('loggedCompanyId'), {companyAbout: this.companyAboutInput}).subscribe(
-      data => {
-        this.updatePage();
-        this.companyAboutInput = '';
-        this.companyAboutInputStatus = false;
-        this.notifyService.showSuccess('Saved', 'Success');
-      },
-      error => this.notifyService.showError('Could not save', 'Failed')
-    );
-  }
 
 
-  uploadLogo(fileInputOne) {
-    this.myCompLogo =  fileInputOne.target.files[0] as File;
-    const fileReader = new FileReader();
-    fileReader.onload = (e) => {
-      this.previewCompLogo = fileReader.result;
-    },
-    fileReader.readAsDataURL(this.myCompLogo);
-  }
 
-  saveCompanyProfile() {
-    // tslint:disable-next-line: new-parens
+  changeCompanyType() {
     this.ImprintLoader = true;
-    const formData = new FormData;
-    formData.append('fileUploaded', this.myCompLogo, this.myCompLogo.name);
-
-    this.fileUploadServcie.uploadCompanyLogo(formData).subscribe(
+    this.companyProfileService.updateCompanyProfile( localStorage.getItem('loggedCompanyId'), {companyType: this.companyTypeInput}).subscribe(
       data => {
-        const logoData = {
-          url: `${dev.connect}static/images/companyProfileImages/${data.imageName}`,
-          name: data.imageName
-        };
+        this.myCompany = data;
         this.ImprintLoader = false;
-        if (this.myCompany.logo.url !== '' ) { this.removeLogo(this.myCompany.logo.name ); }
-
-        this.companyProfileService.updateCompanyProfile( localStorage.getItem('loggedCompanyId'), {logo: logoData}).subscribe(
-          dataU => {
-            this.updatePage();
-            this.previewCompLogo = null;
-            this.notifyService.showSuccess('Saved', 'Success');
-            this.ImprintLoader = false;
-          },
-          error => {this.notifyService.showError('Could not save', 'Failed'); this.ImprintLoader = false;}
-        );
-
-
-
-      },
-      error => {
-        this.notifyService.showError('Could not upload Picture', 'Failed');
-        this.ImprintLoader = false;
-      }
-    );
-
-  }
-
-
-  removeLogo(name) {
-    this.fileUploadServcie.removeCompanyLogo(name).subscribe(data => '', error => 'Erro deleting log');
-  }
-
-  changeCompanyEmail() {
-
-    this.companyProfileService.updateCompanyProfile( localStorage.getItem('loggedCompanyId'), {companyEmail: this.companyEmailInput}).subscribe(
-      data => {
-        this.updatePage();
-        this.companyEmailInput = '';
-        this.companyEmailInputStatus = false;
+        this.companyTypeInput = '';
+        this.companyTypeInputStatus = false;
         this.notifyService.showSuccess('Saved', 'Success');
+
       },
       error => this.notifyService.showError('Could not save', 'Failed')
     );
@@ -375,38 +353,62 @@ export class ProfileComponent implements OnInit {
 
 
   changeCompanyWebsite() {
+    this.ImprintLoader = true;
     this.companyProfileService.updateCompanyProfile( localStorage.getItem('loggedCompanyId'), {companyWebsite: this.companyWebsiteInput}).subscribe(
       data => {
-        this.updatePage();
+        this.myCompany = data;
+        this.ImprintLoader = false;
         this.companyWebsiteInput = '';
         this.companyWebsiteInputStatus = false;
         this.notifyService.showSuccess('Saved', 'Success');
+
       },
       error => this.notifyService.showError('Could not save', 'Failed')
     );
   }
 
 
-  changeCompanyAddress() {
-    this.companyProfileService.updateCompanyProfile( localStorage.getItem('loggedCompanyId'), {companyAddress: this.companyAddressInput}).subscribe(
+  changeNumberOfEmployees() {
+    this.ImprintLoader = true;
+    this.companyProfileService.updateCompanyProfile( localStorage.getItem('loggedCompanyId'), {numberOfEmployees: this.numberOfEmployeesInput}).subscribe(
       data => {
-        this.updatePage();
-        this.companyAddressInput = '';
-        this.companyAddressInputStatus = false;
+        this.myCompany = data;
+        this.ImprintLoader = false;
+        this.numberOfEmployeesInput = '';
+        this.numberOfEmployeesInputStatus = false;
         this.notifyService.showSuccess('Saved', 'Success');
+
       },
       error => this.notifyService.showError('Could not save', 'Failed')
     );
   }
+
+  changeMyUserName() {
+    this.ImprintLoader = true;
+    this.userService.updateUsers( localStorage.getItem('loggedUserID'), {name: this.myUserNameInput}).subscribe(
+      data => {
+
+        this.ImprintLoader = false;
+        this.myUserNameInput = '';
+        this.myUserNameInputStatus = false;
+        this.MyUserName = data.name;
+        this.notifyService.showSuccess('Saved', 'Success');
+
+      },
+      error => this.notifyService.showError('Could not save', 'Failed')
+    );
+  }
+
 
 
   changeUserPasswordInput() {
-
+    this.ImprintLoader = true;
     if ( this.userPasswordInput.toString().length < 4 ) {this.notifyService.showWarning('Should be more than 4 characters', 'Week Password'); } else {
 
     this.userService.updateUsers( localStorage.getItem('loggedUserID'), {password: this.userPasswordInput}).subscribe(
       data => {
         this.userPasswordInput = '';
+        this.ImprintLoader = false;
         this.userPasswordInputStatus = false;
         this.notifyService.showSuccess('Saved', 'Success');
       },
@@ -528,6 +530,7 @@ export class ProfileComponent implements OnInit {
 
 
   saveDepartment() {
+    this.ImprintLoader = true;
     if (this.myCompany.department) {
 
       if (this.departmentInputId === '') {
@@ -535,12 +538,12 @@ export class ProfileComponent implements OnInit {
 
         this.companyProfileService.updateCompanyProfile(this.myCompany._id, {department: this.myCompany.department}).subscribe(
           data => {
-            this.updatePage().then(() => {
-              this.departmentInput = '';
-              this.departmentInputId = '';
-              this.notifyService.showSuccess('Department Created', 'Success');
-              this.departmentFormModal.hide();
-            });
+            this.ImprintLoader = false;
+            this.myCompany = data;
+            this.departmentInput = '';
+            this.departmentInputId = '';
+            this.notifyService.showSuccess('Department Created', 'Success');
+            this.departmentFormModal.hide();
           },
           error => this.notifyService.showError('Could not create department', 'Failed')
         );
@@ -551,12 +554,12 @@ export class ProfileComponent implements OnInit {
 
             this.companyProfileService.updateCompanyProfile(this.myCompany._id, {department: this.myCompany.department}).subscribe(
               data => {
-                this.updatePage().then(() => {
-                  this.departmentInput = '';
-                  this.departmentInputId = '';
-                  this.notifyService.showSuccess('Department Created', 'Success');
-                  this.departmentFormModal.hide();
-                });
+                this.ImprintLoader = false;
+                this.myCompany = data;
+                this.departmentInput = '';
+                this.departmentInputId = '';
+                this.notifyService.showSuccess('Department Created', 'Success');
+                this.departmentFormModal.hide();
               },
               error => this.notifyService.showError('Could not create department', 'Failed')
             );
@@ -575,12 +578,12 @@ export class ProfileComponent implements OnInit {
       const newDepartment = [{departmentName: this.departmentInput}];
       this.companyProfileService.updateCompanyProfile(this.myCompany._id, {department: newDepartment}).subscribe(
         data => {
-          this.updatePage().then(() => {
-            this.departmentInput = '';
-            this.departmentInputId = '';
-            this.notifyService.showSuccess('Department Created', 'Success');
-            this.departmentFormModal.hide();
-          });
+          this.ImprintLoader = false;
+          this.myCompany = data;
+          this.departmentInput = '';
+          this.departmentInputId = '';
+          this.notifyService.showSuccess('Department Created', 'Success');
+          this.departmentFormModal.hide();
         },
         error => this.notifyService.showError('Could not create department', 'Failed')
       );
@@ -598,7 +601,7 @@ export class ProfileComponent implements OnInit {
 
 
   deleteDepartment(id) {
-
+    this.ImprintLoader = true;
     const findUser = this.AllUsers.filter((user) => (user.departmentId === id && user.companyId === this.myCompany._id)).map(e => e);
 
     if (findUser.length > 0) {
@@ -610,12 +613,12 @@ export class ProfileComponent implements OnInit {
 
       this.companyProfileService.updateCompanyProfile(this.myCompany._id, {department: filterDepartment}).subscribe(
         data => {
-          this.updatePage().then(() => {
-            this.departmentInput = '';
-            this.departmentInputId = '';
-            this.notifyService.showSuccess('Department deleted', 'Success');
-            this.departmentFormModal.hide();
-          });
+          this.ImprintLoader = false;
+          this.myCompany = data;
+          this.departmentInput = '';
+          this.departmentInputId = '';
+          this.notifyService.showSuccess('Department Deleted', 'Success');
+          this.departmentFormModal.hide();
         },
         error => this.notifyService.showError('Could not delete department', 'Failed')
       );
