@@ -13,7 +13,13 @@
     min-height: 550px
     padding: 1em
     display: flex
+    -webkit-display: flex
+    -moz-display: flex
+    -ms-display: flex
     flex-direction: column
+    -webkit-flex-direction: column
+    -moz-flex-direction: column
+    -ms-flex-direction: column
 
     @include desktop_sm
       height: 600px
@@ -50,8 +56,8 @@
       text-align: center
 
       h4 
-        font-size: 32px
-        font-weight: bold
+        font-size: 22px
+        font-weight: 900
         color: white
         text-transform: uppercase
 
@@ -63,7 +69,12 @@
     height: 100%
     background-color: transparent
     width: 100%
+    -webkit-transform: translateY(-13em)
+    -moz-transform: translateY(-13em)
+    -ms-transform: translateY(-13em)
+    -o-transform: translateY(-13em)
     transform: translateY(-13em)
+
     padding: 0 1em
     display: flex
 
@@ -87,6 +98,10 @@
   color: black
   margin: 1em 0 1em 0
   text-transform: uppercase
+  -webkit-text-transform: uppercase
+  -moz-text-transform: uppercase
+  -ms-text-transform: uppercase
+  -o-text-transform: uppercase
 
 .main .main-body .inner-body-wrap p
   font-size: 13px
@@ -100,6 +115,10 @@
   color: black
   display: flex
   flex-direction: column
+  -webkit-text-transform: uppercase
+  -moz-text-transform: uppercase
+  -ms-text-transform: uppercase
+  -o-text-transform: uppercase
 
 
   .text-a 
@@ -110,6 +129,7 @@
   ul 
 
     li 
+      list-style: none
       font-size: 13px
 
       &::first-letter
@@ -120,6 +140,7 @@
 
 .main .main-body .inner-body-wrap ol
     li 
+      list-style: none
       font-size: 13px
       margin: .5em 0
 
@@ -129,6 +150,7 @@
 
 .main .main-body .inner-body-wrap ul
     li 
+      list-style: none
       font-size: 13px
       margin: .5em 0
 
