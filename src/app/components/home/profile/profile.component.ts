@@ -321,9 +321,11 @@ export class ProfileComponent implements OnInit {
 
 
   changeCompanyName() {
+    this.ImprintLoader = true;
     this.companyProfileService.updateCompanyProfile( localStorage.getItem('loggedCompanyId'), {companyName: this.companyNameInput}).subscribe(
       data => {
-        this.updatePage();
+        this.myCompany = data;
+        this.ImprintLoader = false;
         this.companyNameInput = '';
         this.companyNameInputStatus = false;
         this.notifyService.showSuccess('Saved', 'Success');

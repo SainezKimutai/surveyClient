@@ -322,48 +322,72 @@
 
                 <div class="item-info"> 
                     <div class="title"> Company Type </div>
-                    <span *ngIf="myCompany">{{myCompany.companyType}}</span>           
+                    <div class="w-100 v-wrap d-flex">
+                    <span *ngIf="myCompany">{{myCompany.companyType}}</span>     
+                    </div>      
                     <!-- <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="companyTypeInputStatus = !companyTypeInputStatus"></fa-icon>
                     <input *ngIf="editProfileSwitch && companyTypeInputStatus" class="edit-input" type="text" name="companyTypeInput" [(ngModel)]="companyTypeInput">
                     <button *ngIf="editProfileSwitch && companyTypeInputStatus" id="faCheck" [disabled]="companyTypeInput === ''" (click)="changeCompanyType()" class="save-btn">Save</button> -->
                 </div>
                 <div class="item-info"> 
                     <div class="title">Associate Inst</div>
+                    <div class="w-100 v-wrap d-flex">
                     <span *ngIf="myCompany && myCompany.institutionName">{{myCompany.institutionName}}</span>  
                     <span *ngIf="myCompany && !myCompany.institutionName">---</span>    
+                    </div>
                 </div>
 
                 <div class="item-info"> 
                     <div class="title">No. Of Employees </div>
-                    <span *ngIf="myCompany">{{myCompany.numberOfEmployees}}</span> 
-                    <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="numberOfEmployeesInputStatus = !numberOfEmployeesInputStatus"></fa-icon>
-                    <input *ngIf="editProfileSwitch && numberOfEmployeesInputStatus" class="edit-input" type="text" name="numberOfEmployeesInput" [(ngModel)]="numberOfEmployeesInput">
-                    <button *ngIf="editProfileSwitch && numberOfEmployeesInputStatus" id="faCheck" [disabled]="numberOfEmployeesInput === ''" (click)="changeNumberOfEmployees()" class="save-btn">Save</button>
+                    <div class="w-100 v-wrap d-flex">
+                        <span *ngIf="myCompany">{{myCompany.numberOfEmployees}}</span> 
+                        <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="numberOfEmployeesInputStatus = !numberOfEmployeesInputStatus"></fa-icon>
+                    </div>
+                    <div class="w-100 d-flex">
+                        <input *ngIf="editProfileSwitch && numberOfEmployeesInputStatus" class="edit-input" type="text" name="numberOfEmployeesInput" [(ngModel)]="numberOfEmployeesInput">
+                        <button *ngIf="editProfileSwitch && numberOfEmployeesInputStatus" id="faCheck" [disabled]="numberOfEmployeesInput === ''" (click)="changeNumberOfEmployees()" class="save-btn">Save</button>
+                    </div>
+                 
+                   
                 </div>
                 <div class="item-info"> 
                     <div class="title">Website</div>
+                    <div class="w-100 v-wrap d-flex">
                     <span *ngIf="myCompany">{{myCompany.companyWebsite}}</span>    
                     <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="companyWebsiteInputStatus = !companyWebsiteInputStatus"></fa-icon>
+                    </div>
+                    <div class="w-100 d-flex">
                     <input *ngIf="editProfileSwitch && companyWebsiteInputStatus" class="edit-input" type="text" name="companyWebsiteInput" [(ngModel)]="companyWebsiteInput">
                     <button *ngIf="editProfileSwitch && companyWebsiteInputStatus" id="faCheck" [disabled]="companyWebsiteInput === ''" (click)="changeCompanyWebsite()" class="save-btn">Save</button>
+                    </div>
                 </div>
                 <div class="item-info"> 
                     <div class="title">Username </div>
+                    <div class="w-100 v-wrap d-flex">
                     <span *ngIf="myCompany">{{MyUserName}}</span>    
                     <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="myUserNameInputStatus = !myUserNameInputStatus"></fa-icon>
+                    </div>
+                    <div class="w-100 d-flex">
                     <input *ngIf="editProfileSwitch && myUserNameInputStatus" class="edit-input" type="text" name="myUserNameInput" [(ngModel)]="myUserNameInput">
                     <button *ngIf="editProfileSwitch && myUserNameInputStatus" id="faCheck" [disabled]="myUserNameInput === ''" (click)="changeMyUserName()" class="save-btn">Save</button>
+                    </div>
                 </div>
                 <div class="item-info"> 
                     <div class="title">Email </div>
+                    <div class="w-100 v-wrap d-flex">
                     <span *ngIf="myCompany">{{loggedUserEmail}}</span>
+                    </div>
                 </div>
                 <div class="item-info"> 
                     <div class="title">Password </div>
+                    <div class="w-100 v-wrap d-flex">
                     <span *ngIf="myCompany">**********</span>
                     <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="userPasswordInputStatus = !userPasswordInputStatus"></fa-icon>
+                    </div>
+                    <div class="w-100 d-flex">
                     <input *ngIf="editProfileSwitch && userPasswordInputStatus" class="edit-input" type="text" name="userPasswordInput" [(ngModel)]="userPasswordInput">
                     <button *ngIf="editProfileSwitch && userPasswordInputStatus" id="faCheck" [disabled]="userPasswordInput === ''" (click)="changeUserPasswordInput()" class="save-btn">Save</button>
+                    </div>
                 </div>
 
             </div>
