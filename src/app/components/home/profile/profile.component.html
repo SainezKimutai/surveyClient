@@ -390,8 +390,8 @@
 
             <div  class="item-list" *ngFor="let item of myCompany.department">
                 <span>{{item.departmentName}}</span>
-                <span class="wrap-item">
-                    <fa-icon class="fa-edit"  (click)="editProfile(item)" [icon]="faEdit"></fa-icon>
+                <span *ngIf="editProfileSwitch" class="wrap-item">
+                    <fa-icon  class="fa-edit"  (click)="editProfile(item)" [icon]="faEdit"></fa-icon>
                     <fa-icon class="fa-delete"  (click)="deleteDepartment(item._id)" [icon]="faTrash"></fa-icon>
                 </span>
               
