@@ -20,9 +20,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   ) { }
 
   @ViewChild('infoModal', {static: true}) infoModal: ModalDirective;
-  @ViewChild('#email', {static: false}) emailInput: ElementRef;
-  @ViewChild('#password', {static: false}) passwordInput: ElementRef;
-
   // loader
   public ImprintLoader = false;
 
