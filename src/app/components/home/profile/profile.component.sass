@@ -815,30 +815,41 @@
     width: 100%
 
     .head 
-        padding: .5em
         background-color: grayColor(g200)
         width: 100%
         display: flex
+        align-items: stretch
 
         h4 
+            padding: 1em .5em
             font-size: 14px
             margin-right: auto
             font-weight: bold
             color: teal
+            display: flex
+            align-items: center
 
         .wrap
-            margin-left: auto
-            height: 1em
-            width: 1em
-            color: grayColor(g300)
+            margin: auto 1em auto auto
+            height: 2em
+            width: 2em
+            background-color: grayColor(g100)
             border-radius: 50%
-            padding: .2em 0 0 .5em
             cursor: pointer
-
+            display: flex
+            align-items: center
 
             fa-icon 
+                margin: auto
                 font-size: 14px
                 color: colorTheme(success)
+
+            &:hover
+                background-color: colorTheme(success)
+                
+                fa-icon 
+                    color: grayColor(g100)
+
           
     .body-wrap-dp
         width: 100%
