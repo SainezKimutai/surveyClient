@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { faEnvelope, faKey, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { faEnvelope, faKey, faTimes, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from 'src/app/shared/services/user.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { Router } from '@angular/router';
@@ -20,6 +20,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   ) { }
 
   @ViewChild('infoModal', {static: true}) infoModal: ModalDirective;
+  @ViewChild('#email', {static: false}) emailInput: ElementRef;
+  @ViewChild('#password', {static: false}) passwordInput: ElementRef;
 
   // loader
   public ImprintLoader = false;
@@ -28,8 +30,15 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   public faEnvelope = faEnvelope;
   public faKey = faKey;
   public faTimes = faTimes;
+  public faEyeSlash = faEyeSlash;
+  public faEye = faEye;
 
   public loginForm;
+
+
+  public emailError = false;
+  public passwordError = false;
+  public PasswordType = 'password';
 
 
   ngOnInit() {
@@ -46,7 +55,56 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
 
+
+
+
+
+
+
+
+
+  showPassword() {
+    this.PasswordType = 'text';
+  }
+  hidePassword() {
+    this.PasswordType = 'password';
+  }
+
+
+
+
+
+
+  emailCheck() {
+
+    if (this.loginForm.email === '') {
+      this.emailError = true;
+    } else {
+      this.emailError = false;
+    }
+  }
+
+  passwordCheck() {
+    if (this.loginForm.password === '') {
+      this.passwordError = true;
+    } else {
+      this.passwordError = false;
+    }
+  }
+
+
+
+
+
+
+
+
   login() {
+
+    if (this.loginForm.email === '') { this.emailError = true; }
+    if (this.loginForm.password === '') { this.passwordError = true; }
+    if (this.loginForm.email !== '' && this.loginForm.password !== '') {
+
     this.ImprintLoader = true;
     this.userService.loginUser(this.loginForm).subscribe(
       dataUser => {
@@ -86,6 +144,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       },
       error => {this.notifyService.showError(error.error.message, 'Access denied'); this.ImprintLoader = false; }
     );
+  }
   }
 
 

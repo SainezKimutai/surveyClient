@@ -10,20 +10,20 @@
   .main-top 
     background-color: colorTheme(primaryTheme)
     width: 100%
-    min-height: 450px
+    min-height: 550px
     padding: 1em
     display: flex
     flex-direction: column
 
     @include desktop_sm
-      height: 500px
+      height: 600px
  
 
-    .head
+    .head, .back-wrap
       margin: .5em auto
       width: 100%
       max-width: $desktop_lg
-      text-align: left
+      text-align: center
       display: flex
       align-items: stretch
 
@@ -32,9 +32,15 @@
         flex-direction: column
 
       img 
-        width: 10rem
+        margin: auto
+        width: 15rem
+        -webkit-width: 15rem
+        -moz-width: 15rem
+        -ms-width: 15rem
+        -o-width: 15rem
 
       .btn 
+        margin: auto
         height: 3em
 
     .title
