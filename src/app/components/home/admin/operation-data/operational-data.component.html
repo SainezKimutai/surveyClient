@@ -4,115 +4,190 @@
 
 
 
-    <section id="top_cards_section" class="card-group">
+<section id="top_cards_section" class="card-group">
 
-        <div class="card first">
-            <div class="card-title">
-                <h4>No of Third Party Companies</h4>
-                <fa-icon [icon]="faListAlt"></fa-icon>
-            </div>
-            <div class="card-info">
-                <h4>{{AllThirdParties.length}}</h4>
-            </div>
-            <div class="card-body">
-               
-            </div>
+    <div class="card first">
+        <div class="card-title">
+            <h4>No of Third Party Companies</h4>
+            <fa-icon [icon]="faListAlt"></fa-icon>
         </div>
-
-        <div class="card second">
-            <div class="card-title">
-                <h4>No of Companies</h4>
-                <fa-icon [icon]="faBuilding"></fa-icon>
-            </div>
-            <div class="card-info">
-                <h4>{{AllCompanies.length}}</h4>
-            </div>
-            <div class="card-body">
-             
-            </div>
+        <div class="card-info">
+            <h4>{{AllThirdParties.length}}</h4>
         </div>
-
-        <div class="card third">
-            <div class="card-title">
-                <h4>No of Surveys</h4>
-                <fa-icon [icon]="faBuilding"></fa-icon>
-            </div>
-            <div class="card-info">
-                <h4>{{AllSurveys.length}}</h4>
-            </div>
-            <div class="card-body">
+        <div class="card-body">
             
-            </div>
         </div>
+    </div>
 
+    <div class="card second">
+        <div class="card-title">
+            <h4>No of Companies</h4>
+            <fa-icon [icon]="faBuilding"></fa-icon>
+        </div>
+        <div class="card-info">
+            <h4>{{AllCompanies.length}}</h4>
+        </div>
+        <div class="card-body">
+            
+        </div>
+    </div>
 
-    </section><!-- top_cards_section -->
-
-
-
-
-
-
-
-
-
-
-    <div class="risk-categories-chart-section">
-        <div class="model">
-            <div class="model-title">
-                <span class="title">Risk Ratio Per Risk Category</span>
-                <div class=" graph-switch d-flex ml-auto">
-                    <!-- <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
-                    <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> -->
-                </div>
-            </div>
-
-            <div class="model-body">
-                <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
-                <canvas *ngIf="chartsProgress === 100 && riskCategoryChartType" baseChart class="chart" [chartType]="riskCategoryChartType" [labels]="riskCategoryChartLabels"
-                    [datasets]="riskCategoryChartDatasets" [options]="riskCategoryChartOptions" [plugins]="pluginDataLabels"></canvas>
-            </div>
+    <div class="card third">
+        <div class="card-title">
+            <h4>No of Surveys</h4>
+            <fa-icon [icon]="faBuilding"></fa-icon>
+        </div>
+        <div class="card-info">
+            <h4>{{AllSurveys.length}}</h4>
+        </div>
+        <div class="card-body">
+        
         </div>
     </div>
 
 
-    <div class="overal-risk-rating-chart-section">
-        <div class="model">
-            <div class="model-title">
-                <span class="title">Overall Average Risk Rating</span>
-                <div class=" graph-switch d-flex ml-auto">
-                    <!-- <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
-                    <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> -->
-                </div>
-            </div>
+</section><!-- top_cards_section -->
 
-            <div class="model-body">
-                <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
-                <canvas *ngIf="chartsProgress === 100 && overallRiskRatingChartType" baseChart class="chart" [chartType]="overallRiskRatingChartType" [labels]="overallRiskRatingChartLabels"
-                    [datasets]="overallRiskRatingChartDatasets" [options]="overallRiskRatingChartOptions" [plugins]="pluginDataLabels"></canvas>
-            </div>
-        </div>
-    </div>
 
-    
 
-    <div class="overal-risk-per-industry-chart-section">
-        <div class="model">
-            <div class="model-title">
-                <span class="title">Average Risk Rating Per Industry</span>
-                <div class=" graph-switch d-flex ml-auto">
-                    <!-- <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
-                    <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> -->
-                </div>
-            </div>
 
-            <div class="model-body">
-                <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
-                <canvas *ngIf="chartsProgress === 100 && riskPerIndustryChartType" baseChart class="chart" [chartType]="riskPerIndustryChartType" [labels]="riskPerIndustryChartLabels"
-                    [datasets]="riskPerIndustryChartDatasets" [options]="riskPerIndustryChartOptions" [plugins]="pluginDataLabels"></canvas>
+
+
+
+
+
+
+<div class="risk-categories-chart-section">
+    <div class="model">
+        <div class="model-title">
+            <span class="title">Risk Ratio Per Risk Category</span>
+            <div class=" graph-switch d-flex ml-auto">
+                <!-- <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
+                <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> -->
             </div>
         </div>
+
+        <div class="model-body">
+            <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
+            <canvas *ngIf="chartsProgress === 100 && riskCategoryChartType" baseChart class="chart" [chartType]="riskCategoryChartType" [labels]="riskCategoryChartLabels"
+                [datasets]="riskCategoryChartDatasets" [options]="riskCategoryChartOptions" [plugins]="pluginDataLabels"></canvas>
+        </div>
     </div>
+</div>
+
+
+<div class="overal-risk-rating-chart-section">
+    <div class="model">
+        <div class="model-title">
+            <span class="title">Overall Average Risk Rating</span>
+            <div class=" graph-switch d-flex ml-auto">
+                <!-- <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
+                <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> -->
+            </div>
+        </div>
+
+        <div class="model-body">
+            <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
+            <canvas *ngIf="chartsProgress === 100 && overallRiskRatingChartType" baseChart class="chart" [chartType]="overallRiskRatingChartType" [labels]="overallRiskRatingChartLabels"
+                [datasets]="overallRiskRatingChartDatasets" [options]="overallRiskRatingChartOptions" [plugins]="pluginDataLabels"></canvas>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="overal-risk-per-industry-chart-section">
+    <div class="model">
+        <div class="model-title">
+            <span class="title">Average Risk Rating Per Industry</span>
+            <div class=" graph-switch d-flex ml-auto">
+                <!-- <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
+                <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> -->
+            </div>
+        </div>
+
+        <div class="model-body">
+            <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
+            <canvas *ngIf="chartsProgress === 100 && riskPerIndustryChartType" baseChart class="chart" [chartType]="riskPerIndustryChartType" [labels]="riskPerIndustryChartLabels"
+                [datasets]="riskPerIndustryChartDatasets" [options]="riskPerIndustryChartOptions" [plugins]="pluginDataLabels"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="risk-exposure-section">
+    <div class="model">
+        <div class="model-title">
+            <span class="title">Average Risk Exposure Per Company</span>
+            <div class=" graph-switch d-flex ml-auto">
+                <!-- <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
+                <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> -->
+            </div>
+        </div>
+
+        <div class="model-body">
+            <!-- <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress> -->
+            
+
+            <div class="main-wrap">
+
+                <div class="search-wrap">
+                    <div class="input-wrap">
+                      
+                        <input type="text" placeholder="Search Company Name" aria-placeholder="Company Name">
+                    </div>
+
+                    <div class="average-wrap">
+                        Average Risk <span class="high">65 %</span>
+                    </div>
+                </div>
+
+                <div class="content-wrap">
+
+                    <div class="title-wrap d-flex">
+                        <div class="third-party">Third Party</div>
+                        <div class="company">Company Name (<span>54</span>) </div>
+                        <div class="risk-name">Risk Name</div>
+                        <div class="risk-level">Risk Level</div>
+                        <div class="risk-recom">Recommendation</div> 
+                    </div>
+                    <div class="medel-item-wrap d-flex">
+                        <div class="model-third">
+                            <h4 *ngFor="let item of AllThirdParties;">{{item.name}}</h4>
+
+                        </div>
+                        <div class="model-company">
+                            <h4 *ngFor="let item of AllCompanies">{{item.companyName}}</h4>
+
+                        </div>
+                        <div class="model-risk-name">
+                            <h4>shdjshd</h4>
+
+                        </div>
+                        <div class="model-risk-level">
+                            <h4>shdjshd</h4>
+
+                        </div>
+                        <div class="model-risk-recom">
+                            <h4>shdjshd</h4>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 
 
 

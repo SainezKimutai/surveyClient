@@ -27,7 +27,8 @@
     margin: auto
     color: grayColor(g100)
 
-
+circle-progress
+    margin: auto
 
 
 
@@ -339,6 +340,185 @@
         max-width: $desktop_md
         margin: auto
         height: 100%
+
+
+
+
+
+
+// Risk Exposure Section
+.risk-exposure-section
+    display: flex
+    align-items: stretch
+    width: 100%
+    height: 100%
+    
+    @include desktop_sm
+        display: flex
+        flex-direction: column
+
+.risk-exposure-section .model
+    width: 100%
+    border: none
+    border-radius: 5px
+    margin: 0 0 1em 0
+    padding: 1em 2em 
+    transition: all 0.3s ease
+    background-color: white
+   
+    &:hover
+      transform: translateY(-5px)
+      box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
+
+    @include desktop_md
+        max-width: 100%
+    
+    @include desktop_sm
+        width: 100%
+
+.risk-exposure-section .model .model-title
+    width: 100%
+    display: flex
+    align-items: stretch
+
+    .title
+        width: 100%
+        padding: .5em 1em 2em 1em
+        font-size: 12px
+        color: grayColor(g600)
+        font-weight: bold
+
+.risk-exposure-section .model .model-body
+    width: 100%
+    display: flex
+    align-items: stretch
+    height: 500px
+    padding: 1em
+
+.risk-exposure-section .model .model-body .main-wrap  
+    width: 100%
+
+.risk-exposure-section .model .model-body .main-wrap .search-wrap
+    width: 100%
+    display: flex 
+    align-items: stretch
+    margin-bottom: .5em
+
+    .input-wrap
+        background-color: grayColor(g100)
+        margin-right: auto 
+        padding: .5em
+        width: 200px
+
+
+
+        span 
+            font-size: 12px
+            font-weight: bold
+
+        input
+            background-color: transparent
+            border: none
+            outline: none
+            width: 100%
+            padding: 0 1em
+            font-size: 12px
+    
+    .average-wrap
+        margin-left: auto
+        font-size: 12px
+
+        span 
+            font-size: 16px
+            font-weight: bold 
+
+            &.high
+                color: colorTheme(danger)
+            &.medium
+                color: colorTheme(warning)
+            &.low
+                color: colorTheme(success)
+
+
+.risk-exposure-section .model .model-body .main-wrap .content-wrap
+    width: 100%
+
+.risk-exposure-section .model .model-body .main-wrap .content-wrap .title-wrap
+    width: 100%
+
+
+    .third-party
+        width: 200px
+        padding: .5em
+        font-size: 12px
+        background-color: lighten(colorTheme(primaryTheme), 10)
+        margin-right: .5em
+        font-weight: bold
+        color: white
+
+
+    .company
+        width: 200px
+        padding: .5em
+        font-size: 12px
+        background-color: grayColor(g100)
+        margin-right: .5em
+
+    .risk-name, .risk-level, .risk-recom
+        width: 200px
+        padding: .5em
+        font-size: 12px
+        background-color: grayColor(g100)
+
+
+
+.risk-exposure-section .model .model-body .main-wrap .content-wrap .medel-item-wrap
+    width: 100%
+
+    .model-third
+        width: 200px
+        padding: .5em
+        font-size: 12px
+        margin-right: .5em
+        border-bottom: solid 1px grayColor(g100)
+
+        h4 
+            font-weight: bold
+            color: grayColor(g900)
+            font-size: 12px
+
+
+    .model-company
+        width: 200px
+        padding: .5em
+        font-size: 12px
+        margin-right: .5em
+        font-weight: bold
+        color: grayColor(g900)
+        border-bottom: solid 1px grayColor(g100)
+        
+        h4 
+            font-weight: bold
+            color: grayColor(g900)
+            font-size: 12px
+
+    .model-risk-name, .model-risk-level, .model-risk-recom
+        width: 200px
+        padding: .5em
+        border-bottom: solid 1px grayColor(g100)
+        color: grayColor(g900)
+
+        h4 
+            font-weight: bold
+            color: grayColor(g900)
+            font-size: 12px
+
+    
+
+
+
+
+
 
 
 

@@ -362,14 +362,13 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.pageProgress = 100;
     if (filterParam === 'super') {
       this.activecompany = 'super';
-      this.MyUsers = this.FilteredUsers.filter((u) => u.userType === 'admin' || u._id === localStorage.getItem('loggedUserID') ).map(e => e);
-    }
-    if (filterParam === 'third') {
+      this.MyUsers = this.FilteredUsers.filter((u) => u.userType === 'admin').map(e => e);
+    } else if (filterParam === 'third') {
       this.activecompany = 'third';
-      this.MyUsers = this.FilteredUsers.filter((u) => u.userType === 'thirdparty' || u._id === localStorage.getItem('loggedUserID')).map(e => e);
+      this.MyUsers = this.FilteredUsers.filter((u) => u.userType === 'thirdparty').map(e => e);
     } else {
       this.activecompany = filterParam;
-      this.MyUsers = this.FilteredUsers.filter((u) => u.companyId === filterParam || u._id === localStorage.getItem('loggedUserID')).map(e => e);
+      this.MyUsers = this.FilteredUsers.filter((u) => u.companyId === filterParam ).map(e => e);
     }
   }
 
