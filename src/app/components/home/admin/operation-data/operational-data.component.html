@@ -58,9 +58,7 @@
 
 
     <div class="risk-categories-chart-section">
-
         <div class="model">
-
             <div class="model-title">
                 <span class="title">Risk Ratio Per Risk Category</span>
                 <div class=" graph-switch d-flex ml-auto">
@@ -73,13 +71,28 @@
                 <canvas *ngIf="riskCategoryChartType" baseChart class="chart" [chartType]="riskCategoryChartType" [labels]="riskCategoryChartLabels"
                     [datasets]="riskCategoryChartDatasets" [options]="riskCategoryChartOptions" [plugins]="pluginDataLabels"></canvas>
             </div>
-
-       
         </div>
-        
-
-
     </div>
+
+
+    <div class="overal-risk-rating-chart-section">
+        <div class="model">
+            <div class="model-title">
+                <span class="title">Overall Average Risk Rating</span>
+                <div class=" graph-switch d-flex ml-auto">
+                    <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
+                    <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span>
+                </div>
+            </div>
+
+            <div class="model-body">
+                <canvas *ngIf="overallRiskRatingChartType" baseChart class="chart" [chartType]="overallRiskRatingChartType" [labels]="overallRiskRatingChartLabels"
+                    [datasets]="overallRiskRatingChartDatasets" [options]="overallRiskRatingChartOptions" [plugins]="pluginDataLabels"></canvas>
+            </div>
+        </div>
+    </div>
+
+    
 
 
 

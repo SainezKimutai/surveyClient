@@ -160,8 +160,14 @@ public riskCategoryChartType: string;
 public riskCategoryChartLabels: Array<any>;
 public riskCategoryChartDatasets: Array<any>;
 public riskCategoryChartOptions: any;
+public riskCategoryChartColors: any;
 
-
+// Ovarall risk rating variables
+public overallRiskRatingChartType: string;
+public overallRiskRatingChartLabels: Array<any>;
+public overallRiskRatingChartDatasets: Array<any>;
+public overallRiskRatingChartOptions: any;
+public overallRiskRatingChartColors: any;
 
 
 
@@ -181,7 +187,7 @@ public riskCategoryChartOptions: any;
 
   ngOnInit() {
     
-    this.updatePage().then(() => { this.riskIssuesFunction(); this.trafficFunction(); this.riskCategoriesFunction() } );
+    this.updatePage().then(() => { this.riskIssuesFunction(); this.trafficFunction(); } );
 
   }
 
@@ -297,8 +303,6 @@ public riskCategoryChartOptions: any;
 
 
 riskCategoriesFunction() {
-
-
   
   this.riskCategoryChartType = 'pie';
 
@@ -332,10 +336,10 @@ riskCategoriesFunction() {
 
 
   let dateSet1 = [];
-  this.third1BgColors = [];
+  this.riskCategoryChartColors = [];
   newThreatCatArray.forEach((trtCat) => {
     let y = ThreatRiskAndCat.filter((c) => c.category === trtCat).map(e => e)
-    this.third1BgColors.push(this.getRandomColor());
+    this.riskCategoryChartColors.push(this.getRandomColor());
     dateSet1.push(y.length);
   })
 
@@ -353,7 +357,7 @@ riskCategoriesFunction() {
   this.riskCategoryChartDatasets = [{
     label: 'Risk',
     data: dataset2,
-    backgroundColor: this.third1BgColors,
+    backgroundColor: this.riskCategoryChartColors,
     borderColor: 'white',
     borderWidth: 1.5,
     pointBackgroundColor: 'transparent',
@@ -425,7 +429,7 @@ riskCategoriesFunction() {
           formatter: function(value, context) {
             return context.chart.data.labels[context.dataIndex] + ': ' + value + '%';
           },
-          font: { weight: 100, size: 14 },
+          font: { weight: 100, size: 12 },
           listeners: {
             enter: function(context) {
               context.hovered = true;
@@ -440,6 +444,7 @@ riskCategoriesFunction() {
     }
   };
 
+}
 
 
 
@@ -451,14 +456,143 @@ riskCategoriesFunction() {
 
 
 
+OverallRiskRatingFunction() {
+
+  this.overallRiskRatingChartType = 'horizontalBar';
+
+  let threatArray =  this.riskIssueArray.filter(() => true ).map(e => e.risk);
+  let newThreatArray1 = Array.from(new Set(threatArray));
+  let newThreatArray =  newThreatArray1.reduce((unique, item) => {
+    let unique1 =  unique.filter(() => true).map(e => e.toLowerCase().replace(/ /g,''))
+    let item2 = item.toLowerCase().replace(/ /g,''); 
+    return unique1.includes(item2) ? unique : [...unique, item]
+  }, []);
 
 
+  this.third2Type = 'bar';
 
+  this.overallRiskRatingChartLabels = newThreatArray;
+  let myDatasets = [];
+  this.overallRiskRatingChartColors = [];
 
+  this.overallRiskRatingChartLabels.forEach((riskEl) => {
+    this.overallRiskRatingChartColors.push(this.getRandomColor());
+    let myArr2 = this.riskIssueArray.filter((rsk) => rsk.risk === riskEl ).map(e => e);
+    myDatasets.push(myArr2.length);
+  });
 
+  let myDatasets1 = myDatasets
 
+  this.overallRiskRatingChartDatasets = [{
+    label: 'Risk',
+    data: myDatasets1,
+    backgroundColor: this.overallRiskRatingChartColors,
+    borderColor: 'white',
+    borderWidth: 1.5,
+    pointBackgroundColor: 'transparent',
+    pointHoverBackgroundColor: 'transparent',
+    pointBorderColor: 'white',
+    pointHoverBorderColor: 'gray'
+  }];
+
+  this.overallRiskRatingChartOptions = {
+    title: {
+      display: false,
+      text: 'Sales',
+      fontSize: 25
+    },
+    legend: {
+      display: false,
+      position: 'bottom',
+      labels: {
+            fontColor: '#73818f'
+          }
+    },
+    layout: {
+      padding: 10
+    },
+    tooltips: {
+        enabled: true,
+        callbacks: {
+            label: function(tooltipItem, data) {
+              let dataInx = tooltipItem.index
+              let lbl = data.labels[dataInx];
+              let value = data.datasets[0].data[dataInx];
+              return `${lbl} : ${value}`;
+            },
+        }
+    },
+    scales: {
+      yAxes: [{
+          display: true,
+          gridLines: {
+              drawBorder: false,
+              display: false
+          },
+          stacked: false,
+          ticks: {
+              beginAtZero: true
+          }
+      }],
+      xAxes: [{
+          barPercentage: 0.4,
+          display: false,
+          stacked: false,
+          gridLines: {
+              drawBorder: true,
+              display: false
+          },
+          ticks: {
+            beginAtZero: false
+          }
+      }]
+    },
+    maintainAspectRatio: false,
+    responsive: true,
+    plugins: {
+        datalabels: {
+          clamp: true,
+          anchor: 'center',
+          align: 'center',
+          color: 'black',
+          formatter: function(value, context) {
+            return value;
+          },
+          font: { weight: 'bold', size: 12 },
+          listeners: {
+            enter: function(context) {
+              context.hovered = true;
+              return true;
+            },
+            leave: function(context) {
+              context.hovered = false;
+              return true;
+            }
+          }
+        }
+    }
+  };
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1553,6 +1687,9 @@ graphChartToPie() {
                           this.listThirdPartyCompaniesAndSurveys(0);
                           this.calculateActiveCompanyTotalRiskRate();
                           this.computeCompanyRiskRates();
+
+                          this.riskCategoriesFunction(); 
+                          this.OverallRiskRatingFunction()
                         }
   
                       });
