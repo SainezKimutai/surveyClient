@@ -8,6 +8,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap';
 import { UsersComponent } from './users.component';
 import { UsersRoutingModule } from './users-routing.module';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 
 @NgModule({
@@ -28,6 +29,15 @@ import { UsersRoutingModule } from './users-routing.module';
         timeOut: 5000,
         positionClass: 'toast-bottom-right',
         preventDuplicates: false,
+      }),
+      NgCircleProgressModule.forRoot({
+        radius: 50,
+        outerStrokeWidth: 8,
+        innerStrokeWidth: 8,
+        outerStrokeColor: '#acb4bc',
+        innerStrokeColor: '#e4e7ea',
+        animation: false,
+        animationDuration: 300
       })
 
     ]

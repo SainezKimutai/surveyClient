@@ -32,164 +32,248 @@
     background-color: transparent
 
 
-.article-list
 
-    .list-users-section   
-        background-color: white
-        border-radius: 2px
+.progress-wrap
+    background-color: white
+    border-radius: 5px
+    min-width: 15em
+    min-height: 10em
+    display: flex
+    justify-content: center
+    align-items: center
 
-        .title-div
-            margin: 0 0 0 0
+.list-users-section .title-div
+    margin: 0 0 0 0
+    background-color: lighten(colorTheme(primaryTheme), 10) 
+    padding: .5em  
+    display: flex
+    align-items: center
+    margin: 0 0 1em 0
+
+    h4
+        font-family: Montserrat
+        font-size: 14px
+        color: white
+        font-weight: bold
+
+.list-users-section  .search-wrap
+    width: 300px
+    background-color: white 
+    padding: 1em
+
+
+    .input-wrap
+        background-color: grayColor(g100)
+        padding: .5em 0
+        border-radius: 5px
+        span 
+            padding: 0 0 0 .5em 
+            font-size: 13px
+            font-weight: bold
+            background-color: transparent 
+
+        input 
+            border: none
+            outline: none
+            background-color: transparent
+            font-size: 12px
+            padding: 0 .5em
+    
+
+.list-wrap
+    width: 100%
+    display: flex
+    max-width: $desktop_xl
+    align-items: stretch
+    
+.list-wrap .company-wrap
+    width: 100%
+    min-width: 300px
+    max-width: 300px
+    background-color: white
+    height: fit-content
+
+    .company-title
+        height: 3em
+        display: flex 
+        align-items: center
+        padding: 0 1em
+        margin-bottom: 1em
+        background-color:  lighten(colorTheme(primaryTheme), 10) 
+
+        h4
+            font-size: 14px
+            font-weight: bold
+            color: white
+
+.list-wrap .company-wrap .company-item-scroll
+    width: 100%
+    max-height: 400px
+    overflow-y: scroll
+    
+
+    .company-item
+        height: 3em
+        font-weight: bold
+        display: flex 
+        align-items: center
+        padding: 0 1em
+        border-bottom: solid 1px grayColor(g100)
+        cursor: pointer
+
+        &.active
+            background-image: linear-gradient(to right, lighten( black, 70)  , lighten( black, 95) )
+            border-left: solid 4px colorTheme(primaryTheme)
+
+        h4
+            font-size: 12px
+            font-weight: bold
+            color: grayColor(g800)
+
+.list-wrap .list-item-wrap
+    width: 100%
+    margin: 0 0 0 1em
+    background-color: white
+
+.list-wrap .list-item-wrap .list-item-title
+    width: 100%
+    height: 3em !important
+    padding: 0
+    margin-bottom: 1em
+    display: flex 
+    align-items: stretch
+    background-color: lighten(colorTheme(primaryTheme), 10) 
+
+    .username, .department, .email
+        width: 33.4%
+        height: 100%
+        padding: 0 1em
+        display: flex 
+        align-items: center
+
+        h4 
+            font-weight: bold
+            font-size: 14px
+            color: white
+
+
+.list-wrap .list-item-wrap .list-item-scroll
+    width: 100%
+    max-height: 400px
+    overflow-y: scroll
+    
+
+.list-wrap .list-item-wrap .list-item-scroll .list-item
+    width: 100%
+    height: 3em !important
+    padding: 0
+    display: flex 
+    align-items: stretch
+
+    .username, .department, .email
+        width: 33.4%
+        height: 100%
+        padding: 0 1em
+        display: flex 
+        align-items: center
+
+        h4 
+            font-weight: bold
+            font-size: 12px
+            color: grayColor(g800) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.editNameModal, .editRoleModal, .editPasswordModal
+    .modal-header
+        background-color: colorTheme(primaryTheme)
+        .modal-title
+            font-size: 15px
+            font-family: Montserrat
+
+            span
+                margin: 0 .5em 0 .5em
+                color: white
+                text-transform: uppercase
+            
+
+    .modal-body
+        font-size: 12px
+        font-family: Montserrat
+
+        input, select
+            font-size: 10px
+            font-family: Montserrat  
+
+            option
+                font-size: 10px
+                font-family: Montserrat
+
+        .input-group-text
+            cursor: pointer
+            width: 3em
+            color: colorTheme(primaryTheme)
+            font-family: Montserrat
+
+            fa
+                font-size: 10px
+
+
+    .modal-footer
+        .btn-cancel
             background-color: colorTheme(secondary)
-            padding: .5em  
-
-            h4
-                font-family: Montserrat
-                font-size: 12px
-                color: colorTheme(tertiaryTheme)
-                font-weight: bold
-
-        .list-div
-
-            li
-                padding: 0
-                margin: 0
-                list-style-type: none
-                margin: 0 0 .2em 0
-                box-shadow: 0 1px 1px rgba(0, 0, 0, .1)
-
-                .name-wrap, .role-wrap
-                    margin: 0
-                    padding: .5em 0 0 1em 
-                    text-align: left
-
-                    h4
-                        margin: auto 0
-                        font-size: 10px
-                        font-family: Montserrat             
-                        text-transform: capitalize
-
-                    .btn
-                        margin: 0 2em 0 auto 
-
-                        fa
-                            font-size: 10px
-                            color: grayColor(g100)
-                            &:hover
-                                color: colorTheme(primary)
-                                
-
-                            
-
-
-                .email-wrap  
-                    padding: .5em 0 0 1em  
-                    h4
-                        font-size: 10px
-                        font-family: Montserrat             
-                        margin: 1em auto 
-                        color: black
-
-                .btn-wrap   
-                    .btn
-                        font-size: 10px
-                        font-family: Montserrat             
-                        text-transform: capitalize
-                        margin: 1em auto
-                        background-color: grayColor(g100)
-                        color: black
-                        width: 12em
-
-                    fa
-                        margin: auto 0 
-                        font-size: 10px
-                        color: grayColor(g100)
-                        cursor: pointer
-                    
-
-                        &:hover
-                            color: colorTheme(danger)
-
-
-    .editNameModal, .editRoleModal, .editPasswordModal
-        .modal-header
-            background-color: colorTheme(primaryTheme)
-            .modal-title
-                font-size: 15px
-                font-family: Montserrat
-
-                span
-                    margin: 0 .5em 0 .5em
-                    color: white
-                    text-transform: uppercase
-               
-
-        .modal-body
-            font-size: 12px
+            font-size: 10px
+            font-family: Montserrat
+        .btn-confirm
+            background-color: colorTheme(success)
+            font-size: 10px
             font-family: Montserrat
 
-            input, select
-                font-size: 10px
-                font-family: Montserrat  
-
-                option
-                    font-size: 10px
-                    font-family: Montserrat
-
-            .input-group-text
-                cursor: pointer
-                width: 3em
-                color: colorTheme(primaryTheme)
-                font-family: Montserrat
-
-                fa
-                    font-size: 10px
 
 
-        .modal-footer
-            .btn-cancel
-                background-color: colorTheme(secondary)
-                font-size: 10px
-                font-family: Montserrat
-            .btn-confirm
-                background-color: colorTheme(success)
-                font-size: 10px
-                font-family: Montserrat
-
-
-
-    .deleteUserModal  
-        .modal-header
-            background-color: colorTheme(danger) !important
-            .modal-title
-                font-size: 15px
-                font-family: Montserrat
-               
-
-        .modal-body
-            font-size: 12px
+.deleteUserModal  
+    .modal-header
+        background-color: colorTheme(danger) !important
+        .modal-title
+            font-size: 15px
             font-family: Montserrat
-            text-align: center
+            
 
-            p
-                color: black
+    .modal-body
+        font-size: 12px
+        font-family: Montserrat
+        text-align: center
 
-                span
-                    text-transform: capitalize
-                    margin: 0 .2em 0 .2em
-                    color: colorTheme(primary)
-                    text-transform: uppercase
+        p
+            color: black
+
+            span
+                text-transform: capitalize
+                margin: 0 .2em 0 .2em
+                color: colorTheme(primary)
+                text-transform: uppercase
 
 
-        .modal-footer
-            .btn-cancel
-                background-color: colorTheme(secondary)
-                font-size: 10px
-                font-family: Montserrat
-            .btn-confirm
-                background-color: colorTheme(danger)
-                font-size: 10px
-                font-family: Montserrat
+    .modal-footer
+        .btn-cancel
+            background-color: colorTheme(secondary)
+            font-size: 10px
+            font-family: Montserrat
+        .btn-confirm
+            background-color: colorTheme(danger)
+            font-size: 10px
+            font-family: Montserrat
                             
 
 
