@@ -8,29 +8,40 @@
 
         <div class="card first">
             <div class="card-title">
-                <h4>Third Parties</h4>
+                <h4>No of Third Party Companies</h4>
                 <fa-icon [icon]="faListAlt"></fa-icon>
             </div>
             <div class="card-info">
                 <h4>{{AllThirdParties.length}}</h4>
             </div>
             <div class="card-body">
-                <canvas *ngIf="cardOneType" baseChart class="chart" [chartType]="cardOneType" [labels]="cardOneLabels"
-                    [datasets]="cardOneDatasets" [options]="topCardsChart"></canvas>
+               
             </div>
         </div>
 
         <div class="card second">
             <div class="card-title">
-                <h4>Companies</h4>
+                <h4>No of Companies</h4>
                 <fa-icon [icon]="faBuilding"></fa-icon>
             </div>
             <div class="card-info">
                 <h4>{{AllCompanies.length}}</h4>
             </div>
             <div class="card-body">
-                <canvas *ngIf="cardTwoType" baseChart class="chart" [chartType]="cardTwoType" [labels]="cardTwoLabels"
-                    [datasets]="cardTwoDatasets" [options]="topCardsChart"></canvas>
+             
+            </div>
+        </div>
+
+        <div class="card third">
+            <div class="card-title">
+                <h4>No of Surveys</h4>
+                <fa-icon [icon]="faBuilding"></fa-icon>
+            </div>
+            <div class="card-info">
+                <h4>{{AllCompanies.length}}</h4>
+            </div>
+            <div class="card-body">
+            
             </div>
         </div>
 
@@ -46,13 +57,39 @@
 
 
 
+    <div class="risk-categories-chart-section">
+
+        <div class="model">
+
+            <div class="model-title">
+                <span class="title">Risk Ratio Per Risk Category</span>
+                <div class=" graph-switch d-flex ml-auto">
+                    <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
+                    <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span>
+                </div>
+            </div>
+
+            <div class="model-body">
+                <canvas *ngIf="riskCategoryChartType" baseChart class="chart" [chartType]="riskCategoryChartType" [labels]="riskCategoryChartLabels"
+                    [datasets]="riskCategoryChartDatasets" [options]="riskCategoryChartOptions" [plugins]="pluginDataLabels"></canvas>
+            </div>
+
+       
+        </div>
+        
+
+
+    </div>
+
+
 
 
 
 
     <section id="graph_section" class="card-group">
         <div class="card">
-            <div class="title d-flex"> <span>List of Third Parties</span>
+            <div class="title d-flex"> 
+                <span>List of Third Parties</span>
                 <div class=" graph-switch d-flex ml-auto">
                     <span (click)="listTirdPartyToGraph()"><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
                     <span (click)="listTirdPartyToList()"><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span>
@@ -87,7 +124,7 @@
                 <div class="canvas-wrap" *ngIf="listTirdPartyIsGraph" >
                     <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
                     <canvas *ngIf="thirrdPartyType" baseChart class="chart" [chartType]="thirrdPartyType" [labels]="thirrdPartyLabels"
-                    [datasets]="thirrdPartyDatasets" [options]="thirrdPartyChart"></canvas>
+                    [datasets]="thirrdPartyDatasets" [options]="thirrdPartyChart" [plugins]="pluginDataLabels"></canvas>
                 </div>
        
             </div>
@@ -120,7 +157,7 @@
 
 
 
-    <section id="top_cards_section" class="card-group">
+    <section hidden id="top_cards_section" class="card-group">
 
         <div class="card third">
             <div class="card-title">
@@ -223,7 +260,7 @@
 
 
 
-    <section id="graph_section" class="card-group">
+    <section hidden id="graph_section" class="card-group">
         <div class="card">
             <div class="title d-flex"> <span>Graphical Comparison of Company Average Risk Exposure</span>
                 <div class=" graph-switch d-flex ml-auto">

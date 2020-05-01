@@ -10,6 +10,9 @@ import { ThreatService } from 'src/app/shared/services/threats.service';
 import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { TrafficService } from 'src/app/shared/services/traffic.service';
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+
+
 
 @Component({
   selector: 'app-operational-data',
@@ -65,6 +68,8 @@ public faChartLine = faChartLine;
 public faChartBar = faChartBar;
 public faChartPie = faChartPie;
 
+
+public pluginDataLabels = [pluginDataLabels]
 // Top Cards variables
 public AllThirdParties = [];
 public cardOneType: string;
@@ -108,6 +113,7 @@ public thirrdPartyType: string;
 public thirrdPartyLabels: Array<any>;
 public thirrdPartyDatasets: Array<any>;
 public thirrdPartyChart: any;
+public chart3plugin: any;
 
 public thirrdPartySurveys = [];
 public thirrdPartyCompanys = [];
@@ -149,6 +155,23 @@ public trafficBgColors = [];
 
 
 
+// Risk CategoryChart variables
+public riskCategoryChartType: string;
+public riskCategoryChartLabels: Array<any>;
+public riskCategoryChartDatasets: Array<any>;
+public riskCategoryChartOptions: any;
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -158,9 +181,27 @@ public trafficBgColors = [];
 
   ngOnInit() {
     
-    this.updatePage().then(() => { this.riskIssuesFunction(); this.trafficFunction(); } );
+    this.updatePage().then(() => { this.riskIssuesFunction(); this.trafficFunction(); this.riskCategoriesFunction() } );
 
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -245,6 +286,183 @@ public trafficBgColors = [];
   }
   
   
+
+
+
+
+
+
+
+
+
+
+riskCategoriesFunction() {
+
+
+  
+  this.riskCategoryChartType = 'pie';
+
+
+  let threatCatArray =  this.riskIssueArray.filter(() => true ).map(e => e.riskCategory);
+  let newThreatCatArray = Array.from(new Set(threatCatArray));
+
+  let newThreatRisk = this.riskIssueArray.filter(() => true ).map(e => e.risk);
+  let newThreat1 = Array.from( new Set(newThreatRisk));
+
+  let ThreatRiskInvolved =  newThreat1.reduce((unique, item) => {
+    let unique1 =  unique.filter(() => true).map(e => e.toLowerCase().replace(/ /g,''))
+    let item2 = item.toLowerCase().replace(/ /g,''); 
+    return unique1.includes(item2) ? unique : [...unique, item]
+  }, []);
+
+  let ThreatRiskAndCat = []
+
+  ThreatRiskInvolved.forEach((trt) => {
+    let x = {
+      risk: trt,
+      category: ''
+    }
+    this.riskIssueArray.forEach((rsk) => { 
+      if (rsk.risk === trt && x.category === '' && rsk.category !== '') {
+        x.category = rsk.riskCategory
+        ThreatRiskAndCat.push(x)
+      }
+    })
+  })
+
+
+  let dateSet1 = [];
+  this.third1BgColors = [];
+  newThreatCatArray.forEach((trtCat) => {
+    let y = ThreatRiskAndCat.filter((c) => c.category === trtCat).map(e => e)
+    this.third1BgColors.push(this.getRandomColor());
+    dateSet1.push(y.length);
+  })
+
+  let sumDatasets1 = dateSet1.reduce((a, b) => a + b, 0)
+  let dataset2 = []
+  dateSet1.forEach((a) => {
+    let b = ((a * 100) / sumDatasets1).toFixed(0)
+    dataset2.push(b);
+  })
+
+
+  this.riskCategoryChartLabels = newThreatCatArray;
+  
+
+  this.riskCategoryChartDatasets = [{
+    label: 'Risk',
+    data: dataset2,
+    backgroundColor: this.third1BgColors,
+    borderColor: 'white',
+    borderWidth: 1.5,
+    pointBackgroundColor: 'transparent',
+    pointHoverBackgroundColor: 'transparent',
+    pointBorderColor: 'white',
+    pointHoverBorderColor: 'gray'
+  }];
+
+  this.riskCategoryChartOptions = {
+    title: {
+      display: false,
+      text: 'Sales',
+      fontSize: 25
+    },
+    legend: {
+      display: false,
+      position: 'bottom',
+      labels: {
+            fontColor: '#73818f'
+          }
+    },
+    layout: {
+      padding: 10
+    },
+    tooltips: {
+        enabled: true,
+        callbacks: {
+            label: function(tooltipItem, data) {
+              let dataInx = tooltipItem.index
+              let lbl = data.labels[dataInx];
+              let value = data.datasets[0].data[dataInx];
+              return `${lbl} : ${value}%`;
+            },
+        }
+    },
+    scales: {
+      yAxes: [{
+          display: false,
+          gridLines: {
+              drawBorder: false,
+              display: false
+          },
+          stacked: false,
+          ticks: {
+              beginAtZero: true
+          }
+      }],
+      xAxes: [{
+          barPercentage: 0.4,
+          display: false,
+          stacked: false,
+          gridLines: {
+              drawBorder: true,
+              display: false
+          },
+          ticks: {
+            beginAtZero: false
+          }
+      }]
+    },
+    maintainAspectRatio: false,
+    responsive: true,
+    plugins: {
+        datalabels: {
+          clamp: false,
+          anchor: 'end',
+          align: 'end',
+          color: 'teal',
+          formatter: function(value, context) {
+            return context.chart.data.labels[context.dataIndex] + ': ' + value + '%';
+          },
+          font: { weight: 100, size: 14 },
+          listeners: {
+            enter: function(context) {
+              context.hovered = true;
+              return true;
+            },
+            leave: function(context) {
+              context.hovered = false;
+              return true;
+            }
+          }
+        }
+    }
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
 
 
 
@@ -765,104 +983,6 @@ public trafficBgColors = [];
   
   
   
-   // on the right
-  
-  
-  //  let surveysOnrisk = this.riskIssueArray.filter(() => true ).map(e => e.surveyName)
-  //  let surveyArr = Array.from( new Set(surveysOnrisk));
-  //  let getRisk = this.riskIssueArray.filter(() => true ).map(e => e.risk);
-  //  let RiskInvolved1 = Array.from( new Set(getRisk));
-  
-  //  let RiskInvolved =  RiskInvolved1.reduce((unique, item) => {
-  //    let unique1 =  unique.filter(() => true).map(e => e.toLowerCase().replace(/ /g,''))
-  //    let item2 = item.toLowerCase().replace(/ /g,''); 
-  //    return unique1.includes(item2) ? unique : [...unique, item]
-  //  }, []);
-  
-  
-  //  let mychart2Datasets = []
-  
-  //  surveyArr.forEach((surveyElem) => {
-  //    let dataOnj = {
-  //      sulvey: surveyElem,
-  //      data : []
-  //    }
-  //    RiskInvolved.forEach((riskElm) => {
-       
-  //      let getMyRisk = this.riskIssueArray.filter((r) => r.risk.toLowerCase().replace(/ /g,'') === riskElm.toLowerCase().replace(/ /g,'') && r.surveyName === surveyElem ).map(e => e)
-  //      let getLowRisk = getMyRisk.filter((r) => r.level === 'Low' ).map(e => e)
-  //      let getMediumRisk = getMyRisk.filter((r) => r.level === 'Medium' ).map(e => e)
-  //      let getHighRisk = getMyRisk.filter((r) => r.level === 'High' ).map(e => e)
-  
-  //      let totalLowRiskNum = getLowRisk.length;
-  //      let totalMediumRiskNum = getMediumRisk.length;
-  //      let totalHighRiskNum = getHighRisk.length;
-  
-  //      let totalPoints = ((totalLowRiskNum * 1) + (totalMediumRiskNum * 2) + (totalHighRiskNum * 3))
-  //      let totalRiskNum = totalLowRiskNum + totalMediumRiskNum + totalHighRiskNum
-       
-  //      let finalValue = Math.round(totalPoints / totalRiskNum)
-  //      if(!finalValue) {finalValue = 0}
-  
-  //      let riskObj = {
-  //        risk: riskElm,
-  //        value: finalValue
-  //      }
-  
-  //      dataOnj.data.push(riskObj)
-  
-  //    })
-  
-  //    mychart2Datasets.push(dataOnj)
-  
-  //  })
-  
-  
-  //  let unFilterednewRiskArray = []
-  
-  //  mychart2Datasets.forEach((riskData) => {
-  //    riskData.data.forEach((e) => unFilterednewRiskArray.push(e.risk))
-  //  })
-  //  let newRiskArray = Array.from( new Set(unFilterednewRiskArray));
-  
-  //  this.third2BgColors = [];
-  //  let newDatasetChart2 = [];
-  //  newRiskArray.forEach((riskItem) => {
-  //    let riskValuearr = []
-  //    mychart2Datasets.forEach((riskData) => {
-  //      riskData.data.forEach((r) => r.risk === riskItem ? riskValuearr.push(r.value) : '')
-  
-  //    })
-  
-  //    let sumRiskValue =  riskValuearr.reduce((a,b) => a + b, 0);
-  //    let totalvalue = Math.ceil(sumRiskValue / riskValuearr.length)
-  //      if (totalvalue === 1 ) { this.third2BgColors.push('#4dbd74'); }
-  //      if (totalvalue === 2 ) { this.third2BgColors.push('#ffc107'); }
-  //      if (totalvalue === 3 ) { this.third2BgColors.push('#f86c6b'); }
-  
-  //    newDatasetChart2.push(totalvalue)
-  //  })
-  
-  
-  
-  
-  
-  
-  //  this.third2Type = 'line';
-  
-  //  this.third2Labels = newRiskArray;
-  
-  //   this.third2Datasets = [{
-  //     label: 'Risk',
-  //     data: newDatasetChart2,
-  //     backgroundColor: 'whitesmoke',
-  //     borderColor: 'gray',
-  //     borderWidth: 1.5,
-  //     pointBackgroundColor: 'transparent',
-  //     pointHoverBackgroundColor: 'transparent',
-  //     pointBorderColor: 'black',
-  //     pointHoverBorderColor: 'gray'
-  //  }];
   
     let threatArray =  this.riskIssueArray.filter(() => true ).map(e => e.risk);
     let newThreatArray = Array.from(new Set(threatArray));
@@ -1024,7 +1144,7 @@ public trafficBgColors = [];
   ];
 
 
-
+  this.chart3plugin = [pluginDataLabels];
 
   this.thirrdPartyChart = {
     title: {
@@ -1043,7 +1163,8 @@ public trafficBgColors = [];
       padding: 10
     },
     tooltips: {
-        enabled: true
+        enabled: true,
+        intersect: true
     },
     scales: {
       yAxes: [{
@@ -1074,10 +1195,10 @@ public trafficBgColors = [];
     responsive: true,
     plugins: {
         datalabels: {
-            anchor: 'end',
+            anchor: 'center',
             align: 'top',
             formatter: Math.round,
-            font: { weight: 'bold'}
+            font: { weight: 'bold', size: 18 }
         }
     }
   };
