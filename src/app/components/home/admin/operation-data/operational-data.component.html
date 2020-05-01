@@ -68,7 +68,8 @@
             </div>
 
             <div class="model-body">
-                <canvas *ngIf="riskCategoryChartType" baseChart class="chart" [chartType]="riskCategoryChartType" [labels]="riskCategoryChartLabels"
+                <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
+                <canvas *ngIf="chartsProgress === 100 && riskCategoryChartType" baseChart class="chart" [chartType]="riskCategoryChartType" [labels]="riskCategoryChartLabels"
                     [datasets]="riskCategoryChartDatasets" [options]="riskCategoryChartOptions" [plugins]="pluginDataLabels"></canvas>
             </div>
         </div>
@@ -86,7 +87,8 @@
             </div>
 
             <div class="model-body">
-                <canvas *ngIf="overallRiskRatingChartType" baseChart class="chart" [chartType]="overallRiskRatingChartType" [labels]="overallRiskRatingChartLabels"
+                <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
+                <canvas *ngIf="chartsProgress === 100 && overallRiskRatingChartType" baseChart class="chart" [chartType]="overallRiskRatingChartType" [labels]="overallRiskRatingChartLabels"
                     [datasets]="overallRiskRatingChartDatasets" [options]="overallRiskRatingChartOptions" [plugins]="pluginDataLabels"></canvas>
             </div>
         </div>
@@ -105,7 +107,8 @@
             </div>
 
             <div class="model-body">
-                <canvas *ngIf="riskPerIndustryChartType" baseChart class="chart" [chartType]="riskPerIndustryChartType" [labels]="riskPerIndustryChartLabels"
+                <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
+                <canvas *ngIf="chartsProgress === 100 && riskPerIndustryChartType" baseChart class="chart" [chartType]="riskPerIndustryChartType" [labels]="riskPerIndustryChartLabels"
                     [datasets]="riskPerIndustryChartDatasets" [options]="riskPerIndustryChartOptions" [plugins]="pluginDataLabels"></canvas>
             </div>
         </div>
