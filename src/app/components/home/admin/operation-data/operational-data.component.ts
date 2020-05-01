@@ -169,7 +169,12 @@ public overallRiskRatingChartDatasets: Array<any>;
 public overallRiskRatingChartOptions: any;
 public overallRiskRatingChartColors: any;
 
-
+// risk per industry variables
+public riskPerIndustryChartType: string;
+public riskPerIndustryChartLabels: Array<any>;
+public riskPerIndustryChartDatasets: Array<any>;
+public riskPerIndustryChartOptions: any;
+public riskPerIndustryChartColors: any;
 
 
 
@@ -471,21 +476,36 @@ OverallRiskRatingFunction() {
 
   this.third2Type = 'bar';
 
-  this.overallRiskRatingChartLabels = newThreatArray;
+  let label1 = newThreatArray;
   let myDatasets = [];
   this.overallRiskRatingChartColors = [];
-
-  this.overallRiskRatingChartLabels.forEach((riskEl) => {
+  let sumRisksData = 0
+  label1.forEach((riskEl) => {
     this.overallRiskRatingChartColors.push(this.getRandomColor());
     let myArr2 = this.riskIssueArray.filter((rsk) => rsk.risk === riskEl ).map(e => e);
-    myDatasets.push(myArr2.length);
+    sumRisksData = sumRisksData + myArr2.length;
+    myDatasets.push({label: riskEl, data: myArr2.length});
   });
 
-  let myDatasets1 = myDatasets
+
+  let myDatasets1 = []
+ 
+  myDatasets.forEach((d) => {
+
+    let x = ((Number(d.data) * 100) / Number(sumRisksData)).toFixed(1)
+    d.data = Number(x);
+
+    myDatasets1.push(d);
+  })
+
+  let myDatasets2 = myDatasets1.sort((a, b) => b.data - a.data)
+
+
+  this.overallRiskRatingChartLabels = myDatasets2.filter(() => true).map(e => e.label)
 
   this.overallRiskRatingChartDatasets = [{
     label: 'Risk',
-    data: myDatasets1,
+    data: myDatasets2.filter(() => true).map(e => e.data),
     backgroundColor: this.overallRiskRatingChartColors,
     borderColor: 'white',
     borderWidth: 1.5,
@@ -496,11 +516,6 @@ OverallRiskRatingFunction() {
   }];
 
   this.overallRiskRatingChartOptions = {
-    title: {
-      display: false,
-      text: 'Sales',
-      fontSize: 25
-    },
     legend: {
       display: false,
       position: 'bottom',
@@ -518,7 +533,7 @@ OverallRiskRatingFunction() {
               let dataInx = tooltipItem.index
               let lbl = data.labels[dataInx];
               let value = data.datasets[0].data[dataInx];
-              return `${lbl} : ${value}`;
+              return `${lbl} : ${value}%`;
             },
         }
     },
@@ -556,7 +571,7 @@ OverallRiskRatingFunction() {
           align: 'center',
           color: 'black',
           formatter: function(value, context) {
-            return value;
+            return value + '%';
           },
           font: { weight: 'bold', size: 12 },
           listeners: {
@@ -578,6 +593,186 @@ OverallRiskRatingFunction() {
 
 
 
+
+RiskPerIndustryChartfunction() {
+  this.riskPerIndustryChartType = 'horizontalBar';
+
+  let myLabels = [];
+
+
+  let myCompanyArr = []
+  this.riskIssueArrayPerCompany.forEach((compElem) => {
+
+    let myRiskArray = this.riskIssueArray.filter((r)=> r.company === compElem ).map(e => e);
+
+    let LowRate = myRiskArray.filter((r)=> r.level === 'Low' ).map(e => e);
+    let MediumRate = myRiskArray.filter((r)=> r.level === 'Medium' ).map(e => e);
+    let HighRate = myRiskArray.filter((r)=> r.level === 'High' ).map(e => e);
+    
+    let totalRiskNum = this.companyRiskArray.length;
+    let lowRiskNum = LowRate.length;
+    let mediumRiskNum = MediumRate.length;
+    let highRiskNum = HighRate.length;
+
+    let lowRiskValue = lowRiskNum * 1;
+    let medumRiskValue = mediumRiskNum * 2;
+    let highRiskValue = highRiskNum * 3;
+    let totalRiskValue = totalRiskNum * 3
+
+    let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
+
+
+    let compObj = {
+      companyName: compElem,
+      averageRiskrate: ((myTotalRiskValue * 100) / totalRiskValue).toFixed(1)
+    }
+    myCompanyArr.push(compObj)
+
+  })
+
+
+  let allIndustryTypes = this.AllCompanies.filter((r) => true).map(e => e.companyType);
+  myLabels = Array.from(new Set(allIndustryTypes));
+
+  this.riskPerIndustryChartColors = []
+  let myDataSet1 = [];
+
+  myLabels.forEach((ind) => {
+    let value = 0;
+    let num = 0;
+    myCompanyArr.forEach((dataElm) => {
+      this.AllCompanies.forEach((comp) => {
+        if(dataElm.companyName === comp.companyName && ind === comp.companyType){
+          value = value + Number(dataElm.averageRiskrate)
+          num++
+        } 
+      })
+    })
+    this.riskPerIndustryChartColors.push(this.getRandomColor())
+
+    if(num !== 0 && value !== 0) {
+      let x = Number(Number(value) / Number(num)).toFixed(0)
+      let obj = {
+        label: ind,
+        data: Number(x)
+      }
+      myDataSet1.push(obj)
+    } else {
+      let obj = {
+        label: ind,
+        data: 0
+      }
+      myDataSet1.push(obj)
+    }
+  
+  });
+
+  let sumArr = myDataSet1.filter(r => true).map(e => e.data);
+  let sumDataset = sumArr.reduce((a, b) => Number(a) + Number(b), 0)
+
+  let myDatasets2 = []
+ 
+  myDataSet1.forEach((d) => {
+
+    let x = ((Number(d.data) * 100) / Number(sumDataset)).toFixed(1)
+    d.data = Number(x);
+
+    myDatasets2.push(d);
+  })
+
+  let myDatasets3 = myDatasets2.sort((a, b) => b.data - a.data)
+
+
+  this.riskPerIndustryChartLabels = myDatasets3.filter(() => true).map(e => e.label)
+ 
+  
+  this.riskPerIndustryChartDatasets = [{
+    label: 'Risk rate',
+    data: myDatasets3.filter(() => true).map(e => e.data),
+    backgroundColor: this.riskPerIndustryChartColors,
+    borderColor: 'white',
+    borderWidth: 1.5,
+    pointBackgroundColor: 'transparent',
+    pointHoverBackgroundColor: 'transparent',
+    pointBorderColor: 'white',
+    pointHoverBorderColor: 'gray'
+  }];
+
+  this.riskPerIndustryChartOptions = {
+    legend: {
+      display: false,
+      position: 'bottom',
+      labels: {
+            fontColor: '#73818f'
+          }
+    },
+    layout: {
+      padding: 10
+    },
+    tooltips: {
+        enabled: true,
+        callbacks: {
+            label: function(tooltipItem, data) {
+              let dataInx = tooltipItem.index
+              let lbl = data.labels[dataInx];
+              let value = data.datasets[0].data[dataInx];
+              return `${lbl} : ${value}%`;
+            },
+        }
+    },
+    scales: {
+      yAxes: [{
+          display: true,
+          gridLines: {
+              drawBorder: false,
+              display: false
+          },
+          stacked: false,
+          ticks: {
+              beginAtZero: true
+          }
+      }],
+      xAxes: [{
+          barPercentage: 0.4,
+          display: false,
+          stacked: false,
+          gridLines: {
+              drawBorder: true,
+              display: false
+          },
+          ticks: {
+            beginAtZero: false
+          }
+      }]
+    },
+    maintainAspectRatio: false,
+    responsive: true,
+    plugins: {
+        datalabels: {
+          clamp: true,
+          anchor: 'center',
+          align: 'center',
+          color: 'black',
+          formatter: function(value, context) {
+            return value + '%';
+          },
+          font: { weight: 'bold', size: 12 },
+          listeners: {
+            enter: function(context) {
+              context.hovered = true;
+              return true;
+            },
+            leave: function(context) {
+              context.hovered = false;
+              return true;
+            }
+          }
+        }
+    }
+  };
+
+
+}
 
 
 
@@ -712,16 +907,6 @@ OverallRiskRatingFunction() {
 
     })
 
-
-
-
-
-
-
-
-
-
-  
   
     let allIndustryTypes = this.AllCompanies.filter((r) => true).map(e => e.companyType);
     myCardThreeLabels = Array.from(new Set(allIndustryTypes));
@@ -1690,6 +1875,7 @@ graphChartToPie() {
 
                           this.riskCategoriesFunction(); 
                           this.OverallRiskRatingFunction()
+                          this.RiskPerIndustryChartfunction();
                         }
   
                       });

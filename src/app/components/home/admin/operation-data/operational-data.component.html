@@ -38,7 +38,7 @@
                 <fa-icon [icon]="faBuilding"></fa-icon>
             </div>
             <div class="card-info">
-                <h4>{{AllCompanies.length}}</h4>
+                <h4>{{AllSurveys.length}}</h4>
             </div>
             <div class="card-body">
             
@@ -62,8 +62,8 @@
             <div class="model-title">
                 <span class="title">Risk Ratio Per Risk Category</span>
                 <div class=" graph-switch d-flex ml-auto">
-                    <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
-                    <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span>
+                    <!-- <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
+                    <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> -->
                 </div>
             </div>
 
@@ -80,8 +80,8 @@
             <div class="model-title">
                 <span class="title">Overall Average Risk Rating</span>
                 <div class=" graph-switch d-flex ml-auto">
-                    <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
-                    <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span>
+                    <!-- <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
+                    <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> -->
                 </div>
             </div>
 
@@ -93,6 +93,28 @@
     </div>
 
     
+
+    <div class="overal-risk-per-industry-chart-section">
+        <div class="model">
+            <div class="model-title">
+                <span class="title">Average Risk Rating Per Industry</span>
+                <div class=" graph-switch d-flex ml-auto">
+                    <!-- <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
+                    <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> -->
+                </div>
+            </div>
+
+            <div class="model-body">
+                <canvas *ngIf="riskPerIndustryChartType" baseChart class="chart" [chartType]="riskPerIndustryChartType" [labels]="riskPerIndustryChartLabels"
+                    [datasets]="riskPerIndustryChartDatasets" [options]="riskPerIndustryChartOptions" [plugins]="pluginDataLabels"></canvas>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
 
 
 
@@ -224,7 +246,7 @@
 
 
 
-    <section id="second_cards_section" class="card-group">
+    <section hidden id="second_cards_section" class="card-group">
         <div class="card">
             <div class="title d-flex"> <span>Number of risks that have been measured under each category</span>
                 <div class=" graph-switch d-flex ml-auto">
