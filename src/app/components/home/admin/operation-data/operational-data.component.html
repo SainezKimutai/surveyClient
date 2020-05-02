@@ -133,11 +133,20 @@
                 <div class="search-wrap">
                     <div class="input-wrap">
                       
-                        <input type="text" placeholder="Search Company Name" aria-placeholder="Company Name">
+                        <input type="text" 
+                        (keyup)="filterCompany()" name='FilterName' [(ngModel)]="FilterName"
+                        placeholder="Search Company Name" aria-placeholder="Search Company Name">
                     </div>
 
-                    <div class="average-wrap">
-                        Average Risk <span class="high">65 %</span>
+                    <div class="average-wrap" *ngIf="activeCompanyTotalRiskRate === 0 || activeCompanyTotalRiskRate > 0">
+                        Average Risk <span 
+                        [ngClass]="[ 
+                            33 > activeCompanyTotalRiskRate ? 'low' : '',
+                            66 > activeCompanyTotalRiskRate && activeCompanyTotalRiskRate > 33 ? 'medium' : '',
+                            activeCompanyTotalRiskRate > 66 ? 'high' : ''
+                            ]"
+                            >{{activeCompanyTotalRiskRate}} %
+                        </span>
                     </div>
                 </div>
 
@@ -145,33 +154,46 @@
 
                     <div class="title-wrap d-flex">
                         <div class="third-party">Third Party</div>
-                        <div class="company">Company Name (<span>54</span>) </div>
+                        <div class="company">Company Name (<span>{{riskIssueArrayPerCompany.length}}</span>) </div>
                         <div class="risk-name">Risk Name</div>
                         <div class="risk-level">Risk Level</div>
                         <div class="risk-recom">Recommendation</div> 
                     </div>
                     <div class="medel-item-wrap d-flex">
                         <div class="model-third">
-                            <h4 *ngFor="let item of AllThirdParties;">{{item.name}}</h4>
+                            <h4 *ngFor="let item of AllThirdParties;"
+                            [ngClass]="activeThirdParty === item._id ? 'active' : '' "
+                            (click)="switchActiveThirdCompany(item._id)"
+                            >{{item.name}}</h4>
+
+                            <h4 *ngIf="AllThirdParties.length === 0">---</h4>
 
                         </div>
                         <div class="model-company">
-                            <h4 *ngFor="let item of AllCompanies">{{item.companyName}}</h4>
+                            <h4
+                                *ngFor="let item of riskIssueArrayPerCompanyToView1; let x = index" 
+                                [ngClass]="activeCompany === item ? 'active' : '' "
+                                (click)="switchActiveCompany(x)">               
+                                {{item}}
+                            </h4>
+                            <h4 *ngIf="riskIssueArrayPerCompanyToView1.length === 0">---</h4>
 
                         </div>
-                        <div class="model-risk-name">
-                            <h4>shdjshd</h4>
-
+                        <div class="model-risk-wrap">      
+                            <div class="model-risk-item d-flex"  *ngFor="let item of companyRiskArray">
+                                <h4 class="name">{{item.risk}}</h4> 
+                                <h4    [ngClass]="[ 
+                                    item.level === 'Low' ? 'level low' : 'level',
+                                    item.level === 'Medium' ? 'level medium' : 'level',
+                                    item.level === 'High' ? 'level high' : 'level'
+                                    ]"
+                                    >{{item.level}}</h4>
+                                <h4 class="recom">{{item.recom}}</h4>
+                            </div>
+                            <div class="model-risk-item d-flex"  *ngIf="companyRiskArray.length === 0">---</div>
+                            
                         </div>
-                        <div class="model-risk-level">
-                            <h4>shdjshd</h4>
-
-                        </div>
-                        <div class="model-risk-recom">
-                            <h4>shdjshd</h4>
-
-                        </div>
-
+      
                     </div>
 
                 </div>
@@ -197,9 +219,7 @@
 
 
 
-
-
-    <section id="graph_section" class="card-group">
+    <!-- <section id="graph_section" class="card-group">
         <div class="card">
             <div class="title d-flex"> 
                 <span>List of Third Parties</span>
@@ -243,7 +263,7 @@
             </div>
 
         </div>
-    </section> <!-- graph_section -->
+    </section> graph_section -->
 
 
 
@@ -270,7 +290,7 @@
 
 
 
-    <section hidden id="top_cards_section" class="card-group">
+    <!-- <section hidden id="top_cards_section" class="card-group">
 
         <div class="card third">
             <div class="card-title">
@@ -301,7 +321,7 @@
         </div>
 
 
-    </section><!-- top_cards_section -->
+    </section>top_cards_section -->
 
 
 
@@ -324,7 +344,7 @@
 
 
 
-    <section hidden id="second_cards_section" class="card-group">
+    <!-- <section hidden id="second_cards_section" class="card-group">
         <div class="card">
             <div class="title d-flex"> <span>Number of risks that have been measured under each category</span>
                 <div class=" graph-switch d-flex ml-auto">
@@ -347,7 +367,7 @@
                 <div class=" graph-switch d-flex ml-auto">
                     <span (click)="third2graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="third2Type === 'line' ? 'active' : ''" ></fa-icon></span> 
                     <span (click)="third2graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="third2Type === 'bar' ? 'active' : ''" ></fa-icon></span>
-                    <!-- <span (click)="third2graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="third2Type === 'pie' ? 'active' : ''" ></fa-icon> </span> -->
+                     <span (click)="third2graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="third2Type === 'pie' ? 'active' : ''" ></fa-icon> </span> 
                 </div>
             </div>
 
@@ -358,7 +378,7 @@
             </div>
 
         </div>
-    </section><!-- second_cards_section -->
+    </section> -->
 
 
 
@@ -370,36 +390,7 @@
 
 
 
-
-
-
-    <section hidden id="graph_section" class="card-group">
-        <div class="card">
-            <div class="title d-flex"> <span>Graphical Comparison of Company Average Risk Exposure</span>
-                <div class=" graph-switch d-flex ml-auto">
-                    <span (click)="graphChartToLine()"><fa-icon [icon]="faChartLine" [ngClass]="graphType === 'line' ? 'active' : ''" ></fa-icon></span> 
-                    <span (click)="graphChartToBar()"><fa-icon [icon]="faChartBar" [ngClass]="graphType === 'bar' ? 'active' : ''" ></fa-icon></span>
-                    <span (click)="graphChartToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="graphType === 'pie' ? 'active' : ''" ></fa-icon> </span>
-                </div>
-            </div>
-            <div class="body">
-                <div class="body w-10 d-flex" *ngIf="!graphType">
-                    <div class="spinner-div spinner-border mx-auto" role="status"></div>
-                </div>
-                <div class="canvas-wrap">
-                    <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
-                    <canvas *ngIf="graphType" baseChart class="chart" [chartType]="graphType" [labels]="graphLabels"
-                    [datasets]="graphDatasets" [options]="graphChart"></canvas>
-                </div>
-       
-            </div>
-
-        </div>
-    </section> <!-- graph_section -->
-
-
-
-
+<!-- 
     <section id="risk_per_company_section" class="card-group">
         <div class="card">
             <div class="title d-flex"> 
@@ -455,7 +446,7 @@
             </div>
 
         </div>
-    </section> <!-- graph_section -->
+    </section>  -->
 
 
 

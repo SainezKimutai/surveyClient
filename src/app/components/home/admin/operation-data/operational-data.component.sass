@@ -22,6 +22,11 @@
     margin: 1em
     background-color: transparent
 
+
+
+
+
+
     
 .spinner-div
     margin: auto
@@ -463,12 +468,16 @@ circle-progress
         font-size: 12px
         background-color: grayColor(g100)
         margin-right: .5em
+        background-color: lighten(colorTheme(primaryTheme), 10)
+        color: white
 
     .risk-name, .risk-level, .risk-recom
         width: 200px
         padding: .5em
         font-size: 12px
         background-color: grayColor(g100)
+        background-color: lighten(colorTheme(primaryTheme), 10)
+        color: white
 
 
 
@@ -477,43 +486,101 @@ circle-progress
 
     .model-third
         width: 200px
-        padding: .5em
-        font-size: 12px
+        height: 350px
+        overflow-y: scroll
         margin-right: .5em
-        border-bottom: solid 1px grayColor(g100)
 
         h4 
+            margin-right: .5em
+            padding: .5em
             font-weight: bold
             color: grayColor(g900)
             font-size: 12px
+            border-bottom: solid 1px grayColor(g100)
+            height: fit-content
+            min-height: 3em
+            cursor: pointer
+              
+            &.active 
+                background-image: linear-gradient(to right, lighten( #F7B308, 30)  , lighten( #F7B308, 65) )
+                border-left: solid 4px colorTheme(primaryTheme)
 
 
     .model-company
         width: 200px
-        padding: .5em
-        font-size: 12px
+        height: 350px
+        overflow-y: scroll
         margin-right: .5em
-        font-weight: bold
-        color: grayColor(g900)
-        border-bottom: solid 1px grayColor(g100)
         
         h4 
+            text-transform: capitalize
+            padding: .5em
+            font-size: 12px
+            margin-right: .5em
             font-weight: bold
             color: grayColor(g900)
-            font-size: 12px
+            border-bottom: solid 1px grayColor(g100)
+            cursor: pointer
+            height: fit-content
+            min-height: 3em
 
-    .model-risk-name, .model-risk-level, .model-risk-recom
-        width: 200px
-        padding: .5em
-        border-bottom: solid 1px grayColor(g100)
-        color: grayColor(g900)
+            &.active 
+                background-image: linear-gradient(to right, lighten( black, 70)  , lighten( black, 95) )
+                border-left: solid 4px colorTheme(primaryTheme)
 
-        h4 
-            font-weight: bold
-            color: grayColor(g900)
-            font-size: 12px
+
+    .model-risk-wrap 
+        width: 600px
+        height: 350px
+        overflow-y: scroll
+        display: flex
+        flex-direction: column
+
+
+        .model-risk-item
+            width: 100%
+            border-bottom: solid 1px grayColor(g100)
+          
+
+            h4
+                width: 200px
+                padding: .5em
+                font-size: 12px
+                margin-right: .5em
+                color: grayColor(g900)
+                overflow: hidden
+                word-break: break-all
+                word-wrap: break-word
+                display: block
+
+                &.level
+                    font-weight: bold
+
+                &.low 
+                    color: colorTheme(success)
+
+                &.medium
+                    color: colorTheme(warning)
+
+                &.high
+                    color: colorTheme(danger)
+                    
+
 
     
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

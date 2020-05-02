@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener, ElementRef } from '@angular/core';
 import { faChartLine, faChartBar, faChartPie, faListAlt, faBuilding, faFire } from '@fortawesome/free-solid-svg-icons';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
@@ -133,6 +133,8 @@ public riskIssueArrayUnsorted = [];
 public riskIssueArray = [];
 public riskIssueArrayPerRisk = [];
 public riskIssueArrayPerCompany = []
+public riskIssueArrayPerCompanyToView = [];
+public riskIssueArrayPerCompanyToView1 = [];
 public activeRisk;
 public myGraphLabelColors = [];
 
@@ -142,6 +144,7 @@ public surveyStatus = 0;
 
 public companyRiskArray = [];
 public activeCompany;
+public activeThirdParty;
 public activeCompanyTotalRiskRate = null;
 
 
@@ -177,7 +180,7 @@ public riskPerIndustryChartOptions: any;
 public riskPerIndustryChartColors: any;
 
 
-
+public FilterName = '';
 
 
 
@@ -194,6 +197,7 @@ public riskPerIndustryChartColors: any;
     
     this.updatePage().then(() => { this.riskIssuesFunction(); this.trafficFunction(); } );
 
+  
   }
 
 
@@ -231,6 +235,12 @@ public riskPerIndustryChartColors: any;
   
       this.userService.getAllUsers().subscribe( datauser => {
         this.AllUsers = datauser;
+        let a = this.AllUsers.filter((e) => e.userType === 'thirdparty').map(e => e);
+        this.AllThirdParties = a.sort((a, b) => {
+          if(a.name < b.name) { return -1; }
+          if(a.name > b.name) { return 1; }
+          return 0;
+        });
         this.chartsProgress = 10
   
         this.companyProfileService.getAllCompanyProfiles().subscribe( dataCompanies => {
@@ -302,9 +312,7 @@ public riskPerIndustryChartColors: any;
 
 
 
-
-
-
+  
 
 
 riskCategoriesFunction() {
@@ -604,12 +612,12 @@ RiskPerIndustryChartfunction() {
   this.riskIssueArrayPerCompany.forEach((compElem) => {
 
     let myRiskArray = this.riskIssueArray.filter((r)=> r.company === compElem ).map(e => e);
-
+  
     let LowRate = myRiskArray.filter((r)=> r.level === 'Low' ).map(e => e);
     let MediumRate = myRiskArray.filter((r)=> r.level === 'Medium' ).map(e => e);
     let HighRate = myRiskArray.filter((r)=> r.level === 'High' ).map(e => e);
     
-    let totalRiskNum = this.companyRiskArray.length;
+    let totalRiskNum = myRiskArray.length;
     let lowRiskNum = LowRate.length;
     let mediumRiskNum = MediumRate.length;
     let highRiskNum = HighRate.length;
@@ -618,7 +626,6 @@ RiskPerIndustryChartfunction() {
     let medumRiskValue = mediumRiskNum * 2;
     let highRiskValue = highRiskNum * 3;
     let totalRiskValue = totalRiskNum * 3
-
     let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
 
 
@@ -626,6 +633,7 @@ RiskPerIndustryChartfunction() {
       companyName: compElem,
       averageRiskrate: ((myTotalRiskValue * 100) / totalRiskValue).toFixed(1)
     }
+   
     myCompanyArr.push(compObj)
 
   })
@@ -656,6 +664,7 @@ RiskPerIndustryChartfunction() {
         label: ind,
         data: Number(x)
       }
+   
       myDataSet1.push(obj)
     } else {
       let obj = {
@@ -681,7 +690,6 @@ RiskPerIndustryChartfunction() {
   })
 
   let myDatasets3 = myDatasets2.sort((a, b) => b.data - a.data)
-
 
   this.riskPerIndustryChartLabels = myDatasets3.filter(() => true).map(e => e.label)
  
@@ -812,7 +820,7 @@ RiskPerIndustryChartfunction() {
 
   async topCardsChartFunction() {
   
-    this.AllThirdParties = this.AllUsers.filter((e) => e.userType === 'thirdparty').map(e => e);
+    
     // Card One
     let myCardOneDataSet = [];
     this.AllThirdParties.forEach((thd) => {
@@ -1709,19 +1717,57 @@ graphChartToPie() {
 
 
 
+  filterCompany() {
+    if (!this.FilterName || this.FilterName === null || this.FilterName === '' || this.FilterName.length  < 1) {
+      this.riskIssueArrayPerCompanyToView1 = this.riskIssueArrayPerCompanyToView;
+    } else {
 
+      this.riskIssueArrayPerCompanyToView1 = this.riskIssueArrayPerCompanyToView.filter(v => v.toLowerCase().indexOf(this.FilterName.toLowerCase()) > -1).slice(0, 10);
+
+    }
+
+  }
 
 
 
 
 
  
+  switchActiveThirdCompany(idParam) {
 
+    if(idParam === 1) {
+          this.activeThirdParty = this.AllThirdParties[0]._id;
+          this.riskIssueArrayPerCompanyToView = [];
+          this.riskIssueArrayPerCompany.forEach((riskComp) => {
+            let myComp = this.AllCompanies.filter((cpm) => riskComp === cpm.companyName && this.activeThirdParty === cpm.institutionId ).map(e => e);
+            if (myComp.length > 0) { this.riskIssueArrayPerCompanyToView.push(riskComp); }
+          })
+          
+          this.riskIssueArrayPerCompanyToView1 = this.riskIssueArrayPerCompanyToView
+          this.activeCompany = this.riskIssueArrayPerCompanyToView1[0];
+          this.companyRiskArray = this.riskIssueArray.filter((r)=> r.company === this.activeCompany ).map(e => e);
+          this.calculateActiveCompanyTotalRiskRate();
+
+    } else {
+        this.activeThirdParty = idParam;
+        this.riskIssueArrayPerCompanyToView = [];
+        this.riskIssueArrayPerCompany.forEach((riskComp) => {
+          let myComp = this.AllCompanies.filter((cpm) => riskComp === cpm.companyName && this.activeThirdParty === cpm.institutionId ).map(e => e);
+          if (myComp.length > 0) { this.riskIssueArrayPerCompanyToView.push(riskComp); }
+        })
+
+        this.riskIssueArrayPerCompanyToView1 = this.riskIssueArrayPerCompanyToView
+          this.activeCompany = this.riskIssueArrayPerCompanyToView1[0];
+        this.companyRiskArray = this.riskIssueArray.filter((r)=> r.company === this.activeCompany ).map(e => e);
+        this.calculateActiveCompanyTotalRiskRate();
+      }
+
+  }
   
   
   switchActiveCompany(comp) {
  
-    this.activeCompany = this.riskIssueArrayPerCompany[comp];
+    this.activeCompany = this.riskIssueArrayPerCompanyToView1[comp];
     this.companyRiskArray = this.riskIssueArray.filter((r)=> r.company === this.activeCompany ).map(e => e);
     this.calculateActiveCompanyTotalRiskRate();
 
@@ -1861,9 +1907,14 @@ graphChartToPie() {
                           let newRiskArrayPerRisk = this.riskIssueArray.filter(() => true ).map(e => e.risk);
                           this.riskIssueArrayPerRisk = Array.from(new Set(newRiskArrayPerRisk));
                           let newRiskArrayPerCompany = this.riskIssueArray.filter(() => true ).map(e => e.company);
-                          this.riskIssueArrayPerCompany = Array.from(new Set(newRiskArrayPerCompany));
-                          this.activeCompany = this.riskIssueArrayPerCompany[0]
-                          this.companyRiskArray = this.riskIssueArray.filter((r)=> r.company === this.activeCompany ).map(e => e);
+                          let riskIssueArrayPerCompany1 = Array.from(new Set(newRiskArrayPerCompany));
+                          riskIssueArrayPerCompany1 = riskIssueArrayPerCompany1.sort((a, b) => { if(a < b) { return -1; } if(a > b) { return 1; } return 0; });
+                          this.riskIssueArrayPerCompany =  riskIssueArrayPerCompany1.reduce((unique, item) => {
+                            let unique1 =  unique.filter(() => true).map(e => e.toLowerCase().replace(/ /g,''))
+                            let item2 = item.toLowerCase().replace(/ /g,''); 
+                            return unique1.includes(item2) ? unique : [...unique, item]
+                          }, []);
+                        
                           this.chartsProgress = 95;
   
                           this.topCardsChartFunction();
@@ -1876,6 +1927,7 @@ graphChartToPie() {
                           this.riskCategoriesFunction(); 
                           this.OverallRiskRatingFunction()
                           this.RiskPerIndustryChartfunction();
+                          this.switchActiveThirdCompany(1);
                         }
   
                       });
