@@ -42,14 +42,10 @@ constructor(
 @ViewChild('viewAnswersModal', {static: true, }) viewAnswersModal: ModalDirective;
 
 
-public innerWidth: any;
-public onResizeStatus = false;
+
 public faListAlt = faListAlt;
 public faBuilding = faBuilding;
 public faFire = faFire;
-
-public today = new Date();
-public thisYear = this.today.getFullYear();
 
 
 
@@ -81,7 +77,7 @@ public CompanyRiskRatesSurvey = [];
 public CompanyRiskRatesDataList = [];
 public CompanyRiskRatesDataListView = [];
 
-// Third Section graph variables
+
 public chartsProgress = 0;
 
 
