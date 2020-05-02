@@ -72,58 +72,20 @@ public faChartPie = faChartPie;
 public pluginDataLabels = [pluginDataLabels]
 // Top Cards variables
 public AllThirdParties = [];
-public cardOneType: string;
-public cardOneLabels: Array<any>;
-public cardOneDatasets: Array<any>;
-
-public cardTwoType: string;
-public cardTwoLabels: Array<any>;
-public cardTwoDatasets: Array<any>;
-public cardThreeType: string;
-public cardThreeLabels: Array<any>;
-public cardThreeDatasets: Array<any>;
-public cardFourType: string;
-public cardFourLabels: Array<any>;
-public cardFourDatasets: Array<any>;
-public topCardsChart: any;
 
 
 
-public CompnayRiskRates = [];
 
+public CompanyRiskRates = [];
+public CompanyRiskRatesSurvey = [];
+public CompanyRiskRatesDataList = [];
+public CompanyRiskRatesDataListView = [];
 
 // Third Section graph variables
 public chartsProgress = 0;
-public third1Type;
-public third1Labels;
-public third1Datasets;
-public third1ChartOptions;
-public third1Legend;
-public third1BgColors = [];
-public third2Labels;
-public third2Type;
-public third2Datasets;
-public third2ChartOptions;
-public third2BgColors = [];
-public third2Legend;
 
 
-//
-public thirrdPartyType: string;
-public thirrdPartyLabels: Array<any>;
-public thirrdPartyDatasets: Array<any>;
-public thirrdPartyChart: any;
-public chart3plugin: any;
 
-public thirrdPartySurveys = [];
-public thirrdPartyCompanys = [];
-public listTirdPartyIsGraph = true;
-
-// graph variables
-public graphType: string;
-public graphLabels: Array<any>;
-public graphDatasets: Array<any>;
-public graphChart: any;
 
 public QuestionsOnView = [];
 public companyNameOnView = '';
@@ -181,6 +143,7 @@ public riskPerIndustryChartColors: any;
 
 
 public FilterName = '';
+public Filter2Name = '';
 
 
 
@@ -481,8 +444,6 @@ OverallRiskRatingFunction() {
     return unique1.includes(item2) ? unique : [...unique, item]
   }, []);
 
-
-  this.third2Type = 'bar';
 
   let label1 = newThreatArray;
   let myDatasets = [];
@@ -798,925 +759,6 @@ RiskPerIndustryChartfunction() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  async topCardsChartFunction() {
-  
-    
-    // Card One
-    let myCardOneDataSet = [];
-    this.AllThirdParties.forEach((thd) => {
-      let myComp = this.AllCompanies.filter((r) => r.institutionId === thd._id ).map(e => e);
-      myCardOneDataSet.push(myComp.length);
-    });
-  
-    this.cardOneType = 'line';
-  
-    this.cardOneLabels = this.AllUsers.filter((e) => e.userType === 'thirdparty').map(e => e.name);
-  
-    this.cardOneDatasets = [{
-        label: 'Associated Companies',
-        data: myCardOneDataSet,
-        backgroundColor: 'transparent',
-        borderColor: 'white',
-        borderWidth: 1.5,
-        pointBackgroundColor: 'transparent',
-        pointHoverBackgroundColor: 'transparent',
-        pointBorderColor: 'white',
-        pointHoverBorderColor: 'gray'
-      }];
-  
-  
-  
-  
-  
-  
-  
-  
-  
-    // Card Two
-    let myCardTwoDataSet = [];
-    this.AllCompanies.forEach((comp) => {
-      let allSurveysDone = this.AllResponses.filter((r) => r.companyId === comp._id ).map(e => e.surveyId);
-      let filteredSurveysDone = Array.from(new Set(allSurveysDone));
-      myCardTwoDataSet.push(filteredSurveysDone.length);
-    });
-    this.cardTwoType = 'line';
-  
-    this.cardTwoLabels = this.AllCompanies.filter(() => true ).map(e => e.companyName);
-  
-    this.cardTwoDatasets = [{
-        label: 'Survey',
-        data: myCardTwoDataSet,
-        backgroundColor: 'transparent',
-        borderColor: 'white',
-        borderWidth: 1.5,
-        pointBackgroundColor: 'transparent',
-        pointHoverBackgroundColor: 'transparent',
-        pointBorderColor: 'white',
-        pointHoverBorderColor: 'gray'
-      }];
-  
-  
-  
-  
-  
-  
-  
-      // Card Three
-    let myCardThreeLabels = [];
-
-
-    let myCardThreeCompanyArr = []
-    this.riskIssueArrayPerCompany.forEach((compElem) => {
-
-      let myRiskArray = this.riskIssueArray.filter((r)=> r.company === compElem ).map(e => e);
-
-      let LowRate = myRiskArray.filter((r)=> r.level === 'Low' ).map(e => e);
-      let MediumRate = myRiskArray.filter((r)=> r.level === 'Medium' ).map(e => e);
-      let HighRate = myRiskArray.filter((r)=> r.level === 'High' ).map(e => e);
-      
-      let totalRiskNum = this.companyRiskArray.length;
-      let lowRiskNum = LowRate.length;
-      let mediumRiskNum = MediumRate.length;
-      let highRiskNum = HighRate.length;
-  
-      let lowRiskValue = lowRiskNum * 1;
-      let medumRiskValue = mediumRiskNum * 2;
-      let highRiskValue = highRiskNum * 3;
-      let totalRiskValue = totalRiskNum * 3
-  
-      let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
-  
-
-      let compObj = {
-        companyName: compElem,
-        averageRiskrate: ((myTotalRiskValue * 100) / totalRiskValue).toFixed(1)
-      }
-      myCardThreeCompanyArr.push(compObj)
-
-    })
-
-  
-    let allIndustryTypes = this.AllCompanies.filter((r) => true).map(e => e.companyType);
-    myCardThreeLabels = Array.from(new Set(allIndustryTypes));
-  
-    let myCardThreeDataSet = [];
-    myCardThreeLabels.forEach((ind) => {
-      let value = 0;
-      let num = 0;
-      myCardThreeCompanyArr.forEach((dataElm) => {
-        this.AllCompanies.forEach((comp) => {
-          if(dataElm.companyName === comp.companyName && ind === comp.companyType){
-            value = value + Number(dataElm.averageRiskrate)
-            num++
-          } 
-        })
-      })
-      if(num !== 0 && value !== 0) {
-        myCardThreeDataSet.push(value / num)
-      } else {
-        myCardThreeDataSet.push(0)
-      }
-    
-    });
-  
-
-    this.cardThreeType = 'line';
-  
-    this.cardThreeLabels = myCardThreeLabels;
-  
-    this.cardThreeDatasets = [{
-        label: 'A. Risk Rate',
-        data: myCardThreeDataSet,
-        backgroundColor: 'transparent',
-        borderColor: 'white',
-        borderWidth: 1.5,
-        pointBackgroundColor: 'transparent',
-        pointHoverBackgroundColor: 'transparent',
-        pointBorderColor: 'white',
-        pointHoverBorderColor: 'gray'
-      }];
-  
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-    // card Fours
-    let myCardFourLabelArr = []
-    let myCardFourDataSet = []
-    this.riskIssueArrayPerCompany.forEach((compElem) => {
-
-      let myRiskArray = this.riskIssueArray.filter((r)=> r.company === compElem ).map(e => e);
-
-      let LowRate = myRiskArray.filter((r)=> r.level === 'Low' ).map(e => e);
-      let MediumRate = myRiskArray.filter((r)=> r.level === 'Medium' ).map(e => e);
-      let HighRate = myRiskArray.filter((r)=> r.level === 'High' ).map(e => e);
-      
-      let totalRiskNum = this.companyRiskArray.length;
-      let lowRiskNum = LowRate.length;
-      let mediumRiskNum = MediumRate.length;
-      let highRiskNum = HighRate.length;
-  
-      let lowRiskValue = lowRiskNum * 1;
-      let medumRiskValue = mediumRiskNum * 2;
-      let highRiskValue = highRiskNum * 3;
-      let totalRiskValue = totalRiskNum * 3
-  
-      let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
-  
-      myCardFourLabelArr.push(compElem);
-      myCardFourDataSet.push(((myTotalRiskValue * 100) / totalRiskValue).toFixed(1))
-    })
-
-
-
-    this.cardFourType = 'line';
-  
-    this.cardFourLabels = myCardFourLabelArr;
-  
-    this.cardFourDatasets = [{
-        label: 'A. Risk Rate',
-        data: myCardFourDataSet,
-        backgroundColor: 'transparent',
-        borderColor: 'white',
-        borderWidth: 1.5,
-        pointBackgroundColor: 'transparent',
-        pointHoverBackgroundColor: 'transparent',
-        pointBorderColor: 'white',
-        pointHoverBorderColor: 'gray'
-      }];
-  
-  
-  
-  
-    this.topCardsChart = {
-      title: {
-        display: false,
-        text: 'Sales',
-        fontSize: 25
-      },
-      legend: {
-        display: false,
-        position: 'right',
-        labels: {
-              fontColor: '#00e676'
-            }
-      },
-      layout: {
-        padding: 10
-      },
-      tooltips: {
-          enabled: true
-      },
-      scales: {
-        yAxes: [{
-            display: false,
-            gridLines: {
-                drawBorder: false,
-                display: false
-            },
-            stacked: true,
-            ticks: {
-                beginAtZero: true
-            }
-        }],
-        xAxes: [{
-            barPercentage: 0.4,
-            display: false,
-            stacked: true,
-            gridLines: {
-                drawBorder: true,
-                display: false
-            },
-            ticks: {
-              beginAtZero: false
-            }
-        }]
-      },
-      maintainAspectRatio: false,
-      responsive: true,
-      plugins: {
-          datalabels: {
-              anchor: 'end',
-              align: 'top',
-              formatter: Math.round,
-              font: { weight: 'bold'}
-          }
-      }
-    };
-  
-  }
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  third1graphToLine() {
-    this.third1Type = 'line';
-    this.third1ChartOptions.legend.display = false;
-    this.third1ChartOptions.scales.xAxes[0].display = true;
-    this.third1Datasets[0].backgroundColor = 'whitesmoke';
-    this.third1Datasets[0].borderColor = 'gray';
-    this.third1Datasets[0].pointBorderColor = 'black';
-  }
-  third1graphToBar() {
-    this.third1Type = 'bar';
-    this.third1ChartOptions.legend.display = false;
-    this.third1ChartOptions.scales.xAxes[0].display = true;
-    this.third1Datasets[0].backgroundColor = this.third1BgColors;
-    this.third1Datasets[0].borderColor = 'white';
-    this.third1Datasets[0].pointBorderColor = 'white';
-  }
-  third1graphToPie() {
-    this.third1Type = 'pie';
-    this.third1ChartOptions.legend.display = true;
-    this.third1ChartOptions.scales.xAxes[0].display = false;
-    this.third1Datasets[0].backgroundColor = this.third1BgColors;
-    this.third1Datasets[0].borderColor = 'white';
-    this.third1Datasets[0].pointBorderColor = 'white';
-  }
-  
-  third2graphToLine() {
-    this.third2Type = 'line';
-    this.third2ChartOptions.legend.display = false;
-    this.third2ChartOptions.scales.xAxes[0].display = true;
-    this.third2Datasets[0].backgroundColor = 'whitesmoke';
-    this.third2Datasets[0].borderColor = 'gray';
-    this.third2Datasets[0].pointBorderColor = 'black';
-  }
-  third2graphToBar() {
-    this.third2Type = 'bar';
-    this.third2ChartOptions.legend.display = false;
-    this.third2ChartOptions.scales.xAxes[0].display = true;
-    this.third2Datasets[0].backgroundColor = this.third2BgColors;
-    this.third2Datasets[0].borderColor = 'white';
-    this.third2Datasets[0].pointBorderColor = 'white';
-  }
-  third2graphToPie() {
-    this.third2Type = 'pie';
-    this.third2ChartOptions.legend.display = true;
-    this.third2ChartOptions.scales.xAxes[0].display = false;
-    this.third2Datasets[0].backgroundColor = this.third2BgColors;
-    this.third2Datasets[0].borderColor = 'white';
-    this.third2Datasets[0].pointBorderColor = 'white';
-  }
-  
-  
-  
-  
-  
-  @HostListener('window:resize', []) onResize() {
-    this.innerWidth = window.innerWidth;
-  
-    if (this.onResizeStatus) {
-    if (this.innerWidth < 992) {
-      this.third1ChartOptions.legend.position = 'top';
-      this.third2ChartOptions.legend.position = 'top';
-    }
-  
-    if (this.innerWidth > 992) {
-      this.third1ChartOptions.legend.position = 'bottom';
-      this.third2ChartOptions.legend.position = 'bottom';
-    }
-    }
-  
-  
-  }
-  
-  
-  
-  
-  thirdSectionGraphsFunction() {
-    this.chartsProgress = 100;
-
-
-    this.third1Type = 'pie';
-
-
-    let threatCatArray =  this.riskIssueArray.filter(() => true ).map(e => e.riskCategory);
-    let newThreatCatArray = Array.from(new Set(threatCatArray));
-  
-    let newThreatRisk = this.riskIssueArray.filter(() => true ).map(e => e.risk);
-    let newThreat1 = Array.from( new Set(newThreatRisk));
-  
-    let ThreatRiskInvolved =  newThreat1.reduce((unique, item) => {
-      let unique1 =  unique.filter(() => true).map(e => e.toLowerCase().replace(/ /g,''))
-      let item2 = item.toLowerCase().replace(/ /g,''); 
-      return unique1.includes(item2) ? unique : [...unique, item]
-    }, []);
-  
-    let ThreatRiskAndCat = []
-  
-    ThreatRiskInvolved.forEach((trt) => {
-      let x = {
-        risk: trt,
-        category: ''
-      }
-      this.riskIssueArray.forEach((rsk) => { 
-        if (rsk.risk === trt && x.category === '' && rsk.category !== '') {
-          x.category = rsk.riskCategory
-          ThreatRiskAndCat.push(x)
-        }
-      })
-    })
-  
-  
-    let mychart1Datasets = [];
-    this.third1BgColors = [];
-    newThreatCatArray.forEach((trtCat) => {
-      let y = ThreatRiskAndCat.filter((c) => c.category === trtCat).map(e => e)
-      this.third1BgColors.push(this.getRandomColor());
-      mychart1Datasets.push(y.length);
-    })
-  
-  
-    this.third1Labels = newThreatCatArray;
-    
-  
-    this.third1Datasets = [{
-      label: 'Risk',
-      data: mychart1Datasets,
-      backgroundColor: this.third1BgColors,
-      borderColor: 'white',
-      borderWidth: 1.5,
-      pointBackgroundColor: 'transparent',
-      pointHoverBackgroundColor: 'transparent',
-      pointBorderColor: 'white',
-      pointHoverBorderColor: 'gray'
-    }];
-  
-    this.third1ChartOptions = {
-      title: {
-        display: false,
-        text: 'Sales',
-        fontSize: 25
-      },
-      legend: {
-        display: true,
-        position: 'bottom',
-        labels: {
-              fontColor: '#73818f'
-            }
-      },
-      layout: {
-        padding: 10
-      },
-      tooltips: {
-          enabled: true
-      },
-      scales: {
-        yAxes: [{
-            display: false,
-            gridLines: {
-                drawBorder: false,
-                display: false
-            },
-            stacked: false,
-            ticks: {
-                beginAtZero: true
-            }
-        }],
-        xAxes: [{
-            barPercentage: 0.4,
-            display: false,
-            stacked: false,
-            gridLines: {
-                drawBorder: true,
-                display: false
-            },
-            ticks: {
-              beginAtZero: false
-            }
-        }]
-      },
-      maintainAspectRatio: false,
-      responsive: true,
-      plugins: {
-          datalabels: {
-              anchor: 'end',
-              align: 'top',
-              formatter: Math.round,
-              font: { weight: 'bold'}
-          }
-      }
-    };
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-    let threatArray =  this.riskIssueArray.filter(() => true ).map(e => e.risk);
-    let newThreatArray = Array.from(new Set(threatArray));
-
-    this.third2Type = 'bar';
-
-    this.third2Labels = newThreatArray;
-    let mythird2Datasets = [];
-    this.third2BgColors = [];
-
-    this.third2Labels.forEach((riskEl) => {
-      this.third2BgColors.push(this.getRandomColor());
-      let myArr2 = this.riskIssueArray.filter((rsk) => rsk.risk === riskEl ).map(e => e);
-      mythird2Datasets.push(myArr2.length);
-    });
-
-    this.third2Datasets = [{
-    label: 'Risk',
-    data: mythird2Datasets,
-    backgroundColor: this.third2BgColors,
-    borderColor: 'white',
-    borderWidth: 1.5,
-    pointBackgroundColor: 'transparent',
-    pointHoverBackgroundColor: 'transparent',
-    pointBorderColor: 'white',
-    pointHoverBorderColor: 'gray'
-  }];
-
-    this.third2ChartOptions = {
-     title: {
-       display: false,
-       text: 'Sales',
-       fontSize: 25
-     },
-     legend: {
-       display: false,
-       position: 'bottom',
-       itemWidth: 10,
-       labels: {
-             fontColor: '#73818f'
-           }
-     },
-     layout: {
-       padding: 10
-     },
-     tooltips: {
-      enabled: true
-    //   callbacks: {
-    //    label: function(tooltipItem, data) {
-    //      if(Number(tooltipItem.yLabel) === 3) {return 'High Risk'}
-    //      if(Number(tooltipItem.yLabel) === 2) {return 'Medium Risk'}
-    //      if(Number(tooltipItem.yLabel) === 1) {return 'Low Risk'}
-    //      if(Number(tooltipItem.yLabel) === 0) {return 'Not Assessed'}
-    //    },
-    // }
-    },
-     scales: {
-       yAxes: [{
-           display: false,
-           gridLines: {
-               drawBorder: false,
-               display: false
-           },
-           stacked: false,
-           ticks: {
-               beginAtZero: true
-           }
-       }],
-       xAxes: [{
-           barPercentage: 0.4,
-           display: true,
-           stacked: false,
-           gridLines: {
-               drawBorder: true,
-               display: false
-           },
-           ticks: {
-             beginAtZero: false
-           }
-       }]
-     },
-     maintainAspectRatio: false,
-     responsive: true,
-     plugins: {
-         datalabels: {
-             anchor: 'end',
-             align: 'top',
-             formatter: Math.round,
-             font: { weight: 'bold'}
-         }
-     }
-   };
-  
-  
-  
-  
-    this.onResizeStatus = true;
-    this.onResize();
-  
-  } // end of thirdSectionGraphsFunction
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-
-  
-  
-
-
-
-
-
-  listTirdPartyToList() {
-    this.listTirdPartyIsGraph = false;
-  }
-
-  listTirdPartyToGraph() {
-    this.listTirdPartyIsGraph = true;
-  }
-
-
-
-
-
-
-
-  listThirdPartyCompaniesAndSurveys(num) {
-
-
-
-  let thirdparties = this.AllUsers.filter((e) => e.userType === 'thirdparty').map(e => e);
-
-  this.thirrdPartySurveys = this.AllSurveys.filter((surv) => surv.institutionId === thirdparties[num]._id).map(e => e);
-  this.thirrdPartyCompanys = this.AllCompanies.filter((comp) => comp.institutionId === thirdparties[num]._id).map(e => e);
-
-  this.thirrdPartyType = 'pie';
-  
-  this.thirrdPartyLabels = ['Surveys', 'Companies'];
-
-  this.thirrdPartyDatasets = [
-    {
-      label: thirdparties[num].name,
-      data: [ this.thirrdPartySurveys.length, this.thirrdPartyCompanys.length],
-      backgroundColor: ['#02b0cc', 'orange' ],
-      borderColor: 'white',
-      borderWidth: 1.5,
-      pointBackgroundColor: 'transparent',
-      pointHoverBackgroundColor: 'transparent',
-      pointBorderColor: 'white',
-      pointHoverBorderColor: 'gray'
-    }
-  ];
-
-
-  this.chart3plugin = [pluginDataLabels];
-
-  this.thirrdPartyChart = {
-    title: {
-      display: false,
-      text: 'Sales',
-      fontSize: 25
-    },
-    legend: {
-      display: true,
-      position: 'right',
-      labels: {
-            fontColor: '#73818f'
-          }
-    },
-    layout: {
-      padding: 10
-    },
-    tooltips: {
-        enabled: true,
-        intersect: true
-    },
-    scales: {
-      yAxes: [{
-          display: false,
-          gridLines: {
-              drawBorder: false,
-              display: false
-          },
-          stacked: false,
-          ticks: {
-              beginAtZero: true
-          }
-      }],
-      xAxes: [{
-          barPercentage: 0.4,
-          display: false,
-          stacked: false,
-          gridLines: {
-              drawBorder: true,
-              display: false
-          },
-          ticks: {
-            beginAtZero: false
-          }
-      }]
-    },
-    maintainAspectRatio: false,
-    responsive: true,
-    plugins: {
-        datalabels: {
-            anchor: 'center',
-            align: 'top',
-            formatter: Math.round,
-            font: { weight: 'bold', size: 18 }
-        }
-    }
-  };
-}
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-graphChartToLine() {
-  this.graphType = 'line';
-  this.graphChart.legend.display = false;
-  this.graphChart.scales.xAxes[0].display = true;
-  this.graphDatasets[0].backgroundColor = 'rgba(2, 176, 204, .5)',
-  this.graphDatasets[0].borderColor = 'rgb(2, 176, 204)',
-  this.graphDatasets[0].pointBorderColor = 'rgba(2, 176, 204, .8)'
-}
-graphChartToBar() {
-  this.graphType = 'bar';
-  this.graphChart.legend.display = false;
-  this.graphChart.scales.xAxes[0].display = true;
-  this.graphDatasets[0].backgroundColor = this.myGraphLabelColors;
-  this.graphDatasets[0].borderColor = 'white';
-  this.graphDatasets[0].pointBorderColor = 'white';
-}
-graphChartToPie() {
-  this.graphType = 'pie';
-  this.graphChart.legend.display = true;
-  this.graphChart.scales.xAxes[0].display = false;
-  this.graphDatasets[0].backgroundColor = this.myGraphLabelColors;
-  this.graphDatasets[0].borderColor = 'white';
-  this.graphDatasets[0].pointBorderColor = 'white';
-}
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-  
-  
-  
-  graphChartFunction() {
-
-    let graphLabelsArr = [];
-    let graphDatasetDataArr = [];
-
-    this.riskIssueArrayPerCompany.forEach((compElem) => {
-
-      let myRiskArray = this.riskIssueArray.filter((r)=> r.company === compElem ).map(e => e);
-
-      let LowRate = myRiskArray.filter((r)=> r.level === 'Low' ).map(e => e);
-      let MediumRate = myRiskArray.filter((r)=> r.level === 'Medium' ).map(e => e);
-      let HighRate = myRiskArray.filter((r)=> r.level === 'High' ).map(e => e);
-      
-      let totalRiskNum = this.companyRiskArray.length;
-      let lowRiskNum = LowRate.length;
-      let mediumRiskNum = MediumRate.length;
-      let highRiskNum = HighRate.length;
-  
-      let lowRiskValue = lowRiskNum * 1;
-      let medumRiskValue = mediumRiskNum * 2;
-      let highRiskValue = highRiskNum * 3;
-      let totalRiskValue = totalRiskNum * 3
-  
-      let myTotalRiskValue = Number(lowRiskValue) + Number(medumRiskValue) + Number(highRiskValue);
-  
-      graphLabelsArr.push(compElem);
-      graphDatasetDataArr.push(((myTotalRiskValue * 100) / totalRiskValue).toFixed(1))
-    })
-
-
-
-
-
-
-    this.graphType = 'line';
-  
-    this.graphLabels = graphLabelsArr;
-    this.myGraphLabelColors = [];
-    graphDatasetDataArr.forEach((e) => {
-      if(  33 > e) { this.myGraphLabelColors.push('#4dbd74') }
-      if (e > 33 && 66 > e) { this.myGraphLabelColors.push('#ffc107') }
-      if (e > 66) { this.myGraphLabelColors.push('#f86c6b') }
-    });
-
-    this.graphDatasets = [
-      {
-        label: 'Average Risk Exposure',
-        data: graphDatasetDataArr,
-        backgroundColor: 'rgba(2, 176, 204, .5)',
-        borderColor: 'rgb(2, 176, 204)',
-        borderWidth: 1.5,
-        pointBackgroundColor: 'transparent',
-        pointHoverBackgroundColor: 'transparent',
-        pointBorderColor: 'rgba(2, 176, 204, .8)',
-        pointHoverBorderColor: 'gray'
-      }
-    ];
-  
-  
-  
-  
-    this.graphChart = {
-      title: {
-        display: false,
-        text: 'Sales',
-        fontSize: 25
-      },
-      legend: {
-        display: false,
-        position: 'right',
-        labels: {
-              fontColor: '#73818f'
-            }
-      },
-      layout: {
-        padding: 10
-      },
-      tooltips: {
-          enabled: true
-      },
-      scales: {
-        yAxes: [{
-            display: true,
-            gridLines: {
-                drawBorder: false,
-                display: false
-            },
-            stacked: false,
-            ticks: {
-                beginAtZero: true
-            }
-        }],
-        xAxes: [{
-            barPercentage: 0.4,
-            display: true,
-            stacked: false,
-            gridLines: {
-                drawBorder: true,
-                display: false
-            },
-            ticks: {
-              beginAtZero: false
-            }
-        }]
-      },
-      maintainAspectRatio: false,
-      responsive: true,
-      plugins: {
-          datalabels: {
-              anchor: 'end',
-              align: 'top',
-              formatter: Math.round,
-              font: { weight: 'bold'}
-          }
-      }
-    };
-  }
-  
-  
-  
-  
-  
-
-
-
-
-
-
-
-
-
-
   filterCompany() {
     if (!this.FilterName || this.FilterName === null || this.FilterName === '' || this.FilterName.length  < 1) {
       this.riskIssueArrayPerCompanyToView1 = this.riskIssueArrayPerCompanyToView;
@@ -1736,7 +778,9 @@ graphChartToPie() {
   switchActiveThirdCompany(idParam) {
 
     if(idParam === 1) {
-          this.activeThirdParty = this.AllThirdParties[0]._id;
+          let getTactive = this.AllThirdParties.filter((r) => r.name === 'Tactive Consulting').map(e => e)
+          if(getTactive.length === 0) { this.activeThirdParty = this.AllThirdParties[0]._id;}
+          if(getTactive.length !== 0) { this.activeThirdParty = getTactive[0]._id;}
           this.riskIssueArrayPerCompanyToView = [];
           this.riskIssueArrayPerCompany.forEach((riskComp) => {
             let myComp = this.AllCompanies.filter((cpm) => riskComp === cpm.companyName && this.activeThirdParty === cpm.institutionId ).map(e => e);
@@ -1819,15 +863,24 @@ graphChartToPie() {
 
 
 
+  
+  
+  filterCompanySurvey() {
+    if (!this.Filter2Name || this.Filter2Name === null || this.Filter2Name === '' || this.Filter2Name.length  < 1) {
+      this.CompanyRiskRatesDataListView = this.CompanyRiskRatesDataList;
+    } else {
+      this.CompanyRiskRatesDataListView = this.CompanyRiskRatesDataList.filter(v => v.companyName.toLowerCase().indexOf(this.Filter2Name.toLowerCase()) > -1).slice(0, 10);
+    }
 
+  }
   
   
   
   
-  
-  
-  computeCompanyRiskRates() {
-    this.CompnayRiskRates = [];
+ computeCompanyRiskRates() {
+    this.CompanyRiskRates = [];
+    let CompanyRiskRatesSurveyArr = []
+    let CompanyList = []
     this.AllCompanies.forEach( (comp) => {
   
   
@@ -1863,13 +916,62 @@ graphChartToPie() {
               surveyId: surv._id,
               responseId: resp._id
             }
-            this.CompnayRiskRates.push(obj)
+            this.CompanyRiskRates.push(obj)
+            CompanyList.push(comp.companyName)
+            CompanyRiskRatesSurveyArr.push(surv.surveyName)
           }
         }
       }
       }
   
     });
+
+    this.CompanyRiskRatesSurvey = Array.from( new Set(CompanyRiskRatesSurveyArr))
+
+    let newArr = Array.from( new Set(CompanyList))
+
+    this.CompanyRiskRatesDataList = []
+    newArr.forEach((c) => {
+      let mainObj = {
+        companyName:c,
+        data: [] 
+      }
+      this.CompanyRiskRatesSurvey.forEach((surv) => {
+        let getMyComp = this.CompanyRiskRates.filter((cmpRisk) => cmpRisk.companyName === c && cmpRisk.surveyName === surv).map(e => e);
+
+        if (getMyComp.length === 0) {
+          let dataObj = {
+            surveyName: surv,
+            riskRate: 0,
+            surveyId: 0,
+            responseId: 0
+          }
+          mainObj.data.push(dataObj)
+        } else {
+          let dataObj = {
+            surveyName: getMyComp[0].surveyName,
+            riskRate: getMyComp[0].riskRate,
+            surveyId: getMyComp[0].surveyId,
+            responseId: getMyComp[0].responseId
+          }
+          mainObj.data.push(dataObj)
+        
+        }
+       
+      })
+
+
+      this.CompanyRiskRatesDataList.push(mainObj)
+      
+    })
+
+    this.CompanyRiskRatesDataList = this.CompanyRiskRatesDataList.sort((a, b) => {
+      if(a.companyName < b.companyName) { return -1; }
+      if(a.companyName > b.companyName) { return 1; }
+      return 0;
+    });
+
+    this.CompanyRiskRatesDataListView = this.CompanyRiskRatesDataList
   
   }
   
@@ -1915,12 +1017,8 @@ graphChartToPie() {
                             return unique1.includes(item2) ? unique : [...unique, item]
                           }, []);
                         
-                          this.chartsProgress = 95;
-  
-                          this.topCardsChartFunction();
-                          this.graphChartFunction();
-                          this.thirdSectionGraphsFunction();
-                          this.listThirdPartyCompaniesAndSurveys(0);
+                          this.chartsProgress = 100;
+
                           this.calculateActiveCompanyTotalRiskRate();
                           this.computeCompanyRiskRates();
 
@@ -1960,7 +1058,10 @@ graphChartToPie() {
   
   
   
-  openAnswersModal(companyName, surveyName, surveyId, responseId) {
+  openAnswersModal(companyName, surveyName, responseId) {
+
+    if(responseId === 0) {return}
+
     this.companyNameOnView = companyName;
     this.surveyNameOnView = surveyName;
     this.QuestionsOnView = []
@@ -2109,6 +1210,7 @@ graphChartToPie() {
 
 
   checkSurveyProgress(surveyId, responseId) {
+    if(responseId === 0) {return}
     const myResponses = this.AllResponses.filter((resp) => resp._id === responseId ).map( e => e);
     let allQuizs = this.AllQuestions.filter((q) => q.surveyId === surveyId).map(e => e);
     let allQuizs2 = allQuizs.sort((a, b) =>  b.position - a.position);

@@ -88,7 +88,7 @@ constructor(
   
   
   
-  public CompnayRiskRates = [];
+  public CompanyRiskRates = [];
   
   
   // Third Section graph variables
@@ -1185,7 +1185,7 @@ calculateActiveCompanyTotalRiskRate(){
 
 
 computeCompanyRiskRates() {
-  this.CompnayRiskRates = [];
+  this.CompanyRiskRates = [];
   this.AllCompanies.forEach( (comp) => {
 
 
@@ -1221,7 +1221,7 @@ computeCompanyRiskRates() {
             surveyId: surv._id,
             responseId: resp._id
           }
-          this.CompnayRiskRates.push(obj)
+          this.CompanyRiskRates.push(obj)
         }
       }
     }
