@@ -209,7 +209,9 @@ public Filter2Name = '';
   
           this.surveyService.getAllSurveys().subscribe( dataSurvey => {
           
-            this.AllSurveys = dataSurvey;
+          // this.AllSurveys = dataSurvey;
+          // Get only Bcp Final Survey
+          this.AllSurveys = dataSurvey.filter((s) => s._id === '5e819470d729c17ebc232ad6').map(e => e)
             this.chartsProgress = 30
   
             this.questionService.getAllQuestions().subscribe( dataQuestion => {
@@ -395,13 +397,13 @@ riskCategoriesFunction() {
     plugins: {
         datalabels: {
           clamp: false,
-          anchor: 'end',
+          anchor: 'top',
           align: 'end',
-          color: 'teal',
+          color: 'black',
           formatter: function(value, context) {
             return context.chart.data.labels[context.dataIndex] + ': ' + value + '%';
           },
-          font: { weight: 100, size: 12 },
+          font: { weight: 400, size: 12 },
           listeners: {
             enter: function(context) {
               context.hovered = true;
@@ -471,7 +473,7 @@ OverallRiskRatingFunction() {
   this.overallRiskRatingChartDatasets = [{
     label: 'Risk',
     data: myDatasets2.filter(() => true).map(e => e.data),
-    backgroundColor: this.overallRiskRatingChartColors,
+    backgroundColor: 'rgba(7, 75, 251, .9)',
     borderColor: 'white',
     borderWidth: 1.5,
     pointBackgroundColor: 'transparent',
@@ -534,7 +536,7 @@ OverallRiskRatingFunction() {
           clamp: true,
           anchor: 'center',
           align: 'center',
-          color: 'black',
+          color: 'white',
           formatter: function(value, context) {
             return value + '%';
           },
@@ -628,7 +630,7 @@ RiskPerIndustryChartfunction() {
         label: ind,
         data: 0
       }
-      myDataSet1.push(obj)
+      // myDataSet1.push(obj)
     }
   
   });
@@ -654,7 +656,7 @@ RiskPerIndustryChartfunction() {
   this.riskPerIndustryChartDatasets = [{
     label: 'Risk rate',
     data: myDatasets3.filter(() => true).map(e => e.data),
-    backgroundColor: this.riskPerIndustryChartColors,
+    backgroundColor: '#F7B308',
     borderColor: 'white',
     borderWidth: 1.5,
     pointBackgroundColor: 'transparent',
