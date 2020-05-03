@@ -6,12 +6,11 @@ import { ResponseService } from 'src/app/shared/services/responses.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
 import { ThreatService } from 'src/app/shared/services/threats.service';
 import { faListAlt, faDownload, faChartLine, faChartBar, faChartPie } from '@fortawesome/free-solid-svg-icons';
-
-
 import * as jspdf from 'jspdf';
 import 'jspdf-autotable';
 import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
 import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 
 declare let html2canvas: any;
 
@@ -66,7 +65,7 @@ export class ReportsComponent implements OnInit {
       public riskIssueArrayUnsorted = [];
 
 
-
+      public pluginDataLabels = [pluginDataLabels]
       // chart
       public chart3Labels;
       public chart3Type;
@@ -571,13 +570,8 @@ this.AllSurveys.forEach((surveyElem) => {
   if(this.TemplateOneViewId === surveyElem._id ) {
 
 
-
-  let dataOnj = {
-    label: surveyElem,
-    data : []
-  }
   RiskInvolved.forEach((riskElm) => {
-    
+
     let getMyRisk = this.riskIssueArray.filter((r) => r.risk.toLowerCase().replace(/ /g,'') === riskElm.toLowerCase().replace(/ /g,'') ).map(e => e)
     let getLowRisk = getMyRisk.filter((r) => r.level === 'Low' ).map(e => e)
     let getMediumRisk = getMyRisk.filter((r) => r.level === 'Medium' ).map(e => e)
@@ -593,11 +587,15 @@ this.AllSurveys.forEach((surveyElem) => {
     let finalValue = Math.round(totalPoints / totalRiskNum)
 
     if(!finalValue) {finalValue = 0}
-    dataOnj.data.push(finalValue)
+    let dataOnj = {
+      label: riskElm,
+      data : finalValue
+    }  
+    MyComparisonDataSet.push(dataOnj)
 
   })
 
-  MyComparisonDataSet.push(dataOnj)
+
   }
 })
 
@@ -605,37 +603,30 @@ this.AllSurveys.forEach((surveyElem) => {
 
 this.chart3Type = 'line';
 
-this.chart3Labels = RiskInvolved;
-
-
-this.chart3Datasets = [];
-
-
-
 
 this.chart3BgColors = []
 
-  MyComparisonDataSet[0].data.forEach((d) => {
-    if (d === 1) { this.chart3BgColors.push('#4dbd74'); }
-    if (d === 2) { this.chart3BgColors.push('#ffc107'); }
-    if (d === 3) { this.chart3BgColors.push('#f86c6b'); }
+  MyComparisonDataSet = MyComparisonDataSet.sort((a, b) => b.data - a.data)
+
+  MyComparisonDataSet.forEach((d) => {
+    if (d.data === 1) { this.chart3BgColors.push('#4dbd74'); }
+    if (d.data === 2) { this.chart3BgColors.push('#ffc107'); }
+    if (d.data === 3) { this.chart3BgColors.push('#f86c6b'); }
   })
 
-
-  let color = this.random_rgba();
-
+  this.chart3Labels = MyComparisonDataSet.filter(() => true).map(e => e.label);
 
 
 
    this.chart3Datasets = [{
-    label: MyComparisonDataSet[0].label,
-    data: MyComparisonDataSet[0].data,
-    backgroundColor: color.light,
-    borderColor: color.mild,
+    label: 'Risk Level',
+    data: MyComparisonDataSet.filter(() => true).map(e => e.data),
+    backgroundColor: 'whitesmoke',
+    borderColor: 'gray',
     borderWidth: 1.5,
     pointBackgroundColor: 'transparent',
     pointHoverBackgroundColor: 'transparent',
-    pointBorderColor: color.dark,
+    pointBorderColor: 'black',
     pointHoverBorderColor: 'black'
  }];
 
@@ -701,13 +692,30 @@ this.chart3BgColors = []
    maintainAspectRatio: false,
    responsive: true,
    plugins: {
-       datalabels: {
-           anchor: 'end',
-           align: 'top',
-           formatter: Math.round,
-           font: { weight: 'bold'}
-       }
-   }
+    datalabels: {
+      clamp: false,
+      anchor: 'end',
+      align: 'start',
+      color: 'black',
+      formatter: function(value, context) {
+        if (value === 0) {return 'Not Assessed'}
+        if (value === 1 ) { return 'Low'; }
+        if (value === 2 ) { return 'Medium'; }
+        if (value === 3 ) { return 'High'; }
+      },
+      font: { weight: 100, size: 12 },
+      listeners: {
+        enter: function(context) {
+          context.hovered = true;
+          return true;
+        },
+        leave: function(context) {
+          context.hovered = false;
+          return true;
+        }
+      }
+    }
+  }
    
  };
 

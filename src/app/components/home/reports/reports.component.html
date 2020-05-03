@@ -80,13 +80,13 @@
             <div class=" graph-switch d-flex ml-auto">
                 <span (click)="chart3graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart3Type === 'line' ? 'active' : ''" ></fa-icon></span> 
                 <span (click)="chart3graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="chart3Type === 'bar' ? 'active' : ''" ></fa-icon></span>
-                <span (click)="chart3graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="chart3Type === 'pie' ? 'active' : ''" ></fa-icon> </span>
+                <!-- <span (click)="chart3graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="chart3Type === 'pie' ? 'active' : ''" ></fa-icon> </span> -->
             </div>
         </div>
 
         <div class="body-wrapper">
             <canvas *ngIf="chart3Type" baseChart class="chart" [chartType]="chart3Type" [labels]="chart3Labels"
-            [datasets]="chart3Datasets" [options]="chart3ChartOptions"></canvas>
+            [datasets]="chart3Datasets" [options]="chart3ChartOptions" [plugins]="pluginDataLabels"></canvas>
         </div>
 
 </section>
