@@ -4,6 +4,7 @@ import { faChartLine, faChartBar, faChartPie, faArrowAltCircleLeft, faArrowAltCi
 import { ExchangerateService } from 'src/app/shared/services/exchangeRates.service';
 import { GDPGrowthRateService } from 'src/app/shared/services/gdpGrowthRate.service';
 import { InterestRateService } from 'src/app/shared/services/interetRates.service';
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-market-dashboard',
@@ -67,6 +68,7 @@ public interestInput;
 
 
 // chart 
+public pluginDataLabels = pluginDataLabels;
 
 public gdpType;
 public gdpLabels;
@@ -301,25 +303,34 @@ public activeYear = this.currentYear;
     this.gdpType = 'line';
     this.gdpChartOptions.legend.display = false;
     this.gdpChartOptions.scales.xAxes[0].display = true;
+    this.gdpChartOptions.scales.yAxes[0].display = false;
     this.gdpDatasets[0].backgroundColor = 'whitesmoke'; 
     this.gdpDatasets[0].borderColor = 'gray';
     this.gdpDatasets[0].pointBorderColor = 'black';
+    this.gdpChartOptions.plugins.datalabels.anchor = 'start';
+    this.gdpChartOptions.plugins.datalabels.align = 'start';
   }
   gdpGraphToBar() {
     this.gdpType = 'bar';
     this.gdpChartOptions.legend.display = false;
     this.gdpChartOptions.scales.xAxes[0].display = true;
+    this.gdpChartOptions.scales.yAxes[0].display = false;
     this.gdpDatasets[0].backgroundColor = ['#02b0cc','#074BFB', '#ffc107', '#f86c6b'];
     this.gdpDatasets[0].borderColor = 'transparent';
     this.gdpDatasets[0].pointBorderColor = 'white';
+    this.gdpChartOptions.plugins.datalabels.anchor = 'center';
+    this.gdpChartOptions.plugins.datalabels.align = 'center';
   }
   gdpGraphToPie() {
     this.gdpType = 'pie';
     this.gdpChartOptions.legend.display = true;
     this.gdpChartOptions.scales.xAxes[0].display = false;
+    this.gdpChartOptions.scales.yAxes[0].display = false;
     this.gdpDatasets[0].backgroundColor = ['#02b0cc','#074BFB', '#ffc107', '#f86c6b'];
     this.gdpDatasets[0].borderColor = 'white';
     this.gdpDatasets[0].pointBorderColor = 'white';
+    this.gdpChartOptions.plugins.datalabels.anchor = 'center';
+    this.gdpChartOptions.plugins.datalabels.align = 'center';
 
   }
   
@@ -359,8 +370,6 @@ public activeYear = this.currentYear;
     ];
   
   
-  
-  
     this.gdpChartOptions = {
       title: {
         display: false,
@@ -378,11 +387,19 @@ public activeYear = this.currentYear;
         padding: 10
       },
       tooltips: {
-          enabled: true
+          enabled: true,
+          callbacks: {
+            label: function(tooltipItem, data) {
+              let dataInx = tooltipItem.index
+              let lbl = data.labels[dataInx];
+              let value = data.datasets[0].data[dataInx];
+              return `${lbl} : ${value}%`;
+            },
+        }
       },
       scales: {
         yAxes: [{
-            display: true,
+            display: false,
             gridLines: {
                 drawBorder: false,
                 display: false
@@ -408,14 +425,35 @@ public activeYear = this.currentYear;
       maintainAspectRatio: false,
       responsive: true,
       plugins: {
-          datalabels: {
-              anchor: 'end',
-              align: 'top',
-              formatter: Math.round,
-              font: { weight: 'bold'}
+        datalabels: {
+          clamp: true,
+          anchor: 'start',
+          align: 'start',
+          color: 'black',
+          formatter: function(value, context) {
+            return value + '%';
+          },
+          font: { weight: 'bold', size: 12 },
+          listeners: {
+            enter: function(context) {
+              context.hovered = true;
+              return true;
+            },
+            leave: function(context) {
+              context.hovered = false;
+              return true;
+            }
           }
-      }
+        }
+    }
     };
+
+
+
+    if( 1 > gdpData[0].firstQ || 1 > gdpData[0].secondQ || 1 > gdpData[0].thirdQ && 1 > gdpData[0].fourthQ) {
+      this.gdpGraphToPie();
+    }
+  
 
   }
 
@@ -541,21 +579,33 @@ public activeYear = this.currentYear;
       maintainAspectRatio: false,
       responsive: true,
       plugins: {
-          datalabels: {
-              anchor: 'end',
-              align: 'top',
-              formatter: Math.round,
-              font: { weight: 'bold'}
+        datalabels: {
+          clamp: true,
+          anchor: 'end',
+          align: 'end',
+          color: 'black',
+          formatter: function(value, context) {
+            return value + '%';
+          },
+          font: { weight: 'bold', size: 12 },
+          listeners: {
+            enter: function(context) {
+              context.hovered = true;
+              return true;
+            },
+            leave: function(context) {
+              context.hovered = false;
+              return true;
+            }
           }
-      }
+        }
+    }
     };
 
 
 
 
   }
-
-
 
 
 
@@ -725,16 +775,31 @@ public activeYear = this.currentYear;
       maintainAspectRatio: false,
       responsive: true,
       plugins: {
-          datalabels: {
-              anchor: 'end',
-              align: 'top',
-              formatter: Math.round,
-              font: { weight: 'bold'}
+        datalabels: {
+          clamp: true,
+          anchor: 'end',
+          align: 'end',
+          color: 'black',
+          formatter: function(value, context) {
+            return value.toFixed(1);
+          },
+          font: { weight: 'bold', size: 12 },
+          listeners: {
+            enter: function(context) {
+              context.hovered = true;
+              return true;
+            },
+            leave: function(context) {
+              context.hovered = false;
+              return true;
+            }
           }
+        }
       }
     };
 
   }
+
 
 
 
