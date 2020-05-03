@@ -778,7 +778,7 @@ filterCompany() {
 switchActiveThirdCompany(idParam) {
 
   if(idParam === 1) {
-        let getTactive = this.AllThirdParties.filter((r) => r.name === 'Tactive Consulting').map(e => e)
+        let getTactive = this.AllThirdParties.filter((r) => r._id === localStorage.getItem('loggedUserInstitution')).map(e => e)
         if(getTactive.length === 0) { this.activeThirdParty = this.AllThirdParties[0]._id;}
         if(getTactive.length !== 0) { this.activeThirdParty = getTactive[0]._id;}
         this.riskIssueArrayPerCompanyToView = [];

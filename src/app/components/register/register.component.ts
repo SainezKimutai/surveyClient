@@ -95,8 +95,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   checkIfInvited() {
     this.route.queryParams.subscribe(params => {
-      this.thirdParty = params.institution;
-      this.registrationForm.institutionId = params.institution;
+
+      if (params.institution) {
+        this.thirdParty = params.institution;
+        this.registrationForm.institutionId = params.institution;
+      }
+
     });
   }
 
@@ -161,6 +165,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       companyAddress: '',
       companyEmail: ''
     };
+
 
     this.companyProfileService.createCompanyProfile(newProfileData).subscribe(
       dataProfile => {

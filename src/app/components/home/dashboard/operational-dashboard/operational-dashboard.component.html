@@ -163,14 +163,14 @@
                     <div class="content-wrap">
     
                         <div class="title-wrap d-flex">
-                            <div class="third-party">Third Party</div>
+                            <!-- <div class="third-party">Third Party</div> -->
                             <div class="company">Company Name ( <span>{{riskIssueArrayPerCompanyToView1.length}}</span> ) </div>
                             <div class="risk-name">Risk Name</div>
                             <div class="risk-level">Risk Level</div>
                             <div class="risk-recom">Recommendation</div> 
                         </div>
                         <div class="medel-item-wrap d-flex">
-                            <div class="model-third">
+                            <!-- <div class="model-third">
                                 <h4 *ngFor="let item of AllThirdParties;"
                                 [ngClass]="activeThirdParty === item._id ? 'active' : '' "
                                 (click)="switchActiveThirdCompany(item._id)"
@@ -178,7 +178,7 @@
     
                                 <h4 *ngIf="AllThirdParties.length === 0">---</h4>
     
-                            </div>
+                            </div> -->
                             <div class="model-company">
                                 <h4
                                     *ngFor="let item of riskIssueArrayPerCompanyToView1; let x = index" 

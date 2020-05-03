@@ -216,7 +216,9 @@ export class ProfileComponent implements OnInit {
 
             this.surveyService.getAllSurveys().subscribe(
               dataSurvey => {
-                this.AllSurveys = dataSurvey;
+                // this.AllSurveys = dataSurvey;
+                // Get only Bcp Final Survey
+                this.AllSurveys = dataSurvey.filter((s) => s._id === '5e819470d729c17ebc232ad6').map(e => e)
                 this.chartsProgress = 30;
 
                 this.questionService.getAllQuestions().subscribe(
@@ -1143,7 +1145,7 @@ export class ProfileComponent implements OnInit {
      },
      scales: {
        yAxes: [{
-           display: false,
+           display: true,
            gridLines: {
                drawBorder: false,
                display: false
@@ -1175,7 +1177,7 @@ export class ProfileComponent implements OnInit {
         align: 'center',
         color: 'teal',
         formatter: function(value, context) {
-          return value + '%';
+          return '';
         },
         font: { weight: 100, size: 12 },
         listeners: {
@@ -1490,6 +1492,79 @@ export class ProfileComponent implements OnInit {
 
     this.MyComparisonDataSet = []
 
+
+    // THIS SECTION IF FOR MULTIPLE SURVEYS ---------------------------------------------------------------------------------------------
+  
+    // SurveyInvolve.forEach((surveyElem) => {
+    //   let dataOnj = {
+    //     label: surveyElem,
+    //     data : []
+    //   }
+    //   RiskInvolved.forEach((riskElm) => {
+        
+    //     let getMyRisk = this.riskIssueArray.filter((r) => r.risk.toLowerCase().replace(/ /g,'') === riskElm.toLowerCase().replace(/ /g,'') && r.surveyName === surveyElem ).map(e => e)
+    //     let getLowRisk = getMyRisk.filter((r) => r.level === 'Low' ).map(e => e)
+    //     let getMediumRisk = getMyRisk.filter((r) => r.level === 'Medium' ).map(e => e)
+    //     let getHighRisk = getMyRisk.filter((r) => r.level === 'High' ).map(e => e)
+
+    //     let totalLowRiskNum = getLowRisk.length;
+    //     let totalMediumRiskNum = getMediumRisk.length;
+    //     let totalHighRiskNum = getHighRisk.length;
+
+    //     let totalPoints = ((totalLowRiskNum * 1) + (totalMediumRiskNum * 2) + (totalHighRiskNum * 3))
+    //     let totalRiskNum = totalLowRiskNum + totalMediumRiskNum + totalHighRiskNum
+        
+    //     let finalValue = Math.round(totalPoints / totalRiskNum)
+    //     if(!finalValue) {finalValue = 0}
+    //     dataOnj.data.push(finalValue)
+
+    //   })
+    //   this.MyComparisonDataSet.push(dataOnj)
+    // })
+
+
+
+    // this.comparisonChartType = 'line';
+    // this.comparisonChartLabels = RiskInvolved;
+    // this.comparisonChartDatasets = [];
+    // this.MyComparisonDataSet.forEach((dataElem) => {
+
+    // this.comparisonChartBGColors = []
+
+    // dataElem.data.forEach((d) => {
+    //     if (d === 1) { this.comparisonChartBGColors.push('#4dbd74'); }
+    //     if (d === 2) { this.comparisonChartBGColors.push('#ffc107'); }
+    //     if (d === 3) { this.comparisonChartBGColors.push('#f86c6b'); }
+    //   })
+
+    //   let bgColors = []
+    //   let color = this.random_rgba();
+
+    //     bgColors.push(color.light);
+
+    //     let dataSet = {
+    //       label: dataElem.label,
+    //       data: dataElem.data,
+    //       backgroundColor: 'transparent',
+    //       borderColor: color.mild,
+    //       borderWidth: 1.5,
+    //       pointBackgroundColor: 'transparent',
+    //       pointHoverBackgroundColor: 'transparent',
+    //       pointBorderColor: color.dark,
+    //       pointHoverBorderColor: 'black'
+    //     }
+    //     this.comparisonChartDatasets.push(dataSet)
+    // })
+
+
+
+
+
+
+
+
+    // THIS SECTION IS FOR ONE SURVEY ------------------------------------------------------------------------------------
+
     SurveyInvolve.forEach((surveyElem) => {
       let dataOnj = {
         label: surveyElem,
@@ -1511,55 +1586,66 @@ export class ProfileComponent implements OnInit {
         
         let finalValue = Math.round(totalPoints / totalRiskNum)
         if(!finalValue) {finalValue = 0}
-        dataOnj.data.push(finalValue)
 
-
+        let dataObj = {
+          label: riskElm,
+          data: finalValue
+        }
+        dataOnj.data.push(dataObj)
 
       })
-
       this.MyComparisonDataSet.push(dataOnj)
-
     })
 
 
 
     this.comparisonChartType = 'line';
-
-    this.comparisonChartLabels = RiskInvolved;
-
-
-    this.comparisonChartDatasets = [];
-
-
+  
+    this.MyComparisonDataSet[0].data = this.MyComparisonDataSet[0].data.sort((a, b) => b.data - a.data)
+    this.comparisonChartLabels = this.MyComparisonDataSet[0].data.filter(() => true).map(e => e.label);
     this.MyComparisonDataSet.forEach((dataElem) => {
+        this.comparisonChartBGColors = []
 
-      this.comparisonChartBGColors = []
-
-      dataElem.data.forEach((d) => {
-        if (d === 1) { this.comparisonChartBGColors.push('#4dbd74'); }
-        if (d === 2) { this.comparisonChartBGColors.push('#ffc107'); }
-        if (d === 3) { this.comparisonChartBGColors.push('#f86c6b'); }
-      })
-
-      let bgColors = []
-      let color = this.random_rgba();
-
-        bgColors.push(color.light);
-
-        let dataSet = {
-          label: dataElem.label,
-          data: dataElem.data,
-          backgroundColor: 'transparent', // bgColors,
-          borderColor: color.mild,
-          borderWidth: 1.5,
-          pointBackgroundColor: 'transparent',
-          pointHoverBackgroundColor: 'transparent',
-          pointBorderColor: color.dark,
-          pointHoverBorderColor: 'black'
-        }
-        this.comparisonChartDatasets.push(dataSet)
+          dataElem.data.forEach((d) => {
+            if (d.value === 1) { this.comparisonChartBGColors.push('#4dbd74'); }
+            if (d.value === 2) { this.comparisonChartBGColors.push('#ffc107'); }
+            if (d.value === 3) { this.comparisonChartBGColors.push('#f86c6b'); }
+          })
 
     })
+
+    let bgColors = []
+    let color = this.random_rgba();
+
+      bgColors.push(color.light);
+
+    this.comparisonChartDatasets = [{
+        label: this.MyComparisonDataSet[0].label,
+        data: this.MyComparisonDataSet[0].data.filter(() => true).map(e => e.data),
+        backgroundColor: 'transparent',
+        borderColor: color.mild,
+        borderWidth: 1.5,
+        pointBackgroundColor: 'transparent',
+        pointHoverBackgroundColor: 'transparent',
+        pointBorderColor: color.dark,
+        pointHoverBorderColor: 'black'
+      }]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     this.comparisonChartOptions = {
       title: {
@@ -1568,7 +1654,7 @@ export class ProfileComponent implements OnInit {
         fontSize: 25
       },
       legend: {
-        display: true,
+        display: false,
         position: 'top',
         labels: {
               fontColor: '#73818f'

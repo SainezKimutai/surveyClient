@@ -116,7 +116,7 @@
                     
                     <div class="btn-wrap d-flex">
                         <button class="btn btn-sm btn-back mr-auto " (click)="backToFormOne()">back</button>
-                        <button class="btn btn-sm btn-submit ml-auto"  [disabled]="registrationForm.email === '' || !passwordMatch || registrationForm.institutionId === '' "
+                        <button class="btn btn-sm btn-submit ml-auto"  [disabled]="registrationForm.email === '' || !passwordMatch || registrationForm.institutionId === '' || !registrationForm.institutionId "
                          (click)="register()">Submit</button>
                     </div>
 

@@ -123,6 +123,17 @@
                 </div>
             </div>
 
+            <div *ngIf="comparisonChartType" id="chart_key" >
+                <div class="wrap">
+                    <div *ngFor=" let item of comparisonChartDatasets"> 
+                        <span class="color" [style.background-color]="item.borderColor">.</span> <span class="text">{{item.label}}</span> 
+                    </div>
+
+                    
+                </div>
+               
+            </div>
+
             <div class="body-wrapper">
                 <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
                 <canvas *ngIf="comparisonChartType" baseChart class="chart" [chartType]="comparisonChartType" [labels]="comparisonChartLabels"
