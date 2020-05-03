@@ -13,11 +13,11 @@
 
         <div class="card first">
             <div class="card-title">
-                <h4>No of Third Party Companies</h4>
+                <h4>No of Industries</h4>
                 <fa-icon [icon]="faListAlt"></fa-icon>
             </div>
             <div class="card-info">
-                <h4>{{AllThirdParties.length}}</h4>
+                <h4 *ngIf="chartsProgress === 100">{{AllIndustries.length}}</h4>
             </div>
             <div class="card-body">
                 
@@ -31,7 +31,7 @@
                 <fa-icon [icon]="faBuilding"></fa-icon>
             </div>
             <div class="card-info">
-                <h4>{{AllCompanies.length}}</h4>
+                <h4 *ngIf="chartsProgress === 100">{{AllCompanies.length}}</h4>
             </div>
             <div class="card-body">
                 
@@ -44,7 +44,7 @@
                 <fa-icon [icon]="faBuilding"></fa-icon>
             </div>
             <div class="card-info">
-                <h4>{{AllSurveys.length}}</h4>
+                <h4 *ngIf="chartsProgress === 100">{{AllSurveys.length}}</h4>
             </div>
             <div class="card-body">
             

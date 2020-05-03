@@ -10,6 +10,7 @@ import { ThreatService } from 'src/app/shared/services/threats.service';
 import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import { IndustryService } from 'src/app/shared/services/industry.service';
 
 
 
@@ -34,6 +35,7 @@ constructor(
     private responseService: ResponseService,
     private threatService: ThreatService,
     private threatCategoryService: ThreatCategoryService,
+    private industriesServices: IndustryService,
     private notification: NotificationService
   ) { }
 
@@ -58,7 +60,7 @@ constructor(
   public AllThreats = [];
   public AllThreatCategorys = [];
   public AllTraffic = [];
-  
+  public AllIndustries = [];
   
   // Icons
   public faChartLine = faChartLine;
@@ -200,7 +202,9 @@ updatePage() {
 
         this.surveyService.getAllInstitutionSurveys().subscribe( dataSurvey => {
 
-          this.AllSurveys = dataSurvey;
+          // this.AllSurveys = dataSurvey;
+          // Get only Bcp Final Survey
+          this.AllSurveys = dataSurvey.filter((s) => s._id === '5e819470d729c17ebc232ad6').map(e => e)
           this.chartsProgress = 30
 
           this.questionService.getAllQuestions().subscribe( dataQuestion => {
@@ -218,9 +222,17 @@ updatePage() {
 
 
                 this.threatCategoryService.getAllByInstitutions().subscribe ( dataThreatCat => {
-                  this.AllThreatCategorys = dataThreatCat; resolve();
-                  this.chartsProgress = 70
-                  
+                  this.AllThreatCategorys = dataThreatCat; 
+                  this.chartsProgress = 65
+                 
+                  this.industriesServices.getAllIndustrys().subscribe(
+                    dataInd => {
+                      this.AllIndustries = dataInd;
+                      this.chartsProgress = 70
+                      resolve();
+                    },error => console.log('Error getting all industries')
+                  )
+  
 
                 }, error => console.log('Error getting all threat Categories'));
 
@@ -350,7 +362,7 @@ this.riskCategoryChartOptions = {
   },
   legend: {
     display: false,
-    position: 'bottom',
+    position: 'right',
     labels: {
           fontColor: '#73818f'
         }
@@ -399,13 +411,13 @@ this.riskCategoryChartOptions = {
   plugins: {
       datalabels: {
         clamp: false,
-        anchor: 'end',
+        anchor: 'top',
         align: 'end',
-        color: 'teal',
+        color: 'black',
         formatter: function(value, context) {
           return context.chart.data.labels[context.dataIndex] + ': ' + value + '%';
         },
-        font: { weight: 100, size: 12 },
+        font: { weight: 400, size: 12 },
         listeners: {
           enter: function(context) {
             context.hovered = true;
@@ -475,7 +487,7 @@ this.overallRiskRatingChartLabels = myDatasets2.filter(() => true).map(e => e.la
 this.overallRiskRatingChartDatasets = [{
   label: 'Risk',
   data: myDatasets2.filter(() => true).map(e => e.data),
-  backgroundColor: this.overallRiskRatingChartColors,
+  backgroundColor: 'rgba(7, 75, 251, .9)',
   borderColor: 'white',
   borderWidth: 1.5,
   pointBackgroundColor: 'transparent',
@@ -538,7 +550,7 @@ this.overallRiskRatingChartOptions = {
         clamp: true,
         anchor: 'center',
         align: 'center',
-        color: 'black',
+        color: 'white',
         formatter: function(value, context) {
           return value + '%';
         },
@@ -632,7 +644,7 @@ myLabels.forEach((ind) => {
       label: ind,
       data: 0
     }
-    myDataSet1.push(obj)
+    // myDataSet1.push(obj)
   }
 
 });
@@ -658,7 +670,7 @@ this.riskPerIndustryChartLabels = myDatasets3.filter(() => true).map(e => e.labe
 this.riskPerIndustryChartDatasets = [{
   label: 'Risk rate',
   data: myDatasets3.filter(() => true).map(e => e.data),
-  backgroundColor: this.riskPerIndustryChartColors,
+  backgroundColor: '#F7B308',
   borderColor: 'white',
   borderWidth: 1.5,
   pointBackgroundColor: 'transparent',

@@ -677,7 +677,7 @@ this.chart3BgColors = []
          }
      }],
      xAxes: [{
-         barPercentage: 0.4,
+         barPercentage: 0.5,
          display: true,
          stacked: false,
          gridLines: {
