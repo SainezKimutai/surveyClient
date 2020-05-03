@@ -133,20 +133,11 @@ export class ReportsComponent implements OnInit {
                                   
                                     
                                      if(typeof(question['answer']) === 'object') {
-                                      // Here was chnaged from 
-                                      
-                                      // question['answer'] = answr.answer.answer;
-                                      // question['recom'] = answr.answer.recom;
-                                      // question['level'] = answr.answer.level;
-                                      // question['threat'] = answr.answer.threatId ?  answr.answer.threat : '';
-                                       // Here was chnaged from 
-
-                                      // to 
-                                      question['answer'] = answr.answer ? answr.answer.answer: answr.answer;
-                                      question['recom'] = answr.recom;
-                                      question['level'] = answr.level;
-                                      question['threat'] = answr.threatId ?  answr.threat : '';
-                                      
+                                      question['answer'] = answr.answer.answer;
+                                      question['recom'] = answr.answer.recom;
+                                      question['level'] = answr.answer.level;
+                                      question['threat'] = answr.answer.threatId ?  answr.answer.threat : '';
+   
                                      }
                                     });
 
