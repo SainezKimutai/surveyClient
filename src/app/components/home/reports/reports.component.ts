@@ -132,12 +132,12 @@ export class ReportsComponent implements OnInit {
                                     question['threat'] = answr.threatId ? answr.threat: '';
                                   
                                     
-                                     if(typeof(question['answer']) === 'object') {
+                                     if(typeof(question['answer']) === 'object') { 
                                       question['answer'] = answr.answer.answer;
                                       question['recom'] = answr.answer.recom;
                                       question['level'] = answr.answer.level;
                                       question['threat'] = answr.answer.threatId ?  answr.answer.threat : '';
-   
+                                      
                                      }
                                     });
 
