@@ -14,6 +14,7 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { ThreatService } from 'src/app/shared/services/threats.service';
 import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
 import { IndustryService } from 'src/app/shared/services/industry.service';
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-profile',
@@ -122,7 +123,7 @@ export class ProfileComponent implements OnInit {
     public departmentInputId = '';
 
 
-
+    public pluginDataLabels = [pluginDataLabels]
 
 
     // chart
@@ -881,21 +882,27 @@ export class ProfileComponent implements OnInit {
     })
 
 
-    let mychart1Datasets = [];
+    let dateSet1 = [];
     this.chart1BgColors = [];
     newThreatCatArray.forEach((trtCat) => {
       let y = ThreatRiskAndCat.filter((c) => c.category === trtCat).map(e => e)
       this.chart1BgColors.push(this.getRandomColor());
-      mychart1Datasets.push(y.length);
+      dateSet1.push(y.length);
     })
-
+  
+    let sumDatasets1 = dateSet1.reduce((a, b) => a + b, 0)
+    let dataset2 = []
+    dateSet1.forEach((a) => {
+      let b = ((a * 100) / sumDatasets1).toFixed(0)
+      dataset2.push(b);
+    })
 
     this.chart1Labels = newThreatCatArray;
 
 
     this.chart1Datasets = [{
       label: 'Risk',
-      data: mychart1Datasets,
+      data: dataset2,
       backgroundColor: this.chart1BgColors,
       borderColor: 'white',
       borderWidth: 1.5,
@@ -922,7 +929,15 @@ export class ProfileComponent implements OnInit {
         padding: 10
       },
       tooltips: {
-          enabled: true
+        enabled: true,
+        callbacks: {
+            label: function(tooltipItem, data) {
+              let dataInx = tooltipItem.index
+              let lbl = data.labels[dataInx];
+              let value = data.datasets[0].data[dataInx];
+              return `${lbl} : ${value}%`;
+            },
+        }
       },
       scales: {
         yAxes: [{
@@ -952,12 +967,26 @@ export class ProfileComponent implements OnInit {
       maintainAspectRatio: false,
       responsive: true,
       plugins: {
-          datalabels: {
-              anchor: 'end',
-              align: 'top',
-              formatter: Math.round,
-              font: { weight: 'bold'}
+        datalabels: {
+          clamp: false,
+          anchor: 'center',
+          align: 'center',
+          color: 'black',
+          formatter: function(value, context) {
+            return value + '%';
+          },
+          font: { weight: 100, size: 12 },
+          listeners: {
+            enter: function(context) {
+              context.hovered = true;
+              return true;
+            },
+            leave: function(context) {
+              context.hovered = false;
+              return true;
+            }
           }
+        }
       }
     };
 
@@ -1006,15 +1035,15 @@ export class ProfileComponent implements OnInit {
         let totalRiskNum = totalLowRiskNum + totalMediumRiskNum + totalHighRiskNum
         
         let finalValue = Math.round(totalPoints / totalRiskNum)
-        // console.log(finalValue)
-        if(!finalValue) { finalValue = 1}
-
-        let riskObj = {
-          risk: riskElm,
-          value: finalValue
+ 
+        if (finalValue) {
+          let riskObj = {
+            risk: riskElm,
+            value: finalValue
+          }
+          dataOnj.data.push(riskObj)
         }
 
-        dataOnj.data.push(riskObj)
 
       })
 
@@ -1025,12 +1054,12 @@ export class ProfileComponent implements OnInit {
 
     let unFilterednewRiskArray = []
 
+
     mychart2Datasets.forEach((riskData) => {
       riskData.data.forEach((e) => unFilterednewRiskArray.push(e.risk))
     })
     let newRiskArray = Array.from( new Set(unFilterednewRiskArray));
 
-    this.chart2BgColors = [];
     let newDatasetChart2 = [];
     newRiskArray.forEach((riskItem) => {
       let riskValuearr = []
@@ -1040,30 +1069,44 @@ export class ProfileComponent implements OnInit {
       })
 
       let sumRiskValue =  riskValuearr.reduce((a,b) => a + b, 0);
-      let totalvalue = Math.ceil(sumRiskValue / riskValuearr.length)
-        if (totalvalue === 1 ) { this.chart2BgColors.push('#4dbd74'); }
-        if (totalvalue === 2 ) { this.chart2BgColors.push('#ffc107'); }
-        if (totalvalue === 3 ) { this.chart2BgColors.push('#f86c6b'); }
+     
+      let totalAvarage = (sumRiskValue / riskValuearr.length)
+      let totalScore = totalAvarage * 100 * 100;
+      let totalvalue = Math.floor(totalScore / 300)
 
-      newDatasetChart2.push(totalvalue)
+
+  
+
+      let obj = {
+        label: riskItem,
+        value: totalvalue
+      }
+
+      newDatasetChart2.push(obj)
     })
 
 
 
+    newDatasetChart2 = newDatasetChart2.sort((a, b) => b.value - a.value)
+    this.chart2BgColors = [];
+    newDatasetChart2.forEach((p) => {
+      if (34 > p.value ) { this.chart2BgColors.push('#4dbd74'); }
+      if (p.value > 33 && 67 > p.value  ) { this.chart2BgColors.push('#ffc107'); }
+      if (p.value > 66 ) { this.chart2BgColors.push('#f86c6b'); }
+    })
 
 
+    this.chart2Type = 'bar';
 
-    this.chart2Type = 'line';
-
-    this.chart2Labels = newRiskArray;
+    this.chart2Labels = newDatasetChart2.filter(() => true).map(e => e.label);
 
 
 
     this.chart2Datasets = [{
      label: 'Risk',
-     data: newDatasetChart2,
-     backgroundColor: 'whitesmoke',
-     borderColor: 'gray',
+     data: newDatasetChart2.filter(() => true).map(e => e.value),
+     backgroundColor: this.chart2BgColors,
+     borderColor: 'transparent',
      borderWidth: 1.5,
      pointBackgroundColor: 'transparent',
      pointHoverBackgroundColor: 'transparent',
@@ -1091,10 +1134,9 @@ export class ProfileComponent implements OnInit {
          enabled: true,
          callbacks: {
           label: function(tooltipItem, data) {
-            if(Number(tooltipItem.yLabel) === 3) {return 'High Risk'}
-            if(Number(tooltipItem.yLabel) === 2) {return 'Medium Risk'}
-            if(Number(tooltipItem.yLabel) === 1) {return 'Low Risk'}
-            if(Number(tooltipItem.yLabel) === 0) {return 'Not Assessed'}
+            if(34 > Number(tooltipItem.yLabel) ) {return `Low Risk: ${Number(tooltipItem.yLabel)}`}
+            if(Number(tooltipItem.yLabel) > 33 && 67 > Number(tooltipItem.yLabel)) {return `Medium Risk ${Number(tooltipItem.yLabel)}`}
+            if(Number(tooltipItem.yLabel) > 66 ) {return `High Risk: ${Number(tooltipItem.yLabel)}`}
           },
       }
 
@@ -1127,13 +1169,27 @@ export class ProfileComponent implements OnInit {
      maintainAspectRatio: false,
      responsive: true,
      plugins: {
-         datalabels: {
-             anchor: 'end',
-             align: 'top',
-             formatter: Math.round,
-             font: { weight: 'bold'}
-         }
-     }
+      datalabels: {
+        clamp: false,
+        anchor: 'center',
+        align: 'center',
+        color: 'teal',
+        formatter: function(value, context) {
+          return value + '%';
+        },
+        font: { weight: 100, size: 12 },
+        listeners: {
+          enter: function(context) {
+            context.hovered = true;
+            return true;
+          },
+          leave: function(context) {
+            context.hovered = false;
+            return true;
+          }
+        }
+      }
+    }
    };
 
 
@@ -1493,7 +1549,7 @@ export class ProfileComponent implements OnInit {
         let dataSet = {
           label: dataElem.label,
           data: dataElem.data,
-          backgroundColor: bgColors,
+          backgroundColor: 'transparent', // bgColors,
           borderColor: color.mild,
           borderWidth: 1.5,
           pointBackgroundColor: 'transparent',
@@ -1560,13 +1616,27 @@ export class ProfileComponent implements OnInit {
       maintainAspectRatio: false,
       responsive: true,
       plugins: {
-          datalabels: {
-              anchor: 'end',
-              align: 'top',
-              formatter: Math.round,
-              font: { weight: 'bold'}
+        datalabels: {
+          clamp: false,
+          anchor: 'end',
+          align: 'end',
+          color: 'teal',
+          formatter: function(value, context) {
+            return '';
+          },
+          font: { weight: 100, size: 12 },
+          listeners: {
+            enter: function(context) {
+              context.hovered = true;
+              return true;
+            },
+            leave: function(context) {
+              context.hovered = false;
+              return true;
+            }
           }
-      }
+        }
+    }
     };
 
 

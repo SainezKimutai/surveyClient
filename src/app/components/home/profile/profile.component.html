@@ -43,7 +43,7 @@
             <div class="card">
                 <div class="title d-flex"> <span>Number of risks that have been measured under each category</span>
                     <div class=" graph-switch d-flex ml-auto">
-                        <span (click)="chart1graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart1Type === 'line' ? 'active' : ''" ></fa-icon></span> 
+                        <!-- <span (click)="chart1graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart1Type === 'line' ? 'active' : ''" ></fa-icon></span>  -->
                         <span (click)="chart1graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="chart1Type === 'bar' ? 'active' : ''" ></fa-icon></span>
                         <span (click)="chart1graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="chart1Type === 'pie' ? 'active' : ''" ></fa-icon> </span>
                     </div>
@@ -68,7 +68,7 @@
                 <div class="body-wrapper">
                     <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
                     <canvas *ngIf="chart2Type" baseChart class="chart" [chartType]="chart2Type" [labels]="chart2Labels"
-                    [datasets]="chart2Datasets" [options]="chart2ChartOptions"></canvas>
+                    [datasets]="chart2Datasets" [options]="chart2ChartOptions" [plugins]="pluginDataLabels"></canvas>
                 </div>
     
             </div>
@@ -84,13 +84,13 @@
 
 
 
-        <section class="risk-graph-section">
+        <!-- <section hidden class="risk-graph-section">
         
                 <div class="title d-flex"> <span>Total risk level on each survey </span>
                     <div class=" graph-switch d-flex ml-auto">
-                        <!-- <span (click)="chart3graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart3Type === 'line' ? 'active' : ''" ></fa-icon></span>  -->
+                        
                         <span (click)="chart3graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="chart3Type === 'bar' ? 'active' : ''" ></fa-icon></span>
-                        <!-- <span (click)="chart3graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="chart3Type === 'pie' ? 'active' : ''" ></fa-icon> </span> -->
+                    
                     </div>
                 </div>
                 <div *ngIf="chart3Type" id="chart_key" >
@@ -109,7 +109,7 @@
                     [datasets]="chart3Datasets" [options]="chart3ChartOptions"></canvas>
                 </div>
        
-        </section>
+        </section> -->
 
 
 
@@ -119,15 +119,14 @@
             <div class="title d-flex"> <span>Average risk rate for specific risk type under each survey</span>
                 <div class=" graph-switch d-flex ml-auto">
                     <span (click)="comparisonChartToLine()"><fa-icon [icon]="faChartLine" [ngClass]="comparisonChartType === 'line' ? 'active' : ''" ></fa-icon></span> 
-                    <span (click)="comparisonChartToBar()"><fa-icon [icon]="faChartBar" [ngClass]="comparisonChartType === 'bar' ? 'active' : ''" ></fa-icon></span>
-                    <!-- <span (click)="comparisonChartToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="comparisonChartType === 'pie' ? 'active' : ''" ></fa-icon> </span> -->
+                    <!-- <span (click)="comparisonChartToBar()"><fa-icon [icon]="faChartBar" [ngClass]="comparisonChartType === 'bar' ? 'active' : ''" ></fa-icon></span> -->
                 </div>
             </div>
 
             <div class="body-wrapper">
                 <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
                 <canvas *ngIf="comparisonChartType" baseChart class="chart" [chartType]="comparisonChartType" [labels]="comparisonChartLabels"
-                [datasets]="comparisonChartDatasets" [options]="comparisonChartOptions"></canvas>
+                [datasets]="comparisonChartDatasets" [options]="comparisonChartOptions" [plugins]="pluginDataLabels"></canvas>
             </div>
    
     </section>
@@ -145,7 +144,7 @@
 
 
 
-        <div class="risk-section">
+        <!-- <div hidden class="risk-section">
             <div class="title">List of all risk types on all surveys done</div>
 
             <div class="body-wrapper">
@@ -155,7 +154,7 @@
                         <div class="mx-auto ">Threat</div>
                         <div class="mx-auto ">Survey</div>
                         <div class="mx-auto ">Severity</div>
-                        <!-- <div class="rate">Intervention</div> -->
+                     
                     </div>
 
                 </div>
@@ -176,12 +175,12 @@
                         item.level === 'High' ? 'mx-auto riskRate high' : 'mx-auto riskRate'
                         ]"
                         >{{item.level}}</div>
-                        <!-- <div class="mx-auto">{{item.recom}}</div> -->
+                     
                     </div>
 
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
 
@@ -231,7 +230,7 @@
 
 
 
-        <div class="survey-info-wrap">
+        <div hidden class="survey-info-wrap">
 
             <h5>Survey Info</h5>
             <div class="grid-container">
