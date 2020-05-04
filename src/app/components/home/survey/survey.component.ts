@@ -69,11 +69,13 @@ export class SurveyComponent implements OnInit {
             this.AllQuestions = dataQuiz;
             this.pageProgress = 50;
 
+
             this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
               dataRsp => {
 
               this.AllResponses = dataRsp;
               this.pageProgress = 75;
+              if (this.AllResponses.length === 0) { this.pageProgress = 100; }
               resolve();
 
               },
@@ -93,16 +95,20 @@ export class SurveyComponent implements OnInit {
 
 
   checkForCompletedSurveys() {
+
      this.AllSurveys =  this.AllSurveys.filter((surv, ind, arr) => {
-        const myResponses = this.AllResponses;
+        let myResponses = this.AllResponses.filter((r) => r.surveyId === surv._id).map(e => e);
         if (myResponses.length > 0) {
         let allQuizs = this.AllQuestions.filter((q) => q.surveyId === surv._id).map(e => e);
+        let allQuizs2 = allQuizs.sort((a, b) =>  b.position - a.position);
+        let allQuizs3 = allQuizs2.reverse();
         let allAnswers = myResponses[0].answers;
         let allAnswersNumber = Number(allAnswers.length);
-
         let nextQuiz = 0;
 
-        allQuizs.forEach((quiz, ind2, arr2) => {
+
+
+        allQuizs3.forEach((quiz, ind2, arr2) => {
 
           if (nextQuiz === 1) {
             let isAnswerPresent = allAnswers.filter((ans) => ans.questionId === quiz._id ).map(e => e );
@@ -115,9 +121,7 @@ export class SurveyComponent implements OnInit {
 
           if ( ind2 === arr2.length - 1) {
 
-
-            let myCompletionValue = Number((( Number(allAnswersNumber) * 100 ) / Number(allQuizs.length)).toFixed(0));
-
+            let myCompletionValue =  Number((( Number(allAnswersNumber) * 100 ) / Number(allQuizs2.length)).toFixed(0));
             surv.done = Number(myCompletionValue);
 
             this.pageProgress = 100; }
@@ -128,7 +132,9 @@ export class SurveyComponent implements OnInit {
         } else {
           surv.done = 0;
           if (ind === arr.length - 1) { this.pageProgress = 100; }
+
         }
+        this.pageProgress = 100;
         return true;
       }).map( e => e);
 

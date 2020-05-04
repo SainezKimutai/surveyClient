@@ -23,6 +23,12 @@ export class ExchangerateService {
         return this.http.get<any>(myUrl, {params});
     }
 
+    fetchPastExchangeRates(date ) {
+        const params = new HttpParams() .set('app_id', '798715814eab4268abf21640d0308d2a');
+        const myUrl = `https://openexchangerates.org/api/historical/${date}.json`;
+        return this.http.get<any>(myUrl, {params});
+    }
+
 
     createExchangerate( data: any ) {
         return this.http.post<any>(this.url + 'create', data, {headers : header});

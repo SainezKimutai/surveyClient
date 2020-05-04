@@ -39,11 +39,14 @@
     
             <div class="logo-section">
                 <div class="wrap">
-                    <h4>Welcome Back</h4>
+                    <h4>Welcome</h4>
     
                     <img src="../../../assets/images/logo1.png" alt="" >
                 </div>
     
+           
+
+
             </div>
     
     
@@ -59,20 +62,33 @@
 				</div>
 	
 				<div class="form-group">
+                    <div class="wrap d-flex">
 					<fa-icon [icon]="faEnvelope"></fa-icon>
-					<input type="email" name="email" [(ngModel)]="loginForm.email" placeholder="Enter Email" required>
+                    <input type="email" (keyup)="emailCheck()" [ngClass]="emailError ? 'error' : ''" name="email" [(ngModel)]="loginForm.email" placeholder="Enter Email" required>
+                    </div>
+                    <div  *ngIf="emailError" class="error-wrap wrap">
+                        <span>Please enter your email</span>
+                    </div>
 				</div>
 				
 				<div class="form-group">
+                    <div class="wrap d-flex">
 					<fa-icon [icon]="faKey"></fa-icon>
-					<input type="password" name="password" [(ngModel)]="loginForm.password"  placeholder="Enter Password">
+                    <input [type]="PasswordType" (keyup)="passwordCheck()" [ngClass]="passwordError ? 'error' : ''"  name="password" [(ngModel)]="loginForm.password"  placeholder="Enter Password">
+                    <fa-icon style="cursor: pointer;" *ngIf="PasswordType === 'password'" [icon]="faEye" (click)="showPassword()"></fa-icon>
+                    <fa-icon style="cursor: pointer;" *ngIf="PasswordType === 'text'"  [icon]="faEyeSlash" (click)="hidePassword()"></fa-icon>
+                    </div>
+                    <div *ngIf="passwordError" class="error-wrap">
+                        <span>Please enter your password</span>
+                    </div>
+
 				</div>
 
 
 
 				
 				<div class="btn-wrap d-flex">
-					<button [disabled]="loginForm.password === '' || loginForm.email === ''" class="btn ml-auto btn-sm btn-submit" (click)="login()" style="color: white;">Login</button>
+					<button class="btn ml-auto btn-sm btn-submit" (click)="login()" style="color: white;">Login</button>
 				</div>
 
           
@@ -85,10 +101,19 @@
 
             </form>
 
+            <!-- <div id="img-wrap" class="wrap">
+                <img src="../../../assets/images/logo4.png" alt="" >
+            </div> -->
+
+
+
     
             </div>
     
         </div>
+
+
+        
     
     
     </section>
@@ -104,8 +129,61 @@
 
 
 
+    <div bsModal  #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    [config]="{backdrop: 'static',  keyboard: false}" >
+        <div class="modal-dialog infoModal modal-xl" role="document">
+            <div class="modal-content">
 
+            <div class="modal-body" >
 
+                <div class="wrap-one">
+                    <div class="image-wrap">
+                        <img src="../../../assets/images/logo8.png" alt="" >
+                    </div>
+                </div>
+
+                <div class="wrap-two">
+
+                    <div class="cancel-wrap">
+                        <div (click)="toLogin()">
+                            <fa-icon [icon]="faTimes"></fa-icon>
+                     
+                        </div>
+                    </div>
+
+                    <div class="top-paragraph">
+                        <p>
+                            As a business leader today, <span>identifying your risk</span> is the first and most crucial step 
+                            towards re-organizing or even rebuilding your market strategies to mitigate against revenue 
+                            losses and ensure business continuity when faced with disruptions in your business environment. 
+                        </p>
+                    </div>
+                    <div class="line-wrap d-flex">
+                        <hr class="line mr-auto">
+                    </div>
+                  
+                    <div class="mid-paragraph">
+                        <p>
+                            By completing a short survey, <span>our automated  Business Continuity Planning  platform,</span> will generate a risk assessment report 
+                            for your business. You will <span>immediately</span> receive recommendations on areas that require continuity 
+                            planning to ensure your business’s survival in this volatile environment.
+                        </p>
+                    </div>
+                    <div class="bottom-paragraph">
+                        <h6>
+                            Click on <span >Register</span> to start the survey
+                        </h6>
+                        <h6 class="mt-3">
+                            or <span>Login</span> if you have an account.
+                        </h6>
+                    </div>
+                </div>
+
+            </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    
 
 
 

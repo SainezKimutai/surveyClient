@@ -51,7 +51,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-    this.checkIfInvited();
     this.registrationForm = {
       companyName: '',
       logo: {
@@ -68,6 +67,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
       email: '',
       userType: 'customer'
     };
+
+    this.checkIfInvited();
 
     this.userService.getAllUsers().subscribe(
       data => {
@@ -92,10 +93,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   }
 
-  checkIfInvited(){
+  checkIfInvited() {
     this.route.queryParams.subscribe(params => {
-      this.thirdParty = params.institution;
-      console.log(this.thirdParty);
+
+      if (params.institution) {
+        this.thirdParty = params.institution;
+        this.registrationForm.institutionId = params.institution;
+      }
+
     });
   }
 
@@ -160,6 +165,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       companyAddress: '',
       companyEmail: ''
     };
+
 
     this.companyProfileService.createCompanyProfile(newProfileData).subscribe(
       dataProfile => {

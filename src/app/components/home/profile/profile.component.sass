@@ -70,6 +70,7 @@
 
 
 
+
     .survey-info-wrap, .account-status-wrap
         background-color: white
         width: 100%
@@ -203,6 +204,36 @@
 
 
 
+#chart_key
+    width: 100%
+    display: flex
+    text-align: right
+
+    .wrap
+        margin-right: auto
+        display: flex
+        flex-direction: column
+        @include desktop_sm
+            display: flex
+            flex-direction: column
+       
+
+        div
+            display: flex
+            align-items: stretch
+            margin: 0 1em 0 0
+       
+
+            .color
+                
+                width: 3em
+                height: 3px
+                border-radius: 0px
+                margin: auto .5em auto 0
+                color: transparent
+
+            .text
+                font-size: 12px
 
 
 .body-section .info-section .risk-section
@@ -308,8 +339,10 @@
 
 
 #chart_section
-    display: flex
-    align-items: stretch
+    display: grid
+    grid-template-columns: repeat(1, 1fr)
+    // display: flex
+    // align-items: stretch
     width: 100%
     // height: 100%
     
@@ -366,9 +399,9 @@
 .risk-graph-section
     border: none
     border-radius: 5px
-    // width: 100%
-    height: 400px
-    margin: 0 1.5em 1em 0
+    width: 100%
+    height: fit-content
+    margin: 0 0 1em 0
     transition: all 0.3s ease
     cursor: pointer
     padding: 1em
@@ -388,11 +421,14 @@
 
     .body-wrapper
         width: 100%
-        height: 250px
+        height: 320px
         display: flex
         flex-direction: column
         align-items: center
         justify-content: center
+
+        canvas
+            // width: 100%
 
 
 
@@ -494,8 +530,14 @@
                     width: 100%
                     padding: 0 0 0 1em
 
-                    &.riskRate
+                    &.riskRate-high
+                        background-color: colorTheme(danger)
+                        color: white
+                    &.riskRate-medium
                         background-color: orange
+                        color: white
+                    &.riskRate-low
+                        background-color: colorTheme(success)
                         color: white
 
 
@@ -518,20 +560,46 @@
 
 
 .body-section .profile-section
+    overflow: hidden
     background-color: white
     width: 100%
-    max-width: 400px
-    max-height: 700px
+    max-width: 350px
+    min-height: 700px
+    height: fit-content
     padding: 1em
     border-radius: 5px
-    // box-shadow: 0 0 10px rgba(0, 0, 0, .2)
-    // -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
-    // -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
     margin: 0 0 1em 1em
+    transition: all .5s
+    -webkit-transition: all .5s
+    -moz-transition: all .5s
+
+    &.minimize
+        width: 3em 
+        padding: 0em
+        background-color: colorTheme(primaryTheme)
+
+        .profile-switch
+            fa-icon 
+                cursor: pointer
+                color: white
+                font-size: 18px
+                margin: .5em
+               
+
+                &:hover
+                    color: colorTheme(warning)
+                    
 
     @include desktop_md
         margin: 0 0 1em 0
 
+.profile-switch
+    fa-icon 
+        cursor: pointer
+        font-size: 14px
+        
+        &:hover
+            color: colorTheme(warning)
 
 .body-section .profile-section .company-info
     background-color: colorTheme(primaryTheme)
@@ -556,9 +624,10 @@
     .wrap-one
         text-align: center
         width: 100%
+        
 
         
-    .wrap-two
+    .wrap-one
         text-align: center
         width: 100%
         display: flex
@@ -600,7 +669,7 @@
     padding: 1em 2em
 
     img 
-        width: 100%
+        // width: 100%
         height: 100%
         max-width: 100px
         max-height: 100px
@@ -613,15 +682,34 @@
         width: 100%
         // padding: .5em 1em .5em 15%
         text-align: left
-        margin: 0 0 1em 0
+        margin: 0 0 2em 0
+
+        .title
+            font-size: 12px
+            font-weight: bold
+            width: 15em
+            color: teal
+            text-transform: uppercase
+
+
+        .v-wrap
+            padding: 0 0 0 0
+
+            span 
+                font-weight: bold
+                font-size: 12
+                color: grayColor(g900)
 
         fa-icon
             font-size: 12px
-            margin: 0 1em 0 0 
+            margin: 0 1em 0 1em 
             
 
         span 
             font-size: 12px
+            margin-right: 1em
+
+        
 
 
 .body-section .profile-section .personal-info
@@ -724,8 +812,84 @@
                             background-color: colorTheme(info)
                             color: white
 
-     
-                    
+.department-section
+    width: 100%
+
+    .head 
+        background-color: grayColor(g200)
+        width: 100%
+        display: flex
+        align-items: stretch
+
+        h4 
+            padding: 1em .5em
+            font-size: 14px
+            margin-right: auto
+            font-weight: bold
+            color: teal
+            display: flex
+            align-items: center
+
+        .wrap
+            margin: auto 1em auto auto
+            height: 2em
+            width: 2em
+            background-color: grayColor(g100)
+            border-radius: 50%
+            cursor: pointer
+            display: flex
+            align-items: center
+
+            fa-icon 
+                margin: auto
+                font-size: 14px
+                color: colorTheme(success)
+
+            &:hover
+                background-color: colorTheme(success)
+                
+                fa-icon 
+                    color: grayColor(g100)
+
+          
+    .body-wrap-dp
+        width: 100%
+    
+           
+        .item-list
+            padding: .5em
+            background-color: whitesmoke
+            width: 100%
+            display: flex
+            margin: 0 0 .5em 0
+
+            span 
+                font-size: 13px
+                margin-right: auto
+                width: 100%
+
+
+            .wrap-item
+                margin-left: auto 
+                text-align: right
+                
+
+                fa-icon 
+                    margin: 0 1em 0 0
+                    font-size: 12px
+                    margin-left: auto 
+                    color: grayColor(g300)
+                    cursor: pointer
+
+                    &:hover
+
+                        &.fa-editt
+                            color: colorTheme(primary)
+
+                        &.fa-delete
+                            color: colorTheme(danger)
+    
+
 
 
 
@@ -814,7 +978,7 @@
             background-color: white
 
             input
-                width: 100%
+                // width: 100%
                 border-radius: 2px
                 padding: .5em
                 border: none

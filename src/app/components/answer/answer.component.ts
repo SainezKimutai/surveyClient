@@ -172,10 +172,7 @@ export class AnswerComponent implements OnInit {
 
     } else {
        
-      setTimeout(()=>{
-        this.addTermsModal.show();
-      }, 50);
-      
+
       this.pageProgress = 50;
       this.DoneQuestions = 0;
       this.formatQuestions();

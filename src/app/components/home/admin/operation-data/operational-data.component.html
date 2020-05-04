@@ -1,0 +1,377 @@
+
+<section class="body-section">
+
+
+
+
+<section id="top_cards_section" class="card-group">
+
+    <div class="card first">
+        <div class="card-title">
+            <h4>No of Third Party Companies</h4>
+            <fa-icon [icon]="faListAlt"></fa-icon>
+        </div>
+        <div class="card-info">
+            <h4>{{AllThirdParties.length}}</h4>
+        </div>
+        <div class="card-body">
+            
+        </div>
+    </div>
+
+    <div class="card second">
+        <div class="card-title">
+            <h4>No of Companies</h4>
+            <fa-icon [icon]="faBuilding"></fa-icon>
+        </div>
+        <div class="card-info">
+            <h4>{{AllCompanies.length}}</h4>
+        </div>
+        <div class="card-body">
+            
+        </div>
+    </div>
+
+    <div class="card third">
+        <div class="card-title">
+            <h4>No of Surveys</h4>
+            <fa-icon [icon]="faBuilding"></fa-icon>
+        </div>
+        <div class="card-info">
+            <h4>{{AllSurveys.length}}</h4>
+        </div>
+        <div class="card-body">
+        
+        </div>
+    </div>
+
+
+</section><!-- top_cards_section -->
+
+
+
+
+
+
+
+
+
+
+<div class="risk-categories-chart-section">
+    <div class="model">
+        <div class="model-title">
+            <span class="title">Risk Ratio Per Risk Category</span>
+            <div class=" graph-switch d-flex ml-auto">
+                <!-- <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
+                <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> -->
+            </div>
+        </div>
+
+        <div class="model-body">
+            <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
+            <canvas *ngIf="chartsProgress === 100 && riskCategoryChartType" baseChart class="chart" [chartType]="riskCategoryChartType" [labels]="riskCategoryChartLabels"
+                [datasets]="riskCategoryChartDatasets" [options]="riskCategoryChartOptions" [plugins]="pluginDataLabels"></canvas>
+        </div>
+    </div>
+</div>
+
+
+<div class="overal-risk-rating-chart-section">
+    <div class="model">
+        <div class="model-title">
+            <span class="title">Overall Average Risk Rating</span>
+            <div class=" graph-switch d-flex ml-auto">
+                <!-- <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
+                <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> -->
+            </div>
+        </div>
+
+        <div class="model-body">
+            <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
+            <canvas *ngIf="chartsProgress === 100 && overallRiskRatingChartType" baseChart class="chart" [chartType]="overallRiskRatingChartType" [labels]="overallRiskRatingChartLabels"
+                [datasets]="overallRiskRatingChartDatasets" [options]="overallRiskRatingChartOptions" [plugins]="pluginDataLabels"></canvas>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="overal-risk-per-industry-chart-section">
+    <div class="model">
+        <div class="model-title">
+            <span class="title">Average Risk Rating Per Industry</span>
+            <div class=" graph-switch d-flex ml-auto">
+                <!-- <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
+                <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> -->
+            </div>
+        </div>
+
+        <div class="model-body">
+            <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
+            <canvas *ngIf="chartsProgress === 100 && riskPerIndustryChartType" baseChart class="chart" [chartType]="riskPerIndustryChartType" [labels]="riskPerIndustryChartLabels"
+                [datasets]="riskPerIndustryChartDatasets" [options]="riskPerIndustryChartOptions" [plugins]="pluginDataLabels"></canvas>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="risk-exposure-section">
+    <div class="model">
+        <div class="model-title">
+            <span class="title">Average Risk Exposure Per Company</span>
+            <div class=" graph-switch d-flex ml-auto">
+                <!-- <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
+                <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> -->
+            </div>
+        </div>
+
+        <div class="model-body">
+            <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
+            
+
+            <div class="main-wrap" *ngIf="chartsProgress === 100">
+
+                <div class="search-wrap">
+                    <div class="input-wrap">
+                      
+                        <input type="text" 
+                        (keyup)="filterCompany()" name='FilterName' [(ngModel)]="FilterName"
+                        placeholder="Search Company Name" aria-placeholder="Search Company Name">
+                    </div>
+
+                    <div class="average-wrap" *ngIf="activeCompanyTotalRiskRate === 0 || activeCompanyTotalRiskRate > 0">
+                        Average Risk <span 
+                        [ngClass]="[ 
+                            33 > activeCompanyTotalRiskRate ? 'low' : '',
+                            66 > activeCompanyTotalRiskRate && activeCompanyTotalRiskRate > 33 ? 'medium' : '',
+                            activeCompanyTotalRiskRate > 66 ? 'high' : ''
+                            ]"
+                            >{{activeCompanyTotalRiskRate}} %
+                        </span>
+                    </div>
+                </div>
+
+                <div class="content-wrap">
+
+                    <div class="title-wrap d-flex">
+                        <div class="third-party">Third Party</div>
+                        <div class="company">Company Name ( <span>{{riskIssueArrayPerCompanyToView1.length}}</span> ) </div>
+                        <div class="risk-name">Risk Name</div>
+                        <div class="risk-level">Risk Level</div>
+                        <div class="risk-recom">Recommendation</div> 
+                    </div>
+                    <div class="medel-item-wrap d-flex">
+                        <div class="model-third">
+                            <h4 *ngFor="let item of AllThirdParties;"
+                            [ngClass]="activeThirdParty === item._id ? 'active' : '' "
+                            (click)="switchActiveThirdCompany(item._id)"
+                            >{{item.name}}</h4>
+
+                            <h4 *ngIf="AllThirdParties.length === 0">---</h4>
+
+                        </div>
+                        <div class="model-company">
+                            <h4
+                                *ngFor="let item of riskIssueArrayPerCompanyToView1; let x = index" 
+                                [ngClass]="activeCompany === item ? 'active' : '' "
+                                (click)="switchActiveCompany(x)">               
+                                {{item}}
+                            </h4>
+                            <h4 *ngIf="riskIssueArrayPerCompanyToView1.length === 0">---</h4>
+
+                        </div>
+                        <div class="model-risk-wrap">      
+                            <div class="model-risk-item d-flex"  *ngFor="let item of companyRiskArray">
+                                <h4 class="name">{{item.risk}}</h4> 
+                                <h4    [ngClass]="[ 
+                                    item.level === 'Low' ? 'level low' : 'level',
+                                    item.level === 'Medium' ? 'level medium' : 'level',
+                                    item.level === 'High' ? 'level high' : 'level'
+                                    ]"
+                                    >{{item.level}}</h4>
+                                <h4 class="recom">{{item.recom}}</h4>
+                            </div>
+                            <div class="model-risk-item d-flex"  *ngIf="companyRiskArray.length === 0">---</div>
+                            
+                        </div>
+      
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="survey-average-section">
+    <div class="model">
+        <div class="model-title">
+            <span class="title">Survey Average Risk Rating</span>
+            <div class=" graph-switch d-flex ml-auto">
+                <!-- <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
+                <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> -->
+            </div>
+        </div>
+
+        <div class="model-body">
+            <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
+            
+
+            <div class="main-wrap" *ngIf="chartsProgress === 100">
+
+                <div class="search-wrap">
+                    <div class="input-wrap">
+                      
+                        <input type="text" 
+                        (keyup)="filterCompanySurvey()" name='Filter2Name' [(ngModel)]="Filter2Name"
+                        placeholder="Search Company Name" aria-placeholder="Search Company Name">
+                    </div>
+                </div>
+
+                <div class="content-wrap">
+
+                    <div class="title-wrap d-flex">
+                        <div class="company">Company Name</div>
+                        <div class="survey" *ngFor="let item of CompanyRiskRatesSurvey">{{item}}</div>
+                    </div>
+                    <div class="item-wrap">
+                        <div class="item d-flex" *ngFor="let comp of CompanyRiskRatesDataListView">
+                            <h4 class="company">{{comp.companyName}}</h4>
+                            <div class="item-rate-rate d-flex">
+                                <h4 
+                                 *ngFor="let dataItem of comp.data"
+                                 (click)="openAnswersModal(comp.companyName, dataItem.surveyName, dataItem.responseId); checkSurveyProgress(dataItem.surveyId, dataItem.responseId)"
+                                 [ngClass]="[ 
+                                        dataItem.riskRate >  66 ? ' riskRate high' : 'riskRate',
+                                        66 > dataItem.riskRate && dataItem.riskRate > 33 ? ' riskRate medium' : 'riskRate',
+                                        33 > dataItem.riskRate  ? 'riskRate low' : 'riskRate'
+                                        ]"
+                                 > <span *ngIf="dataItem.riskRate !== 0"> {{dataItem.riskRate}} % </span>  <span *ngIf="dataItem.riskRate === 0">---</span>  </h4>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<section id="traffic_section" class="card-group">
+    
+    <div class="card">
+        <div class="title d-flex"> <span>Traffic Monitor</span>
+            <div class=" graph-switch d-flex ml-auto">
+                
+                <span (click)="trafficGraphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="trafficType === 'line' ? 'active' : ''" ></fa-icon></span> 
+                <span (click)="trafficGraphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="trafficType === 'bar' ? 'active' : ''" ></fa-icon></span>
+                <span (click)="trafficGraphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="trafficType === 'pie' ? 'active' : ''" ></fa-icon> </span>
+            </div>
+        </div>
+        <div class="body">
+            <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
+            <canvas *ngIf="trafficType" baseChart class="chart" [chartType]="trafficType" [labels]="trafficLabels"
+            [datasets]="trafficDatasets" [options]="trafficChartOptions"></canvas>
+        </div>
+
+    </div>
+
+
+    <div style="background-color: transparent;" class="card"></div>
+
+
+</section><!-- traffic_section -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div bsModal #viewAnswersModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog viewAnswersModal modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h4 class="modal-title ">Responses of <span>{{companyNameOnView}}</span> on
+                    <span>{{surveyNameOnView}} survey</span>
+                </h4>
+                <button type="button" class="btn close" (click)="viewAnswersModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+
+            </div>
+            <div class="surveyStatus-wrap ">
+                <span *ngIf="100 > surveyStatus" class="surveyStatus text-primary">In progress, ({{surveyStatus}}%)</span> 
+                <span *ngIf="surveyStatus > 99" class="surveyStatus text-success">Completed</span> 
+            </div>
+            <div class="modal-body">
+
+                <div class="question-wrap"  *ngFor="let item of QuestionsOnView; let i = index" id="quiz{{i}}" >
+                    <div class="question d-flex w-100">{{i+1}}. {{item.question}}</div>
+                    <div class="choices-wrapper">
+                    <div class="choices answer">
+                        <span>{{item.answer}}</span>
+                    </div>
+                    <div class="choices recom" *ngIf="item.level">
+                        <span>Mapped Risk: <span class="span-inner">{{item.threat}}</span> </span>
+                    </div>
+                    <div class="choices threat" *ngIf="item.level">
+                        <span>Threat Level: <span class="{{item.level}}">{{item.level}}</span> </span>
+                    </div>
+                    <div class="choices recom" *ngIf="item.recom">
+                        <span>Recommendation: <span class="span-inner">{{item.recom}}</span> </span>
+                    </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+</section><!-- body-section -->
+
+
+
+

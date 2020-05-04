@@ -25,7 +25,7 @@
     <section *ngIf="ZeroSurveyDone" class="info-section zero-survey-one">
 
         <div class="wrap">
-            <h4>Analitics</h4>
+            <h4>ANALYTICS</h4>
             <h5>{{noteOne}}</h5>
             <p>{{noteTwo}}</p>
         </div>
@@ -41,9 +41,9 @@
 
         <section id="chart_section" class="card-group">
             <div class="card">
-                <div class="title d-flex"> <span>Risk Categories</span>
+                <div class="title d-flex"> <span>Number of risks that have been measured under each category</span>
                     <div class=" graph-switch d-flex ml-auto">
-                        <span (click)="chart1graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart1Type === 'line' ? 'active' : ''" ></fa-icon></span> 
+                        <!-- <span (click)="chart1graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart1Type === 'line' ? 'active' : ''" ></fa-icon></span>  -->
                         <span (click)="chart1graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="chart1Type === 'bar' ? 'active' : ''" ></fa-icon></span>
                         <span (click)="chart1graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="chart1Type === 'pie' ? 'active' : ''" ></fa-icon> </span>
                     </div>
@@ -57,18 +57,18 @@
             </div>
     
             <div class="card">
-                <div class="title d-flex"> <span>General Risk Representation</span>
+                <div class="title d-flex"> <span>Average risk rate for specific risk type based on all surveys</span>
                     <div class=" graph-switch d-flex ml-auto">
                         <span (click)="chart2graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart2Type === 'line' ? 'active' : ''" ></fa-icon></span> 
                         <span (click)="chart2graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="chart2Type === 'bar' ? 'active' : ''" ></fa-icon></span>
-                        <span (click)="chart2graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="chart2Type === 'pie' ? 'active' : ''" ></fa-icon> </span>
+                        <!-- <span (click)="chart2graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="chart2Type === 'pie' ? 'active' : ''" ></fa-icon> </span> -->
                     </div>
                 </div>
     
                 <div class="body-wrapper">
                     <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
                     <canvas *ngIf="chart2Type" baseChart class="chart" [chartType]="chart2Type" [labels]="chart2Labels"
-                    [datasets]="chart2Datasets" [options]="chart2ChartOptions"></canvas>
+                    [datasets]="chart2Datasets" [options]="chart2ChartOptions" [plugins]="pluginDataLabels"></canvas>
                 </div>
     
             </div>
@@ -84,23 +84,63 @@
 
 
 
-        <section class="risk-graph-section">
+        <!-- <section hidden class="risk-graph-section">
         
-                <div class="title d-flex"> <span>General Risk Representation</span>
+                <div class="title d-flex"> <span>Total risk level on each survey </span>
                     <div class=" graph-switch d-flex ml-auto">
-                        <span (click)="chart3graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart3Type === 'line' ? 'active' : ''" ></fa-icon></span> 
+                        
                         <span (click)="chart3graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="chart3Type === 'bar' ? 'active' : ''" ></fa-icon></span>
-                        <span (click)="chart3graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="chart3Type === 'pie' ? 'active' : ''" ></fa-icon> </span>
+                    
                     </div>
                 </div>
-    
+                <div *ngIf="chart3Type" id="chart_key" >
+                    <div class="wrap">
+                        <div> <span class="color" style="background-color: #f86c6b;">.</span> <span class="text">High risk</span> </div>
+                        <div> <span class="color" style="background-color: #ffc107;"></span> <span class="text">Medium risk</span></div>
+                        <div> <span class="color" style="background-color: #4dbd74;"></span> <span class="text">Low risk</span></div>
+                        <div> <span class="color" style="background-color: #73818f;"></span> <span class="text">Highest Possible Level</span></div>
+                    </div>
+                   
+                </div>
+
                 <div class="body-wrapper">
                     <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
                     <canvas *ngIf="chart3Type" baseChart class="chart" [chartType]="chart3Type" [labels]="chart3Labels"
                     [datasets]="chart3Datasets" [options]="chart3ChartOptions"></canvas>
                 </div>
        
-        </section>
+        </section> -->
+
+
+
+
+        <section class="risk-graph-section">
+        
+            <div class="title d-flex"> <span>Average risk rate for specific risk type under each survey</span>
+                <div class=" graph-switch d-flex ml-auto">
+                    <span (click)="comparisonChartToLine()"><fa-icon [icon]="faChartLine" [ngClass]="comparisonChartType === 'line' ? 'active' : ''" ></fa-icon></span> 
+                    <!-- <span (click)="comparisonChartToBar()"><fa-icon [icon]="faChartBar" [ngClass]="comparisonChartType === 'bar' ? 'active' : ''" ></fa-icon></span> -->
+                </div>
+            </div>
+
+            <div *ngIf="comparisonChartType" id="chart_key" >
+                <div class="wrap">
+                    <div *ngFor=" let item of comparisonChartDatasets"> 
+                        <span class="color" [style.background-color]="item.borderColor">.</span> <span class="text">{{item.label}}</span> 
+                    </div>
+
+                    
+                </div>
+               
+            </div>
+
+            <div class="body-wrapper">
+                <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
+                <canvas *ngIf="comparisonChartType" baseChart class="chart" [chartType]="comparisonChartType" [labels]="comparisonChartLabels"
+                [datasets]="comparisonChartDatasets" [options]="comparisonChartOptions" [plugins]="pluginDataLabels"></canvas>
+            </div>
+   
+    </section>
 
 
 
@@ -115,12 +155,8 @@
 
 
 
-
-
-
-
-        <div class="risk-section">
-            <div class="title">You risk maping</div>
+        <!-- <div hidden class="risk-section">
+            <div class="title">List of all risk types on all surveys done</div>
 
             <div class="body-wrapper">
                 <div class="body-title">
@@ -129,7 +165,7 @@
                         <div class="mx-auto ">Threat</div>
                         <div class="mx-auto ">Survey</div>
                         <div class="mx-auto ">Severity</div>
-                        <!-- <div class="rate">Intervention</div> -->
+                     
                     </div>
 
                 </div>
@@ -150,12 +186,12 @@
                         item.level === 'High' ? 'mx-auto riskRate high' : 'mx-auto riskRate'
                         ]"
                         >{{item.level}}</div>
-                        <!-- <div class="mx-auto">{{item.recom}}</div> -->
+                     
                     </div>
 
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
 
@@ -165,15 +201,14 @@
 
         <div class="account-status-wrap">
           
-                <div class="title">Your Risk Rates Per Survey Template</div>
+                <div class="title">List of surveys done and their total average risk rate</div>
                 <div class="body-wrapper">
                 <div class="body-title" >
           
                   <div  class="body-item d-flex">
-                    <div class="mx-auto ">Comapany Name</div>
+             
                     <div class="mx-auto ">Survey Name</div>
                     <div class="mx-auto ">Risk rate</div>
-                    <!-- <div class="rate">Recommendation</div> -->
                   </div>
           
                 </div>
@@ -184,12 +219,13 @@
                 
                       <div class="body" *ngIf="CompanyRiskRates.length !== 0">
             
-                        <div *ngFor="let comp of CompanyRiskRates" class="body-item d-flex" (click)="openAnswersModal(comp.companyName, comp.surveyName, comp.surveyId, comp.responseId)">
-                          <div class="mx-auto companyName">{{comp.companyName}}</div>
+                        <div *ngFor="let comp of CompanyRiskRates" class="body-item d-flex">
+                      
                           <div class="mx-auto surveyName">{{comp.surveyName}}</div>
-                          <div class="mx-auto riskRate">{{comp.riskRate}}</div>
-                          <!-- <div class="mx-auto recommendation">{{comp.recommendation}}</div> -->
-                     
+                          <div *ngIf="comp.riskRate > 66" class="mx-auto riskRate-high">{{comp.riskRate}} %</div>
+                          <div *ngIf="66 > comp.riskRate && comp.riskRate > 33" class="mx-auto riskRate-medium">{{comp.riskRate}} %</div>
+                          <div *ngIf="33 > comp.riskRate" class="mx-auto riskRate-low">{{comp.riskRate}} %</div>
+
                         </div>
                 
                       </div>
@@ -205,7 +241,7 @@
 
 
 
-        <div class="survey-info-wrap">
+        <div hidden class="survey-info-wrap">
 
             <h5>Survey Info</h5>
             <div class="grid-container">
@@ -253,6 +289,11 @@
 
     <section class="profile-section">
 
+        <!-- [ngClass]="profileMinimized ? 'profile-section minimize' : 'profile-section'" -->
+        <!-- <div class="profile-switch">
+            <fa-icon [icon]="profileMinimized ? faArrowCircleLeft : faArrowCircleRight" (click)="minimizeProfile()"></fa-icon>
+        </div> -->
+
         <div class="company-info">
 
             <h4>
@@ -263,17 +304,7 @@
                 <input *ngIf="companyNameInputStatus" class="edit-input" type="text" name="companyNameInput" [(ngModel)]="companyNameInput">
                 <button *ngIf="companyNameInputStatus" id="faCheck" [disabled]="companyNameInput === ''" (click)="changeCompanyName()" class="save-btn">Save</button>
             </h4>
-            <p>
-                <span *ngIf="myCompany">{{myCompany.companyAbout}}  
-                    <span *ngIf="!myCompany.companyAbout">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span> 
-                </span>
-                <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="companyAboutInputStatus = !companyAboutInputStatus"></fa-icon>
-            </p>
 
-            <textarea name="" id="" cols="30" rows="3"
-            *ngIf="companyAboutInputStatus" class="edit-input" type="text" name="companyAboutInput" [(ngModel)]="companyAboutInput"></textarea>
-
-            <button *ngIf="companyAboutInputStatus" id="faCheck" [disabled]="companyAboutInput === ''" (click)="changeCompanyAbout()" class="save-btn">Save</button>
 
         </div>
 
@@ -289,87 +320,122 @@
 
 
 
-            <div class="wrap-one">
-
-            <div class="img-wrap">
-                 <div *ngIf="myCompany">
-                     <img *ngIf="myCompany.logo.url === ''" src="../../../assets/images/logo.jpeg" alt="logo" class="company-logo">
-                     <img *ngIf="myCompany.logo.url !== ''" [src]="myCompany.logo.url" alt="logo" class="company-logo">
+            <div  *ngIf="myCompany" class="wrap-one">
+                <div class="actions d-flex">
+                    <div class="custom-control custom-switch ml-auto">
+                        <input type="checkbox" name="editProfileSwitch" [(ngModel)]="editProfileSwitch"  class="custom-control-input" id="customSwitch1">
+                        <label class="custom-control-label" for="customSwitch1">Edit Profile</label>
+                      </div>
                 </div>
-                <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="previewCompLogo = 'sd'"></fa-icon>
-                <input *ngIf="previewCompLogo" class="edit-input" type="text" type="file" name="fileUploaded" (change)="uploadLogo($event)">
-                <button *ngIf="previewCompLogo" id="faCheck" [disabled]="previewCompLogo === ''" (click)="saveCompanyProfile()" class="save-btn">Save</button>
-            </div>
-
-
 
             <div class="other-info">
 
                 <div class="item-info"> 
-                    <fa-icon [icon]="faEnvelope"></fa-icon>
-                    <span *ngIf="myCompany">{{myCompany.companyEmail}}</span>           
-                    <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="companyEmailInputStatus = !companyEmailInputStatus"></fa-icon>
-                    <input *ngIf="companyEmailInputStatus" class="edit-input" type="text" name="companyEmailInput" [(ngModel)]="companyEmailInput">
-                    <button *ngIf="companyEmailInputStatus" id="faCheck" [disabled]="companyEmailInput === ''" (click)="changeCompanyEmail()" class="save-btn">Save</button>
+                    <div class="title">Company Type </div>
+                    <div class="w-100 v-wrap d-flex">
+                    <span *ngIf="myCompany">{{myCompany.companyType}}</span>     
+                    </div>      
+                    <!-- <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="companyTypeInputStatus = !companyTypeInputStatus"></fa-icon>
+                    <input *ngIf="editProfileSwitch && companyTypeInputStatus" class="edit-input" type="text" name="companyTypeInput" [(ngModel)]="companyTypeInput">
+                    <button *ngIf="editProfileSwitch && companyTypeInputStatus" id="faCheck" [disabled]="companyTypeInput === ''" (click)="changeCompanyType()" class="save-btn">Save</button> -->
                 </div>
                 <div class="item-info"> 
-                    <fa-icon [icon]="faGlobe"></fa-icon>
+                    <div class="title">Associate Institution</div>
+                    <div class="w-100 v-wrap d-flex">
+                    <span *ngIf="myCompany && myCompany.institutionName">{{myCompany.institutionName}}</span>  
+                    <span *ngIf="myCompany && !myCompany.institutionName">---</span>    
+                    </div>
+                </div>
+
+                <div class="item-info"> 
+                    <div class="title">No. Of Employees </div>
+                    <div class="w-100 v-wrap d-flex">
+                        <span *ngIf="myCompany">{{myCompany.numberOfEmployees}}</span> 
+                        <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="numberOfEmployeesInputStatus = !numberOfEmployeesInputStatus"></fa-icon>
+                    </div>
+                    <div class="w-100 d-flex">
+                        <input *ngIf="editProfileSwitch && numberOfEmployeesInputStatus" class="edit-input" type="text" name="numberOfEmployeesInput" [(ngModel)]="numberOfEmployeesInput">
+                        <button *ngIf="editProfileSwitch && numberOfEmployeesInputStatus" id="faCheck" [disabled]="numberOfEmployeesInput === ''" (click)="changeNumberOfEmployees()" class="save-btn">Save</button>
+                    </div>
+                 
+                   
+                </div>
+                <div class="item-info"> 
+                    <div class="title">Website</div>
+                    <div class="w-100 v-wrap d-flex">
                     <span *ngIf="myCompany">{{myCompany.companyWebsite}}</span>    
                     <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="companyWebsiteInputStatus = !companyWebsiteInputStatus"></fa-icon>
-                    <input *ngIf="companyWebsiteInputStatus" class="edit-input" type="text" name="companyWebsiteInput" [(ngModel)]="companyWebsiteInput">
-                    <button *ngIf="companyWebsiteInputStatus" id="faCheck" [disabled]="companyWebsiteInput === ''" (click)="changeCompanyWebsite()" class="save-btn">Save</button>
+                    </div>
+                    <div class="w-100 d-flex">
+                    <input *ngIf="editProfileSwitch && companyWebsiteInputStatus" class="edit-input" type="text" name="companyWebsiteInput" [(ngModel)]="companyWebsiteInput">
+                    <button *ngIf="editProfileSwitch && companyWebsiteInputStatus" id="faCheck" [disabled]="companyWebsiteInput === ''" (click)="changeCompanyWebsite()" class="save-btn">Save</button>
+                    </div>
                 </div>
                 <div class="item-info"> 
-                    <fa-icon [icon]="faAddressBook"></fa-icon>
-                    <span *ngIf="myCompany">{{myCompany.companyAddress}}</span> 
-                    <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="companyAddressInputStatus = !companyAddressInputStatus"></fa-icon>
-                    <input *ngIf="companyAddressInputStatus" class="edit-input" type="text" name="companyAddressInput" [(ngModel)]="companyAddressInput">
-                    <button *ngIf="companyAddressInputStatus" id="faCheck" [disabled]="companyAddressInput === ''" (click)="changeCompanyAddress()" class="save-btn">Save</button>
+                    <div class="title">Username </div>
+                    <div class="w-100 v-wrap d-flex">
+                    <span *ngIf="myCompany">{{MyUserName}}</span>    
+                    <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="myUserNameInputStatus = !myUserNameInputStatus"></fa-icon>
+                    </div>
+                    <div class="w-100 d-flex">
+                    <input *ngIf="editProfileSwitch && myUserNameInputStatus" class="edit-input" type="text" name="myUserNameInput" [(ngModel)]="myUserNameInput">
+                    <button *ngIf="editProfileSwitch && myUserNameInputStatus" id="faCheck" [disabled]="myUserNameInput === ''" (click)="changeMyUserName()" class="save-btn">Save</button>
+                    </div>
+                </div>
+                <div class="item-info"> 
+                    <div class="title">Email </div>
+                    <div class="w-100 v-wrap d-flex">
+                    <span *ngIf="myCompany">{{loggedUserEmail}}</span>
+                    </div>
+                </div>
+                <div class="item-info"> 
+                    <div class="title">Password </div>
+                    <div class="w-100 v-wrap d-flex">
+                    <span *ngIf="myCompany">**********</span>
+                    <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="userPasswordInputStatus = !userPasswordInputStatus"></fa-icon>
+                    </div>
+                    <div class="w-100 d-flex">
+                    <input *ngIf="editProfileSwitch && userPasswordInputStatus" class="edit-input" type="text" name="userPasswordInput" [(ngModel)]="userPasswordInput">
+                    <button *ngIf="editProfileSwitch && userPasswordInputStatus" id="faCheck" [disabled]="userPasswordInput === ''" (click)="changeUserPasswordInput()" class="save-btn">Save</button>
+                    </div>
                 </div>
 
             </div>
 
         </div>   <!-- wrap-one -->
 
-        <div class="wrap-two">
-            <div class="actions d-flex">
-                <div class="custom-control custom-switch ml-auto">
-                    <input type="checkbox" name="editProfileSwitch" [(ngModel)]="editProfileSwitch"  class="custom-control-input" id="customSwitch1">
-                    <label class="custom-control-label" for="customSwitch1">Edit Profile</label>
-                  </div>
-            </div>
-            <div class="w-100 pr-4 d-flex">
-                <button class="btn btn-sm btn-outline-primary ml-auto" (click)="departmentModal.show()">Departments</button>
-            </div>
-            
-        </div>
-      
+
 
         </div>  <!-- company-other -->
 
 
-
-
-
-
-
-        <div class="personal-info">
-            <hr class="line">
+        <div *ngIf="myCompany" class="department-section" >
             <div class="head">
-                <h4>Personal Info</h4>
+                    <h4>Departments</h4>
+
+                    <span class="wrap" (click)="showDepartmentFormModal()" >
+                        <fa-icon [icon]="faPlus"></fa-icon>
+                    </span>
             </div>
-            <div class="item-info"> 
-                <fa-icon [icon]="faEnvelope"></fa-icon>
-                <span>{{loggedUserEmail}}</span>
+
+            <div  class="body-wrap-dp">
+
+     
+
+            <div  class="item-list" *ngFor="let item of myCompany.department">
+                <span>{{item.departmentName}}</span>
+                <span *ngIf="editProfileSwitch" class="wrap-item">
+                    <fa-icon  class="fa-editt"  (click)="editProfile(item)" [icon]="faEdit"></fa-icon>
+                    <fa-icon class="fa-delete"  (click)="deleteDepartment(item._id)" [icon]="faTrash"></fa-icon>
+                </span>
+              
             </div>
-            <div class="item-info"> 
-                <fa-icon [icon]="faKey"></fa-icon>
-                <span>**********</span>
-                <fa-icon id="faEdit" *ngIf="editProfileSwitch" [icon]="faEdit" (click)="userPasswordInputStatus = !userPasswordInputStatus"></fa-icon>
-                <input *ngIf="userPasswordInputStatus" class="edit-input" type="text" name="userPasswordInput" [(ngModel)]="userPasswordInput">
-                <button *ngIf="userPasswordInputStatus" id="faCheck" [disabled]="userPasswordInput === ''" (click)="changeUserPasswordInput()" class="save-btn">Save</button>
             </div>
+
         </div>
+
+
+
 
 
 

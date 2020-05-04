@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { faEnvelope, faKey, faTimes, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from 'src/app/shared/services/user.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { Router } from '@angular/router';
+import { ModalDirective } from 'ngx-bootstrap';
 
 
 @Component({
@@ -18,14 +19,23 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     private notifyService: NotificationService
   ) { }
 
+  @ViewChild('infoModal', {static: true}) infoModal: ModalDirective;
   // loader
   public ImprintLoader = false;
 
   // icon
   public faEnvelope = faEnvelope;
   public faKey = faKey;
+  public faTimes = faTimes;
+  public faEyeSlash = faEyeSlash;
+  public faEye = faEye;
 
   public loginForm;
+
+
+  public emailError = false;
+  public passwordError = false;
+  public PasswordType = 'password';
 
 
   ngOnInit() {
@@ -35,10 +45,63 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       password: ''
     };
 
+    setTimeout(() => {
+      this.infoModal.show();
+    }, 50);
+
   }
 
 
+
+
+
+
+
+
+
+
+  showPassword() {
+    this.PasswordType = 'text';
+  }
+  hidePassword() {
+    this.PasswordType = 'password';
+  }
+
+
+
+
+
+
+  emailCheck() {
+
+    if (this.loginForm.email === '') {
+      this.emailError = true;
+    } else {
+      this.emailError = false;
+    }
+  }
+
+  passwordCheck() {
+    if (this.loginForm.password === '') {
+      this.passwordError = true;
+    } else {
+      this.passwordError = false;
+    }
+  }
+
+
+
+
+
+
+
+
   login() {
+
+    if (this.loginForm.email === '') { this.emailError = true; }
+    if (this.loginForm.password === '') { this.passwordError = true; }
+    if (this.loginForm.email !== '' && this.loginForm.password !== '') {
+
     this.ImprintLoader = true;
     this.userService.loginUser(this.loginForm).subscribe(
       dataUser => {
@@ -79,9 +142,13 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       error => {this.notifyService.showError(error.error.message, 'Access denied'); this.ImprintLoader = false; }
     );
   }
+  }
 
 
 
+  toLogin() {
+    this.infoModal.hide();
+  }
 
 
   ngOnDestroy() {

@@ -11,11 +11,11 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
 import { AdminRoutingModule } from './admin-routing.module';
 import { AdminComponent } from './admin.component';
 import {AdminMarketRateComponent } from './market-rates/market-rates.component';
-
+import { AdminOperationalDataComponent } from './operation-data/operational-data.component';
 @NgModule({
 
   declarations: [
-      AdminComponent, AdminMarketRateComponent
+      AdminComponent, AdminMarketRateComponent, AdminOperationalDataComponent
           ],
 
     imports: [

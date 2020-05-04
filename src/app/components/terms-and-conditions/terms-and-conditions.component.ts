@@ -25,14 +25,14 @@ public thisYear = this.today.getFullYear();
   }
 
 
-  goBack() {
-    if(localStorage.getItem('loggedUserToken')) {
-      this.router.navigate(['/home/survey']);
-    }
-    if(!localStorage.getItem('loggedUserToken')) {
-      this.router.navigate(['/register']);
-    }
-  }
+  // goBack() {
+  //   if(localStorage.getItem('loggedUserToken')) {
+  //     this.router.navigate(['/home/survey']);
+  //   }
+  //   if(!localStorage.getItem('loggedUserToken')) {
+  //     this.router.navigate(['/register']);
+  //   }
+  // }
 
 
 

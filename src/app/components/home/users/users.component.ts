@@ -25,7 +25,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     private notifyService: NotificationService,
     private companyProfileService: CompanyProfileService,
   ) {}
-
+ // tslint:disable: max-line-length
   // tslint:disable: prefer-const
   // tslint:disable: object-literal-shorthand
 
@@ -37,12 +37,14 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   // loader
   public ImprintLoader = false;
+  public pageProgress = 0;
 
   // permission
   public toAdmin = false;
   public toCustomer = false;
 
   public AllCompanies = [];
+  public CustomerCompanies = [];
   public myCompany: any;
 
   public editNameForm: FormGroup;
@@ -51,6 +53,8 @@ export class UsersComponent implements OnInit, OnDestroy {
   public inviteForm: FormGroup;
 
   public Users: Array<any>;
+  public MyUsers = [];
+  public FilteredUsers = [];
   public UserToBeEdited;
   public togglePassword: string;
   public showPasswordIcon: boolean;
@@ -59,6 +63,8 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   public myInterval: any;
 
+  public FilterName = '';
+  public activecompany: any;
 
 
 
@@ -73,12 +79,17 @@ export class UsersComponent implements OnInit, OnDestroy {
     }
 
 
+    this.pageProgress = 35;
     this.userService.getAllUsers().subscribe(
       data => {
         this.Users = data;
-        if (localStorage.getItem('permissionStatus') === 'isCustomer') {
-         this.Users = this.Users.filter((user) => user.companyId === localStorage.getItem('loggedCompanyId')).map(e => e);
-        }
+        this.pageProgress = 75;
+        this.getUsersDepartments(this.Users);
+
+
+        // if (localStorage.getItem('permissionStatus') === 'isCustomer') {
+        //  this.Users = this.Users.filter((user) => user.companyId === localStorage.getItem('loggedCompanyId')).map(e => e);
+        // }
       },
       error => {
         console.log('Error In getting all Users');
@@ -87,7 +98,12 @@ export class UsersComponent implements OnInit, OnDestroy {
 
     this.companyProfileService.getAllCompanyProfiles().subscribe(
       data => {
-        this.AllCompanies = data;
+        this.AllCompanies = data.sort((a, b) => {
+          if (a.companyName < b.companyName) { return -1; }
+          if (a.companyName > b.companyName) { return 1; }
+          return 0;
+      });
+        this.CustomerCompanies = this.AllCompanies;
         for (const comp of this.AllCompanies) { if (comp._id === localStorage.getItem('loggedCompanyId')) { this.myCompany = comp; break; }}
       },
       error => console.log('Error geting all Companies')
@@ -157,6 +173,56 @@ export class UsersComponent implements OnInit, OnDestroy {
   get formEditPassword() { return this.editPasswordForm.controls; }
   get formInvite() { return this.inviteForm.controls; }
 
+
+
+
+
+  getUsersDepartments(data) {
+    let myData = data.filter(() => true).map(e => e);
+
+    myData.forEach((userElm, idx, arr) => {
+      userElm.departmentName = '---';
+
+      if (userElm.departmentId && userElm.departmentId !== 'none' )  {
+       this.AllCompanies.forEach((comp) => {
+        if (comp._id === userElm.companyId) {
+          comp.department.forEach(dpEl => {
+            if (dpEl._id === userElm.departmentId) {
+              userElm.departmentName = dpEl.departmentName;
+              this.FilteredUsers.push(userElm);
+            }
+          });
+        }
+        });
+       if (idx === arr.length - 1) {
+
+          if (this.toAdmin) {
+
+            this.filterUsers('super');
+          }
+          if (this.toCustomer) {
+            this.filterUsers(localStorage.getItem('loggedCompanyId'));
+          }
+        }
+       } else {
+        this.FilteredUsers.push(userElm);
+
+        if (idx === arr.length - 1) {
+
+          if (this.toAdmin) {
+
+            this.filterUsers('super');
+          }
+          if (this.toCustomer) {
+            this.filterUsers(localStorage.getItem('loggedCompanyId'));
+          }
+        }
+      }
+
+
+
+    });
+  }
 
 
 
@@ -279,6 +345,32 @@ export class UsersComponent implements OnInit, OnDestroy {
 
 
 
+  filterCompany() {
+    if (!this.FilterName || this.FilterName === null || this.FilterName === '' || this.FilterName.length  < 1) {
+      this.CustomerCompanies = this.AllCompanies;
+    } else {
+
+      this.CustomerCompanies = this.AllCompanies.filter(v => v.companyName.toLowerCase().indexOf(this.FilterName.toLowerCase()) > -1).slice(0, 10);
+
+    }
+
+  }
+
+
+  filterUsers(filterParam) {
+
+    this.pageProgress = 100;
+    if (filterParam === 'super') {
+      this.activecompany = 'super';
+      this.MyUsers = this.FilteredUsers.filter((u) => u.userType === 'admin').map(e => e);
+    } else if (filterParam === 'third') {
+      this.activecompany = 'third';
+      this.MyUsers = this.FilteredUsers.filter((u) => u.userType === 'thirdparty').map(e => e);
+    } else {
+      this.activecompany = filterParam;
+      this.MyUsers = this.FilteredUsers.filter((u) => u.companyId === filterParam ).map(e => e);
+    }
+  }
 
 
 

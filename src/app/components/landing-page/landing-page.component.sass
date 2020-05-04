@@ -11,12 +11,16 @@ main .side-bg
     height: 100%
     clip-path: polygon(0 0, 50% 0, 50% 100%, 0% 100%)
     background-color: colorTheme(primaryTheme)
-    // background: linear-gradient(rgba(7, 75, 251, 0.9) ,rgba(7, 75, 251, 0.9)), url("../../../assets/images/bg.png") no-repeat
 
 
     @include desktop_md
-        clip-path: polygon(100% 0, 100% 50%, 0 50%, 0 0)
+        clip-path: polygon(100% 0, 100% 55%, 0 55%, 0 0)
 
+    @include desktop_sm
+        clip-path: polygon(100% 0, 100% 90%, 0 90%, 0 0)
+
+    @include desktop_xm
+        clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 0)
 
 
 
@@ -30,8 +34,14 @@ main .side-bg
     align-items: strecth
 
     @include desktop_md
-         padding: 3em 1em
+        padding: 1em 1em
 
+    @include desktop_sm
+        padding: 3em 1em 3em 1em
+
+
+    @include desktop_xm
+        padding: 1em 1em 3em 1em
 
 
 
@@ -56,6 +66,20 @@ main .side-bg
         display: flex
         flex-direction: column
         height: fit-content
+
+
+#img-wrap
+    margin: 0 auto
+    width: fit-content
+    height: 200px
+    display: flex
+    flex-direction: column
+    justify-content: center
+
+
+    img 
+        width: 150px 
+        height: 50px
 
     
 .body-section .form-section .logo-section
@@ -83,22 +107,78 @@ main .side-bg
             width: 200px 
             height: 150px
 
+.body-section .form-section .logo-section .wrap
+    .top-paragraph
+        width: 100%
+
+        p 
+            font-weight: 400 !important
+            font-size: 15px
+            color: whitesmoke
+
+            span 
+                font-weight: bolder
+                color: #f7b307
+
+    .line-wrap
+        width: 6em
+
+        .line 
+            margin: 1.5em 0 2.2em 0 !important
+            width: 100%
+            border: solid 2px #f7b307
+        
+
+    .mid-paragraph
+        padding: 0 0 0 4em
+
+        @include desktop_xm
+            padding: 0
+
+        p 
+            color: whitesmoke 
+            font-size: 15px
+
+            span 
+                font-weight: bolder
+                color: #f7b307
+
+
+    .bottom-paragraph
+        padding: 1em 0 0 4em
+        
+        @include desktop_xm
+            padding: 0
+
+        h6 
+            color: whitesmoke
+            font-size: 15px
+
+            span 
+                cursor: pointer
+                font-weight: bold
+                color: white
+
+        
+
 .body-section .form-section .form-wrap
     width: 100%
     height: 100% 
     display: flex
-    align-items: sretch
+    flex-direction: column
+    justify-content: center
 
 
 
 .body-section .form-section .form-wrap .form
-    margin-left: auto
+    margin: auto
     display: flex
     flex-direction: column
     justify-content: center
     padding: 1em
-    border-radius: red solid 1px
+    border-radius: 1px
     width: 100%
+
 
 .body-section .form-section .form-wrap .form .dynamic-wrapper
     width: 100%
@@ -123,8 +203,8 @@ main .side-bg
 .body-section .form-section .form-wrap .form .form-group
     width: 100%
     margin: 0 0 2em 0
-    display: flex
-    align-items: stretch
+    // display: flex
+    // align-items: stretch
 
     fa-icon
         width: 1em
@@ -141,7 +221,16 @@ main .side-bg
         border-bottom: solid 1px colorTheme(primaryTheme)
         background-color: transparent
 
+        &.error
+            border-bottom: solid 1px colorTheme(danger) 
 
+
+    .error-wrap
+        width: 100%
+        padding: 0 2.3em
+        span 
+            font-size: 12px
+            color: colorTheme(danger)
 
 .body-section .form-section .form-wrap .form .btn-wrap
     width: 100%
@@ -173,4 +262,202 @@ main .side-bg
 
     a 
         font-size: 12px
+
+
+
+
+
+
+::-webkit-scrollbar
+    width: 0px
+    background: transparent
+
+::-webkit-scrollbar-thumb 
+    background-color: colorTheme(primaryTheme)
+    width: 1px
+.modal-backdrop.in 
+    background: transparent !important
+
+.infoModal
+    border: none
+    border-radius: 5px
+    width: 100%
+    max-width: 900px
+    height: 80%
+    overflow-y: scroll
+    margin: 3em auto
+    display: flex
+    align-items: stretch
+    -ms-overflow-style: none
+    background-color: transparent
+    scrollbar-width: none
+    padding: 0
+
+    &.modal-backdrop.in 
+        background: transparent !important
+
+
+    @include desktop_md
+        margin: 1em auto
+        display: flex
+        flex-direction: column
+        height: 600px
+
+
+    .modal-content 
+        border: none
+        background-color: transparent
+        padding: 0 !important
+
+
+
+        .modal-body
+            margin: auto
+            width: 100%
+            height: 100%
+            padding: 1em
+            display: flex
+            align-items: stretch  
+
+            @include desktop_md
+                display: flex 
+                flex-direction: column
+                
+                .wrap-one
+                    height: 300px
+            
+            .wrap-one
+                background: url("../../../assets/images/logo5.jpg") no-repeat
+                background-position: center center
+                background-size: cover
+                width: 50%
+                -webkit-transform: scaleX(-1)
+                -moz-transform: scaleX(-1)
+                transform: scaleX(-1)
+                display: flex
+                flex-direction: column
+                justify-content: flex-end
+                align-items: bottom
+
+
+                @include desktop_md
+                    width: 100%
+
+                .image-wrap
+                    margin: auto auto 0em auto
+                    width: fit-content
+                    height: fit-content
+                    display: flex
+                    flex-direction: column
+                    justify-content: center
+
+
+                    img 
+                        -webkit-transform: scaleX(-1)
+                        -moz-transform: scaleX(-1)
+                        transform: scaleX(-1)
+                        width: 170px 
+                        height: 55px
+
+
+            .wrap-two
+                background-color: colorTheme(primaryTheme)
+                padding: 1em
+                width: 50%
+                overflow-y: scroll
+
+                @include desktop_md
+                    width: 100%
+
+                .cancel-wrap
+                    width: 100%
+                    display: flex
+                    align-items: stretch
+                        
+                    div 
+                        background-color: transparent
+                        border-radius: 50%
+                        width: 2em
+                        height: 2em
+                        margin-left: auto
+                        padding: .2em 0 0 .8em
+                        cursor: pointer
+                        font-weight: 100 !important
+
+                        &.hover                
+                            background-color: white
+
+                        span 
+                            font-size: 14px
+                            color: white
+                            font-weight: 100 !important
+                            &.hover                
+                                background-color: #f7b307
+
+
+
+
+                        fa-icon
+                            font-size: 15px
+                            color: white
+
+                        
+
+
+                .top-paragraph
+                    width: 100%
+
+                    p 
+                        font-weight: 400 !important
+                        font-size: 15px
+                        color: whitesmoke
+
+                        span 
+                            font-weight: bolder
+                            color: #f7b307
+
+                .line-wrap
+                    width: 6em
+
+                    .line 
+                        margin: 1.5em 0 2.2em 0 !important
+                        width: 100%
+                        border: solid 2px #f7b307
+                    
+
+                .mid-paragraph
+                    padding: 0 0 0 4em
+
+                    @include desktop_xm
+                        padding: 0
+
+                    p 
+                        color: whitesmoke 
+                        font-size: 15px
+
+                        span 
+                            font-weight: bolder
+                            color: #f7b307
+
+
+                .bottom-paragraph
+                    padding: 1em 0 0 4em
+                    
+                    @include desktop_xm
+                        padding: 0
+
+                    h6 
+                        color: whitesmoke
+                        font-size: 15px
+
+                        span 
+                            cursor: pointer
+                            font-weight: bold
+                            color: white
+
+                            &.hover
+                                color: #f7b307
+
+
+
 

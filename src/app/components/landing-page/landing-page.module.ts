@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { LandingPageComponent } from './landing-page.component';
 import { LandingPageRoutingModule } from './landing-page-routing.module';
+import { ModalModule } from 'ngx-bootstrap';
 
 
 
@@ -24,6 +25,7 @@ import { LandingPageRoutingModule } from './landing-page-routing.module';
       FontAwesomeModule,
       ReactiveFormsModule,
       FormsModule,
+      ModalModule.forRoot(),
       ToastrModule.forRoot({
         timeOut: 5000,
         positionClass: 'toast-bottom-right',
