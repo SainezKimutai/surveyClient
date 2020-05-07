@@ -209,9 +209,7 @@ public Filter2Name = '';
   
           this.surveyService.getAllSurveys().subscribe( dataSurvey => {
           
-          // this.AllSurveys = dataSurvey;
-          // Get only Bcp Final Survey
-          this.AllSurveys = dataSurvey.filter((s) => s._id === '5e819470d729c17ebc232ad6').map(e => e)
+          this.AllSurveys = dataSurvey;
             this.chartsProgress = 30
   
             this.questionService.getAllQuestions().subscribe( dataQuestion => {
@@ -708,7 +706,7 @@ RiskPerIndustryChartfunction() {
               display: false
           },
           ticks: {
-            beginAtZero: false
+            beginAtZero: true
           }
       }]
     },
