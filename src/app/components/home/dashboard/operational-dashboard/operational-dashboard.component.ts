@@ -200,11 +200,17 @@ updatePage() {
         this.AllCompanies = dataCompanies;
         this.chartsProgress = 20
 
+        // console.log(this.AllCompanies);
+
         this.surveyService.getAllInstitutionSurveys().subscribe( dataSurvey => {
 
-          this.AllSurveys.push(dataSurvey[0]);
+           
+          // this.AllSurveys = dataSurvey;
           // Get only Bcp Final Survey
-          // this.AllSurveys = dataSurvey.filter((s) => s._id === '5e819470d729c17ebc232ad6').map(e => e)
+          const id = dataSurvey[0]._id;
+          this.AllSurveys.push(dataSurvey[0])
+          
+
           this.chartsProgress = 30
 
           this.questionService.getAllQuestions().subscribe( dataQuestion => {
@@ -1001,11 +1007,16 @@ riskIssuesFunction() {
   this.AllThreats.forEach((threat,idx1, arr1 ) => {
     for (let trtCategory of this.AllThreatCategorys) {
       if (trtCategory._id === threat.category) {
+          
         this.AllCompanies.forEach( (comp) => {
           
           for (let response of this.AllResponses) {
             if (response.companyId === comp._id) {
+<<<<<<< HEAD
              
+=======
+              
+>>>>>>> 3ec314d8feaad15782160b49bc904a6aa1737ef2
               for (let survey of this.AllSurveys) {
                 
                 if ((survey._id === response.surveyId)) {

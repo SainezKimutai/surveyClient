@@ -209,7 +209,11 @@ public Filter2Name = '';
   
           this.surveyService.getAllSurveys().subscribe( dataSurvey => {
           
+          // this.AllSurveys = dataSurvey;
+          // Get only Bcp Final Survey
+
           this.AllSurveys = dataSurvey;
+
             this.chartsProgress = 30
   
             this.questionService.getAllQuestions().subscribe( dataQuestion => {

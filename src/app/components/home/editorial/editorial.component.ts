@@ -165,8 +165,10 @@ export class EditorialComponent implements OnInit {
   ngOnInit() {
     localStorage.setItem('ActiveNav', 'editorial');
     this.updatePage();
-    // this.updater();
-    // this.duplicateQuestionsForThirdParty();
+
+    // this.updater(); - updates threats to set an id
+    // this.duplicateQuestionsForThirdParty(); -- duplicates all questions in one survey on another
+    // this.clearAllQuestionsInASurvey(); -- clears all questions in a survey
   }
 
 
@@ -943,26 +945,38 @@ export class EditorialComponent implements OnInit {
 
   // async duplicateQuestionsForThirdParty(){
     
-  //   await this.questionService.getQuestionsInASurvey("{baseSurveyId}").subscribe(data=>
+  //   await this.questionService.getQuestionsInASurvey("{SurveyToDuplicateId}").subscribe(data=>
   //     { 
   //      data.forEach(question=>{
   //        delete question._id;
-  //        question['surveyId'] = '{surveyId}';
+  //        question['surveyId'] = '{newSurveyId}';
   //        if(question['choices'].length>0){
   //          for(var i =0; i<question['choices'].length; i++){
   //            delete question['choices'][i]._id
   //          }
   //        }
-  //        if(question['surveyId'] === '{surveyId}'){
-  //         //  this.questionService.createQuestion(question).subscribe(data=>{
-  //         //    console.log(data);
-  //         //  }, err=>console.log(err))
+  //        if(question['surveyId'] === '{newSurveyId}'){
+  //          this.questionService.createQuestion(question).subscribe(data=>{
+  //            console.log(data);
+  //          }, err=>console.log(err))
   //        }
   //      })
   //      console.log("Done");
   //     }, err=>console.log(err))
   // }
 
+  // async clearAllQuestionsInASurvey(){
+  //   await this.questionService.getQuestionsInASurvey('{surveyIdToDelete}').subscribe(data =>{
+      
+  //     data.forEach(question =>{
+  //       // console.log(question._id);
+  //       this.questionService.deleteQuestion(question._id).subscribe(response=>{
+  //         console.log(response); //keep this line..
+  //       });
+  //     })
+  //   })
+  
+  // }
 } 
 
 
