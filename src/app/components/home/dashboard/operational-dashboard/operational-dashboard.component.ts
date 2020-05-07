@@ -1012,11 +1012,7 @@ riskIssuesFunction() {
           
           for (let response of this.AllResponses) {
             if (response.companyId === comp._id) {
-<<<<<<< HEAD
-             
-=======
               
->>>>>>> 3ec314d8feaad15782160b49bc904a6aa1737ef2
               for (let survey of this.AllSurveys) {
                 
                 if ((survey._id === response.surveyId)) {
