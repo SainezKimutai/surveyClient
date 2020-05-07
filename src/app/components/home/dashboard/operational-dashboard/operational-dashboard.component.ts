@@ -200,11 +200,17 @@ updatePage() {
         this.AllCompanies = dataCompanies;
         this.chartsProgress = 20
 
+        // console.log(this.AllCompanies);
+
         this.surveyService.getAllInstitutionSurveys().subscribe( dataSurvey => {
 
+           
           // this.AllSurveys = dataSurvey;
           // Get only Bcp Final Survey
-          this.AllSurveys = dataSurvey.filter((s) => s._id === '5e819470d729c17ebc232ad6').map(e => e)
+          const id = dataSurvey[0]._id;
+          this.AllSurveys.push(dataSurvey[0])
+          
+
           this.chartsProgress = 30
 
           this.questionService.getAllQuestions().subscribe( dataQuestion => {
@@ -221,7 +227,7 @@ updatePage() {
                 this.chartsProgress = 60
 
 
-                this.threatCategoryService.getAllByInstitutions().subscribe ( dataThreatCat => {
+                this.threatCategoryService.getAllThreatCategorys().subscribe ( dataThreatCat => {
                   this.AllThreatCategorys = dataThreatCat; 
                   this.chartsProgress = 65
                  
@@ -722,7 +728,7 @@ this.riskPerIndustryChartOptions = {
             display: false
         },
         ticks: {
-          beginAtZero: false
+          beginAtZero: true
         }
     }]
   },
@@ -999,10 +1005,13 @@ riskIssuesFunction() {
   this.AllThreats.forEach((threat,idx1, arr1 ) => {
     for (let trtCategory of this.AllThreatCategorys) {
       if (trtCategory._id === threat.category) {
+          
         this.AllCompanies.forEach( (comp) => {
           for (let response of this.AllResponses) {
             if (response.companyId === comp._id) {
+              
               for (let survey of this.AllSurveys) {
+                
                 if ((survey._id === response.surveyId)) {
 
                     response.answers.forEach( (respAns, idx2, array2) => {

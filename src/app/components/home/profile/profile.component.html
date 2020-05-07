@@ -41,7 +41,7 @@
 
         <section id="chart_section" class="card-group">
             <div class="card">
-                <div class="title d-flex"> <span>Number of risks that have been measured under each category</span>
+                <div class="title d-flex"> <span>Risk rates per category</span>
                     <div class=" graph-switch d-flex ml-auto">
                         <!-- <span (click)="chart1graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart1Type === 'line' ? 'active' : ''" ></fa-icon></span>  -->
                         <span (click)="chart1graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="chart1Type === 'bar' ? 'active' : ''" ></fa-icon></span>
@@ -57,7 +57,7 @@
             </div>
     
             <div class="card">
-                <div class="title d-flex"> <span>Average risk rate for specific risk type based on all surveys</span>
+                <div class="title d-flex"> <span>Overall risk rate</span>
                     <div class=" graph-switch d-flex ml-auto">
                         <span (click)="chart2graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart2Type === 'line' ? 'active' : ''" ></fa-icon></span> 
                         <span (click)="chart2graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="chart2Type === 'bar' ? 'active' : ''" ></fa-icon></span>
@@ -116,7 +116,7 @@
 
         <section class="risk-graph-section">
         
-            <div class="title d-flex"> <span>Average risk rate for specific risk type under each survey</span>
+            <div class="title d-flex"> <span>Risk per survey</span>
                 <div class=" graph-switch d-flex ml-auto">
                     <span (click)="comparisonChartToLine()"><fa-icon [icon]="faChartLine" [ngClass]="comparisonChartType === 'line' ? 'active' : ''" ></fa-icon></span> 
                     <!-- <span (click)="comparisonChartToBar()"><fa-icon [icon]="faChartBar" [ngClass]="comparisonChartType === 'bar' ? 'active' : ''" ></fa-icon></span> -->
@@ -201,14 +201,14 @@
 
         <div class="account-status-wrap">
           
-                <div class="title">List of surveys done and their total average risk rate</div>
+                <div class="title">Risk score (%)</div>
                 <div class="body-wrapper">
                 <div class="body-title" >
           
                   <div  class="body-item d-flex">
              
                     <div class="mx-auto ">Survey Name</div>
-                    <div class="mx-auto ">Risk rate</div>
+                    <div class="mx-auto ">Risk of failure in next 120 days</div>
                   </div>
           
                 </div>
