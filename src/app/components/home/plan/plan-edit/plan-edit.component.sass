@@ -1,0 +1,37 @@
+@import 'src/styles.sass'
+
+
+.list-section
+    width: 100%
+
+.title
+    width: 100%
+    padding: .5em 1em
+    display: flex
+    align-items: stretch
+    background-color: colorTheme(primaryTheme)
+
+    .icon 
+        margin: auto 0
+        width: 2em
+        height: 2em
+        border-radius: 50%
+        background-color: grayColor(g200)
+        display: flex
+        align-items: center
+        justify-content: center
+        cursor: pointer
+
+        fa-icon 
+            color: grayColor(g900)
+            font-size: 12px
+        &:hover
+            background-color: orange
+            fa-icon 
+                color: white
+
+    .text
+        margin: auto 1em
+        font-size: 16px
+        font-weight: bold
+        color: white

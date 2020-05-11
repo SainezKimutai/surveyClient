@@ -16,14 +16,13 @@
 
 
 
+<article *ngIf="ListPlanStatus">
+
 <div  class="progress-wrap" *ngIf="pageProgress !== 100">
     <circle-progress [percent]="pageProgress" ></circle-progress>
 </div>
-
-
-<article *ngIf="pageProgress === 100">
-
-<section class="templates-section" *ngIf="AllSurveys.length !== 0">
+    
+<section class="templates-section" *ngIf="AllSurveys.length !== 0 && pageProgress === 100">
     <div class="head">
        <h4> Surveys with no plan</h4>
     </div>
@@ -73,7 +72,7 @@
 
 
 
-<section class="plan-section">
+<section class="plan-section" *ngIf="pageProgress === 100">
     <div class="head">
         <h4>Existing Plan</h4>
     </div>
@@ -90,7 +89,7 @@
             </div>
         </div>
 
-        <div class="card-model-item"  *ngFor="let plan of AllPlans">
+        <div class="card-model-item"  *ngFor="let plan of AllPlans" (click)="editPlan(plan)">
             <div class="icon-wrap">
                 <fa-icon [icon]="faBusinessTime"></fa-icon>
             </div>
@@ -106,13 +105,8 @@
 
 
 
+
 </article>
-
-
-
-
-
-
 
 
 <div bsModal #addPlanModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -141,4 +135,11 @@
         </div>
     </div>
 </div>
+
+<article *ngIf="EditPlanStatus">
+    <app-plan-edit></app-plan-edit>
+</article>
+
+
+
 

@@ -1,0 +1,22 @@
+
+
+
+<section class="list-section" *ngIf="PlanOnEdit" >
+    <div class="title">
+        <span class="icon" (click)="back()"> <fa-icon [icon]="faArrowLeft"></fa-icon> </span>
+
+        <span class="text">{{PlanOnEdit.name}}</span>
+
+    </div>
+
+    <div class="model">
+
+        <div class="model-title">
+            <h4>{{PlanOnEdit.plan.length}}</h4>
+            <li *ngFor="let item of PlanOnEdit.plan"> {{item.threat.level}} </li>
+        </div>
+
+    </div>
+
+</section>
+

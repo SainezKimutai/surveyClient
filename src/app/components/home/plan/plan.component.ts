@@ -3,11 +3,8 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { ResponseService } from 'src/app/shared/services/responses.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
-import { ThreatService } from 'src/app/shared/services/threats.service';
 import { faListAlt, faCheck, faSpinner, faBusinessTime } from '@fortawesome/free-solid-svg-icons';
 import 'jspdf-autotable';
-import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
-import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
 import { PlansService } from 'src/app/shared/services/plan.service';
 import { ModalDirective } from 'ngx-bootstrap';
 
@@ -28,13 +25,15 @@ export class PlanComponent implements OnInit {
         private surveyService: SurveyService,
         private responseService: ResponseService,
         private questionService: QuestionService,
-        private threatService: ThreatService,
-        private threatCategoryService: ThreatCategoryService,
-        private companyProfileService: CompanyProfileService,
         
       ) {  }
 
       @ViewChild('addPlanModal', {static: true}) addPlanModal: ModalDirective;
+
+public ListPlanStatus = true;
+public EditPlanStatus = false;
+public ViewPlanStatus = false;
+
 
 public AllPlans = [];
 public AllSurveys = [];
@@ -72,7 +71,10 @@ async updatePage() {
 this.plansService.getAllCompanyPlans().subscribe(
   dataPlan => {
     this.AllPlans = dataPlan;
-
+    // this.AllPlans.forEach((r) => {
+    //   this.plansService.deletePlan(r._id).subscribe()
+    // })
+   
   this.surveyService.getAllInstitutionSurveys().subscribe(
     dataSurvey => {
 
@@ -286,7 +288,7 @@ this.PlanSurveyId = surveyId;
 getTheTreats(reportArr: any) {
   this.NewPlan = [];
   reportArr.forEach((reportElement, ind, arr) => {
-    if(reportElement.threat) {
+    if(reportElement.threat && (reportElement.level === 'Medium' || reportElement.level === 'High')) {
       let planObj = {
           threat: {
               threat: reportElement.threat,
@@ -357,6 +359,20 @@ addPlan() {
 }
 
 
+
+
+
+editPlan(plan: any) {
+  localStorage.setItem('planOnEdit', JSON.stringify(plan))
+  this.EditPlanStatus = true;
+  this.ListPlanStatus = false;
+}
+
+
+toListsPage() {
+  this.EditPlanStatus = false;
+  this.ListPlanStatus = true;
+}
 
 
 } // end of your class

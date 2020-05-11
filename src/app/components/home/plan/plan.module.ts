@@ -10,11 +10,12 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
 import { PlanComponent } from './plan.component';
 import { PlanRoutingModule } from './plan-routing.module';
 import { ModalModule } from 'ngx-bootstrap';
+import { PlanEditComponent } from './plan-edit/plan-edit.component';
 
 @NgModule({
 
   declarations: [
-      PlanComponent
+      PlanComponent, PlanEditComponent
           ],
 
   imports: [
