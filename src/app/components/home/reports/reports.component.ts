@@ -86,7 +86,6 @@ export class ReportsComponent implements OnInit {
 
       ngOnInit() {
         localStorage.setItem('ActiveNav', 'reports');
-
           this.updatePage().then(() => { this.getMoreData().then(() => { }) });
       }
 

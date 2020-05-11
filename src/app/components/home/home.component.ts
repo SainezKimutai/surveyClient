@@ -51,6 +51,7 @@ public surveyNavBarActive = false;
 public profileNavBarActive = false;
 public editorialNavBarActive = false;
 public reportsNavBarActive = false;
+public planNavBarActive = false;
 public trackerNavBarActive = false;
 public usersNavBarActive = false;
 public adminNavBarActive = false;
@@ -97,6 +98,7 @@ CheckActiveNavBar() {
   this.profileNavBarActive = false;
   this.editorialNavBarActive = false;
   this.reportsNavBarActive = false;
+  this.planNavBarActive = false;
   this.trackerNavBarActive = false;
   this.usersNavBarActive = false;
   this.adminNavBarActive = false;
@@ -106,6 +108,7 @@ CheckActiveNavBar() {
   if (localStorage.getItem('ActiveNav') === 'profile') {this.profileNavBarActive = true; }
   if (localStorage.getItem('ActiveNav') === 'editorial') {this.editorialNavBarActive = true; }
   if (localStorage.getItem('ActiveNav') === 'reports') {this.reportsNavBarActive = true; }
+  if (localStorage.getItem('ActiveNav') === 'plan') {this.planNavBarActive = true; }
   if (localStorage.getItem('ActiveNav') === 'tracker') {this.trackerNavBarActive = true; }
   if (localStorage.getItem('ActiveNav') === 'users') {this.usersNavBarActive = true; }
   if (localStorage.getItem('ActiveNav') === 'admin') {this.adminNavBarActive = true; }

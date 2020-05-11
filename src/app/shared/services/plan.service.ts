@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
-import { dev, header } from '../dev/dev';
+import { dev, header} from '../dev/dev';
 
 
 @Injectable({
@@ -8,50 +8,42 @@ import { dev, header } from '../dev/dev';
 })
 
 
-export class ThreatService {
+export class PlanService {
 
 
-    public url = `${dev.connect}api/threats/`;
+    public url = `${dev.connect}api/plan/`;
 
 
     constructor( private http: HttpClient ) { }
 
 
-    createThreat( data: any ) {
+    createPlan( data: any ) {
         return this.http.post<any>(this.url + 'create', data, {headers : header});
     }
 
 
-    getAllThreats() {
+    getAllPlans() {
         return this.http.get<any>(this.url + 'getAll/', {headers : header});
     }
 
 
-    getOneThreat(id) {
+    getOnePlan(id) {
         return this.http.get<any>(this.url + 'getOne/' + id, {headers : header});
     }
-    async getOneThreatName(id) {
-
-     this.http.get<any>(this.url + 'getOne/' + id, {headers : header}).subscribe(data => {
-         return data.name;
-     });
-
-        // return name;
-    }
 
 
-    updateThreat(id, data: any) {
+    updatePlan(id, data: any) {
         return this.http.put<any>(this.url + 'update/' + id, data, {headers : header});
     }
 
-    getAllInstitutionThreats() {
-        const data = {institutionId: localStorage.getItem('loggedUserID')};
-        return this.http.post<any>(this.url + 'institution/', data, {headers: header});
+
+    deletePlan(id) {
+        return this.http.delete<any>(this.url + 'delete/' + id, {headers : header});
     }
 
-
-    deleteThreat(id) {
-        return this.http.delete<any>(this.url + 'delete/' + id, {headers : header});
+    getAllCompanyPlans() {
+        const data = {institutionId: localStorage.getItem('loggedCompanyId')};
+        return this.http.post<any> (this.url + 'company/', data, {headers: header});
     }
 
 }
