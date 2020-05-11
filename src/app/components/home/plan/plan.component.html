@@ -31,16 +31,12 @@
             <circle-progress [percent]="pageProgress" ></circle-progress>
         </div>
 
-        <div [hidden]="pageProgress !== 100" class="card"  *ngFor="let item of AllSurveys" (click)="item.done > 100 || item.done === 100 ? '' : takeSurvey(item)">
+        <div [hidden]="pageProgress !== 100" class="card"  *ngFor="let item of AllSurveys">
             <div class=""></div>
             <div class="card-body d-flex">
                 <fa-icon [icon]="faListAlt"></fa-icon>
                 <h4 >{{item.surveyName}}</h4>
 
-                <fa-icon *ngIf="item.done > 0 && 100 > item.done" style="cursor: pointer; height: 1em;"
-                (mouseenter)="deletePromptModal.show(); passSurveyToReset(item._id)"
-                class="text-info ml-auto" [icon]="faEraser"></fa-icon>
-                
             </div>
             <div class="card-footer">
                 <h5 *ngIf="item.done > 100 || item.done === 100">
