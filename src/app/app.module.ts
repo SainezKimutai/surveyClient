@@ -28,6 +28,7 @@ import { TrackerReasonService } from './shared/services/trackerReasons.service';
 import { IndustryService } from './shared/services/industry.service';
 import { ThreatCategoryService } from './shared/services/threatCategory.service';
 import { TrafficService } from './shared/services/traffic.service';
+import { PlansService } from './shared/services/plan.service';
 
 // tslint:disable: max-line-length
 @NgModule({
@@ -56,7 +57,7 @@ import { TrafficService } from './shared/services/traffic.service';
   ],
 
   providers: [AppCustomPreloader, TokenGuard, AdminGuard, CustomerGuard, NotificationService, UserService, CompanyProfileService, SurveyService, QuestionService,
-    ResponseService, FileUploadService, ThreatService, ThreatCategoryService, TrackerService, TrafficService, TrackerReasonService, IndustryService
+    ResponseService, FileUploadService, ThreatService, ThreatCategoryService, TrackerService, TrafficService, TrackerReasonService, IndustryService, PlansService
   ],
   bootstrap: [AppComponent]
 })

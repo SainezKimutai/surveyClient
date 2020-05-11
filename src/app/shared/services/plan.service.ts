@@ -8,7 +8,7 @@ import { dev, header} from '../dev/dev';
 })
 
 
-export class PlanService {
+export class PlansService {
 
 
     public url = `${dev.connect}api/plan/`;

@@ -16,7 +16,16 @@
 
 
 
-<section class="templates-section">
+
+
+<article>
+
+
+<section class="templates-section" *ngIf="AllSurveys.length !== 0">
+    <div class="head" *ngIf="pageProgress === 100" >
+       <h4> Surveys with no plan</h4>
+    </div>
+
     <div *ngIf="AllSurveys" class="card-group">
         <div *ngIf="pageProgress !== 100" class="progress-wrap">
             <circle-progress [percent]="pageProgress" ></circle-progress>
@@ -35,7 +44,7 @@
             </div>
             <div class="card-footer">
                 <h5 *ngIf="item.done > 100 || item.done === 100">
-                    <fa-icon [icon]="faCheck"></fa-icon> <span>100%</span> <p >Completed</p>
+                    <span>Make a Plan</span>
                 </h5>
                 <h5 *ngIf="item.done > 0 && 100 > item.done">
                     <fa-icon [icon]="faSpinner"></fa-icon> <span>{{item.done}}%</span> <p >In progress</p>
@@ -59,3 +68,47 @@
     </div>
 
 </section>
+
+
+
+
+
+
+
+
+
+
+<section class="plan-section">
+    <div class="head">
+        <h4>Existing Plan</h4>
+    </div>
+
+    <div class="card-model">
+
+
+        <div class="card-model-item" *ngIf="AllPlans.length === 0">
+            <div class="icon-wrap">
+                <fa-icon [icon]="faBusinessTime"></fa-icon>
+            </div>
+            <div class="title-wrap">
+                <h4>---No Existing Plan---</h4>
+            </div>
+        </div>
+
+        <div class="card-model-item"  *ngFor="let plan of AllPlans">
+            <div class="icon-wrap">
+                <fa-icon [icon]="faBusinessTime"></fa-icon>
+            </div>
+            <div class="title-wrap">
+                <h4>{{plan.name}}</h4>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+
+</article>

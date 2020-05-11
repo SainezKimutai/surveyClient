@@ -300,10 +300,10 @@ export class ReportsComponent implements OnInit {
         // pdf.text(75, 20, `Risk Analysis Report`);
         // pdf.setFontSize(12);
 
-        let img = new Image();
-        if (this.myCompany.logo.url === '') {img.src = 'assets/images/logo.jpeg'; }
-        if (this.myCompany.logo.url !== '') {img.src = this.myCompany.logo.url; }
-        pdf.addImage(img, 'PNG', 90, 30, 30, 23);
+        // let img = new Image();
+        // if (this.myCompany.logo.url === '') {img.src = 'assets/images/logo.jpeg'; }
+        // if (this.myCompany.logo.url !== '') {img.src = this.myCompany.logo.url; }
+        // pdf.addImage(img, 'PNG', 90, 30, 30, 23);
         pdf.addImage(headerCanvas, 'PNG', 0, 60, 210, 15);
 
         pdf.text(95, 120, `${this.myCompany.companyName}`);

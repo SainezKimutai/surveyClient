@@ -4,10 +4,11 @@ import { SurveyService } from 'src/app/shared/services/survey.service';
 import { ResponseService } from 'src/app/shared/services/responses.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
 import { ThreatService } from 'src/app/shared/services/threats.service';
-import { faListAlt, faCheck, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faListAlt, faCheck, faSpinner, faBusinessTime } from '@fortawesome/free-solid-svg-icons';
 import 'jspdf-autotable';
 import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
 import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
+import { PlansService } from 'src/app/shared/services/plan.service';
 
 
 // tslint:disable
@@ -22,6 +23,7 @@ export class PlanComponent implements OnInit {
 
     constructor(
         private notifyService: NotificationService,
+        private plansService: PlansService,
         private surveyService: SurveyService,
         private responseService: ResponseService,
         private questionService: QuestionService,
@@ -31,6 +33,7 @@ export class PlanComponent implements OnInit {
         
       ) {  }
 
+public AllPlans = [];
 public AllSurveys = [];
 public AllQuestions = [];
 public AllResponses = [];
@@ -40,6 +43,7 @@ public pageProgress = 0;
 public faCheck = faCheck;
 public faListAlt = faListAlt;
 public faSpinner = faSpinner;
+public faBusinessTime = faBusinessTime;
 
 
 
@@ -55,6 +59,10 @@ ngOnInit() {
 
 async updatePage() {
   return new Promise((resolve, reject) => {
+
+this.plansService.getAllCompanyPlans().subscribe(
+  dataPlan => {
+    this.AllPlans = dataPlan;
 
   this.surveyService.getAllInstitutionSurveys().subscribe(
     dataSurvey => {
@@ -75,7 +83,8 @@ async updatePage() {
             this.AllResponses = dataRsp;
             this.pageProgress = 75;
             if (this.AllResponses.length === 0) { this.pageProgress = 100; }
-            resolve();
+            this.checkIfPlanExists().then(() => resolve())
+          
 
             },
             error => console.log('Error geting all Responses')
@@ -87,8 +96,25 @@ async updatePage() {
     },
     error => console.log('Error getting all surveys')
   );
+},
+error => console.log('Error getting all plans')
+);
 
 });
+}
+
+
+
+
+checkIfPlanExists() {
+  return new Promise((resolve, reject) => {
+    this.AllSurveys = this.AllSurveys.filter((surv) => {
+      let x = this.AllPlans.map((e) => e.surveyId).indexOf(surv._id);
+      if ( x === -1 ) { return true }
+      if ( x !== -1 ) { return false }
+    }).map((e => e));
+    resolve();
+  })
 }
 
 
