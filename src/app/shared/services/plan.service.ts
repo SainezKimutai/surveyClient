@@ -42,7 +42,7 @@ export class PlansService {
     }
 
     getAllCompanyPlans() {
-        const data = {institutionId: localStorage.getItem('loggedCompanyId')};
+        const data = {companyId: localStorage.getItem('loggedCompanyId')};
         return this.http.post<any> (this.url + 'company/', data, {headers: header});
     }
 

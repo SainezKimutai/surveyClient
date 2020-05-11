@@ -9,6 +9,7 @@ import { ChartsModule } from 'ng2-charts';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { PlanComponent } from './plan.component';
 import { PlanRoutingModule } from './plan-routing.module';
+import { ModalModule } from 'ngx-bootstrap';
 
 @NgModule({
 
@@ -16,30 +17,30 @@ import { PlanRoutingModule } from './plan-routing.module';
       PlanComponent
           ],
 
-    imports: [
-      CommonModule,
-      PlanRoutingModule,
-      AngularFontAwesomeModule,
-      FontAwesomeModule,
-      ReactiveFormsModule,
-      FormsModule,
-      ChartsModule,
-      ToastrModule.forRoot({
-        timeOut: 5000,
-        positionClass: 'toast-bottom-right',
-        preventDuplicates: false,
-      }),
-      NgCircleProgressModule.forRoot({
-        radius: 50,
-        outerStrokeWidth: 8,
-        innerStrokeWidth: 8,
-        outerStrokeColor: '#acb4bc',
-        innerStrokeColor: '#e4e7ea',
-        animation: false,
-        animationDuration: 300
-      })
+  imports: [
+    CommonModule,
+    PlanRoutingModule,
+    AngularFontAwesomeModule,
+    FontAwesomeModule,
+    ReactiveFormsModule,
+    FormsModule,
+    ModalModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: false,
+    }),
+    NgCircleProgressModule.forRoot({
+      radius: 50,
+      outerStrokeWidth: 8,
+      innerStrokeWidth: 8,
+      outerStrokeColor: '#acb4bc',
+      innerStrokeColor: '#e4e7ea',
+      animation: false,
+      animationDuration: 300
+    })
 
-    ]
+  ]
 
   })
 

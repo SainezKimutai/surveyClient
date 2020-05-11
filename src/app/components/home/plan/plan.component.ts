@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { ResponseService } from 'src/app/shared/services/responses.service';
@@ -9,6 +9,7 @@ import 'jspdf-autotable';
 import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
 import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
 import { PlansService } from 'src/app/shared/services/plan.service';
+import { ModalDirective } from 'ngx-bootstrap';
 
 
 // tslint:disable
@@ -33,9 +34,12 @@ export class PlanComponent implements OnInit {
         
       ) {  }
 
+      @ViewChild('addPlanModal', {static: true}) addPlanModal: ModalDirective;
+
 public AllPlans = [];
 public AllSurveys = [];
-public AllQuestions = [];
+public AllQuestions1 = [];
+public AllQuestions2 = [];
 public AllResponses = [];
 public ImprintLoader = false;
 public pageProgress = 0;
@@ -45,6 +49,11 @@ public faListAlt = faListAlt;
 public faSpinner = faSpinner;
 public faBusinessTime = faBusinessTime;
 
+public TemplateQuestions: any;
+
+public PlanSurveyId: any;
+public NewPlan = [];
+public planName = '';
 
 
 
@@ -73,7 +82,7 @@ this.plansService.getAllCompanyPlans().subscribe(
       this.questionService.getAllQuestions().subscribe(
         dataQuiz => {
 
-          this.AllQuestions = dataQuiz;
+          this.AllQuestions1 = dataQuiz;
           this.pageProgress = 50;
 
 
@@ -124,7 +133,7 @@ checkForCompletedSurveys() {
    this.AllSurveys =  this.AllSurveys.filter((surv, ind, arr) => {
       let myResponses = this.AllResponses.filter((r) => r.surveyId === surv._id).map(e => e);
       if (myResponses.length > 0) {
-      let allQuizs = this.AllQuestions.filter((q) => q.surveyId === surv._id).map(e => e);
+      let allQuizs = this.AllQuestions1.filter((q) => q.surveyId === surv._id).map(e => e);
       let allQuizs2 = allQuizs.sort((a, b) =>  b.position - a.position);
       let allQuizs3 = allQuizs2.reverse();
       let allAnswers = myResponses[0].answers;
@@ -173,6 +182,87 @@ checkForCompletedSurveys() {
 
 
 
+formatQuestions() {
+  return new Promise((resolve, reject) => {
+
+    this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
+      data => { 
+        data.forEach((responseObj, ind1, arr1) => {
+               responseObj.answers.forEach((answr , ind2, arr2) => {
+                const question = {};
+        
+                  this.questionService.getOneQuestion(answr.questionId).subscribe(
+                      questions => {
+                        
+                         question['surveyId'] = responseObj.surveyId,
+                         question['open'] = questions.open_question,
+                         question['position'] = answr.position,
+
+                         
+                        
+                         question['question'] = questions.question
+                            if(answr.answer.length == 1){
+                            
+                            
+                            answr.answer.forEach(answr => {
+                              
+                              question['answer'] = answr.answer ? answr.answer: answr;
+                              question['recom'] = answr.recom ? answr.recom: '';
+                              question['level'] = answr.level ? answr.level : '';
+                              question['threat'] = answr.threatId ? answr.threat: '';
+                            
+                              
+                               if(typeof(question['answer']) === 'object') { 
+                                question['answer'] = answr.answer.answer;
+                                question['recom'] = answr.answer.recom;
+                                question['level'] = answr.answer.level;
+                                question['threat'] = answr.answer.threatId ?  answr.answer.threat : '';
+                                
+                               }
+                              });
+
+                              this.AllQuestions2.push(question)
+                               
+                            
+                          
+                            };
+                            if(answr.answer.length>1){
+
+                                  question['answer'] = '';
+                                  question['recom'] = '';
+                                  question['level'] = '';
+                                  question['threat'] = '';
+
+                                  for(var i =0; i < answr.answer.length ; i++){
+                                    
+
+                                    question['answer'] = answr.answer[i].answer ? question['answer'] +" "+answr.answer[i].answer: '';
+                                    question['recom'] = answr.answer[i].recom ? question['recom'] + " " + answr.answer[i].recom: '';
+                                    question['level'] = answr.answer[i].level ? question['level'] + " " + answr.answer[i].level : '';
+                                  
+                                    
+                                    if(i === answr.answer.length-1){
+                                    this.AllQuestions2.push(question);
+                                    }
+                                  }
+                  
+                            }
+                          // check for last loop
+                          if ((ind1 === arr1.length - 1) && (ind2 === arr2.length - 1)){
+                           
+                            resolve();
+                          }
+                    })
+              
+              }); // responseObj.answers.forEach(answr => {
+
+          });   // data.forEach(responseObj => {
+      },
+      error => console.log('Error getting all surveys')
+  );
+
+});
+}
 
 
 
@@ -180,12 +270,91 @@ checkForCompletedSurveys() {
 
 
 
+createPlan(surveyId: any) {
+this.ImprintLoader = true;
+this.PlanSurveyId = surveyId;
+ this.formatQuestions().then(() => {
+  let unSortedQuestions = this.AllQuestions2.filter(( quiz) => quiz.surveyId === surveyId ).map(e => e);
+  this.TemplateQuestions = unSortedQuestions.sort((a, b) =>  a.position - b.position);
+  
+  this.getTheTreats( this.TemplateQuestions)
+ })
+}
+
+
+
+getTheTreats(reportArr: any) {
+  this.NewPlan = [];
+  reportArr.forEach((reportElement, ind, arr) => {
+    if(reportElement.threat) {
+      let planObj = {
+          threat: {
+              threat: reportElement.threat,
+              level: reportElement.level,
+              recom: reportElement.recom
+          },
+          actionable: '',
+          tasks : [],
+          tracker: []
+      }
+      this.NewPlan.push(planObj)
+
+      if(ind === arr.length - 1) {
+        this.ImprintLoader = false;
+        this.planName = '';
+        this.addPlanModal.show();
+      }
+    } else {
+      if(ind === arr.length - 1) {
+        this.ImprintLoader = false;
+        this.planName = '';
+        this.addPlanModal.show();
+      }
+    }
+
+  });
+
+
+}
+
+
+surveyUncomplete() {
+  this.notifyService.showInfo('Please complete the survey before creating a plan', 'Survey Not Complete')
+}
 
 
 
 
 
 
+addPlan() {
+  if (this.planName === '') {
+    this.notifyService.showWarning('Type plan name', 'Blank Input');
+  } else {
+    this.ImprintLoader = true;
+    this.addPlanModal.hide();
+    let MyNewPlan = {
+      companyId: localStorage.getItem('loggedCompanyId'),
+      surveyId: this.PlanSurveyId,
+      name: this.planName,
+      plan: this.NewPlan,
+      reporting: 'weekly'
+    }
+    this.plansService.createPlan(MyNewPlan).subscribe(
+      data => {
+        this.updatePage().then(() => { 
+          this.checkForCompletedSurveys(); 
+          this.ImprintLoader = false;
+          this.notifyService.showSuccess('Plan created', 'Success');
+        });
+
+      }, error => {
+        this.ImprintLoader = false;
+        this.notifyService.showError('Could not create plan', 'Failed')
+      }
+    )
+  }
+}
 
 
 
