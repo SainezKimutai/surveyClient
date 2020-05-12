@@ -4,6 +4,7 @@
 .list-section
     width: 100%
     background-color: transparent
+    min-width: $desktop_md
 
 .list-section .title
     width: 100%
@@ -38,12 +39,47 @@
         color: white
 
 
-.list-section .model
+
+.list-section .title .switch
+  display: flex
+  align-items: stretch
+  width: 10em
+  box-shadow: 0 0 5px rgba(0, 0, 0, .3)
+
+  .switch-item
+    width: 100%
+    height: 100%
+    font-size: 10px
+    text-transform: uppercase
+    font-weight: bold 
+    display: flex
+    align-items: center
+    justify-content: center
+    color: grayColor(g800)
+    background-color: whitesmoke
+    cursor: pointer
+
+    &.active 
+      background-color: orange
+      color: white
+
+
+
+
+
+
+
+
+
+
+
+
+.list-section .model-edit
     width: 100%
     display: flex 
     align-items: stretch
 
-.list-section .model .model-threat
+.list-section .model-edit .model-threat
     width: 16em
     padding: 1em
     background-color: white
@@ -77,15 +113,15 @@
                 background-image: linear-gradient(to right, lighten( colorTheme(primaryTheme) , 10)  , lighten( colorTheme(primaryTheme), 50) )
     
         
-.list-section .model .model-card
+.list-section .model-edit .model-card
     width: 100%
     padding: 1em
-.list-section .model .model-card .model-wrap
+.list-section .model-edit .model-card .model-wrap
     width: 100%
     max-width: $desktop_md
     padding: 1em 2em
     background-color: white
-.list-section .model .model-card .model-wrap .top-wrap
+.list-section .model-edit .model-card .model-wrap .top-wrap
     width: 100%
     display: flex
     padding: 1em
@@ -125,7 +161,7 @@
                 color: colorTheme(warning)
 
 
-.list-section .model .model-card .model-wrap .recom-wrap
+.list-section .model-edit .model-card .model-wrap .recom-wrap
     width: 100%
     text-align: left
     padding: 1em
@@ -137,7 +173,7 @@
     p 
         font-size: 12px
 
-.list-section .model .model-card .model-wrap .task-wrap
+.list-section .model-edit .model-card .model-wrap .task-wrap
     width: 100%
     padding: 1em
 
@@ -222,25 +258,156 @@
                         font-size: 10px
                         color: white      
 
-.list-section .model .model-card .model-wrap form 
+
+// view
+.model-view
+  width: 100%
+  display: flex
+  align-items: stretch
+
+.model-view .model-view-body
+  margin: 0 auto
+  width: 100%
+  // min-width: $desktop_md
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+
+.nav.nav-tabs 
+    background-color: transparent
+    text-align: center
+    display: flex
+    align-items: stretch
+    border: none
+    top: 50px
+    margin: 0px
+    padding: 0px
     width: 100%
-    .form-group
+    text-align: center
+    justify-content: center
+
+
+
+.nav.nav-tabs li 
+    display: inline-block
+    margin: 0
+    padding: 0px
+
+.nav.nav-tabs li a 
+    width: 8em
+    border: none
+    background:  grayColor(g200)
+    border: none
+    border-radius: 0px
+    padding: .5em
+    color: grayColor(g800)
+    font-size: 14px
+    font-weight: normal
+.nav.nav-tabs li a.active 
+    font-weight: bold
+    background: white
+    color: orange
+.tab-content 
+    width: 100%
+    background-color:  white
+.tab-content .tab-pane 
+    width: 100%
+    padding: 0
+    height: fit-content
+    min-height: 500px
+.tab-pane .body-wrap
+    width: 100%
+.tab-pane .body-wrap .title
+    width: 100%
+    display: flex
+    align-items: stretch
+    background-color: grayColor(g200)
+    padding: 0
+    div 
+      width: 100%
+      height: 100%
+      padding: .5em
+      display: flex
+      align-items: center
+      justify-content: flex-start
+      border-top: solid 1px grayColor(g300)
+      border-bottom: solid 1px grayColor(g300)
+      border-left: solid 1px grayColor(g300)
+      color: lighten(colorTheme(primaryTheme),10 )
+      font-size: 12px
+
+      &.actionable
+        min-width: 250px
+        max-width: 250px
+
+.tab-pane .body-wrap .item-wrap
+  width: 100%
+  display: flex
+  align-items: stretch
+  border: solid 1px grayColor(g300)
+  height: fit-content
+
+  .actionable
+      min-width: 250px
+      max-width: 250px
+      height: 100% !important
+      padding: .5em
+      display: flex
+      align-items: center
+      justify-content: flex-start
+      color: grayColor(g800)
+      font-size: 12px
+
+  .task-wrap
+    width: 100%
+
+    .task-item
         width: 100%
-        max-width: 20em
-        display: flex 
-        flex-direction: column
+        display: flex
+        align-items: stretch
+        padding: 0
 
-        label 
-            font-size: 12px
-            font-weight: bold
-            color: grayColor(g700)
+        div 
+          width: 100%
+          height: 100%
+          padding: .5em
+          display: flex
+          align-items: center
+          justify-content: flex-start
+          border-bottom: solid 1px grayColor(g300)
+          border-left: solid 1px grayColor(g300)
+          color: grayColor(g700)
+          font-size: 12px
+          
 
-        input 
-            border: none
-            outline: none
-            width: 100%
-            border-radius: 2px
-            background-color: grayColor(g100)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -336,8 +503,13 @@
 
 
 
+
+
+
+
+
     
-// checkbox styling
+checkbox styling
 
 @supports (-webkit-appearance: none) or (-moz-appearance: none) 
   input[type='checkbox'],
@@ -484,20 +656,6 @@
   input[type='radio']:checked  
     --s: .5 
    
- 
-
-ul  
-  margin: 12px 
-  padding: 0 
-  list-style: none 
-  width: 100% 
-  max-width: 320px 
- 
-
-ul li  
-  margin: 16px 0 
-  position: relative 
- 
 
 html  
   -webkit-box-sizing: border-box 

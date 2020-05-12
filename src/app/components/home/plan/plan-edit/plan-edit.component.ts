@@ -36,6 +36,8 @@ export class PlanEditComponent implements OnInit, OnDestroy {
 
 
 public ImprintLoader = false;
+public ActiveModel = 'edit';
+
 public faArrowLeft = faArrowLeft;
 public faPlus = faPlus;
 public faTrash = faTrash;
@@ -72,11 +74,26 @@ ngOnInit() {
 
 
 
+
+
+
+switchModel(param: any) {
+  this.ActiveModel = param;
+}
+
+
+
+
+
+
+
+
+
+
 getUnEdittedThreatPlan() {
   for(let trtPlan of this.PlanOnEdit.plan) {
     if (trtPlan.actionable === '') {
      this.ActivePlanEdit = trtPlan; 
-     console.log(this.ActivePlanEdit)
      break;
     }
   }

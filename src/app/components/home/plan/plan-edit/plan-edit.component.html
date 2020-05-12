@@ -12,14 +12,17 @@
 
 
 <section class="list-section" *ngIf="PlanOnEdit" >
-    <div class="title">
+    <div class="title d-flex">
         <span class="icon" (click)="back()"> <fa-icon [icon]="faArrowLeft"></fa-icon> </span>
 
         <span class="text">{{PlanOnEdit.name}}</span>
-
+        <div class="switch ml-auto">
+            <div [ngClass]="ActiveModel === 'view' ? 'switch-item active' : 'switch-item'" (click)="switchModel('view')">View</div>
+            <div [ngClass]="ActiveModel === 'edit' ? 'switch-item active' : 'switch-item'" (click)="switchModel('edit')">Edit</div>
+        </div>
     </div>
 
-    <div class="model">
+    <div class="model-edit" *ngIf="ActiveModel === 'edit'">
 
         <div class="model-threat">
             <h4 class="head">Threat</h4>
@@ -82,6 +85,113 @@
 
 
     </div>
+
+
+
+
+    <div class="model-view" *ngIf="ActiveModel === 'view'">
+
+        <div class="model-view-body">
+
+
+        <ul class="nav nav-tabs d-flex" id="myTab" role="tablist" >
+            <li class="nav-item">
+                <a class="nav-link active" id="all-plans-tab" data-toggle="tab" href="#all-plans" role="tab" aria-controls="all-plans"  aria-selected="false" >All</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="approved-plans-tab" data-toggle="tab" href="#approved-plans" role="tab" aria-controls="approved-plans" aria-selected="true" >Approved</a>
+            </li>
+    
+            <li class="nav-item">
+                <a class="nav-link" id="escalated-plans-tab" data-toggle="tab" href="#escalated-plans" role="tab" aria-controls="escalated-plans"  aria-selected="false" >Escalated</a>
+            </li>
+    
+    
+        </ul>
+        
+        <div class="tab-content" id="myTabContent">
+
+            <div class="tab-pane fade show active" id="all-plans" role="tabpanel"aria-labelledby="course-tab">
+                <div class="body-wrap">
+                    <div class="title">
+                        <div class="actionable">Business Operations</div>
+                        <div>Task</div>
+                        <div>KPI</div>
+                        <div>Forecast</div>
+                    </div>
+
+                    <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.actionable === ''">
+                        <div class="actionable">
+                            {{item.actionable}}
+                        </div>
+                        <div class="task-wrap">
+                            <div class="task-item" *ngFor="let task of item.tasks">
+                                <div>{{task.task}}</div>
+                                <div>{{task.kpi}}</div>
+                                <div>{{task.forecast | date}}</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-pane fade " id="approved-plans" role="tabpanel"aria-labelledby="approved-plans-tab" >
+                <div class="body-wrap">
+                    <div class="title">
+                        <div class="actionable">Business Operations</div>
+                        <div>Task</div>
+                        <div>KPI</div>
+                        <div>Forecast</div>
+                    </div>
+
+                    <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.actionable === ''">
+                        <div class="actionable">
+                            {{item.actionable}}
+                        </div>
+                        <div class="task-wrap">
+                            <div class="task-item" *ngFor="let task of item.tasks" [hidden]="!task.approval">
+                                <div>{{task.task}}</div>
+                                <div>{{task.kpi}}</div>
+                                <div>{{task.forecast | date}}</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+    
+            <div class="tab-pane fade" id="escalated-plans" role="tabpanel"aria-labelledby="escalated-plans-tab">
+                <div class="body-wrap">
+                    <div class="title">
+                        <div class="actionable">Business Operations</div>
+                        <div>Task</div>
+                        <div>KPI</div>
+                        <div>Forecast</div>
+                    </div>
+
+                    <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.actionable === '' ">
+                        <div class="actionable">
+                            {{item.actionable}}
+                        </div>
+                        <div class="task-wrap">
+                            <div class="task-item" *ngFor="let task of item.tasks" [hidden]="!task.escalated">
+                                <div>{{task.task}}</div>
+                                <div>{{task.kpi}}</div>
+                                <div>{{task.forecast | date}}</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+      </div><!-- tab-content -->
+        
+
+    </div>
+    </div>
+
+
 
 </section>
 
