@@ -3,7 +3,7 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { ResponseService } from 'src/app/shared/services/responses.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import 'jspdf-autotable';
 import { PlansService } from 'src/app/shared/services/plan.service';
 import { ModalDirective } from 'ngx-bootstrap';
@@ -30,14 +30,122 @@ export class PlanEditComponent implements OnInit, OnDestroy {
         
       ) {  }
 
+
+
+@ViewChild('addTaskModal', {static: true}) addTaskModal: ModalDirective;
+
+
+public ImprintLoader = false;
 public faArrowLeft = faArrowLeft;
+public faPlus = faPlus;
+public faTrash = faTrash;
 
 public PlanOnEdit: any;
+public ActivePlanEdit: any;
     
+
+
+public task: any;
+
+
+
+
+
+
+
+
+
 ngOnInit() {
     this.PlanOnEdit = JSON.parse(localStorage.getItem('planOnEdit'))
-    console.log(this.PlanOnEdit.name)
+    this.task = {
+      task: '',
+      kpi: null,
+      forecast: '',
+      priority: 'medium',
+      approval: false,
+      escalated: false,
+      reporters: []
+    }
+
+    this.getUnEdittedThreatPlan();
 }   
+
+
+
+getUnEdittedThreatPlan() {
+  for(let trtPlan of this.PlanOnEdit.plan) {
+    if (trtPlan.actionable === '') {
+     this.ActivePlanEdit = trtPlan; 
+     console.log(this.ActivePlanEdit)
+     break;
+    }
+  }
+}
+
+
+switchPlanThreat(threatPlanId: any) {
+  for(let trtPlan of this.PlanOnEdit.plan) {
+    if (trtPlan._id === threatPlanId) {
+     this.ActivePlanEdit = trtPlan; 
+     break;
+    }
+  }
+}
+
+
+
+
+addTask() {
+  if(this.task.task === '') {
+    this.notifyService.showWarning('Please add task', 'Empty Field')
+  } else if(this.task.kpi === null) {
+    this.notifyService.showWarning('Please add kpi', 'Empty Field')
+  } else if(this.task.forecast === '') {
+    this.notifyService.showWarning('Please set forecast', 'Empty Field')
+  } else {
+    this.ActivePlanEdit.tasks.push(this.task)
+    this.addTaskModal.hide();
+    this.task = {
+      task: '',
+      kpi: null,
+      forecast: '',
+      priority: 'medium',
+      approval: false,
+      escalated: false,
+      reporters: []
+    }
+  }
+
+
+}
+
+removeTask(x: any) {
+  this.ActivePlanEdit.tasks.splice(x, 1);
+}
+
+
+
+saveThePlan() {
+  this.ImprintLoader = true;
+  for(let trtPlan of this.PlanOnEdit.plan) {
+    if (trtPlan._id === this.ActivePlanEdit._id) {
+      trtPlan = this.ActivePlanEdit; 
+
+      this.plansService.updatePlan(this.PlanOnEdit._id, this.PlanOnEdit).subscribe(
+        data => {
+          this.PlanOnEdit = data;
+          this.ImprintLoader = false;
+          this.getUnEdittedThreatPlan();
+          this.notifyService.showSuccess('Plan update', 'Success')
+        },
+        error => { this.ImprintLoader = false; this.notifyService.showError('Could not update plan', 'Error') }
+      )
+     break;
+    }
+  }
+}
+
+
 
 
 
@@ -48,8 +156,24 @@ back() {
 }
 
 
+
+
+
+
+
+
+
 ngOnDestroy() {
     localStorage.removeItem('planOnEdit')
 }
+
+
+
+
+
+
+
+
+
 
 }

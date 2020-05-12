@@ -1,3 +1,13 @@
+<article *ngIf="ImprintLoader" class="imprint-loader home">
+    <div class="imprint-loader-wrap">
+        <div class="imprint-loader-main">
+        <div class="imprint-loader-ball ball-one"></div>
+        <div class="imprint-loader-ball ball-two"></div>
+        <div class="imprint-loader-ball ball-three"></div>
+        <div class="imprint-loader-ball ball-four"></div>
+        </div>
+    </div>
+</article>
 
 
 
@@ -11,12 +21,141 @@
 
     <div class="model">
 
-        <div class="model-title">
-            <h4>{{PlanOnEdit.plan.length}}</h4>
-            <li *ngFor="let item of PlanOnEdit.plan"> {{item.threat.level}} </li>
+        <div class="model-threat">
+            <h4 class="head">Threat</h4>
+
+            <div class="list-item-wrap">
+                <li class="item" *ngFor="let item of PlanOnEdit.plan" 
+                [ngClass]="ActivePlanEdit._id === item._id ? 'item active' : 'item'"
+                (click)="switchPlanThreat(item._id)">{{item.threat.threat}}</li>
+            </div>
         </div>
+
+        <div class="model-card">
+            <div class="model-wrap" *ngIf="ActivePlanEdit">
+                <div class="top-wrap">
+                    <div class="actionable">
+                        <h4>Actionable</h4>
+                        <input type="text" placeholder="Type here" [(ngModel)]="ActivePlanEdit.actionable">
+                    </div>
+                    <div class="level">
+                        <h4>Level</h4>
+                        <h5 [ngClass]="ActivePlanEdit.threat.level === 'High' ? 'high' : 'medium'" >{{ActivePlanEdit.threat.level}}</h5>
+                    </div>
+                </div>
+                <div class="recom-wrap">
+                   <h4>Recomendation</h4>
+                   <p>{{ActivePlanEdit.threat.recom}}</p>
+                </div>
+
+                <div class="task-wrap">
+                    <h4> <span class="text">Tasks</span> <span class="icon" (click)="addTaskModal.show()"> <fa-icon [icon]="faPlus"></fa-icon> </span> </h4>
+                    <div class="task-title">
+                        <h6>Task</h6>
+                        <h6>Kpi</h6>
+                        <h6>Forecast</h6>
+                        <h6>Priority</h6>
+                        <h6>Approval</h6>
+                        <h6>Escalated</h6>
+                    </div>
+                    <div class="task-item" *ngFor="let item of ActivePlanEdit.tasks; let x = index">
+                        <h6>{{item.task}}</h6>
+                        <h6>{{item.kpi}}</h6>
+                        <h6>{{item.forecast | date}}</h6>
+                        <h6>{{item.priority}}</h6>
+                        <h6>{{item.approval}}</h6>
+                        <h6 class="d-flex">{{item.escalated}}
+                            <div class="delete ml-auto">
+                                <fa-icon [icon]="faTrash" (click)="removeTask(x)"></fa-icon>
+                            </div>
+                        </h6>
+                    </div>
+                </div>
+
+                <div class="btn-wrap d-flex">
+                    <button class="btn btn-sm btn-success mx-auto" (click)="saveThePlan()">Save Plan</button>
+                </div>
+
+            </div>
+
+        </div>
+
 
     </div>
 
 </section>
 
+
+
+
+
+
+<div bsModal #addTaskModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog addTaskModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title"> Add Task </h4>
+            <button type="button" class="btn close" (click)="addTaskModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <form class="form">
+                <div class="form-group">
+                    <label> Task</label>
+                    <input type="text" name="task" [(ngModel)]="task.task">
+                </div>
+                <div class="form-group">
+                    <label> KPI</label>
+                    <input type="number" name="kpi" [(ngModel)]="task.kpi">
+                </div>
+                <div class="form-group">
+                    <label> ForeCast</label>
+                    <input id="invoiceDate" #invoiceDateInput #dp="bsDatepicker"
+                    bsDatepicker [bsConfig]="{containerClass:'theme-orange'}"
+                    name="forcast" [(ngModel)]="task.forecast">
+                </div>
+                <div class="priority-wrap w-100">
+                    <label>Priority</label>
+                    <div class="wrap d-flex">
+                        <div class="input-wrap">
+                            <label> Low</label>
+                            <input type="radio" name="priority" value="low" [(ngModel)]="task.priority">
+                        </div>
+                        <div class="input-wrap">
+                            <label> Medium</label>
+                            <input type="radio" name="priority" value="medium" [(ngModel)]="task.priority">
+                        </div>
+                        <div class="input-wrap">
+                            <label> High</label>
+                            <input type="radio" name="priority" value="high" [(ngModel)]="task.priority">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label> Approved</label>
+                    <div class="custom-control custom-switch ml-auto">
+                        <input type="checkbox" name="approval" [(ngModel)]="task.approval" class="custom-control-input" id="approve">
+                        <label *ngIf="task.approval" class="custom-control-label yes" for="approve">Yes</label>
+                        <label *ngIf="!task.approval" class="custom-control-label no" for="approve">No</label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label> Escalated</label>
+                    <div class="custom-control custom-switch ml-auto">
+                        <input type="checkbox" name="escalated" [(ngModel)]="task.escalated" class="custom-control-input" id="escalated">
+                        <label *ngIf="task.escalated" class="custom-control-label yes" for="escalated">Yes</label>
+                        <label *ngIf="!task.escalated" class="custom-control-label no" for="escalated">No</label>
+                    </div>
+               
+                </div>
+            </form>
+           
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-cancel" (click)="addTaskModal.hide()">Cancel</button>
+            <button type="button" class="btn btn-confirm" (click)="addTask()">Add</button>
+        </div>
+        </div>
+    </div>
+</div>

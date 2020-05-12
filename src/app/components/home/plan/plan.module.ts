@@ -9,7 +9,7 @@ import { ChartsModule } from 'ng2-charts';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { PlanComponent } from './plan.component';
 import { PlanRoutingModule } from './plan-routing.module';
-import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule, BsDatepickerModule, DatepickerModule } from 'ngx-bootstrap';
 import { PlanEditComponent } from './plan-edit/plan-edit.component';
 
 @NgModule({
@@ -39,7 +39,9 @@ import { PlanEditComponent } from './plan-edit/plan-edit.component';
       innerStrokeColor: '#e4e7ea',
       animation: false,
       animationDuration: 300
-    })
+    }),
+    BsDatepickerModule.forRoot(),
+    DatepickerModule.forRoot(),
 
   ]
 

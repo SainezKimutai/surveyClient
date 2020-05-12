@@ -3,8 +3,9 @@
 
 .list-section
     width: 100%
+    background-color: transparent
 
-.title
+.list-section .title
     width: 100%
     padding: .5em 1em
     display: flex
@@ -35,3 +36,487 @@
         font-size: 16px
         font-weight: bold
         color: white
+
+
+.list-section .model
+    width: 100%
+    display: flex 
+    align-items: stretch
+
+.list-section .model .model-threat
+    width: 16em
+    padding: 1em
+    background-color: white
+
+
+    .head
+        font-size: 14px
+        padding: 1em
+        font-weight: bold
+        color: lighten(colorTheme(primaryTheme), 10)
+
+    .list-item-wrap
+        width: 100%
+        height: 500px
+        overflow-y: scroll
+        border: solid 1px grayColor(g200)
+
+        li 
+            width: 100%
+            min-height: 4em
+            list-style: none 
+            text-align: left
+            padding: .5em
+            font-size: 12px
+            border-bottom: solid 1px grayColor(g100)
+            cursor: pointer
+
+            &:hover
+                background-image: linear-gradient(to right, lighten( black, 70)  , lighten( black, 95) )
+            &.active
+                background-image: linear-gradient(to right, lighten( colorTheme(primaryTheme) , 10)  , lighten( colorTheme(primaryTheme), 50) )
+    
+        
+.list-section .model .model-card
+    width: 100%
+    padding: 1em
+.list-section .model .model-card .model-wrap
+    width: 100%
+    max-width: $desktop_md
+    padding: 1em 2em
+    background-color: white
+.list-section .model .model-card .model-wrap .top-wrap
+    width: 100%
+    display: flex
+    padding: 1em
+    background-color: grayColor(g100)
+
+    .actionable
+        font-size: 14px
+        margin: 0 auto 0 0
+        width: 80%
+
+        h4 
+            font-size: 14px
+            font-weight: bold 
+            color: lighten(colorTheme(primaryTheme), 10)
+        input 
+            width: 100%
+            border: none
+            outline: none
+            border-radius: 2px
+            background-color: grayColor(g200)
+            font-size: 12px
+        
+    .level
+        margin: 0 0 0 auto
+        text-align: right
+        h4 
+            font-size: 14px
+            font-weight: bold 
+            color: lighten(colorTheme(primaryTheme), 10)
+        h5 
+            font-size: 12px
+            font-weight: bold 
+
+            &.high
+                color: colorTheme(danger)
+            &.medium
+                color: colorTheme(warning)
+
+
+.list-section .model .model-card .model-wrap .recom-wrap
+    width: 100%
+    text-align: left
+    padding: 1em
+
+    h4 
+        font-size: 14px
+        font-weight: bold 
+        color: lighten(colorTheme(primaryTheme), 10)
+    p 
+        font-size: 12px
+
+.list-section .model .model-card .model-wrap .task-wrap
+    width: 100%
+    padding: 1em
+
+    h4 
+        display: flex
+        align-items: stretch
+
+        .text
+            margin: auto 0
+            font-size: 14px
+            font-weight: bold 
+            color: lighten(colorTheme(primaryTheme), 10)
+
+        .icon 
+            margin: auto 0 auto 2em
+            width: 1em
+            height: 1em
+            display: flex
+            align-items: center
+            justify-content: center
+            border-radius: 50%
+            background-color:  grayColor(g100)
+            cursor: pointer
+            fa-icon
+                font-size: 10px
+                color: colorTheme(success)
+            &:hover
+                background-color: colorTheme(success)    
+                fa-icon
+                    font-size: 10px
+                    color: white           
+
+    .task-title
+        background-color: grayColor(g100)
+        display: flex 
+        align-items: stretch
+
+        h6 
+            width: 100%
+            font-size: 11px
+            padding: .5em
+            text-transform: uppercase
+            font-weight: bold
+            color: lighten(colorTheme(primaryTheme), 15)
+
+    .task-item
+        display: flex 
+        align-items: stretch
+        justify-content: center
+        border-bottom: solid 1px grayColor(g100)
+        cursor: pointer
+        h6 
+            width: 100%
+            font-size: 11px
+            padding: .5em
+            text-transform: capitalize
+            .delete
+                display: none !important
+
+        &:hover 
+            background-color: grayColor(g100)
+                
+            h6 .delete       
+                transform: translateX(1.5em)
+                -webkit-transform: translateX(1.5em)
+                -moz-transform: translateX(1.5em)
+                width: 2em
+                height: 2em
+                display: flex !important
+                align-items: center
+                justify-content: center
+                border-radius: 50%
+                background-color:  grayColor(g100)
+                cursor: pointer
+
+                fa-icon
+                    font-size: 10px
+                    color: colorTheme(danger)
+                &:hover
+                    background-color: colorTheme(danger)    
+                    fa-icon
+                        font-size: 10px
+                        color: white      
+
+.list-section .model .model-card .model-wrap form 
+    width: 100%
+    .form-group
+        width: 100%
+        max-width: 20em
+        display: flex 
+        flex-direction: column
+
+        label 
+            font-size: 12px
+            font-weight: bold
+            color: grayColor(g700)
+
+        input 
+            border: none
+            outline: none
+            width: 100%
+            border-radius: 2px
+            background-color: grayColor(g100)
+
+
+
+
+
+
+.addTaskModal
+    width: 100%
+    border: none
+.addTaskModal .modal-content
+    width: 100%
+    border: none   
+.addTaskModal .modal-content .modal-header 
+    border: none
+    width: 100%
+    background-color: colorTheme(success)
+    .modal-title
+        font-size: 18px
+        font-weight: bold 
+        color: white
+    .btn
+        font-size: 18px
+        color: white
+.addTaskModal .modal-content .modal-body 
+    border: none
+    width: 100%
+    .form 
+        width: 100%
+        .form-group
+            width: 100%
+            label
+                font-size: 12px
+                font-weight: bold
+                color: grayColor(g700)
+                &.yes
+                    color: colorTheme(success)
+                &.no
+                    color: grayColor(g600)
+            input, select 
+                width: 100%
+                border: none
+                outline: none
+                background-color: grayColor(g200)
+                font-size: 14px
+                color: black
+                padding: .5em
+                border-radius: 2px
+                font-weight: 400
+        .priority-wrap
+            width: 100%
+            
+            label
+                font-size: 12px
+                font-weight: bold
+                color: grayColor(g700)
+            .wrap
+                display: flex
+                align-items: stretch
+                width: 100%
+
+                .input-wrap
+                    width: 100%
+                    display: flex
+                    flex-direction: column
+
+                    label
+                        font-size: 12px
+                        
+
+
+
+.addTaskModal .modal-content .modal-footer
+    border: none
+    width: 100% 
+    .btn-cancel
+        margin-right: auto !important
+        font-size: 12px
+        background-color: colorTheme(light)
+        color: grayColor(g800)  
+    .btn-confirm
+        margin-left: auto !important
+        font-size: 12px
+        background-color: colorTheme(success)
+        color: white
+
+
+
+
+
+
+
+
+
+
+
+    
+// checkbox styling
+
+@supports (-webkit-appearance: none) or (-moz-appearance: none) 
+  input[type='checkbox'],
+  input[type='radio']  
+    --active: #275EFE 
+    --active-inner: #fff 
+    --focus: 2px rgba(39, 94, 254, .3) 
+    --border: #BBC1E1 
+    --border-hover: #275EFE 
+    --background: #fff 
+    --disabled: #F6F8FF 
+    --disabled-inner: #E1E6F9 
+    -webkit-appearance: none 
+    -moz-appearance: none 
+    height: 21px 
+    outline: none 
+    display: inline-block 
+    vertical-align: top 
+    position: relative 
+    margin: 0 
+    cursor: pointer 
+    border: 1px solid var(--bc, var(--border)) 
+    background: var(--b, var(--background)) 
+    -webkit-transition: background .3s, border-color .3s, -webkit-box-shadow .2s 
+    transition: background .3s, border-color .3s, -webkit-box-shadow .2s 
+    transition: background .3s, border-color .3s, box-shadow .2s 
+    transition: background .3s, border-color .3s, box-shadow .2s, -webkit-box-shadow .2s 
+   
+  input[type='checkbox']:after,
+  input[type='radio']:after  
+    content: '' 
+    display: block 
+    left: 0 
+    top: 0 
+    position: absolute 
+    -webkit-transition: opacity var(--d-o, 0.2s), -webkit-transform var(--d-t, 0.3s) var(--d-t-e, ease) 
+    transition: opacity var(--d-o, 0.2s), -webkit-transform var(--d-t, 0.3s) var(--d-t-e, ease) 
+    transition: transform var(--d-t, 0.3s) var(--d-t-e, ease), opacity var(--d-o, 0.2s) 
+    transition: transform var(--d-t, 0.3s) var(--d-t-e, ease), opacity var(--d-o, 0.2s), -webkit-transform var(--d-t, 0.3s) var(--d-t-e, ease) 
+   
+  input[type='checkbox']:checked,
+  input[type='radio']:checked  
+    --b: var(--active) 
+    --bc: var(--active) 
+    --d-o: .3s 
+    --d-t: .6s 
+    --d-t-e: cubic-bezier(.2, .85, .32, 1.2) 
+   
+  input[type='checkbox']:disabled,
+  input[type='radio']:disabled  
+    --b: var(--disabled) 
+    cursor: not-allowed 
+    opacity: .9 
+   
+  input[type='checkbox']:disabled:checked,
+  input[type='radio']:disabled:checked  
+    --b: var(--disabled-inner) 
+    --bc: var(--border) 
+   
+  input[type='checkbox']:disabled + label,
+  input[type='radio']:disabled + label  
+    cursor: not-allowed 
+   
+  input[type='checkbox']:hover:not(:checked):not(:disabled),
+  input[type='radio']:hover:not(:checked):not(:disabled)  
+    --bc: var(--border-hover) 
+   
+  input[type='checkbox']:focus,
+  input[type='radio']:focus  
+    -webkit-box-shadow: 0 0 0 var(--focus) 
+            box-shadow: 0 0 0 var(--focus) 
+   
+  input[type='checkbox']:not(.switch),
+  input[type='radio']:not(.switch)  
+    width: 21px 
+   
+  input[type='checkbox']:not(.switch):after,
+  input[type='radio']:not(.switch):after  
+    opacity: var(--o, 0) 
+   
+  input[type='checkbox']:not(.switch):checked,
+  input[type='radio']:not(.switch):checked  
+    --o: 1 
+   
+  input[type='checkbox'] + label,
+  input[type='radio'] + label  
+    font-size: 14px 
+    line-height: 21px 
+    display: inline-block 
+    vertical-align: top 
+    cursor: pointer 
+    margin-left: 4px 
+   
+  input[type='checkbox']:not(.switch)  
+    border-radius: 7px 
+   
+  input[type='checkbox']:not(.switch):after  
+    width: 5px 
+    height: 9px 
+    border: 2px solid var(--active-inner) 
+    border-top: 0 
+    border-left: 0 
+    left: 7px 
+    top: 4px 
+    -webkit-transform: rotate(var(--r, 20deg)) 
+            transform: rotate(var(--r, 20deg)) 
+   
+  input[type='checkbox']:not(.switch):checked  
+    --r: 43deg 
+   
+  input[type='checkbox'].switch  
+    width: 38px 
+    border-radius: 11px 
+   
+  input[type='checkbox'].switch:after  
+    left: 2px 
+    top: 2px 
+    border-radius: 50% 
+    width: 15px 
+    height: 15px 
+    background: var(--ab, var(--border)) 
+    -webkit-transform: translateX(var(--x, 0)) 
+            transform: translateX(var(--x, 0)) 
+   
+  input[type='checkbox'].switch:checked  
+    --ab: var(--active-inner) 
+    --x: 17px 
+   
+  input[type='checkbox'].switch:disabled:not(:checked):after  
+    opacity: .6 
+   
+  input[type='radio']  
+    border-radius: 50% 
+   
+  input[type='radio']:after  
+    width: 19px 
+    height: 19px 
+    border-radius: 50% 
+    background: var(--active-inner) 
+    opacity: 0 
+    -webkit-transform: scale(var(--s, 0.7)) 
+            transform: scale(var(--s, 0.7)) 
+   
+  input[type='radio']:checked  
+    --s: .5 
+   
+ 
+
+ul  
+  margin: 12px 
+  padding: 0 
+  list-style: none 
+  width: 100% 
+  max-width: 320px 
+ 
+
+ul li  
+  margin: 16px 0 
+  position: relative 
+ 
+
+html  
+  -webkit-box-sizing: border-box 
+          box-sizing: border-box 
+ 
+
+*  
+  -webkit-box-sizing: inherit 
+          box-sizing: inherit 
+ 
+
+*:before, *:after  
+  -webkit-box-sizing: inherit 
+          box-sizing: inherit 
+ 
+
+
+   
+ 
+/*# sourceMappingURL=style.css.map */
+
+
