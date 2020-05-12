@@ -16,5 +16,5 @@ export const header = new HttpHeaders().set(
 // };
 
 export const dev = {
-  connect: 'http://167.172.26.3:4120',
+  connect: 'http://167.172.26.3:4120/',
 } ;
