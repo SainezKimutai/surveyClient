@@ -125,7 +125,7 @@
     width: 100%
     display: flex
     padding: 1em
-    background-color: grayColor(g100)
+    // background-color: grayColor(g100)
 
     .actionable
         font-size: 14px
@@ -141,7 +141,8 @@
             border: none
             outline: none
             border-radius: 2px
-            background-color: grayColor(g200)
+            background-color: grayColor(g100)
+            padding: .5em
             font-size: 12px
         
     .level
@@ -154,6 +155,7 @@
         h5 
             font-size: 12px
             font-weight: bold 
+            margin: 1em 0 0 0 
 
             &.high
                 color: colorTheme(danger)
@@ -165,6 +167,7 @@
     width: 100%
     text-align: left
     padding: 1em
+    background-color: grayColor(g100)
 
     h4 
         font-size: 14px
@@ -225,6 +228,7 @@
         justify-content: center
         border-bottom: solid 1px grayColor(g100)
         cursor: pointer
+        margin: 4px 0 0 0
         h6 
             width: 100%
             font-size: 11px
@@ -264,6 +268,7 @@
   width: 100%
   display: flex
   align-items: stretch
+  padding: 2em
 
 .model-view .model-view-body
   margin: 0 auto
@@ -293,9 +298,10 @@
     display: inline-block
     margin: 0
     padding: 0px
+    border: solid 1px grayColor(g300)
 
 .nav.nav-tabs li a 
-    width: 8em
+    width: 15em
     border: none
     background:  grayColor(g200)
     border: none
@@ -304,6 +310,7 @@
     color: grayColor(g800)
     font-size: 14px
     font-weight: normal
+    text-transform: uppercase
 .nav.nav-tabs li a.active 
     font-weight: bold
     background: white
@@ -318,6 +325,7 @@
     min-height: 500px
 .tab-pane .body-wrap
     width: 100%
+    padding: 1em
 .tab-pane .body-wrap .title
     width: 100%
     display: flex
@@ -379,6 +387,7 @@
           border-left: solid 1px grayColor(g300)
           color: grayColor(g700)
           font-size: 12px
+          text-transform: capitalize
           
 
 
@@ -389,109 +398,126 @@
 
 
 
+.model-task-form
+  width: 100%
+  margin: 1em auto 5em auto
+  max-width: $desktop_md
+  background-color: white
 
+.model-task-form .action
+  width: 100%
+  padding: .5em 1em
+  display: flex
+  align-items: stretch
+  background-color: colorTheme(primaryTheme)
 
+  span 
+    width: 2em
+    height: 2em
+    display: flex
+    align-items: center
+    justify-content: center
+    cursor: pointer
+    margin: auto 3em auto 0
+    background-color: grayColor(g100)
+    border-radius: 50%
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.addTaskModal
-    width: 100%
-    border: none
-.addTaskModal .modal-content
-    width: 100%
-    border: none   
-.addTaskModal .modal-content .modal-header 
-    border: none
-    width: 100%
-    background-color: colorTheme(success)
-    .modal-title
-        font-size: 18px
-        font-weight: bold 
+    &:hover
+      background-color: colorTheme(warning)
+      fa-icon 
         color: white
-    .btn
-        font-size: 18px
-        color: white
-.addTaskModal .modal-content .modal-body 
-    border: none
+
+    fa-icon
+      font-size: 14px
+      color: black
+
+  h4 
+    margin: auto 0
+    font-size: 14px
+    color: white
+    font-weight: bold
+
+
+.model-task-form form 
+  width: 100%
+.model-task-form form .form-group
     width: 100%
-    .form 
+    padding: .5em
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.5)
+    border-radius: 2px
+    
+    label
+        font-size: 12px
+        font-weight: bold
+        color: lighten(colorTheme(primaryTheme), 10)
+        &.yes
+            color: colorTheme(success)
+        &.no
+            color: grayColor(g600)
+    input, select 
         width: 100%
-        .form-group
+        border: none
+        outline: none
+        background-color: grayColor(g200)
+        font-size: 14px
+        color: black
+        padding: .5em
+        border-radius: 2px
+        font-weight: 400
+.model-task-form form .priority-wrap, 
+.model-task-form form .kpi-calendar-wrap, 
+.model-task-form form .form-group-recurring,
+.model-task-form form .reporting-users
+    width: 100%
+    margin: 0 0 1em 0
+    padding: .5em
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.5)
+    border-radius: 2px
+    
+    label
+        font-size: 12px
+        font-weight: bold
+        color: lighten(colorTheme(primaryTheme), 10)
+    .wrap
+        display: grid
+        grid-template-columns: repeat(3, 1fr)
+        width: 100%
+
+        .input-wrap
             width: 100%
+            display: flex
+            flex-direction: column
+
             label
-                font-size: 12px
-                font-weight: bold
-                color: grayColor(g700)
-                &.yes
-                    color: colorTheme(success)
-                &.no
-                    color: grayColor(g600)
-            input, select 
-                width: 100%
-                border: none
-                outline: none
-                background-color: grayColor(g200)
-                font-size: 14px
-                color: black
-                padding: .5em
-                border-radius: 2px
                 font-weight: 400
-        .priority-wrap
-            width: 100%
-            
-            label
-                font-size: 12px
-                font-weight: bold
                 color: grayColor(g700)
-            .wrap
-                display: flex
-                align-items: stretch
-                width: 100%
+                font-size: 12px
 
-                .input-wrap
-                    width: 100%
-                    display: flex
-                    flex-direction: column
-
-                    label
-                        font-size: 12px
-                        
+.btn-wrap
+  width: 100%
 
 
 
-.addTaskModal .modal-content .modal-footer
-    border: none
-    width: 100% 
-    .btn-cancel
-        margin-right: auto !important
-        font-size: 12px
-        background-color: colorTheme(light)
-        color: grayColor(g800)  
-    .btn-confirm
-        margin-left: auto !important
-        font-size: 12px
-        background-color: colorTheme(success)
-        color: white
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -509,7 +535,7 @@
 
 
     
-checkbox styling
+//checkbox styling
 
 @supports (-webkit-appearance: none) or (-moz-appearance: none) 
   input[type='checkbox'],

@@ -36,6 +36,10 @@
 
         <div class="model-card">
             <div class="model-wrap" *ngIf="ActivePlanEdit">
+                <div class="recom-wrap">
+                    <h4>Recomendation</h4>
+                    <p>{{ActivePlanEdit.threat.recom}}</p>
+                 </div>
                 <div class="top-wrap">
                     <div class="actionable">
                         <h4>Actionable</h4>
@@ -46,28 +50,24 @@
                         <h5 [ngClass]="ActivePlanEdit.threat.level === 'High' ? 'high' : 'medium'" >{{ActivePlanEdit.threat.level}}</h5>
                     </div>
                 </div>
-                <div class="recom-wrap">
-                   <h4>Recomendation</h4>
-                   <p>{{ActivePlanEdit.threat.recom}}</p>
-                </div>
 
                 <div class="task-wrap">
-                    <h4> <span class="text">Tasks</span> <span class="icon" (click)="addTaskModal.show()"> <fa-icon [icon]="faPlus"></fa-icon> </span> </h4>
+                    <h4> <span class="text">Tasks</span> <span class="icon" (click)="openAddTaskModal()"> <fa-icon [icon]="faPlus"></fa-icon> </span> </h4>
                     <div class="task-title">
                         <h6>Task</h6>
-                        <h6>Kpi</h6>
-                        <h6>Forecast</h6>
                         <h6>Priority</h6>
-                        <h6>Approval</h6>
-                        <h6>Escalated</h6>
+                        <h6>Kpi</h6>
+                        <h6>Recurring</h6>
+                        <h6>Forecast</h6>
+                        <h6>StartDate</h6>
                     </div>
                     <div class="task-item" *ngFor="let item of ActivePlanEdit.tasks; let x = index">
                         <h6>{{item.task}}</h6>
-                        <h6>{{item.kpi}}</h6>
-                        <h6>{{item.forecast | date}}</h6>
                         <h6>{{item.priority}}</h6>
-                        <h6>{{item.approval}}</h6>
-                        <h6 class="d-flex">{{item.escalated}}
+                        <h6> <span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.kpi}}</span></h6>
+                        <h6> <span *ngIf="!item.approval">No</span> <span *ngIf="item.approval">Yes</span></h6>
+                        <h6>{{item.forecast}}</h6>
+                        <h6 class="d-flex">{{item.startDate | date}}
                             <div class="delete ml-auto">
                                 <fa-icon [icon]="faTrash" (click)="removeTask(x)"></fa-icon>
                             </div>
@@ -96,14 +96,14 @@
 
         <ul class="nav nav-tabs d-flex" id="myTab" role="tablist" >
             <li class="nav-item">
-                <a class="nav-link active" id="all-plans-tab" data-toggle="tab" href="#all-plans" role="tab" aria-controls="all-plans"  aria-selected="false" >All</a>
+                <a class="nav-link active" id="plans-tab" data-toggle="tab" href="#plans" role="tab" aria-controls="plans"  aria-selected="false" >Plan</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="approved-plans-tab" data-toggle="tab" href="#approved-plans" role="tab" aria-controls="approved-plans" aria-selected="true" >Approved</a>
+                <a class="nav-link" id="pending-plans-tab" data-toggle="tab" href="#pending-plans" role="tab" aria-controls="pending-plans" aria-selected="true" >Pending Approval</a>
             </li>
     
             <li class="nav-item">
-                <a class="nav-link" id="escalated-plans-tab" data-toggle="tab" href="#escalated-plans" role="tab" aria-controls="escalated-plans"  aria-selected="false" >Escalated</a>
+                <a class="nav-link" id="actual-tab" data-toggle="tab" href="#actual" role="tab" aria-controls="actual"  aria-selected="false" >Actual</a>
             </li>
     
     
@@ -111,7 +111,7 @@
         
         <div class="tab-content" id="myTabContent">
 
-            <div class="tab-pane fade show active" id="all-plans" role="tabpanel"aria-labelledby="course-tab">
+            <div class="tab-pane fade show active" id="plans" role="tabpanel"aria-labelledby="course-tab">
                 <div class="body-wrap">
                     <div class="title">
                         <div class="actionable">Business Operations</div>
@@ -120,15 +120,15 @@
                         <div>Forecast</div>
                     </div>
 
-                    <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.actionable === ''">
+                    <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.tasks.length === 0">
                         <div class="actionable">
                             {{item.actionable}}
                         </div>
                         <div class="task-wrap">
                             <div class="task-item" *ngFor="let task of item.tasks">
                                 <div>{{task.task}}</div>
-                                <div>{{task.kpi}}</div>
-                                <div>{{task.forecast | date}}</div>
+                                <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}}</span></div>
+                                <div>{{task.forecast}}</div>
                             </div>
                         </div>
 
@@ -136,7 +136,7 @@
                 </div>
             </div>
             
-            <div class="tab-pane fade " id="approved-plans" role="tabpanel"aria-labelledby="approved-plans-tab" >
+            <div class="tab-pane fade " id="pending-plans" role="tabpanel"aria-labelledby="pending-plans-tab" >
                 <div class="body-wrap">
                     <div class="title">
                         <div class="actionable">Business Operations</div>
@@ -145,15 +145,15 @@
                         <div>Forecast</div>
                     </div>
 
-                    <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.actionable === ''">
+                    <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.tasks.length === 0">
                         <div class="actionable">
                             {{item.actionable}}
                         </div>
                         <div class="task-wrap">
-                            <div class="task-item" *ngFor="let task of item.tasks" [hidden]="!task.approval">
+                            <div class="task-item" *ngFor="let task of item.tasks" [hidden]="task.approval">
                                 <div>{{task.task}}</div>
-                                <div>{{task.kpi}}</div>
-                                <div>{{task.forecast | date}}</div>
+                                <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}}</span></div>
+                                <div>{{task.forecast}}</div>
                             </div>
                         </div>
 
@@ -161,7 +161,7 @@
                 </div>
             </div>
     
-            <div class="tab-pane fade" id="escalated-plans" role="tabpanel"aria-labelledby="escalated-plans-tab">
+            <div class="tab-pane fade" id="actual" role="tabpanel"aria-labelledby="actual-tab">
                 <div class="body-wrap">
                     <div class="title">
                         <div class="actionable">Business Operations</div>
@@ -170,15 +170,15 @@
                         <div>Forecast</div>
                     </div>
 
-                    <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.actionable === '' ">
+                    <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.tasks.length === 0">
                         <div class="actionable">
                             {{item.actionable}}
                         </div>
                         <div class="task-wrap">
-                            <div class="task-item" *ngFor="let task of item.tasks" [hidden]="!task.escalated">
+                            <div class="task-item" *ngFor="let task of item.tasks" [hidden]="task.approval">
                                 <div>{{task.task}}</div>
-                                <div>{{task.kpi}}</div>
-                                <div>{{task.forecast | date}}</div>
+                                <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}}</span></div>
+                                <div>{{task.forecast}}</div>
                             </div>
                         </div>
 
@@ -193,79 +193,137 @@
 
 
 
+
+    <div class="model-task-form" *ngIf="ActiveModel === 'taskForm'">
+        <div class="action d-flex">
+            <span (click)="closeTaskForm()">
+                <fa-icon [icon]="faTimes"></fa-icon>
+            </span>
+    
+            <h4>Add Task</h4>
+        </div>
+    
+        <form>
+            <div class="modal-body" >
+                <form class="form">
+                    <div class="form-group">
+                        <label> Task</label>
+                        <input type="text" name="task" [(ngModel)]="task.task">
+                    </div>
+                    <div class="priority-wrap w-100">
+                        <label>Priority</label>
+                        <div class="wrap">
+                            <div class="input-wrap">
+                                <label> Low</label>
+                                <input type="radio" name="priority" value="low" [(ngModel)]="task.priority">
+                            </div>
+                            <div class="input-wrap">
+                                <label> Medium</label>
+                                <input type="radio" name="priority" value="medium" [(ngModel)]="task.priority">
+                            </div>
+                            <div class="input-wrap">
+                                <label> High</label>
+                                <input type="radio" name="priority" value="high" [(ngModel)]="task.priority">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="kpi-calendar-wrap w-100">
+                        <div class="wrap">
+                            <div class="input-wrap">
+                                <label> KPI</label>
+                                <input type="radio" name="kpiCalendar" value="kpi" [(ngModel)]="kpiCalendar">
+                            </div>
+                            <div class="input-wrap">
+                                <label> Calendar</label>
+                                <input type="radio" name="kpiCalendar" value="calendar" [(ngModel)]="kpiCalendar">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="kpiCalendar === 'kpi'">
+                        <label> KPI input</label>
+                        <input type="number" name="kpi" [(ngModel)]="task.kpi">
+                    </div>
+                    <div class="form-group">
+                        <label> Recurring Task ?</label>
+                        <div class="custom-control custom-switch ml-auto">
+                            <input type="checkbox" name="recurring" [(ngModel)]="task.recurring" (change)="checkRecurring()"  class="custom-control-input" id="customSwitch1">
+                            <label *ngIf="task.recurring" class="custom-control-label yes" for="customSwitch1">Yes</label>
+                            <label *ngIf="!task.recurring" class="custom-control-label no" for="customSwitch1">No</label>
+                        </div>
+                    </div>
+                  
+    
+                    <div class="form-group-recurring" *ngIf="!task.recurring">
+                        <label> ForeCast</label>
+                        <div class="wrap">
+                            <div class="input-wrap">
+                                <label> Weekly </label>
+                                <input type="radio" name="forecast" value="weekly" [(ngModel)]="task.forecast">
+                            </div>
+                            <div class="input-wrap">
+                                <label> Monthly</label>
+                                <input type="radio" name="forecast" value="monthly" [(ngModel)]="task.forecast">
+                            </div>
+                            <div class="input-wrap">
+                                <label> Quarterly</label>
+                                <input type="radio" name="forecast" value="quarterly" [(ngModel)]="task.forecast">
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div class="form-group-recurring" *ngIf="task.recurring">
+                        <label> Forecast</label>
+                        <div class="wrap">
+                            <div class="input-wrap">
+                                <label> Monthly</label>
+                                <input type="radio" name="forecast" value="monthly" [(ngModel)]="task.forecast">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Start Date</label>
+                        <input id="startDate" #startDate #dp="bsDatepicker"
+                        bsDatepicker [bsConfig]="{containerClass:'theme-orange'}"
+                        name="startDate" [(ngModel)]="task.startDate">
+                    </div>
+    
+                    <div class="form-group">
+                        <label> Require Approval ?</label>
+                        <div class="custom-control custom-switch ml-auto">
+                            <input type="checkbox" name="approval" [(ngModel)]="task.approval" class="custom-control-input" id="approve">
+                            <label *ngIf="task.approval" class="custom-control-label yes" for="approve">Yes</label>
+                            <label *ngIf="!task.approval" class="custom-control-label no" for="approve">No</label>
+                        </div>
+                    </div>
+
+                    <div class="reporting-users">
+                        <label> Reporting Users</label>
+                        <div class="wrap">
+                            <div class="input-wrap" *ngFor="let user of CompanyUsers">
+                                <label>{{user.name}}</label>
+                                <input type="checkbox"
+                                [checked]="ReportingUsers.indexOf(user) > -1"
+                                (click)="getReportingUsers(user._id);" name="response" value="{{user._id}}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btn-wrap d-flex w-100">
+                        <button class="btn btn-sm btn-success mx-auto" (click)="addTask()">Add Task</button>
+                    </div>
+                </form>
+               
+            </div>
+        </form>
+    
+    </div>
+
+
+
 </section>
 
 
 
 
 
-
-<div bsModal #addTaskModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog addTaskModal modal-md" role="document">
-        <div class="modal-content">
-        <div class="modal-header ">
-            <h4 class="modal-title"> Add Task </h4>
-            <button type="button" class="btn close" (click)="addTaskModal.hide()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body" >
-            <form class="form">
-                <div class="form-group">
-                    <label> Task</label>
-                    <input type="text" name="task" [(ngModel)]="task.task">
-                </div>
-                <div class="form-group">
-                    <label> KPI</label>
-                    <input type="number" name="kpi" [(ngModel)]="task.kpi">
-                </div>
-                <div class="form-group">
-                    <label> ForeCast</label>
-                    <input id="invoiceDate" #invoiceDateInput #dp="bsDatepicker"
-                    bsDatepicker [bsConfig]="{containerClass:'theme-orange'}"
-                    name="forcast" [(ngModel)]="task.forecast">
-                </div>
-                <div class="priority-wrap w-100">
-                    <label>Priority</label>
-                    <div class="wrap d-flex">
-                        <div class="input-wrap">
-                            <label> Low</label>
-                            <input type="radio" name="priority" value="low" [(ngModel)]="task.priority">
-                        </div>
-                        <div class="input-wrap">
-                            <label> Medium</label>
-                            <input type="radio" name="priority" value="medium" [(ngModel)]="task.priority">
-                        </div>
-                        <div class="input-wrap">
-                            <label> High</label>
-                            <input type="radio" name="priority" value="high" [(ngModel)]="task.priority">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label> Approved</label>
-                    <div class="custom-control custom-switch ml-auto">
-                        <input type="checkbox" name="approval" [(ngModel)]="task.approval" class="custom-control-input" id="approve">
-                        <label *ngIf="task.approval" class="custom-control-label yes" for="approve">Yes</label>
-                        <label *ngIf="!task.approval" class="custom-control-label no" for="approve">No</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label> Escalated</label>
-                    <div class="custom-control custom-switch ml-auto">
-                        <input type="checkbox" name="escalated" [(ngModel)]="task.escalated" class="custom-control-input" id="escalated">
-                        <label *ngIf="task.escalated" class="custom-control-label yes" for="escalated">Yes</label>
-                        <label *ngIf="!task.escalated" class="custom-control-label no" for="escalated">No</label>
-                    </div>
-               
-                </div>
-            </form>
-           
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-cancel" (click)="addTaskModal.hide()">Cancel</button>
-            <button type="button" class="btn btn-confirm" (click)="addTask()">Add</button>
-        </div>
-        </div>
-    </div>
-</div>

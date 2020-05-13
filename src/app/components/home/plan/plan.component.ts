@@ -71,8 +71,9 @@ async updatePage() {
 this.plansService.getAllCompanyPlans().subscribe(
   dataPlan => {
     this.AllPlans = dataPlan;
+
     // this.AllPlans.forEach((r) => {
-    //   this.plansService.deletePlan(r._id).subscribe()
+    //   this.plansService.deletePlan(r._id).subscribe( () => this.notifyService.showSuccess('cleared', 'Cleared'))
     // })
    
   this.surveyService.getAllInstitutionSurveys().subscribe(
@@ -212,6 +213,7 @@ formatQuestions() {
                               question['recom'] = answr.recom ? answr.recom: '';
                               question['level'] = answr.level ? answr.level : '';
                               question['threat'] = answr.threatId ? answr.threat: '';
+                              question['threatId'] = answr.threatId ? answr.threatId: '';
                             
                               
                                if(typeof(question['answer']) === 'object') { 
@@ -219,6 +221,7 @@ formatQuestions() {
                                 question['recom'] = answr.answer.recom;
                                 question['level'] = answr.answer.level;
                                 question['threat'] = answr.answer.threatId ?  answr.answer.threat : '';
+                                question['threatId'] = answr.answer.threatId ?  answr.answer.threatId : '';
                                 
                                }
                               });
@@ -234,6 +237,7 @@ formatQuestions() {
                                   question['recom'] = '';
                                   question['level'] = '';
                                   question['threat'] = '';
+                                  question['threatId'] = '';
 
                                   for(var i =0; i < answr.answer.length ; i++){
                                     
@@ -291,11 +295,12 @@ getTheTreats(reportArr: any) {
     if(reportElement.threat && (reportElement.level === 'Medium' || reportElement.level === 'High')) {
       let planObj = {
           threat: {
+              threatId: reportElement.threatId,
               threat: reportElement.threat,
               level: reportElement.level,
               recom: reportElement.recom
           },
-          actionable: '',
+          actionable: reportElement.threat,
           tasks : [],
           tracker: []
       }
