@@ -106,12 +106,18 @@ switchModel(param: any) {
 
 
 getUnEdittedThreatPlan() {
+  let iterations = this.PlanOnEdit.plan.length;
   for(let trtPlan of this.PlanOnEdit.plan) {
+    iterations--
     if (trtPlan.tasks.length === 0) {
      this.ActivePlanEdit = trtPlan; 
      break;
     }
+    if (iterations === 0) {
+      this.ActivePlanEdit = trtPlan; 
+    }
   }
+
 }
 
 
