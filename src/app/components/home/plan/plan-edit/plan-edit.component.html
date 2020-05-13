@@ -65,7 +65,7 @@
                         <h6>{{item.task}}</h6>
                         <h6>{{item.priority}}</h6>
                         <h6> <span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.kpi}}</span></h6>
-                        <h6> <span *ngIf="!item.approval">No</span> <span *ngIf="item.approval">Yes</span></h6>
+                        <h6> <span *ngIf="!item.recurring">No</span> <span *ngIf="item.recurring">Yes</span></h6>
                         <h6>{{item.forecast}}</h6>
                         <h6 class="d-flex">{{item.startDate | date}}
                             <div class="delete ml-auto">
