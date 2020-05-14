@@ -27,7 +27,7 @@
         <div class="model-threat">
             <h4 class="head">Threat</h4>
 
-            <div class="list-item-wrap">
+            <div class="list-item-wrap" *ngIf="ActivePlanEdit">
                 <li class="item" *ngFor="let item of PlanOnEdit.plan" 
                 [ngClass]="ActivePlanEdit._id === item._id ? 'item active' : 'item'"
                 (click)="switchPlanThreat(item._id)">{{item.threat.threat}}</li>
@@ -168,6 +168,7 @@
                         <div>Task</div>
                         <div>KPI</div>
                         <div>Forecast</div>
+                        <div>Report</div>
                     </div>
 
                     <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.tasks.length === 0">
@@ -179,6 +180,11 @@
                                 <div>{{task.task}}</div>
                                 <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}}</span></div>
                                 <div>{{task.forecast}}</div>
+                                <div>
+                                   <span *ngIf="!task.kpi && task.reportStatus">Done</span>
+                                   <span *ngIf="!task.kpi && !task.reportStatus">Not Done</span>
+                                   <span *ngIf="task.kpi">{{task.reportStatus}}</span>
+                                </div>
                             </div>
                         </div>
 

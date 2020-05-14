@@ -85,7 +85,7 @@ ngOnInit() {
       reports: []
     }
 
-    this.getUnEdittedThreatPlan();
+    this.formartReport().then(() => { this.getUnEdittedThreatPlan(); })
 }   
 
 
@@ -100,6 +100,40 @@ switchModel(param: any) {
 
 
 
+
+
+formartReport() {
+  return new Promise((resolve, reject) => {
+    this.PlanOnEdit.plan.forEach((planElement, index, arr) => {
+      
+      planElement.tasks.forEach(taskElement => {
+        
+        if(taskElement.kpi === null) {
+          if(taskElement.reports.length === 0) {
+            taskElement.reportStatus = false;
+          } else {
+            let reverseReport = taskElement.reports.reverse();
+            taskElement.reportStatus = reverseReport[0].value;
+          }
+        } else {
+          if(taskElement.reports.length === 0) {
+            taskElement.reportStatus = 0;
+          } else {
+            let totalSum: Number;
+            if (taskElement.reports.length === 1) {
+              totalSum = taskElement.reports[0].value;
+            } else {
+              totalSum = taskElement.reports.reduce((a, b) => Number(a.value) + Number(b.value), 0)
+            }
+            taskElement.reportStatus = totalSum;
+          }
+        }
+      });
+
+      if(index === arr.length - 1){resolve()}
+    });
+  })
+}
 
 
 
@@ -271,7 +305,7 @@ saveThePlan() {
         data => {
           this.PlanOnEdit = data;
           this.ImprintLoader = false;
-          this.getUnEdittedThreatPlan();
+          this.formartReport().then(() => { this.getUnEdittedThreatPlan(); })
           this.notifyService.showSuccess('Plan update', 'Success')
         },
         error => { this.ImprintLoader = false; this.notifyService.showError('Could not update plan', 'Error') }
