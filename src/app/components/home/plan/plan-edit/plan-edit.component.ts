@@ -78,6 +78,12 @@ ngOnInit() {
       priority: '',
       kpi: null,
       recurring: false,
+      recurringWeekTarget: {
+        week1: 25,
+        week2: 25,
+        week3: 25,
+        week4: 25
+      },
       forecast: 'weekly',
       startDate: '',
       approval: false,
@@ -144,6 +150,12 @@ closeTaskForm() {
     priority: '',
     kpi: null,
     recurring: false,
+    recurringWeekTarget: {
+      week1: 25,
+      week2: 25,
+      week3: 25,
+      week4: 25
+    },
     forecast: 'weekly',
     startDate: '',
     approval: false,
@@ -172,7 +184,15 @@ addTask() {
     this.notifyService.showWarning('Please add task', 'No task name')
   } else if(this.task.kpi === null && this.kpiCalendar === 'kpi' ) {
     this.notifyService.showWarning('Please add kpi', 'No KPI')
-  } else if(this.task.startDate === '') {
+  } else if(this.task.recurring && !(this.task.recurringWeekTarget.week1 > 0 && 100 > this.task.recurringWeekTarget.week1) ) {
+    this.notifyService.showWarning('Should be a value between 1 and 99', 'Invalid input in week 1')
+  } else if(this.task.recurring && !(this.task.recurringWeekTarget.week2 > 0 && 100 > this.task.recurringWeekTarget.week2) ) {
+    this.notifyService.showWarning('Should be a value between 1 and 99', 'Invalid input in week 2')
+  } else if(this.task.recurring && !(this.task.recurringWeekTarget.week3 > 0 && 100 > this.task.recurringWeekTarget.week3) ) {
+    this.notifyService.showWarning('Should be a value between 1 and 99', 'Invalid input in week 3')
+  } else if(this.task.recurring && !(this.task.recurringWeekTarget.week4 > 0 && 100 > this.task.recurringWeekTarget.week4) ) {
+    this.notifyService.showWarning('Should be a value between 1 and 99', 'Invalid input in week 4')
+  }  else if(this.task.startDate === '') {
     this.notifyService.showWarning('Please set start date', 'No start date')
   } else if(this.ReportingUsers.length === 0) {
     this.notifyService.showWarning('Please add atleast one reporting user', 'No reporting user selected')
@@ -185,6 +205,12 @@ addTask() {
       priority: '',
       kpi: null,
       recurring: false,
+      recurringWeekTarget: {
+        week1: 25,
+        week2: 25,
+        week3: 25,
+        week4: 25
+      },
       forecast: 'weekly',
       startDate: '',
       approval: false,
