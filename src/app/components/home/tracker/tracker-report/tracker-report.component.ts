@@ -38,10 +38,25 @@ public faTimes = faTimes;
 
     ngOnInit() {
       this.PlanOnReport = JSON.parse(localStorage.getItem('planOnReport'));
+      this.PlanOnReport.plan = this.PlanOnReport.plan.filter((t) => t.reportingUser === localStorage.getItem('loggedUserEmail'))
+
       this.getUnEdittedThreatPlan();
     }
 
 
+
+
+formartTasks() {
+  this.PlanOnReport.plan.forEach((planElement) => {
+
+    planElement.tasks.forEach(taskElemet => {
+      
+
+    });
+
+          
+  });
+}
 
 
 

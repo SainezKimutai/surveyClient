@@ -93,7 +93,7 @@
     padding: 1em
 .list-section .model-edit .model-card .model-wrap
     width: 100%
-    max-width: $desktop_md
+    max-width: 900px
     padding: 1em 2em
     background-color: white
 .list-section .model-edit .model-card .model-wrap .head-wrap
@@ -117,25 +117,50 @@
       font-size: 12px
       text-transform: uppercase
       font-weight: bold
-      font-weight: 400
+      font-weight: bold
       color: lighten(colorTheme(primaryTheme), 10)
       margin: auto 0
 .list-section .model-edit .model-card .model-wrap .list-wrap
     width: 100%
+    height: 500px
+    overflow-y: scroll
+.list-section .model-edit .model-card .model-wrap .list-item
+    width: 100%
     margin: 0 0 1em 0
     display: flex
     align-items: stretch
-    border: solid 1px grayColor(g100)
-    border-bottom: solid 1px grayColor(g300)
+    border: solid 1px grayColor(g200)
+    box-shadow: 0 0 2px rgba(0, 0, 0, .1)
     padding: .5em 0
+    cursor: pointer
+
+    &:hover
+        background-color: lighten(colorTheme(primaryTheme), 10)
+        li 
+            color: white
+
     li 
-      list-style: none
-      padding: 0 .5em
-      width: 100%
-      font-size: 12px
-      text-transform: capitalize
-      font-weight: 500
-      color: grayColor(g800)
-      margin: auto 0
+        list-style: none
+        padding: 0 .5em
+        width: 100%
+        font-size: 12px
+        text-transform: capitalize
+        font-weight: 500
+        color: grayColor(g800)
+        margin: auto 0
 
-
+        .pending
+            font-weight: bold
+            color: grayColor(g900)
+        .done
+            font-weight: bold
+            color: colorTheme(success)
+        .awaiting
+            font-weight: bold
+            color: grayColor(g900)
+        .active
+            font-weight: bold
+            color: colorTheme(success)
+        .due
+            font-weight: bold
+            color: grayColor(g700)

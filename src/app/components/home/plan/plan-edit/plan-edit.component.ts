@@ -81,7 +81,8 @@ ngOnInit() {
       period: 'weekly',
       endDate: '',
       approval: false,
-      reportingUser: ''
+      reportingUser: '',
+      reports: []
     }
 
     this.getUnEdittedThreatPlan();
@@ -155,7 +156,8 @@ closeTaskForm() {
     period: 'weekly',
     endDate: '',
     approval: false,
-    reportingUser: ''
+    reportingUser: '',
+    reports: []
   }
 }
 
@@ -246,7 +248,8 @@ addTask() {
       period: 'weekly',
       endDate: '',
       approval: false,
-      reportingUser: ''
+      reportingUser: '',
+      reports: []
     }
   }
 

@@ -40,33 +40,36 @@
             <div class="title-wrap">
                 <h6>Task</h6>
                 <h6>Kpi</h6>
-                <h6>Start</h6>
-                <h6>End</h6>
+                <h6>Start Date</h6>
+                <h6>End Date</h6>
                 <h6>Report</h6>
+                <h6>Timeline</h6>
             </div>
 
             <div class="list-wrap">
-                <li>Task One</li>
-                <li>Task One</li>
-                <li>Task One</li>
-                <li>Task One</li>
-                <li>Task One</li>
-            </div>
-
-            <div class="list-wrap">
-                <li>Task One</li>
-                <li>Task One</li>
-                <li>Task One</li>
-                <li>Task One</li>
-                <li>Task One</li>
-            </div>
-
-            <div class="list-wrap">
-                <li>Task One</li>
-                <li>Task One</li>
-                <li>Task One</li>
-                <li>Task One</li>
-                <li>Task One</li>
+                <div class="list-item" *ngFor="let item of ActivePlanEdit.tasks">
+                    <li>{{item.task}}</li>
+                    <li><span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.kpi}}</span></li>
+                    <li>{{item.startDate | date}}</li>
+                    <li>{{item.endDate | date}}</li>
+                    <li>
+                        <!-- <span class="pending">Pending</span> -->
+                        <span class="done">Done</span>
+                    </li>
+                    <li>
+                        <!-- <span class="awaiting">Awiting</span> -->
+                        <span class="active">Active</span>
+                        <!-- <span class="due">Due</span> -->
+                    </li>
+                </div>
+                <div class="list-item" *ngIf="ActivePlanEdit.tasks.length === 0">
+                    <li>---No Task---</li>
+                    <li>---</li>
+                    <li>---</li>
+                    <li>---</li>
+                    <li>---</li>
+                    <li>---</li>
+                </div>
             </div>
 
             </div>
