@@ -1,12 +1,7 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotificationService } from 'src/app/shared/services/notification.service';
-import { SurveyService } from 'src/app/shared/services/survey.service';
-import { ResponseService } from 'src/app/shared/services/responses.service';
-import { QuestionService } from 'src/app/shared/services/questions.service';
 import { faArrowLeft, faPlus, faTrash, faTimes} from '@fortawesome/free-solid-svg-icons';
-import 'jspdf-autotable';
 import { PlansService } from 'src/app/shared/services/plan.service';
-import { ModalDirective } from 'ngx-bootstrap';
 import { PlanComponent } from '../plan.component';
 import { UserService } from 'src/app/shared/services/user.service';
 
@@ -26,7 +21,6 @@ export class PlanEditComponent implements OnInit, OnDestroy {
         private plansService: PlansService,
         private userService: UserService,
         private planComponent: PlanComponent
-        
       ) {  }
 
 
@@ -79,15 +73,17 @@ ngOnInit() {
       kpi: null,
       recurring: false,
       recurringWeekTarget: {
-        week1: 25,
-        week2: 25,
-        week3: 25,
-        week4: 25
+        week1: 0,
+        week2: 0,
+        week3: 0,
+        week4: 0
       },
-      forecast: 'weekly',
+      forecast: null,
       startDate: '',
+      period: 'weekly',
+      endDate: '',
       approval: false,
-      reporters: [],
+      reportingUser: ''
     }
 
     this.getUnEdittedThreatPlan();
@@ -151,21 +147,35 @@ closeTaskForm() {
     kpi: null,
     recurring: false,
     recurringWeekTarget: {
-      week1: 25,
-      week2: 25,
-      week3: 25,
-      week4: 25
+      week1: 0,
+      week2: 0,
+      week3: 0,
+      week4: 0
     },
-    forecast: 'weekly',
+    forecast: null,
     startDate: '',
+    period: 'weekly',
+    endDate: '',
     approval: false,
-    reporters: [],
+    reportingUser: ''
   }
 }
 
 checkRecurring() {
   if (this.task.recurring) {
-    this.task.forecast = 'monthly';
+    this.task.period = 'monthly';
+  }
+}
+
+calculateEndDate() {
+  if (this.task.period === 'weekly'){
+
+  }
+  if (this.task.period === 'monthly'){
+    
+  }
+  if (this.task.period === 'quarterly'){
+    
   }
 }
 
@@ -206,16 +216,19 @@ addTask() {
       kpi: null,
       recurring: false,
       recurringWeekTarget: {
-        week1: 25,
-        week2: 25,
-        week3: 25,
-        week4: 25
+        week1: 0,
+        week2: 0,
+        week3: 0,
+        week4: 0
       },
-      forecast: 'weekly',
+      forecast: null,
       startDate: '',
+      period: 'weekly',
+      endDate: '',
       approval: false,
-      reporters: [],
+      reportingUser: ''
     }
+    this.ReportingUsers = [];
   }
 
 

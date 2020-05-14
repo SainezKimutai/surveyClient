@@ -254,29 +254,29 @@
                   
     
                     <div class="form-group-recurring" *ngIf="!task.recurring">
-                        <label> ForeCast</label>
+                        <label> Period</label>
                         <div class="wrap">
                             <div class="input-wrap">
                                 <label> Weekly </label>
-                                <input type="radio" name="forecast" value="weekly" [(ngModel)]="task.forecast">
+                                <input type="radio" name="period" value="weekly" [(ngModel)]="task.period">
                             </div>
                             <div class="input-wrap">
                                 <label> Monthly</label>
-                                <input type="radio" name="forecast" value="monthly" [(ngModel)]="task.forecast">
+                                <input type="radio" name="period" value="monthly" [(ngModel)]="task.period">
                             </div>
                             <div class="input-wrap">
                                 <label> Quarterly</label>
-                                <input type="radio" name="forecast" value="quarterly" [(ngModel)]="task.forecast">
+                                <input type="radio" name="period" value="quarterly" [(ngModel)]="task.period">
                             </div>
                         </div>
                     </div>
     
                     <div class="form-group-recurring" *ngIf="task.recurring">
-                        <label> Forecast</label>
+                        <label> Period</label>
                         <div class="wrap">
                             <div class="input-wrap">
                                 <label> Monthly</label>
-                                <input type="radio" name="forecast" value="monthly" [(ngModel)]="task.forecast">
+                                <input type="radio" name="period" value="monthly" [(ngModel)]="task.period">
                             </div>
                         </div>
                     </div>
@@ -286,40 +286,37 @@
                         <div class="wrap">
                             <div class="input-wrap weekly-wrap">
                                 <label>Week 1</label>
-                                <div>
-                                    <input type="number" name="week1" [(ngModel)]="task.recurringWeekTarget.week1"> 
-                                    <span>%</span>
-                                </div>
+                                <input type="number" name="week1" [(ngModel)]="task.recurringWeekTarget.week1"> 
                             </div>
                             <div class="input-wrap weekly-wrap">
                                 <label>Week 2</label>
-                                <div>
-                                    <input type="number" name="week2" [(ngModel)]="task.recurringWeekTarget.week2">
-                                    <span>%</span>
-                                </div>
+                                <input type="number" name="week2" [(ngModel)]="task.recurringWeekTarget.week2">
                             </div>
                             <div class="input-wrap weekly-wrap">
                                 <label>Week 2</label>
-                                <div>
-                                    <input type="number" name="week3" [(ngModel)]="task.recurringWeekTarget.week3">
-                                    <span>%</span>
-                                </div>
+                                <input type="number" name="week3" [(ngModel)]="task.recurringWeekTarget.week3">
                             </div>
                             <div class="input-wrap weekly-wrap">
                                 <label>Week 4</label>
-                                <div>
-                                    <input type="number" name="week4" [(ngModel)]="task.recurringWeekTarget.week4">
-                                    <span>%</span>
-                                </div>
+                                <input type="number" name="week4" [(ngModel)]="task.recurringWeekTarget.week4">
                             </div>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label>Start Date</label>
-                        <input id="startDate" #startDate #dp="bsDatepicker"
-                        bsDatepicker [bsConfig]="{containerClass:'theme-orange'}"
-                        name="startDate" [(ngModel)]="task.startDate">
+                    <div class="date-wrap">
+                        <label> Date</label>
+                        <div class="wrap">
+                            <div class="input-wrap" >
+                                <label>Start Date</label>
+                                <input id="startDate" #startDate #dp="bsDatepicker" (change)="calculateEndDate()"
+                                    bsDatepicker [bsConfig]="{containerClass:'theme-orange'}"
+                                    name="startDate" [(ngModel)]="task.startDate">
+                            </div>
+
+                            <div class="end-date">
+                                <h4>Jun 12 2020</h4>
+                            </div>
+                        </div>
                     </div>
     
                     <div class="form-group">
@@ -335,10 +332,9 @@
                         <label> Reporting Users</label>
                         <div class="wrap">
                             <div class="input-wrap" *ngFor="let user of CompanyUsers">
-                                <label>{{user.name}}</label>
-                                <input type="checkbox"
-                                [checked]="ReportingUsers.indexOf(user) > -1"
-                                (click)="getReportingUsers(user._id);" name="response" value="{{user._id}}">
+                                <label>{{user.email}}</label>
+                                <input type="radio"
+                                name="reportingUser" [(ngModel)]="task.reportingUser" name="response" value="{{user.email}}">
                             </div>
                         </div>
                     </div>

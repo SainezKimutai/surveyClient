@@ -9,13 +9,14 @@ import { ModalModule, BsDatepickerModule, DatepickerModule } from 'ngx-bootstrap
 import { TrackerRoutingModule } from './tracker-routing.module';
 import { TrackerComponent } from './tracker.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { TrackerReportComponent } from './tracker-report/tracker-report.component';
 
 
 
 @NgModule({
 
   declarations: [
-      TrackerComponent
+      TrackerComponent, TrackerReportComponent
           ],
 
     imports: [

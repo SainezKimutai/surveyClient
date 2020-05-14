@@ -1,0 +1,92 @@
+<article *ngIf="ImprintLoader" class="imprint-loader home">
+    <div class="imprint-loader-wrap">
+        <div class="imprint-loader-main">
+        <div class="imprint-loader-ball ball-one"></div>
+        <div class="imprint-loader-ball ball-two"></div>
+        <div class="imprint-loader-ball ball-three"></div>
+        <div class="imprint-loader-ball ball-four"></div>
+        </div>
+    </div>
+</article>
+
+
+
+<section class="list-section" *ngIf="PlanOnReport" >
+    <div class="title d-flex">
+        <span class="icon" (click)="back()"> <fa-icon [icon]="faArrowLeft"></fa-icon> </span>
+
+        <span class="text">{{PlanOnReport.name}}</span>
+
+    </div>
+
+    <div class="model-edit" *ngIf="ActiveModel === 'edit'">
+
+        <div class="model-threat">
+            <h4 class="head">Actionable</h4>
+
+            <div class="list-item-wrap">
+                <li class="item" *ngFor="let item of PlanOnReport.plan" 
+                [ngClass]="ActivePlanEdit._id === item._id ? 'item active' : 'item'"
+                (click)="switchPlanActionable(item._id)">{{item.actionable}}</li>
+            </div>
+        </div>
+
+        <div class="model-card">
+            <div class="model-wrap" *ngIf="ActivePlanEdit">
+            <div class="head-wrap">
+                <h4>Tasks</h4>
+            </div>
+
+            <div class="title-wrap">
+                <h6>Task</h6>
+                <h6>Kpi</h6>
+                <h6>Start</h6>
+                <h6>End</h6>
+                <h6>Report</h6>
+            </div>
+
+            <div class="list-wrap">
+                <li>Task One</li>
+                <li>Task One</li>
+                <li>Task One</li>
+                <li>Task One</li>
+                <li>Task One</li>
+            </div>
+
+            <div class="list-wrap">
+                <li>Task One</li>
+                <li>Task One</li>
+                <li>Task One</li>
+                <li>Task One</li>
+                <li>Task One</li>
+            </div>
+
+            <div class="list-wrap">
+                <li>Task One</li>
+                <li>Task One</li>
+                <li>Task One</li>
+                <li>Task One</li>
+                <li>Task One</li>
+            </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+</section>
+
+
+
+
+

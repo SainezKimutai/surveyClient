@@ -1,0 +1,141 @@
+@import 'src/styles.sass'
+
+
+.list-section
+    width: 100%
+    background-color: transparent
+    min-width: $desktop_md
+
+.list-section .title
+    width: 100%
+    padding: .5em 1em
+    display: flex
+    align-items: stretch
+    background-color: colorTheme(primaryTheme)
+
+    .icon 
+        margin: auto 0
+        width: 2em
+        height: 2em
+        border-radius: 50%
+        background-color: grayColor(g200)
+        display: flex
+        align-items: center
+        justify-content: center
+        cursor: pointer
+
+        fa-icon 
+            color: grayColor(g900)
+            font-size: 12px
+        &:hover
+            background-color: orange
+            fa-icon 
+                color: white
+
+    .text
+        margin: auto 1em
+        font-size: 16px
+        font-weight: bold
+        color: white
+
+
+
+
+
+
+
+
+
+
+
+
+
+.list-section .model-edit
+    width: 100%
+    display: flex 
+    align-items: stretch
+
+.list-section .model-edit .model-threat
+    width: 16em
+    padding: 1em
+    background-color: white
+
+
+    .head
+        font-size: 14px
+        padding: 1em
+        font-weight: bold
+        color: lighten(colorTheme(primaryTheme), 10)
+
+    .list-item-wrap
+        width: 100%
+        height: 500px
+        overflow-y: scroll
+        border: solid 1px grayColor(g200)
+
+        li 
+            width: 100%
+            min-height: 4em
+            list-style: none 
+            text-align: left
+            padding: .5em
+            font-size: 12px
+            border-bottom: solid 1px grayColor(g100)
+            cursor: pointer
+
+            &:hover
+                background-image: linear-gradient(to right, lighten( black, 70)  , lighten( black, 95) )
+            &.active
+                background-image: linear-gradient(to right, lighten( colorTheme(primaryTheme) , 10)  , lighten( colorTheme(primaryTheme), 50) )
+    
+.list-section .model-edit .model-card
+    width: 100%
+    padding: 1em
+.list-section .model-edit .model-card .model-wrap
+    width: 100%
+    max-width: $desktop_md
+    padding: 1em 2em
+    background-color: white
+.list-section .model-edit .model-card .model-wrap .head-wrap
+    width: 100%
+    margin: 0 0 1em 0
+    h4
+      font-size: 14px
+      font-weight: bold 
+      color: grayColor(g800)
+
+.list-section .model-edit .model-card .model-wrap .title-wrap
+    width: 100%
+    margin: 0 0 1em 0
+    display: flex
+    align-items: stretch
+    background-color: grayColor(g200)
+    padding: .5em 0
+    h6
+      padding: 0 .5em
+      width: 100%
+      font-size: 12px
+      text-transform: uppercase
+      font-weight: bold
+      font-weight: 400
+      color: lighten(colorTheme(primaryTheme), 10)
+      margin: auto 0
+.list-section .model-edit .model-card .model-wrap .list-wrap
+    width: 100%
+    margin: 0 0 1em 0
+    display: flex
+    align-items: stretch
+    border: solid 1px grayColor(g100)
+    border-bottom: solid 1px grayColor(g300)
+    padding: .5em 0
+    li 
+      list-style: none
+      padding: 0 .5em
+      width: 100%
+      font-size: 12px
+      text-transform: capitalize
+      font-weight: 500
+      color: grayColor(g800)
+      margin: auto 0
+
+

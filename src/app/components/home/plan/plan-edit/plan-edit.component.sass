@@ -517,30 +517,57 @@
                 font-weight: bold
                 color: grayColor(g700)
                 font-size: 11px
-            div
-              width: fit-content
-              display: flex
-              align-items: stretch
+            input 
+              width: 100%
+              width: 4em
+              border: none
+              outline: none
               background-color: grayColor(g100)
-              border-radius: 3px
-              span 
-                margin: auto 0
-                color: grayColor(g900)
-                font-size: 12px
-                font-weight: bold
-                padding: 0 1em 0 .5em
+              color: grayColor(g800)
+              font-size: 12px
+              font-weight: 400
+              padding: .5em
+              border-radius: 2px
+.model-task-form form .date-wrap
+    width: 100%
+    margin: 0 0 1em 0
+    padding: .5em
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.5)
+    border-radius: 2px
+    
+    label
+        font-size: 12px
+        font-weight: bold
+        color: lighten(colorTheme(primaryTheme), 10)
+    .wrap
+        display: grid
+        grid-template-columns: repeat(2, 1fr)
+        width: 100%
 
-              input 
-                width: 100%
-                width: 4em
-                border: none
-                outline: none
-                background-color: transparent
-                color: grayColor(g800)
-                font-size: 12px
-                font-weight: 400
-                padding: .5em
-                border-radius: 2px
+        .end-date
+            width: 100%
+            display: flex
+            flex-direction: column
+
+            label
+                font-weight: bold
+                color: grayColor(g700)
+                font-size: 11px
+            input 
+              width: 100%
+              width: 10em
+              border: none
+              outline: none
+              background-color: grayColor(g100)
+              color: grayColor(g800)
+              font-size: 12px
+              font-weight: 400
+              padding: .5em
+              border-radius: 2px
+            h4 
+              font-size: 12px
+
+
 .btn-wrap
   width: 100%
 

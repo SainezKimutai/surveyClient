@@ -32,7 +32,6 @@ export class PlanComponent implements OnInit {
 
 public ListPlanStatus = true;
 public EditPlanStatus = false;
-public ViewPlanStatus = false;
 
 
 public AllPlans = [];
