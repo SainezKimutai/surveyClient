@@ -45,8 +45,6 @@ public ActivePlanEdit: any;
 
 public task: any;
 public kpiCalendar = 'kpi';
-public ReportingUsers = [];
-
 
 
 
@@ -161,6 +159,17 @@ closeTaskForm() {
   }
 }
 
+
+getWeekelyTargets() {
+  if (this.task.kpi > 3) {
+    this.task.recurringWeekTarget.week1 = this.task.kpi
+    this.task.recurringWeekTarget.week2 = this.task.kpi
+    this.task.recurringWeekTarget.week3 = this.task.kpi
+    this.task.recurringWeekTarget.week4 = this.task.kpi
+  }
+}
+
+
 checkRecurring() {
   if (this.task.recurring) {
     this.task.period = 'monthly';
@@ -168,24 +177,25 @@ checkRecurring() {
 }
 
 calculateEndDate() {
+  console.log('Change')
   if (this.task.period === 'weekly'){
-
+    let d = new Date(this.task.startDate);
+    d.setDate(d.getDate()+7);
+    this.task.endDate = new Date(d)
   }
   if (this.task.period === 'monthly'){
-    
+    let d = new Date(this.task.startDate);
+    d.setDate(d.getDate()+30);
+    this.task.endDate = new Date(d)
   }
   if (this.task.period === 'quarterly'){
-    
+    let d = new Date(this.task.startDate);
+    d.setDate(d.getDate()+90);
+    this.task.endDate = new Date(d)
   }
 }
 
-getReportingUsers(id) {
-  if(this.ReportingUsers.indexOf(id) > -1){
-    this.ReportingUsers.splice(this.ReportingUsers.indexOf(id), 1);
-  }else{
-    this.ReportingUsers.push(id);
-  }
-}
+
 
 
 
@@ -194,20 +204,30 @@ addTask() {
     this.notifyService.showWarning('Please add task', 'No task name')
   } else if(this.task.kpi === null && this.kpiCalendar === 'kpi' ) {
     this.notifyService.showWarning('Please add kpi', 'No KPI')
-  } else if(this.task.recurring && !(this.task.recurringWeekTarget.week1 > 0 && 100 > this.task.recurringWeekTarget.week1) ) {
-    this.notifyService.showWarning('Should be a value between 1 and 99', 'Invalid input in week 1')
-  } else if(this.task.recurring && !(this.task.recurringWeekTarget.week2 > 0 && 100 > this.task.recurringWeekTarget.week2) ) {
-    this.notifyService.showWarning('Should be a value between 1 and 99', 'Invalid input in week 2')
-  } else if(this.task.recurring && !(this.task.recurringWeekTarget.week3 > 0 && 100 > this.task.recurringWeekTarget.week3) ) {
-    this.notifyService.showWarning('Should be a value between 1 and 99', 'Invalid input in week 3')
-  } else if(this.task.recurring && !(this.task.recurringWeekTarget.week4 > 0 && 100 > this.task.recurringWeekTarget.week4) ) {
-    this.notifyService.showWarning('Should be a value between 1 and 99', 'Invalid input in week 4')
+  } else if(this.task.recurring && !this.task.recurringWeekTarget.week1 ) {
+    this.notifyService.showWarning('Please set weekly target', 'Week 1')
+  } else if(this.task.recurring && !this.task.recurringWeekTarget.week2 ) {
+    this.notifyService.showWarning('Please set weekly target', 'Week 2')
+  } else if(this.task.recurring && !this.task.recurringWeekTarget.week4 ) {
+    this.notifyService.showWarning('Please set weekly target', 'Week 3')
+  } else if(this.task.recurring && !this.task.recurringWeekTarget.week4 ) {
+    this.notifyService.showWarning('Please set weekly target', 'Week 4')
   }  else if(this.task.startDate === '') {
     this.notifyService.showWarning('Please set start date', 'No start date')
-  } else if(this.ReportingUsers.length === 0) {
+  } else if(this.task.reportingUser === '') {
     this.notifyService.showWarning('Please add atleast one reporting user', 'No reporting user selected')
   } else {
-    this.task.reporters = this.ReportingUsers;
+    if (this.task.period === 'weekly'){
+      this.task.forecast = this.task.kpi;
+    }
+    if (this.task.period === 'monthly'){
+      this.task.forecast = (this.task.kpi * 4)
+    }
+    if (this.task.period === 'quarterly'){
+      this.task.forecast = (this.task.kpi * 12)
+    }
+
+
     this.ActivePlanEdit.tasks.push(this.task)
     this.ActiveModel = 'edit';
     this.task = {
@@ -228,7 +248,6 @@ addTask() {
       approval: false,
       reportingUser: ''
     }
-    this.ReportingUsers = [];
   }
 
 

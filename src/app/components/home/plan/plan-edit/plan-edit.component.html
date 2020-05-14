@@ -55,19 +55,19 @@
                     <h4> <span class="text">Tasks</span> <span class="icon" (click)="openAddTaskModal()"> <fa-icon [icon]="faPlus"></fa-icon> </span> </h4>
                     <div class="task-title">
                         <h6>Task</h6>
-                        <h6>Priority</h6>
                         <h6>Kpi</h6>
-                        <h6>Recurring</h6>
                         <h6>Forecast</h6>
-                        <h6>StartDate</h6>
+                        <h6>Period</h6>
+                        <h6>Recurring</h6>  
+                        <h6>EndDate</h6>
                     </div>
                     <div class="task-item" *ngFor="let item of ActivePlanEdit.tasks; let x = index">
-                        <h6>{{item.task}}</h6>
-                        <h6>{{item.priority}}</h6>
+                        <h6>{{item.task}}</h6>     
                         <h6> <span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.kpi}}</span></h6>
-                        <h6> <span *ngIf="!item.recurring">No</span> <span *ngIf="item.recurring">Yes</span></h6>
                         <h6>{{item.forecast}}</h6>
-                        <h6 class="d-flex">{{item.startDate | date}}
+                        <h6>{{item.period}}</h6>
+                        <h6> <span *ngIf="!item.recurring">No</span> <span *ngIf="item.recurring">Yes</span></h6>                
+                        <h6 class="d-flex">{{item.endDate | date}}
                             <div class="delete ml-auto">
                                 <fa-icon [icon]="faTrash" (click)="removeTask(x)"></fa-icon>
                             </div>
@@ -241,7 +241,7 @@
                     </div>
                     <div class="form-group" *ngIf="kpiCalendar === 'kpi'">
                         <label> KPI input</label>
-                        <input type="number" name="kpi" [(ngModel)]="task.kpi">
+                        <input type="number" name="kpi" [(ngModel)]="task.kpi" (keyup)="getWeekelyTargets()">
                     </div>
                     <div class="form-group">
                         <label> Recurring Task ?</label>
@@ -308,13 +308,14 @@
                         <div class="wrap">
                             <div class="input-wrap" >
                                 <label>Start Date</label>
-                                <input id="startDate" #startDate #dp="bsDatepicker" (change)="calculateEndDate()"
+                                <input id="startDate" #startDate #dp="bsDatepicker" 
                                     bsDatepicker [bsConfig]="{containerClass:'theme-orange'}"
-                                    name="startDate" [(ngModel)]="task.startDate">
+                                    name="startDate" [(ngModel)]="task.startDate" (ngModelChange)="calculateEndDate()">
                             </div>
 
                             <div class="end-date">
-                                <h4>Jun 12 2020</h4>
+                                <label>End Date</label>
+                                <h4>{{task.endDate | date}}</h4>
                             </div>
                         </div>
                     </div>
@@ -329,7 +330,7 @@
                     </div>
 
                     <div class="reporting-users">
-                        <label> Reporting Users</label>
+                        <label> Assign User </label>
                         <div class="wrap">
                             <div class="input-wrap" *ngFor="let user of CompanyUsers">
                                 <label>{{user.email}}</label>
