@@ -22,7 +22,7 @@
     <div class="model-edit" *ngIf="ActiveModel === 'edit' && ActivePlanEdit">
 
         <div class="model-threat">
-            <h4 class="head">Actionable</h4>
+            <h4 class="head">ACTIONABLES</h4>
 
             <div class="list-item-wrap">
                 <li class="item" *ngFor="let item of PlanOnReport.plan" 
@@ -47,7 +47,8 @@
             </div>
 
             <div class="list-wrap">
-                <div class="list-item" *ngFor="let item of ActivePlanEdit.tasks">
+                <div class="list-item" *ngFor="let item of ActivePlanEdit.tasks" 
+                (click)="actionClicked(item)" >
                     <li>{{item.task}}</li>
                     <li><span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.kpi}}</span></li>
                     <li>{{item.startDate | date}}</li>
@@ -90,6 +91,45 @@
 </section>
 
 
+
+
+
+
+
+<div bsModal #reportModel="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog reportModel modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title"> Report </h4>
+            <button type="button" class="btn close" (click)="reportModel.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+
+            <form class="form">
+                <div class="form-group" *ngIf="!reportInputIsBoolean">
+                    <label>Report Value</label>
+                    <input type="number" name="reportValueInput" [(ngModel)]="reportValueInput">
+                </div>
+                <div class="form-group" *ngIf="reportInputIsBoolean">
+                    <label>Task Done ?</label>
+                    <div class="custom-control custom-switch ml-auto">
+                        <input type="checkbox" name="reportEventInput" [(ngModel)]="reportEventInput" class="custom-control-input" id="approve">
+                        <label *ngIf="reportEventInput" class="custom-control-label yes" for="approve">Yes</label>
+                        <label *ngIf="!reportEventInput" class="custom-control-label no" for="approve">No</label>
+                    </div>
+                </div>
+            </form>
+           
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-cancel" (click)="reportModel.hide()">Cancel</button>
+            <button type="button" class="btn btn-confirm" (click)="saveReport()">Save</button>
+        </div>
+        </div>
+    </div>
+</div>
 
 
 

@@ -59,12 +59,12 @@
                         <h6>Forecast</h6>
                         <h6>Period</h6>
                         <h6>Recurring</h6>  
-                        <h6>EndDate</h6>
+                        <h6>End Date</h6>
                     </div>
                     <div class="task-item" *ngFor="let item of ActivePlanEdit.tasks; let x = index">
                         <h6>{{item.task}}</h6>     
                         <h6> <span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.kpi}}</span></h6>
-                        <h6>{{item.forecast}}</h6>
+                        <h6> <span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.forecast}}</span></h6>
                         <h6>{{item.period}}</h6>
                         <h6> <span *ngIf="!item.recurring">No</span> <span *ngIf="item.recurring">Yes</span></h6>                
                         <h6 class="d-flex">{{item.endDate | date}}

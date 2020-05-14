@@ -179,7 +179,6 @@ checkRecurring() {
 }
 
 calculateEndDate() {
-  console.log('Change')
   if (this.task.period === 'weekly'){
     let d = new Date(this.task.startDate);
     d.setDate(d.getDate()+7);
