@@ -38,24 +38,74 @@ public faTimes = faTimes;
 
     ngOnInit() {
       this.PlanOnReport = JSON.parse(localStorage.getItem('planOnReport'));
-      this.PlanOnReport.plan = this.PlanOnReport.plan.filter((t) => t.reportingUser === localStorage.getItem('loggedUserEmail'))
-
-      this.getUnEdittedThreatPlan();
+      this.PlanOnReport.plan = this.PlanOnReport.plan.filter((plan) => {
+        plan.tasks = plan.tasks.filter((task) => task.reportingUser === localStorage.getItem('loggedUserEmail')).map(e => e);
+        return true;
+      } ).map(e => e);
+      this.formartTasks().then(() => {  this.getUnEdittedThreatPlan(); });
     }
 
 
 
 
 formartTasks() {
-  this.PlanOnReport.plan.forEach((planElement) => {
+  return new Promise((resolve, reject) => {
+  this.PlanOnReport.plan.forEach((planElement, ind, arr) => {
 
-    planElement.tasks.forEach(taskElemet => {
-      
+    planElement.tasks.forEach(taskElement => {
+      let start: any = new Date(taskElement.startDate);
+      let end: any = new Date(taskElement.endDate);
+      let today: any = new Date();
+      let timeTo = today - end
+      let timeFrom = today - start
+      if (timeFrom < 0) {
+        taskElement.timeline = 'awaiting';
+      }
+      if (timeFrom > 0 && timeTo < 0 ) {
+        taskElement.timeline = 'active';
+      }
+      if (timeTo > 0 && !taskElement.recurring ) {
+        taskElement.timeline = 'due';
+      }
+      if (timeTo > 0 && taskElement.recurring ) {
+        taskElement.timeline = 'active';
+      }
+      if (!taskElement.recurring && taskElement.reports.length === 0){
+        taskElement.reportingStatus = 'pending';
+      }
+      if (!taskElement.recurring && taskElement.reports.length !== 0){
+        taskElement.reportingStatus = 'done';
+      }
+      if (taskElement.recurring){
+        let diff = today - start;
+        let days = Math.ceil(diff / (1000*60*60*24));
+        let week = Math.ceil(days / 7)
+        
+        if (taskElement.reports.length === week - 1) {
+            taskElement.reportingStatus = 'pending';
+        }
+        if (taskElement.reports.length === week) {
+          taskElement.reportingStatus = 'done';
+        }
+        if ((week - taskElement.reports.length ) > 1 ) {
+          this.addEmptyReport();
+        }
+      }
 
     });
-
-          
+    if (ind === arr.length - 1){ 
+      resolve();
+    }   
   });
+  
+});
+}
+
+
+
+
+addEmptyReport() {
+
 }
 
 

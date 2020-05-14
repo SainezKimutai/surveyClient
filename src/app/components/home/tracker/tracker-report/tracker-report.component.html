@@ -19,7 +19,7 @@
 
     </div>
 
-    <div class="model-edit" *ngIf="ActiveModel === 'edit'">
+    <div class="model-edit" *ngIf="ActiveModel === 'edit' && ActivePlanEdit">
 
         <div class="model-threat">
             <h4 class="head">Actionable</h4>
@@ -32,7 +32,7 @@
         </div>
 
         <div class="model-card">
-            <div class="model-wrap" *ngIf="ActivePlanEdit">
+            <div class="model-wrap">
             <div class="head-wrap">
                 <h4>Tasks</h4>
             </div>
@@ -53,13 +53,13 @@
                     <li>{{item.startDate | date}}</li>
                     <li>{{item.endDate | date}}</li>
                     <li>
-                        <!-- <span class="pending">Pending</span> -->
-                        <span class="done">Done</span>
+                        <span *ngIf="item.reportingStatus === 'pending'" class="pending">Pending</span>
+                        <span *ngIf="item.reportingStatus === 'done'" class="done">Done</span>
                     </li>
                     <li>
-                        <!-- <span class="awaiting">Awiting</span> -->
-                        <span class="active">Active</span>
-                        <!-- <span class="due">Due</span> -->
+                        <span *ngIf="item.timeline === 'awaiting'" class="awaiting">Awaiting</span>
+                        <span *ngIf="item.timeline === 'active'" class="active">Active</span>
+                        <span *ngIf="item.timeline === 'due'" class="due">Due</span>
                     </li>
                 </div>
                 <div class="list-item" *ngIf="ActivePlanEdit.tasks.length === 0">
