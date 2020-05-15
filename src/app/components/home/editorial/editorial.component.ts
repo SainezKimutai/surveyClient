@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { faPlus, faSearch, faListAlt, faTrashAlt, faExclamationTriangle, faEye,
-  faBackward, faEdit, faTrash, faBuilding, faComments, faFire} from '@fortawesome/free-solid-svg-icons';
+  faBackward, faEdit, faTrash, faBuilding, faComments, faFire,
+  faBusinessTime } from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
@@ -12,6 +13,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { createUrlResolverWithoutPackagePrefix } from '@angular/compiler';
 import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
 import { async } from '@angular/core/testing';
+import {ActivityPlanService } from 'src/app/shared/services/activityPlan.service';
 @Component({
   selector: 'app-editorial',
   templateUrl: './editorial.component.html',
@@ -28,13 +30,16 @@ export class EditorialComponent implements OnInit {
     private industryService: IndustryService,
     private _formBuilder: FormBuilder,
     private trackerReasonService: TrackerReasonService,
-    private threatCategoryService: ThreatCategoryService
+    private threatCategoryService: ThreatCategoryService,
+    private activityPlanService: ActivityPlanService
   ) {  }
 
 // Modals
 
 @ViewChild('addThreatModal', {static: true}) addThreatModal: ModalDirective;
 @ViewChild('deletePromptModal', {static: true}) deletePromptModal: ModalDirective;
+@ViewChild('addPlanModal', {static: true}) addPlanModal: ModalDirective;
+
 
 
   // loader
@@ -55,6 +60,7 @@ export class EditorialComponent implements OnInit {
   public faDelete = faTrashAlt;
   public faEye = faEye;
   public faWarning = faExclamationTriangle;
+  public faBusinessTime = faBusinessTime;
 
 
   //
@@ -64,6 +70,7 @@ export class EditorialComponent implements OnInit {
   public AllTrackerReasons = [];
   public AllIndustrys = [];
   public AllThreatCategories = [];
+  public AllActivityPlans = [];
 
   public TemplateNameOnView = [];
   public TemplateQuestions = [];
@@ -159,6 +166,12 @@ export class EditorialComponent implements OnInit {
   // threat Categories
   public threatCategoryInput = '';
 
+public activityPlan = '';
+public activityPlanThreatId = ''
+
+
+
+
 
 
 
@@ -213,10 +226,18 @@ export class EditorialComponent implements OnInit {
 
                             this.threatService.getAllInstitutionThreats().subscribe(
                               dataTrt=> {
-                                this.AllThreats = dataTrt; 
-                                this.pageProgress = 100;
-                                
-                                resolve();},
+                                this.AllThreats = dataTrt;
+                                this.pageProgress = 90;
+                                this.activityPlanService.getAllActivityPlanByInstitutionId().subscribe(
+                                  dataPlanAct => {
+                                    this.AllActivityPlans = dataPlanAct;
+                                    this.pageProgress = 100;
+                                    
+                                    resolve();
+                                  },
+                                  error => console.log('Error getting plan Activities')
+                                )
+                               },
                               error => console.log('Error getting threats')
                             );
                           
@@ -899,6 +920,43 @@ export class EditorialComponent implements OnInit {
       error => this.notifyService.showError('could not delete industry', 'Failed')
     );
   }
+
+
+  addActivityPlan() {
+    this.activityPlanService.createActivityPlan({
+      activityPlan: this.activityPlan, 
+      institutionId: localStorage.getItem('loggedUserID'),
+      threatId: this.activityPlanThreatId
+    }).subscribe(
+      data => {
+        this.updatePage().then(() => {
+          this.notifyService.showSuccess('Activity Plan added', 'Success');
+          this.activityPlan = '';
+          this.activityPlanThreatId = '';
+        });
+      },
+      error => this.notifyService.showError('could not add industry', 'Failed')
+    );
+  }
+
+  deleteActivityPlan(id) {
+    this.activityPlanService.deleteActivityPlan(id).subscribe(
+      data => {
+        this.updatePage().then(() => {
+          this.notifyService.showSuccess('Activity Plan deleted', 'Success');
+          this.activityPlan = '';
+          this.activityPlanThreatId = '';
+        });
+      },
+      error => this.notifyService.showError('could not delete industry', 'Failed')
+    );
+  }
+
+
+
+
+
+
 
   async updater(){
     this.industryService.getAllIndustrys().subscribe(

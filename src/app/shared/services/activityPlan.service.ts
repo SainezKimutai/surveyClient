@@ -8,40 +8,40 @@ import { dev, header} from '../dev/dev';
 })
 
 
-export class IndustryService {
+export class ActivityPlanService {
 
 
-    public url = `${dev.connect}api/industry/`;
+    public url = `${dev.connect}api/activityPlan/`;
 
 
     constructor( private http: HttpClient ) { }
 
 
-    createIndustry( data: any ) {
+    createActivityPlan( data: any ) {
         return this.http.post<any>(this.url + 'create', data, {headers : header});
     }
 
 
-    getAllIndustrys() {
+    getAllPlanActivities() {
         return this.http.get<any>(this.url + 'getAll/', {headers : header});
     }
 
 
-    getOneIndustry(id) {
+    getOneActivityPlan(id) {
         return this.http.get<any>(this.url + 'getOne/' + id, {headers : header});
     }
 
 
-    updateIndustry(id, data: any) {
+    updateActivityPlan(id, data: any) {
         return this.http.put<any>(this.url + 'update/' + id, data, {headers : header});
     }
 
 
-    deleteIndustry(id) {
+    deleteActivityPlan(id) {
         return this.http.delete<any>(this.url + 'delete/' + id, {headers : header});
     }
 
-    getAllInstitutionIndustrys() {
+    getAllActivityPlanByInstitutionId() {
         const data = {institutionId: localStorage.getItem('loggedUserInstitution')};
         return this.http.post<any> (this.url + 'institution/', data, {headers: header});
     }
