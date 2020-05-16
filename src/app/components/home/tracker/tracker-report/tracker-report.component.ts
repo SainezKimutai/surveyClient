@@ -220,9 +220,6 @@ formatPlan() {
 
 
 
-addEmptyReport() {
-
-}
 
 
 
