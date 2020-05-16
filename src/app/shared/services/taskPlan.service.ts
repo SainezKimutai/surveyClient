@@ -8,42 +8,37 @@ import { dev, header} from '../dev/dev';
 })
 
 
-export class ActivityPlanService {
+export class TaskPlanService {
 
 
-    public url = `${dev.connect}api/activityPlan/`;
+    public url = `${dev.connect}api/taskPlan/`;
 
 
     constructor( private http: HttpClient ) { }
 
 
-    createActivityPlan( data: any ) {
+    createTaskPlan( data: any ) {
         return this.http.post<any>(this.url + 'create', data, {headers : header});
     }
 
 
-    getAllActivityPlan() {
+    getAllTaskPlan() {
         return this.http.get<any>(this.url + 'getAll/', {headers : header});
     }
 
 
-    getOneActivityPlan(id) {
+    getOneTaskPlan(id) {
         return this.http.get<any>(this.url + 'getOne/' + id, {headers : header});
     }
 
 
-    updateActivityPlan(id, data: any) {
+    updateTaskPlan(id, data: any) {
         return this.http.put<any>(this.url + 'update/' + id, data, {headers : header});
     }
 
 
-    deleteActivityPlan(id) {
+    deleteTaskPlan(id) {
         return this.http.delete<any>(this.url + 'delete/' + id, {headers : header});
-    }
-
-    getAllActivityPlanByInstitutionId() {
-        const data = {institutionId: localStorage.getItem('loggedUserInstitution')};
-        return this.http.post<any> (this.url + 'institution/', data, {headers: header});
     }
 
 }

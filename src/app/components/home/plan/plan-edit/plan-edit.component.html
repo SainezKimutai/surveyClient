@@ -41,10 +41,6 @@
                     <p>{{ActivePlanEdit.threat.recom}}</p>
                  </div>
                 <div class="top-wrap">
-                    <div class="actionable">
-                        <h4>Actionable</h4>
-                        <input type="text" placeholder="Type here" [(ngModel)]="ActivePlanEdit.actionable">
-                    </div>
                     <div class="level">
                         <h4>Level</h4>
                         <h5 [ngClass]="ActivePlanEdit.threat.level === 'High' ? 'high' : 'medium'" >{{ActivePlanEdit.threat.level}}</h5>
@@ -52,20 +48,18 @@
                 </div>
 
                 <div class="task-wrap">
-                    <h4> <span class="text">Tasks</span> <span class="icon" (click)="openAddTaskModal()"> <fa-icon [icon]="faPlus"></fa-icon> </span> </h4>
+                    <h4> <span class="text">Plan</span> <span class="icon" (click)="openAddTaskModal()"> <fa-icon [icon]="faPlus"></fa-icon> </span> </h4>
                     <div class="task-title">
-                        <h6>Task</h6>
-                        <h6>Kpi</h6>
-                        <h6>Forecast</h6>
-                        <h6>Period</h6>
+                        <h6>Activity</h6>
+                        <h6>Kpi</h6>     
+                        <h6>Rrequency</h6>
                         <h6>Recurring</h6>  
                         <h6>End Date</h6>
                     </div>
-                    <div class="task-item" *ngFor="let item of ActivePlanEdit.tasks; let x = index">
-                        <h6>{{item.task}}</h6>     
+                    <div class="task-item" *ngFor="let item of ActivePlanEdit.tasksArray; let x = index">
+                        <h6>{{item.activityName}}</h6>     
                         <h6> <span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.kpi}}</span></h6>
-                        <h6> <span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.forecast}}</span></h6>
-                        <h6>{{item.period}}</h6>
+                        <h6>{{item.frequency}}</h6>
                         <h6> <span *ngIf="!item.recurring">No</span> <span *ngIf="item.recurring">Yes</span></h6>                
                         <h6 class="d-flex">{{item.endDate | date}}
                             <div class="delete ml-auto">
@@ -73,10 +67,6 @@
                             </div>
                         </h6>
                     </div>
-                </div>
-
-                <div class="btn-wrap d-flex">
-                    <button class="btn btn-sm btn-success mx-auto" (click)="saveThePlan()">Save Plan</button>
                 </div>
 
             </div>
@@ -115,18 +105,18 @@
                 <div class="body-wrap">
                     <div class="title">
                         <div class="actionable">Business Operations</div>
-                        <div>Task</div>
+                        <div>Activity</div>
                         <div>KPI</div>
                         <div>Forecast</div>
                     </div>
 
                     <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.tasks.length === 0">
                         <div class="actionable">
-                            {{item.actionable}}
+                            {{item.threat.threat}}
                         </div>
                         <div class="task-wrap">
-                            <div class="task-item" *ngFor="let task of item.tasks">
-                                <div>{{task.task}}</div>
+                            <div class="task-item" *ngFor="let task of item.tasksArray">
+                                <div>{{task.activityName}}</div>
                                 <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}}</span></div>
                                 <div>{{task.forecast}}</div>
                             </div>
@@ -140,18 +130,18 @@
                 <div class="body-wrap">
                     <div class="title">
                         <div class="actionable">Business Operations</div>
-                        <div>Task</div>
+                        <div>Activity</div>
                         <div>KPI</div>
                         <div>Forecast</div>
                     </div>
 
                     <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.tasks.length === 0">
                         <div class="actionable">
-                            {{item.actionable}}
+                            {{item.threat.threat}}
                         </div>
                         <div class="task-wrap">
-                            <div class="task-item" *ngFor="let task of item.tasks" [hidden]="task.approval">
-                                <div>{{task.task}}</div>
+                            <div class="task-item" *ngFor="let task of item.tasksArray" [hidden]="task.approval">
+                                <div>{{task.activityName}}</div>
                                 <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}}</span></div>
                                 <div>{{task.forecast}}</div>
                             </div>
@@ -165,7 +155,7 @@
                 <div class="body-wrap">
                     <div class="title">
                         <div class="actionable">Business Operations</div>
-                        <div>Task</div>
+                        <div>Activity</div>
                         <div>KPI</div>
                         <div>Forecast</div>
                         <div>Report</div>
@@ -173,11 +163,11 @@
 
                     <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.tasks.length === 0">
                         <div class="actionable">
-                            {{item.actionable}}
+                            {{item.threat.threat}}
                         </div>
                         <div class="task-wrap">
-                            <div class="task-item" *ngFor="let task of item.tasks" [hidden]="task.approval">
-                                <div>{{task.task}}</div>
+                            <div class="task-item" *ngFor="let task of item.tasksArray" [hidden]="task.approval">
+                                <div>{{task.activityName}}</div>
                                 <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}}</span></div>
                                 <div>{{task.forecast}}</div>
                                 <div>
@@ -206,15 +196,18 @@
                 <fa-icon [icon]="faTimes"></fa-icon>
             </span>
     
-            <h4>Add Task</h4>
+            <h4>Add Plan</h4>
         </div>
     
         <form>
             <div class="modal-body" >
                 <form class="form">
                     <div class="form-group">
-                        <label> Task</label>
-                        <input type="text" name="task" [(ngModel)]="task.task">
+                        <label> Activity</label>
+                        <select name="activityId" [(ngModel)]="task.activityId">
+                            <option value="" selected hidden disabled>--Select Activity</option>
+                            <option *ngFor="let act of ActivityPlan" [value]="act._id">{{act.activityPlan}}</option>
+                        </select>
                     </div>
                     <div class="priority-wrap w-100">
                         <label>Priority</label>
@@ -236,7 +229,7 @@
                     <div class="kpi-calendar-wrap w-100">
                         <div class="wrap">
                             <div class="input-wrap">
-                                <label> KPI</label>
+                                <label> Value</label>
                                 <input type="radio" name="kpiCalendar" value="kpi" [(ngModel)]="kpiCalendar">
                             </div>
                             <div class="input-wrap">
@@ -249,8 +242,16 @@
                         <label> KPI input</label>
                         <input type="number" name="kpi" [(ngModel)]="task.kpi" (keyup)="getWeekelyTargets()">
                     </div>
+
                     <div class="form-group">
-                        <label> Recurring Task ?</label>
+                        <label>End Date</label>
+                        <input id="endDate" #endDate #dp="bsDatepicker" 
+                            bsDatepicker [bsConfig]="{containerClass:'theme-orange'}"
+                            name="endDate" [(ngModel)]="task.endDate">
+                    </div>
+
+                    <div class="form-group">
+                        <label> Recurring Plan ?</label>
                         <div class="custom-control custom-switch ml-auto">
                             <input type="checkbox" name="recurring" [(ngModel)]="task.recurring" (change)="checkRecurring()"  class="custom-control-input" id="customSwitch1">
                             <label *ngIf="task.recurring" class="custom-control-label yes" for="customSwitch1">Yes</label>
@@ -259,35 +260,35 @@
                     </div>
                   
     
-                    <div class="form-group-recurring" *ngIf="!task.recurring">
-                        <label> Period</label>
+                    <div class="form-group-recurring" *ngIf="task.recurring">
+                        <label>Frequency</label>
                         <div class="wrap">
                             <div class="input-wrap">
                                 <label> Weekly </label>
-                                <input type="radio" name="period" value="weekly" [(ngModel)]="task.period">
+                                <input type="radio" name="frequency" value="weekly" [(ngModel)]="task.frequency">
                             </div>
                             <div class="input-wrap">
                                 <label> Monthly</label>
-                                <input type="radio" name="period" value="monthly" [(ngModel)]="task.period">
+                                <input type="radio" name="frequency" value="monthly" [(ngModel)]="task.frequency">
                             </div>
                             <div class="input-wrap">
                                 <label> Quarterly</label>
-                                <input type="radio" name="period" value="quarterly" [(ngModel)]="task.period">
+                                <input type="radio" name="frequency" value="quarterly" [(ngModel)]="task.frequency">
                             </div>
                         </div>
                     </div>
     
-                    <div class="form-group-recurring" *ngIf="task.recurring">
-                        <label> Period</label>
+                    <div class="form-group-recurring" *ngIf="!task.recurring">
+                        <label>Frequency</label>
                         <div class="wrap">
                             <div class="input-wrap">
                                 <label> Monthly</label>
-                                <input type="radio" name="period" value="monthly" [(ngModel)]="task.period">
+                                <input type="radio" name="frequency" value="monthly" [(ngModel)]="task.frequency">
                             </div>
                         </div>
                     </div>
 
-                    <div class="weekly-targets" *ngIf="task.recurring">
+                    <div class="weekly-targets" *ngIf="!task.recurring">
                         <label> Weekly Target</label>
                         <div class="wrap">
                             <div class="input-wrap weekly-wrap">
@@ -309,22 +310,7 @@
                         </div>
                     </div>
 
-                    <div class="date-wrap">
-                        <label> Date</label>
-                        <div class="wrap">
-                            <div class="input-wrap" >
-                                <label>Start Date</label>
-                                <input id="startDate" #startDate #dp="bsDatepicker" 
-                                    bsDatepicker [bsConfig]="{containerClass:'theme-orange'}"
-                                    name="startDate" [(ngModel)]="task.startDate" (ngModelChange)="calculateEndDate()">
-                            </div>
 
-                            <div class="end-date">
-                                <label>End Date</label>
-                                <h4>{{task.endDate | date}}</h4>
-                            </div>
-                        </div>
-                    </div>
     
                     <div class="form-group">
                         <label> Require Approval ?</label>
@@ -333,6 +319,12 @@
                             <label *ngIf="task.approval" class="custom-control-label yes" for="approve">Yes</label>
                             <label *ngIf="!task.approval" class="custom-control-label no" for="approve">No</label>
                         </div>
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label>Actionable</label>
+                        <textarea name="actionable" [(ngModel)]="task.actionable"></textarea>
                     </div>
 
                     <div class="reporting-users">

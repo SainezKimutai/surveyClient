@@ -4,6 +4,8 @@ import { faArrowLeft, faPlus, faTrash, faTimes} from '@fortawesome/free-solid-sv
 import { PlansService } from 'src/app/shared/services/plan.service';
 import { PlanComponent } from '../plan.component';
 import { UserService } from 'src/app/shared/services/user.service';
+import { TaskPlanService } from 'src/app/shared/services/taskPlan.service';
+import { ActivityPlanService } from 'src/app/shared/services/activityPlan.service';
 
 
 // tslint:disable
@@ -20,7 +22,9 @@ export class PlanEditComponent implements OnInit, OnDestroy {
         private notifyService: NotificationService,
         private plansService: PlansService,
         private userService: UserService,
-        private planComponent: PlanComponent
+        private planComponent: PlanComponent,
+        private taskPlanService: TaskPlanService,
+        private activityPlanService: ActivityPlanService
       ) {  }
 
 
@@ -32,6 +36,8 @@ public TaskFormStatus = true;
 public ActiveModel = 'edit';
 
 public CompanyUsers = [];
+public ActivityPlan = [];
+public TaskPlan = [];
 
 public faArrowLeft = faArrowLeft;
 public faPlus = faPlus;
@@ -55,18 +61,8 @@ public kpiCalendar = 'kpi';
 
 ngOnInit() {
     this.PlanOnEdit = JSON.parse(localStorage.getItem('planOnEdit'))
-
-    this.userService.getAllUsers().subscribe(
-      data => {
-        this.CompanyUsers = data.filter((user) => user.companyId === localStorage.getItem('loggedCompanyId')).map(e => e);
-      },
-      error => {
-        console.log('Error In getting all Users');
-      }
-    ); // get all users
-
     this.task = {
-      task: '',
+      activityId: '',
       priority: '',
       kpi: null,
       recurring: false,
@@ -78,17 +74,54 @@ ngOnInit() {
       },
       forecast: null,
       startDate: '',
-      period: 'weekly',
+      frequency: 'monthly',
       endDate: '',
       approval: false,
       reportingUser: '',
+      actionable: '',
       reports: []
     }
 
-    this.formartReport().then(() => { this.getUnEdittedThreatPlan(); })
+    this.updatePage().then(() => {
+      this.formatTask().then(() => {
+        this.formartReport().then(() => { this.getUnEdittedThreatPlan(); })
+      })
+    })
 }   
 
 
+
+
+updatePage() {
+
+  return new Promise((resolve, reject) => {
+    this.userService.getAllUsers().subscribe(
+      data => {
+        this.CompanyUsers = data.filter((user) => user.companyId === localStorage.getItem('loggedCompanyId')).map(e => e);
+
+        this.activityPlanService.getAllActivityPlanByInstitutionId().subscribe(
+          dataActivity => {
+            this.ActivityPlan = dataActivity;
+            
+            this.taskPlanService.getAllTaskPlan().subscribe(
+              dataTask => {
+                this.TaskPlan = dataTask;
+                // this.TaskPlan.forEach((r) => {
+                //   this.taskPlanService.deleteTaskPlan(r._id).subscribe( () => this.notifyService.showSuccess('cleared', 'Cleared'))
+                // })
+                            
+                this.formatAtivity().then(() => resolve())
+              }, error => console.log('Error getting task plan')
+            )
+
+          }, error => console.log('Error getting activity plan')
+        )
+
+      },
+      error => { console.log('Error In getting all Users'); }
+    );
+  })
+}
 
 
 
@@ -100,14 +133,44 @@ switchModel(param: any) {
 
 
 
+formatAtivity () {
+  return new Promise((resolve, reject) => {
+  this.TaskPlan.forEach((task, ind, arr) => {
+    let getActivity = this.ActivityPlan.filter((a) => a._id === task.activityId).map((e) => e);
+    task.activityName = getActivity[0].activityPlan;
+    if (ind === arr.length - 1){ resolve() }
+  })
+  if(this.TaskPlan.length === 0) { resolve() }
+})
+}
+
+
+
+
+formatTask() {
+  return new Promise((resolve, reject) => {
+  this.PlanOnEdit.plan.forEach((planElement: any, index, array) => {
+    planElement.tasksArray = [];
+    planElement.tasks.forEach((taskId) => {
+      let myTaskPlan = this.TaskPlan.filter((t) => t._id === taskId).map((e) => e);
+      planElement.tasksArray.push(myTaskPlan[0]);
+    })
+
+    if( index === array.length - 1) {
+      resolve()
+    }
+  })
+});
+}
+
+
+
 
 
 formartReport() {
   return new Promise((resolve, reject) => {
     this.PlanOnEdit.plan.forEach((planElement, index, arr) => {
-      
-      planElement.tasks.forEach(taskElement => {
-        
+      planElement.tasksArray.forEach(taskElement => {
         if(taskElement.kpi === null) {
           if(taskElement.reports.length === 0) {
             taskElement.reportStatus = false;
@@ -116,7 +179,8 @@ formartReport() {
             taskElement.reportStatus = reverseReport[0].value;
           }
         } else {
-          if(taskElement.reports.length === 0) {
+
+          if( taskElement.reports.length === 0) {
             taskElement.reportStatus = 0;
           } else {
             let totalSum: Number;
@@ -141,18 +205,7 @@ formartReport() {
 
 
 getUnEdittedThreatPlan() {
-  let iterations = this.PlanOnEdit.plan.length;
-  for(let trtPlan of this.PlanOnEdit.plan) {
-    iterations--
-    if (trtPlan.tasks.length === 0) {
-     this.ActivePlanEdit = trtPlan; 
-     break;
-    }
-    if (iterations === 0) {
-      this.ActivePlanEdit = trtPlan; 
-    }
-  }
-
+  this.ActivePlanEdit = this.PlanOnEdit.plan[0];
 }
 
 
@@ -175,7 +228,7 @@ openAddTaskModal() {
 closeTaskForm() {
   this.ActiveModel = 'edit';
   this.task = {
-    task: '',
+    activityId: '',
     priority: '',
     kpi: null,
     recurring: false,
@@ -187,9 +240,10 @@ closeTaskForm() {
     },
     forecast: null,
     startDate: '',
-    period: 'weekly',
+    frequency: 'monthly',
     endDate: '',
     approval: false,
+    actionable: '',
     reportingUser: '',
     reports: []
   }
@@ -198,32 +252,32 @@ closeTaskForm() {
 
 getWeekelyTargets() {
   if (this.task.kpi > 3) {
-    this.task.recurringWeekTarget.week1 = this.task.kpi
-    this.task.recurringWeekTarget.week2 = this.task.kpi
-    this.task.recurringWeekTarget.week3 = this.task.kpi
-    this.task.recurringWeekTarget.week4 = this.task.kpi
+    this.task.recurringWeekTarget.week1 = this.task.kpi / 4
+    this.task.recurringWeekTarget.week2 = this.task.kpi / 4
+    this.task.recurringWeekTarget.week3 = this.task.kpi / 4
+    this.task.recurringWeekTarget.week4 = this.task.kpi / 4
   }
 }
 
 
 checkRecurring() {
   if (this.task.recurring) {
-    this.task.period = 'monthly';
+    this.task.frequency = 'monthly';
   }
 }
 
 calculateEndDate() {
-  if (this.task.period === 'weekly'){
+  if (this.task.frequency === 'weekly'){
     let d = new Date(this.task.startDate);
     d.setDate(d.getDate()+7);
     this.task.endDate = new Date(d)
   }
-  if (this.task.period === 'monthly'){
+  if (this.task.frequency === 'monthly'){
     let d = new Date(this.task.startDate);
     d.setDate(d.getDate()+30);
     this.task.endDate = new Date(d)
   }
-  if (this.task.period === 'quarterly'){
+  if (this.task.frequency === 'quarterly'){
     let d = new Date(this.task.startDate);
     d.setDate(d.getDate()+90);
     this.task.endDate = new Date(d)
@@ -235,8 +289,8 @@ calculateEndDate() {
 
 
 addTask() {
-  if(this.task.task === '') {
-    this.notifyService.showWarning('Please add task', 'No task name')
+  if(this.task.activityId === '') {
+    this.notifyService.showWarning('Please add Activity', 'No Activity')
   } else if(this.task.kpi === null && this.kpiCalendar === 'kpi' ) {
     this.notifyService.showWarning('Please add kpi', 'No KPI')
   } else if(this.task.recurring && !this.task.recurringWeekTarget.week1 ) {
@@ -247,47 +301,54 @@ addTask() {
     this.notifyService.showWarning('Please set weekly target', 'Week 3')
   } else if(this.task.recurring && !this.task.recurringWeekTarget.week4 ) {
     this.notifyService.showWarning('Please set weekly target', 'Week 4')
-  }  else if(this.task.startDate === '') {
-    this.notifyService.showWarning('Please set start date', 'No start date')
+  } else if(this.task.endDate === '') {
+    this.notifyService.showWarning('Please set end date', 'No end date')
+  } else if(this.task.actionable === '') {
+    this.notifyService.showWarning('Please type actionable', 'No Actionable')
   } else if(this.task.reportingUser === '') {
     this.notifyService.showWarning('Please add atleast one reporting user', 'No reporting user selected')
   } else {
-    if (this.task.period === 'weekly'){
+    if (this.task.frequency === 'weekly'){
       this.task.forecast = this.task.kpi;
     }
-    if (this.task.period === 'monthly'){
+    if (this.task.frequency === 'monthly'){
       this.task.forecast = (this.task.kpi * 4)
     }
-    if (this.task.period === 'quarterly'){
+    if (this.task.frequency === 'quarterly'){
       this.task.forecast = (this.task.kpi * 12)
     }
-
-
-    this.ActivePlanEdit.tasks.push(this.task)
-    this.ActiveModel = 'edit';
-    this.task = {
-      task: '',
-      priority: '',
-      kpi: null,
-      recurring: false,
-      recurringWeekTarget: {
-        week1: 0,
-        week2: 0,
-        week3: 0,
-        week4: 0
-      },
-      forecast: null,
-      startDate: '',
-      period: 'weekly',
-      endDate: '',
-      approval: false,
-      reportingUser: '',
-      reports: []
-    }
+    this.task.startDate = new Date();
+    this.submitTaskPlan();
   }
 
 
 }
+
+
+
+
+
+submitTaskPlan() {
+  this.taskPlanService.createTaskPlan(this.task).subscribe(
+    data => {
+      this.ActivePlanEdit.tasks.push(data._id)
+      this.saveThePlan();
+    }, 
+    error => this.notifyService.showError('Could not create Plan', 'Failed')
+  )
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 removeTask(x: any) {
   this.ActivePlanEdit.tasks.splice(x, 1);
@@ -300,13 +361,47 @@ saveThePlan() {
   for(let trtPlan of this.PlanOnEdit.plan) {
     if (trtPlan._id === this.ActivePlanEdit._id) {
       trtPlan = this.ActivePlanEdit; 
-
       this.plansService.updatePlan(this.PlanOnEdit._id, this.PlanOnEdit).subscribe(
         data => {
           this.PlanOnEdit = data;
-          this.ImprintLoader = false;
-          this.formartReport().then(() => { this.getUnEdittedThreatPlan(); })
-          this.notifyService.showSuccess('Plan update', 'Success')
+          this.updatePage().then(() => {
+            this.formatTask().then(() => {
+              this.formartReport().then(() => { 
+                for(let trtPlan of this.PlanOnEdit.plan) {
+                  if (trtPlan._id === this.ActivePlanEdit._id) {
+                   this.ActivePlanEdit = trtPlan; 
+
+                     this.ActiveModel = 'edit';
+                    this.task = {
+                      activityId: '',
+                      priority: '',
+                      kpi: null,
+                      recurring: false,
+                      recurringWeekTarget: {
+                        week1: 0,
+                        week2: 0,
+                        week3: 0,
+                        week4: 0
+                      },
+                      forecast: null,
+                      startDate: '',
+                      frequency: 'monthly',
+                      endDate: '',
+                      approval: false,
+                      actionable: '',
+                      reportingUser: '',
+                      reports: []
+                    }
+                    this.ImprintLoader = false;
+                    this.notifyService.showSuccess('Plan update', 'Success')
+                   break;
+                  }
+                }
+              })
+            })
+          })
+
+
         },
         error => { this.ImprintLoader = false; this.notifyService.showError('Could not update plan', 'Error') }
       )

@@ -299,7 +299,6 @@ getTheTreats(reportArr: any) {
               level: reportElement.level,
               recom: reportElement.recom
           },
-          actionable: reportElement.threat,
           tasks : [],
           tracker: []
       }
@@ -343,8 +342,7 @@ addPlan() {
       companyId: localStorage.getItem('loggedCompanyId'),
       surveyId: this.PlanSurveyId,
       name: this.planName,
-      plan: this.NewPlan,
-      reporting: 'weekly'
+      plan: this.NewPlan
     }
     this.plansService.createPlan(MyNewPlan).subscribe(
       data => {
