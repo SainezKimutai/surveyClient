@@ -168,19 +168,17 @@ formatPlan() {
       if (timeTo > 0 ) {
         taskElement.timeline = 'due';
       }
-      if (!taskElement.recurring && taskElement.reports.length === 0){
-        taskElement.reportingStatus = 'pending';
-      }
-      if (!taskElement.recurring && taskElement.reports.length !== 0){
-        taskElement.reportingStatus = 'done';
-      }
-      if (taskElement.recurring){
-        let diff = today - start;
-        let days = Math.ceil(diff / (1000*60*60*24));
-        let week = Math.ceil(days / 7)
 
-        // if the numver of week does not exceed a month
-        if (week < 5) {
+      if (!taskElement.recurring){
+        let doneSecond = today - start;
+        let days = Math.ceil(doneSecond / (1000*60*60*24));
+        let totalSeconds = end - start;
+        let totalDays = Math.ceil(totalSeconds / (1000*60*60*24)); 
+        let week = Math.ceil(days / 7)
+        let totalWeeks = Math.ceil(totalDays / 7) 
+
+        // if the number of week does not exceed a month
+        if (week < totalWeeks || week === totalWeeks) {
           if (taskElement.reports.length === week - 1 ) {
               taskElement.reportingStatus = 'pending';
           }
@@ -190,24 +188,153 @@ formatPlan() {
         }
 
         // if there is report skipped
-        if (taskElement.reports.length < 4) {
+        if (taskElement.reports.length < totalWeeks) {
           if ((week - taskElement.reports.length ) > 1 ) {
             let reportObj = {
               value: taskElement.kpi === null ? false : 0,
               reportingDate: new Date()
             }
             taskElement.reports.push(reportObj);
-            this.plansService.updatePlan(this.PlanOnReport._id, this.PlanOnReport).subscribe(
+            this.taskPlanService.updateTaskPlan(taskElement._id, taskElement).subscribe(
               data => {
-                this.PlanOnReport = data;
-                this.formatPlan();
+                this.updatePage().then(() => {
+                  this.formatTask().then(() => {
+                    this.formatPlan().then(() => {   this.ActivePlanEdit = this.PlanOnReport.plan[0]; });
+                  })
+                })
               },
-              error => { console.log('Error updating skipped weeek') }
+              error => { console.log('Error updating skipped week') }
             )
           }
         }
       }
+      if (taskElement.recurring){
 
+        if (taskElement.frequency === 'weekly') {
+          let doneSecond = today - start;
+          let days = Math.ceil(doneSecond / (1000*60*60*24));
+          let totalSeconds = end - start;
+          let totalDays = Math.ceil(totalSeconds / (1000*60*60*24)); 
+          let week = Math.ceil(days / 7)
+          let totalWeeks = Math.ceil(totalDays / 7) 
+
+                 // if the number of week does not exceed end date
+            if (week < totalWeeks || week === totalWeeks) {
+              if (taskElement.reports.length === week - 1 ) {
+                  taskElement.reportingStatus = 'pending';
+              }
+              if (taskElement.reports.length === week) {
+                taskElement.reportingStatus = 'done';
+              }
+            }
+
+            // if there is report skipped
+            if (taskElement.reports.length < totalWeeks) {
+              if ((week - taskElement.reports.length ) > 1 ) {
+                let reportObj = {
+                  value: taskElement.kpi === null ? false : 0,
+                  reportingDate: new Date()
+                }
+                taskElement.reports.push(reportObj);
+                this.taskPlanService.updateTaskPlan(taskElement._id, taskElement).subscribe(
+                  data => {
+                    this.updatePage().then(() => {
+                      this.formatTask().then(() => {
+                        this.formatPlan().then(() => {   this.ActivePlanEdit = this.PlanOnReport.plan[0]; });
+                      })
+                    })
+                  },
+                  error => { console.log('Error updating skipped week') }
+                )
+              }
+            }
+
+
+        }
+        if (taskElement.frequency === 'monthly') {
+          let doneSecond = today - start;
+          let days = Math.ceil(doneSecond / (1000*60*60*24));
+          let totalSeconds = end - start;
+          let totalDays = Math.ceil(totalSeconds / (1000*60*60*24)); 
+          let month = Math.ceil(days / 30)
+          let totalMonths = Math.ceil(totalDays / 30) 
+
+                 // if the number of months does not exceed end date
+            if (month < totalMonths || month === totalMonths) {
+              if (taskElement.reports.length === month - 1 ) {
+                  taskElement.reportingStatus = 'pending';
+              }
+              if (taskElement.reports.length === month) {
+                taskElement.reportingStatus = 'done';
+              }
+            }
+
+            // if there is report skipped
+            if (taskElement.reports.length < totalMonths) {
+              if ((month - taskElement.reports.length ) > 1 ) {
+                let reportObj = {
+                  value: taskElement.kpi === null ? false : 0,
+                  reportingDate: new Date()
+                }
+                taskElement.reports.push(reportObj);
+                this.taskPlanService.updateTaskPlan(taskElement._id, taskElement).subscribe(
+                  data => {
+                    this.updatePage().then(() => {
+                      this.formatTask().then(() => {
+                        this.formatPlan().then(() => {   this.ActivePlanEdit = this.PlanOnReport.plan[0]; });
+                      })
+                    })
+                  },
+                  error => { console.log('Error updating skipped week') }
+                )
+              }
+            }
+
+        }
+        if (taskElement.frequency === 'quarterly') {
+          let doneSecond = today - start;
+          let days = Math.ceil(doneSecond / (1000*60*60*24));
+          let totalSeconds = end - start;
+          let totalDays = Math.ceil(totalSeconds / (1000*60*60*24)); 
+          let quarter = Math.ceil(days / 90)
+          let totalQuarter = Math.ceil(totalDays / 90) 
+
+                 // if the number of months does not exceed end date
+            if (quarter < totalQuarter || quarter === totalQuarter) {
+              if (taskElement.reports.length === quarter - 1 ) {
+                  taskElement.reportingStatus = 'pending';
+              }
+              if (taskElement.reports.length === quarter) {
+                taskElement.reportingStatus = 'done';
+              }
+            }
+
+            // if there is report skipped
+            if (taskElement.reports.length < totalQuarter) {
+              if ((quarter - taskElement.reports.length ) > 1 ) {
+                let reportObj = {
+                  value: taskElement.kpi === null ? false : 0,
+                  reportingDate: new Date()
+                }
+                taskElement.reports.push(reportObj);
+                this.taskPlanService.updateTaskPlan(taskElement._id, taskElement).subscribe(
+                  data => {
+                    this.updatePage().then(() => {
+                      this.formatTask().then(() => {
+                        this.formatPlan().then(() => {   this.ActivePlanEdit = this.PlanOnReport.plan[0]; });
+                      })
+                    })
+                  },
+                  error => { console.log('Error updating skipped week') }
+                )
+              }
+            }       
+        }
+
+    
+
+ 
+      }
     });
     if (ind === arr.length - 1){ 
       resolve();
@@ -252,7 +379,7 @@ actionClicked(item: any) {
       this.reportValueInput = null;
       this.reportInputIsBoolean = false;
     }
-    this.TaskOnEdit = item._id;
+    this.TaskOnEdit = item;
     this.ReportOnEdit = '';
     this.reportModel.show();
   }
@@ -271,7 +398,7 @@ actionClicked(item: any) {
       this.reportInputIsBoolean = false;
     }
 
-    this.TaskOnEdit = item._id;
+    this.TaskOnEdit = item;
     this.reportModel.show();
   }
 
@@ -305,33 +432,23 @@ saveReport() {
   this.reportModel.hide();
   if (this.ReportOnEdit){
  
-    for(let taskElm of this.ActivePlanEdit.tasks ) {
-      if (this.TaskOnEdit === taskElm._id) {
-        for(let taskReport of taskElm.reports) {
-          if (taskReport._id === this.ReportOnEdit ) {
-            taskReport.value = this.reportInputIsBoolean ? this.reportEventInput : this.reportValueInput;
-            this.saveThePlan()
-            break;
-          }
-        }
+    for(let taskReport of this.TaskOnEdit.reports) {
+      if (taskReport._id === this.ReportOnEdit ) {
+        taskReport.value = this.reportInputIsBoolean ? this.reportEventInput : this.reportValueInput;
+        this.saveTaskPlan();
         break;
       }
     }
    
   } else {
     
-    for(let taskElm of this.ActivePlanEdit.tasks ) {
-      if (this.TaskOnEdit === taskElm._id) {
-  
+
         let reportObj = {
           value: this.reportInputIsBoolean ? this.reportEventInput : this.reportValueInput,
           reportingDate: new Date()
         }
-        taskElm.reports.push(reportObj);
-        this.saveThePlan();
-        break;
-      }
-    }
+        this.TaskOnEdit.reports.push(reportObj)
+        this.saveTaskPlan();
   }
 }
 
@@ -341,40 +458,35 @@ saveReport() {
 
 
 
-
-
-
-
-
-
-
-
-saveThePlan() {
-  for(let Plan of this.PlanOnReport.plan) {
-    if (Plan._id === this.ActivePlanEdit._id){
-
-      Plan = this.ActivePlanEdit
-      this.plansService.updatePlan(this.PlanOnReport._id, this.PlanOnReport).subscribe(
-        data => {
-          this.PlanOnReport = data;
-
-          for(let planData of this.PlanOnReport.plan) {
-            if (planData._id === this.ActivePlanEdit._id){
-              this.ActivePlanEdit = planData;
-              break;
-            }
-          }
-
-          this.ImprintLoader = false;
-          this.formatPlan();
-          this.notifyService.showSuccess('Report update', 'Success')
-        },
-        error => { this.ImprintLoader = false; this.notifyService.showError('Could not update report', 'Error') }
-      )
-      break;
-    }
-  }
+saveTaskPlan() {
+  this.taskPlanService.updateTaskPlan(this.TaskOnEdit._id, this.TaskOnEdit).subscribe(
+    data => {
+      this.updatePage().then(() => {
+        this.formatTask().then(() => {
+          this.formatPlan().then(() => {  
+             for(let trtPlan of this.PlanOnReport.plan) {
+              if (trtPlan._id === this.ActivePlanEdit._id) {
+               this.ActivePlanEdit = trtPlan; 
+               this.reportModel.hide();
+               this.reportEventInput = false;
+                this.reportValueInput = null
+                this.ImprintLoader = false;
+               break;
+              }
+            }  
+          });
+        })
+      })
+    },
+    error => { console.log('Error updating skipped week') }
+  )
 }
+
+
+
+
+
+
 
 
 
