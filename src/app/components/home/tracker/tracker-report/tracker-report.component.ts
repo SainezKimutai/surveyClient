@@ -5,6 +5,8 @@ import { PlansService } from 'src/app/shared/services/plan.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { TrackerComponent } from '../tracker.component';
 import { ModalDirective } from 'ngx-bootstrap';
+import { TaskPlanService } from 'src/app/shared/services/taskPlan.service';
+import { ActivityPlanService } from 'src/app/shared/services/activityPlan.service';
 
 @Component({
   selector: 'app-tracker-report',
@@ -17,8 +19,9 @@ export class TrackerReportComponent implements OnInit, OnDestroy {
     constructor(
       private notifyService: NotificationService,
       private plansService: PlansService,
-      private userService: UserService,
-      private trackerComponent: TrackerComponent
+      private trackerComponent: TrackerComponent,
+      private taskPlanService: TaskPlanService,
+      private activityPlanService: ActivityPlanService
     ) {  }
 
 @ViewChild('reportModel', {static: true}) reportModel: ModalDirective;
@@ -42,7 +45,8 @@ public reportInputIsBoolean = false;
 public TaskOnEdit: any;
 public ReportOnEdit: any;
 
-
+public ActivityPlan = [];
+public TaskPlan = [];
 
 
 
@@ -64,7 +68,12 @@ public ReportOnEdit: any;
 
     ngOnInit() {
       this.PlanOnReport = JSON.parse(localStorage.getItem('planOnReport'));
-      this.formartTasks().then(() => {   this.ActivePlanEdit = this.PlanOnReport.plan[0]; });
+     
+      this.updatePage().then(() => {
+        this.formatTask().then(() => {
+          this.formatPlan().then(() => {   this.ActivePlanEdit = this.PlanOnReport.plan[0]; });
+        })
+      })
     }
 
 
@@ -75,6 +84,59 @@ public ReportOnEdit: any;
 
 
 
+updatePage() {
+  return new Promise((resolve, reject) => {
+        this.activityPlanService.getAllActivityPlanByInstitutionId().subscribe(
+          dataActivity => {
+            this.ActivityPlan = dataActivity;
+            
+            this.taskPlanService.getAllTaskPlan().subscribe(
+              dataTask => {
+                this.TaskPlan = dataTask;
+
+                this.formatAtivity().then(() => resolve())
+              }, error => console.log('Error getting task plan')
+            )
+
+          }, error => console.log('Error getting activity plan')
+        )
+  })
+}
+
+
+
+
+
+formatAtivity () {
+  return new Promise((resolve, reject) => {
+  this.TaskPlan.forEach((task, ind, arr) => {
+    let getActivity = this.ActivityPlan.filter((a) => a._id === task.activityId).map((e) => e);
+    task.activityName = getActivity[0].activityPlan;
+    if (ind === arr.length - 1){ resolve() }
+  })
+  if(this.TaskPlan.length === 0) { resolve() }
+})
+}
+
+
+
+
+formatTask() {
+  return new Promise((resolve, reject) => {
+  this.PlanOnReport.plan.forEach((planElement: any, index, array) => {
+    planElement.tasksArray = [];
+    planElement.tasks.forEach((taskId) => {
+      let myTaskPlan = this.TaskPlan.filter((t) => t._id === taskId).map((e) => e);
+      planElement.tasksArray.push(myTaskPlan[0]);
+    })
+
+    if( index === array.length - 1) {
+      resolve()
+    }
+  })
+});
+}
+    
 
 
 
@@ -82,21 +144,16 @@ public ReportOnEdit: any;
 
 
 
-
-
-
-
-
-formartTasks() {
+formatPlan() {
   return new Promise((resolve, reject) => {
     this.PlanOnReport.plan = this.PlanOnReport.plan.filter((plan) => {
-      plan.tasks = plan.tasks.filter((task) => task.reportingUser === localStorage.getItem('loggedUserEmail')).map(e => e);
+      plan.tasksArray = plan.tasksArray.filter((task) => task.reportingUser === localStorage.getItem('loggedUserEmail')).map(e => e);
       return true;
     } ).map(e => e);
 
   this.PlanOnReport.plan.forEach((planElement, ind, arr) => {
 
-    planElement.tasks.forEach(taskElement => {
+    planElement.tasksArray.forEach(taskElement => {
       let start: any = new Date(taskElement.startDate);
       let end: any = new Date(taskElement.endDate);
       let today: any = new Date();
@@ -143,14 +200,12 @@ formartTasks() {
             this.plansService.updatePlan(this.PlanOnReport._id, this.PlanOnReport).subscribe(
               data => {
                 this.PlanOnReport = data;
-                this.formartTasks();
+                this.formatPlan();
               },
               error => { console.log('Error updating skipped weeek') }
             )
           }
         }
-
-
       }
 
     });
@@ -314,7 +369,7 @@ saveThePlan() {
           }
 
           this.ImprintLoader = false;
-          this.formartTasks();
+          this.formatPlan();
           this.notifyService.showSuccess('Report update', 'Success')
         },
         error => { this.ImprintLoader = false; this.notifyService.showError('Could not update report', 'Error') }
