@@ -48,11 +48,19 @@
                 </div>
 
                 <div class="task-wrap">
-                    <h4> <span class="text">Plan</span> <span class="icon" (click)="openAddTaskModal()"> <fa-icon [icon]="faPlus"></fa-icon> </span> </h4>
+                    <div class="heading d-flex">
+                         <h4 class="text mr-auto">Plan</h4> 
+                         
+                         <div class="action-wrap ml-auto">
+                            <div class="existing" (click)="existingPlanModal.show()">Add Existing Plan</div>
+                            <div class="new" (click)="openAddTaskModal()">Add New Plan</div>
+                         </div>
+                         
+                    </div>
                     <div class="task-title">
                         <h6>Activity</h6>
                         <h6>Kpi</h6>     
-                        <h6>Rrequency</h6>
+                        <h6>Frequency</h6>
                         <h6>Recurring</h6>  
                         <h6>End Date</h6>
                     </div>
@@ -63,7 +71,7 @@
                         <h6> <span *ngIf="!item.recurring">No</span> <span *ngIf="item.recurring">Yes</span></h6>                
                         <h6 class="d-flex">{{item.endDate | date}}
                             <div class="delete ml-auto">
-                                <fa-icon [icon]="faTrash" (click)="removeTask(x)"></fa-icon>
+                                <fa-icon [icon]="faTrash" (click)="removeTask(item._id)"></fa-icon>
                             </div>
                         </h6>
                     </div>
@@ -106,8 +114,7 @@
                     <div class="title">
                         <div class="actionable">Business Operations</div>
                         <div>Activity</div>
-                        <div>KPI</div>
-                        <div>Forecast</div>
+                        <div>KPI</div>    
                     </div>
 
                     <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.tasks.length === 0">
@@ -118,7 +125,6 @@
                             <div class="task-item" *ngFor="let task of item.tasksArray">
                                 <div>{{task.activityName}}</div>
                                 <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}}</span></div>
-                                <div>{{task.forecast}}</div>
                             </div>
                         </div>
 
@@ -132,7 +138,7 @@
                         <div class="actionable">Business Operations</div>
                         <div>Activity</div>
                         <div>KPI</div>
-                        <div>Forecast</div>
+                   
                     </div>
 
                     <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.tasks.length === 0">
@@ -143,7 +149,7 @@
                             <div class="task-item" *ngFor="let task of item.tasksArray" [hidden]="task.approval">
                                 <div>{{task.activityName}}</div>
                                 <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}}</span></div>
-                                <div>{{task.forecast}}</div>
+                          
                             </div>
                         </div>
 
@@ -157,7 +163,6 @@
                         <div class="actionable">Business Operations</div>
                         <div>Activity</div>
                         <div>KPI</div>
-                        <div>Forecast</div>
                         <div>Report</div>
                     </div>
 
@@ -169,7 +174,6 @@
                             <div class="task-item" *ngFor="let task of item.tasksArray" [hidden]="task.approval">
                                 <div>{{task.activityName}}</div>
                                 <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}}</span></div>
-                                <div>{{task.forecast}}</div>
                                 <div>
                                    <span *ngIf="!task.kpi && task.reportStatus">Done</span>
                                    <span *ngIf="!task.kpi && !task.reportStatus">Not Done</span>
@@ -348,11 +352,47 @@
     
     </div>
 
-
-
 </section>
 
 
+
+
+
+
+
+<div bsModal #existingPlanModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog existingPlanModal modal-lg" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title">Activity Plan</h4>
+            <button type="button" class="btn close" (click)="existingPlanModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <div class="title">
+                <h6>Activity</h6>
+                <h6>Kpi</h6>     
+                <h6>Frequency</h6>
+                <h6>Recurring</h6>  
+                <h6>End Date</h6>
+            </div>
+            <div class="list-wrap">
+                <div *ngFor="let item of TaskPlan" [ngClass]="SelectedTaskId === item._id ? 'active list-item d-flex' : 'list-item d-flex'" (click)="selectTaskPlanFuction(item._id)">
+                    <h6>{{item.activityName}}</h6>     
+                    <h6> <span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.kpi}}</span></h6>
+                    <h6>{{item.frequency}}</h6>
+                    <h6> <span *ngIf="!item.recurring">No</span> <span *ngIf="item.recurring">Yes</span></h6>                
+                    <h6>{{item.endDate | date}}</h6>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button [disabled]="SelectedTaskId === ''"  type="button" class="btn btn-confirm" (click)="addExistingTaskPlan()">Add</button>
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 

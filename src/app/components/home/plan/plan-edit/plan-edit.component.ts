@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { faArrowLeft, faPlus, faTrash, faTimes} from '@fortawesome/free-solid-svg-icons';
 import { PlansService } from 'src/app/shared/services/plan.service';
@@ -6,6 +6,7 @@ import { PlanComponent } from '../plan.component';
 import { UserService } from 'src/app/shared/services/user.service';
 import { TaskPlanService } from 'src/app/shared/services/taskPlan.service';
 import { ActivityPlanService } from 'src/app/shared/services/activityPlan.service';
+import { ModalDirective } from 'ngx-bootstrap';
 
 
 // tslint:disable
@@ -27,7 +28,7 @@ export class PlanEditComponent implements OnInit, OnDestroy {
         private activityPlanService: ActivityPlanService
       ) {  }
 
-
+  @ViewChild('existingPlanModal', {static: true}) existingPlanModal: ModalDirective;
 
 
 public ImprintLoader = false;
@@ -51,7 +52,7 @@ public ActivePlanEdit: any;
 
 public task: any;
 public kpiCalendar = 'kpi';
-
+public SelectedTaskId = '';
 
 
 
@@ -261,28 +262,11 @@ getWeekelyTargets() {
 
 
 checkRecurring() {
-  if (this.task.recurring) {
+  if (!this.task.recurring) {
     this.task.frequency = 'monthly';
   }
 }
 
-calculateEndDate() {
-  if (this.task.frequency === 'weekly'){
-    let d = new Date(this.task.startDate);
-    d.setDate(d.getDate()+7);
-    this.task.endDate = new Date(d)
-  }
-  if (this.task.frequency === 'monthly'){
-    let d = new Date(this.task.startDate);
-    d.setDate(d.getDate()+30);
-    this.task.endDate = new Date(d)
-  }
-  if (this.task.frequency === 'quarterly'){
-    let d = new Date(this.task.startDate);
-    d.setDate(d.getDate()+90);
-    this.task.endDate = new Date(d)
-  }
-}
 
 
 
@@ -293,14 +277,6 @@ addTask() {
     this.notifyService.showWarning('Please add Activity', 'No Activity')
   } else if(this.task.kpi === null && this.kpiCalendar === 'kpi' ) {
     this.notifyService.showWarning('Please add kpi', 'No KPI')
-  } else if(this.task.recurring && !this.task.recurringWeekTarget.week1 ) {
-    this.notifyService.showWarning('Please set weekly target', 'Week 1')
-  } else if(this.task.recurring && !this.task.recurringWeekTarget.week2 ) {
-    this.notifyService.showWarning('Please set weekly target', 'Week 2')
-  } else if(this.task.recurring && !this.task.recurringWeekTarget.week4 ) {
-    this.notifyService.showWarning('Please set weekly target', 'Week 3')
-  } else if(this.task.recurring && !this.task.recurringWeekTarget.week4 ) {
-    this.notifyService.showWarning('Please set weekly target', 'Week 4')
   } else if(this.task.endDate === '') {
     this.notifyService.showWarning('Please set end date', 'No end date')
   } else if(this.task.actionable === '') {
@@ -340,6 +316,17 @@ submitTaskPlan() {
 
 
 
+selectTaskPlanFuction(id: any) {
+  this.SelectedTaskId = id;
+}
+
+
+addExistingTaskPlan() {
+  this.ActivePlanEdit.tasks.push(this.SelectedTaskId)
+  this.saveThePlan();
+  this.existingPlanModal.hide();
+  this.SelectedTaskId = '';
+}
 
 
 
@@ -347,11 +334,9 @@ submitTaskPlan() {
 
 
 
-
-
-
-removeTask(x: any) {
-  this.ActivePlanEdit.tasks.splice(x, 1);
+removeTask(id: any) {
+  this.ActivePlanEdit.tasks = this.ActivePlanEdit.tasks.filter((t) => t !== id).map(e => e);
+  this.saveThePlan();
 }
 
 

@@ -127,7 +127,7 @@
     padding: 1em
     .level
         margin: 0
-        text-align: right
+        text-align: left
         h4 
             font-size: 14px
             font-weight: bold 
@@ -159,88 +159,92 @@
 .list-section .model-edit .model-card .model-wrap .task-wrap
     width: 100%
     padding: 1em
+    margin: 1em 0 0 0
+.list-section .model-edit .model-card .model-wrap .task-wrap .heading
+  width: 100%
+  padding: 1em 0
 
-    h4 
-        display: flex
-        align-items: stretch
+  h4 
+    margin: auto auto auto 0
+    font-size: 14px
+    font-weight: bold 
+    color: lighten(colorTheme(primaryTheme), 10)
 
-        .text
-            margin: auto 0
-            font-size: 14px
-            font-weight: bold 
-            color: lighten(colorTheme(primaryTheme), 10)
+  .action-wrap
+    margin: auto 0 auto auto
+    display: flex
+    align-items: stretch
 
-        .icon 
-            margin: auto 0 auto 2em
-            width: 1em
-            height: 1em
-            display: flex
+    .existing
+      width: fit-content
+      background-color: colorTheme(warning)
+      font-size: 12px
+      color: white
+      padding: .5em 1em
+      cursor: pointer
+      border-radius: 2px
+      margin: 0 1em 0 0
+    .new
+      width: fit-content
+      background-color: colorTheme(success)
+      font-size: 12px
+      color: white
+      padding: .5em 1em
+      cursor: pointer
+      border-radius: 2px
+  
+.list-section .model-edit .model-card .model-wrap .task-wrap .task-title
+    background-color: grayColor(g100)
+    display: flex 
+    align-items: stretch
+
+    h6 
+        width: 100%
+        font-size: 11px
+        padding: .5em
+        text-transform: uppercase
+        font-weight: bold
+        color: lighten(colorTheme(primaryTheme), 15)
+
+.list-section .model-edit .model-card .model-wrap .task-wrap .task-item
+    display: flex 
+    align-items: stretch
+    justify-content: center
+    border-bottom: solid 1px grayColor(g100)
+    cursor: pointer
+    margin: 4px 0 0 0
+    h6 
+        width: 100%
+        font-size: 11px
+        padding: .5em
+        text-transform: capitalize
+        .delete
+            display: none !important
+
+    &:hover 
+        background-color: grayColor(g100)
+            
+        h6 .delete       
+            transform: translateX(1.5em)
+            -webkit-transform: translateX(1.5em)
+            -moz-transform: translateX(1.5em)
+            width: 2em
+            height: 2em
+            display: flex !important
             align-items: center
             justify-content: center
             border-radius: 50%
             background-color:  grayColor(g100)
             cursor: pointer
+
             fa-icon
                 font-size: 10px
-                color: colorTheme(success)
+                color: colorTheme(danger)
             &:hover
-                background-color: colorTheme(success)    
+                background-color: colorTheme(danger)    
                 fa-icon
                     font-size: 10px
-                    color: white           
-
-    .task-title
-        background-color: grayColor(g100)
-        display: flex 
-        align-items: stretch
-
-        h6 
-            width: 100%
-            font-size: 11px
-            padding: .5em
-            text-transform: uppercase
-            font-weight: bold
-            color: lighten(colorTheme(primaryTheme), 15)
-
-    .task-item
-        display: flex 
-        align-items: stretch
-        justify-content: center
-        border-bottom: solid 1px grayColor(g100)
-        cursor: pointer
-        margin: 4px 0 0 0
-        h6 
-            width: 100%
-            font-size: 11px
-            padding: .5em
-            text-transform: capitalize
-            .delete
-                display: none !important
-
-        &:hover 
-            background-color: grayColor(g100)
-                
-            h6 .delete       
-                transform: translateX(1.5em)
-                -webkit-transform: translateX(1.5em)
-                -moz-transform: translateX(1.5em)
-                width: 2em
-                height: 2em
-                display: flex !important
-                align-items: center
-                justify-content: center
-                border-radius: 50%
-                background-color:  grayColor(g100)
-                cursor: pointer
-
-                fa-icon
-                    font-size: 10px
-                    color: colorTheme(danger)
-                &:hover
-                    background-color: colorTheme(danger)    
-                    fa-icon
-                        font-size: 10px
-                        color: white      
+                    color: white      
 
 
 // view
@@ -580,6 +584,66 @@
 
 
 
+.existingPlanModal
+  border: none
+.existingPlanModal .modal-content
+  width: 100%
+  border: none
+  height: fit-content
+.existingPlanModal .modal-content .modal-header
+  width: 100%
+  border: none
+  background-color: orange
+  h4 
+      font-size: 14px
+      color: white
+.existingPlanModal .modal-content .modal-body
+    width: 100%
+    border: none
+    .title 
+      width: 100%
+      display: flex 
+      align-items: stretch
+      background-color: grayColor(g100)
+      h6
+        padding: .5em
+        width: 100%
+        font-weight: bold 
+        font-size: 12px
+        color: grayColor(g900)
+        text-transform: uppercase
+
+    .list-wrap
+        width: 100%
+        max-height: 500px
+        overflow-x: scroll
+
+        .list-item
+            width: 100%
+            border-bottom: solid 1px grayColor(g100)
+            cursor: pointer
+            h6
+                padding: .5em
+                width: 100%
+                font-size: 12px
+                color: grayColor(g900)
+                text-transform: capitalize
+            &:hover
+              background-color: colorTheme(primaryTheme)
+              h6 
+                color: white
+
+            &.active
+              background-color: colorTheme(success)
+              h6 
+                color: white
+.existingPlanModal .modal-content .modal-footer
+  width: 100%
+  button 
+      font-size: 12px
+      background-color: orange
+      color: white
+    
 
 
 
