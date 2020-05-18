@@ -106,8 +106,10 @@ planDescriptionEditorConfig: AngularEditorConfig = {
 
 
 ngOnInit() {
+    this.ImprintLoader = true;
     this.PlanOnEdit = JSON.parse(localStorage.getItem('planOnEdit'))
     this.task = {
+      companyId : localStorage.getItem('loggedCompanyId'),
       activityId: '',
       priority: '',
       kpi: null,
@@ -154,21 +156,19 @@ updatePage() {
           dataActivity => {
             this.ActivityPlan = dataActivity;
             
-            this.taskPlanService.getAllTaskPlan().subscribe(
+            this.taskPlanService.getAllTaskPlanByCompanyId().subscribe(
               dataTask => {
                 this.TaskPlan = dataTask;
+       
                 // this.TaskPlan.forEach((r) => {
                 //   this.taskPlanService.deleteTaskPlan(r._id).subscribe( () => this.notifyService.showSuccess('cleared', 'Cleared'))
                 // })
 
                 //  this.TaskPlan.forEach((r) => {
-                //    r.description = {
-                //     title: '',
-                //     body: '',
-                //   },
-                //   r.documents = [];
+                //   r.companyId = localStorage.getItem('loggedCompanyId'),
                 //   this.taskPlanService.updateTaskPlan(r._id, r).subscribe( () => this.notifyService.showSuccess('Updated', 'Updated'))
                 // })
+
                             
                 this.formatAtivity().then(() => resolve())
               }, error => console.log('Error getting task plan')
@@ -265,6 +265,7 @@ formartReport() {
 
 
 getUnEdittedThreatPlan() {
+  this.ImprintLoader = false;
   this.ActivePlanEdit = this.PlanOnEdit.plan[0];
 }
 
@@ -288,6 +289,7 @@ openAddTaskModal() {
 closeTaskForm() {
   this.ActiveModel = 'edit';
   this.task = {
+    companyId : localStorage.getItem('loggedCompanyId'),
     activityId: '',
     priority: '',
     kpi: null,
@@ -422,6 +424,7 @@ saveThePlan() {
 
                      this.ActiveModel = 'edit';
                     this.task = {
+                      companyId : localStorage.getItem('loggedCompanyId'),
                       activityId: '',
                       priority: '',
                       kpi: null,

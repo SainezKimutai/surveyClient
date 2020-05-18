@@ -108,10 +108,10 @@ planDescriptionEditorConfig: AngularEditorConfig = {
 
     ngOnInit() {
       this.PlanOnReport = JSON.parse(localStorage.getItem('planOnReport'));
-     
+      this.ImprintLoader = true;
       this.updatePage().then(() => {
         this.formatTask().then(() => {
-          this.formatPlan().then(() => {   this.ActivePlanEdit = this.PlanOnReport.plan[0]; });
+          this.formatPlan().then(() => {  this.ImprintLoader = false;  this.ActivePlanEdit = this.PlanOnReport.plan[0]; });
         })
       })
     }
@@ -130,7 +130,7 @@ updatePage() {
           dataActivity => {
             this.ActivityPlan = dataActivity;
             
-            this.taskPlanService.getAllTaskPlan().subscribe(
+            this.taskPlanService.getAllTaskPlanByCompanyId().subscribe(
               dataTask => {
                 this.TaskPlan = dataTask;
 

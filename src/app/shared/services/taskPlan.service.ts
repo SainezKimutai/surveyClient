@@ -26,6 +26,10 @@ export class TaskPlanService {
         return this.http.get<any>(this.url + 'getAll/', {headers : header});
     }
 
+    getAllTaskPlanByCompanyId() {
+        const data = {companyId: localStorage.getItem('loggedCompanyId')};
+        return this.http.post<any> (this.url + 'getByCompanyId/', data, {headers: header});
+    }
 
     getOneTaskPlan(id) {
         return this.http.get<any>(this.url + 'getOne/' + id, {headers : header});

@@ -52,7 +52,7 @@
                 <div class="list-item" *ngFor="let item of ActivePlanEdit.tasksArray" 
                  >
                     <li>{{item.activityName}}</li>
-                    <li><span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.kpi}}</span></li>
+                    <li><span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.kpi}} <span style="text-transform: capitalize;">{{item.kpiUnit}}</span></span></li>
                     <!-- <li>{{item.startDate | date}}</li> -->
                     <li>{{item.endDate | date}}</li>
                     <li class="d-flex">

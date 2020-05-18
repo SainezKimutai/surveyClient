@@ -71,7 +71,7 @@
                     </div>
                     <div class="task-item" *ngFor="let item of ActivePlanEdit.tasksArray; let x = index">
                         <h6>{{item.activityName}}</h6>     
-                        <h6> <span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.kpi}}</span></h6>
+                        <h6> <span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.kpi}} <span style="text-transform: capitalize;">{{item.kpiUnit}}</span> </span></h6>
                         <h6>{{item.frequency}}</h6>
                         <h6> <span *ngIf="!item.recurring">No</span> <span *ngIf="item.recurring">Yes</span></h6>                
                         <h6 class="d-flex">{{item.endDate | date}}</h6>
@@ -132,7 +132,7 @@
                         <div class="task-wrap">
                             <div class="task-item" *ngFor="let task of item.tasksArray">
                                 <div>{{task.activityName}}</div>
-                                <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}}</span></div>
+                                <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}} <span style="text-transform: capitalize;">{{task.kpiUnit}}</span></span></div>
                                 <div> <span class="icon" (click)="openViewPlanDescriptionModal(task)"><fa-icon class="desc"  [icon]="faCommentAlt"></fa-icon> </span> </div>
                                 <div> <span class="icon" (click)="openPlanDocsModal(task)"><fa-icon class="doc" [icon]="faFileAlt"></fa-icon> </span> </div>        
                             </div>
@@ -161,7 +161,7 @@
                         <div class="task-wrap">
                             <div class="task-item" *ngFor="let task of item.tasksArray" [hidden]="task.approval">
                                 <div>{{task.activityName}}</div>
-                                <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}}</span></div>
+                                <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}} <span style="text-transform: capitalize;">{{task.kpiUnit}}</span></span></div>
                                 <div> <span class="icon" (click)="openViewPlanDescriptionModal(task)"><fa-icon class="desc"  [icon]="faCommentAlt"></fa-icon> </span> </div>
                                 <div> <span class="icon" (click)="openPlanDocsModal(task)"><fa-icon class="doc" [icon]="faFileAlt"></fa-icon> </span> </div>   
                           
@@ -190,7 +190,7 @@
                         <div class="task-wrap">
                             <div class="task-item" *ngFor="let task of item.tasksArray" [hidden]="task.approval">
                                 <div>{{task.activityName}}</div>
-                                <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}}</span></div>
+                                <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}} <span style="text-transform: capitalize;">{{task.kpiUnit}}</span></span></div>
                                 <div>
                                    <span *ngIf="!task.kpi && task.reportStatus">Done</span>
                                    <span *ngIf="!task.kpi && !task.reportStatus">Not Done</span>
