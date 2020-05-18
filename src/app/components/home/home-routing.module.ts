@@ -21,6 +21,7 @@ const routes: Routes = [
         { path: 'admin', loadChildren: 'src/app/components/home/admin/admin.module#AdminModule', canActivate: [AdminGuard], data: {preload: true}},
         { path: 'survey', loadChildren: 'src/app/components/home/survey/survey.module#SurveyModule', data: {preload: true}},
         { path: 'reports', loadChildren: 'src/app/components/home/reports/reports.module#ReportsModule', canActivate: [CustomerGuard], data: {preload: true}},
+        { path: 'document', loadChildren: 'src/app/components/home/document/document.module#DocumentModule', canActivate: [CustomerGuard],  data: {preload: true}},
         { path: 'plan', loadChildren: 'src/app/components/home/plan/plan.module#PlanModule', canActivate: [CustomerGuard],  data: {preload: true}},
         { path: 'tracker', loadChildren: 'src/app/components/home/tracker/tracker.module#TrackerModule', canActivate: [CustomerGuard], data: {preload: true}},
         { path: 'profile', loadChildren: 'src/app/components/home/profile/profile.module#ProfileModule', canActivate: [CustomerGuard],  data: {preload: true}},

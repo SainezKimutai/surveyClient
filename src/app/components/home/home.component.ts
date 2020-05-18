@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { faBars, faArrowLeft, faChartLine, faEdit, faUser, faUsers, faListAlt, faPowerOff,
-  faProjectDiagram } from '@fortawesome/free-solid-svg-icons';
+  faProjectDiagram, faFileAlt} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -34,7 +34,7 @@ public faPowerOff = faPowerOff;
 public faEdit = faEdit;
 public faProjectDiagram = faProjectDiagram;
 public faUsers = faUsers;
-
+public faFileAlt = faFileAlt;
 
 // permisions
 public toAdmin = false;
@@ -56,6 +56,7 @@ public trackerNavBarActive = false;
 public usersNavBarActive = false;
 public adminNavBarActive = false;
 public marketRateBarActive = false;
+public documentNavBarActive = false;
 
 public myInterval;
 
@@ -103,6 +104,7 @@ CheckActiveNavBar() {
   this.usersNavBarActive = false;
   this.adminNavBarActive = false;
   this.marketRateBarActive = false;
+  this.documentNavBarActive = false;
   if (localStorage.getItem('ActiveNav') === 'dashboard') {this.dashboardNavBarActive = true; }
   if (localStorage.getItem('ActiveNav') === 'survey') {this.surveyNavBarActive = true; }
   if (localStorage.getItem('ActiveNav') === 'profile') {this.profileNavBarActive = true; }
@@ -113,6 +115,7 @@ CheckActiveNavBar() {
   if (localStorage.getItem('ActiveNav') === 'users') {this.usersNavBarActive = true; }
   if (localStorage.getItem('ActiveNav') === 'admin') {this.adminNavBarActive = true; }
   if (localStorage.getItem('ActiveNav') === 'marketRates') {this.marketRateBarActive = true; }
+  if (localStorage.getItem('ActiveNav') === 'document') {this.documentNavBarActive = true; }
 
 }
 

@@ -325,10 +325,10 @@ export class ReportsComponent implements OnInit {
           
           this.TemplateQuestions.forEach((quiz, key, arr) => {              
     
-              const reportTemplate = html2canvas(document.querySelector(`#quiz${key}`), {scale: 1});   
+              const reportTemplate = html2canvas(document.querySelector(`#quiz${key}`), {scale: 0});   
            
-              reportTemplate.then(reportCanvas => {
-
+              reportTemplate.then(reportCanvasImg => {
+                let reportCanvas = reportCanvasImg.toDataURL("image/jpeg", 1.0)
         
                 let reportFinalStartPosition = Number(reportConstantStartPosition)
                 if ( key > pageQuestions) {
@@ -344,8 +344,8 @@ export class ReportsComponent implements OnInit {
                     reportConstantStartPosition = reportConstantStartPosition + 65
                   }
                   if (!quiz.recom) {
-                    pdf.addImage(reportCanvas, 10, reportFinalStartPosition, 190, 30);
-                    reportConstantStartPosition = reportConstantStartPosition + 25
+                    pdf.addImage(reportCanvas, 10, reportFinalStartPosition, 190, 20);
+                    reportConstantStartPosition = reportConstantStartPosition + 15
                   }
                   
                 } else {
@@ -355,8 +355,8 @@ export class ReportsComponent implements OnInit {
                     reportConstantStartPosition = reportConstantStartPosition + 65
                   }
                   if (!quiz.recom) {
-                    pdf.addImage(reportCanvas, 10, reportFinalStartPosition, 190, 30);
-                    reportConstantStartPosition = reportConstantStartPosition + 25
+                    pdf.addImage(reportCanvas, 10, reportFinalStartPosition, 190, 20);
+                    reportConstantStartPosition = reportConstantStartPosition + 15
                   }
 
                 }
