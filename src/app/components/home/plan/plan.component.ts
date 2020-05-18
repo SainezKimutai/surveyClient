@@ -70,10 +70,6 @@ async updatePage() {
 this.plansService.getAllCompanyPlans().subscribe(
   dataPlan => {
     this.AllPlans = dataPlan;
-
-    // this.AllPlans.forEach((r) => {
-    //   this.plansService.deletePlan(r._id).subscribe( () => this.notifyService.showSuccess('cleared', 'Cleared'))
-    // })
    
   this.surveyService.getAllInstitutionSurveys().subscribe(
     dataSurvey => {

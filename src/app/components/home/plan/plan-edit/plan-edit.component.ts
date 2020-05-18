@@ -160,15 +160,6 @@ updatePage() {
               dataTask => {
                 this.TaskPlan = dataTask;
        
-                // this.TaskPlan.forEach((r) => {
-                //   this.taskPlanService.deleteTaskPlan(r._id).subscribe( () => this.notifyService.showSuccess('cleared', 'Cleared'))
-                // })
-
-                //  this.TaskPlan.forEach((r) => {
-                //   r.companyId = localStorage.getItem('loggedCompanyId'),
-                //   this.taskPlanService.updateTaskPlan(r._id, r).subscribe( () => this.notifyService.showSuccess('Updated', 'Updated'))
-                // })
-
                             
                 this.formatAtivity().then(() => resolve())
               }, error => console.log('Error getting task plan')
