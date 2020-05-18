@@ -195,9 +195,10 @@
                                    <span *ngIf="!task.kpi && task.reportStatus">Done</span>
                                    <span *ngIf="!task.kpi && !task.reportStatus">Not Done</span>
                                    <span *ngIf="task.kpi">{{task.reportStatus}}</span>
-                                   <div> <span class="icon" (click)="openViewPlanDescriptionModal(task)"><fa-icon class="desc"  [icon]="faCommentAlt"></fa-icon> </span> </div>
-                                   <div> <span class="icon" (click)="openPlanDocsModal(task)"><fa-icon class="doc" [icon]="faFileAlt"></fa-icon> </span> </div>   
+                                
                                 </div>
+                                <div> <span class="icon" (click)="openViewPlanDescriptionModal(task)"><fa-icon class="desc"  [icon]="faCommentAlt"></fa-icon> </span> </div>
+                                <div> <span class="icon" (click)="openPlanDocsModal(task)"><fa-icon class="doc" [icon]="faFileAlt"></fa-icon> </span> </div>  
                             </div>
                         </div>
 
