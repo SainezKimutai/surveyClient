@@ -54,11 +54,11 @@
         </a>
       </li>
 
-      <li *ngIf="toCustomer" [ngClass] ="documentNavBarActive ? 'nav-item active': 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
+      <!-- <li *ngIf="toCustomer" [ngClass] ="documentNavBarActive ? 'nav-item active': 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
         <a routerLink="/home/document" [ngClass]=" documentNavBarActive ? 'nav-link active': 'nav-link'">
           <fa-icon [icon]="faFileAlt"></fa-icon><span>Documents</span>
         </a>
-      </li>
+      </li> -->
 
       <li *ngIf="toCustomer"  [ngClass]="profileNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
         <a routerLink="/home/profile" [ngClass]=" profileNavBarActive ? 'nav-link active' : 'nav-link'">
@@ -153,11 +153,11 @@
           </a>
         </li>
 
-        <li *ngIf="toCustomer" [ngClass] ="documentNavBarActive ? 'nav-item active': 'nav-item'">
+        <!-- <li *ngIf="toCustomer" [ngClass] ="documentNavBarActive ? 'nav-item active': 'nav-item'">
           <a routerLink="/home/document" [ngClass]="documentNavBarActive ? 'nav-link active': 'nav-link'">
             <fa-icon [icon]="faFileAlt"></fa-icon><span>Documents</span>
           </a>
-        </li>
+        </li> -->
 
         <li *ngIf="toCustomer"  [ngClass]="profileNavBarActive ? 'nav-item active' : 'nav-item'" >
           <a routerLink="/home/profile" [ngClass]=" profileNavBarActive ? 'nav-link active' : 'nav-link'">
