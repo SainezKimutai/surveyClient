@@ -63,17 +63,23 @@
                         <h6>Frequency</h6>
                         <h6>Recurring</h6>  
                         <h6>End Date</h6>
+                        <h6>Description</h6>
+                        <h6>Documents</h6>
+                        <div class="delete">
+                           .
+                        </div>
                     </div>
                     <div class="task-item" *ngFor="let item of ActivePlanEdit.tasksArray; let x = index">
                         <h6>{{item.activityName}}</h6>     
                         <h6> <span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.kpi}}</span></h6>
                         <h6>{{item.frequency}}</h6>
                         <h6> <span *ngIf="!item.recurring">No</span> <span *ngIf="item.recurring">Yes</span></h6>                
-                        <h6 class="d-flex">{{item.endDate | date}}
-                            <div class="delete ml-auto">
-                                <fa-icon [icon]="faTrash" (click)="removeTask(item._id)"></fa-icon>
-                            </div>
-                        </h6>
+                        <h6 class="d-flex">{{item.endDate | date}}</h6>
+                        <h6> <span class="icon" (click)="openPlanDescriptionModal(item)"><fa-icon class="desc"  [icon]="faCommentAlt"></fa-icon> </span> </h6>
+                        <h6> <span class="icon" (click)="openPlanDocsModal(item)"><fa-icon class="doc" [icon]="faFileAlt"></fa-icon> </span> </h6>
+                        <div class="delete ml-auto">
+                            <fa-icon [icon]="faTrash" (click)="removeTask(item._id)"></fa-icon>
+                        </div>
                     </div>
                 </div>
 
@@ -112,13 +118,13 @@
             <div class="tab-pane fade show active" id="plans" role="tabpanel"aria-labelledby="course-tab">
                 <div class="body-wrap">
                     <div class="title">
-                        <div class="actionable">Business Operations</div>
+                        <div class="heading">Business Operations</div>
                         <div>Activity</div>
                         <div>KPI</div>    
                     </div>
 
                     <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.tasks.length === 0">
-                        <div class="actionable">
+                        <div class="heading">
                             {{item.threat.threat}}
                         </div>
                         <div class="task-wrap">
@@ -135,14 +141,14 @@
             <div class="tab-pane fade " id="pending-plans" role="tabpanel"aria-labelledby="pending-plans-tab" >
                 <div class="body-wrap">
                     <div class="title">
-                        <div class="actionable">Business Operations</div>
+                        <div class="heading">Business Operations</div>
                         <div>Activity</div>
                         <div>KPI</div>
                    
                     </div>
 
                     <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.tasks.length === 0">
-                        <div class="actionable">
+                        <div class="heading">
                             {{item.threat.threat}}
                         </div>
                         <div class="task-wrap">
@@ -160,14 +166,14 @@
             <div class="tab-pane fade" id="actual" role="tabpanel"aria-labelledby="actual-tab">
                 <div class="body-wrap">
                     <div class="title">
-                        <div class="actionable">Business Operations</div>
+                        <div class="heading">Business Operations</div>
                         <div>Activity</div>
                         <div>KPI</div>
                         <div>Report</div>
                     </div>
 
                     <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.tasks.length === 0">
-                        <div class="actionable">
+                        <div class="heading">
                             {{item.threat.threat}}
                         </div>
                         <div class="task-wrap">
@@ -329,12 +335,6 @@
                         </div>
                     </div>
 
-                    
-                    <div class="form-group">
-                        <label>Description</label>
-                        <textarea name="actionable" [(ngModel)]="task.actionable"></textarea>
-                    </div>
-
                     <div class="reporting-users">
                         <label> Assign User </label>
                         <div class="wrap">
@@ -397,6 +397,102 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
+
+<div bsModal #planDescriptionModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog planDescriptionModal modal-lg" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title">Description</h4>
+            <button type="button" class="btn close" (click)="planDescriptionModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <form>
+                <div class="form-group">
+                    <label >Title</label>
+                    <input type="text" name="title" [(ngModel)]="descriptionInput.title" >
+                </div>
+                <div class="form-group">
+                    <label >Body</label>
+                    <angular-editor name="body" [(ngModel)]="descriptionInput.body" [config]="planDescriptionEditorConfig" required></angular-editor>
+                </div>
+            </form>
+           
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-confirm" (click)="addDescription()">Add</button>
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+
+
+
+
+
+
+
+<div bsModal #planDocsModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog planDocsModal modal-lg" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title">Documents</h4>
+            <button type="button" class="btn close" (click)="planDocsModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <div class="list-document" *ngIf="TaskPlanOnEdit">
+                <div class="doc-item" *ngFor="let doc of TaskPlanOnEdit.documents">
+                    <a [href]="doc.url" target="_blank" 
+                    [ngClass]="[doc.docType === 'image' ? 'icon image' : '',
+                    doc.docType === 'video' ? 'icon video' : '',
+                    doc.docType === 'word' ? 'icon word' : '',
+                    doc.docType === 'sheet' ? 'icon sheet' : '',
+                    doc.docType === 'presentation' ? 'icon presentation' : '',
+                    doc.docType === 'pdf' ? 'icon pdf' : '' ]">
+                        <fa-icon *ngIf="doc.docType === 'image'" [icon]="faFileWord"></fa-icon>
+                        <fa-icon *ngIf="doc.docType === 'video'" [icon]="faVideo"></fa-icon>
+                        <fa-icon *ngIf="doc.docType === 'word'" [icon]="faFileWord"></fa-icon>
+                        <fa-icon *ngIf="doc.docType === 'sheet'" [icon]="faFileExcel"></fa-icon>
+                        <fa-icon *ngIf="doc.docType === 'presentation'" [icon]="faFilePowerpoint"></fa-icon>
+                        <fa-icon *ngIf="doc.docType === 'pdf'" [icon]="faFilePdf"></fa-icon>
+                    </a>
+                    <div class="name">
+                        <p>{{doc.docOriginalName}}</p>
+                    </div>
+                    <div class="action">
+                        <span (click)="removeTaskDoc(doc)">
+                            <fa-icon [icon]="faTrash"></fa-icon>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="upload-wrap">
+                <button class="btn btn-sm" (click)="docFileInput.click()">Upload Document</button>
+                <input hidden readonly type="file" #docFileInput name="fileUploaded" (change)="uploadDoc($event)">
+                   
+            </div>
+       
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
 
 
 

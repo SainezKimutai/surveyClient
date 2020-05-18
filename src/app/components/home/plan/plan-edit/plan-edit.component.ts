@@ -1,12 +1,15 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { NotificationService } from 'src/app/shared/services/notification.service';
-import { faArrowLeft, faPlus, faTrash, faTimes} from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faPlus, faTrash, faTimes, faFileAlt, faCommentAlt,
+         faImage, faVideo, faFileWord, faFileExcel, faFilePowerpoint, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { PlansService } from 'src/app/shared/services/plan.service';
 import { PlanComponent } from '../plan.component';
 import { UserService } from 'src/app/shared/services/user.service';
 import { TaskPlanService } from 'src/app/shared/services/taskPlan.service';
 import { ActivityPlanService } from 'src/app/shared/services/activityPlan.service';
 import { ModalDirective } from 'ngx-bootstrap';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { dev } from 'src/app/shared/dev/dev';
 
 
 // tslint:disable
@@ -29,6 +32,10 @@ export class PlanEditComponent implements OnInit, OnDestroy {
       ) {  }
 
   @ViewChild('existingPlanModal', {static: true}) existingPlanModal: ModalDirective;
+  @ViewChild('planDescriptionModal', {static: true}) planDescriptionModal: ModalDirective;
+  @ViewChild('planDocsModal', {static: true}) planDocsModal: ModalDirective;
+  
+  
 
 
 public ImprintLoader = false;
@@ -44,6 +51,16 @@ public faArrowLeft = faArrowLeft;
 public faPlus = faPlus;
 public faTrash = faTrash;
 public faTimes = faTimes;
+public faFileAlt = faFileAlt;
+public faCommentAlt = faCommentAlt;
+public faImage = faImage;
+public faVideo = faVideo;
+public faFileWord = faFileWord;
+public faFileExcel = faFileExcel;
+public faFilePowerpoint = faFilePowerpoint;
+public faFilePdf = faFilePdf;
+
+
 
 public PlanOnEdit: any;
 public ActivePlanEdit: any;
@@ -54,8 +71,33 @@ public task: any;
 public kpiCalendar = 'kpi';
 public SelectedTaskId = '';
 
+public descriptionInput = {
+  title: '',
+  body: '',
+};
+public TaskPlanOnEdit: any;
 
-
+planDescriptionEditorConfig: AngularEditorConfig = {
+  editable: true,
+  spellcheck: true,
+  height: 'auto',
+  minHeight: '200px',
+  maxHeight: 'auto',
+  width: 'auto',
+  minWidth: '0',
+  translate: 'yes',
+  enableToolbar: true,
+  showToolbar: true,
+  placeholder: 'Enter text here...',
+  defaultParagraphSeparator: '',
+  defaultFontName: '',
+  defaultFontSize: '2',
+  fonts: [ {class: 'georgia', name: 'Georgia'}, {class: 'arial', name: 'Arial'}, {class: 'times-new-roman', name: 'Times New Roman'}, {class: 'calibri', name: 'Calibri'}, {class: 'comic-sans-ms', name: 'Comic Sans MS'}],
+  customClasses: [{name: 'quote', class: 'quote', }, {name: 'redText', class: 'redText'}, {name: 'titleText', class: 'titleText', tag: 'h1', }, ],
+  uploadUrl: 'v1/image',
+  sanitize: true,
+  toolbarPosition: 'top',
+};
 
 
 
@@ -79,8 +121,12 @@ ngOnInit() {
       frequency: 'monthly',
       endDate: '',
       approval: false,
+      description : {
+            title: '',
+            body: '',
+          },
+      documents: [],
       reportingUser: '',
-      actionable: '',
       reports: []
     }
 
@@ -110,6 +156,15 @@ updatePage() {
                 this.TaskPlan = dataTask;
                 // this.TaskPlan.forEach((r) => {
                 //   this.taskPlanService.deleteTaskPlan(r._id).subscribe( () => this.notifyService.showSuccess('cleared', 'Cleared'))
+                // })
+
+                //  this.TaskPlan.forEach((r) => {
+                //    r.description = {
+                //     title: '',
+                //     body: '',
+                //   },
+                //   r.documents = [];
+                //   this.taskPlanService.updateTaskPlan(r._id, r).subscribe( () => this.notifyService.showSuccess('Updated', 'Updated'))
                 // })
                             
                 this.formatAtivity().then(() => resolve())
@@ -246,7 +301,11 @@ closeTaskForm() {
     frequency: 'monthly',
     endDate: '',
     approval: false,
-    actionable: '',
+    description : {
+      title: '',
+      body: '',
+    },
+    documents: [],
     reportingUser: '',
     reports: []
   }
@@ -283,8 +342,6 @@ addTask() {
     this.notifyService.showWarning('Please add kpi Unit', 'No KPI Unit')
   } else if(this.task.endDate === '') {
     this.notifyService.showWarning('Please set end date', 'No end date')
-  } else if(this.task.actionable === '') {
-    this.notifyService.showWarning('Please type actionable', 'No Actionable')
   } else if(this.task.reportingUser === '') {
     this.notifyService.showWarning('Please add atleast one reporting user', 'No reporting user selected')
   } else {
@@ -378,12 +435,16 @@ saveThePlan() {
                       frequency: 'monthly',
                       endDate: '',
                       approval: false,
-                      actionable: '',
+                      description : {
+                        title: '',
+                        body: '',
+                      },
+                      documents: [],
                       reportingUser: '',
                       reports: []
                     }
                     this.ImprintLoader = false;
-                    this.notifyService.showSuccess('Plan update', 'Success')
+                    this.notifyService.showSuccess('Plan updated', 'Success')
                    break;
                   }
                 }
@@ -405,6 +466,151 @@ saveThePlan() {
 
 
 
+openPlanDescriptionModal(taskPlan: any) {
+  this.TaskPlanOnEdit = taskPlan;
+
+  if (this.TaskPlanOnEdit.description.title ) { this.descriptionInput.title = this.TaskPlanOnEdit.description.title };
+  if (!this.TaskPlanOnEdit.description.title ) { this.descriptionInput.title = this.TaskPlanOnEdit.activityName };
+  if (this.TaskPlanOnEdit.description.body ) { this.descriptionInput.body = this.TaskPlanOnEdit.description.body };
+  if (!this.TaskPlanOnEdit.description.body ) { this.descriptionInput.body = ''};
+  this.planDescriptionModal.show();
+}
+
+
+
+
+
+
+
+
+addDescription() {
+  if (this.descriptionInput.title === '') {
+    this.notifyService.showWarning('Please add title', 'No Title')
+  } else if (this.descriptionInput.body === '') {
+    this.notifyService.showWarning('Please add body', 'No body content')
+  } else {
+    this.ImprintLoader = true;
+    this.TaskPlanOnEdit.description = {
+      title: this.descriptionInput.title,
+      body: this.descriptionInput.body ,
+    }
+    this.taskPlanService.updateTaskPlan(this.TaskPlanOnEdit._id, this.TaskPlanOnEdit).subscribe(
+      data => {
+        this.updatePage().then(() => {
+          this.formatTask().then(() => {
+            this.formartReport().then(() => { 
+              for(let trtPlan of this.PlanOnEdit.plan) {
+                if (trtPlan._id === this.ActivePlanEdit._id) {
+                 this.ActivePlanEdit = trtPlan; 
+                 this.planDescriptionModal.hide();
+                  this.ImprintLoader = false;
+                  this.notifyService.showSuccess('Description updated', 'Success')
+                 break;
+                }
+              }
+            })
+          })
+        })
+      }, error => { this.ImprintLoader = true; this.notifyService.showError('could not add description', 'Failed') }
+    )
+  }
+}
+
+
+
+
+
+
+
+openPlanDocsModal(taskPlan: any) {
+  this.TaskPlanOnEdit = taskPlan;
+  this.planDocsModal.show();
+
+}
+
+
+
+
+uploadDoc(docFile) {
+  this.ImprintLoader = true;
+  const myDoc =  docFile.target.files[0] as File;
+  // tslint:disable-next-line: new-parens
+  const formData = new FormData;
+  formData.append('fileUploaded', myDoc, myDoc.name);
+  let MyDocType = myDoc.type.toLocaleLowerCase();
+  let myDocTypeName = '';
+  if (MyDocType.includes('image')) { myDocTypeName = 'image'}
+  if (MyDocType.includes('video')) { myDocTypeName = 'video'}
+  if (MyDocType.includes('pdf')) { myDocTypeName = 'pdf' }
+  if (MyDocType.includes('word')) { myDocTypeName = 'word' }
+  if (MyDocType.includes('sheet') || MyDocType.includes('excel')) { myDocTypeName = 'sheet' }
+  if (MyDocType.includes('presentation')) { myDocTypeName = 'presentation' }
+
+  // this.notifyService.showInfo(myDocTypeName, myDocTypeName);
+
+  this.taskPlanService.uploadPlanDocument(formData).subscribe(
+    data => {
+
+      let myDocObj = {
+        docType: myDocTypeName,
+        docOriginalName: myDoc.name,
+        name: data.name,
+        url: `${dev.connect}${data.url}`,
+      }
+      this.TaskPlanOnEdit.documents.push(myDocObj);
+      this.taskPlanService.updateTaskPlan(this.TaskPlanOnEdit._id, this.TaskPlanOnEdit).subscribe(
+        data => {
+          this.updatePage().then(() => {
+            this.formatTask().then(() => {
+              this.formartReport().then(() => { 
+                for(let trtPlan of this.PlanOnEdit.plan) {
+                  if (trtPlan._id === this.ActivePlanEdit._id) {
+                   this.ActivePlanEdit = trtPlan; 
+                    this.TaskPlanOnEdit = data;
+                    this.ImprintLoader = false;
+                    this.notifyService.showSuccess('Document updated', 'Success')
+                   break;
+                  }
+                }
+              })
+            })
+          })
+        }, error => { this.ImprintLoader = true; this.notifyService.showError('could not add description', 'Failed') }
+      )
+      }, error => { this.ImprintLoader = true; this.notifyService.showInfo('Document was not uploaded', 'Failed'); }
+  );
+
+
+}
+
+
+
+
+removeTaskDoc(doc: any) {
+  this.ImprintLoader = true;
+  this.TaskPlanOnEdit.documents =  this.TaskPlanOnEdit.documents.filter((d) => d._id !== doc._id).map(e => e);
+  this.taskPlanService.updateTaskPlan(this.TaskPlanOnEdit._id, this.TaskPlanOnEdit).subscribe(
+    data => {
+      this.updatePage().then(() => {
+        this.formatTask().then(() => {
+          this.formartReport().then(() => { 
+            for(let trtPlan of this.PlanOnEdit.plan) {
+              if (trtPlan._id === this.ActivePlanEdit._id) {
+               this.ActivePlanEdit = trtPlan; 
+                this.TaskPlanOnEdit = data;
+                this.ImprintLoader = false;
+                this.notifyService.showSuccess('Document removed', 'Success')
+                this.taskPlanService.removePlanDocument(doc.name).subscribe();
+               break;
+              }
+            }
+          })
+        })
+      })
+    }, error => { this.ImprintLoader = true; this.notifyService.showError('could not add description', 'Failed') }
+  )
+}
+
 
 back() {
   this.planComponent.toListsPage();
@@ -419,7 +625,7 @@ back() {
 
 
 ngOnDestroy() {
-    localStorage.removeItem('planOnEdit')
+  localStorage.removeItem('planOnEdit')
 }
 
 

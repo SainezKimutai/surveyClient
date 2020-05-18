@@ -118,7 +118,7 @@
     padding: 1em
 .list-section .model-edit .model-card .model-wrap
     width: 100%
-    max-width: $desktop_md
+    max-width: 900px
     padding: 1em 2em
     background-color: white
 .list-section .model-edit .model-card .model-wrap .top-wrap
@@ -205,6 +205,9 @@
         text-transform: uppercase
         font-weight: bold
         color: lighten(colorTheme(primaryTheme), 15)
+    .delete  
+        width: 2em
+        opacity: 0
 
 .list-section .model-edit .model-card .model-wrap .task-wrap .task-item
     display: flex 
@@ -216,35 +219,54 @@
     h6 
         width: 100%
         font-size: 11px
-        padding: .5em
+        padding: .5em .9em
         text-transform: capitalize
-        .delete
-            display: none !important
+        display: flex !important
+        align-items: center
+        justify-content: flex-start
+        .icon
+          width: 2em 
+          height: 2em
+          cursor: pointer
+          display: flex !important
+          align-items: center
+          justify-content: center
+          border-radius: 50%
 
-    &:hover 
-        background-color: grayColor(g100)
-            
-        h6 .delete       
-            transform: translateX(1.5em)
-            -webkit-transform: translateX(1.5em)
-            -moz-transform: translateX(1.5em)
+          .desc 
+            color: orange 
+          .doc
+            color: colorTheme(success)           
+          &:hover
+            background-color: colorTheme(primaryTheme)  
+            fa-icon
+              color: white
+
+    .delete  
+        width: 2em
+        height: 2em
+        display: flex !important
+        align-items: center
+        justify-content: center
+        border-radius: 50%
+        background-color:  grayColor(g100)
+        cursor: pointer
+        opacity: 0
+        fa-icon
+            font-size: 10px
+            color: colorTheme(danger)
+        &:hover
             width: 2em
-            height: 2em
-            display: flex !important
-            align-items: center
-            justify-content: center
-            border-radius: 50%
-            background-color:  grayColor(g100)
-            cursor: pointer
-
+            height: 2em !important
+            background-color: colorTheme(danger)    
             fa-icon
                 font-size: 10px
-                color: colorTheme(danger)
-            &:hover
-                background-color: colorTheme(danger)    
-                fa-icon
-                    font-size: 10px
-                    color: white      
+                color: white  
+    &:hover 
+        background-color: grayColor(g100) 
+        .delete 
+            opacity: 1 
+    
 
 
 // view
@@ -329,7 +351,7 @@
       color: lighten(colorTheme(primaryTheme),10 )
       font-size: 12px
 
-      &.actionable
+      &.heading
         min-width: 250px
         max-width: 250px
 
@@ -340,7 +362,7 @@
   border: solid 1px grayColor(g300)
   height: fit-content
 
-  .actionable
+  .heading
       min-width: 250px
       max-width: 250px
       height: 100% !important
@@ -651,12 +673,191 @@
 
 
 
+.planDescriptionModal
+  border: none
+.planDescriptionModal .modal-content
+  width: 100%
+  border: none
+  height: fit-content
+.planDescriptionModal .modal-content .modal-header
+  width: 100%
+  border: none
+  background-color: colorTheme(warning)
+  h4 
+      font-size: 14px
+      color: white
+.planDescriptionModal .modal-content .modal-body
+    width: 100%
+    border: none
+.planDescriptionModal .modal-content .modal-body form 
+  width: 100%
+.planDescriptionModal .modal-content .modal-body form .form-group 
+  width: 100%
+  display: flex 
+  flex-direction: column
+  label
+      font-weight: bold
+      color: grayColor(g700)
+      font-size: 11px
+  input 
+    width: 100%
+    max-width: 20em
+    border: none
+    outline: none
+    background-color: grayColor(g100)
+    color: grayColor(g800)
+    font-size: 12px
+    font-weight: 400
+    padding: .5em
+    border-radius: 2px
+
+.planDescriptionModal .modal-content .modal-footer
+  width: 100%
+  button 
+      font-size: 12px
+      background-color: colorTheme(warning)
+      color: white
+    
 
 
 
 
 
 
+
+
+
+
+.planDocsModal
+  border: none
+.planDocsModal .modal-content
+  width: 100%
+  border: none
+  height: fit-content
+  max-height: 600px
+  overflow-y: scroll
+.planDocsModal .modal-content .modal-header
+  width: 100%
+  border: none
+  background-color: colorTheme(success)
+  h4 
+      font-size: 14px
+      color: white
+.planDocsModal .modal-content .modal-body
+    width: 100%
+    border: none
+
+.planDocsModal .modal-content .modal-body .list-document
+  width: 100%
+  padding: 1em 0
+  display: grid
+  grid-template-columns: repeat(4, 1fr)
+  grid-gap: 1em
+
+  @include desktop_md
+    grid-template-columns: repeat(3, 1fr)
+  @include desktop_sm
+    grid-template-columns: repeat(2, 1fr)
+  @include desktop_xm
+    grid-template-columns: repeat(1, 1fr)
+
+  .doc-item
+      width: 100%
+      text-align: left
+
+      .icon
+          padding: .5em
+          width: fit-content
+          cursor: pointer
+          fa-icon
+            font-size: 42px
+            margin: 0
+
+          &.image
+            background-color: white
+            fa-icon
+              color: grayColor(g700)
+            &:hover
+              border-bottom: solid 2px grayColor(g700) 
+          &.video
+            background-color: white
+            fa-icon
+              color: teal  
+            &:hover
+              border-bottom: solid 2px teal 
+          &.word
+            background-color: white
+            fa-icon
+              color: colorTheme(primary)
+            &:hover
+              border-bottom: solid 2px colorTheme(primary)    
+          &.sheet
+            background-color: white
+            fa-icon
+              color: colorTheme(success)
+            &:hover
+              border-bottom: solid 2px colorTheme(success)  
+          &.presentation
+            background-color: white
+            fa-icon
+              color: purple
+            &:hover
+              border-bottom: solid 2px purple
+          &.pdf
+            background-color: white
+            fa-icon
+              color: orange
+            &:hover
+              border-bottom: solid 2px orange    
+      .name
+          padding: .5em
+          width: fit-content
+          p
+            font-size: 12px
+            color: grayColor(g700)
+            font-weight: bold
+            margin: 0
+      .action
+          padding: .5em
+          width: fit-content
+
+          span
+              width: 1.5em
+              height: 1.5em
+              border-radius: 50%
+              background-color: grayColor(g100)
+              display: flex
+              align-items: stretch
+              cursor: pointer
+
+              fa-icon 
+                  margin: auto
+                  font-size: 10px
+                  color: grayColor(g200)
+              &:hover
+                  fa-icon 
+                      color: colorTheme(danger) 
+
+              
+
+
+.planDocsModal .modal-content .modal-body .upload-wrap
+  width: 100%
+  display: flex
+  align-items: stretch
+
+  .btn 
+    margin: auto
+    background-color: colorTheme(success) 
+    color: white 
+    font-size: 12px
+.planDocsModal .modal-content .modal-footer
+  width: 100%
+  button 
+      font-size: 12px
+      background-color: colorTheme(success)
+      color: white
+  
 
 
 

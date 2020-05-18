@@ -5,7 +5,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
-import { ChartsModule } from 'ng2-charts';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { PlanComponent } from './plan.component';
 import { PlanRoutingModule } from './plan-routing.module';
@@ -42,7 +42,7 @@ import { PlanEditComponent } from './plan-edit/plan-edit.component';
     }),
     BsDatepickerModule.forRoot(),
     DatepickerModule.forRoot(),
-
+    AngularEditorModule
   ]
 
   })

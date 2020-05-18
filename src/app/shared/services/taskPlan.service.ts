@@ -41,4 +41,12 @@ export class TaskPlanService {
         return this.http.delete<any>(this.url + 'delete/' + id, {headers : header});
     }
 
+    uploadPlanDocument( data: any ) {
+        return this.http.post<any>(this.url + 'uploadPlanDocument/', data, {headers : header});
+    }
+
+    removePlanDocument(name) {
+        return this.http.delete<any>(this.url + 'removePlanDocument/' + name, {headers : header});
+    }
+
 }
