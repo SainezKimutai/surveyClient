@@ -11,11 +11,12 @@ import { PlanComponent } from './plan.component';
 import { PlanRoutingModule } from './plan-routing.module';
 import { ModalModule, BsDatepickerModule, DatepickerModule } from 'ngx-bootstrap';
 import { PlanEditComponent } from './plan-edit/plan-edit.component';
+import { SanitizeHtmlPipe } from 'src/app/shared/pipe/safePipe';
 
 @NgModule({
 
   declarations: [
-      PlanComponent, PlanEditComponent
+      PlanComponent, PlanEditComponent, SanitizeHtmlPipe
           ],
 
   imports: [

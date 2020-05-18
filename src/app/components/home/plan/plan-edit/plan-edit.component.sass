@@ -350,6 +350,7 @@
       border-left: solid 1px grayColor(g300)
       color: lighten(colorTheme(primaryTheme),10 )
       font-size: 12px
+      
 
       &.heading
         min-width: 250px
@@ -385,6 +386,7 @@
         div 
           width: 100%
           height: 100%
+          min-height: 4em
           padding: .5em
           display: flex
           align-items: center
@@ -394,6 +396,29 @@
           color: grayColor(g700)
           font-size: 12px
           text-transform: capitalize
+          word-wrap: break-word
+          display: block
+          white-space: nowrap
+          overflow: hidden !important
+          text-overflow: ellipsis
+
+          .icon
+            width: 2em 
+            height: 2em
+            cursor: pointer
+            display: flex !important
+            align-items: center
+            justify-content: center
+            border-radius: 50%
+
+            .desc 
+              color: orange 
+            .doc
+              color: colorTheme(success)           
+            &:hover
+              background-color: colorTheme(primaryTheme)  
+              fa-icon
+                color: white
           
 
 
@@ -728,6 +753,65 @@
 
 
 
+.viewDescriptionModal
+  border: none
+.viewDescriptionModal .modal-content
+  width: 100%
+  border: none
+  height: fit-content
+  max-height: 600px
+  overflow-y: scroll
+.viewDescriptionModal .modal-content .modal-header
+  width: 100%
+  border: none
+  background-color: colorTheme(warning)
+  h4 
+      font-size: 14px
+      color: white
+.viewDescriptionModal .modal-content .modal-body
+    width: 100%
+    border: none
+
+    .no-doc
+        font-weight: bold 
+        color: grayColor(g800)
+        font-size: 14px
+        margin: 0 0 1em 0
+    .body-wrap
+      width: 100%
+
+      h4 
+        font-weight: bold 
+        color: grayColor(g800)
+        font-size: 14px
+        margin: 0 0 1em 0
+      .body-content
+        width: 100%
+        overflow: hidden
+        word-break: break-all
+        word-wrap: break-word
+        display: block
+        background-color: whitesmoke
+        padding: 1em
+        border-radius: 5px
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .planDocsModal
   border: none
 .planDocsModal .modal-content
@@ -760,6 +844,12 @@
     grid-template-columns: repeat(2, 1fr)
   @include desktop_xm
     grid-template-columns: repeat(1, 1fr)
+
+  .no-doc
+      font-weight: bold 
+      color: grayColor(g800)
+      font-size: 14px
+      margin: 0 0 1em 0
 
   .doc-item
       width: 100%

@@ -121,6 +121,8 @@
                         <div class="heading">Business Operations</div>
                         <div>Activity</div>
                         <div>KPI</div>    
+                        <div>Description</div>
+                        <div>Documents</div>  
                     </div>
 
                     <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.tasks.length === 0">
@@ -131,9 +133,12 @@
                             <div class="task-item" *ngFor="let task of item.tasksArray">
                                 <div>{{task.activityName}}</div>
                                 <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}}</span></div>
+                                <div> <span class="icon" (click)="openViewPlanDescriptionModal(task)"><fa-icon class="desc"  [icon]="faCommentAlt"></fa-icon> </span> </div>
+                                <div> <span class="icon" (click)="openPlanDocsModal(task)"><fa-icon class="doc" [icon]="faFileAlt"></fa-icon> </span> </div>        
                             </div>
+                            
                         </div>
-
+             
                     </div>
                 </div>
             </div>
@@ -144,6 +149,8 @@
                         <div class="heading">Business Operations</div>
                         <div>Activity</div>
                         <div>KPI</div>
+                        <div>Description</div>
+                        <div>Documents</div>  
                    
                     </div>
 
@@ -155,6 +162,8 @@
                             <div class="task-item" *ngFor="let task of item.tasksArray" [hidden]="task.approval">
                                 <div>{{task.activityName}}</div>
                                 <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}}</span></div>
+                                <div> <span class="icon" (click)="openViewPlanDescriptionModal(task)"><fa-icon class="desc"  [icon]="faCommentAlt"></fa-icon> </span> </div>
+                                <div> <span class="icon" (click)="openPlanDocsModal(task)"><fa-icon class="doc" [icon]="faFileAlt"></fa-icon> </span> </div>   
                           
                             </div>
                         </div>
@@ -170,6 +179,8 @@
                         <div>Activity</div>
                         <div>KPI</div>
                         <div>Report</div>
+                        <div>Description</div>
+                        <div>Documents</div>  
                     </div>
 
                     <div class="item-wrap" *ngFor="let item of PlanOnEdit.plan" [hidden]="item.tasks.length === 0">
@@ -184,6 +195,8 @@
                                    <span *ngIf="!task.kpi && task.reportStatus">Done</span>
                                    <span *ngIf="!task.kpi && !task.reportStatus">Not Done</span>
                                    <span *ngIf="task.kpi">{{task.reportStatus}}</span>
+                                   <div> <span class="icon" (click)="openViewPlanDescriptionModal(task)"><fa-icon class="desc"  [icon]="faCommentAlt"></fa-icon> </span> </div>
+                                   <div> <span class="icon" (click)="openPlanDocsModal(task)"><fa-icon class="doc" [icon]="faFileAlt"></fa-icon> </span> </div>   
                                 </div>
                             </div>
                         </div>
@@ -431,6 +444,26 @@
 
 
 
+<div bsModal #viewDescriptionModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog viewDescriptionModal modal-lg" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title">Description</h4>
+            <button type="button" class="btn close" (click)="viewDescriptionModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" *ngIf="TaskPlanOnView" >
+
+            <div class="body-wrap" *ngIf="TaskPlanOnView.description.title !== ''">
+                <h4>{{TaskPlanOnView.description.title}}</h4>
+                <div class="body-content" [innerHTML]="TaskPlanOnView.description.body | sanitizeHtml"></div>
+            </div>
+            <h4 class="no-doc" *ngIf="TaskPlanOnView.description.title === ''">No Description</h4>
+        </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 
@@ -469,16 +502,18 @@
                     <div class="name">
                         <p>{{doc.docOriginalName}}</p>
                     </div>
-                    <div class="action">
+                    <div class="action" *ngIf="ActiveModel === 'edit'">
                         <span (click)="removeTaskDoc(doc)">
                             <fa-icon [icon]="faTrash"></fa-icon>
                         </span>
                     </div>
                 </div>
 
+                <h4 class="no-doc" *ngIf="TaskPlanOnEdit.documents.length === 0">No Documents</h4>
+
             </div>
             
-            <div class="upload-wrap">
+            <div class="upload-wrap" *ngIf="ActiveModel === 'edit'">
                 <button class="btn btn-sm" (click)="docFileInput.click()">Upload Document</button>
                 <input hidden readonly type="file" #docFileInput name="fileUploaded" (change)="uploadDoc($event)">
                    

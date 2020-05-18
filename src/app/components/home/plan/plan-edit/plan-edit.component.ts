@@ -34,6 +34,8 @@ export class PlanEditComponent implements OnInit, OnDestroy {
   @ViewChild('existingPlanModal', {static: true}) existingPlanModal: ModalDirective;
   @ViewChild('planDescriptionModal', {static: true}) planDescriptionModal: ModalDirective;
   @ViewChild('planDocsModal', {static: true}) planDocsModal: ModalDirective;
+  @ViewChild('viewDescriptionModal', {static: true}) viewDescriptionModal: ModalDirective;
+  
   
   
 
@@ -76,6 +78,7 @@ public descriptionInput = {
   body: '',
 };
 public TaskPlanOnEdit: any;
+public TaskPlanOnView: any;
 
 planDescriptionEditorConfig: AngularEditorConfig = {
   editable: true,
@@ -610,6 +613,19 @@ removeTaskDoc(doc: any) {
     }, error => { this.ImprintLoader = true; this.notifyService.showError('could not add description', 'Failed') }
   )
 }
+
+
+
+
+
+
+
+
+openViewPlanDescriptionModal(taskPlan: any) {
+  this.TaskPlanOnView = taskPlan;
+  this.viewDescriptionModal.show();
+}
+
 
 
 back() {
