@@ -38,19 +38,19 @@
 
       <li *ngIf="toCustomer" [ngClass] ="reportsNavBarActive ? 'nav-item active': 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
         <a routerLink="/home/reports" [ngClass]=" reportsNavBarActive ? 'nav-link active': 'nav-link'">
-          <fa-icon [icon]="faListAlt"></fa-icon><span>Reports</span>
+          <fa-icon [icon]="faFax"></fa-icon><span>Reports</span>
         </a>
       </li>
 
       <li *ngIf="toCustomer" [ngClass] ="planNavBarActive ? 'nav-item active': 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
         <a routerLink="/home/plan" [ngClass]=" planNavBarActive ? 'nav-link active': 'nav-link'">
-          <fa-icon [icon]="faProjectDiagram"></fa-icon><span>Plan</span>
+          <fa-icon [icon]="faBusinessTime"></fa-icon><span>Plan</span>
         </a>
       </li>
 
       <li *ngIf="toCustomer" [ngClass] ="trackerNavBarActive ? 'nav-item active': 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
         <a routerLink="/home/tracker" [ngClass]=" trackerNavBarActive ? 'nav-link active': 'nav-link'">
-          <fa-icon [icon]="faProjectDiagram"></fa-icon><span>Tracker</span>
+          <fa-icon [icon]="faCrosshairs"></fa-icon><span>Tracker</span>
         </a>
       </li>
 
@@ -77,8 +77,6 @@
           <fa-icon [icon]="faEdit"></fa-icon> <span>Editorial</span>
         </a>
       </li>
-
-
 
 
       <li *ngIf="toCustomer || toAdmin" [ngClass]="usersNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent">
@@ -139,19 +137,19 @@
         
         <li *ngIf="toCustomer" [ngClass] ="reportsNavBarActive ? 'nav-item active': 'nav-item'">
           <a routerLink="/home/reports" [ngClass]=" reportsNavBarActive ? 'nav-link active': 'nav-link'">
-            <fa-icon [icon]="faListAlt"></fa-icon><span>Reports</span>
+            <fa-icon [icon]="faFax"></fa-icon><span>Reports</span>
           </a>
         </li>
 
         <li *ngIf="toCustomer" [ngClass] ="planNavBarActive ? 'nav-item active': 'nav-item'">
           <a routerLink="/home/plan" [ngClass]=" planNavBarActive ? 'nav-link active': 'nav-link'">
-            <fa-icon [icon]="faProjectDiagram"></fa-icon><span>Plan</span>
+            <fa-icon [icon]="faBusinessTime"></fa-icon><span>Plan</span>
           </a>
         </li>
 
         <li *ngIf="toCustomer" [ngClass] ="trackerNavBarActive ? 'nav-item active': 'nav-item'">
           <a routerLink="/home/tracker" [ngClass]=" trackerNavBarActive ? 'nav-link active': 'nav-link'">
-            <fa-icon [icon]="faProjectDiagram"></fa-icon><span>Tracker</span>
+            <fa-icon [icon]="faCrosshairs"></fa-icon><span>Tracker</span>
           </a>
         </li>
 

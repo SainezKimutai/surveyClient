@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { faBars, faArrowLeft, faChartLine, faEdit, faUser, faUsers, faListAlt, faPowerOff,
-  faProjectDiagram, faFileAlt} from '@fortawesome/free-solid-svg-icons';
+  faProjectDiagram, faFileAlt, faBusinessTime, faNewspaper, faFolderPlus, faCrosshairs,
+  faFax} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -35,6 +36,11 @@ public faEdit = faEdit;
 public faProjectDiagram = faProjectDiagram;
 public faUsers = faUsers;
 public faFileAlt = faFileAlt;
+public faBusinessTime = faBusinessTime;
+public faNewspaper = faNewspaper;
+public faFolderPlus = faFolderPlus;
+public faCrosshairs = faCrosshairs;
+public faFax = faFax;
 
 // permisions
 public toAdmin = false;
