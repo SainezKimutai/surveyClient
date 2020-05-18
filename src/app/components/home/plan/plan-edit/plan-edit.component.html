@@ -22,12 +22,12 @@
         </div>
     </div>
 
-    <div class="model-edit" *ngIf="ActiveModel === 'edit'">
+    <div class="model-edit" *ngIf="ActiveModel === 'edit' && ActivePlanEdit">
 
         <div class="model-threat">
             <h4 class="head">Threat</h4>
 
-            <div class="list-item-wrap" *ngIf="ActivePlanEdit">
+            <div class="list-item-wrap">
                 <li class="item" *ngFor="let item of PlanOnEdit.plan" 
                 [ngClass]="ActivePlanEdit._id === item._id ? 'item active' : 'item'"
                 (click)="switchPlanThreat(item._id)">{{item.threat.threat}}</li>
@@ -35,7 +35,7 @@
         </div>
 
         <div class="model-card">
-            <div class="model-wrap" *ngIf="ActivePlanEdit">
+            <div class="model-wrap" >
                 <div class="recom-wrap">
                     <h4>Recomendation</h4>
                     <p>{{ActivePlanEdit.threat.recom}}</p>
@@ -246,6 +246,10 @@
                         <label> KPI input</label>
                         <input type="number" name="kpi" [(ngModel)]="task.kpi" (keyup)="getWeekelyTargets()">
                     </div>
+                    <div class="form-group" *ngIf="kpiCalendar === 'kpi'">
+                        <label> KPI Metric / Unit</label>
+                        <input type="text" name="kpiUnit" [(ngModel)]="task.kpiUnit" >
+                    </div>
 
                     <div class="form-group">
                         <label>End Date</label>
@@ -264,7 +268,7 @@
                     </div>
                   
     
-                    <div class="form-group-recurring" *ngIf="task.recurring">
+                    <div class="form-group-recurring" *ngIf="task.recurring || kpiCalendar === 'calendar'">
                         <label>Frequency</label>
                         <div class="wrap">
                             <div class="input-wrap">
@@ -282,7 +286,7 @@
                         </div>
                     </div>
     
-                    <div class="form-group-recurring" *ngIf="!task.recurring">
+                    <div class="form-group-recurring" *ngIf="!task.recurring && kpiCalendar === 'kpi'">
                         <label>Frequency</label>
                         <div class="wrap">
                             <div class="input-wrap">
@@ -292,7 +296,7 @@
                         </div>
                     </div>
 
-                    <div class="weekly-targets" *ngIf="!task.recurring">
+                    <div class="weekly-targets" *ngIf="!task.recurring && kpiCalendar === 'kpi'">
                         <label> Weekly Target</label>
                         <div class="wrap">
                             <div class="input-wrap weekly-wrap">

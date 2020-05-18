@@ -66,6 +66,7 @@ ngOnInit() {
       activityId: '',
       priority: '',
       kpi: null,
+      kpiUnit: '',
       recurring: false,
       recurringWeekTarget: {
         week1: 0,
@@ -232,6 +233,7 @@ closeTaskForm() {
     activityId: '',
     priority: '',
     kpi: null,
+    kpiUnit: '',
     recurring: false,
     recurringWeekTarget: {
       week1: 0,
@@ -277,6 +279,8 @@ addTask() {
     this.notifyService.showWarning('Please add Activity', 'No Activity')
   } else if(this.task.kpi === null && this.kpiCalendar === 'kpi' ) {
     this.notifyService.showWarning('Please add kpi', 'No KPI')
+  } else if(this.task.kpiUnit === '' && this.kpiCalendar === 'kpi' ) {
+    this.notifyService.showWarning('Please add kpi Unit', 'No KPI Unit')
   } else if(this.task.endDate === '') {
     this.notifyService.showWarning('Please set end date', 'No end date')
   } else if(this.task.actionable === '') {
@@ -361,6 +365,7 @@ saveThePlan() {
                       activityId: '',
                       priority: '',
                       kpi: null,
+                      kpiUnit: '',
                       recurring: false,
                       recurringWeekTarget: {
                         week1: 0,
