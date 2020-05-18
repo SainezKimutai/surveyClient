@@ -1,12 +1,16 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { NotificationService } from 'src/app/shared/services/notification.service';
-import { faArrowLeft, faPlus, faTrash, faTimes} from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faPlus, faTrash, faTimes, faFileAlt, faCommentAlt,
+  faImage, faVideo, faFileWord, faFileExcel, faFilePowerpoint, faFilePdf, faCrosshairs } from '@fortawesome/free-solid-svg-icons';
 import { PlansService } from 'src/app/shared/services/plan.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { TrackerComponent } from '../tracker.component';
 import { ModalDirective } from 'ngx-bootstrap';
 import { TaskPlanService } from 'src/app/shared/services/taskPlan.service';
 import { ActivityPlanService } from 'src/app/shared/services/activityPlan.service';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { dev } from 'src/app/shared/dev/dev';
+
 
 @Component({
   selector: 'app-tracker-report',
@@ -25,6 +29,8 @@ export class TrackerReportComponent implements OnInit, OnDestroy {
     ) {  }
 
 @ViewChild('reportModel', {static: true}) reportModel: ModalDirective;
+@ViewChild('planDescriptionModal', {static: true}) planDescriptionModal: ModalDirective;
+@ViewChild('planDocsModal', {static: true}) planDocsModal: ModalDirective;
 
 public ImprintLoader = false;
 
@@ -38,6 +44,16 @@ public faArrowLeft = faArrowLeft;
 public faPlus = faPlus;
 public faTrash = faTrash;
 public faTimes = faTimes;
+public faFileAlt = faFileAlt;
+public faCommentAlt = faCommentAlt;
+public faImage = faImage;
+public faVideo = faVideo;
+public faFileWord = faFileWord;
+public faFileExcel = faFileExcel;
+public faFilePowerpoint = faFilePowerpoint;
+public faFilePdf = faFilePdf;
+public faCrosshairs = faCrosshairs
+
 
 public reportValueInput = null;
 public reportEventInput = false;
@@ -52,8 +68,32 @@ public TaskPlan = [];
 
 
 
+public descriptionInput = {
+  title: '',
+  body: '',
+};
 
-
+planDescriptionEditorConfig: AngularEditorConfig = {
+  editable: true,
+  spellcheck: true,
+  height: 'auto',
+  minHeight: '200px',
+  maxHeight: 'auto',
+  width: 'auto',
+  minWidth: '0',
+  translate: 'yes',
+  enableToolbar: true,
+  showToolbar: true,
+  placeholder: 'Enter text here...',
+  defaultParagraphSeparator: '',
+  defaultFontName: '',
+  defaultFontSize: '2',
+  fonts: [ {class: 'georgia', name: 'Georgia'}, {class: 'arial', name: 'Arial'}, {class: 'times-new-roman', name: 'Times New Roman'}, {class: 'calibri', name: 'Calibri'}, {class: 'comic-sans-ms', name: 'Comic Sans MS'}],
+  customClasses: [{name: 'quote', class: 'quote', }, {name: 'redText', class: 'redText'}, {name: 'titleText', class: 'titleText', tag: 'h1', }, ],
+  uploadUrl: 'v1/image',
+  sanitize: true,
+  toolbarPosition: 'top',
+};
 
 
 
@@ -488,6 +528,111 @@ saveTaskPlan() {
 
 
 
+
+openPlanDescriptionModal(taskPlan: any) {
+  this.TaskOnEdit = taskPlan;
+  if (this.TaskOnEdit.description.title ) { this.descriptionInput.title = this.TaskOnEdit.description.title };
+  if (!this.TaskOnEdit.description.title ) { this.descriptionInput.title = this.TaskOnEdit.activityName };
+  if (this.TaskOnEdit.description.body ) { this.descriptionInput.body = this.TaskOnEdit.description.body };
+  if (!this.TaskOnEdit.description.body ) { this.descriptionInput.body = ''};
+  this.planDescriptionModal.show();
+}
+
+
+
+
+addDescription() {
+  if (this.descriptionInput.title === '') {
+    this.notifyService.showWarning('Please add title', 'No Title')
+  } else if (this.descriptionInput.body === '') {
+    this.notifyService.showWarning('Please add body', 'No body content')
+  } else {
+    this.ImprintLoader = true;
+    this.TaskOnEdit.description = {
+      title: this.descriptionInput.title,
+      body: this.descriptionInput.body ,
+    }
+    this.taskPlanService.updateTaskPlan(this.TaskOnEdit._id, this.TaskOnEdit).subscribe(
+      data => {
+        this.updatePage().then(() => {
+          this.formatTask().then(() => {
+            this.formatPlan().then(() => {  
+               for(let trtPlan of this.PlanOnReport.plan) {
+                if (trtPlan._id === this.ActivePlanEdit._id) {
+                 this.ActivePlanEdit = trtPlan; 
+                 this.planDescriptionModal.hide();
+                  this.ImprintLoader = false;
+                 break;
+                }
+              }  
+            });
+          })
+        })
+      }, error => { this.ImprintLoader = true; this.notifyService.showError('could not add description', 'Failed') }
+    )
+  }
+}
+
+
+
+
+
+openPlanDocsModal(taskPlan: any) {
+  this.TaskOnEdit = taskPlan;
+  this.planDocsModal.show();
+}
+
+
+uploadDoc(docFile) {
+  this.ImprintLoader = true;
+  const myDoc =  docFile.target.files[0] as File;
+  // tslint:disable-next-line: new-parens
+  const formData = new FormData;
+  formData.append('fileUploaded', myDoc, myDoc.name);
+  let MyDocType = myDoc.type.toLocaleLowerCase();
+  let myDocTypeName = '';
+  if (MyDocType.includes('image')) { myDocTypeName = 'image'}
+  if (MyDocType.includes('video')) { myDocTypeName = 'video'}
+  if (MyDocType.includes('pdf')) { myDocTypeName = 'pdf' }
+  if (MyDocType.includes('word')) { myDocTypeName = 'word' }
+  if (MyDocType.includes('sheet') || MyDocType.includes('excel')) { myDocTypeName = 'sheet' }
+  if (MyDocType.includes('presentation')) { myDocTypeName = 'presentation' }
+
+  // this.notifyService.showInfo(myDocTypeName, myDocTypeName);
+
+  this.taskPlanService.uploadPlanDocument(formData).subscribe(
+    data => {
+
+      let myDocObj = {
+        docType: myDocTypeName,
+        docOriginalName: myDoc.name,
+        name: data.name,
+        url: `${dev.connect}${data.url}`,
+      }
+      this.TaskOnEdit.documents.push(myDocObj);
+      this.taskPlanService.updateTaskPlan(this.TaskOnEdit._id, this.TaskOnEdit).subscribe(
+        data => {
+          this.updatePage().then(() => {
+            this.formatTask().then(() => {
+              this.formatPlan().then(() => {  
+                 for(let trtPlan of this.PlanOnReport.plan) {
+                  if (trtPlan._id === this.ActivePlanEdit._id) {
+                   this.ActivePlanEdit = trtPlan; 
+                    this.TaskOnEdit = data;
+                    this.ImprintLoader = false;
+                   break;
+                  }
+                }  
+              });
+            })
+          })
+        }, error => { this.ImprintLoader = true; this.notifyService.showError('could not add description', 'Failed') }
+      )
+      }, error => { this.ImprintLoader = true; this.notifyService.showInfo('Document was not uploaded', 'Failed'); }
+  );
+
+
+}
 
 
 

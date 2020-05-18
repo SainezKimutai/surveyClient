@@ -10,7 +10,7 @@ import { TrackerRoutingModule } from './tracker-routing.module';
 import { TrackerComponent } from './tracker.component';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { TrackerReportComponent } from './tracker-report/tracker-report.component';
-
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 
 @NgModule({
@@ -43,6 +43,7 @@ import { TrackerReportComponent } from './tracker-report/tracker-report.componen
       }),
       BsDatepickerModule.forRoot(),
       DatepickerModule.forRoot(),
+      AngularEditorModule
 
     ]
 
