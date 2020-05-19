@@ -469,7 +469,7 @@ saveReport() {
   }
 
   this.ImprintLoader = true;
-  this.reportModel.hide();
+  // this.reportModel.hide();
   if (this.ReportOnEdit){
  
     for(let taskReport of this.TaskOnEdit.reports) {
@@ -481,8 +481,6 @@ saveReport() {
     }
    
   } else {
-    
-
         let reportObj = {
           value: this.reportInputIsBoolean ? this.reportEventInput : this.reportValueInput,
           reportingDate: new Date()
@@ -501,16 +499,31 @@ saveReport() {
 saveTaskPlan() {
   this.taskPlanService.updateTaskPlan(this.TaskOnEdit._id, this.TaskOnEdit).subscribe(
     data => {
+      // this.updatePage().then(() => {
+      //   this.formatTask().then(() => {
+      //     this.formatPlan().then(() => {  
+      //        for(let trtPlan of this.PlanOnReport.plan) {
+      //         if (trtPlan._id === this.ActivePlanEdit._id) {
+      //          this.ActivePlanEdit = trtPlan; 
+      //          this.reportModel.hide();
+      //          this.reportEventInput = false;
+      //           this.reportValueInput = null
+      //           this.ImprintLoader = false;
+      //          break;
+      //         }
+      //       }  
+      //     });
+      //   })
+      // })
       this.updatePage().then(() => {
         this.formatTask().then(() => {
           this.formatPlan().then(() => {  
              for(let trtPlan of this.PlanOnReport.plan) {
               if (trtPlan._id === this.ActivePlanEdit._id) {
                this.ActivePlanEdit = trtPlan; 
-               this.reportModel.hide();
-               this.reportEventInput = false;
-                this.reportValueInput = null
+                this.TaskOnEdit = data;
                 this.ImprintLoader = false;
+                this.notifyService.showSuccess('Report Updated', 'Success')
                break;
               }
             }  
@@ -518,7 +531,7 @@ saveTaskPlan() {
         })
       })
     },
-    error => { console.log('Error updating report') }
+    error => { this.ImprintLoader = false; this.notifyService.showError('Could not update Report', 'Failed') }
   )
 }
 
@@ -619,14 +632,16 @@ uploadDoc(docFile) {
                   if (trtPlan._id === this.ActivePlanEdit._id) {
                    this.ActivePlanEdit = trtPlan; 
                     this.TaskOnEdit = data;
-                    this.ImprintLoader = false;
+                    // this.ImprintLoader = false;
+                    this.saveReport();
+                    this.planDocsModal.hide();
                    break;
                   }
                 }  
               });
             })
           })
-        }, error => { this.ImprintLoader = true; this.notifyService.showError('could not add description', 'Failed') }
+        }, error => { this.ImprintLoader = true; this.notifyService.showError('could not update report', 'Failed') }
       )
       }, error => { this.ImprintLoader = true; this.notifyService.showInfo('Document was not uploaded', 'Failed'); }
   );

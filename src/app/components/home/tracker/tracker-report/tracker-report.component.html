@@ -40,36 +40,34 @@
             <div class="title-wrap">
                 <h6>Activity</h6>
                 <h6>Kpi</h6>
-                <!-- <h6>Start Date</h6> -->
                 <h6>End Date</h6>
-                <h6>Report</h6>
                 <h6>Timeline</h6>
                 <h6>Description</h6>
-                <h6>Documents</h6>  
+                <!-- <h6>Documents</h6>   -->
+                <h6>Report</h6>
             </div>
 
             <div class="list-wrap">
-                <div class="list-item" *ngFor="let item of ActivePlanEdit.tasksArray" 
-                 >
+                <div class="list-item" *ngFor="let item of ActivePlanEdit.tasksArray">
                     <li>{{item.activityName}}</li>
                     <li><span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.kpi}} <span style="text-transform: capitalize;">{{item.kpiUnit}}</span></span></li>
-                    <!-- <li>{{item.startDate | date}}</li> -->
                     <li>{{item.endDate | date}}</li>
-                    <li class="d-flex">
-                        <span *ngIf="item.reportingStatus === 'pending'" class="pending">Pending</span>
-                        <span *ngIf="item.reportingStatus === 'done'" class="done ">Done</span>
-                        <span class="icon report ml-auto mr-3" (click)="actionClicked(item)"> <fa-icon class="report" [icon]="faCrosshairs"></fa-icon> </span>
+                    <li>
+                        <span *ngIf="item.timeline === 'awaiting'" class="awaiting  ml-1">Awaiting</span>
+                        <span *ngIf="item.timeline === 'active'" class="active  ml-1">Active</span>
+                        <span *ngIf="item.timeline === 'due'" class="due  ml-1">Due</span>
                     </li>
                     <li>
-                        <span *ngIf="item.timeline === 'awaiting'" class="awaiting">Awaiting</span>
-                        <span *ngIf="item.timeline === 'active'" class="active">Active</span>
-                        <span *ngIf="item.timeline === 'due'" class="due">Due</span>
+                        <span [ngClass]="item.description.body === '' ? 'icon desc desc-empty ml-1' : 'icon desc ml-1'" 
+                        class="" (click)="openPlanDescriptionModal(item)"><fa-icon class=""  [icon]="faCommentAlt"></fa-icon> </span>
                     </li>
-                    <li>
-                        <span class="icon desc" (click)="openPlanDescriptionModal(item)"><fa-icon class=""  [icon]="faCommentAlt"></fa-icon> </span>
-                    </li>
-                    <li>
+                    <!-- <li>
                         <span class="icon doc" (click)="openPlanDocsModal(item)"><fa-icon class="doc" [icon]="faFileAlt"></fa-icon> </span>
+                    </li> -->
+                    <li class="d-flex">
+                        <span *ngIf="item.reportingStatus === 'pending'" class="pending ml-1">Pending</span>
+                        <span *ngIf="item.reportingStatus === 'done'" class="done ml-1">Submitted</span>
+                        <span class="icon report ml-auto mr-3" (click)="actionClicked(item)"> <fa-icon class="report" [icon]="faCrosshairs"></fa-icon> </span>
                     </li>
                 </div>
                 <div class="list-item" *ngIf="ActivePlanEdit.tasks.length === 0">
@@ -130,6 +128,10 @@
                     </div>
                 </div>
             </form>
+
+            <div class="upload-wrap" *ngIf="reportValueInput || reportEventInput">
+                <button class="btn btn-sm" (click)="planDocsModal.show()">Attach Document</button>    
+            </div>
            
         </div>
         <div class="modal-footer">
@@ -218,8 +220,7 @@
             
             <div class="upload-wrap">
                 <button class="btn btn-sm" (click)="docFileInput.click()">Upload Document</button>
-                <input hidden readonly type="file" #docFileInput name="fileUploaded" (change)="uploadDoc($event)">
-                   
+                <input hidden readonly type="file" #docFileInput name="fileUploaded" (change)="uploadDoc($event)">        
             </div>
        
         </div>
