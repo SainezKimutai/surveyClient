@@ -349,7 +349,7 @@ formatPlan() {
       }   
     });
 
- 
+    if(this.TaskPlan.length === 0) { resolve() }
   
 });
 }
