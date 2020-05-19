@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { faBuilding, faFire, faComment, faEnvelope, faKey , faGlobe , faAddressBook,
   faEdit, faCheck, faListAlt, faBookReader, faTrash, faChartLine, faChartBar, faChartPie,
-  faArrowCircleRight, faArrowCircleLeft, faPlus } from '@fortawesome/free-solid-svg-icons';
+  faArrowCircleRight, faArrowCircleLeft, faPlus, 
+  faFileAlt, faCommentAlt, faImage, faVideo, faFileWord, faFileExcel,
+  faFilePowerpoint, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
@@ -15,6 +17,9 @@ import { ThreatService } from 'src/app/shared/services/threats.service';
 import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
 import { IndustryService } from 'src/app/shared/services/industry.service';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import { PlansService } from 'src/app/shared/services/plan.service';
+import { TaskPlanService } from 'src/app/shared/services/taskPlan.service';
+import { ActivityPlanService } from 'src/app/shared/services/activityPlan.service';
 
 @Component({
   selector: 'app-profile',
@@ -35,13 +40,17 @@ export class ProfileComponent implements OnInit {
     private fileUploadServcie: FileUploadService,
     private threatService: ThreatService,
     private threatCategoryService: ThreatCategoryService,
-    private industryService: IndustryService
+    private industryService: IndustryService,
+    private plansService: PlansService,
+    private taskPlanService: TaskPlanService,
+    private activityPlanService: ActivityPlanService
 
   ) { }
   @ViewChild('viewAnswersModal', {static: true, }) viewAnswersModal: ModalDirective;
   @ViewChild('departmentModal', {static: true}) departmentModal: ModalDirective;
   @ViewChild('departmentFormModal', {static: true}) departmentFormModal: ModalDirective;
-
+  @ViewChild('planDocsModal', {static: true}) planDocsModal: ModalDirective;
+  @ViewChild('viewDescriptionModal', {static: true}) viewDescriptionModal: ModalDirective;
 
 
   public ImprintLoader = false;
@@ -67,6 +76,14 @@ export class ProfileComponent implements OnInit {
     public faTrash = faTrash;
     public faArrowCircleRight = faArrowCircleRight;
     public faArrowCircleLeft = faArrowCircleLeft;
+    public faFileAlt = faFileAlt;
+    public faCommentAlt = faCommentAlt;
+    public faImage = faImage;
+    public faVideo = faVideo;
+    public faFileWord = faFileWord;
+    public faFileExcel = faFileExcel;
+    public faFilePowerpoint = faFilePowerpoint;
+    public faFilePdf = faFilePdf;
     // Icons
     public faChartLine = faChartLine;
     public faChartBar = faChartBar;
@@ -157,7 +174,12 @@ export class ProfileComponent implements OnInit {
     public comparisonChartBGColors = [];
     public MyComparisonDataSet = [];
 
+    public AllPlans = [];
+    public PlanOnView: any;
+    public ActivityPlan = [];
+    public TaskPlan = [];
 
+    public TaskPlanOnView: any;
 
 
 
@@ -173,23 +195,141 @@ export class ProfileComponent implements OnInit {
     localStorage.setItem('ActiveNav', 'profile');
     this.loggedUserEmail = localStorage.getItem('loggedUserEmail');
 
+    this.plansService.getAllCompanyPlans().subscribe(
+      dataPlan => {
+        this.AllPlans = dataPlan;
+        this.PlanOnView = this.AllPlans[0]
+        this.planUpdatePage().then(() => {
+          this.formatTask().then(() => {
+            this.formartReport()
+          })
+        })
+      }
+    )
+
     this.updatePage().then(() => { this.riskIssuesFunction();  this.checkIfNoSuverysHaveBeenDone()});
 
   }
 
 
 
+  switchPlan(x) {
+    this.PlanOnView = this.AllPlans[x];
+    this.planUpdatePage().then(() => {
+      this.formatTask().then(() => {
+        this.formartReport()
+      })
+    })
+  }
 
 
 
+  planUpdatePage() {
+
+    return new Promise((resolve, reject) => {
+
+          this.activityPlanService.getAllActivityPlan().subscribe(
+            dataActivity => {
+              this.ActivityPlan = dataActivity;
+              
+              this.taskPlanService.getAllTaskPlanByCompanyId().subscribe(
+                dataTask => {
+                  this.TaskPlan = dataTask;
+                  // this.TaskPlan.forEach((t) => {
+                  //   this.taskPlanService.deleteTaskPlan(t._id).subscribe()
+                  // })
+                              
+                  this.formatAtivity().then(() => resolve())
+                }, error => console.log('Error getting task plan')
+              )
+  
+            }, error => console.log('Error getting activity plan')
+          )
+    })
+  }
 
 
 
+  formatAtivity () {
+    return new Promise((resolve, reject) => {
+    this.TaskPlan.forEach((task, ind, arr) => {
+      let getActivity = this.ActivityPlan.filter((a) => a._id === task.activityId).map((e) => e);
+      task.activityName = getActivity[0].activityPlan;
+      if (ind === arr.length - 1){ resolve() }
+    })
+    if(this.TaskPlan.length === 0) { resolve() }
+  })
+  }
+  
+  
+  
+  
+  formatTask() {
+    return new Promise((resolve, reject) => {
+    this.PlanOnView.plan.forEach((planElement: any, index, array) => {
+      planElement.tasksArray = [];
+      planElement.tasks.forEach((taskId) => {
+        let myTaskPlan = this.TaskPlan.filter((t) => t._id === taskId).map((e) => e);
+        planElement.tasksArray.push(myTaskPlan[0]);
+      })
+  
+      if( index === array.length - 1) {
+        resolve()
+      }
+    })
+  });
+  }
+  
+  
+  
+  
+  
+  formartReport() {
+    return new Promise((resolve, reject) => {
+      this.PlanOnView.plan.forEach((planElement, index, arr) => {
+        planElement.tasksArray.forEach(taskElement => {
+          if(taskElement.kpi === null) {
+            if(taskElement.reports.length === 0) {
+              taskElement.reportStatus = false;
+            } else {
+              let reverseReport = taskElement.reports.reverse();
+              taskElement.reportStatus = reverseReport[0].value;
+            }
+          } else {
+  
+            if( taskElement.reports.length === 0) {
+              taskElement.reportStatus = 0;
+            } else {
+              let totalSum: Number;
+              if (taskElement.reports.length === 1) {
+                totalSum = taskElement.reports[0].value;
+              } else {
+                totalSum = taskElement.reports.reduce((a, b) => Number(a.value) + Number(b.value), 0)
+              }
+              taskElement.reportStatus = totalSum;
+            }
+          }
+        });
+  
+        if(index === arr.length - 1){resolve()}
+      });
+    })
+  }
+  
+  
 
 
 
-
-
+  openViewPlanDescriptionModal(taskPlan: any) {
+    this.TaskPlanOnView = taskPlan;
+    this.viewDescriptionModal.show();
+  }
+  
+  openPlanDocsModal(taskPlan: any) {
+    this.TaskPlanOnView = taskPlan;
+    this.planDocsModal.show();
+  }
+  
 
 
 

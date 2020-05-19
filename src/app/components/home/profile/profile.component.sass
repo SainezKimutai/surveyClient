@@ -545,6 +545,139 @@
 
 
 
+.plan-section 
+    background-color: white
+    width: 100%
+    height: fit-content
+    min-height: 300px
+    margin: 0 0 1em 0
+    border-radius: 5px
+    padding: 1em
+    .title
+        width: 100%
+        padding: .5em 1em 2em 1em
+        font-size: 12px
+        color: grayColor(g600)
+        font-weight: bold
+.plan-tab
+    width: 100%
+    display: flex
+    align-items: stretch
+.plan-tab .tab-wrap
+    width: fit-content
+    overflow-y: scroll
+    max-width: 500px
+    margin: auto
+    display: flex
+    align-items: stretch
+    text-align: center
+.plan-tab .tab-wrap .tab-item
+    font-size: 12px
+    background-color: grayColor(g200)
+    margin: 0 .5em
+    padding: .5em
+    color: grayColor(g800)
+    min-width: 10em
+    cursor: pointer
+    &.active
+        color: white
+        background-color: colorTheme(primaryTheme)
+
+.plan-wrapper
+    width: 100%
+    overflow-y: scroll
+.plan-section .body-wrap
+    width: 100%
+    padding: 1em
+    min-width: 500px
+.plan-section .body-wrap .title
+    width: 100%
+    display: flex
+    align-items: stretch
+    background-color: grayColor(g200)
+    padding: 0
+    div 
+      width: 100%
+      height: 100%
+      padding: .5em
+      display: flex
+      align-items: center
+      justify-content: flex-start
+      border-top: solid 1px grayColor(g300)
+      border-bottom: solid 1px grayColor(g300)
+      border-left: solid 1px grayColor(g300)
+      color: lighten(colorTheme(primaryTheme),10 )
+      font-size: 12px
+      
+
+      &.heading
+        min-width: 150px
+        max-width: 150px
+
+.plan-section .body-wrap .item-wrap
+  width: 100%
+  display: flex
+  align-items: stretch
+  border: solid 1px grayColor(g300)
+  height: fit-content
+
+  .heading
+      min-width: 150px
+      max-width: 150px
+      height: 100% !important
+      padding: .5em
+      display: flex
+      align-items: center
+      justify-content: flex-start
+      color: grayColor(g800)
+      font-size: 12px
+
+  .task-wrap
+    width: 100%
+
+    .task-item
+        width: 100%
+        display: flex
+        align-items: stretch
+        padding: 0
+
+        div 
+          width: 100%
+          height: 100%
+          min-height: 4em
+          padding: .5em
+          display: flex
+          align-items: center
+          justify-content: flex-start
+          border-bottom: solid 1px grayColor(g300)
+          border-left: solid 1px grayColor(g300)
+          color: grayColor(g700)
+          font-size: 12px
+          text-transform: capitalize
+          word-wrap: break-word
+          display: block
+          white-space: nowrap
+          overflow: hidden !important
+          text-overflow: ellipsis
+
+          .icon
+            width: 2em 
+            height: 2em
+            cursor: pointer
+            display: flex !important
+            align-items: center
+            justify-content: center
+            border-radius: 50%
+
+            .desc 
+              color: orange 
+            .doc
+              color: colorTheme(success)           
+            &:hover
+              background-color: colorTheme(primaryTheme)  
+              fa-icon
+                color: white
+          
 
 
 
@@ -996,6 +1129,198 @@
                 color: white
                 background-color: transparent
                 border: solid 1px white
+
+
+
+
+
+
+
+
+
+
+
+
+.planDocsModal
+  border: none
+.planDocsModal .modal-content
+  width: 100%
+  border: none
+  height: fit-content
+  max-height: 600px
+  overflow-y: scroll
+.planDocsModal .modal-content .modal-header
+  width: 100%
+  border: none
+  background-color: colorTheme(success)
+  h4 
+      font-size: 14px
+      color: white
+.planDocsModal .modal-content .modal-body
+    width: 100%
+    border: none
+
+.planDocsModal .modal-content .modal-body .list-document
+  width: 100%
+  padding: 1em 0
+  display: grid
+  grid-template-columns: repeat(4, 1fr)
+  grid-gap: 1em
+
+  @include desktop_md
+    grid-template-columns: repeat(3, 1fr)
+  @include desktop_sm
+    grid-template-columns: repeat(2, 1fr)
+  @include desktop_xm
+    grid-template-columns: repeat(1, 1fr)
+
+  .no-doc
+      font-weight: bold 
+      color: grayColor(g800)
+      font-size: 14px
+      margin: 0 0 1em 0
+
+  .doc-item
+      width: 100%
+      text-align: left
+
+      .icon
+          padding: .5em
+          width: fit-content
+          cursor: pointer
+          fa-icon
+            font-size: 42px
+            margin: 0
+
+          &.image
+            background-color: white
+            fa-icon
+              color: grayColor(g700)
+            &:hover
+              border-bottom: solid 2px grayColor(g700) 
+          &.video
+            background-color: white
+            fa-icon
+              color: teal  
+            &:hover
+              border-bottom: solid 2px teal 
+          &.word
+            background-color: white
+            fa-icon
+              color: colorTheme(primary)
+            &:hover
+              border-bottom: solid 2px colorTheme(primary)    
+          &.sheet
+            background-color: white
+            fa-icon
+              color: colorTheme(success)
+            &:hover
+              border-bottom: solid 2px colorTheme(success)  
+          &.presentation
+            background-color: white
+            fa-icon
+              color: purple
+            &:hover
+              border-bottom: solid 2px purple
+          &.pdf
+            background-color: white
+            fa-icon
+              color: orange
+            &:hover
+              border-bottom: solid 2px orange    
+      .name
+          padding: .5em
+          width: fit-content
+          p
+            font-size: 12px
+            color: grayColor(g700)
+            font-weight: bold
+            margin: 0
+      .action
+          padding: .5em
+          width: fit-content
+
+          span
+              width: 1.5em
+              height: 1.5em
+              border-radius: 50%
+              background-color: grayColor(g100)
+              display: flex
+              align-items: stretch
+              cursor: pointer
+
+              fa-icon 
+                  margin: auto
+                  font-size: 10px
+                  color: grayColor(g200)
+              &:hover
+                  fa-icon 
+                      color: colorTheme(danger) 
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+.viewDescriptionModal
+  border: none
+.viewDescriptionModal .modal-content
+  width: 100%
+  border: none
+  height: fit-content
+  max-height: 600px
+  overflow-y: scroll
+.viewDescriptionModal .modal-content .modal-header
+  width: 100%
+  border: none
+  background-color: colorTheme(warning)
+  h4 
+      font-size: 14px
+      color: white
+.viewDescriptionModal .modal-content .modal-body
+    width: 100%
+    border: none
+
+    .no-doc
+        font-weight: bold 
+        color: grayColor(g800)
+        font-size: 14px
+        margin: 0 0 1em 0
+    .body-wrap
+      width: 100%
+
+      h4 
+        font-weight: bold 
+        color: grayColor(g800)
+        font-size: 14px
+        margin: 0 0 1em 0
+      .body-content
+        width: 100%
+        overflow: hidden
+        word-break: break-all
+        word-wrap: break-word
+        display: block
+        background-color: whitesmoke
+        padding: 1em
+        border-radius: 5px
+    
+
+
+
+
+
+
+
+
 
 
 

@@ -541,7 +541,6 @@ addDescription() {
 openPlanDocsModal(taskPlan: any) {
   this.TaskPlanOnEdit = taskPlan;
   this.planDocsModal.show();
-
 }
 
 

@@ -10,6 +10,7 @@ import { ProfileRoutingModule } from './profile-routing.module';
 import { ModalModule } from 'ngx-bootstrap';
 import { ChartsModule } from 'ng2-charts';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { SanitizeHtmlPipe2 } from 'src/app/shared/pipe/safePipe2';
 
 
 
@@ -17,9 +18,7 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
 @NgModule({
 
   declarations: [
-      ProfileComponent,
-
-
+      ProfileComponent, SanitizeHtmlPipe2
           ],
 
     imports: [

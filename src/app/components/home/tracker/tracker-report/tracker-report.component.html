@@ -65,9 +65,9 @@
                         <span class="icon doc" (click)="openPlanDocsModal(item)"><fa-icon class="doc" [icon]="faFileAlt"></fa-icon> </span>
                     </li> -->
                     <li class="d-flex">
-                        <span *ngIf="item.reportingStatus === 'pending'" class="pending ml-1">Pending</span>
-                        <span *ngIf="item.reportingStatus === 'done'" class="done ml-1">Submitted</span>
-                        <span class="icon report ml-auto mr-3" (click)="actionClicked(item)"> <fa-icon class="report" [icon]="faCrosshairs"></fa-icon> </span>
+                        <span *ngIf="item.reportingStatus === 'pending'" class="pending mt-auto mb-auto ml-1">Pending</span>
+                        <span *ngIf="item.reportingStatus === 'done'" class="done mt-auto mb-auto ml-1">Submitted</span>
+                        <span class="icon report mt-auto mb-auto ml-auto mr-3" (click)="actionClicked(item)"> <fa-icon class="report" [icon]="faCrosshairs"></fa-icon> </span>
                     </li>
                 </div>
                 <div class="list-item" *ngIf="ActivePlanEdit.tasks.length === 0">

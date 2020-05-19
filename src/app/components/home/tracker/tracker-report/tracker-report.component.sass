@@ -166,47 +166,38 @@
             font-weight: bold
             color: grayColor(g700)
         .icon
-            width: 2em 
-            height: 2em
             cursor: pointer
-            display: flex !important
+            background-color: transparent
+            display: flex
             align-items: center
             justify-content: center
-            border-radius: 50%
-            background-color: grayColor(g200)
+            padding: .2em .5em
+
             fa-icon 
-                font-size: 11px
+                font-size: 16px
                 cursor: pointer
 
             &.report
-                background-color: grayColor(g200)   
                 fa-icon 
                     color: teal 
                 &:hover
-                    background-color: teal  
-                    fa-icon 
-                        color: white
+                    border: solid 1px teal  
                     
             &.desc 
-                background-color: grayColor(g200)   
                 &.desc-empty
-                    background-color: grayColor(g100) 
                     fa-icon 
                       color: grayColor(g200) 
+                    &:hover
+                      border: solid 1px grayColor(g200)    
                 fa-icon 
                     color: orange  
                 &:hover
-                    background-color: orange  
-                    fa-icon 
-                        color: white
-            &.doc
-                background-color: grayColor(g200)   
+                    border: solid 1px orange   
+            &.doc 
                 fa-icon 
                     color: colorTheme(success)      
                 &:hover
-                    background-color: colorTheme(success)    
-                    fa-icon 
-                        color: white
+                    border: solid 1px colorTheme(success)    
 
 
 
