@@ -198,12 +198,14 @@ export class ProfileComponent implements OnInit {
     this.plansService.getAllCompanyPlans().subscribe(
       dataPlan => {
         this.AllPlans = dataPlan;
-        this.PlanOnView = this.AllPlans[0]
-        this.planUpdatePage().then(() => {
-          this.formatTask().then(() => {
-            this.formartReport()
+        if(this.AllPlans.length > 0) {
+          this.PlanOnView = this.AllPlans[0]
+          this.planUpdatePage().then(() => {
+            this.formatTask().then(() => {
+              this.formartReport()
+            })
           })
-        })
+        }
       }
     )
 

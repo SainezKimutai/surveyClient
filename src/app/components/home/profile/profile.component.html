@@ -237,7 +237,7 @@
 
 
 
-        <div class="plan-section" >
+        <div class="plan-section" *ngIf="PlanOnView">
           
             <div class="title">Plan Report</div>
 
@@ -250,7 +250,7 @@
             </div>
 
             <div class="plan-wrapper">
-            <div class="body-wrap" *ngIf="PlanOnView">
+            <div class="body-wrap">
                 <div class="title">
                     <div class="heading">Business Operations</div>
                     <div>Activity</div>
@@ -280,6 +280,7 @@
                     </div>
 
                 </div>
+
             </div>
             </div>
             
