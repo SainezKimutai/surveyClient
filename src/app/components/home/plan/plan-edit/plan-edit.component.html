@@ -75,8 +75,8 @@
                         <h6>{{item.frequency}}</h6>
                         <h6> <span *ngIf="!item.recurring">No</span> <span *ngIf="item.recurring">Yes</span></h6>                
                         <h6 class="d-flex">{{item.endDate | date}}</h6>
-                        <h6> <span class="icon" (click)="openPlanDescriptionModal(item)"><fa-icon class="desc"  [icon]="faCommentAlt"></fa-icon> </span> </h6>
-                        <h6> <span class="icon" (click)="openPlanDocsModal(item)"><fa-icon class="doc" [icon]="faFileAlt"></fa-icon> </span> </h6>
+                        <h6> <span [ngClass]="item.description.body === '' ? 'icon empty' : 'icon desc'" (click)="openPlanDescriptionModal(item)"><fa-icon class=""  [icon]="faCommentAlt"></fa-icon> </span> </h6>
+                        <h6> <span [ngClass]="item.documents.length === 0 ? 'icon empty' : 'icon doc'"  (click)="openPlanDocsModal(item)"><fa-icon class="" [icon]="faFileAlt"></fa-icon> </span> </h6>
                         <div class="delete ml-auto">
                             <fa-icon [icon]="faTrash" (click)="removeTask(item._id)"></fa-icon>
                         </div>
