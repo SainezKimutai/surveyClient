@@ -159,7 +159,7 @@
                             {{item.threat.threat}}
                         </div>
                         <div class="task-wrap">
-                            <div class="task-item" *ngFor="let task of item.tasksArray" [hidden]="task.approval">
+                            <div class="task-item" *ngFor="let task of item.tasksArray" [hidden]="!task.approval || task.reportApproved">
                                 <div>{{task.activityName}}</div>
                                 <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}} <span style="text-transform: capitalize;">{{task.kpiUnit}}</span></span></div>
                                 <div> <span class="icon" (click)="openViewPlanDescriptionModal(task)"><fa-icon class="desc"  [icon]="faCommentAlt"></fa-icon> </span> </div>
@@ -188,7 +188,7 @@
                             {{item.threat.threat}}
                         </div>
                         <div class="task-wrap">
-                            <div class="task-item" *ngFor="let task of item.tasksArray" [hidden]="task.approval">
+                            <div class="task-item" *ngFor="let task of item.tasksArray" [hidden]="(task.approval && !task.reportApproved) || task.reportStatus === 0">
                                 <div>{{task.activityName}}</div>
                                 <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}} <span style="text-transform: capitalize;">{{task.kpiUnit}}</span></span></div>
                                 <div>
