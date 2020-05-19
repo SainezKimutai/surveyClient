@@ -209,8 +209,10 @@
         font-weight: bold
         color: lighten(colorTheme(primaryTheme), 15)
     .delete  
-        width: 2em
         opacity: 0
+        padding: 2px .5em
+        fa-icon
+            font-size: 10px
 
 .list-section .model-edit .model-card .model-wrap .task-wrap .task-item
     display: flex 
@@ -252,25 +254,18 @@
                   border: solid 1px colorTheme(success)   
 
     .delete  
-        width: 2em
-        height: 2em
+        padding: 2px .5em
         display: flex !important
         align-items: center
         justify-content: center
-        border-radius: 50%
-        background-color:  grayColor(g100)
+        border: solid 1px transparent
         cursor: pointer
         opacity: 0
         fa-icon
             font-size: 10px
             color: colorTheme(danger)
         &:hover
-            width: 2em
-            height: 2em !important
-            background-color: colorTheme(danger)    
-            fa-icon
-                font-size: 10px
-                color: white  
+            border: solid 1px colorTheme(danger)      
     &:hover 
         background-color: grayColor(g100) 
         .delete 

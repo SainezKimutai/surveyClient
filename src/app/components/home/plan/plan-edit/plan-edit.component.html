@@ -65,9 +65,7 @@
                         <h6>End Date</h6>
                         <h6>Description</h6>
                         <h6>Documents</h6>
-                        <div class="delete">
-                           .
-                        </div>
+                        <div class="delete"> <fa-icon [icon]="faTrash"></fa-icon></div>
                     </div>
                     <div class="task-item" *ngFor="let item of ActivePlanEdit.tasksArray; let x = index">
                         <h6>{{item.activityName}}</h6>     
@@ -77,7 +75,7 @@
                         <h6 class="d-flex">{{item.endDate | date}}</h6>
                         <h6> <span [ngClass]="item.description.body === '' ? 'icon empty' : 'icon desc'" (click)="openPlanDescriptionModal(item)"><fa-icon class=""  [icon]="faCommentAlt"></fa-icon> </span> </h6>
                         <h6> <span [ngClass]="item.documents.length === 0 ? 'icon empty' : 'icon doc'"  (click)="openPlanDocsModal(item)"><fa-icon class="" [icon]="faFileAlt"></fa-icon> </span> </h6>
-                        <div class="delete ml-auto">
+                        <div class="delete">
                             <fa-icon [icon]="faTrash" (click)="removeTask(item._id)"></fa-icon>
                         </div>
                     </div>
@@ -400,7 +398,7 @@
             <div class="list-wrap">
                 <div *ngFor="let item of TaskPlan" [ngClass]="SelectedTaskId === item._id ? 'active list-item d-flex' : 'list-item d-flex'" (click)="selectTaskPlanFuction(item._id)">
                     <h6>{{item.activityName}}</h6>     
-                    <h6> <span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.kpi}}</span></h6>
+                    <h6> <span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.kpi}} <span style="text-transform: capitalize;">{{item.kpiUnit}}</span></span></h6>
                     <h6>{{item.frequency}}</h6>
                     <h6> <span *ngIf="!item.recurring">No</span> <span *ngIf="item.recurring">Yes</span></h6>                
                     <h6>{{item.endDate | date}}</h6>
