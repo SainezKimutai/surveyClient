@@ -114,6 +114,7 @@ planDescriptionEditorConfig: AngularEditorConfig = {
   
           this.ActiveActivityPlan = this.ActivityPlan[0];
           this.TaskPlansOnView = this.TaskPlan.filter((task) => task.activityId === this.ActiveActivityPlan._id).map(e => e);
+         
         });
 
       })
@@ -220,11 +221,7 @@ formatPlan() {
             taskElement.reports.push(reportObj);
             this.taskPlanService.updateTaskPlan(taskElement._id, taskElement).subscribe(
               data => {
-                this.updatePage().then(() => {
-                  
-                    this.formatPlan().then(() => {   this.ActivePlanEdit = this.PlanOnReport.plan[0]; });
-                
-                })
+                this.updatePage().then(() => { this.formatPlan() })
               },
               error => { console.log('Error updating skipped week') }
             )
@@ -261,11 +258,7 @@ formatPlan() {
                 taskElement.reports.push(reportObj);
                 this.taskPlanService.updateTaskPlan(taskElement._id, taskElement).subscribe(
                   data => {
-                    this.updatePage().then(() => {
-                     
-                        this.formatPlan().then(() => {   this.ActivePlanEdit = this.PlanOnReport.plan[0]; });
-                      })
-                    
+                    this.updatePage().then(() => { this.formatPlan() })
                   },
                   error => { console.log('Error updating skipped week') }
                 )
@@ -302,11 +295,7 @@ formatPlan() {
                 taskElement.reports.push(reportObj);
                 this.taskPlanService.updateTaskPlan(taskElement._id, taskElement).subscribe(
                   data => {
-                    this.updatePage().then(() => {
-                     
-                        this.formatPlan().then(() => {   this.ActivePlanEdit = this.PlanOnReport.plan[0]; });
-                      })
-                    
+                    this.updatePage().then(() => { this.formatPlan() })
                   },
                   error => { console.log('Error updating skipped week') }
                 )
@@ -321,10 +310,11 @@ formatPlan() {
           let totalDays = Math.ceil(totalSeconds / (1000*60*60*24)); 
           let quarter = Math.ceil(days / 90)
           let totalQuarter = Math.ceil(totalDays / 90) 
-
+      
                  // if the number of months does not exceed end date
             if (quarter < totalQuarter || quarter === totalQuarter) {
               if (taskElement.reports.length === quarter - 1 ) {
+               
                   taskElement.reportingStatus = 'pending';
               }
               if (taskElement.reports.length === quarter) {
@@ -342,11 +332,7 @@ formatPlan() {
                 taskElement.reports.push(reportObj);
                 this.taskPlanService.updateTaskPlan(taskElement._id, taskElement).subscribe(
                   data => {
-                    this.updatePage().then(() => {
-                   
-                        this.formatPlan().then(() => {   this.ActivePlanEdit = this.PlanOnReport.plan[0]; });
-                      })
-                    
+                    this.updatePage().then(() => { this.formatPlan() })
                   },
                   error => { console.log('Error updating skipped week') }
                 )
@@ -487,9 +473,17 @@ saveTaskPlan() {
 
       this.updatePage().then(() => {
           this.formatPlan().then(() => {   
-          this.TaskOnEdit = data;
-          this.ImprintLoader = false;
-          this.notifyService.showSuccess('Report Updated', 'Success')
+            for(let tskPlan of this.TaskPlan) {
+              if (tskPlan._id === data._id) {
+               this.TaskOnEdit = tskPlan;
+               this.TaskPlansOnView = this.TaskPlan.filter((task) => task.activityId === this.ActiveActivityPlan._id).map(e => e);
+               let reverseReport = this.TaskOnEdit.reports.reverse();
+               this.ReportOnEdit = reverseReport[0]._id;
+               this.ImprintLoader = false;
+               this.notifyService.showSuccess('Report Updated', 'Success')
+               break;
+              }
+            }
         })
       })
     },
