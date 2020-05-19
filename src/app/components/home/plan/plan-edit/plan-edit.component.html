@@ -250,33 +250,27 @@
                             </div>
                         </div>
                     </div>
-                    <div class="kpi-calendar-wrap w-100">
+                    <!-- <div class="kpi-calendar-wrap w-100">
                         <div class="wrap">
                             <div class="input-wrap">
                                 <label> Value</label>
                                 <input type="radio" name="kpiCalendar" value="kpi" [(ngModel)]="kpiCalendar">
                             </div>
-                            <div class="input-wrap">
+                            <div  class="input-wrap">
                                 <label> Calendar</label>
                                 <input type="radio" name="kpiCalendar" value="calendar" [(ngModel)]="kpiCalendar">
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-group" *ngIf="kpiCalendar === 'kpi'">
                         <label> KPI input</label>
                         <input type="number" name="kpi" [(ngModel)]="task.kpi" (keyup)="getWeekelyTargets()">
                     </div>
                     <div class="form-group" *ngIf="kpiCalendar === 'kpi'">
-                        <label> KPI Metric / Unit</label>
+                        <label> Metric / Unit</label>
                         <input type="text" name="kpiUnit" [(ngModel)]="task.kpiUnit" >
                     </div>
 
-                    <div class="form-group">
-                        <label>End Date</label>
-                        <input id="endDate" #endDate #dp="bsDatepicker" 
-                            bsDatepicker [bsConfig]="{containerClass:'theme-orange'}"
-                            name="endDate" [(ngModel)]="task.endDate">
-                    </div>
 
                     <div class="form-group">
                         <label> Recurring Plan ?</label>
@@ -305,8 +299,13 @@
                             </div>
                         </div>
                     </div>
-    
-                    <div class="form-group-recurring" *ngIf="!task.recurring && kpiCalendar === 'kpi'">
+                    <div class="form-group">
+                        <label>End Date</label>
+                        <input id="endDate" #endDate #dp="bsDatepicker" 
+                            bsDatepicker [bsConfig]="{containerClass:'theme-orange'}"
+                            name="endDate" [(ngModel)]="task.endDate">
+                    </div>
+                    <!-- <div class="form-group-recurring" *ngIf="!task.recurring && kpiCalendar === 'kpi'">
                         <label>Frequency</label>
                         <div class="wrap">
                             <div class="input-wrap">
@@ -314,9 +313,9 @@
                                 <input type="radio" name="frequency" value="monthly" [(ngModel)]="task.frequency">
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
-                    <div class="weekly-targets" *ngIf="!task.recurring && kpiCalendar === 'kpi'">
+                    <!-- <div hidden class="weekly-targets" *ngIf="!task.recurring && kpiCalendar === 'kpi'">
                         <label> Weekly Target</label>
                         <div class="wrap">
                             <div class="input-wrap weekly-wrap">
@@ -336,7 +335,7 @@
                                 <input type="number" name="week4" [(ngModel)]="task.recurringWeekTarget.week4">
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
 
     
