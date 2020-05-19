@@ -631,11 +631,6 @@
                     <div class="name">
                         <p>{{doc.docOriginalName}}</p>
                     </div>
-                    <div class="action" *ngIf="ActiveModel === 'edit'">
-                        <span (click)="removeTaskDoc(doc)">
-                            <fa-icon [icon]="faTrash"></fa-icon>
-                        </span>
-                    </div>
                 </div>
 
                 <h4 class="no-doc" *ngIf="TaskPlanOnView.documents.length === 0">No Documents</h4>
