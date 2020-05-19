@@ -35,6 +35,8 @@ export class PlanEditComponent implements OnInit, OnDestroy {
   @ViewChild('planDescriptionModal', {static: true}) planDescriptionModal: ModalDirective;
   @ViewChild('planDocsModal', {static: true}) planDocsModal: ModalDirective;
   @ViewChild('viewDescriptionModal', {static: true}) viewDescriptionModal: ModalDirective;
+  @ViewChild('addActivityPlanModal', {static: true}) addActivityPlanModal: ModalDirective;
+  
   
   
   
@@ -79,6 +81,15 @@ public descriptionInput = {
 };
 public TaskPlanOnEdit: any;
 public TaskPlanOnView: any;
+
+
+
+public activityPlan = '';
+public activityPlanThreatId = ''
+
+
+
+
 
 planDescriptionEditorConfig: AngularEditorConfig = {
   editable: true,
@@ -152,7 +163,7 @@ updatePage() {
       data => {
         this.CompanyUsers = data.filter((user) => user.companyId === localStorage.getItem('loggedCompanyId')).map(e => e);
 
-        this.activityPlanService.getAllActivityPlanByInstitutionId().subscribe(
+        this.activityPlanService.getAllActivityPlan().subscribe(
           dataActivity => {
             this.ActivityPlan = dataActivity;
             
@@ -619,6 +630,60 @@ openViewPlanDescriptionModal(taskPlan: any) {
   this.TaskPlanOnView = taskPlan;
   this.viewDescriptionModal.show();
 }
+
+
+
+
+
+
+
+
+
+
+
+addActivityPlan() {
+  this.ImprintLoader = true;
+  this.activityPlanService.createActivityPlan({
+    activityPlan: this.activityPlan, 
+    institutionId: localStorage.getItem('loggedUserInstitution'),
+    threatId: this.activityPlanThreatId
+  }).subscribe(
+    data => {
+      this.updatePage().then(() => {
+        this.ImprintLoader = false;
+        this.notifyService.showSuccess('Activity Plan added', 'Success');
+        this.activityPlan = '';
+        this.activityPlanThreatId = '';
+      });
+    },
+    error => { this.ImprintLoader = false; this.notifyService.showError('could not add industry', 'Failed') }
+  );
+}
+
+deleteActivityPlan(id) {
+  this.ImprintLoader = true;
+  this.activityPlanService.deleteActivityPlan(id).subscribe(
+    data => {
+      this.updatePage().then(() => {
+        this.ImprintLoader = false;
+        this.notifyService.showSuccess('Activity Plan deleted', 'Success');
+        this.activityPlan = '';
+        this.activityPlanThreatId = '';
+      });
+    },
+    error => {this.ImprintLoader = false; this.notifyService.showError('could not delete industry', 'Failed') }
+  );
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

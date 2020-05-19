@@ -898,14 +898,16 @@ public activityPlanThreatId = ''
 
 
   addIndustries() {
+    this.ImprintLoader = true;
     this.industryService.createIndustry({industryName: this.industryInput, institutionId: localStorage.getItem('loggedUserID')}).subscribe(
       data => {
         this.updatePage().then(() => {
+          this.ImprintLoader = false;
           this.notifyService.showSuccess('industry added', 'Success');
           this.industryInput = '';
         });
       },
-      error => this.notifyService.showError('could not add industry', 'Failed')
+      error => { this.ImprintLoader = false; this.notifyService.showError('could not add industry', 'Failed') }
     );
   }
 
@@ -923,6 +925,7 @@ public activityPlanThreatId = ''
 
 
   addActivityPlan() {
+    this.ImprintLoader = true;
     this.activityPlanService.createActivityPlan({
       activityPlan: this.activityPlan, 
       institutionId: localStorage.getItem('loggedUserID'),
@@ -933,22 +936,25 @@ public activityPlanThreatId = ''
           this.notifyService.showSuccess('Activity Plan added', 'Success');
           this.activityPlan = '';
           this.activityPlanThreatId = '';
+          this.ImprintLoader = false;
         });
       },
-      error => this.notifyService.showError('could not add industry', 'Failed')
+      error => { this.ImprintLoader = false; this.notifyService.showError('could not add industry', 'Failed') }
     );
   }
 
   deleteActivityPlan(id) {
+    this.ImprintLoader = true;
     this.activityPlanService.deleteActivityPlan(id).subscribe(
       data => {
         this.updatePage().then(() => {
+          this.ImprintLoader = false;
           this.notifyService.showSuccess('Activity Plan deleted', 'Success');
           this.activityPlan = '';
           this.activityPlanThreatId = '';
         });
       },
-      error => this.notifyService.showError('could not delete industry', 'Failed')
+      error => {this.ImprintLoader = false; this.notifyService.showError('could not delete industry', 'Failed') }
     );
   }
 
