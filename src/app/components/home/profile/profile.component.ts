@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { faBuilding, faFire, faComment, faEnvelope, faKey , faGlobe , faAddressBook,
   faEdit, faCheck, faListAlt, faBookReader, faTrash, faChartLine, faChartBar, faChartPie,
-  faArrowCircleRight, faArrowCircleLeft, faPlus, 
+  faArrowCircleRight, faArrowCircleLeft, faPlus,
   faFileAlt, faCommentAlt, faImage, faVideo, faFileWord, faFileExcel,
   faFilePowerpoint, faFilePdf } from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
