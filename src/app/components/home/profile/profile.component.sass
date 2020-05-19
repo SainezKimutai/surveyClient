@@ -661,22 +661,28 @@
           text-overflow: ellipsis
 
           .icon
-            width: 2em 
-            height: 2em
+            padding: .3em .5em
             cursor: pointer
             display: flex !important
             align-items: center
             justify-content: center
-            border-radius: 50%
-
-            .desc 
-              color: orange 
-            .doc
-              color: colorTheme(success)           
-            &:hover
-              background-color: colorTheme(primaryTheme)  
-              fa-icon
-                color: white
+            width: fit-content
+            
+            &.empty 
+                fa-icon
+                    color: grayColor(g300) 
+                &:hover
+                    border: solid 1px grayColor(g300)           
+            &.desc 
+                fa-icon
+                    color: orange 
+                &:hover
+                    border: solid 1px orange
+            &.doc
+                fa-icon
+                    color: colorTheme(success) 
+                &:hover
+                    border: solid 1px colorTheme(success)         
           
 
 

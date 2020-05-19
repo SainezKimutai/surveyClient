@@ -269,13 +269,12 @@
                             <div>{{task.activityName}}</div>
                             <div><span *ngIf="task.kpi === null">---</span> <span *ngIf="task.kpi">{{task.kpi}} <span style="text-transform: capitalize;">{{task.kpiUnit}}</span></span></div>
                            
-                            <div> <span class="icon" (click)="openViewPlanDescriptionModal(task)"><fa-icon class="desc"  [icon]="faCommentAlt"></fa-icon> </span> </div>
-                            <div> <span class="icon" (click)="openPlanDocsModal(task)"><fa-icon class="doc" [icon]="faFileAlt"></fa-icon> </span> </div> 
+                            <div> <span [ngClass]="task.description.body === '' ? 'icon empty' : 'icon desc'" (click)="openViewPlanDescriptionModal(task)"><fa-icon class=""  [icon]="faCommentAlt"></fa-icon> </span> </div>
+                            <div> <span [ngClass]="task.documents.length === 0 ? 'icon empty' : 'icon doc'" (click)="openPlanDocsModal(task)"><fa-icon class="" [icon]="faFileAlt"></fa-icon> </span> </div> 
                             <div>
                                 <span *ngIf="!task.kpi && task.reportStatus">Done</span>
                                 <span *ngIf="!task.kpi && !task.reportStatus">Not Done</span>
-                                <span *ngIf="task.kpi">{{task.reportStatus}} <span style="text-transform: capitalize;">{{task.kpiUnit}}</span></span>
-                             
+                                <span *ngIf="task.kpi">{{task.reportStatus}} <span style="text-transform: capitalize;">{{task.kpiUnit}}</span></span> 
                              </div> 
                         </div>
                     </div>
