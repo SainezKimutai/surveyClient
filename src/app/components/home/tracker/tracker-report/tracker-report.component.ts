@@ -518,7 +518,7 @@ saveTaskPlan() {
         })
       })
     },
-    error => { console.log('Error updating skipped week') }
+    error => { console.log('Error updating report') }
   )
 }
 

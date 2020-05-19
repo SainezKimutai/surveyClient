@@ -85,8 +85,11 @@ public TaskPlanOnView: any;
 
 
 public activityPlan = '';
-public activityPlanThreatId = ''
+public activityPlanThreatId = '';
 
+public ViewPlansArrA = [];
+public ViewPlansArrB = [];
+public ViewPlansArrC = [];
 
 
 
@@ -143,7 +146,8 @@ ngOnInit() {
           },
       documents: [],
       reportingUser: '',
-      reports: []
+      reports: [],
+      reportApproved: false
     }
 
     this.updatePage().then(() => {
@@ -170,7 +174,9 @@ updatePage() {
             this.taskPlanService.getAllTaskPlanByCompanyId().subscribe(
               dataTask => {
                 this.TaskPlan = dataTask;
-       
+                // this.TaskPlan.forEach((t) => {
+                //   this.taskPlanService.deleteTaskPlan(t._id).subscribe()
+                // })
                             
                 this.formatAtivity().then(() => resolve())
               }, error => console.log('Error getting task plan')
@@ -314,7 +320,8 @@ closeTaskForm() {
     },
     documents: [],
     reportingUser: '',
-    reports: []
+    reports: [],
+    reportApproved: false
   }
 }
 
@@ -449,7 +456,8 @@ saveThePlan() {
                       },
                       documents: [],
                       reportingUser: '',
-                      reports: []
+                      reports: [],
+                      reportApproved: false
                     }
                     this.ImprintLoader = false;
                     this.notifyService.showSuccess('Plan updated', 'Success')
@@ -678,10 +686,30 @@ deleteActivityPlan(id) {
 
 
 
+approveTaskPlan(task) {
+  this.ImprintLoader = true;
+  for (let t of this.TaskPlan) {
+    if (t._id === task._id) {
+      t.reportApproved = true;
+      this.taskPlanService.updateTaskPlan(t._id, t).subscribe(
+        data => {
+          this.updatePage().then(() => {
+            this.formatTask().then(() => {
+              this.formartReport().then(() => {
+                this.ImprintLoader = false;
+                this.notifyService.showSuccess('Report Approved', 'Success')
+              })
+              
+            })
+          })
+        },
+        error => {this.ImprintLoader = false; this.notifyService.showError('Could not approve', 'Failed')}
+      )
+      break;
+    }
+  }
 
-
-
-
+}
 
 
 
