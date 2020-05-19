@@ -19,15 +19,15 @@
 
     </div>
 
-    <div class="model-edit" *ngIf="ActiveModel === 'edit' && ActivePlanEdit">
+    <div class="model-edit" *ngIf="ActiveActivityPlan">
 
         <div class="model-threat">
-            <h4 class="head">Threat Plan</h4>
+            <h4 class="head">Activity</h4>
 
             <div class="list-item-wrap">
-                <li class="item" *ngFor="let item of PlanOnReport.plan" 
-                [ngClass]="ActivePlanEdit._id === item._id ? 'item active' : 'item'"
-                (click)="switchPlanActionable(item._id)">{{item.threat.threat}}</li>
+                <li class="item" *ngFor="let item of ActivityPlan" 
+                [ngClass]="ActiveActivityPlan._id === item._id ? 'item active' : 'item'"
+                (click)="switchActivityPlan(item._id)">{{item.activityPlan}}</li>
             </div>
         </div>
 
@@ -48,7 +48,7 @@
             </div>
 
             <div class="list-wrap">
-                <div class="list-item" *ngFor="let item of ActivePlanEdit.tasksArray">
+                <div class="list-item" *ngFor="let item of TaskPlansOnView">
                     <li>{{item.activityName}}</li>
                     <li><span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.kpi}} <span style="text-transform: capitalize;">{{item.kpiUnit}}</span></span></li>
                     <li>{{item.endDate | date}}</li>
@@ -70,7 +70,7 @@
                         <span class="icon report mt-auto mb-auto ml-auto mr-3" (click)="actionClicked(item)"> <fa-icon class="report" [icon]="faCrosshairs"></fa-icon> </span>
                     </li>
                 </div>
-                <div class="list-item" *ngIf="ActivePlanEdit.tasks.length === 0">
+                <div class="list-item" *ngIf="TaskPlansOnView.length === 0">
                     <li>---No Task---</li>
                     <li>---</li>
                     <li>---</li>
