@@ -30,13 +30,13 @@
                     <fa-icon [icon]="faListAlt"></fa-icon>
                     <h4 >{{item.surveyName}}</h4>
 
-                    <!-- <fa-icon *ngIf="item.done > 0 && 100 > item.done" style="cursor: pointer; height: 1em;"
-                    (mouseenter)="deletePromptModal.show(); passSurveyToReset(item._id)"
-                    class="text-info ml-auto" [icon]="faEraser"></fa-icon> -->
-
-                    <fa-icon *ngIf="item.done > 0" style="cursor: pointer; height: 1em;"
+                    <fa-icon *ngIf="item.done > 0 && 100 > item.done" style="cursor: pointer; height: 1em;"
                     (mouseenter)="deletePromptModal.show(); passSurveyToReset(item._id)"
                     class="text-info ml-auto" [icon]="faEraser"></fa-icon>
+
+                    <!-- <fa-icon *ngIf="item.done > 0" style="cursor: pointer; height: 1em;"
+                    (mouseenter)="deletePromptModal.show(); passSurveyToReset(item._id)"
+                    class="text-info ml-auto" [icon]="faEraser"></fa-icon> -->
                     
                 </div>
                 <div class="card-footer">
