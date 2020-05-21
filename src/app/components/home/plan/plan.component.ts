@@ -209,6 +209,7 @@ formatQuestions() {
                               question['level'] = answr.level ? answr.level : '';
                               question['threat'] = answr.threatId ? answr.threat: '';
                               question['threatId'] = answr.threatId ? answr.threatId: '';
+                              question['answerId'] = answr._id ?  answr._id : '';
                             
                               
                                if(typeof(question['answer']) === 'object') { 
@@ -217,6 +218,7 @@ formatQuestions() {
                                 question['level'] = answr.answer.level;
                                 question['threat'] = answr.answer.threatId ?  answr.answer.threat : '';
                                 question['threatId'] = answr.answer.threatId ?  answr.answer.threatId : '';
+                                question['answerId'] = answr.answer._id ?  answr.answer._id : '';
                                 
                                }
                               });
@@ -233,6 +235,7 @@ formatQuestions() {
                                   question['level'] = '';
                                   question['threat'] = '';
                                   question['threatId'] = '';
+                                  question['answerId'] = '';
 
                                   for(var i =0; i < answr.answer.length ; i++){
                                     
@@ -290,6 +293,7 @@ getTheTreats(reportArr: any) {
     if(reportElement.threat && (reportElement.level === 'Medium' || reportElement.level === 'High')) {
       let planObj = {
           threat: {
+              answerId: reportElement.answerId,
               threatId: reportElement.threatId,
               threat: reportElement.threat,
               level: reportElement.level,
