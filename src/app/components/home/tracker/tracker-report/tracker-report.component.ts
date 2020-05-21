@@ -60,12 +60,12 @@ public reportInputIsBoolean = false;
 public TaskOnEdit: any;
 public ReportOnEdit: any;
 
+public AllPlans = [];
 public ActivityPlan = [];
 public TaskPlan = [];
+public TaskPlanOnView = [];
 
 public ActiveActivityPlan: any;
-public TaskPlansOnView = [];
-
 
 
 public descriptionInput = {
@@ -108,15 +108,16 @@ planDescriptionEditorConfig: AngularEditorConfig = {
 
     ngOnInit() {
       this.PlanOnReport = JSON.parse(localStorage.getItem('planOnReport'));
+      this.AllPlans = this.PlanOnReport.plan.filter((p) => p.tasks.length > 0 ).map((e) => e)
+     
       this.ImprintLoader = true;
       this.updatePage().then(() => {
-        this.formatPlan().then(() => {  this.ImprintLoader = false;  
-  
-          this.ActiveActivityPlan = this.ActivityPlan[0];
-          this.TaskPlansOnView = this.TaskPlan.filter((task) => task.activityId === this.ActiveActivityPlan._id).map(e => e);
-         
+        this.formatPlan().then(() => {  
+          this.mergeWithTreats().then(() => {
+            this.TaskPlanOnView = this.TaskPlan;
+            this.ImprintLoader = false;  
+          })
         });
-
       })
     }
 
@@ -130,6 +131,9 @@ planDescriptionEditorConfig: AngularEditorConfig = {
 
 updatePage() {
   return new Promise((resolve, reject) => {
+
+
+
         this.activityPlanService.getAllActivityPlan().subscribe(
           dataActivity => {
             this.ActivityPlan = dataActivity;
@@ -144,7 +148,7 @@ updatePage() {
 
           }, error => console.log('Error getting activity plan')
         )
-  })
+    })
 }
 
 
@@ -156,6 +160,8 @@ formatAtivity () {
   this.TaskPlan.forEach((task, ind, arr) => {
     let getActivity = this.ActivityPlan.filter((a) => a._id === task.activityId).map((e) => e);
     task.activityName = getActivity[0].activityPlan;
+
+
     if (ind === arr.length - 1){ resolve() }
   })
   if(this.TaskPlan.length === 0) { resolve() }
@@ -221,7 +227,11 @@ formatPlan() {
             taskElement.reports.push(reportObj);
             this.taskPlanService.updateTaskPlan(taskElement._id, taskElement).subscribe(
               data => {
-                this.updatePage().then(() => { this.formatPlan() })
+                this.updatePage().then(() => { 
+                  this.formatPlan().then(() => {
+                    this.mergeWithTreats()
+                  })
+                 })
               },
               error => { console.log('Error updating skipped week') }
             )
@@ -258,7 +268,11 @@ formatPlan() {
                 taskElement.reports.push(reportObj);
                 this.taskPlanService.updateTaskPlan(taskElement._id, taskElement).subscribe(
                   data => {
-                    this.updatePage().then(() => { this.formatPlan() })
+                    this.updatePage().then(() => { 
+                      this.formatPlan().then(() => {
+                        this.mergeWithTreats()
+                      })
+                     })
                   },
                   error => { console.log('Error updating skipped week') }
                 )
@@ -295,7 +309,11 @@ formatPlan() {
                 taskElement.reports.push(reportObj);
                 this.taskPlanService.updateTaskPlan(taskElement._id, taskElement).subscribe(
                   data => {
-                    this.updatePage().then(() => { this.formatPlan() })
+                    this.updatePage().then(() => { 
+                      this.formatPlan().then(() => {
+                        this.mergeWithTreats()
+                      })
+                     })
                   },
                   error => { console.log('Error updating skipped week') }
                 )
@@ -332,7 +350,11 @@ formatPlan() {
                 taskElement.reports.push(reportObj);
                 this.taskPlanService.updateTaskPlan(taskElement._id, taskElement).subscribe(
                   data => {
-                    this.updatePage().then(() => { this.formatPlan() })
+                    this.updatePage().then(() => { 
+                      this.formatPlan().then(() => {
+                        this.mergeWithTreats()
+                      })
+                     })
                   },
                   error => { console.log('Error updating skipped week') }
                 )
@@ -360,15 +382,35 @@ formatPlan() {
 
 
 
-switchActivityPlan(activityPlanId: any) {
-  for(let actPlan of this.ActivityPlan) {
-    if (actPlan._id === activityPlanId) {
-     this.ActiveActivityPlan = actPlan;
-     this.TaskPlansOnView = this.TaskPlan.filter((task) => task.activityId === this.ActiveActivityPlan._id).map(e => e);
-     break;
-    }
-  }
+
+
+
+mergeWithTreats() {
+  return new Promise((resolve, reject) => {
+    this.TaskPlan.forEach((t, ind, arr) => {
+      t.threatArr = []
+      this.AllPlans.forEach(p => {
+        let x = p.tasks.includes(t._id);
+        if (x) {
+          t.threatArr.push(p.threat.threat);
+        }
+      })
+      if (ind = arr.length -1) { resolve(); }
+    })
+    if(this.TaskPlan.length === 0) { resolve() }
+  })
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 back() {
@@ -440,7 +482,6 @@ saveReport() {
   }
 
   this.ImprintLoader = true;
-  // this.reportModel.hide();
   if (this.ReportOnEdit){
  
     for(let taskReport of this.TaskOnEdit.reports) {
@@ -473,17 +514,19 @@ saveTaskPlan() {
 
       this.updatePage().then(() => {
           this.formatPlan().then(() => {   
+            this.mergeWithTreats().then(() => { 
             for(let tskPlan of this.TaskPlan) {
               if (tskPlan._id === data._id) {
                this.TaskOnEdit = tskPlan;
-               this.TaskPlansOnView = this.TaskPlan.filter((task) => task.activityId === this.ActiveActivityPlan._id).map(e => e);
                let reverseReport = this.TaskOnEdit.reports.reverse();
                this.ReportOnEdit = reverseReport[0]._id;
                this.ImprintLoader = false;
+               this.reportModel.hide();
                this.notifyService.showSuccess('Report Updated', 'Success')
                break;
               }
             }
+          });
         })
       })
     },
@@ -525,9 +568,11 @@ addDescription() {
       data => {
         this.updatePage().then(() => {
             this.formatPlan().then(() => {  
+              this.mergeWithTreats().then(() => { 
               this.planDescriptionModal.hide();
               this.ImprintLoader = false; 
               this.notifyService.showSuccess('Description Updated', 'Success')
+              });
           })
         })
       }, error => { this.ImprintLoader = true; this.notifyService.showError('could not add description', 'Failed') }
@@ -575,12 +620,12 @@ uploadDoc(docFile) {
       this.taskPlanService.updateTaskPlan(this.TaskOnEdit._id, this.TaskOnEdit).subscribe(
         data => {
           this.updatePage().then(() => {
-            
               this.formatPlan().then(() => {  
-                this.TaskOnEdit = data;
-                this.saveReport();
-                this.planDocsModal.hide();
-          
+                this.mergeWithTreats().then(() => { 
+                  this.TaskOnEdit = data;
+                  this.saveReport();
+                  this.planDocsModal.hide();
+                });
             })
           })
         }, error => { this.ImprintLoader = true; this.notifyService.showError('could not update report', 'Failed') }

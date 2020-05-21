@@ -95,7 +95,7 @@
 
    
     <div id="reportTemplate">
-    <div class="question-wrap"  *ngFor="let item of TemplateQuestions; let i = index" id="quiz{{i}}" [hidden]="item.answer === 'Not answered'">
+    <div class="question-wrap"  *ngFor="let item of TemplateQuestions; let i = index" id="quiz{{i}}">
         <div class="question d-flex w-100">{{i+1}}. {{item.question}}</div>
         <div class="choices-wrapper">
         <div class="choices answer">

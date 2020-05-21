@@ -253,10 +253,8 @@ export class ReportsComponent implements OnInit {
         this.TemplateNameOnView = name;
         this.TemplateOneViewId = id;
         let unSortedQuestions = this.AllQuestions.filter(( quiz) => quiz.surveyId === id ).map(e => e);
-   
-        this.TemplateQuestions = unSortedQuestions.sort((a, b) =>  a.position - b.position);
-      
-    
+        let AnsweredQuestion = unSortedQuestions.filter(( quiz) => quiz.answer !== 'Not answered').map(e => e);
+        this.TemplateQuestions = AnsweredQuestion.sort((a, b) =>  a.position - b.position);
         this.TemeplateViewSectionStatus = false;
         this.QuestionsViewStatus = true;
 
