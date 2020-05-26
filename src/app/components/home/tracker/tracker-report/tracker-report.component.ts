@@ -478,19 +478,24 @@ actionClicked(item: any) {
 
 saveReport() {
 
-  if((!this.reportInputIsBoolean && this.reportValueInput === null) ||(!this.reportInputIsBoolean && this.reportValueInput === 0) ) {
-    this.notifyService.showWarning('Please input a value more than zero', 'Empty Input')
+  
+  if(!this.reportInputIsBoolean && this.reportValueInput === null) {
+    this.notifyService.showWarning('Please input a value', 'Empty Input')
     return;
   }
 
-  console.log(this.ReportOnEdit)
+ 
 
   this.ImprintLoader = true;
   if (this.ReportOnEdit){
- 
+
+     
+
     for(let taskReport of this.TaskOnEdit.reports) {
       if (taskReport._id === this.ReportOnEdit ) {
         taskReport.value = this.reportInputIsBoolean ? this.reportEventInput : this.reportValueInput;
+
+        
         this.saveTaskPlan();
         break;
       }
@@ -513,8 +518,13 @@ saveReport() {
 
 
 saveTaskPlan() {
+
+  
+
   this.taskPlanService.updateTaskPlan(this.TaskOnEdit._id, this.TaskOnEdit).subscribe(
     data => {
+
+     
 
       this.updatePage().then(() => {
           this.formatPlan().then(() => {   
@@ -524,9 +534,10 @@ saveTaskPlan() {
                this.TaskOnEdit = tskPlan;
                let reverseReport = this.TaskOnEdit.reports.reverse();
                this.ReportOnEdit = reverseReport[0]._id;
+               
                 this.calculateReportProgrress();
   
-               this.ImprintLoader = false;
+            
                this.reportModel.hide();
                this.notifyService.showSuccess('Report Updated', 'Success')
                break;
@@ -651,30 +662,48 @@ uploadDoc(docFile) {
 
 
 calculateReportProgrress() {
+
+  
+
  this.TaskPlan.forEach((taskPlan, ind, arr) => {
   let totalReportValue = taskPlan.reports.reduce((a, b) => a + b.value, 0);
   let totalKpi = taskPlan.kpi;
+
+
   let currentProgress = (( totalReportValue * 100 ) / totalKpi).toFixed(0)
-  taskPlan.reportProgress = currentProgress
-  this.taskPlanService.updateTaskPlan(taskPlan._id, taskPlan).subscribe((data) => {
-    
-  }, error => console.log('Error updating taskplan progress'))
+
+   
+
+  taskPlan.reportProgress = (totalReportValue/ totalKpi)*100;
+
   
+
+  this.taskPlanService.updateTaskPlan(taskPlan._id, taskPlan).subscribe((data) => {
+    console.log(data);
+   
   if (ind === arr.length - 1) { 
+
     this.taskPlanService.getAllTaskPlanByCompanyId().subscribe(
       dataTask => {
+
+        // console.log(dataTask);
+
         this.TaskPlan = dataTask.filter((task) => task.reportingUser === localStorage.getItem('loggedUserEmail')).map(e => e);
         this.TaskPlan.forEach((tsk) => { delete tsk.__v});
         this.formatAtivity().then(() => {
-          this.formatPlan().then(() => {  
+
+          this.formatPlan().then(() => {
             this.mergeWithTreats().then(() => {
               this.updatedPlanThreats();   
             })
           });
+
         })
       }, error => console.log('Error'))
    
   }
+}, error => console.log('Error updating taskplan progress'))
+  
  }) 
 }
 
@@ -684,6 +713,7 @@ calculateReportProgrress() {
 
 
 updatedPlanThreats(){
+
   this.AllPlans.forEach((plan, ind, arr) => {
 
     let averageTask = []
@@ -696,6 +726,8 @@ updatedPlanThreats(){
     })
 
     let getTheAverage = (averageTask.reduce((a, b) => a + b, 0) / averageTask.length)
+
+    console.log(getTheAverage);
  
     if (getTheAverage < 30) { 
       plan.threat.level = 'High'
@@ -716,6 +748,7 @@ updatedPlanThreats(){
       this.PlanOnReport.plan = this.AllPlans;
       console.log(this.PlanOnReport)
       this.plansService.updatePlan(this.PlanOnReport._id, this.PlanOnReport).subscribe((data) => {
+        console.log(data);
         this.PlanOnReport === data;
         this.updateThreatLevels();
       }, error => {console.log('Error updating Plans')} )
@@ -731,12 +764,14 @@ updatedPlanThreats(){
 
 
 updateThreatLevels() {
+  console.log(this.PlanOnReport);
   this.responseService.getOneResponse(this.PlanOnReport.responseId).subscribe(
     passData=> {
       this.checkForAnyThreatChanges(passData).then((respData) => {
         // console.log(respData)
-        this.responseService.updateThreatLevel(respData).subscribe( data => {this.notifyService.showSuccess('Level Change', 'Success')})
-      })
+        
+        this.responseService.updateThreatLevel(respData).subscribe( data => {this.ImprintLoader = false; this.notifyService.showSuccess('Level Change', 'Success')})
+      },err=> this.ImprintLoader = false);
     }, error => console.log('Error')
     )
 

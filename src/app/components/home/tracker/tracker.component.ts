@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { faListAlt, faCheck, faSpinner, faBusinessTime } from '@fortawesome/free-solid-svg-icons';
 import { PlansService } from 'src/app/shared/services/plan.service';
+import {ResponseService} from 'src/app/shared/services/responses.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class TrackerComponent implements OnInit {
     constructor(
       private notifyService: NotificationService,
       private plansService: PlansService,
+      private responseService : ResponseService,
       private userService: UserService
     ) {  }
 
@@ -41,6 +43,7 @@ export class TrackerComponent implements OnInit {
     ngOnInit() {
       localStorage.setItem('ActiveNav', 'tracker');
       this.updatePage()
+      
     }
 
 
@@ -74,8 +77,8 @@ export class TrackerComponent implements OnInit {
     this.ReportStatus = false;
     this.updatePage().then(() => {});
   }
+
   
-
-
+  
 
 } // End of main class
