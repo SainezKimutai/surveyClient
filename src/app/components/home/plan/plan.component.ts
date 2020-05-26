@@ -50,6 +50,7 @@ public faBusinessTime = faBusinessTime;
 public TemplateQuestions: any;
 
 public PlanSurveyId: any;
+public PlanResponseId: any;
 public NewPlan = [];
 public planName = '';
 
@@ -70,7 +71,9 @@ async updatePage() {
 this.plansService.getAllCompanyPlans().subscribe(
   dataPlan => {
     this.AllPlans = dataPlan;
-   
+    // this.AllPlans.forEach((p) => {
+    //     this.plansService.deletePlan(p._id).subscribe(() => this.notifyService.showSuccess('deleted', 'Deleted'))
+    //   })
   this.surveyService.getAllInstitutionSurveys().subscribe(
     dataSurvey => {
 
@@ -185,40 +188,42 @@ formatQuestions() {
 
     this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
       data => { 
+  
         data.forEach((responseObj, ind1, arr1) => {
-               responseObj.answers.forEach((answr , ind2, arr2) => {
+               responseObj.answers.forEach((mainAnswer , ind2, arr2) => {
                 const question = {};
-        
-                  this.questionService.getOneQuestion(answr.questionId).subscribe(
+                  this.questionService.getOneQuestion(mainAnswer.questionId).subscribe(
                       questions => {
-                        
+                         question['responseId'] = responseObj._id;
                          question['surveyId'] = responseObj.surveyId,
                          question['open'] = questions.open_question,
-                         question['position'] = answr.position,
+                         question['position'] = mainAnswer.position,
 
                          
                         
                          question['question'] = questions.question
-                            if(answr.answer.length == 1){
+                            if(mainAnswer.answer.length == 1){
                             
                             
-                            answr.answer.forEach(answr => {
+                              mainAnswer.answer.forEach(answr => {
                               
                               question['answer'] = answr.answer ? answr.answer: answr;
                               question['recom'] = answr.recom ? answr.recom: '';
                               question['level'] = answr.level ? answr.level : '';
                               question['threat'] = answr.threatId ? answr.threat: '';
                               question['threatId'] = answr.threatId ? answr.threatId: '';
-                              question['answerId'] = answr._id ?  answr._id : '';
+                              question['answerId'] = mainAnswer._id ?  mainAnswer._id : '';
+                             
                             
                               
                                if(typeof(question['answer']) === 'object') { 
+                            
                                 question['answer'] = answr.answer.answer;
                                 question['recom'] = answr.answer.recom;
                                 question['level'] = answr.answer.level;
                                 question['threat'] = answr.answer.threatId ?  answr.answer.threat : '';
                                 question['threatId'] = answr.answer.threatId ?  answr.answer.threatId : '';
-                                question['answerId'] = answr.answer._id ?  answr.answer._id : '';
+                                question['answerId'] = mainAnswer._id ? mainAnswer._id : '';
                                 
                                }
                               });
@@ -228,7 +233,7 @@ formatQuestions() {
                             
                           
                             };
-                            if(answr.answer.length>1){
+                            if(mainAnswer.answer.length>1){
 
                                   question['answer'] = '';
                                   question['recom'] = '';
@@ -237,15 +242,15 @@ formatQuestions() {
                                   question['threatId'] = '';
                                   question['answerId'] = '';
 
-                                  for(var i =0; i < answr.answer.length ; i++){
+                                  for(var i =0; i < mainAnswer.answer.length ; i++){
                                     
 
-                                    question['answer'] = answr.answer[i].answer ? question['answer'] +" "+answr.answer[i].answer: '';
-                                    question['recom'] = answr.answer[i].recom ? question['recom'] + " " + answr.answer[i].recom: '';
-                                    question['level'] = answr.answer[i].level ? question['level'] + " " + answr.answer[i].level : '';
+                                    question['answer'] = mainAnswer.answer[i].answer ? question['answer'] +" "+mainAnswer.answer[i].answer: '';
+                                    question['recom'] = mainAnswer.answer[i].recom ? question['recom'] + " " + mainAnswer.answer[i].recom: '';
+                                    question['level'] = mainAnswer.answer[i].level ? question['level'] + " " + mainAnswer.answer[i].level : '';
                                   
                                     
-                                    if(i === answr.answer.length-1){
+                                    if(i === mainAnswer.answer.length-1){
                                     this.AllQuestions2.push(question);
                                     }
                                   }
@@ -289,6 +294,7 @@ this.PlanSurveyId = surveyId;
 
 getTheTreats(reportArr: any) {
   this.NewPlan = [];
+  this.PlanResponseId = reportArr[0].responseId
   reportArr.forEach((reportElement, ind, arr) => {
     if(reportElement.threat && (reportElement.level === 'Medium' || reportElement.level === 'High')) {
       let planObj = {
@@ -341,6 +347,7 @@ addPlan() {
     let MyNewPlan = {
       companyId: localStorage.getItem('loggedCompanyId'),
       surveyId: this.PlanSurveyId,
+      responseId: this.PlanResponseId,
       name: this.planName,
       plan: this.NewPlan
     }

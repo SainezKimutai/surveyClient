@@ -1212,7 +1212,8 @@ RiskPerIndustryChartfunction() {
     if(responseId === 0) {return}
     const myResponses = this.AllResponses.filter((resp) => resp._id === responseId ).map( e => e);
     let allQuizs = this.AllQuestions.filter((q) => q.surveyId === surveyId).map(e => e);
-    let allQuizs2 = allQuizs.sort((a, b) =>  b.position - a.position);
+    let allQuizs1 = allQuizs.filter((q) =>  q.answer !== 'Not answered').map(e => e);
+    let allQuizs2 = allQuizs1.sort((a, b) =>  b.position - a.position);
     let allQuizs3 = allQuizs2.reverse();
     let allAnswers = myResponses[0].answers;
     let allAnswersNumber = Number(allAnswers.length);

@@ -10,6 +10,7 @@ import { ActivityPlanService } from 'src/app/shared/services/activityPlan.servic
 import { ModalDirective } from 'ngx-bootstrap';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { dev } from 'src/app/shared/dev/dev';
+import { ResponseService } from 'src/app/shared/services/responses.service';
 
 
 // tslint:disable
@@ -28,7 +29,8 @@ export class PlanEditComponent implements OnInit, OnDestroy {
         private userService: UserService,
         private planComponent: PlanComponent,
         private taskPlanService: TaskPlanService,
-        private activityPlanService: ActivityPlanService
+        private activityPlanService: ActivityPlanService,
+        private responseService: ResponseService
       ) {  }
 
   @ViewChild('existingPlanModal', {static: true}) existingPlanModal: ModalDirective;
@@ -122,6 +124,7 @@ planDescriptionEditorConfig: AngularEditorConfig = {
 ngOnInit() {
     this.ImprintLoader = true;
     this.PlanOnEdit = JSON.parse(localStorage.getItem('planOnEdit'))
+    this.updateThreatLevels();
     this.task = {
       companyId : localStorage.getItem('loggedCompanyId'),
       activityId: '',
@@ -717,6 +720,66 @@ approveTaskPlan(task) {
 back() {
   this.planComponent.toListsPage();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+updateThreatLevels() {
+  this.checkForAnyThreatChanges().then((respData: any) => {
+    this.responseService.updateResponse(respData._id, {answers: respData.answers}).subscribe( data => {this.notifyService.showSuccess('Level Change', 'Success')})
+  })
+}
+
+
+
+
+checkForAnyThreatChanges() {
+  return new Promise((resolve, reject) => {
+    this.responseService.getOneResponse(this.PlanOnEdit.responseId).subscribe(
+      dataResp => {
+        let newResponse = dataResp;
+        // resolve(newResponse)
+        console.log(newResponse.answers)
+        this.PlanOnEdit.plan.forEach((planParam: any, planIndex:any, planArray: any) => {
+          newResponse.answers  = newResponse.answers.filter((ansObj: any, ind: any, arr: any) => {
+        
+            if (ansObj._id === planParam.threat.answerId) {
+            
+              ansObj.answer = ansObj.answer.filter((ans2Obj: any) => {
+                  ans2Obj.level = 'Low';
+                  return true;
+                }).map(e => e);
+            }
+            if ((planIndex === planArray.length -1) && (ind === arr.length - 1)) {
+              resolve(newResponse);
+            }
+            return true
+          }).map(e => e)
+
+      })
+
+      }, error => console.log('Error')
+    )
+  }) 
+}
+
+
+
+
+
+
+
+
+
+
 
 
 
