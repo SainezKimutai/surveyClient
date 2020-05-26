@@ -733,28 +733,30 @@ back() {
 
 
 updateThreatLevels() {
-  this.checkForAnyThreatChanges().then((respData: any) => {
-    this.responseService.updateResponse(respData._id, {answers: respData.answers}).subscribe( data => {this.notifyService.showSuccess('Level Change', 'Success')})
-  })
+  this.responseService.getOneResponse(this.PlanOnEdit.responseId).subscribe(
+    passData=> {
+      this.checkForAnyThreatChanges(passData).then((respData) => {
+        console.log(respData)
+        // this.responseService.updateThreatLevel(respData).subscribe( data => {this.notifyService.showSuccess('Level Change', 'Success')})
+      })
+    }, error => console.log('Error')
+    )
+
 }
 
 
 
 
-checkForAnyThreatChanges() {
+checkForAnyThreatChanges(dataResp) {
   return new Promise((resolve, reject) => {
-    this.responseService.getOneResponse(this.PlanOnEdit.responseId).subscribe(
-      dataResp => {
         let newResponse = dataResp;
-        // resolve(newResponse)
-        console.log(newResponse.answers)
+        // console.log(newResponse.answers)
         this.PlanOnEdit.plan.forEach((planParam: any, planIndex:any, planArray: any) => {
           newResponse.answers  = newResponse.answers.filter((ansObj: any, ind: any, arr: any) => {
         
             if (ansObj._id === planParam.threat.answerId) {
-            
               ansObj.answer = ansObj.answer.filter((ans2Obj: any) => {
-                  ans2Obj.level = 'Low';
+                  ans2Obj.level = 'High';
                   return true;
                 }).map(e => e);
             }
@@ -766,12 +768,8 @@ checkForAnyThreatChanges() {
 
       })
 
-      }, error => console.log('Error')
-    )
   }) 
 }
-
-
 
 
 
