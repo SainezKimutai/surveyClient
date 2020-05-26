@@ -51,5 +51,19 @@ export class UserService {
       return this.http.delete<any>(this.url + 'delete/' + id, {headers : header});
     }
 
+    passwordReset(userDetails : any){
+
+      var userObj ={
+          email: userDetails.email,
+          password: userDetails.password
+      }
+
+      return this.http.post<any>(this.url + 'passwordreset', userObj, {headers: header});
+    }
+
+    sendResetEmail(userDetails :any){
+      return this.http.post<any>(this.url + 'passwordresettoken', userDetails, {headers: header});
+    }
+
 
 }

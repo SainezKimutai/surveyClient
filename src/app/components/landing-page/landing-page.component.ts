@@ -20,6 +20,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   ) { }
 
   @ViewChild('infoModal', {static: true}) infoModal: ModalDirective;
+  @ViewChild('resetModal', {static: true}) resetModal: ModalDirective;
   // loader
   public ImprintLoader = false;
 
@@ -31,11 +32,14 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   public faEye = faEye;
 
   public loginForm;
+  public resetForm;
 
 
   public emailError = false;
   public passwordError = false;
   public PasswordType = 'password';
+  public resetEmail ='';
+  public emailVerify = false;
 
 
   ngOnInit() {
@@ -44,6 +48,12 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       email: '',
       password: ''
     };
+
+    this.resetForm = {
+      email: ''
+    };
+
+
 
     setTimeout(() => {
       this.infoModal.show();
@@ -155,6 +165,34 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.ImprintLoader = false;
   }
 
+  passwordReset(){
+    this.resetModal.show();
+  }
+
+  sendResetEmail(){
+    this.ImprintLoader = true;
+    const user ={
+      email: this.resetEmail
+    }
+
+    this.userService.sendResetEmail(user).subscribe(
+      user=>{
+        this.resetModal.hide();
+        this.notifyService.showSuccess("Check your email, password reset instructions were sent", "Success!")
+        this.ImprintLoader = false;
+      },err=>{
+        this.ImprintLoader = false;
+        this.notifyService.showError("An error occured, are you sure you used the right email?", "Failed")
+      }
+    )
+  }
+
+  checkEmail(){
+    
+    if(this.resetEmail.includes('@') && this.resetEmail.includes('.')){
+      this.emailVerify  = true;
+    }
+  }
 
 
 }

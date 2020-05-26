@@ -469,10 +469,10 @@
             <fa-icon [icon]="faBuilding"></fa-icon>
             Industries
         </div>
-        <div class="nav-tab" (click)="addPlanModal.show()">
+        <!-- <div class="nav-tab" (click)="addPlanModal.show()">
             <fa-icon [icon]="faBusinessTime"></fa-icon>
             Activity Plan
-        </div>
+        </div> -->
 
     </div>
 
@@ -651,7 +651,7 @@
 
 
 
-<div bsModal  #addPlanModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- <div bsModal  #addPlanModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog addPlanModal modal-md" role="document">
         <div class="modal-content">
         <div class="modal-header ">
@@ -663,23 +663,23 @@
         <div class="modal-body" >
             <div class="wrap d-flex" *ngFor="let item of AllActivityPlans">
                 <h4>{{item.activityPlan}}</h4>
-                <!-- <fa-icon [icon]="faTrash" (click)="deleteActivityPlan(item._id)"></fa-icon> -->
+                 <fa-icon [icon]="faTrash" (click)="deleteActivityPlan(item._id)"></fa-icon> 
             </div>
 
             <div class="input-wrap">
             <input type="text" name="activityPlan" [(ngModel)]="activityPlan" placeholder="Type here">
-            <!-- <select name="activityPlanThreatId" [(ngModel)]="activityPlanThreatId" >
+             <select name="activityPlanThreatId" [(ngModel)]="activityPlanThreatId" >
                 <option value="" selected hidden disabled>--Associate Threat</option>
                 <option *ngFor="let trt of AllThreats" [value]="trt._id">{{trt.name}}</option>
-            </select> -->
+            </select> 
             </div>
         </div>
         <div class="modal-footer">
             <button [disabled]="activityPlan === ''"  type="button" class="btn btn-confirm" (click)="addActivityPlan()">Add</button>
         </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div> 
+    </div> 
+</div>  -->
 
 
 

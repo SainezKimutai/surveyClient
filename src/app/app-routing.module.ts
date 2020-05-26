@@ -13,6 +13,8 @@ const routes: Routes = [
 
   { path: 'register', loadChildren: 'src/app/components/register/register.module#RegisterModule', data: {preload: true}},
 
+  {path: 'passwordreset', loadChildren: 'src/app/components/passwordreset/passwordreset.module#PasswordResetModule'},
+
   { path: 'traffic', loadChildren: 'src/app/components/traffic/traffic.module#TrafficModule'},
 
   { path: 'answer', loadChildren: 'src/app/components/answer/answer.module#AnswerModule', canActivate: [TokenGuard]  },
