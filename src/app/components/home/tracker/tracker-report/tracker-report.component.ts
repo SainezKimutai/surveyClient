@@ -113,7 +113,7 @@ planDescriptionEditorConfig: AngularEditorConfig = {
       // console.log(this.PlanOnReport._id)
       this.AllPlans = this.PlanOnReport.plan.filter((p) => p.tasks.length > 0 ).map((e) => e)
      
-      this.ImprintLoader = true;
+      // this.ImprintLoader = true;
       this.updatePage().then(() => {
         this.formatPlan().then(() => {  
           this.mergeWithTreats().then(() => {
@@ -143,7 +143,7 @@ updatePage() {
               dataTask => {
                 this.TaskPlan = dataTask.filter((task) => task.reportingUser === localStorage.getItem('loggedUserEmail')).map(e => e);;
                 this.TaskPlan.forEach((tsk) => { delete tsk.__v})
-                console.log(this.TaskPlan)
+               
               this.formatAtivity().then(() => {
                  resolve();
                  })
@@ -168,7 +168,7 @@ formatAtivity () {
 
     if (ind === arr.length - 1){ resolve() }
   })
-  if(this.TaskPlan.length === 0) { resolve() }
+  if(this.TaskPlan.length === 0) { resolve(); console.log('Here')}
 })
 }
 
