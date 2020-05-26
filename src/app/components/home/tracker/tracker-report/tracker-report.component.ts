@@ -143,10 +143,7 @@ updatePage() {
               dataTask => {
                 this.TaskPlan = dataTask.filter((task) => task.reportingUser === localStorage.getItem('loggedUserEmail')).map(e => e);;
                 this.TaskPlan.forEach((tsk) => { delete tsk.__v})
-               
-              this.formatAtivity().then(() => {
-                 resolve();
-                 })
+                 this.formatAtivity().then(() => { resolve(); })
               }, error => console.log('Error getting task plan')
             )
 
@@ -164,8 +161,6 @@ formatAtivity () {
   this.TaskPlan.forEach((task, ind, arr) => {
     let getActivity = this.ActivityPlan.filter((a) => a._id === task.activityId).map((e) => e);
     task.activityName = getActivity[0].activityPlan;
-
-
     if (ind === arr.length - 1){ resolve() }
   })
   if(this.TaskPlan.length === 0) { resolve(); console.log('Here')}
@@ -399,7 +394,9 @@ mergeWithTreats() {
           t.threatArr.push(p.threat.threat);
         }
       })
-      if (ind = arr.length -1) { resolve(); }
+      if (ind = arr.length -1) {
+        this.TaskPlan =  this.TaskPlan.filter((t) => t.threatArr.length !== 0).map((e) => e);
+         resolve(); }
     })
     if(this.TaskPlan.length === 0) { resolve() }
   })
