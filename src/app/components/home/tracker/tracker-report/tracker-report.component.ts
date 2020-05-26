@@ -10,6 +10,7 @@ import { TaskPlanService } from 'src/app/shared/services/taskPlan.service';
 import { ActivityPlanService } from 'src/app/shared/services/activityPlan.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { dev } from 'src/app/shared/dev/dev';
+import { ResponseService } from 'src/app/shared/services/responses.service';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class TrackerReportComponent implements OnInit, OnDestroy {
       private plansService: PlansService,
       private trackerComponent: TrackerComponent,
       private taskPlanService: TaskPlanService,
-      private activityPlanService: ActivityPlanService
+      private activityPlanService: ActivityPlanService,
+      private responseService: ResponseService
     ) {  }
 
 @ViewChild('reportModel', {static: true}) reportModel: ModalDirective;
@@ -108,6 +110,7 @@ planDescriptionEditorConfig: AngularEditorConfig = {
 
     ngOnInit() {
       this.PlanOnReport = JSON.parse(localStorage.getItem('planOnReport'));
+      // console.log(this.PlanOnReport._id)
       this.AllPlans = this.PlanOnReport.plan.filter((p) => p.tasks.length > 0 ).map((e) => e)
      
       this.ImprintLoader = true;
@@ -132,8 +135,6 @@ planDescriptionEditorConfig: AngularEditorConfig = {
 updatePage() {
   return new Promise((resolve, reject) => {
 
-
-
         this.activityPlanService.getAllActivityPlan().subscribe(
           dataActivity => {
             this.ActivityPlan = dataActivity;
@@ -141,8 +142,11 @@ updatePage() {
             this.taskPlanService.getAllTaskPlanByCompanyId().subscribe(
               dataTask => {
                 this.TaskPlan = dataTask.filter((task) => task.reportingUser === localStorage.getItem('loggedUserEmail')).map(e => e);;
-
-                this.formatAtivity().then(() => resolve())
+                this.TaskPlan.forEach((tsk) => { delete tsk.__v})
+                console.log(this.TaskPlan)
+              this.formatAtivity().then(() => {
+                 resolve();
+                 })
               }, error => console.log('Error getting task plan')
             )
 
@@ -481,6 +485,8 @@ saveReport() {
     return;
   }
 
+  console.log(this.ReportOnEdit)
+
   this.ImprintLoader = true;
   if (this.ReportOnEdit){
  
@@ -520,6 +526,8 @@ saveTaskPlan() {
                this.TaskOnEdit = tskPlan;
                let reverseReport = this.TaskOnEdit.reports.reverse();
                this.ReportOnEdit = reverseReport[0]._id;
+                this.calculateReportProgrress();
+  
                this.ImprintLoader = false;
                this.reportModel.hide();
                this.notifyService.showSuccess('Report Updated', 'Success')
@@ -641,6 +649,123 @@ uploadDoc(docFile) {
 
 
 
+
+
+
+calculateReportProgrress() {
+ this.TaskPlan.forEach((taskPlan, ind, arr) => {
+  let totalReportValue = taskPlan.reports.reduce((a, b) => a + b.value, 0);
+  let totalKpi = taskPlan.kpi;
+  let currentProgress = (( totalReportValue * 100 ) / totalKpi).toFixed(0)
+  taskPlan.reportProgress = currentProgress
+  this.taskPlanService.updateTaskPlan(taskPlan._id, taskPlan).subscribe((data) => {
+    
+  }, error => console.log('Error updating taskplan progress'))
+  
+  if (ind === arr.length - 1) { 
+    this.taskPlanService.getAllTaskPlanByCompanyId().subscribe(
+      dataTask => {
+        this.TaskPlan = dataTask.filter((task) => task.reportingUser === localStorage.getItem('loggedUserEmail')).map(e => e);
+        this.TaskPlan.forEach((tsk) => { delete tsk.__v});
+        this.formatAtivity().then(() => {
+          this.formatPlan().then(() => {  
+            this.mergeWithTreats().then(() => {
+              this.updatedPlanThreats();   
+            })
+          });
+        })
+      }, error => console.log('Error'))
+   
+  }
+ }) 
+}
+
+
+
+
+
+
+updatedPlanThreats(){
+  this.AllPlans.forEach((plan, ind, arr) => {
+
+    let averageTask = []
+    plan.tasks.forEach(taskId => {
+      this.TaskPlan.forEach((taskPlan) => {
+        if (taskPlan._id === taskId) {
+          averageTask.push(taskPlan.reportProgress)
+        }
+      })
+    })
+
+    let getTheAverage = (averageTask.reduce((a, b) => a + b, 0) / averageTask.length)
+    let updateLevel = '';
+    if (getTheAverage < 30) { 
+      updateLevel = 'High'
+    };
+    if (getTheAverage > 29 && getTheAverage < 61 ) { 
+      updateLevel = 'Medium'
+    };
+    if (getTheAverage > 60) { 
+      updateLevel = 'Low'
+    };
+    
+    plan.threat.level = updateLevel
+
+    if (ind === arr.length - 1) {
+      this.PlanOnReport.plan = this.AllPlans;
+      console.log(this.PlanOnReport)
+      this.plansService.updatePlan(this.PlanOnReport._id, this.PlanOnReport).subscribe((data) => {
+        this.PlanOnReport === data;
+        this.updateThreatLevels();
+      }, error => {console.log('Error updating Plans')} )
+    }
+
+
+  })
+}
+
+
+
+
+
+
+updateThreatLevels() {
+  this.responseService.getOneResponse(this.PlanOnReport.responseId).subscribe(
+    passData=> {
+      this.checkForAnyThreatChanges(passData).then((respData) => {
+        // console.log(respData)
+        this.responseService.updateThreatLevel(respData).subscribe( data => {this.notifyService.showSuccess('Level Change', 'Success')})
+      })
+    }, error => console.log('Error')
+    )
+
+}
+
+
+
+
+checkForAnyThreatChanges(dataResp) {
+  return new Promise((resolve, reject) => {
+        let newResponse = dataResp;
+        // console.log(newResponse.answers)
+        this.PlanOnReport.plan.forEach((planParam: any, planIndex:any, planArray: any) => {
+          newResponse.answers  = newResponse.answers.filter((ansObj: any, ind: any, arr: any) => {
+            if (ansObj._id === planParam.threat.answerId) {
+              ansObj.answer = ansObj.answer.filter((ans2Obj: any) => {
+                  ans2Obj.level = planParam.threat.level;
+                  return true;
+                }).map(e => e);
+            }
+            if ((planIndex === planArray.length -1) && (ind === arr.length - 1)) {
+              resolve(newResponse);
+            }
+            return true
+          }).map(e => e)
+
+      })
+
+  }) 
+}
 
 
 

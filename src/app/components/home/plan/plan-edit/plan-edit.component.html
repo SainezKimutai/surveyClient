@@ -43,7 +43,9 @@
                 <div class="top-wrap">
                     <div class="level">
                         <h4>Level</h4>
-                        <h5 [ngClass]="ActivePlanEdit.threat.level === 'High' ? 'high' : 'medium'" >{{ActivePlanEdit.threat.level}}</h5>
+                        <h5 *ngIf="ActivePlanEdit.threat.level === 'High'" class="high" >{{ActivePlanEdit.threat.level}}</h5>
+                        <h5 *ngIf="ActivePlanEdit.threat.level === 'Medium'" class="medium" >{{ActivePlanEdit.threat.level}}</h5>
+                        <h5 *ngIf="ActivePlanEdit.threat.level === 'Low'" class="low">{{ActivePlanEdit.threat.level}}</h5>
                     </div>
                 </div>
 
