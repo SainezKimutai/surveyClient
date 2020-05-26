@@ -710,7 +710,7 @@ updatedPlanThreats(){
     };
     
     plan.threat.level = updateLevel
-
+    console.log(updateLevel)
     if (ind === arr.length - 1) {
       this.PlanOnReport.plan = this.AllPlans;
       console.log(this.PlanOnReport)
