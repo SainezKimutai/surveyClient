@@ -117,6 +117,7 @@ planDescriptionEditorConfig: AngularEditorConfig = {
       this.updatePage().then(() => {
         this.formatPlan().then(() => {  
           this.mergeWithTreats().then(() => {
+            // this.TaskPlan =  this.TaskPlan.filter((tP) => tP.threatArr.length !== 0).map((e) => e);
             this.TaskPlanOnView = this.TaskPlan;
             this.ImprintLoader = false;  
           })
@@ -395,8 +396,8 @@ mergeWithTreats() {
         }
       })
       if (ind = arr.length -1) {
-        this.TaskPlan =  this.TaskPlan.filter((t) => t.threatArr.length !== 0).map((e) => e);
-         resolve(); }
+         resolve(); 
+      }
     })
     if(this.TaskPlan.length === 0) { resolve() }
   })
@@ -477,8 +478,8 @@ actionClicked(item: any) {
 
 saveReport() {
 
-  if(!this.reportInputIsBoolean && this.reportValueInput === null) {
-    this.notifyService.showWarning('Please input a value', 'Empty Input')
+  if((!this.reportInputIsBoolean && this.reportValueInput === null) ||(!this.reportInputIsBoolean && this.reportValueInput === 0) ) {
+    this.notifyService.showWarning('Please input a value more than zero', 'Empty Input')
     return;
   }
 
