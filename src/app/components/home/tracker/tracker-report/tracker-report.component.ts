@@ -698,19 +698,22 @@ updatedPlanThreats(){
     })
 
     let getTheAverage = (averageTask.reduce((a, b) => a + b, 0) / averageTask.length)
-    let updateLevel = '';
+ 
     if (getTheAverage < 30) { 
-      updateLevel = 'High'
+      plan.threat.level = 'High'
+      console.log('High')
     };
     if (getTheAverage > 29 && getTheAverage < 61 ) { 
-      updateLevel = 'Medium'
+      plan.threat.level = 'Medium'
+      console.log('Medium')
     };
     if (getTheAverage > 60) { 
-      updateLevel = 'Low'
+      plan.threat.level = 'Low'
+      console.log('Low')
     };
-    
-    plan.threat.level = updateLevel
-    console.log(updateLevel)
+    console.log(plan.threat.level)
+
+  
     if (ind === arr.length - 1) {
       this.PlanOnReport.plan = this.AllPlans;
       console.log(this.PlanOnReport)
@@ -756,7 +759,7 @@ checkForAnyThreatChanges(dataResp) {
                   return true;
                 }).map(e => e);
             }
-            if ((planIndex === planArray.length -1) && (ind === arr.length - 1)) {
+            if ((planIndex === planArray.length - 1) && (ind === arr.length - 1)) {
               resolve(newResponse);
             }
             return true
