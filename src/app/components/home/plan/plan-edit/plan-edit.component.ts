@@ -734,7 +734,16 @@ back() {
 
 
 
-
+deletePlan() {
+  this.ImprintLoader = true;
+  this.plansService.deletePlan(this.PlanOnEdit._id).subscribe(
+    data => {
+      this.ImprintLoader = false;
+      this.notifyService.showSuccess('Plan Deleted', 'Success');
+      this.back();
+    }, error => {this.ImprintLoader = false; this.notifyService.showError('Could not delete', 'Failed')}
+    )
+}
 
 
 

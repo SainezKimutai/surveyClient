@@ -51,6 +51,7 @@ export class TrackerComponent implements OnInit {
       this.plansService.getAllCompanyPlans().subscribe(
         dataPlans => {
           this.AllPlans = dataPlans;
+          this.AllPlans.forEach((pln) => { delete pln.__v});
           this.pageProgress = 100
           resolve();
         },

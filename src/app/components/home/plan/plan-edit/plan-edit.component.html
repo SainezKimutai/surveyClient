@@ -32,6 +32,9 @@
                 [ngClass]="ActivePlanEdit._id === item._id ? 'item active' : 'item'"
                 (click)="switchPlanThreat(item._id)">{{item.threat.threat}}</li>
             </div>
+            <div class="btn-wrap w-100 mt-2 d-flex">
+                <button class="btn btn-sm btn-outline-danger mx-auto" (click)="deletePlan()">Delete Plan</button>
+            </div>
         </div>
 
         <div class="model-card">
