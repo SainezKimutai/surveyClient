@@ -124,7 +124,6 @@ planDescriptionEditorConfig: AngularEditorConfig = {
 ngOnInit() {
     this.ImprintLoader = true;
     this.PlanOnEdit = JSON.parse(localStorage.getItem('planOnEdit'))
-    this.updateThreatLevels();
     this.task = {
       companyId : localStorage.getItem('loggedCompanyId'),
       activityId: '',
@@ -732,44 +731,6 @@ back() {
 
 
 
-updateThreatLevels() {
-  this.responseService.getOneResponse(this.PlanOnEdit.responseId).subscribe(
-    passData=> {
-      this.checkForAnyThreatChanges(passData).then((respData) => {
-        console.log(respData)
-        // this.responseService.updateThreatLevel(respData).subscribe( data => {this.notifyService.showSuccess('Level Change', 'Success')})
-      })
-    }, error => console.log('Error')
-    )
-
-}
-
-
-
-
-checkForAnyThreatChanges(dataResp) {
-  return new Promise((resolve, reject) => {
-        let newResponse = dataResp;
-        // console.log(newResponse.answers)
-        this.PlanOnEdit.plan.forEach((planParam: any, planIndex:any, planArray: any) => {
-          newResponse.answers  = newResponse.answers.filter((ansObj: any, ind: any, arr: any) => {
-        
-            if (ansObj._id === planParam.threat.answerId) {
-              ansObj.answer = ansObj.answer.filter((ans2Obj: any) => {
-                  ans2Obj.level = 'High';
-                  return true;
-                }).map(e => e);
-            }
-            if ((planIndex === planArray.length -1) && (ind === arr.length - 1)) {
-              resolve(newResponse);
-            }
-            return true
-          }).map(e => e)
-
-      })
-
-  }) 
-}
 
 
 
