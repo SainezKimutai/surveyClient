@@ -94,4 +94,9 @@ export class ResponseService {
         return this.http.get<any>(this.url + 'user/' + id, {headers : header});
     }
 
+    updateThreatLevel(responseObj){
+        console.log(this.url + 'update/' + responseObj._id)
+        return this.http.put<any>(this.url + 'update/' + responseObj._id, responseObj, {headers : header});
+    }
+
 }
