@@ -10,6 +10,7 @@ import { ActivityPlanService } from 'src/app/shared/services/activityPlan.servic
 import { ModalDirective } from 'ngx-bootstrap';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { dev } from 'src/app/shared/dev/dev';
+import { ResponseService } from 'src/app/shared/services/responses.service';
 
 
 // tslint:disable
@@ -28,7 +29,8 @@ export class PlanEditComponent implements OnInit, OnDestroy {
         private userService: UserService,
         private planComponent: PlanComponent,
         private taskPlanService: TaskPlanService,
-        private activityPlanService: ActivityPlanService
+        private activityPlanService: ActivityPlanService,
+        private responseService: ResponseService
       ) {  }
 
   @ViewChild('existingPlanModal', {static: true}) existingPlanModal: ModalDirective;
@@ -717,6 +719,35 @@ approveTaskPlan(task) {
 back() {
   this.planComponent.toListsPage();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+deletePlan() {
+  this.ImprintLoader = true;
+  this.plansService.deletePlan(this.PlanOnEdit._id).subscribe(
+    data => {
+      this.ImprintLoader = false;
+      this.notifyService.showSuccess('Plan Deleted', 'Success');
+      this.back();
+    }, error => {this.ImprintLoader = false; this.notifyService.showError('Could not delete', 'Failed')}
+    )
+}
+
+
+
+
 
 
 

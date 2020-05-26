@@ -43,7 +43,7 @@ export class TrackerComponent implements OnInit {
     ngOnInit() {
       localStorage.setItem('ActiveNav', 'tracker');
       this.updatePage()
-      this.getAResponseObjectForUser();
+      
     }
 
 
@@ -54,6 +54,7 @@ export class TrackerComponent implements OnInit {
       this.plansService.getAllCompanyPlans().subscribe(
         dataPlans => {
           this.AllPlans = dataPlans;
+          this.AllPlans.forEach((pln) => { delete pln.__v});
           this.pageProgress = 100
           resolve();
         },
@@ -77,36 +78,7 @@ export class TrackerComponent implements OnInit {
     this.updatePage().then(() => {});
   }
 
-  getAResponseObjectForUser(){
-    const payload = {
-      surveyId : '5e819470d729c17ebc232ad6',
-      userId : '5e76b1d501cbaf3e26ba4e16',
-      companyId: '5e76b1d401cbaf3e26ba4e15'
-    }
-    var survey;
-    this.responseService.getByUserIdCompanyIdSurveyId(payload).subscribe((data)=>{
-      
-       survey = data[0];
-       survey.answers.forEach(answers => {
-         answers.answer.forEach(element => {
-           if(element.level === "High"){
-              element.level = "Medium";
-           }
-         });
-       });
-
-       console.log(survey);
-
-
-       this.responseService.updateThreatLevel(survey).subscribe((data)=>{
-         console.log(data);
-       });
-       
-    },err=>console.log("Err"));
-
-  }
   
-
-
+  
 
 } // End of main class

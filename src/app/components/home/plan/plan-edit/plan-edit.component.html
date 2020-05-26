@@ -32,6 +32,9 @@
                 [ngClass]="ActivePlanEdit._id === item._id ? 'item active' : 'item'"
                 (click)="switchPlanThreat(item._id)">{{item.threat.threat}}</li>
             </div>
+            <div class="btn-wrap w-100 mt-2 d-flex">
+                <button class="btn btn-sm btn-outline-danger mx-auto" (click)="deletePlan()">Delete Plan</button>
+            </div>
         </div>
 
         <div class="model-card">
@@ -43,7 +46,9 @@
                 <div class="top-wrap">
                     <div class="level">
                         <h4>Level</h4>
-                        <h5 [ngClass]="ActivePlanEdit.threat.level === 'High' ? 'high' : 'medium'" >{{ActivePlanEdit.threat.level}}</h5>
+                        <h5 *ngIf="ActivePlanEdit.threat.level === 'High'" class="high" >{{ActivePlanEdit.threat.level}}</h5>
+                        <h5 *ngIf="ActivePlanEdit.threat.level === 'Medium'" class="medium" >{{ActivePlanEdit.threat.level}}</h5>
+                        <h5 *ngIf="ActivePlanEdit.threat.level === 'Low'" class="low">{{ActivePlanEdit.threat.level}}</h5>
                     </div>
                 </div>
 

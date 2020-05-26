@@ -58,7 +58,7 @@
 
  </section>
 
- <section class="Questions-listing" *ngIf="QuestionsViewStatus">
+ <section class="Questions-listing" [hidden]="!QuestionsViewStatus">
 
     <div class="head d-flex">
         <button class="btn btn-sm mr-auto" (click)="viewSurveyTemplates()"> <fa-icon style="color: white;" [icon]="faBackward"></fa-icon> </button>
@@ -94,7 +94,7 @@
 
 
    
-    <div id="reportTemplate">
+    <div #reportTemplate id="reportTemplate">
     <div class="question-wrap"  *ngFor="let item of TemplateQuestions; let i = index" id="quiz{{i}}">
         <div class="question d-flex w-100">{{i+1}}. {{item.question}}</div>
         <div class="choices-wrapper">

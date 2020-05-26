@@ -115,7 +115,7 @@ export class InvitationComponent implements OnInit, OnDestroy {
 
 
   redirect(dataUser) {
-     
+
     if ( this.InvitedUserType === 'admin') {
       localStorage.setItem('loggedUserToken', dataUser.token);
       localStorage.setItem('loggedUserName', dataUser.name);

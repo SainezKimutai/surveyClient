@@ -1142,6 +1142,7 @@ RiskPerIndustryChartfunction() {
                             if ((ind1 === arr1.length - 1) && (ind2 === arr2.length - 1)){
                             
                               resolve();
+                              this.QuestionsOnView = this.QuestionsOnView.filter((q) =>  q.answer !== 'Not answered').map(e => e);
                               this.viewAnswersModal.show();
                          
                             }
@@ -1149,6 +1150,7 @@ RiskPerIndustryChartfunction() {
                 }); // responseObj.answers.forEach(answr => {
   
                   resolve();
+                  this.QuestionsOnView = this.QuestionsOnView.filter((q) =>  q.answer !== 'Not answered').map(e => e);
                   this.viewAnswersModal.show();
   
             }

@@ -3,7 +3,7 @@ import { faBuilding, faUsers, faGlobe, faIndustry, faEnvelope, faKey } from '@fo
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { Router , ActivatedRoute, ParamMap} from '@angular/router';
- 
+
 @Component({
     selector: 'app-passwordreset',
     templateUrl: './passwordreset.component.html',
@@ -11,6 +11,7 @@ import { Router , ActivatedRoute, ParamMap} from '@angular/router';
   })
   export class PasswordResetComponent implements OnInit {
 
+    // tslint:disable
     email: String;
     token: String;
 
