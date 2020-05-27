@@ -28,9 +28,9 @@
             <h4 class="head">Threat</h4>
 
             <div class="list-item-wrap">
-                <li class="item" *ngFor="let item of PlanOnEdit.plan" 
+                <li class="item" *ngFor="let item of PlanOnEdit.plan; let i = index" 
                 [ngClass]="ActivePlanEdit._id === item._id ? 'item active' : 'item'"
-                (click)="switchPlanThreat(item._id)">{{item.threat.threat}}</li>
+                (click)="switchPlanThreat(item._id)">{{i+1}} . {{item.threat.threat}}</li>
             </div>
             <div class="btn-wrap w-100 mt-2 d-flex">
                 <button class="btn btn-sm btn-outline-danger mx-auto" (click)="deletePlan()">Delete Plan</button>

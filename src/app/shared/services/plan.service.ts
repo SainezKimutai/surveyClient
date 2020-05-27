@@ -46,4 +46,6 @@ export class PlansService {
         return this.http.post<any> (this.url + 'company/', data, {headers: header});
     }
 
+    
+
 }
