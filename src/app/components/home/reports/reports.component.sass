@@ -188,94 +188,82 @@
             font-weight: bold
             text-transform: uppercase
 
-    .question-wrap
-        background-color: white
-        margin: 4px 0
-        padding: 5px 1em
-        min-height: 4em
-        height: fit-content
 
-        &:hover
-            // background-color: colorTheme(secondaryTheme)
-            // color: white
-
-        .question
-            font-size: 12px
-            font-weight: bold
-
-        .choices-wrapper
-            width: 100%
-            padding: 1em
-            border-radius: 5px
-            background-color: grayColor(g100) 
-
-            .choices
-                width: 100%   
-                margin: 0 0 12px 0
-
-                &.answer        
-                    border-radius: 3px
-                    width: fit-content
-                    font-weight: bold
-
-                &.threat
-                    border-radius: 3px
-                    width: fit-content
-                    
-
-                    span 
-                        display: flex
-                        flex-direction: column
-                        font-style: italic
-
-                        .span-inner
-                            font-style: normal
-                            margin: 0 0 0 1em
-                            border-radius: 0px
-                            padding: .4em .7em
-                            border-left: solid 4px orange
-                        .Low
-                            font-style: normal
-                            margin: 0 0 0 1em
-                            border-radius: 0px
-                            padding: .4em .7em
-                            border-left: solid 4px colorTheme(success)
-                        .Medium
-                            font-style: normal
-                            margin: 0 0 0 1em
-                            border-radius: 0px
-                            padding: .4em .7em
-                            border-left: solid 4px orange
-                        .High
-                            font-style: normal
-                            margin: 0 0 0 1em
-                            border-radius: 0px
-                            padding: .4em .7em
-                            border-left: solid 4px red
-
-
-                &.recom
-                    border-radius: 3px
-                    width: fit-content
-                    
-
-                    span 
-                        display: flex
-                        flex-direction: column
-                        font-style: italic
-
-                        .span-inner
-                            font-style: normal
-                            margin: 0 0 0 1em
-                            border-radius: 0px
-                            padding: .4em .7em
-                            border-left: solid 4px colorTheme(secondaryTheme)
-
-
+#reportTemplate
+    padding: 0
+#reportTemplate .question-wrap
+    background-color: white
+    margin: 4px 0
+    padding: 15px 1em 8px 1em
+    min-height: 4em
+    height: fit-content
+    &.interval
+        margin: 4px 0 24px 0 
+    .question
+        font-size: 12px
+        font-weight: bold
+    .choices-wrapper
+        width: 100%
+        padding: 1em
+        border-radius: 5px
+        background-color: grayColor(g100) 
+        min-height: 16.5em
+        max-height: 16.5em
+        .choices
+            width: 100%   
+            margin: 0 0 12px 0
+            &.answer        
+                border-radius: 3px
+                width: fit-content
+                font-weight: bold
+            &.threat
+                border-radius: 3px
+                width: fit-content
                 span 
-                    font-size: 12px
-                    width: 100%
-                    margin: 0 1em
+                    display: flex
+                    flex-direction: column
+                    font-style: italic
+                    .span-inner
+                        font-style: normal
+                        margin: 0 0 0 1em
+                        border-radius: 0px
+                        padding: .4em .7em
+                        border-left: solid 4px orange
+                    .Low
+                        font-style: normal
+                        margin: 0 0 0 1em
+                        border-radius: 0px
+                        padding: .4em .7em
+                        border-left: solid 4px colorTheme(success)
+                    .Medium
+                        font-style: normal
+                        margin: 0 0 0 1em
+                        border-radius: 0px
+                        padding: .4em .7em
+                        border-left: solid 4px orange
+                    .High
+                        font-style: normal
+                        margin: 0 0 0 1em
+                        border-radius: 0px
+                        padding: .4em .7em
+                        border-left: solid 4px red
+            &.recom
+                border-radius: 3px
+                width: fit-content
+                span 
+                    display: flex
+                    flex-direction: column
+                    font-style: italic
+                    .span-inner
+                        font-style: normal
+                        margin: 0 0 0 1em
+                        border-radius: 0px
+                        padding: .4em .7em
+                        border-left: solid 4px colorTheme(secondaryTheme)
+            span 
+                font-size: 12px
+                width: 100%
+                margin: 0 1em
 
 
 
@@ -342,5 +330,19 @@
 
         canvas 
             padding: 2em 0 0 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
