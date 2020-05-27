@@ -392,7 +392,7 @@ editPlan(plan: any) {
 toListsPage() {
   this.EditPlanStatus = false;
   this.ListPlanStatus = true;
-  this.updatePage().then(() => { this.checkForCompletedSurveys(); });
+  this.updatePage().then(() => { this.checkForCompletedSurveys(); this.removeUnUsedTasks()});
 }
 
 
