@@ -117,7 +117,7 @@ planDescriptionEditorConfig: AngularEditorConfig = {
       this.updatePage().then(() => {
         this.formatPlan().then(() => {  
           this.mergeWithTreats().then(() => {
-            // this.TaskPlan =  this.TaskPlan.filter((tP) => tP.threatArr.length !== 0).map((e) => e);
+            this.TaskPlan =  this.TaskPlan.filter((tP) => tP.threatArr.length !== 0).map((e) => e);
             this.TaskPlanOnView = this.TaskPlan;
             this.ImprintLoader = false;  
           })
@@ -694,6 +694,7 @@ calculateReportProgrress() {
 
           this.formatPlan().then(() => {
             this.mergeWithTreats().then(() => {
+              this.TaskPlan =  this.TaskPlan.filter((tP) => tP.threatArr.length !== 0).map((e) => e);
               this.updatedPlanThreats();   
             })
           });
