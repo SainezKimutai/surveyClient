@@ -41,7 +41,7 @@
             <div class="list-wrap">
                 <div class="list-item" *ngFor="let item of TaskPlan">
                     <li class="threat"> 
-                        <span *ngFor="let trt of item.threatArr; let x = index">{{x + 1}}. {{trt}}</span>
+                        <span *ngFor="let trt of item.threatArr; let x = index">{{trt}}</span>
                     </li>
                     <li>{{item.activityName}}</li>
                     <li><span *ngIf="item.kpi === null">---</span> <span *ngIf="item.kpi">{{item.kpi}} <span style="text-transform: capitalize;">{{item.kpiUnit}}</span></span></li>
