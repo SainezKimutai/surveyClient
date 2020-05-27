@@ -7,6 +7,7 @@ import { faListAlt, faCheck, faSpinner, faBusinessTime } from '@fortawesome/free
 import 'jspdf-autotable';
 import { PlansService } from 'src/app/shared/services/plan.service';
 import { ModalDirective } from 'ngx-bootstrap';
+import { TaskPlanService } from 'src/app/shared/services/taskPlan.service';
 
 
 // tslint:disable
@@ -25,7 +26,7 @@ export class PlanComponent implements OnInit {
         private surveyService: SurveyService,
         private responseService: ResponseService,
         private questionService: QuestionService,
-        
+        private taskPlanService: TaskPlanService
       ) {  }
 
       @ViewChild('addPlanModal', {static: true}) addPlanModal: ModalDirective;
@@ -39,6 +40,7 @@ public AllSurveys = [];
 public AllQuestions1 = [];
 public AllQuestions2 = [];
 public AllResponses = [];
+public TaskPlan = [];
 public ImprintLoader = false;
 public pageProgress = 0;
 
@@ -57,9 +59,10 @@ public planName = '';
 
 
 
+
 ngOnInit() {
     localStorage.setItem('ActiveNav', 'plan');
-    this.updatePage().then(() => { this.checkForCompletedSurveys(); });
+    this.updatePage().then(() => { this.checkForCompletedSurveys(); this.removeUnUsedTasks(); });
 }
 
 
@@ -74,38 +77,46 @@ this.plansService.getAllCompanyPlans().subscribe(
     // this.AllPlans.forEach((p) => {
     //     this.plansService.deletePlan(p._id).subscribe(() => this.notifyService.showSuccess('deleted', 'Deleted'))
     //   })
-  this.surveyService.getAllInstitutionSurveys().subscribe(
-    dataSurvey => {
 
-      this.AllSurveys = dataSurvey;
-      this.pageProgress = 25;
+    this.taskPlanService.getAllTaskPlanByCompanyId().subscribe(
+      dataTask => {
+        this.TaskPlan = dataTask;
+                    
+      this.surveyService.getAllInstitutionSurveys().subscribe(
+        dataSurvey => {
 
-      this.questionService.getAllQuestions().subscribe(
-        dataQuiz => {
+          this.AllSurveys = dataSurvey;
+          this.pageProgress = 25;
 
-          this.AllQuestions1 = dataQuiz;
-          this.pageProgress = 50;
+          this.questionService.getAllQuestions().subscribe(
+            dataQuiz => {
+
+              this.AllQuestions1 = dataQuiz;
+              this.pageProgress = 50;
 
 
-          this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
-            dataRsp => {
+              this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
+                dataRsp => {
 
-            this.AllResponses = dataRsp;
-            this.pageProgress = 75;
-            if (this.AllResponses.length === 0) { this.pageProgress = 100; }
-            this.checkIfPlanExists().then(() => resolve())
-          
+                this.AllResponses = dataRsp;
+                this.pageProgress = 75;
+                if (this.AllResponses.length === 0) { this.pageProgress = 100; }
+                this.checkIfPlanExists().then(() => resolve())
+              
+
+                },
+                error => console.log('Error geting all Responses')
+              );
 
             },
-            error => console.log('Error geting all Responses')
+            error => console.log('Error getting all question')
           );
-
         },
-        error => console.log('Error getting all question')
+        error => console.log('Error getting all surveys')
       );
-    },
-    error => console.log('Error getting all surveys')
-  );
+     
+  }, error => console.log('Error getting task plan')
+  )
 },
 error => console.log('Error getting all plans')
 );
@@ -383,6 +394,40 @@ toListsPage() {
   this.ListPlanStatus = true;
   this.updatePage().then(() => { this.checkForCompletedSurveys(); });
 }
+
+
+
+
+
+
+
+
+
+
+removeUnUsedTasks() {
+  this.TaskPlan.forEach((taskPlanElement) => {
+    let shared = false ;
+    this.AllPlans.forEach((planParam, ind1, arr1) => {
+      planParam.plan.forEach((pp, ind2, arr2) => {
+        if( pp.tasks.indexOf(taskPlanElement._id) !== -1) {
+          shared = true;
+        }
+        if (ind1 === arr1.length - 1 && ind2 === arr2.length -1 ) {
+          if (!shared) {
+            this.taskPlanService.deleteTaskPlan(taskPlanElement._id).subscribe(data => console.log('TaskPlan deleted'), error => 'Error deleting unsued task plans')
+          }
+        }
+      })
+    })
+  })
+}
+
+
+
+
+
+
+
 
 
 } // end of your class

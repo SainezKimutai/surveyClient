@@ -113,9 +113,10 @@ planDescriptionEditorConfig: AngularEditorConfig = {
       // console.log(this.PlanOnReport._id)
       this.AllPlans = this.PlanOnReport.plan.filter((p) => p.tasks.length > 0 ).map((e) => e)
      
-      // this.ImprintLoader = true;
+      this.ImprintLoader = true;
       this.updatePage().then(() => {
-        this.formatPlan().then(() => {  
+        this.formatPlan().then(() => { 
+           
           this.mergeWithTreats().then(() => {
             this.TaskPlan =  this.TaskPlan.filter((tP) => tP.threatArr.length !== 0).map((e) => e);
             this.TaskPlanOnView = this.TaskPlan;
@@ -395,7 +396,7 @@ mergeWithTreats() {
           t.threatArr.push(p.threat.threat);
         }
       })
-      if (ind = arr.length -1) {
+      if (ind === arr.length - 1) {
          resolve(); 
       }
     })
