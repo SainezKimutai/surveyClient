@@ -30,7 +30,7 @@ const routes: Routes = [
         { path: 'market_rate', loadChildren: 'src/app/components/home/marketRate/marketRate.module#MarketRateModule', canActivate: [AdminGuard],  data: {preload: true}},
         { path: 'editorial', loadChildren: 'src/app/components/home/editorial/editorial.module#EditorialModule', canActivate: [ThirdPartyGuard], data: {preload: true}},
         { path: 'users', loadChildren: 'src/app/components/home/users/users.module#UsersModule', canActivate: [CustomerAdminGuard], data: {preload: true}},
-        { path: 'sales', loadChildren: 'src/app/components/home/sales/sales.module#SalesModule', canActivate: [CustomerThirdPartyGuard], data: {preload: true}},
+        { path: 'crm', loadChildren: 'src/app/components/home/sales/sales.module#SalesModule', canActivate: [CustomerThirdPartyGuard], data: {preload: true}},
       ]
   }
 

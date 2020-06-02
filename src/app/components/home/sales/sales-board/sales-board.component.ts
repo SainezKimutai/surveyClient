@@ -152,7 +152,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
     if (localStorage.getItem('permissionStatus') === 'isCustomer') { this.toCustomer = true; }
     this.salesCategoryService.getAllSalesCategories().subscribe( data => {
-      if (data.length === 0 ) { this.router.navigate(['/home/sales/sales_config/']); }
+      if (data.length === 0 ) { this.router.navigate(['/home/crm/crm_config/']); }
       this.SalesCategorys = data;
       this.renderBeforeOtherFunctions();  });
     this.salesService.getAllOppProject().subscribe( data => {this.Opportunitys = data.reverse();  this.renderBeforeOtherFunctions(); } );
@@ -1003,7 +1003,7 @@ selectPriority(num) {
 
 
   toSalesEdit(id) {
-    this.router.navigate(['home/sales/sales_edit']);
+    this.router.navigate(['home/crm/crm_edit']);
     window.localStorage.setItem('salesEditItemId', id);
 
   }

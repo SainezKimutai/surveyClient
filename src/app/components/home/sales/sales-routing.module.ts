@@ -6,8 +6,8 @@ import { SalesBoardComponent } from './sales-board/sales-board.component';
 const routes: Routes = [
 
     { path: '', component: SalesBoardComponent },
-    { path: 'sales_edit', loadChildren: 'src/app/components/home/sales/sales-edit/sales-edit.module#SalesEditModule', data: { preload: true }},
-    { path: 'sales_config', loadChildren: 'src/app/components/home/sales/sales-config/sales-config.module#SalesConfigModule', data: { preload: true }},
+    { path: 'crm_edit', loadChildren: 'src/app/components/home/sales/sales-edit/sales-edit.module#SalesEditModule', data: { preload: true }},
+    { path: 'crm_config', loadChildren: 'src/app/components/home/sales/sales-config/sales-config.module#SalesConfigModule', data: { preload: true }},
 ];
 
 @NgModule({

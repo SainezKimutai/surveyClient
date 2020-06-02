@@ -31,8 +31,8 @@
       </li>
 
       <li  *ngIf="toCustomer || toThirdParty" [ngClass] ="salesNavBarActive ? 'nav-item active': 'nav-item'">
-        <a routerLink="/home/sales" [ngClass]=" salesNavBarActive ? 'nav-link active': 'nav-link'">
-          <fa-icon [icon]="faFax"></fa-icon><span>Sales</span>
+        <a routerLink="/home/crm" [ngClass]=" salesNavBarActive ? 'nav-link active': 'nav-link'">
+          <fa-icon [icon]="faChartLine"></fa-icon><span>CRM</span>
         </a>
       </li>
       
@@ -135,8 +135,8 @@
           </a>
         </li>
         <li *ngIf="toCustomer || toThirdParty" [ngClass] ="salesNavBarActive ? 'nav-item active': 'nav-item'">
-          <a routerLink="/home/sales" [ngClass]=" salesNavBarActive ? 'nav-link active': 'nav-link'">
-            <fa-icon [icon]="faFax"></fa-icon><span>Sales</span>
+          <a routerLink="/home/crm" [ngClass]=" salesNavBarActive ? 'nav-link active': 'nav-link'">
+            <fa-icon [icon]="faChartLine"></fa-icon><span>CRM</span>
           </a>
         </li>
 
