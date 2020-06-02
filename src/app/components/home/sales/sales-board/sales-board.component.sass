@@ -1,0 +1,1284 @@
+@import "src/styles.sass"
+
+@keyframes appear
+    50% 
+        opacity: 0
+    100%
+        opacity: 1
+
+// ------------------------------------------------
+
+
+
+
+
+
+
+.topNavBard
+    width: 100%
+    display: flex
+    align-items: stretch
+    padding: .5em 1em 2em 1em
+    overflow-x: scroll
+
+    .item
+        margin: 0 2em 0 0
+        .btn
+            width: 100%
+            height: 3em
+            color: vanillaTheme(titleTheme)
+            margin: auto
+            border: none
+            font-size: 12px
+            font-family: Montserrat
+            text-transform: capitalize
+            text-align: left
+            background-color: transparent
+            box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+            -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+            -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+            border-radius: 2px
+            border-bottom: solid 2px vanillaTheme(primaryTheme)
+
+            @include desktop_md          
+                height: 6em
+                display: flex
+                align-items: center
+
+            &:hover
+                background-color: grayColor(g400)
+
+            fa, fa-icon
+                font-size: 12px
+                margin: 0 2em 0 0
+
+            &.thm-success
+                fa
+                    color: vanillaTheme(success)
+
+            &.thm-warning          
+                fa
+                    color: vanillaTheme(warning)
+
+            &.thm-primary
+                fa
+                    color: vanillaTheme(primary)
+            
+            &.thm-info
+                fa
+                    color: vanillaTheme(info)                 
+            &.thm-danger
+                fa, fa-icon
+                    color: vanillaTheme(danger)
+
+
+
+
+
+
+
+// Title Section
+#title_section
+    width: 100%
+    padding: 0 1em
+    background-color: transparent
+    border: none
+    display: flex
+    align-items: stretch
+
+    h4
+        margin: auto auto auto 0
+        color: vanillaTheme(primaryTheme)
+        font-size: 18px
+        font-weight: bold
+        text-transform: uppercase
+        text-shadow: 1px -1px 1px white
+        -moz-text-shadow: 1px -1px 1px white
+        -webkit-text-shadow: 1px -1px 1px white
+
+
+
+
+
+
+.body_section
+    margin: 1em
+    background-color: transparent
+
+.spinner-div
+    margin: auto
+    color: vanillaTheme(primaryTheme)
+
+
+.addNewOppModal, .addNewStageModal
+    .modal-header
+        background-color: vanillaTheme(success)
+        .modal-title
+            font-size: 15px
+            font-family: Montserrat
+
+            span
+                margin: 0 .5em 0 .5em
+                color: white
+                text-transform: uppercase
+            
+
+    .modal-body
+        font-size: 12px
+        font-family: Montserrat
+
+        .form-group
+            padding: .5em
+            margin: 0
+
+            .input-group-text
+                font-size: 10px
+                background-color: white
+                border: none
+                width: 10em
+
+            input
+                background-color: white
+                font-family: Montserrat
+                font-size: 10px
+                color: vanillaTheme(primary)
+                border: none
+                border-radius: 4px
+                border-bottom: solid 1px vanillaTheme(tertiaryTheme)
+                cursor: pointer
+                outline: none 
+
+                &:hover
+                    border-bottom: solid 1px vanillaTheme(primary)
+                
+                &:focus
+                    outline: none              
+
+            
+            select
+                background-color: white
+                font-family: Montserrat
+                font-size: 10px
+                color: vanillaTheme(primary)
+                border: none
+                border-radius: 4px
+                border-bottom: solid 1px vanillaTheme(tertiaryTheme)
+                cursor: pointer
+                outline: none 
+
+                &:hover
+                    border-bottom: solid 1px vanillaTheme(primary)
+                
+                &:focus
+                    outline: none
+
+            #radio_wrap
+                padding: auto
+                margin: 0 2em 0 0
+                font-size: 12px
+
+    .modal-footer
+        .btn-cancel
+            background-color: vanillaTheme(tertiaryTheme)
+            font-size: 10px
+            font-family: Montserrat
+        .btn-confirm
+            background-color: vanillaTheme(success)
+            font-size: 10px
+            font-family: Montserrat
+
+
+
+
+
+
+.pipeline-section
+    border: solid 1px grayColor(g200)
+    border-radius: 5px
+    background-color: white
+    margin: 0
+    padding: 1em
+    display: flex
+    align-items: stretch
+
+    @include desktop_md
+        display: flex
+        flex-direction: column
+
+    .gen-pipeline, .my-pipeline
+        width: 10em
+        font-size: 12px
+        font-family: Montserrat
+        margin: 0 1em 0 0
+        border: none
+        border-radius: 2px
+        background-color: grayColor(g200)
+        outline: none
+        box-shadow: 1px 2px 3px rgba(0, 0, 0, .2)
+        -moz-box-shadow: 1px 2px 3px rgba(0, 0, 0, .2)
+        -webkit-box-shadow: 1px 2px 3px rgba(0, 0, 0, .2)
+
+        &:hover
+            background-color: grayColor(g400)
+        
+        &.notCurrent
+            border-bottom: none
+
+        &.current
+            border-bottom: solid 2px vanillaTheme(primary)
+
+    form
+        margin-left: auto
+        display: flex
+        align-items: stretch
+
+        @include desktop_md
+            padding: 1em 0 0 0
+            display: flex
+            flex-direction: column
+            align-items: center
+            justify-content: center
+
+        
+        .switch
+            margin: 0 1em 0 0
+            font-size: 12px
+            
+
+            @include desktop_md
+                margin: 0 0 1em 0
+
+            .cli 
+                width: 6em
+                background-color: grayColor(g200)
+                padding: .3em
+                border-top-left-radius: 2px
+                border-bottom-left-radius: 2px
+                cursor: pointer
+                text-align: center
+                box-shadow: 1px 2px 3px rgba(0, 0, 0, .2)
+                -moz-box-shadow: 1px 2px 3px rgba(0, 0, 0, .2)
+                -webkit-box-shadow: 1px 2px 3px rgba(0, 0, 0, .2)
+
+                &.active
+                    background-color: vanillaTheme(primary) !important
+                    color: white
+
+
+            .svc 
+                width: 6em
+                background-color: grayColor(g200)
+                padding: .3em
+                border-top-right-radius: 2px
+                border-bottom-right-radius: 2px
+                cursor: pointer
+                text-align: center
+                box-shadow: 1px 2px 3px rgba(0, 0, 0, .2)
+                -moz-box-shadow: 1px 2px 3px rgba(0, 0, 0, .2)
+                -webkit-box-shadow: 1px 2px 3px rgba(0, 0, 0, .2)
+
+                &.active
+                    background-color: vanillaTheme(primary) !important
+                    color: white
+
+        .search-wrap
+            display: flex
+            align-items: stretch
+            border: none
+            width: 15em
+            height: 2em
+            border-radius: 10px
+            box-shadow: 1px 2px 3px rgba(0, 0, 0, .2)
+            -moz-box-shadow: 1px 2px 3px rgba(0, 0, 0, .2)
+            -webkit-box-shadow: 1px 2px 3px rgba(0, 0, 0, .2)
+            background-color: grayColor(g200)
+
+            input 
+                width: 100%
+                height: 100%
+                outline: none
+                border: none
+                border-radius: 0px
+                background-color: transparent
+                font-size: 12px
+                padding: 0 .5em
+
+            fa 
+                cursor: pointer
+                font-size: 14px
+                margin: auto 1em
+                color: grayColor(g400)
+
+        
+        button
+            font-size: 10px
+            font-family: Montserrat
+            box-shadow: 0 0 10px rgba(0,0,0,.3)
+            text-transform: uppercase
+            background-color: vanillaTheme(primary)
+            color: white
+
+
+
+#kanban_section    
+    font-size: 11px
+    background-color: transparent
+    border: none
+    padding: 0
+    overflow-y: scroll
+    transform:rotateX(180deg)
+    -ms-transform:rotateX(180deg)
+    -webkit-transform:rotateX(180deg)
+    padding: 1em
+    
+    article
+        background-color: transparent
+        height: fit-content
+        min-width: 250px
+        width: 50%
+        border: none
+        margin: 0 2em 0 0
+            
+
+        #head
+            margin: 0 0 0 0
+            border: none
+            // box-shadow: 0 0 5px rgba(0,0,0,.3)
+            width: 100%         
+            height: 30px
+            position: relative
+
+            &.first-category
+                background-color: var(--my-color-var)
+
+                &:after
+                    content: ''
+                    position: absolute
+                    right: -15px
+                    bottom: 0
+                    width: 0
+                    height: 0
+                    border-left: 15px solid var(--my-color-var)
+                    border-top: 15px solid transparent
+                    border-bottom: 15px solid transparent
+                    
+
+            &.middle-category
+                background-color: var(--my-color-var)
+
+                &:before
+                    content: ''
+                    position: absolute
+                    left: 0px          
+                    bottom: 0
+                    width: 0
+                    height: 0
+                    border-left: 15px solid grayColor(g100)
+                    border-top: 15px solid transparent
+                    border-bottom: 15px solid transparent
+
+                &:after
+                    content: ''
+                    position: absolute
+                    right: -15px
+                    bottom: 0
+                    width: 0
+                    height: 0
+                    border-left: 15px solid var(--my-color-var)
+                    border-top: 15px solid transparent
+                    border-bottom: 15px solid transparent
+
+            &.last-category
+                background-color: var(--my-color-var)
+
+                &:before
+                    content: ''
+                    position: absolute
+                    left: 0px
+                    bottom: 0
+                    width: 0
+                    height: 0
+                    border-left: 15px solid grayColor(g100)
+                    border-top: 15px solid transparent
+                    border-bottom: 15px solid transparent
+            &:hover
+                button fa
+                    opacity: 1
+            
+            .info-div    
+                margin: 4px  
+                width: 75% 
+
+                h4
+                    margin: 1em 0 auto 1em
+                    // color: black
+                    font-size: 10px
+                    font-weight: bold
+                    font-family: Montserrat
+                    text-transform: uppercase
+                    letter-spacing: 2px
+
+            .form
+                margin: 4px  
+                width: 75% 
+
+                input
+                    font-size: 12px
+                    color: grayColor(g700)
+                    font-weight: bold
+                    font-family: Montserrat
+                    background-color: grayColor(g200)
+
+
+
+            button
+                margin: auto 0 auto 0     
+                cursor: pointer
+
+                fa
+                    font-size: 11px
+                    color: vanillaTheme(tertiaryTheme)
+                    opacity: 0
+
+                fa[name=check]
+                    font-size: 16px
+                    color: lime
+                    text-shadow: 0 0 5px rgba(0,0,0,.3)
+                    opacity: 1
+
+                fa[name=times]
+                    font-size: 16px
+                    color: vanillaTheme(dark)
+                    text-shadow: 0 0 5px rgba(0,0,0,.3)
+                    opacity: 1
+                
+
+        #totals
+            background-color: white
+            padding: .5em
+            margin: 0 0 0 0
+            border: none
+            border-top: none
+            
+            h4
+                margin: auto 0 auto 0
+                color: vanillaTheme(primary)
+                font-size: 10px
+                font-family: Montserrat
+                text-transform: uppercase
+                letter-spacing: 2px
+                color: grayColor(g500)
+
+                span
+                    // text-shadow: 2px 2px 1px rgba(0,0,0,.3)
+                    margin: auto .5em auto .5em
+                    font-size: 10px
+                    font-weight: bold
+                    color: vanillaTheme(secondaryTheme)
+                    cursor: pointer
+
+        #add_deal_div
+
+            .btn
+                width: 100%
+                background-color: transparent
+
+                // &:hover
+                //     background-color: vanillaTheme(primary)
+
+                fa
+                    color: white
+                    font-size: 14px
+
+            &.first-category .btn:hover
+                background-color: lighten(vanillaTheme(primary), 5%)
+            &.middle-category .btn:hover
+                background-color: vanillaTheme(primary)
+            &.last-category .btn:hover
+                background-color: vanillaTheme(success)
+
+
+
+            
+
+        .card-group
+            min-height: 140px
+            height: fit-content
+            max-height: 500px
+            padding: 1em 0 0 0
+            display: grid
+            grid-template-columns: repeat(1, 1fr)
+            grid-gap: 0px
+            // display: flex
+            // flex-direction: column
+            background-color: transparent
+            box-shadow: 0 0 5px rgba(0,0,0,.3)
+            overflow-x: scroll
+
+
+            &.hovered
+                box-shadow: 0 0 5px vanillaTheme(primary)
+                border: solid 1px vanillaTheme(primary)
+
+            .card
+                background-color: white
+                padding: .5em
+                margin: 0 0 1em 0 
+                border: solid 1px grayColor(g300)
+                border-radius: 2px
+                cursor: pointer
+                width: 100%
+
+                &:hover
+                    border: solid 2px vanillaTheme(primary)
+
+                &.hovered-on-drag
+                    margin: 140px 0 0 0 
+
+                &.beingDragged
+                    border: solid 2px vanillaTheme(warning)
+                    opacity: 1
+
+                .card-body
+                    display: flex
+                    align-items: stretch
+                    padding: 0
+
+                    .card-info-div
+                        width: 70%
+                        flex-direction: column
+                        align-items: flex-start
+
+                        .clientN
+                            font-family: Montserrat
+                            font-size: 10px
+                            color: vanillaTheme(primary)
+                            margin: 0 0 1em 0
+
+                            &:hover                    
+                                zoom: 1.1
+                                font-weight: bold
+                                text-decoration: underline
+                                text-transform: uppercase
+
+                        .projectN
+                            font-family: Montserrat
+                            font-size: 10px
+                            color: vanillaTheme(tertiaryTheme)
+                            margin: 0 0 1em 0
+                            
+
+                        .revenue
+                            font-family: Montserrat
+                            font-size: 10px
+                            color: vanillaTheme(tertiaryTheme)
+                            margin: 0 0 1em 0
+                        
+                        .rateWarp
+                            font-size: 10px
+                            color: gray
+                            margin: 0 0 1em 0
+
+                            .rateColor
+                                color: vanillaTheme(secondaryTheme)  
+
+
+                    .card-icon-div
+                        display: none
+
+                    &:hover .card-icon-div
+                        width: 30%
+                        display: flex
+                        flex-direction: column
+                        align-items: flex-end
+
+                        .btn
+                            margin: 0
+                            float: right      
+                            width: fit-content
+                            padding: 0 .5em 0 1em
+                            
+                            &:hover
+                                fa
+                                    color: vanillaTheme(primary)
+                            fa
+                                font-size: 10px
+                                margin: 0
+                                color: vanillaTheme(tertiaryTheme)
+
+                .card-footer
+                    margin: .3em 0 0 0
+                    padding: .4em 0 0 0
+                    h4
+                        font-family: Montserrat
+                        font-size: 10px
+                        color: vanillaTheme(tertiaryTheme)
+
+                        &:hover
+                            color: black
+                            text-decoration: underline
+                            font-size: 12px
+                            font-weight: bold
+
+                        &.schedule
+                            cursor: pointer
+
+                            &:hover
+                                color: vanillaTheme(primary)
+                                zoom: 1.1
+                                font-weight: bold
+                                text-decoration: underline
+                                
+                        span
+                            color: vanillaTheme(primary)
+                            font-weight: bold
+                            text-shadow: 0 0 3px rgba(0,0,0,.3)
+
+                        .dropdown-menu
+                            border: solid 1px grayColor(g200)
+                            border-radius: 5px
+                            padding: 1em
+                            background-color: vanillaTheme(primary)
+
+                            h4
+                                font-size: 11px
+                                color: black
+
+
+
+
+.list-section
+    background-color: white
+    border-radius: 5px
+    margin: 1em 0 0 0
+
+
+    .list-title
+        display: flex
+        align-items: stretch
+        background-color: vanillaTheme(primary)
+        padding: 1em
+
+        .list-title-wrap
+            width: 100%
+
+            h4
+                font-size: 12px
+                font-family: Montserrat 
+                text-transform: capitalize
+
+    .list-item   
+        display: flex
+        align-items: stretch
+        padding: 1em
+        margin: 0 0 .5em 0
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .1)
+
+        .list-item-wrap
+            width: 100%
+
+            h4
+                font-size: 12px
+                font-family: Montserrat 
+                text-transform: capitalize
+
+
+.clientDetailModal
+
+    .modal-header
+        background-color: vanillaTheme(primary)
+        .modal-title
+            font-size: 15px
+            font-family: Montserrat
+
+            span
+                margin: 0 .5em 0 .5em
+                color: white
+                text-transform: uppercase
+            
+
+    .modal-body
+        font-size: 12px
+        font-family: Montserrat
+        
+        .info-div
+            display: flex
+            align-items: stretch
+            border-bottom: solid 1px grayColor(g200)
+
+            .company-name
+                margin: 0 0 0 1em
+                width: 50%
+                font-family: Montserrat
+                font-size: 10px
+                span
+                    font-size: 14px
+                    color: vanillaTheme(warning)
+            .manager
+                margin: 0 1em 0 0
+                width: 50%
+                font-size: 10px
+                font-family: Montserrat
+
+                span
+                    font-size: 14px
+                    color: vanillaTheme(warning)
+
+
+        
+        .contact-div
+            border-radius: 5px
+            background-color: grayColor(g200)
+            margin: 1em
+            padding: 1em
+            
+            .phone, .altPhone, .email, .website
+                font-size: 10px
+                font-family: Montserrat
+                margin: 0 0 1em 0
+
+                span
+                    font-size: 11px
+                    color: vanillaTheme(warning)
+        
+
+        
+
+    .modal-footer
+        .btn-cancel
+            background-color: vanillaTheme(tertiaryTheme)
+            font-size: 10px
+            font-family: Montserrat
+        .btn-confirm
+            background-color: vanillaTheme(primary)
+            font-size: 10px
+            font-family: Montserrat
+
+
+
+
+
+
+.clientEditModal
+    .modal-header
+        background-color: vanillaTheme(primary)
+        .modal-title
+            font-size: 15px
+            font-family: Montserrat
+
+            span
+                margin: 0 .5em 0 .5em
+                color: white
+                text-transform: uppercase
+            
+
+    .modal-body
+        font-size: 12px
+        font-family: Montserrat
+        
+        form
+            display: flex
+            align-items: stretch
+
+            .info-div
+                display: flex
+                align-items: stretch
+                width: 50%
+                padding: .5em 0 .5em
+                margin: 0 0 1em 0
+
+                .title
+                    font-size: 12px
+                    font-family: Montserrat
+                    width: 30%
+                .value
+                    font-size: 10px
+                    font-family: Montserrat
+                    width: 30%
+                    color: vanillaTheme(warning)
+                .btn
+                    font-size: 10px
+                    font-family: Montserrat
+                    width: 5rem
+
+                    &:hover
+                        fa
+                            color: vanillaTheme(primary)
+
+                    fa
+                        font-size: 10px
+
+
+            .input-group
+                width: 50%
+
+                input
+                    // font-size: 10px
+                    font-family: Montserrat
+
+                .input-group-append
+                    // font-size: 10px
+
+                    .btn
+                        // font-size: 10px
+                        font-family: Montserrat
+                        background-color: vanillaTheme(success)
+
+    .modal-footer
+        .btn-cancel
+            background-color: vanillaTheme(tertiaryTheme)
+            font-size: 10px
+            font-family: Montserrat
+        .btn-confirm
+            background-color: vanillaTheme(success)
+            font-size: 10px
+            font-family: Montserrat
+
+
+
+.mailToClientModal
+    .modal-header
+        background-color: vanillaTheme(primary)
+        .modal-title
+            font-size: 15px
+            font-family: Montserrat
+
+            span
+                margin: 0 .5em 0 .5em
+                color: white
+                text-transform: uppercase
+            
+
+    .modal-body
+        font-size: 12px
+        font-family: Montserrat
+        
+        form
+            .sender, .reciever    
+                display: flex
+                align-items: stretch
+                margin: 0 1em 1em 0
+                
+                h4
+                    font-size: 12px
+                    font-family: Montserrat
+                    width: 60px
+                    margin: 0 0 0 0 
+                
+                h5 
+                    font-size: 12px
+                    font-family: Montserrat
+                    margin: 0
+                    padding: 0
+
+            .subject-div
+                display: flex
+                align-items: stretch
+
+                h4
+                    font-size: 12px
+                    font-family: Montserrat
+                    width: 60px
+                    margin: auto 1em auto 0
+
+                input
+                    font-size: 12px
+                    font-family: Montserrat
+                    margin: auto 0
+
+                    span
+                        font-size: 10px
+                        margin: 0 0 0 1em
+
+            .body-div
+                margin: 1em 0 1em 0
+                
+                textarea
+                    border-radius: 5px
+                    font-size: 12px
+                    font-family: Montserrat
+                    background-color: grayColor(g100)
+                    width: 100%
+
+    .modal-footer
+        .btn-cancel
+            background-color: vanillaTheme(tertiaryTheme)
+            font-size: 10px
+            font-family: Montserrat
+        .btn-confirm
+            background-color: vanillaTheme(success)
+            font-size: 10px
+            font-family: Montserrat
+
+.writeNoteModal
+    .modal-header
+        background-color: vanillaTheme(primary)
+        .modal-title
+            font-size: 15px
+            font-family: Montserrat
+
+            span
+                margin: 0 .5em 0 .5em
+                color: white
+                text-transform: uppercase
+            
+
+    .modal-body
+        font-size: 12px
+        font-family: Montserrat
+        
+        form
+            label
+                font-size: 12px
+                font-family: Montserrat
+                color: vanillaTheme(primary)
+
+            input
+                font-size: 12px
+                font-family: Montserrat
+                margin: auto 0
+
+            
+            textarea
+                border-radius: 5px
+                font-size: 12px
+                font-family: Montserrat
+                background-color: grayColor(g100)
+                width: 100%
+
+    .modal-footer
+        .btn-cancel
+            background-color: vanillaTheme(tertiaryTheme)
+            font-size: 10px
+            font-family: Montserrat
+        .btn-confirm
+            background-color: vanillaTheme(success)
+            font-size: 10px
+            font-family: Montserrat
+
+
+
+.listNoteModal
+    .modal-header
+        background-color: vanillaTheme(primary)
+        .modal-title
+            font-size: 15px
+            font-family: Montserrat
+
+            span
+                margin: 0 .5em 0 .5em
+                color: white
+                text-transform: uppercase
+            
+
+    .modal-body
+        font-size: 12px
+        font-family: Montserrat
+        
+        .head-div
+            background-color: vanillaTheme(secondary)
+            font-size: 14px
+            font-family: Montserrat
+            color: vanillaTheme(Primary)
+            padding: 1em .5em 1em .5em
+
+            h4
+                font-size: 12px
+                font-family: Montserrat
+                margin: auto 0
+                width: 100%
+
+        .list-div  
+            margin: .2em 0 .2em 0        
+            padding: 1em .5em 1em .5em
+            cursor: pointer
+
+            &:hover
+                border: solid 1px vanillaTheme(primary)
+            .title
+                font-size: 12px
+                font-family: Montserrat
+                color: vanillaTheme(primary)
+                width: 100%
+            
+            .content
+                font-size: 10px
+                font-family: Montserrat
+                margin: auto 2em auto 0
+                width: 100%
+                white-space: nowrap
+                overflow: hidden !important
+                text-overflow: ellipsis
+
+            .project
+                font-size: 12px
+                font-family: Montserrat
+                color: vanillaTheme(primary)
+                width: 100%
+
+            .writtenBy
+                font-size: 10px
+                font-family: Montserrat
+                // color: vanillaTheme(tertiaryTheme)
+                font-style: italic
+                width: 100%
+
+    .modal-footer
+        .btn-close
+            background-color: vanillaTheme(primary)
+            font-size: 10px
+            font-family: Montserrat
+
+
+.detailNoteModal
+    .modal-header
+        background-color: vanillaTheme(primary)
+        .modal-title
+            font-size: 15px
+            font-family: Montserrat
+            text-align: center
+
+    .modal-body
+        font-size: 12px
+        font-family: Montserrat
+        
+        .head-div
+            text-align: center            
+            padding: 1em .5em 1em .5em
+
+            h4
+                font-size: 12px
+                font-family: Montserrat
+                color: vanillaTheme(primary)
+                margin: auto 0
+            h5
+                font-size: 12px
+                font-family: Montserrat
+                margin: auto 0
+        .content-div
+            margin: 0 1em 0 1em
+            padding: 1em
+            border-radius: 5px
+            font-size: 12px
+            font-family: Montserrat
+            background-color: grayColor(g100)
+            width: 96%
+            height: 350px
+            
+        
+        .blockquote
+            margin: 0 1em 0 1em
+            padding: 1em
+
+            .blockquote-footer
+                font-size: 10px
+                font-family: Montserrat
+                color: vanillaTheme(primary)
+                font-style: italic
+
+                span
+                    font-size: 10px
+                    font-family: Montserrat
+                    color: vanillaTheme(warning)
+                    font-style: italic
+
+    .modal-footer
+        .btn-close
+            background-color: vanillaTheme(tertiaryTheme)
+            font-size: 10px
+            font-family: Montserrat
+
+        .btn-edit
+            background-color: vanillaTheme(primary)
+            font-size: 10px
+            font-family: Montserrat
+
+        .btn-delete
+            background-color: vanillaTheme(danger)
+            font-size: 10px
+            font-family: Montserrat
+
+
+
+.listSentEmailModal
+    .modal-header
+        background-color: vanillaTheme(warning)
+        .modal-title
+            font-size: 15px
+            font-family: Montserrat
+
+            span
+                margin: 0 .5em 0 .5em
+                color: white
+                text-transform: uppercase
+            
+
+    .modal-body
+        font-size: 12px
+        font-family: Montserrat
+        
+        .head-div
+            background-color: vanillaTheme(secondary)
+            font-size: 14px
+            font-family: Montserrat
+            color: vanillaTheme(Primary)
+            padding: 1em .5em 1em .5em
+
+            h4
+                font-size: 12px
+                font-family: Montserrat
+                margin: auto 0
+                width: 100%
+
+        .list-div  
+            margin: .2em 0 .2em 0        
+            padding: 1em .5em 1em .5em
+            cursor: pointer
+
+            &:hover
+                border: solid 1px vanillaTheme(primary)
+            .sender
+                padding-left: .5em
+                font-size: 12px
+                font-family: Montserrat
+                color: vanillaTheme(primary)
+                width: 100%
+
+            .reciever
+                padding-left: .5em
+                font-size: 12px
+                font-family: Montserrat
+                color: vanillaTheme(primary)
+                width: 100%
+            
+            .subject
+                font-size: 10px
+                font-family: Montserrat
+                margin: auto 2em auto 0
+                padding-left: .5em
+                width: 100%
+                white-space: nowrap
+                overflow: hidden !important
+                text-overflow: ellipsis
+
+            .sentOn
+                padding-left: .5em
+                font-size: 10px
+                font-family: Montserrat
+                // color: vanillaTheme(tertiaryTheme)
+                font-style: italic
+                width: 100%
+
+    .modal-footer
+        .btn-close
+            background-color: vanillaTheme(warning)
+            font-size: 10px
+            font-family: Montserrat
+
+
+
+.detailSentEmailModal
+    .modal-header
+        background-color: vanillaTheme(warning)
+        .modal-title
+            font-size: 15px
+            font-family: Montserrat
+            text-align: center
+
+            span
+                text-shadow: 1px 2px 3px rgba(0,0,0,.2)
+                color: teal
+
+    .modal-body
+        font-size: 12px
+        font-family: Montserrat
+        
+        .head-div
+            text-align: center            
+            padding: 1em .5em 1em .5em
+
+            h4
+                font-size: 12px
+                font-family: Montserrat
+                color: vanillaTheme(primary)
+                margin: auto 0
+            h5
+                font-size: 12px
+                font-family: Montserrat
+                margin: auto 0
+        .content-div
+            margin: 0 1em 0 1em
+            padding: 1em
+            border-radius: 5px
+            font-size: 12px
+            font-family: Montserrat
+            background-color: grayColor(g100)
+            width: 96%
+            height: 350px
+            
+        
+        .blockquote
+            margin: 0 1em 0 1em
+            padding: 1em
+
+            .blockquote-footer
+                font-size: 10px
+                font-family: Montserrat
+                color: vanillaTheme(primary)
+                font-style: italic
+
+                span
+                    font-size: 10px
+                    font-family: Montserrat
+                    color: vanillaTheme(warning)
+                    font-style: italic
+
+    .modal-footer
+        .btn-close
+            background-color: vanillaTheme(tertiaryTheme)
+            font-size: 10px
+            font-family: Montserrat
+
+        .btn-edit
+            background-color: vanillaTheme(primary)
+            font-size: 10px
+            font-family: Montserrat
+
+        .btn-delete
+            background-color: vanillaTheme(danger)
+            font-size: 10px
+            font-family: Montserrat
+
+
+
+
+
+
+
+
+
+.generate-sales-categories
+    position: fixed
+    bottom: 0px
+    display: flex
+    align-items: stretch
+
+    &.hide
+        display: none
+
+    .gen-category-div
+        height: 4em
+        width: 16em
+        display: flex
+        background-color: teal
+        opacity: .6
+        margin: 0 1em 0 1em
+
+        h4
+            margin: auto
+            color: white
+            font-size: 12px
+            font-family: Montserrat
+
+
+

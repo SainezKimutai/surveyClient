@@ -1,0 +1,675 @@
+@import "src/styles.sass"
+
+.title-section
+    width: 100%
+    margin: 1em
+    background-color: transparent
+.title-section .wrap 
+    width: 100%
+    // padding: 1em 
+    display: flex
+    align-items: stretch
+.title-section .wrap span
+    margin: auto 2em auto 0
+    width: 2em
+    height: 2em
+    border-radius: 50%
+    display: flex
+    align-items: center 
+    justify-content: center
+    background-color: grayColor(g200)
+    cursor: pointer
+    fa-icon 
+        font-size: 12px
+        color: grayColor(g800)
+
+    &:hover
+        background-color: grayColor(g900)
+        fa-icon 
+            color: white
+        
+.title-section .wrap h4
+    margin: auto 0
+    color: vanillaTheme(primaryTheme)
+    font-size: 18px
+    font-weight: bold
+    text-transform: uppercase
+    text-shadow: 1px -1px 1px white
+    -moz-text-shadow: 1px -1px 1px white
+    -webkit-text-shadow: 1px -1px 1px white
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.body-section
+    margin: 1em
+    background-color: transparent
+    min-width: $desktop_md
+    overflow: hidden
+.body-section .model-card-top
+    width: 100%
+    display: grid 
+    grid-template-columns: repeat(2, 1fr)
+    grid-gap: 2em
+.body-section .model-card-top .model-wrap
+    width: 100%
+    background-color: white
+    border-radius: 5px
+.body-section .model-card-top .model-wrap .model-item
+    display: flex 
+    align-items: stretch
+    padding: .5em
+    cursor: pointer
+    border-radius: 2px
+    border: solid 1px transparent
+    &:hover
+        border: solid 1px grayColor(g100)
+        .action
+            opacity: 1
+            
+.body-section .model-card-top .model-wrap .model-item .spec 
+    margin: auto 0
+    width: 10em
+    display: flex
+    align-items: stretch
+    font-size: 12px
+    color: grayColor(g700)
+    font-weight: bold
+    text-align: left
+    span 
+        margin-left: auto
+.body-section .model-card-top .model-wrap .model-item .val 
+    margin: auto 0
+    display: flex
+    align-items: stretch
+    font-size: 12px
+    color: vanillaTheme(primaryTheme)
+    font-weight: bold
+    text-align: left
+    padding: .5em
+    fa 
+        font-size: 14px
+        color: vanillaTheme(tertiaryTheme)
+        &.star-active
+            color: vanillaTheme(secondaryTheme)
+.body-section .model-card-top .model-wrap .model-item .action
+    margin: auto 0 auto auto
+    display: flex
+    align-items: stretch
+    opacity: 0
+.body-section .model-card-top .model-wrap .model-item .action .edit 
+    width: 2em
+    height: 2em
+    margin-right: 1em
+    border-radius: 50%
+    display: flex
+    align-items: center 
+    justify-content: center
+    background-color: grayColor(g100)
+    fa-icon 
+        font-size: 10px
+        color: vanillaTheme(primary)
+    &:hover
+        background-color: vanillaTheme(primary)
+        fa-icon 
+            color: white
+.body-section .model-card-top .model-wrap .model-item .action .delete 
+    margin: auto 0 auto auto
+    width: 2em
+    height: 2em
+    border-radius: 50%
+    display: flex
+    align-items: center 
+    justify-content: center
+    background-color: grayColor(g100)
+    fa-icon 
+        font-size: 10px
+        color: vanillaTheme(danger)
+    &:hover
+        background-color: vanillaTheme(danger)
+        fa-icon 
+            color: white
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.body-section .model-card-task 
+    width: 100%
+    background-color: white
+    margin: 2em 0 0 0
+    padding: 1em .5em
+    border-radius: 2px
+
+.body-section .model-card-task .model-title 
+    width: 100%
+    padding: 1em 
+    display: flex
+    align-items: stretch
+    h4 
+        font-size: 14px
+        font-weight: bold 
+        color: grayColor(g800)
+.body-section .model-card-task .model-title span
+    margin: auto 2em auto auto
+    width: 2em
+    height: 2em
+    border-radius: 50%
+    display: flex
+    align-items: center 
+    justify-content: center
+    background-color: grayColor(g100)
+    cursor: pointer
+    fa-icon 
+        font-size: 12px
+        color: vanillaTheme(success)
+
+    &:hover
+        background-color: vanillaTheme(success)
+        fa-icon 
+            color: white
+
+
+.body-section .model-card-task .model-wrap
+    width: 100%
+.body-section .model-card-task .model-wrap .task-title
+    display: flex 
+    align-items: stretch
+    padding: .5em
+    cursor: pointer
+    border-radius: 2px
+    border: solid 1px transparent
+    background-color: grayColor(g100)
+    margin: 0 0 5px 0
+    h4
+        margin: auto 0
+        width: 100%
+        color: vanillaTheme(primaryTheme)
+        font-size: 12px  
+        font-weight: bold
+    div 
+        min-width: 7em
+        max-width: 7em
+        color: vanillaTheme(primaryTheme)
+        color: transparent
+        font-weight: bold
+.body-section .model-card-task .model-wrap .task-item
+    display: flex 
+    align-items: stretch
+    padding: .5em
+    cursor: pointer
+    border-radius: 2px
+    border-bottom: solid 1px grayColor(g100)
+    &:hover
+        background-color: whitesmoke
+        .action
+            opacity: 1
+    h6 
+        margin: auto 0
+        width: 100%
+        color: grayColor(g800)
+        font-size: 12px
+.body-section .model-card-task .model-wrap .task-item .action
+    margin: auto 0 auto auto
+    display: flex
+    align-items: stretch
+    opacity: 0
+    min-width: 7em
+    max-width: 7em
+.body-section .model-card-task .model-wrap .task-item .action .edit 
+    width: 2em
+    height: 2em
+    margin-right: 1em
+    border-radius: 50%
+    display: flex
+    align-items: center 
+    justify-content: center
+    background-color: grayColor(g100)
+    fa-icon 
+        font-size: 10px
+        color: vanillaTheme(primary)
+    &:hover
+        background-color: vanillaTheme(primary)
+        fa-icon 
+            color: white
+.body-section .model-card-task .model-wrap .task-item .action .delete 
+    margin: auto 0 auto auto
+    width: 2em
+    height: 2em
+    border-radius: 50%
+    display: flex
+    align-items: center 
+    justify-content: center
+    background-color: grayColor(g100)
+    fa-icon 
+        font-size: 10px
+        color: vanillaTheme(danger)
+    &:hover
+        background-color: vanillaTheme(danger)
+        fa-icon 
+            color: white
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+.editProjectModal
+    border: none
+.editProjectModal .modal-content
+    border: none
+.editProjectModal .modal-content .modal-header
+    border: none
+    background-color: vanillaTheme(primary)
+    .modal-title
+        font-size: 14px
+        color: white
+        font-weight: bold
+    .btn 
+        color: white
+        font-size: 14px
+.editProjectModal .modal-content .modal-body
+    border: none
+.editProjectModal .modal-content .modal-body form 
+    width: 100%
+.editProjectModal .modal-content .modal-body form .form-group
+    width: 100%
+    margin: 0 0 2em 0
+    label
+        font-size: 12px
+        font-weight: bold
+    input, select 
+        width: 100%
+        border: none
+        outline: none
+        background-color: grayColor(g200)
+        font-size: 14px
+        color: black
+        padding: .5em
+        border-radius: 2px
+        font-weight: 400
+
+    fa 
+        font-size: 14px
+        color: vanillaTheme(tertiaryTheme)
+        cursor: pointer
+        margin: 0 1em 0 0 
+        &.star-active
+            color: vanillaTheme(secondaryTheme)
+    #calender_wrapper
+        div
+            h4
+                font-size: 10px
+                font-family: Montserrat
+                padding: .5em
+                color: vanillaTheme(success)
+
+                span
+                    font-size: 10px
+                    font-family: Montserrat
+                    color: vanillaTheme(primary)
+
+        ngb-datepicker
+            font-size: 10px
+            font-family: Montserrat
+
+            .custom-day 
+                text-align: center
+                padding: 0.185rem 0.25rem
+                display: inline-block
+                height: 2rem
+                width: 2rem
+            
+            .custom-day.focused 
+                background-color: #e6e6e6
+            
+            .custom-day.range, .custom-day:hover
+                background-color: rgb(2, 117, 216)
+                color: white
+            
+            .custom-day.faded
+                background-color: rgba(2, 117, 216, 0.5)
+
+            .custom-day.disabled
+                color: gray
+                opacity: .3
+                
+            .custom-day.disabled:hover
+                color: gray
+                opacity: .3
+                background-color: white!important
+
+
+.editProjectModal .modal-content .modal-footer
+    border: none
+    background-color: transparent
+    display: flex
+    align-items: stretch
+    button 
+        margin: auto
+        background-color: vanillaTheme(primary)
+        color: white 
+        font-weight: bold 
+        font-size: 12px
+        border: none 
+        padding: .5em 1em
+        border-radius: 4px
+
+
+
+
+
+
+
+
+
+
+
+
+
+.taskModal
+    border: none
+.taskModal .modal-content
+    border: none
+.taskModal .modal-content .modal-header
+    border: none
+    background-color: vanillaTheme(primary)
+    .modal-title
+        font-size: 14px
+        color: white
+        font-weight: bold
+    .btn 
+        color: white
+        font-size: 14px
+.taskModal .modal-content .modal-body
+    border: none
+.taskModal .modal-content .modal-body form 
+    width: 100%
+.taskModal .modal-content .modal-body form  .form-group
+    width: 100%
+    margin: 0 0 2em 0
+    label
+        font-size: 12px
+        font-weight: bold
+    input, select 
+        width: 100%
+        border: none
+        outline: none
+        background-color: grayColor(g200)
+        font-size: 14px
+        color: black
+        padding: .5em
+        border-radius: 2px
+        font-weight: 400
+.taskModal .modal-content .modal-footer
+    border: none
+    background-color: transparent
+    display: flex
+    align-items: stretch
+    button 
+        margin: auto
+        background-color: vanillaTheme(primary)
+        color: white 
+        font-weight: bold 
+        font-size: 12px
+        border: none 
+        padding: .5em 1em
+        border-radius: 4px
+
+
+
+
+
+
+
+.taskCalendarModal
+    border: none
+.taskCalendarModal .modal-content
+    border: none
+.taskCalendarModal .modal-content .modal-header
+    border: none
+    background-color: vanillaTheme(primary)
+    .modal-title
+        font-size: 14px
+        color: white
+        font-weight: bold
+    .btn 
+        color: white
+        font-size: 14px
+.taskCalendarModal .modal-content .modal-body
+    border: none
+.taskCalendarModal .modal-content .modal-body  #duration_wrap
+    width: 100%
+    .input-group-prepend
+        span
+            font-size: 10px
+            font-family: Montserrat
+            color: vanillaTheme(primary)
+
+    input
+        font-size: 10px
+        font-family: Montserrat
+        padding: .5em
+        color: vanillaTheme(success)
+
+
+    .input-group-prepend
+        span
+            font-size: 10px
+            font-family: Montserrat
+            color: vanillaTheme(primary)
+
+
+.taskCalendarModal .modal-content .modal-body #calender_wrapper
+    width: 100%
+    #callender_date
+        width: 100%
+        h4
+            font-size: 10px
+            font-family: Montserrat
+            padding: .5em
+            color: vanillaTheme(success)
+
+            span
+                font-size: 10px
+                font-family: Montserrat
+                color: vanillaTheme(primary)
+
+    ngb-datepicker
+        font-size: 10px
+        font-family: Montserrat
+
+        .custom-day 
+            text-align: center
+            padding: 0.185rem 0.25rem
+            display: inline-block
+            height: 2rem
+            width: 2rem
+        
+        .custom-day.focused 
+            background-color: #e6e6e6
+        
+        .custom-day.range, .custom-day:hover
+            background-color: rgb(2, 117, 216)
+            color: white
+        
+        .custom-day.faded
+            background-color: rgba(2, 117, 216, 0.5)
+
+        .custom-day.disabled
+            color: gray
+            opacity: .3
+        .custom-day.disabled:hover
+            color: gray
+            opacity: .3
+            background-color: white!important    
+
+.taskCalendarModal .modal-content .modal-footer
+    border: none
+    background-color: transparent
+    display: flex
+    align-items: stretch
+    button 
+        margin: auto
+        background-color: vanillaTheme(primary)
+        color: white 
+        font-weight: bold 
+        font-size: 12px
+        border: none 
+        padding: .5em 1em
+        border-radius: 4px
+
+
+
+
+   
+
+
+.delete_section
+    background-color: white
+    padding: 1em
+    margin:  1em
+    border-radius: 2px
+    border: none
+    text-align: center
+
+    .delete_btn_div
+
+        .btn
+            font-size: 10px
+            font-family: Montserrat
+            box-shadow: 0 0 10px rgba(0,0,0,.3)
+            text-transform: uppercase
+            width: 10em
+            color: white
+            background-color: vanillaTheme(danger)
+
+    .modal-danger   
+        .modal-header
+            background-color: vanillaTheme(danger) !important
+            .modal-title
+                font-size: 15px
+                font-family: Montserrat
+               
+
+        .modal-body
+            font-size: 12px
+            font-family: Montserrat
+
+            p
+                color: black
+
+                span
+                    text-transform: capitalize
+                    margin: 0 .2em 0 .2em
+                    color: vanillaTheme(primary)
+
+
+        .modal-footer
+            .btn-cancel
+                background-color: vanillaTheme(secondary)
+                font-size: 10px
+                font-family: Montserrat
+            .btn-confirm
+                background-color: vanillaTheme(danger)
+                font-size: 10px
+                font-family: Montserrat
+
+
+
+
+// Buton Section
+#button_section
+    margin: 2em 0 2em 0
+    padding: 1em
+    background-color: white
+    border: solid 1px grayColor(g300)
+    border-radius: 2px
+
+#button_section #button_group
+    width: 97.5%
+        
+#button_section #button_group .div_wrap
+    padding: 0
+
+#button_section #button_group .div_wrap .btn
+    font-size: 10px
+    font-family: Montserrat
+    box-shadow: 0 0 10px rgba(0,0,0,.3)
+    text-transform: uppercase
+    
+
+        
+
+.deleteModal  
+    .modal-header
+        background-color: vanillaTheme(danger) !important
+        .modal-title
+            font-size: 15px
+            font-family: Montserrat
+            
+
+    .modal-body
+
+        h4
+            font-size: 14px
+            font-family: Montserrat
+            text-align: center
+
+        p
+            font-size: 12px
+            color: black
+
+            span
+                margin: 0 .2em 0 .2em
+                color: vanillaTheme(primary)
+                text-transform: uppercase
+
+    .modal-footer
+        .btn-cancel
+            background-color: vanillaTheme(secondary)
+            font-size: 10px
+            font-family: Montserrat
+        .btn-confirm
+            background-color: vanillaTheme(danger)
+            font-size: 10px
+            font-family: Montserrat
+
+
+
+
+

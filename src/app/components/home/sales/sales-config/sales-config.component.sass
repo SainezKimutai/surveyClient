@@ -1,0 +1,377 @@
+@import "src/styles.sass"
+
+
+// ------------------------------------------------
+.title-section
+    width: 100%
+    margin: 1em
+    background-color: transparent
+.title-section .wrap 
+    width: 100%
+    // padding: 1em 
+    display: flex
+    align-items: stretch
+.title-section .wrap span
+    margin: auto 2em auto 0
+    width: 2em
+    height: 2em
+    border-radius: 50%
+    display: flex
+    align-items: center 
+    justify-content: center
+    background-color: grayColor(g200)
+    cursor: pointer
+    fa-icon 
+        font-size: 12px
+        color: grayColor(g800)
+
+    &:hover
+        background-color: grayColor(g900)
+        fa-icon 
+            color: white
+        
+.title-section .wrap h4
+    margin: auto 0
+    color: vanillaTheme(primaryTheme)
+    font-size: 18px
+    font-weight: bold
+    text-transform: uppercase
+    text-shadow: 1px -1px 1px white
+    -moz-text-shadow: 1px -1px 1px white
+    -webkit-text-shadow: 1px -1px 1px white
+
+
+
+
+
+
+
+
+
+
+
+.body_section
+    margin: 1em
+    background-color: transparent
+
+
+.spinner-div
+    margin: 5em auto
+    color: vanillaTheme(primary)
+
+
+
+// Add Section
+#add_section
+    margin: 0 0 1em 0
+    width: 100%
+
+    @include desktop_md
+        margin: 0 auto 1em auto
+        width: 100%
+ 
+    #add_section_row
+        
+        .div_wrap
+            text-align: start
+            width: 100%
+            
+            @include desktop_md
+                text-align: center           
+            
+            .btn
+                color: white
+                width: 100%
+                height: 100%
+                font-size: 10px
+                font-family: Montserrat
+                box-shadow: 0 0 10px rgba(0,0,0,.3)
+                text-transform: uppercase
+            #btn_sales
+                background-color: vanillaTheme(warning)
+                color: black
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// List Add Sales Category
+
+#listAddSalesCategory.hide
+    background-color: transparent
+    height: 0
+    -webkit-transition: all 2s // For Safari 3.1 to 6.0 
+    transition: all 2s
+    opacity: 0
+    display: none
+
+#listAddSalesCategory
+    -webkit-transition: all 2s // For Safari 3.1 to 6.0 
+    transition: all 2s
+    margin: 0
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    width: 100%
+
+    @include desktop_md
+        margin: 0 auto 0 auto
+        width: 95%
+        
+
+    #myAddSalesCategoryForm
+        background-color: white
+        border-radius: 2px
+        box-shadow: 0 0 7px rgba(0, 0, 0, .3)
+        padding: 1em
+        width: 70%
+        border: none
+
+        #form_header
+            h4
+                font-weight: bold
+                font-size: 12px
+                font-family: Montserrat
+                color: vanillaTheme(warning)
+
+        @include desktop_md
+            width: 100%
+
+        .input-group-text
+            font-size: 10px
+            font-family: Montserrat
+
+        input, label
+            font-size: 10px
+            font-family: Montserrat      
+
+
+    .list-group
+        box-shadow: 0 0 5px rgba(0,0,0,.3)
+        border-radius: 2px
+        width: 70%
+
+        @include desktop_md
+            width: 100%
+
+        .list-group-item
+            padding: 5px
+            border: solid 1px white
+            background-color: whitesmoke
+            margin: auto 0 auto 0    
+
+            h4
+                margin: auto 0 auto 0 
+                font-size: 10px
+                font-family: Montserrat
+
+            .btn-wrap
+                margin: 0 0 0 auto
+
+                button
+                    fa
+                        margin: 0 .5em 0 .5em
+                        font-size: 10px
+                        font-family: Montserrat
+                        text-transform: capitalize
+                        &[name=pencil]
+                            color: vanillaTheme(primary)
+                        &[name=trash]
+                            color: vanillaTheme(danger)
+
+
+    .editSalesCatModal
+        .modal-header
+            background-color: vanillaTheme(primary)
+            .modal-title
+                font-size: 15px
+                font-family: Montserrat
+
+                span
+                    margin: 0 .5em 0 .5em
+                    color: white
+                    text-transform: uppercase
+               
+
+        .modal-body
+            font-size: 12px
+            font-family: Montserrat
+
+            input
+                font-size: 10px
+                font-family: Montserrat  
+
+        .modal-footer
+            .btn-cancel
+                background-color: vanillaTheme(secondary)
+                font-size: 10px
+                font-family: Montserrat
+            .btn-confirm
+                background-color: vanillaTheme(success)
+                font-size: 10px
+                font-family: Montserrat
+
+
+
+    .deleteSalesCatModal  
+        .modal-header
+            background-color: vanillaTheme(danger) !important
+            .modal-title
+                font-size: 15px
+                font-family: Montserrat
+               
+
+        .modal-body
+            font-size: 12px
+            font-family: Montserrat
+            text-align: center
+
+            p
+                color: black
+
+                span
+                    text-transform: capitalize
+                    margin: 0 .2em 0 .2em
+                    color: vanillaTheme(primary)
+                    text-transform: uppercase
+
+
+        .modal-footer
+            .btn-cancel
+                background-color: vanillaTheme(secondary)
+                font-size: 10px
+                font-family: Montserrat
+            .btn-confirm
+                background-color: vanillaTheme(danger)
+                font-size: 10px
+                font-family: Montserrat
+
+
+
+
+#colorSelect
+    width: 20em
+    margin: 0 0 0 1em
+    border-radius: 0px
+    border: none
+    border-bottom: solid 1px vanillaTheme(secondary)
+    font-size: 10px
+
+    .color-select-head
+        display: flex
+        align-items: stretch
+        width: 100%
+        color: vanillaTheme(primary)
+
+        .colorImage 
+            width: 1em
+            height: 1em
+            margin: 0 1em 0 0
+        fa
+            margin: auto 1em auto auto
+
+    .colorSelect-dropdown-menu
+        width: 20em
+        height: 250px
+        color: grayColor(g800)
+        display: none
+
+        &.active 
+            display: block
+            position: absolute
+            background-color: vanillaTheme(tertiaryTheme)
+            z-index: 1
+            height: 300px
+            overflow-x: scroll
+
+        .dropdown-item
+            font-size: 12px
+            cursor: pointer
+
+            &:hover
+                background-color: vanillaTheme(secondaryTheme)
+
+            .colorImage 
+                width: 1em
+                height: 1em
+                margin: 0 1em 0 0
+
+
+
+
+
+
+
+#colorSelectOnSalesList
+    width: 2em
+    height: 2em
+    margin: auto 1em auto 1em
+    border-radius: 0px
+    border: none
+    border: solid 1px vanillaTheme(secondary)
+    font-size: 10px
+    display: flex
+
+    .color-select-head
+        display: flex
+        align-items: stretch
+        width: 100%
+        height: 100%
+        margin: auto
+        color: vanillaTheme(primary)
+        cursor: pointer
+
+        .colorImage 
+            width: 1em
+            height: 1em
+            margin: 0 1em 0 0
+        fa
+            margin: auto 1em auto auto
+
+#color_Select_OnSalesList_menu.colorSelect-dropdown-menu
+    width: 20em
+    height: 250px
+    margin: 0 0 0 4em
+    color: grayColor(g800)
+    display: none
+    border: solid 2px blue
+
+    &.active 
+        display: block
+        position: absolute
+        background-color: vanillaTheme(tertiaryTheme)
+        z-index: 1
+        height: 300px
+        overflow-x: scroll
+
+    .dropdown-item
+        font-size: 12px
+        cursor: pointer
+
+        &:hover
+            background-color: vanillaTheme(secondaryTheme)
+
+        .colorImage 
+            width: 1em
+            height: 1em
+            margin: 0 1em 0 0
+
+
+
+

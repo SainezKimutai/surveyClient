@@ -1,0 +1,457 @@
+<article *ngIf="ImprintLoader" class="imprint-loader home">
+  <div class="imprint-loader-wrap">
+      <div class="imprint-loader-main">
+      <div class="imprint-loader-ball ball-one"></div>
+      <div class="imprint-loader-ball ball-two"></div>
+      <div class="imprint-loader-ball ball-three"></div>
+      <div class="imprint-loader-ball ball-four"></div>
+      </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+
+
+
+<section class="title-section">
+  <div class="wrap">
+    <span routerLink="/home/sales">
+      <fa-icon [icon]="faArrowLeft"></fa-icon>
+    </span>
+
+    <h4>Sales edit</h4>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+<section class="body-section" *ngIf="OpennedProject">
+
+<div class="model-card-top">
+
+<div class="model-wrap" >
+
+    <div class="model-item">
+      <h4 class="spec">Project Name <span>:</span> </h4>
+      <h4 class="val">{{OpennedProject.projectName}}</h4>
+    </div>
+
+    
+    <div class="model-item">
+      <h4 class="spec">Client Name <span>:</span> </h4>
+      <h4 class="val">{{OpennedProject.clientName}}</h4>
+    </div>
+
+    
+    <!-- <div class="model-item">
+      <h4 class="spec">Project Manager<span>:</span> </h4>
+      <h4 class="val">{{OpennedProject.projectManager}}</h4>
+      <div class="action">
+        <span class="edit" (click)="openEditModal('projectManager')">
+          <fa-icon [icon]="faEdit"></fa-icon>
+        </span>
+      </div>
+    </div> -->
+
+
+    <div class="model-item">
+      <h4 class="spec">Revenue <span>:</span> </h4>
+      <h4 class="val">{{OpennedProject.revenue | currency:'KSH ':'symbol':'4.0-0'}}</h4>
+      <div class="action">
+        <span class="edit" (click)="openEditModal('revenue')">
+          <fa-icon [icon]="faEdit"></fa-icon>
+        </span>
+      </div>
+    </div>
+
+    <div class="model-item">
+      <h4 class="spec">Priority <span>:</span> </h4>
+      <h4 class="val">
+        <fa name="star"  [ngClass]="OpennedProject.priority >= '1' ? 'star-active' : ''" ></fa> 
+        <fa name="star"  [ngClass]="OpennedProject.priority >= '2' ? 'star-active' : ''" ></fa> 
+        <fa name="star"  [ngClass]="OpennedProject.priority >= '3' ? 'star-active' : ''" ></fa> 
+      </h4>
+      <div class="action">
+        <span class="edit" (click)="openEditModal('priority')">
+          <fa-icon [icon]="faEdit"></fa-icon>
+        </span>
+      </div>
+    </div>
+  
+</div>
+
+
+
+
+
+
+<div class="model-wrap">
+
+
+  <div class="model-item">
+    <h4 class="spec">Duration <span>:</span> </h4>
+    <h4 class="val">{{OpennedProject.projectDuration}} Days</h4>
+  </div>
+
+
+  <div class="model-item">
+    <h4 class="spec">Start Date <span>:</span> </h4>
+    <h4 class="val" *ngIf="OpennedProject.projectStartDate">
+      {{OpennedProject.projectStartDate.day}} / {{OpennedProject.projectStartDate.month}} / {{OpennedProject.projectStartDate.year}}
+    </h4>
+    <div class="action">
+      <span class="edit" (click)="openEditModal('projectStartDate')">
+        <fa-icon [icon]="faEdit"></fa-icon>
+      </span>
+    </div>
+  </div>
+
+
+
+  <div class="model-item">
+    <h4 class="spec">End Date <span>:</span> </h4>
+    <h4 class="val" *ngIf="OpennedProject.projectEndDate">
+      {{OpennedProject.projectEndDate.day}} / {{OpennedProject.projectEndDate.month}} / {{OpennedProject.projectEndDate.year}}
+    </h4>
+    <div class="action">
+      <span class="edit" (click)="openEditModal('projectEndDate')">
+        <fa-icon [icon]="faEdit"></fa-icon>
+      </span>
+    </div>
+  </div>
+
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+<section id="button_section">
+
+
+  <div id="button_group" class="d-flex">
+      
+<!--       
+      <div class="col-4 div_wrap">
+        <button class="btn btn-sm btn-info" (click)="lauchProject()">Launch Project</button>
+      </div> -->
+      
+      <div class="col-4 div_wrap">
+          <button class="btn btn-sm btn-danger" (click)="deleteProject()">Delete Project</button>
+      </div>
+
+    
+      
+  </div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+<div bsModal #editProjectModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog editProjectModal modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Form</h4>
+        <button type="button" class="btn close" (click)="editProjectModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form class="form">
+
+            <div class="form-group" *ngIf="ModalState === 'projectManager'">
+              <label>Project Manager</label>
+              <select type="text" class="" name="projectMangerInput" [(ngModel)]="projectMangerInput">
+                  <option *ngFor="let User of Users" value='{{User.name}}'>{{User.name}} : {{User.departmentName}}</option>
+              </select>
+            </div>
+
+
+            <div class="form-group" *ngIf="ModalState === 'revenue'">
+              <label>Revenue</label>
+              <input type="text" name="projectRevenueInput" [(ngModel)]="projectRevenueInput">
+            </div>
+
+
+            <div class="form-group" *ngIf="ModalState === 'priority'">
+              <label>Priority</label>
+              <div class="d-flex">
+                <fa name="star"  [ngClass]="projectPriority >= '1' ? 'star-active' : ''" (click)="selectPriority(1)"></fa> 
+                <fa name="star"  [ngClass]="projectPriority >= '2' ? 'star-active' : ''" (click)="selectPriority(2)"></fa> 
+                <fa name="star"  [ngClass]="projectPriority >= '3' ? 'star-active' : ''" (click)="selectPriority(3)"></fa> 
+              </div>
+            </div>
+
+
+            <div class="form-group" *ngIf="ModalState === 'projectStartDate' || ModalState === 'projectEndDate'">
+              <label>Duration (days)</label>
+              <input type="number" min="1" name="projectDuration" placeholder="Duration" [(ngModel)]="projectDuration">
+      
+              <div id="calender_wrapper" >
+                <div class="d-flex">
+                  <h4 class="col-6" *ngIf="projectFromDate">Commencement: <span>{{ projectFromDate.day }}/ {{ projectFromDate.month }}/{{ projectFromDate.year }} </span></h4>
+                  <h4 class="col-6" *ngIf="projectToDate">Completion: <span>{{projectToDate.day}}/{{projectToDate.month}}/{{ projectToDate.year }}</span> </h4>
+                </div>
+      
+                <ngb-datepicker #projectDatePicker [minDate]="projectMinDate" (select)="onProjectDateSelection($event)" [displayMonths]="2" [dayTemplate]="projectCalender" outsideDays="hidden">
+                </ngb-datepicker>
+      
+                <ng-template #projectCalender let-date let-focused="focused" >
+                  <span class="custom-day"
+                        [class.focused]="focused"
+                        [class.range]="isProjectDateRange(date)"
+                        [class.disabled]="isProjectDateBeforeMinDate(date)"
+                        [class.faded]="isProjectDateHovered(date) || isProjectDateInside(date)"
+                        (mouseenter)="projectHoveredDate = date"
+                        (mouseleave)="projectHoveredDate = null">
+                    {{ date.day }}
+                  </span>
+                </ng-template>
+             </div>
+  
+
+            </div>
+
+          
+
+
+          </form>
+      </div>
+      <div class="modal-footer">
+          <button *ngIf="ModalState === 'projectManager'" class="btn btn-sm" (click)="submitProjectManager(); editProjectModal.hide()">Save</button>
+          <button *ngIf="ModalState === 'revenue'" class="btn btn-sm" (click)="submitProjectRevenue(); editProjectModal.hide()">Save</button>
+          <button *ngIf="ModalState === 'priority'" class="btn btn-sm" (click)="saveprojectPriority(); editProjectModal.hide()">Save</button>
+          <button *ngIf="ModalState === 'projectStartDate' || ModalState === 'projectEndDate'" class="btn btn-sm" (click)="saveProjectDurationDates(); editProjectModal.hide()">Save</button>
+          
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+
+
+<div bsModal #taskModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog taskModal modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Task Form</h4>
+        <button type="button" class="btn close" (click)="taskModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="myAddTaskForm" #myAddTaskForm='ngForm' [formGroup]="addTaskForm">
+          <div class="form-group">
+              <label>Task Name</label>
+              <input type="text" #taskDefineInput class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+              formControlName="taskName" [class.is-invalid]="formAddTask.taskName.invalid && formAddTask.taskName.touched" required placeholder="Task">
+          </div>
+      
+          <div class="form-group">
+              <label>Assign Team</label>
+              <select type="" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+              formControlName="assignedTeam" [class.is-invalid]="formAddTask.assignedTeam.invalid && formAddTask.assignedTeam.touched"
+                  required>
+                  <option value="" disabled selected hidden >Select Team---</option>
+                  <option *ngFor="let Team of Teams" value='{{Team._id}}'>{{Team.name}}</option>
+              </select> 
+          </div>
+    
+          <div class="form-group">
+            <label>Assign User</label>
+            <select type="" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+            formControlName="assignedUser" [class.is-invalid]="formAddTask.assignedUser.invalid && formAddTask.assignedUser.touched"
+                required>
+                <option value="" disabled selected hidden >Select User---</option>
+                <option *ngFor="let User of Users" value='{{User.name}}'>{{User.name}}</option>
+            
+            </select> 
+        </div>
+      
+
+      
+      </form>
+      </div>
+      <div class="modal-footer">
+          <button class="btn btn-sm" 
+          [disabled]="!addTaskForm.valid"
+          (click)="taskModal.hide(); taskCalendarModal.show()">Proceed</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+
+
+
+
+
+
+
+<div bsModal #taskCalendarModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog taskCalendarModal modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Task Timeline Form</h4>
+        <button type="button" class="btn close" (click)="taskCalendarModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="duration_wrap"  class="input-group input-group-sm mb-3 ">
+  
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-sm"><fa name="time"></fa></span>
+          </div>
+        
+          <input type="number" min="1" placeholder="Duration" name="taskDuration" [(ngModel)]="taskDuration">
+        
+          <div class="input-group-append">
+              <span class="input-group-text" id="inputGroup-sizing-sm">Days</span>
+          </div>
+        
+        </div>
+        
+        
+        <div id="calender_wrapper">
+        <div id="callender_date" class="d-flex">
+        
+        <h4 class="col-6" *ngIf="taskFromDate">Start: <span>{{ taskFromDate.day }}/ {{ taskFromDate.month }}/{{ taskFromDate.year }} </span></h4>
+        <h4 class="col-6" *ngIf="taskToDate">End: <span>{{taskToDate.day}}/{{taskToDate.month}}/{{ taskToDate.year }}</span> </h4>
+        </div>
+        
+        <ngb-datepicker  #taskDatePicker [minDate]="taskMinDate" [maxDate]="taskMaxDate"  (select)="onTaskDateSelection($event)" [displayMonths]="1" [dayTemplate]="taskCalender" outsideDays="hidden">
+        </ngb-datepicker>
+        
+        <ng-template #taskCalender let-date let-focused="focused" >
+        <span class="custom-day"
+        
+              [class.focused]="focused"
+              [class.range]="isTaskDateRange(date)"
+              [class.disabled]="isTaskDateOutSide(date)"
+              [class.faded]="isTaskDateHovered(date) || isTaskDateInside(date)"
+              (mouseenter)="taskHoveredDate = date"
+              (mouseleave)="taskHoveredDate = null">
+          {{ date.day }}
+        </span>
+        </ng-template>
+        
+        
+        </div>
+      </div>
+      <div class="modal-footer">
+          <button *ngIf="!taskOnEditId" class="btn btn-sm" (click)="addTask(); taskCalendarModal.hide()">Add Task</button>
+          <button *ngIf="taskOnEditId" class="btn btn-sm" (click)="saveEditTask(); taskCalendarModal.hide()">Edit Task</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div bsModal #deleteModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog deleteModal" role="document">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">Are You Sure ?</h4>
+        <button type="button" class="btn close" (click)="deleteModal.hide()" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body" *ngIf="OpennedProject">
+        <p>You are about to delete <span>{{OpennedProject.projectName}}</span> project for <span>{{OpennedProject.clientName}}</span>.</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-cancel" (click)="deleteModal.hide()">Cancel</button>
+        <button type="button" class="btn btn-confirm" (click)="submitDeleted(); deleteModal.hide()">Delete</button>
+    </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+
+
+
+
+
+
+
+
