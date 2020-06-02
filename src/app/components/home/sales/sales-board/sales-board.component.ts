@@ -717,7 +717,7 @@ selectPriority(num) {
       createdBy: localStorage.getItem('loggedUserEmail'),
       createdOn: new Date()
     };
-
+    this.ImprintLoader = true;
     this.salesService.addOppProject(structuredData).subscribe(
       data => {
         this.createNewClient(data);
@@ -770,6 +770,7 @@ selectPriority(num) {
 
       data => {
         this.UpdateSalesCategories().then(() => this.updatePage());
+        this.ImprintLoader = false;
         this.notifyService.showSuccess(data.message, 'Success');
       },
       error => {

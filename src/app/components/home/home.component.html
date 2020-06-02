@@ -30,7 +30,7 @@
         </a>
       </li>
 
-      <li [ngClass] ="salesNavBarActive ? 'nav-item active': 'nav-item'">
+      <li  *ngIf="toCustomer || toThirdParty" [ngClass] ="salesNavBarActive ? 'nav-item active': 'nav-item'">
         <a routerLink="/home/sales" [ngClass]=" salesNavBarActive ? 'nav-link active': 'nav-link'">
           <fa-icon [icon]="faFax"></fa-icon><span>Sales</span>
         </a>
@@ -134,7 +134,7 @@
             <fa-icon [icon]="faChartLine"></fa-icon> <span>Dashboard</span>
           </a>
         </li>
-        <li [ngClass] ="salesNavBarActive ? 'nav-item active': 'nav-item'">
+        <li *ngIf="toCustomer || toThirdParty" [ngClass] ="salesNavBarActive ? 'nav-item active': 'nav-item'">
           <a routerLink="/home/sales" [ngClass]=" salesNavBarActive ? 'nav-link active': 'nav-link'">
             <fa-icon [icon]="faFax"></fa-icon><span>Sales</span>
           </a>
