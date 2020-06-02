@@ -422,7 +422,7 @@
               formControlName="managerName" [class.is-invalid]="formManagerName.managerName.invalid && formManagerName.managerName.touched">
 
               <div class="input-group-append">
-                 <button [disabled]="!managerNameForm.valid" class="input-group-text btn btn-sm" (click)="saveManagerName(ClientOppened._id); managerNameInput=!managerNameInput">Save</button>          
+                 <button [disabled]="!managerNameForm.valid" class="input-group-text btn btn-sm" (click)="saveManagerName(); managerNameInput=!managerNameInput">Save</button>          
               </div><!--input-group-append-->
             </div><!-- input-group -->
           </form>

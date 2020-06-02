@@ -795,7 +795,7 @@ selectPriority(num) {
   }
 
 
-  saveManagerName(id) {
+  saveManagerName() {
     this.clientService.updateClient(this.ClientOppened._id, this.managerNameForm.value).subscribe(
       data => {
         this.ClientOppened = data;
