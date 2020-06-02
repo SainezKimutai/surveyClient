@@ -39,8 +39,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
     private salesNoteService: SalesNoteService,
     private salesSentEmailService: SalesSentEmailService,
     private clientService: ClientService,
-    private sanitize: DomSanitizer
-
+    public sanitize: DomSanitizer
   ) { }
 // tslint:disable: prefer-const
 // tslint:disable: object-literal-shorthand
