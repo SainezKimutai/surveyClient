@@ -21,166 +21,147 @@
     </div>
   </section>
   
+   
+  
+
+  <section class="body-section">
+
+    <div class="form-wrap">
+      <form  #myAddSalesCategoryForm='ngForm' [formGroup]="addSalesCategoryForm"   class="form">
     
+        <div id="form_header">
+            <h4>Add Sales Stage</h4>
+        </div>
   
   
-  
-  <!-- div -->
-  <div class="row body_section">
-  
-  <article class="col-md-6">
-  
-  
-  
-  
-   <!-- list Add Sales Categories -->
-   <section id="listAddSalesCategory" >
-  
-  
-      <form id="myAddSalesCategoryForm" #myAddSalesCategoryForm='ngForm' [formGroup]="addSalesCategoryForm"   class="form">
-    
-          <div id="form_header">
-              <h4>Sales Stages</h4>
+      <div class="form-group">
+              <label for="">Name</label>
+            <input type="text"  aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+            formControlName="name" [class.is-invalid]="formAddSalesCategory.name.invalid && formAddSalesCategory.name.touched" required >
+      </div>
+
+      <div class="form-group">
+        <label>Color</label>
+        <div id="colorSelect"class="color-select">
+          <div class="color-select-head" (click)="toggleColorSelectDropdown()">
+              <div class="colorImage" [style.background-color]="SalesStagesColor.code"></div>
+              {{SalesStagesColor.name}}
+              <fa class="ml-auto" name="sort-down"></fa>
           </div>
-    
-    
-        <div class="form-group">
-              <input type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
-              formControlName="name" [class.is-invalid]="formAddSalesCategory.name.invalid && formAddSalesCategory.name.touched" required placeholder="Type">
-        </div>
-  
-        <div class="form-group">
-          <label>Color</label>
-          <div id="colorSelect"class="color-select">
-            <div class="color-select-head" (click)="toggleColorSelectDropdown()">
-                <div class="colorImage" [style.background-color]="SalesStagesColor.code"></div>
-                {{SalesStagesColor.name}}
-                <fa class="ml-auto" name="sort-down"></fa>
-            </div>
-            <div [ngClass]="ColorSelectDropdownActive ? 'colorSelect-dropdown-menu active' : 'colorSelect-dropdown-menu'">
-                <div *ngFor="let color of Colors" class="dropdown-item d-flex" (click)="selectProductColor(color)">
-                    <div class="colorImage" [style.background-color]="color.code"></div>{{color.name}}
-                </div>
-            </div>
-        </div>
-        </div>
-  
-        <div class="btn-wrap">
-          <button [disabled]="!addSalesCategoryForm.valid" class="btn btn-sm btm-warning input-group-text" (click)="addSalesCategory()">Add Sales Stage </button>
-        </div>
-    
-      </form>
-    
-      <ul class="list-group">
-          <div id="color_Select_OnSalesList_menu" [ngClass]="ColorSelectDropdownActiveOnSalesList ? 'colorSelect-dropdown-menu active' : 'colorSelect-dropdown-menu'">
-              <div *ngFor="let color of Colors" class="dropdown-item d-flex" (click)="selectProductColorOnSalesList(color)">
+          <div [ngClass]="ColorSelectDropdownActive ? 'colorSelect-dropdown-menu active' : 'colorSelect-dropdown-menu'">
+              <div *ngFor="let color of Colors" class="dropdown-item d-flex" (click)="selectProductColor(color)">
                   <div class="colorImage" [style.background-color]="color.code"></div>{{color.name}}
               </div>
           </div>
-          <li class="list-group-item d-flex" *ngFor="let SalesCategory of SalesCategorys">
+      </div>
+      </div>
+
+      <div class="btn-wrap">
+        <button class="btn" (click)="addSalesCategory()">Save </button>
+      </div>
   
-            <div id="colorSelectOnSalesList"class="color-select">
-              <div class="color-select-head" [style.background-color]="SalesCategory.color ? SalesCategory.color.code : '#02b0cc'" (click)="toggleColorSelectDropdownOnSalesList(SalesCategory._id)">
-              </div>
-             
-            </div>
-  
-  
-            <h4>{{SalesCategory.name}}</h4>
-            <div class="btn-wrap">
-                <button class="btn btn-sm" data-toggle="modal" (click)="identifySalesCatBeEdited(SalesCategory)">
-                    <fa name="pencil"></fa>
-                </button>
-                <button class="btn btn-sm" data-toggle="modal" (click)="identifySalesCatToBeDeleted(SalesCategory)">
-                    <fa name="trash"></fa>
-                </button>
-            </div>
-          
-          </li>
+    </form>
+    </div>
+
+
+
+
+
+
+
+
+
+    <div class="list-wrap">
     
-      </ul>
-  
-  
-  
-  
-  
-  
-  
-      <div bsModal #editSalesCatModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog editSalesCatModal" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title" *ngIf="salesCategoryToBeEdited">You are Editing<span>{{salesCategoryToBeEdited.name}}</span></h4>
-              <button type="button" class="btn close" (click)="editSalesCatModal.hide()" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+      <ul class="list-group">
+        <h4>List</h4>
+        <div id="color_Select_OnSalesList_menu" [ngClass]="ColorSelectDropdownActiveOnSalesList ? 'colorSelect-dropdown-menu active' : 'colorSelect-dropdown-menu'">
+            <div *ngFor="let color of Colors" class="dropdown-item d-flex" (click)="selectProductColorOnSalesList(color)">
+                <div class="colorImage" [style.background-color]="color.code"></div>{{color.name}}
+            </div>
+        </div>
+        <li class="list-group-item d-flex" *ngFor="let SalesCategory of SalesCategorys">
+
+          <div id="colorSelectOnSalesList"class="color-select">
+            <div class="color-select-head" [style.background-color]="SalesCategory.color ? SalesCategory.color.code : '#02b0cc'" (click)="toggleColorSelectDropdownOnSalesList(SalesCategory._id)">
+            </div>
+           
+          </div>
+
+
+          <h4>{{SalesCategory.name}}</h4>
+          <div class="btn-wrap">
+              <button class="btn btn-sm" data-toggle="modal" (click)="identifySalesCatBeEdited(SalesCategory)">
+                  <fa name="pencil"></fa>
               </button>
-            </div>
-            <div class="modal-body">
-              <form class="form" [formGroup]="editSalesCatForm">
-                <div class="form-group">
-                    <input type="text" class="form-control"
-                    formControlName="name" [class.is-invalid]="formSalesCatTeam.name.invalid && formSalesCatTeam.name.touched">
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-cancel" (click)="editSalesCatModal.hide()">No</button>
-              <button type="button" [disabled]="!editSalesCatForm.valid"class="btn btn-confirm" (click)="editSalesCategory(); editSalesCatModal.hide()">YES</button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-  
-  
-    <div bsModal #deleteSalesCatModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog deleteSalesCatModal" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h4 class="modal-title">Are you sure ?</h4>
-              <button type="button" class="btn close" (click)="deleteSalesCatModal.hide()" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+              <button class="btn btn-sm" data-toggle="modal" (click)="identifySalesCatToBeDeleted(SalesCategory)">
+                  <fa name="trash"></fa>
               </button>
-            </div>
-            <div class="modal-body" *ngIf="salesCategoryToBeDeleted">
-              <p>You are about to delete<span>{{salesCategoryToBeDeleted.name}}</span></p>
-              <p>This action is IRREVERSIBLE.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-cancel" (click)="deleteSalesCatModal.hide()">No</button>
-              <button type="button" class="btn btn-confirm" (click)="deleteSalesCategory(); deleteSalesCatModal.hide()">YES</button>
-            </div>
-          </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->  
+          </div>
+        
+        </li>
   
-  
-  
-  
-  
-  
-  
-  
-  
+    </ul>
+    </div>
+
+
+
+
+
+
+  </section>
+
+
     
-    </section>
-    
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  </article>
-  
+  <div bsModal #editSalesCatModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog editSalesCatModal" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" *ngIf="salesCategoryToBeEdited">You are Editing<span>{{salesCategoryToBeEdited.name}}</span></h4>
+          <button type="button" class="btn close" (click)="editSalesCatModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="form" [formGroup]="editSalesCatForm">
+            <div class="form-group">
+                <input type="text" class="form-control"
+                formControlName="name" [class.is-invalid]="formSalesCatTeam.name.invalid && formSalesCatTeam.name.touched">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-cancel" (click)="editSalesCatModal.hide()">No</button>
+          <button type="button" [disabled]="!editSalesCatForm.valid"class="btn btn-confirm" (click)="editSalesCategory(); editSalesCatModal.hide()">YES</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div bsModal #deleteSalesCatModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog deleteSalesCatModal" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Are you sure ?</h4>
+          <button type="button" class="btn close" (click)="deleteSalesCatModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" *ngIf="salesCategoryToBeDeleted">
+          <p>You are about to delete<span>{{salesCategoryToBeDeleted.name}}</span></p>
+          <p>This action is IRREVERSIBLE.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-cancel" (click)="deleteSalesCatModal.hide()">No</button>
+          <button type="button" class="btn btn-confirm" (click)="deleteSalesCategory(); deleteSalesCatModal.hide()">YES</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->  
+
+
  
-  
-  
-  
-  </div>
-  
   
   
   

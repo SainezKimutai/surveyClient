@@ -291,16 +291,7 @@ openSalesCatForm() {
 // Add Sales Category
 addSalesCategory() {
 
-  this.previewSectionStatus = false;
-  this.customServiceSectionStatus = false;
-  this.customServiceFormStatus = false;
-  this.addTaskSectionStatus = false;
-  this.defineTaskFormStatus = false;
-  this.listAddTeamStatus = false;
-  this.listAddSalesCategoryStatus = true;
-  this.listStatus = false;
-  setTimeout(() => { this.listStatus = true; }, 1000);
-
+  if (this.addSalesCategoryForm.value.name === '') { this.notifyService.showWarning('Please provide the name', 'Empty Field!'); } else {
   let convertedData = {
                       companyId: this.toCustomer ? localStorage.getItem('loggedCompanyId') : localStorage.getItem('loggedUserID'),
                       name: this.addSalesCategoryForm.value.name,
@@ -325,6 +316,9 @@ addSalesCategory() {
       }, 1500);
     }
   );
+
+ }
+
 
 }
 
