@@ -501,13 +501,21 @@
             color: grayColor(g600)
         .add-new
           cursor: pointer
-          background-color: colorTheme(success)
-          color: white
-          font-weight: 100
-          font-size: 10px
+          border: solid 1px colorTheme(success)
+          background-color: transparent
+          color: colorTheme(success)
+          font-weight: 600
+          font-size: 12px
           border-radius: 2px
           padding: .5em 1em
           margin: auto 0 auto auto
+          transition: all .5s
+          webkit-transition: all .5s
+          -moz-transition: all .5s
+          &:hover
+            border: solid 1px transparent
+            color: white
+            background-color: colorTheme(success)
     input, select 
         width: 100%
         border: none
@@ -640,11 +648,26 @@
                 font-size: 11px
             h4 
               font-size: 12px
-
-
-.btn-wrap
+.model-task-form .sale 
   width: 100%
-
+  .add-new
+      cursor: pointer
+      border: solid 1px colorTheme(warning)
+      background-color: transparent
+      color: colorTheme(warning)
+      font-weight: 600
+      font-size: 12px
+      border-radius: 2px
+      padding: .5em 1em
+      margin: auto 0 auto auto
+      transition: all .5s
+      -webkit-transition: all .5s
+      -moz-transition: all .5s
+      &:hover
+        border: solid 1px transparent
+        color: white
+        background-color: colorTheme(warning)
+        
 
 
 
@@ -1043,6 +1066,83 @@
 
 
 
+
+.addNewOppModal, .addNewStageModal
+    .modal-header
+        background-color: vanillaTheme(success)
+        .modal-title
+            font-size: 15px
+            font-family: Montserrat
+
+            span
+                margin: 0 .5em 0 .5em
+                color: white
+                text-transform: uppercase
+            
+
+    .modal-body
+        font-size: 12px
+        font-family: Montserrat
+
+        .form-group
+            padding: .5em
+            margin: 0
+
+            .input-group-text
+                font-size: 10px
+                background-color: white
+                border: none
+                width: 10em
+
+            input
+                background-color: white
+                font-family: Montserrat
+                font-size: 10px
+                color: vanillaTheme(primary)
+                border: none
+                border-radius: 4px
+                border-bottom: solid 1px vanillaTheme(tertiaryTheme)
+                cursor: pointer
+                outline: none 
+
+                &:hover
+                    border-bottom: solid 1px vanillaTheme(primary)
+                
+                &:focus
+                    outline: none              
+
+            
+            select
+                background-color: white
+                font-family: Montserrat
+                font-size: 10px
+                color: vanillaTheme(primary)
+                border: none
+                border-radius: 4px
+                border-bottom: solid 1px vanillaTheme(tertiaryTheme)
+                cursor: pointer
+                outline: none 
+
+                &:hover
+                    border-bottom: solid 1px vanillaTheme(primary)
+                
+                &:focus
+                    outline: none
+
+            #radio_wrap
+                padding: auto
+                margin: 0 2em 0 0
+                font-size: 12px
+
+    .modal-footer
+        .btn-cancel
+            background-color: vanillaTheme(tertiaryTheme)
+            font-size: 10px
+            font-family: Montserrat
+        .btn-confirm
+            background-color: vanillaTheme(success)
+            font-size: 10px
+            font-family: Montserrat
 
 
 

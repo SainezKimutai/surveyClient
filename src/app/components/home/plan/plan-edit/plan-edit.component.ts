@@ -11,6 +11,10 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { dev } from 'src/app/shared/dev/dev';
 import { ResponseService } from 'src/app/shared/services/responses.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SalesCategoryService } from 'src/app/shared/services/sales-category.service';
+import { SalesService } from 'src/app/shared/services/sales.service';
+import { ClientService } from 'src/app/shared/services/client.service';
 
 
 // tslint:disable
@@ -25,12 +29,16 @@ export class PlanEditComponent implements OnInit, OnDestroy {
 
     constructor(
         private notifyService: NotificationService,
+        private formBuilder: FormBuilder,
         private plansService: PlansService,
         private userService: UserService,
         private planComponent: PlanComponent,
         private taskPlanService: TaskPlanService,
         private activityPlanService: ActivityPlanService,
-        private responseService: ResponseService
+        private responseService: ResponseService,
+        private salesCategoryService: SalesCategoryService,
+        private salesService: SalesService,
+        private clientService: ClientService
       ) {  }
 
   @ViewChild('existingPlanModal', {static: true}) existingPlanModal: ModalDirective;
@@ -41,7 +49,7 @@ export class PlanEditComponent implements OnInit, OnDestroy {
   
   
   
-  
+public newOppForm: FormGroup;
 
 
 public ImprintLoader = false;
@@ -52,6 +60,7 @@ public ActiveModel = 'edit';
 public CompanyUsers = [];
 public ActivityPlan = [];
 public TaskPlan = [];
+public SalesCategories = [];
 
 public faArrowLeft = faArrowLeft;
 public faPlus = faPlus;
@@ -93,6 +102,7 @@ public ViewPlansArrA = [];
 public ViewPlansArrB = [];
 public ViewPlansArrC = [];
 
+public projPriority = Number;
 
 
 
@@ -152,12 +162,33 @@ ngOnInit() {
       reportApproved: false
     }
 
+    // Pass form values
+    this.newOppForm = this.formBuilder.group({
+      projectName: ['', Validators.required],
+      clientName: ['', Validators.required],
+      projectManager: [''],
+      task: [],
+      revenue: [null, Validators.required],
+      priority: null,
+      projectStatus: [''],
+      projectDuration: null,
+      projectStartDate: null,
+      projectEndDate: null
+    });
+
     this.updatePage().then(() => {
       this.formatTask().then(() => {
         this.formartReport().then(() => { this.getUnEdittedThreatPlan(); })
       })
     })
 }   
+
+
+
+
+
+
+get formNewOpp() { return this.newOppForm.controls; }
 
 
 
@@ -179,8 +210,12 @@ updatePage() {
                 // this.TaskPlan.forEach((t) => {
                 //   this.taskPlanService.deleteTaskPlan(t._id).subscribe()
                 // })
-                            
-                this.formatAtivity().then(() => resolve())
+                this.salesCategoryService.getAllSalesCategories().subscribe( 
+                  dataSalesCat => {
+                    this.SalesCategories = dataSalesCat;
+                    this.formatAtivity().then(() => resolve())
+                }, error => console.log('Error getting sales cat'));
+                              
               }, error => console.log('Error getting task plan')
             )
 
@@ -747,10 +782,87 @@ deletePlan() {
 
 
 
+selectPriority(num) {
+  this.projPriority = num;
+}
 
 
 
+submitNewOppForm() {
 
+  // Adding abjects to task array
+  // this.Projects.forEach((proj) => {
+  //   return proj.serviceName === this.newOppForm.value.projectName ?
+
+  //     this.Tasks = proj.task.filter((a) => {
+  //       a.assignedUser = '';
+  //       a.taskStatus = 'unChecked';
+  //       a.taskDuration = null;
+  //       a.taskStartDate = null;
+  //       a.taskEndDate = null;
+  //       return true;
+  //     }).map(a => a ) :
+
+  //     '';
+
+  // });
+
+  let structuredData = {
+    companyId:  localStorage.getItem('loggedCompanyId'),
+    projectName: this.newOppForm.value.projectName,
+    clientName: this.newOppForm.value.clientName,
+    projectManager: '',
+    task: [],
+    revenue: this.newOppForm.value.revenue,
+    priority: this.projPriority,
+    projectStatus: this.SalesCategories[0]._id,
+    projectDuration: null,
+    projectStartDate: null,
+    projectEndDate: null,
+    createdBy: localStorage.getItem('loggedUserEmail'),
+    createdOn: new Date()
+  };
+  this.ImprintLoader = true;
+  this.salesService.addOppProject(structuredData).subscribe(
+    data => {
+      this.createNewClient(data)
+      this.notifyService.showSuccess(`Client ${data.clientName} has been added`, 'Success');
+    },
+    error => { this.ImprintLoader = true; this.notifyService.showError(error, 'Failed...'); }
+  );
+}
+
+
+
+createNewClient(client) {
+  let newClient = {
+    companyId:  localStorage.getItem('loggedCompanyId'),
+    companyName: client.clientName,
+    managerName: '',
+    primaryTelNumber: null,
+    secondaryTelNumber: null,
+    email: '',
+    website: '',
+    twitter: '',
+    facebook: '',
+    instagram: '',
+    createdOn: new Date()
+  };
+
+  this.clientService.createClient(newClient).subscribe(
+
+    data => {
+
+      this.ImprintLoader = false;
+      this.notifyService.showSuccess(data.message, 'Success');
+    },
+    error => {
+      this.notifyService.showWarning('Something is wrong, Client was not captured', 'Warning');
+    }
+
+  );
+
+}
 
 
 
