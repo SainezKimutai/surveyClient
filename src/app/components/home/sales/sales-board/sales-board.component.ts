@@ -10,7 +10,7 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import { SalesCategoryService } from 'src/app/shared/services/sales-category.service';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { ClientService } from 'src/app/shared/services/client.service';
-
+import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
 import { SalesNoteService } from 'src/app/shared/services/sales-note.service';
 import { SalesSentEmailService } from 'src/app/shared/services/sales-sent-email.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
@@ -39,7 +39,8 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
     private salesNoteService: SalesNoteService,
     private salesSentEmailService: SalesSentEmailService,
     private clientService: ClientService,
-    public sanitize: DomSanitizer
+    public sanitize: DomSanitizer,
+    public companyProfileService: CompanyProfileService
   ) { }
 // tslint:disable: prefer-const
 // tslint:disable: object-literal-shorthand
@@ -119,6 +120,8 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
   public Users: any = [];
   public SentEmails: any = [];
 
+  public AllCompanies = [];
+
   public ClientOppened: any = [];
   public mailData: any = [];
   public myInterval: any;
@@ -140,6 +143,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
 
 
+  public ActiveCompanyId = '';
 
 
 
@@ -150,12 +154,43 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    if (localStorage.getItem('permissionStatus') === 'isCustomer') { this.toCustomer = true; }
-    this.salesCategoryService.getAllSalesCategories().subscribe( data => {
-      if (data.length === 0 ) { this.router.navigate(['/home/crm/crm_config/']); }
-      this.SalesCategorys = data;
-      this.renderBeforeOtherFunctions();  });
-    this.salesService.getAllOppProject().subscribe( data => {this.Opportunitys = data.reverse();  this.renderBeforeOtherFunctions(); } );
+    if (localStorage.getItem('permissionStatus') === 'isCustomer') {
+      this.toCustomer = true;
+      this.salesCategoryService.getAllSalesCategories().subscribe( data => {
+
+        if (data.length === 0 ) { this.router.navigate(['/home/crm/crm_config/']); }
+        this.SalesCategorys = data;
+        this.salesService.getAllOppProject().subscribe( dataOpps => {
+          this.Opportunitys = dataOpps.reverse();
+          this.renderBeforeOtherFunctions();
+        } );
+        });
+
+    } else {
+
+        this.companyProfileService.getAllCompaniesByInstitutionId().subscribe( dataCompanies => {
+          this.AllCompanies = dataCompanies;
+          this.ActiveCompanyId = this.AllCompanies[0]._id;
+          this.salesCategoryService.getAllSalesCategoriesByCompany(this.ActiveCompanyId).subscribe( data => {
+
+            // if (data.length === 0 ) { this.router.navigate(['/home/crm/crm_config/']); }
+            this.SalesCategorys = data;
+            console.log(data)
+            // this.pipelineAction = 'Gen';
+            // this.renderBeforeOtherFunctions();
+
+            this.salesService.getAllOppProjectByCompany(this.ActiveCompanyId).subscribe( dataOpps => {
+              this.Opportunitys = dataOpps.reverse();  
+              this.renderBeforeOtherFunctions();
+            } );
+
+            });
+
+        }, error => console.log('cannot get Companies')
+        );
+
+
+    }
 
     setTimeout(() => {
       this.ImprintLoader = true;
@@ -367,7 +402,10 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
     this.switchPipeline();
     this.MyOpportunitys = this.Opportunitys.filter((e) => e.createdBy === localStorage.getItem('loggedUserEmail') ? true : false).map(r => r);
 
-    this.UpdateSalesCategories().then(() => {this.updatePage(); } );
+    if (this.toCustomer) {
+      this.UpdateSalesCategories().then(() => {this.updatePage(); } );
+    }
+
 
   }
 
@@ -379,6 +417,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
  async updatePage() {
 
+    if (this.toCustomer) {
 
     this.salesCategoryService.getAllSalesCategories().subscribe(
       data => {
@@ -498,7 +537,31 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
       error => { console.log('Cannot get all sent emails'); }
     );
 
-
+    } else {
+      this.salesCategoryService.getAllSalesCategoriesByCompany(this.ActiveCompanyId).subscribe(
+        data => {
+          this.SalesCategorys = data;
+        },
+        error => {
+          console.log('Cannot get Sales Categories');
+        }
+      ); // list sales Cat -end
+  
+  
+      this.salesService.getAllOppProjectByCompany(this.ActiveCompanyId).subscribe(
+        data => {
+          this.Opportunitys = data.reverse();
+          // this.MyOpportunitys = data.filter((e) => e.createdBy === localStorage.getItem('loggedUserEmail') ? true : false).map(r => r);
+          this.SalesPiplineFullyUpdate = true;
+          this.switchPipeline();
+        },
+        error => {
+          console.log('Cannot get Opp projects');
+        }
+      ); // list opp Cat -end
+  
+  
+    }
 
   } // update Page
 
@@ -515,7 +578,17 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
 
 
-
+  switchCompanyData(id: any) {
+    console.log(this.ActiveCompanyId)
+    this.salesCategoryService.getAllSalesCategoriesByCompany(this.ActiveCompanyId).subscribe( data => {
+        this.SalesCategorys = data;
+        this.salesService.getAllOppProjectByCompany(this.ActiveCompanyId).subscribe( dataOpps => {
+          this.Opportunitys = dataOpps;
+          this.renderBeforeOtherFunctions();
+          this.switchPipelineToGen();
+        } );
+    });
+  }
 
 
 
@@ -544,7 +617,6 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
 
   switchPipeline() {
-
 
       switch (this.pipelineAction) {
         case 'Gen': this.OpportunitysToDisplay = this.Opportunitys; this.SalesCategorysToDisplay = this.SalesCategorys; this.genaralPipelineActive = true;  this.myPipelineActive = false; this.ImprintLoader = false; break;

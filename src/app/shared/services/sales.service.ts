@@ -26,6 +26,11 @@ export class SalesService {
     }
 
 
+    getAllOppProjectByCompany(iDparam: any) {
+      const data = {companyId: iDparam};
+      return this.http.post<any>(this.url + 'getCompanyAll/', data, {headers : this.header});
+    }
+
     getAllOppProject() {
       let data: any;
       if (localStorage.getItem('permissionStatus') === 'isCustomer') {

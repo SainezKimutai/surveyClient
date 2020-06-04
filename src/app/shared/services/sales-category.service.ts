@@ -32,6 +32,11 @@ export class SalesCategoryService {
     }
 
 
+    getAllSalesCategoriesByCompany(iDparam: any) {
+      const data = {companyId: iDparam};
+      return this.http.post<any>(this.url + 'getCompanyAll/', data, {headers : this.header});
+    }
+
     getAllSalesCategories() {
       let data: any;
       if (localStorage.getItem('permissionStatus') === 'isCustomer') {

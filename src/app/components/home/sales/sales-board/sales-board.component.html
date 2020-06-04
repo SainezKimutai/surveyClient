@@ -69,9 +69,16 @@
 
 <section class="pipeline-section">
 
-  <div class="btn-wrap d-flex">
+  <div *ngIf="toCustomer" class="btn-wrap d-flex">
     <button [ngClass]="genaralPipelineActive ? 'gen-pipeline current' : 'gen-pipeline notCurrent' " (click)="switchPipelineToGen()">General Pipeline</button>
     <button [ngClass]="myPipelineActive ? 'my-pipeline current' : 'my-pipeline notCurrent' " (click)="switchPipelineToMine()">My Pipeline</button>
+  </div>
+
+ <div *ngIf="!toCustomer" class="company-wrap d-flex">
+    <h4>Company</h4>
+    <select name="ActiveCompanyId" [(ngModel)]="ActiveCompanyId" (change)="switchCompanyData()">
+            <option *ngFor="let item of AllCompanies" [value]="item._id">{{item.companyName}}</option>
+    </select>
   </div>
 
   <form class="form">

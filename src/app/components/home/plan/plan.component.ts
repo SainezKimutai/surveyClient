@@ -8,6 +8,7 @@ import 'jspdf-autotable';
 import { PlansService } from 'src/app/shared/services/plan.service';
 import { ModalDirective } from 'ngx-bootstrap';
 import { TaskPlanService } from 'src/app/shared/services/taskPlan.service';
+import { resolve } from 'url';
 
 
 // tslint:disable
@@ -74,6 +75,7 @@ async updatePage() {
 this.plansService.getAllCompanyPlans().subscribe(
   dataPlan => {
     this.AllPlans = dataPlan;
+    console.log(this.AllPlans.length)
     // this.AllPlans.forEach((p) => {
     //     this.plansService.deletePlan(p._id).subscribe(() => this.notifyService.showSuccess('deleted', 'Deleted'))
     //   })
@@ -84,7 +86,7 @@ this.plansService.getAllCompanyPlans().subscribe(
                     
       this.surveyService.getAllInstitutionSurveys().subscribe(
         dataSurvey => {
-
+          console.log(dataSurvey.length)
           this.AllSurveys = dataSurvey;
           this.pageProgress = 25;
 
@@ -141,7 +143,6 @@ checkIfPlanExists() {
 
 
 checkForCompletedSurveys() {
-
    this.AllSurveys =  this.AllSurveys.filter((surv, ind, arr) => {
       let myResponses = this.AllResponses.filter((r) => r.surveyId === surv._id).map(e => e);
       if (myResponses.length > 0) {
@@ -181,9 +182,10 @@ checkForCompletedSurveys() {
 
       }
       this.pageProgress = 100;
+     
       return true;
     }).map( e => e);
-
+    if (this.AllSurveys.length === 0) { this.pageProgress = 100;}
 }
 
 
