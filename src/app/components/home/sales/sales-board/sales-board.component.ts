@@ -175,12 +175,12 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
             // if (data.length === 0 ) { this.router.navigate(['/home/crm/crm_config/']); }
             this.SalesCategorys = data;
-            console.log(data)
+            console.log(data);
             // this.pipelineAction = 'Gen';
             // this.renderBeforeOtherFunctions();
 
             this.salesService.getAllOppProjectByCompany(this.ActiveCompanyId).subscribe( dataOpps => {
-              this.Opportunitys = dataOpps.reverse();  
+              this.Opportunitys = dataOpps.reverse();
               this.renderBeforeOtherFunctions();
             } );
 
@@ -546,8 +546,8 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
           console.log('Cannot get Sales Categories');
         }
       ); // list sales Cat -end
-  
-  
+
+
       this.salesService.getAllOppProjectByCompany(this.ActiveCompanyId).subscribe(
         data => {
           this.Opportunitys = data.reverse();
@@ -559,8 +559,8 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
           console.log('Cannot get Opp projects');
         }
       ); // list opp Cat -end
-  
-  
+
+
     }
 
   } // update Page
@@ -579,7 +579,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
 
   switchCompanyData() {
-    console.log(this.ActiveCompanyId)
+    console.log(this.ActiveCompanyId);
     this.salesCategoryService.getAllSalesCategoriesByCompany(this.ActiveCompanyId).subscribe( data => {
         this.SalesCategorys = data;
         this.salesService.getAllOppProjectByCompany(this.ActiveCompanyId).subscribe( dataOpps => {
