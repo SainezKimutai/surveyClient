@@ -144,7 +144,8 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
 
   public ActiveCompanyId = '';
-
+  public NoCompanies = false;
+  public CompanyHaveNotUsedCrm = false;
 
 
 
@@ -153,7 +154,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
-
+    this.ImprintLoader = true;
     if (localStorage.getItem('permissionStatus') === 'isCustomer') {
       this.toCustomer = true;
       this.salesCategoryService.getAllSalesCategories().subscribe( data => {
@@ -170,21 +171,23 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
         this.companyProfileService.getAllCompaniesByInstitutionId().subscribe( dataCompanies => {
           this.AllCompanies = dataCompanies;
-          this.ActiveCompanyId = this.AllCompanies[0]._id;
-          this.salesCategoryService.getAllSalesCategoriesByCompany(this.ActiveCompanyId).subscribe( data => {
+          if (this.AllCompanies.length === 0) {
+            this.ImprintLoader = false;
+            this.NoCompanies = true;
+            this.notifyService.showInfo('You have no companies within the system', 'No Companies')
+          } else {
+            this.ActiveCompanyId = this.AllCompanies[0]._id;
+            this.salesCategoryService.getAllSalesCategoriesByCompany(this.ActiveCompanyId).subscribe( data => {
+              this.SalesCategorys = data;
+              if (this.SalesCategorys.length === 0) { this.CompanyHaveNotUsedCrm = true; }
+              this.pipelineAction = 'Gen';
+              this.salesService.getAllOppProjectByCompany(this.ActiveCompanyId).subscribe( dataOpps => {
+                this.Opportunitys = dataOpps.reverse();
+                this.renderBeforeOtherFunctions();
+              } );
+              });
+          }
 
-            // if (data.length === 0 ) { this.router.navigate(['/home/crm/crm_config/']); }
-            this.SalesCategorys = data;
-            console.log(data);
-            // this.pipelineAction = 'Gen';
-            // this.renderBeforeOtherFunctions();
-
-            this.salesService.getAllOppProjectByCompany(this.ActiveCompanyId).subscribe( dataOpps => {
-              this.Opportunitys = dataOpps.reverse();
-              this.renderBeforeOtherFunctions();
-            } );
-
-            });
 
         }, error => console.log('cannot get Companies')
         );
@@ -192,15 +195,13 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
     }
 
-    setTimeout(() => {
-      this.ImprintLoader = true;
-    }, 5);
+    // setTimeout(() => {
+    //   this.ImprintLoader = true;
+    // }, 5);
 
     localStorage.setItem('ActiveNav', 'sales');
 
-    this.kanbanSectionStatus = true;
-
-
+  
     this.userService.getAllUsers().subscribe(
       data => {
         this.Users = data;
@@ -387,7 +388,30 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   renderBeforeOtherFunctions() {
+
+    return new Promise((resolve, reject) => {
 
     this.MySalesCategorys = this.SalesCategorys.filter((category) => {
       let OppInThisCategory = this.Opportunitys.filter((opp) => {
@@ -405,8 +429,10 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
     if (this.toCustomer) {
       this.UpdateSalesCategories().then(() => {this.updatePage(); } );
     }
-
-
+    if (!this.toCustomer) {
+      this.UpdateSalesCategories2().then(() => { resolve(); } );
+    }
+   })
   }
 
 
@@ -541,6 +567,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
       this.salesCategoryService.getAllSalesCategoriesByCompany(this.ActiveCompanyId).subscribe(
         data => {
           this.SalesCategorys = data;
+          
         },
         error => {
           console.log('Cannot get Sales Categories');
@@ -579,13 +606,16 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
 
   switchCompanyData() {
-    console.log(this.ActiveCompanyId);
     this.salesCategoryService.getAllSalesCategoriesByCompany(this.ActiveCompanyId).subscribe( data => {
         this.SalesCategorys = data;
+        if (this.SalesCategorys.length === 0) { this.CompanyHaveNotUsedCrm = true; } else { this.CompanyHaveNotUsedCrm = false; }
         this.salesService.getAllOppProjectByCompany(this.ActiveCompanyId).subscribe( dataOpps => {
           this.Opportunitys = dataOpps;
-          this.renderBeforeOtherFunctions();
-          this.switchPipelineToGen();
+          this.renderBeforeOtherFunctions().then(() => {
+            this.SalesPiplineFullyUpdate = true;
+            this.switchPipelineToGen();
+          });
+
         } );
     });
   }
@@ -712,8 +742,23 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
 
 
+  UpdateSalesCategories2() {
+    return new Promise((resolve, reject) => {
+    this.SalesCategorys.forEach((category, ind, dataCategoryArr) => {
 
+        let OppInThisCategory = this.Opportunitys.filter((opp) => {
+          return opp.projectStatus === category._id ? true : false;
+        }).map((e) => e );
 
+        category.totalLeads = OppInThisCategory.length,
+        category.totalRevenue = OppInThisCategory.reduce( (previous, current) => previous + current.revenue, 0)
+        if (ind === dataCategoryArr.length - 1) { resolve(); }
+
+    });
+
+  });
+
+  }
 
 
 
@@ -1082,7 +1127,9 @@ selectPriority(num) {
 
   // Drag and Drop Functions
   highlightcategory(e) {
+    if (this.toCustomer) {
     this.salesCatHoveredOnDrag = e.target.id;
+    }
   }
 
 
@@ -1092,13 +1139,17 @@ selectPriority(num) {
 
 
   drag(e) {
+    if (this.toCustomer) {
     e.dataTransfer.setData('text', e.target.id);
     this.cardBeingDraged = e.target.id;
+    }
   }
 
 
   dragenter(e) {
+    if (this.toCustomer) {
     this.cardHoveredOnDrag = e.target.id;
+    }
   }
 
 
@@ -1108,6 +1159,7 @@ selectPriority(num) {
 
 
   drop(e) {
+    if (this.toCustomer) {
     e.preventDefault();
     this.cardHoveredOnDrag = null;
     this.salesCatHoveredOnDrag = null;
@@ -1117,7 +1169,7 @@ selectPriority(num) {
     this.SalesCategorys.forEach((stage) => {
       return stage._id === TargetId ? (this.ImprintLoader = true, this.switchStage(CardId, stage)) : '';
     });
-
+  }
   }
 
 

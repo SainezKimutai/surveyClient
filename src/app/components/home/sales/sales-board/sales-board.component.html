@@ -18,22 +18,22 @@
 <section class="topNavBard">
   <div class="item d-flex">
       
-    <button class="btn thm-success btn-sm" (click)="openNoteModal()">
+    <button *ngIf="toCustomer" class="btn thm-success btn-sm" (click)="openNoteModal()">
       <fa name="book"></fa>Notes
     </button>
 </div>
 <div class="item">
-  <button class="btn thm-warning btn-sm" (click)="openEmailModal()">
+  <button *ngIf="toCustomer" class="btn thm-warning btn-sm" (click)="openEmailModal()">
     <fa name="envelope"></fa>Emails
   </button>
 </div>
 <div class="item">
-    <button class="btn thm-primary btn-sm" (click)="eventReminder()">
+    <button *ngIf="toCustomer" class="btn thm-primary btn-sm" (click)="eventReminder()">
       <fa name="calendar"></fa>Events
     </button>
 </div>
 <div class="item">
-  <button class="btn thm-danger btn-sm"routerLink="/home/crm/crm_config">
+  <button *ngIf="toCustomer" class="btn thm-danger btn-sm"routerLink="/home/crm/crm_config">
     <fa-icon [icon]="faLayerGroup"></fa-icon>Stages
   </button>
 </div>
@@ -100,14 +100,19 @@
 
 
 
+<div *ngIf="NoCompanies" class="w-100 d-flex CompanyHasNot">
+  <div class="mx-auto">You have no associated company</div>
+</div>
 
-
+<div *ngIf="CompanyHaveNotUsedCrm" class="w-100 d-flex CompanyHasNot">
+  <div class="mx-auto">The company has not started using the CRM</div>
+</div>
 
 
 
 
 <!-- kanban_section -->
-<section id="kanban_section" class="d-flex" *ngIf="kanbanSectionStatus">
+<section id="kanban_section" class="d-flex">
 
 
   <!-- [ngClass]="[last ? 'clearfix d-flex last-category' : '',
@@ -140,8 +145,8 @@
           <div  *ngIf="!SalesPiplineFullySwitched" class="spinner-div spinner-border" role="status"></div>
     </div>
 
-    <div id="add_deal_div" [style.color]="SalesCategory.color ? SalesCategory.color.code : '#02b0cc'"  onMouseOver="this.style.backgroundColor = this.style.color" onmouseout="this.style.backgroundColor='transparent'" >
-          <button class="btn btn-sm" (click)="addNewOppModal.show(); setClickedStage(SalesCategory._id)"><fa name="plus"></fa></button>
+    <div  id="add_deal_div" [style.color]="SalesCategory.color ? SalesCategory.color.code : '#02b0cc'"  onMouseOver="this.style.backgroundColor = this.style.color" onmouseout="this.style.backgroundColor='transparent'" >
+          <button *ngIf="toCustomer" class="btn btn-sm" (click)="addNewOppModal.show(); setClickedStage(SalesCategory._id)"><fa name="plus"></fa></button>
     </div>
 
 
@@ -176,7 +181,7 @@
               </div>
             </div><!-- .card-info-div -->
 
-            <div class="card-icon-div">
+            <div *ngIf="toCustomer" class="card-icon-div">
               <button class="btn btn-sm" (click)="mailFunction(Opportunity.clientName)"
               placement="left" ngbPopover="Send an email" triggers="mouseenter:mouseleave"><fa name="envelope"></fa></button>
 
@@ -398,7 +403,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-cancel" (click)="clientDetailModal.hide()">Cancel</button>
-        <button type="button" class="btn btn-confirm" (click)="clientDetailModal.hide(); clientEditModal.show()">EDIT</button>
+        <button *ngIf="toCustomer" type="button" class="btn btn-confirm" (click)="clientDetailModal.hide(); clientEditModal.show()">EDIT</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
