@@ -102,7 +102,7 @@ public ViewPlansArrA = [];
 public ViewPlansArrB = [];
 public ViewPlansArrC = [];
 
-public projPriority = Number;
+public projPriority = null;
 
 
 

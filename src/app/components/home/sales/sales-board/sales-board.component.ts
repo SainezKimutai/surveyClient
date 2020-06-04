@@ -578,7 +578,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
 
 
-  switchCompanyData(id: any) {
+  switchCompanyData() {
     console.log(this.ActiveCompanyId)
     this.salesCategoryService.getAllSalesCategoriesByCompany(this.ActiveCompanyId).subscribe( data => {
         this.SalesCategorys = data;
