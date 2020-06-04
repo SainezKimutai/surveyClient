@@ -33,7 +33,6 @@ export class CompanyProfileService {
 
     getAllCompaniesByInstitutionId() {
         const data = {institutionId: localStorage.getItem('loggedUserInstitution')};
-        console.log(data);
         return this.http.post<any>(this.url + 'institution/', data, {headers: header});
     }
 

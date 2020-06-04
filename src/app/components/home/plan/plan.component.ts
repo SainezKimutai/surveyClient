@@ -75,7 +75,7 @@ async updatePage() {
 this.plansService.getAllCompanyPlans().subscribe(
   dataPlan => {
     this.AllPlans = dataPlan;
-    console.log(this.AllPlans.length)
+ 
     // this.AllPlans.forEach((p) => {
     //     this.plansService.deletePlan(p._id).subscribe(() => this.notifyService.showSuccess('deleted', 'Deleted'))
     //   })
@@ -86,7 +86,7 @@ this.plansService.getAllCompanyPlans().subscribe(
                     
       this.surveyService.getAllInstitutionSurveys().subscribe(
         dataSurvey => {
-          console.log(dataSurvey.length)
+        
           this.AllSurveys = dataSurvey;
           this.pageProgress = 25;
 
