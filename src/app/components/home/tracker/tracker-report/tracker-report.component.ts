@@ -717,7 +717,7 @@ calculateReportProgrress() {
 updatedPlanThreats(){
 
   this.AllPlans.forEach((plan, ind, arr) => {
-
+    let planIndex = this.PlanOnReport.plan.indexOf(plan);
     let averageTask = []
     plan.tasks.forEach(taskId => {
       this.TaskPlan.forEach((taskPlan) => {
@@ -729,28 +729,22 @@ updatedPlanThreats(){
 
     let getTheAverage = (averageTask.reduce((a, b) => a + b, 0) / averageTask.length)
 
-    console.log(getTheAverage);
- 
     if (getTheAverage < 30) { 
       plan.threat.level = 'High'
-      console.log('High')
     };
     if (getTheAverage > 29 && getTheAverage < 61 ) { 
       plan.threat.level = 'Medium'
-      console.log('Medium')
     };
     if (getTheAverage > 60) { 
       plan.threat.level = 'Low'
-      console.log('Low')
     };
-    console.log(plan.threat.level)
 
+ 
+    this.PlanOnReport.plan[planIndex] = plan;
   
     if (ind === arr.length - 1) {
-      this.PlanOnReport.plan = this.AllPlans;
-      console.log(this.PlanOnReport)
+      // this.PlanOnReport.plan = this.AllPlans;
       this.plansService.updatePlan(this.PlanOnReport._id, this.PlanOnReport).subscribe((data) => {
-        console.log(data);
         this.PlanOnReport === data;
         this.updateThreatLevels();
       }, error => {console.log('Error updating Plans')} )
@@ -766,7 +760,6 @@ updatedPlanThreats(){
 
 
 updateThreatLevels() {
-  console.log(this.PlanOnReport);
   this.responseService.getOneResponse(this.PlanOnReport.responseId).subscribe(
     passData=> {
       this.checkForAnyThreatChanges(passData).then((respData) => {

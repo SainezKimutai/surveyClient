@@ -198,7 +198,7 @@ checkForCompletedSurveys() {
 
 formatQuestions() {
   return new Promise((resolve, reject) => {
-
+    this.AllQuestions2 = [];
     this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
       data => { 
   
