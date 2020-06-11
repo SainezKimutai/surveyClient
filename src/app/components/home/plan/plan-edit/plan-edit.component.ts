@@ -207,14 +207,12 @@ updatePage() {
             this.taskPlanService.getAllTaskPlanByCompanyId().subscribe(
               dataTask => {
                 this.TaskPlan = dataTask;
-                // this.TaskPlan.forEach((t) => {
-                //   this.taskPlanService.deleteTaskPlan(t._id).subscribe()
-                // })
-                this.salesCategoryService.getAllSalesCategories().subscribe( 
-                  dataSalesCat => {
-                    this.SalesCategories = dataSalesCat;
+               
+                // this.salesCategoryService.getAllSalesCategories().subscribe( 
+                  // dataSalesCat => {
+                    // this.SalesCategories = dataSalesCat;
                     this.formatAtivity().then(() => resolve())
-                }, error => console.log('Error getting sales cat'));
+                // }, error => console.log('Error getting sales cat'));
                               
               }, error => console.log('Error getting task plan')
             )
