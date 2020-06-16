@@ -56,7 +56,7 @@ export class InvitationComponent implements OnInit, OnDestroy {
       this.InvitedDeptId = params.get('deptId');
       this.InvitedEmail = params.get('email');
       this.InvitedToken = params.get('token');
-      localStorage.setItem('invitedUserToken', params.get('token'));
+      sessionStorage.setItem('invitedUserToken', params.get('token'));
     });
 
   }
@@ -117,34 +117,34 @@ export class InvitationComponent implements OnInit, OnDestroy {
   redirect(dataUser) {
 
     if ( this.InvitedUserType === 'admin') {
-      localStorage.setItem('loggedUserToken', dataUser.token);
-      localStorage.setItem('loggedUserName', dataUser.name);
-      localStorage.setItem('loggedUserEmail', dataUser.email);
-      localStorage.setItem('loggedUserID', dataUser._id);
-      localStorage.setItem('loggedCompanyId', dataUser.companyId);
-      localStorage.setItem('permissionStatus', 'isAdmin');
+      sessionStorage.setItem('loggedUserToken', dataUser.token);
+      sessionStorage.setItem('loggedUserName', dataUser.name);
+      sessionStorage.setItem('loggedUserEmail', dataUser.email);
+      sessionStorage.setItem('loggedUserID', dataUser._id);
+      sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
+      sessionStorage.setItem('permissionStatus', 'isAdmin');
       this.router.navigate(['/home/dashboard']);
     }
 
     if ( this.InvitedUserType === 'thirdparty') {
 
-      localStorage.setItem('loggedUserToken', dataUser.token);
-      localStorage.setItem('loggedUserName', dataUser.name);
-      localStorage.setItem('loggedUserEmail', dataUser.email);
-      localStorage.setItem('loggedUserID', dataUser._id);
-      localStorage.setItem('loggedCompanyId', dataUser.companyId);
-      localStorage.setItem('permissionStatus', 'isThirdParty');
+      sessionStorage.setItem('loggedUserToken', dataUser.token);
+      sessionStorage.setItem('loggedUserName', dataUser.name);
+      sessionStorage.setItem('loggedUserEmail', dataUser.email);
+      sessionStorage.setItem('loggedUserID', dataUser._id);
+      sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
+      sessionStorage.setItem('permissionStatus', 'isThirdParty');
       this.router.navigate(['/home/dashboard']);
     }
 
 
     if ( this.InvitedUserType === 'customer') {
-      localStorage.setItem('loggedUserToken', dataUser.token);
-      localStorage.setItem('loggedUserName', dataUser.name);
-      localStorage.setItem('loggedUserEmail', dataUser.email);
-      localStorage.setItem('loggedUserID', dataUser._id);
-      localStorage.setItem('loggedCompanyId', dataUser.companyId);
-      localStorage.setItem('permissionStatus', 'isCustomer');
+      sessionStorage.setItem('loggedUserToken', dataUser.token);
+      sessionStorage.setItem('loggedUserName', dataUser.name);
+      sessionStorage.setItem('loggedUserEmail', dataUser.email);
+      sessionStorage.setItem('loggedUserID', dataUser._id);
+      sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
+      sessionStorage.setItem('permissionStatus', 'isCustomer');
       this.router.navigate(['/home/profile']);
     }
 

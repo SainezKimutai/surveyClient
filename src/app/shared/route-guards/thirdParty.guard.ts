@@ -14,7 +14,7 @@ export class ThirdPartyGuard implements CanActivate {
 
     canActivate( next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
-        if (localStorage.getItem('permissionStatus') === 'isThirdParty') {
+        if (sessionStorage.getItem('permissionStatus') === 'isThirdParty') {
         return true;
         }
 

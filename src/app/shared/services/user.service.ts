@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
-import { dev, header } from '../dev/dev';
+import { dev, header, preauthheader } from '../dev/dev';
 import { UserModel } from '../models/user.model';
 
 
@@ -15,8 +15,8 @@ export class UserService {
     url = `${dev.connect}api/users/`;
 
     registrationHeader = new HttpHeaders().set(
-      'Authorization', `Bearer ${localStorage.getItem('invitedUserToken')}`
-    );
+      'Authorization', `Bearer ${sessionStorage.getItem('invitedUserToken')}`
+    ).set('secrete', 'IMPRINT@@2020');
 
     constructor( private http: HttpClient ) { }
 
@@ -25,7 +25,7 @@ export class UserService {
     }
 
     loginUser( loginData: any ) {
-      return this.http.post<any>(this.url + 'login', loginData, {headers : header});
+      return this.http.post<any>(this.url + 'login', loginData, {headers : preauthheader});
     }
 
     inviteUser(inviteData: any) {
@@ -58,11 +58,11 @@ export class UserService {
           password: userDetails.password
       }
 
-      return this.http.post<any>(this.url + 'passwordreset', userObj, {headers: header});
+      return this.http.post<any>(this.url + 'passwordreset', userObj, {headers: preauthheader});
     }
 
     sendResetEmail(userDetails :any){
-      return this.http.post<any>(this.url + 'passwordresettoken', userDetails, {headers: header});
+      return this.http.post<any>(this.url + 'passwordresettoken', userDetails, {headers: preauthheader});
     }
 
 

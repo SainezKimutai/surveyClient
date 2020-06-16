@@ -155,7 +155,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.ImprintLoader = true;
-    if (localStorage.getItem('permissionStatus') === 'isCustomer') {
+    if (sessionStorage.getItem('permissionStatus') === 'isCustomer') {
       this.toCustomer = true;
       this.salesCategoryService.getAllSalesCategories().subscribe( data => {
 
@@ -199,7 +199,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
     //   this.ImprintLoader = true;
     // }, 5);
 
-    localStorage.setItem('ActiveNav', 'sales');
+    sessionStorage.setItem('ActiveNav', 'sales');
 
   
     this.userService.getAllUsers().subscribe(
@@ -233,7 +233,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
             if ( note.projectId === opp._id ) {
             note = {...note, noteProjectName: `${opp.clientName} - ${opp.projectName}`};
 
-            if ( localStorage.getItem('permissionStatus') === 'isAdmin') {
+            if ( sessionStorage.getItem('permissionStatus') === 'isAdmin') {
               this.Users.forEach((user) => {
                 if ( note.createdBy === user.email) {
                   note = {...note, createdByUsername: user.name};
@@ -242,7 +242,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
               });
             }
 
-            if ( localStorage.getItem('permissionStatus') !== 'isAdmin') {
+            if ( sessionStorage.getItem('permissionStatus') !== 'isAdmin') {
 
               this.Users.forEach((user) => {
                 if ( note.createdBy === user.email) {
@@ -274,10 +274,10 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
     this.salesSentEmailService.getAll().subscribe(
       data => {
-        if ( localStorage.getItem('permissionStatus') === 'isAdmin') {
+        if ( sessionStorage.getItem('permissionStatus') === 'isAdmin') {
           this.SentEmails = data.reverse();
         }
-        if ( localStorage.getItem('permissionStatus') !== 'isAdmin') {
+        if ( sessionStorage.getItem('permissionStatus') !== 'isAdmin') {
 
           data.forEach((sentMail) => {
           this.Users.forEach((user) => {
@@ -348,7 +348,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
       title: ['', Validators.required],
       content: ['', Validators.required],
       createdAt: [null],
-      createdBy: [localStorage.getItem('loggedUserEmail')],
+      createdBy: [sessionStorage.getItem('loggedUserEmail')],
 
     });
 
@@ -415,7 +415,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
     this.MySalesCategorys = this.SalesCategorys.filter((category) => {
       let OppInThisCategory = this.Opportunitys.filter((opp) => {
-        return opp.projectStatus === category._id && opp.createdBy === localStorage.getItem('loggedUserEmail') ? true : false;
+        return opp.projectStatus === category._id && opp.createdBy === sessionStorage.getItem('loggedUserEmail') ? true : false;
       }).map((e) => e );
 
       category.totalLeads = OppInThisCategory.length;
@@ -424,7 +424,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
       return true;
     }).map((e) => e );
     this.switchPipeline();
-    this.MyOpportunitys = this.Opportunitys.filter((e) => e.createdBy === localStorage.getItem('loggedUserEmail') ? true : false).map(r => r);
+    this.MyOpportunitys = this.Opportunitys.filter((e) => e.createdBy === sessionStorage.getItem('loggedUserEmail') ? true : false).map(r => r);
 
     if (this.toCustomer) {
       this.UpdateSalesCategories().then(() => {this.updatePage(); } );
@@ -458,7 +458,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
     this.salesService.getAllOppProject().subscribe(
       data => {
         this.Opportunitys = data.reverse();
-        this.MyOpportunitys = data.filter((e) => e.createdBy === localStorage.getItem('loggedUserEmail') ? true : false).map(r => r);
+        this.MyOpportunitys = data.filter((e) => e.createdBy === sessionStorage.getItem('loggedUserEmail') ? true : false).map(r => r);
         this.SalesPiplineFullyUpdate = true;
         this.switchPipeline();
       },
@@ -500,7 +500,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
             if ( note.projectId === opp._id ) {
             note = {...note, noteProjectName: `${opp.clientName} - ${opp.projectName}`};
 
-            if ( localStorage.getItem('permissionStatus') === 'isAdmin') {
+            if ( sessionStorage.getItem('permissionStatus') === 'isAdmin') {
               this.Users.forEach((user) => {
                 if ( note.createdBy === user.email) {
                   note = {...note, createdByUsername: user.name};
@@ -509,7 +509,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
               });
             }
 
-            if ( localStorage.getItem('permissionStatus') !== 'isAdmin') {
+            if ( sessionStorage.getItem('permissionStatus') !== 'isAdmin') {
 
               this.Users.forEach((user) => {
                 if ( note.createdBy === user.email) {
@@ -540,10 +540,10 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
     this.salesSentEmailService.getAll().subscribe(
       data => {
-        if ( localStorage.getItem('permissionStatus') === 'isAdmin') {
+        if ( sessionStorage.getItem('permissionStatus') === 'isAdmin') {
           this.SentEmails = data.reverse();
         }
-        if ( localStorage.getItem('permissionStatus') !== 'isAdmin') {
+        if ( sessionStorage.getItem('permissionStatus') !== 'isAdmin') {
 
           data.forEach((sentMail) => {
           this.Users.forEach((user) => {
@@ -578,7 +578,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
       this.salesService.getAllOppProjectByCompany(this.ActiveCompanyId).subscribe(
         data => {
           this.Opportunitys = data.reverse();
-          // this.MyOpportunitys = data.filter((e) => e.createdBy === localStorage.getItem('loggedUserEmail') ? true : false).map(r => r);
+          // this.MyOpportunitys = data.filter((e) => e.createdBy === sessionStorage.getItem('loggedUserEmail') ? true : false).map(r => r);
           this.SalesPiplineFullyUpdate = true;
           this.switchPipeline();
         },
@@ -767,7 +767,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
     return new Promise((resolve, reject) => {
     this.MySalesCategorys = this.SalesCategorys.filter((category) => {
       let OppInThisCategory = this.Opportunitys.filter((opp) => {
-        return opp.projectStatus === category._id && opp.createdBy === localStorage.getItem('loggedUserEmail') ? true : false;
+        return opp.projectStatus === category._id && opp.createdBy === sessionStorage.getItem('loggedUserEmail') ? true : false;
       }).map((e) => e );
 
       category.totalLeads = OppInThisCategory.length;
@@ -819,7 +819,7 @@ selectPriority(num) {
     // });
 
     let structuredData = {
-      companyId:  this.toCustomer ? localStorage.getItem('loggedCompanyId') : localStorage.getItem('loggedUserID'),
+      companyId:  this.toCustomer ? sessionStorage.getItem('loggedCompanyId') : sessionStorage.getItem('loggedUserID'),
       projectName: this.newOppForm.value.projectName,
       clientName: this.newOppForm.value.clientName,
       projectManager: '',
@@ -830,7 +830,7 @@ selectPriority(num) {
       projectDuration: null,
       projectStartDate: null,
       projectEndDate: null,
-      createdBy: localStorage.getItem('loggedUserEmail'),
+      createdBy: sessionStorage.getItem('loggedUserEmail'),
       createdOn: new Date()
     };
     this.ImprintLoader = true;
@@ -869,7 +869,7 @@ selectPriority(num) {
 
   createNewClient(client) {
     let newClient = {
-      companyId:  this.toCustomer ? localStorage.getItem('loggedCompanyId') : localStorage.getItem('loggedUserID'),
+      companyId:  this.toCustomer ? sessionStorage.getItem('loggedCompanyId') : sessionStorage.getItem('loggedUserID'),
       companyName: client.clientName,
       managerName: '',
       primaryTelNumber: null,
@@ -1007,7 +1007,7 @@ selectPriority(num) {
                 this.ImprintLoader = false;
                 this.mailToClientModal.show();
                 this.mailData = {
-                  sender: localStorage.getItem('loggedUserEmail'),
+                  sender: sessionStorage.getItem('loggedUserEmail'),
                   reciever: cliData.email,
                   client: cliData.companyName
                 };
@@ -1027,7 +1027,7 @@ selectPriority(num) {
   sendMailToClient() {
     this.ImprintLoader = true;
     let dataToBeSent = {
-      companyId: this.toCustomer ? localStorage.getItem('loggedCompanyId') : localStorage.getItem('loggedUserID'),
+      companyId: this.toCustomer ? sessionStorage.getItem('loggedCompanyId') : sessionStorage.getItem('loggedUserID'),
       sender: this.mailData.sender,
       reciever: this.mailData.reciever,
       subject: this.sendMailForm.value.subject,
@@ -1104,7 +1104,7 @@ selectPriority(num) {
 
 
   toScheduleActivity(id) {
-    localStorage.setItem('eventProjectId', id);
+    sessionStorage.setItem('eventProjectId', id);
     this.router.navigate(['home/ngCalendar']);
   }
 
@@ -1121,7 +1121,7 @@ selectPriority(num) {
 
   toSalesEdit(id) {
     this.router.navigate(['home/crm/crm_edit']);
-    window.localStorage.setItem('salesEditItemId', id);
+    window.sessionStorage.setItem('salesEditItemId', id);
 
   }
 
@@ -1361,7 +1361,7 @@ selectPriority(num) {
 
   submitNote() {
     let dataToBeSent = {
-      companyId:  this.toCustomer ? localStorage.getItem('loggedCompanyId') : localStorage.getItem('loggedUserID'),
+      companyId:  this.toCustomer ? sessionStorage.getItem('loggedCompanyId') : sessionStorage.getItem('loggedUserID'),
       title: this.writeNoteForm.value.title,
       content: this.writeNoteForm.value.content,
       projectId: this.noteWriten.id,
@@ -1413,8 +1413,8 @@ selectPriority(num) {
 
 
   openActivity(id, ttl) {
-    localStorage.setItem('eventProjectId', id);
-    localStorage.setItem('eventProjectTitle', ttl);
+    sessionStorage.setItem('eventProjectId', id);
+    sessionStorage.setItem('eventProjectTitle', ttl);
     this.router.navigate(['home/ngCalendar']);
   }
 

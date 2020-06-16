@@ -42,7 +42,7 @@ export class GDPGrowthRateService {
     }
 
     getAllInstitutionGDP() {
-        const data = {institutionId: localStorage.getItem('loggedUserID')};
+        const data = {institutionId: sessionStorage.getItem('loggedUserID')};
         return this.http.post<any> (this.url + 'institution/', data, {headers: header});
     }
 

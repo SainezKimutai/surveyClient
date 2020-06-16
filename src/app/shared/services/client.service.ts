@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders  } from '@angular/common/http';
-import { dev } from '../dev/dev';
+import { dev, header } from '../dev/dev';
 
 
 @Injectable({
@@ -15,7 +15,7 @@ export class ClientService {
 
 
     header = new HttpHeaders().set(
-      'Authorization', `Bearer ${window.localStorage.getItem('loggedUserToken')}`
+      'Authorization', `Bearer ${window.sessionStorage.getItem('loggedUserToken')}`
     );
 
 
@@ -23,44 +23,44 @@ export class ClientService {
 
 
     createClient( data: any ) {
-      return this.http.post<any>(this.url + 'create', data, {headers : this.header});
+      return this.http.post<any>(this.url + 'create', data, {headers : header});
     }
 
 
     getAllClients() {
       let data: any;
-      if (localStorage.getItem('permissionStatus') === 'isCustomer') {
-        data = {companyId: localStorage.getItem('loggedCompanyId')};
-        return this.http.post<any>(this.url + 'getCompanyAll/', data, {headers : this.header});
+      if (sessionStorage.getItem('permissionStatus') === 'isCustomer') {
+        data = {companyId: sessionStorage.getItem('loggedCompanyId')};
+        return this.http.post<any>(this.url + 'getCompanyAll/', data, {headers : header});
       } else {
-        data = {companyId: localStorage.getItem('loggedUserID')};
-        return this.http.post<any>(this.url + 'getCompanyAll/', data, {headers : this.header});
+        data = {companyId: sessionStorage.getItem('loggedUserID')};
+        return this.http.post<any>(this.url + 'getCompanyAll/', data, {headers : header});
       }
     }
 
 
     getOneClient(id) {
-      return this.http.get<any>(this.url + 'getOne/' + id, {headers : this.header});
+      return this.http.get<any>(this.url + 'getOne/' + id, {headers : header});
     }
 
 
     getOneByName(name) {
-      return this.http.get<any>(this.url + 'getByName/' + name + '/', {headers : this.header});
+      return this.http.get<any>(this.url + 'getByName/' + name + '/', {headers : header});
     }
 
 
     updateClient(id, data: any) {
-      return this.http.put<any>(this.url + 'update/' + id, data, {headers : this.header});
+      return this.http.put<any>(this.url + 'update/' + id, data, {headers : header});
     }
 
 
     deleteClient(id) {
-      return this.http.delete<any>(this.url + 'delete/' + id, {headers : this.header});
+      return this.http.delete<any>(this.url + 'delete/' + id, {headers : header});
     }
 
 
     sendMail( data: any ) {
-      return this.http.post<any>(this.url + 'sendMail', data, {headers : this.header});
+      return this.http.post<any>(this.url + 'sendMail', data, {headers : header});
     }
 
 

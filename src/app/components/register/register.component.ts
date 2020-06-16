@@ -125,13 +125,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
 
 
-
-
-
-
-
-
-
   moveFormOne2Two() {
     this.formOne = false;
     this.formTwo = true;
@@ -180,14 +173,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
         };
 
         this.userService.registerUser(newUserData).subscribe(
-          dataUser => {
-            localStorage.setItem('loggedUserToken', dataUser.token);
-            localStorage.setItem('loggedUserName', dataUser.name);
-            localStorage.setItem('loggedUserInstitution', dataUser.institutionId);
-            localStorage.setItem('loggedUserEmail', dataUser.email);
-            localStorage.setItem('loggedUserID', dataUser._id);
-            localStorage.setItem('loggedCompanyId', dataUser.companyId);
-            localStorage.setItem('permissionStatus', 'isCustomer');
+           async dataUser => {
+           await sessionStorage.setItem('loggedUserToken', dataUser.token);
+           await sessionStorage.setItem('loggedUserName', dataUser.name);
+           await sessionStorage.setItem('loggedUserInstitution', dataUser.institutionId);
+           await sessionStorage.setItem('loggedUserEmail', dataUser.email);
+           await sessionStorage.setItem('loggedUserID', dataUser._id);
+           await sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
+           await sessionStorage.setItem('permissionStatus', 'isCustomer');
             this.router.navigate(['/home/profile']);
           },
           error => {this.notifyService.showWarning('Could not submit', 'Failled');  this.ImprintLoader = false; }

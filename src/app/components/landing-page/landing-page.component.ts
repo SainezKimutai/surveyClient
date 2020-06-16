@@ -4,6 +4,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap';
+import { async } from '@angular/core/testing';
 
 
 @Component({
@@ -64,12 +65,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
 
 
-
-
-
-
-
-
   showPassword() {
     this.PasswordType = 'text';
   }
@@ -114,36 +109,36 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
     this.ImprintLoader = true;
     this.userService.loginUser(this.loginForm).subscribe(
-      dataUser => {
+     async dataUser =>  {
         if (dataUser.userType === 'customer') {
-          localStorage.setItem('loggedUserToken', dataUser.token);
-          localStorage.setItem('loggedUserName', dataUser.name);
-          localStorage.setItem('loggedUserEmail', dataUser.email);
-          localStorage.setItem('loggedUserInstitution', dataUser.institutionId);
-          localStorage.setItem('loggedUserID', dataUser._id);
-          localStorage.setItem('loggedCompanyId', dataUser.companyId);
-          localStorage.setItem('permissionStatus', 'isCustomer');
+         await sessionStorage.setItem('loggedUserToken', dataUser.token);
+         await sessionStorage.setItem('loggedUserName', dataUser.name);
+         await sessionStorage.setItem('loggedUserEmail', dataUser.email);
+         await sessionStorage.setItem('loggedUserInstitution', dataUser.institutionId);
+         await sessionStorage.setItem('loggedUserID', dataUser._id);
+         await sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
+         await sessionStorage.setItem('permissionStatus', 'isCustomer');
           this.router.navigate(['/home/survey']);
         }
 
 
         if (dataUser.userType === 'admin') {
-          localStorage.setItem('loggedUserInstitution', dataUser._id);
-          localStorage.setItem('loggedUserToken', dataUser.token);
-          localStorage.setItem('loggedUserName', dataUser.name);
-          localStorage.setItem('loggedUserEmail', dataUser.email);
-          localStorage.setItem('loggedUserID', dataUser._id);
-          localStorage.setItem('permissionStatus', 'isAdmin');
+         await sessionStorage.setItem('loggedUserInstitution', dataUser._id);
+         await sessionStorage.setItem('loggedUserToken', dataUser.token);
+         await sessionStorage.setItem('loggedUserName', dataUser.name);
+         await sessionStorage.setItem('loggedUserEmail', dataUser.email);
+         await sessionStorage.setItem('loggedUserID', dataUser._id);
+         await sessionStorage.setItem('permissionStatus', 'isAdmin');
           this.router.navigate(['/home/admin']);
         }
 
         if (dataUser.userType === 'thirdparty') {
-          localStorage.setItem('loggedUserInstitution', dataUser._id);
-          localStorage.setItem('loggedUserToken', dataUser.token);
-          localStorage.setItem('loggedUserName', dataUser.name);
-          localStorage.setItem('loggedUserEmail', dataUser.email);
-          localStorage.setItem('loggedUserID', dataUser._id);
-          localStorage.setItem('permissionStatus', 'isThirdParty');
+         await sessionStorage.setItem('loggedUserInstitution', dataUser._id);
+         await sessionStorage.setItem('loggedUserToken', dataUser.token);
+         await sessionStorage.setItem('loggedUserName', dataUser.name);
+         await sessionStorage.setItem('loggedUserEmail', dataUser.email);
+         await sessionStorage.setItem('loggedUserID', dataUser._id);
+         await sessionStorage.setItem('permissionStatus', 'isThirdParty');
           this.router.navigate(['/home/dashboard']);
         }
 

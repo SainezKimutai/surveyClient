@@ -44,7 +44,7 @@ export class SurveyComponent implements OnInit {
 
 
   ngOnInit() {
-    localStorage.setItem('ActiveNav', 'survey');
+    sessionStorage.setItem('ActiveNav', 'survey');
     this.updatePage().then(() => { this.checkForCompletedSurveys(); });
   }
 
@@ -70,7 +70,7 @@ export class SurveyComponent implements OnInit {
             this.pageProgress = 50;
 
 
-            this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
+            this.responseService.getUsersResponses(sessionStorage.getItem('loggedUserID')).subscribe(
               dataRsp => {
 
               this.AllResponses = dataRsp;
@@ -156,7 +156,7 @@ export class SurveyComponent implements OnInit {
     this.deletePromptModal.hide();
     this.ImprintLoader = true;
     for (let resp of this.AllResponses) {
-      if (resp.companyId === localStorage.getItem('loggedCompanyId') && resp.surveyId === this.surveyTobeErased && resp.userId === localStorage.getItem('loggedUserID') ) {
+      if (resp.companyId === sessionStorage.getItem('loggedCompanyId') && resp.surveyId === this.surveyTobeErased && resp.userId === sessionStorage.getItem('loggedUserID') ) {
 
         this.responseService.deleteResponse(resp._id).subscribe(
           data => {

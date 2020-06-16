@@ -43,14 +43,15 @@ export class SurveyService {
     }
 
     getAllInstitutionSurveys() {
-        const data = {institutionId: localStorage.getItem('loggedUserInstitution')};
+        console.log(header);
+        const data = {institutionId: sessionStorage.getItem('loggedUserInstitution')};
         return this.http.post<any>(this.url + 'institution/', data, {headers: header});
     }
     getGeneralSurveys() {
         return this.http.get<any> (this.url + 'general/', {headers: header});
     }
     getAllInstitutionSurveysAdmin() {
-        const data = {institutionId : localStorage.getItem('loggedUserID')};
+        const data = {institutionId : sessionStorage.getItem('loggedUserID')};
         return this.http.post<any>(this.url + 'institution/', data, {headers: header});
 
     }

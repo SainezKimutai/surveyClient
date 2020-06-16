@@ -27,7 +27,7 @@ export class TaskPlanService {
     }
 
     getAllTaskPlanByCompanyId() {
-        const data = {companyId: localStorage.getItem('loggedCompanyId')};
+        const data = {companyId: sessionStorage.getItem('loggedCompanyId')};
         return this.http.post<any> (this.url + 'getByCompanyId/', data, {headers: header});
     }
 

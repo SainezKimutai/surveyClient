@@ -62,7 +62,7 @@ public planName = '';
 
 
 ngOnInit() {
-    localStorage.setItem('ActiveNav', 'plan');
+    sessionStorage.setItem('ActiveNav', 'plan');
     this.updatePage().then(() => { this.checkForCompletedSurveys(); this.removeUnUsedTasks(); });
 }
 
@@ -97,7 +97,7 @@ this.plansService.getAllCompanyPlans().subscribe(
               this.pageProgress = 50;
 
 
-              this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
+              this.responseService.getUsersResponses(sessionStorage.getItem('loggedUserID')).subscribe(
                 dataRsp => {
 
                 this.AllResponses = dataRsp;
@@ -199,7 +199,7 @@ checkForCompletedSurveys() {
 formatQuestions() {
   return new Promise((resolve, reject) => {
     this.AllQuestions2 = [];
-    this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
+    this.responseService.getUsersResponses(sessionStorage.getItem('loggedUserID')).subscribe(
       data => { 
   
         data.forEach((responseObj, ind1, arr1) => {
@@ -358,7 +358,7 @@ addPlan() {
     this.ImprintLoader = true;
     this.addPlanModal.hide();
     let MyNewPlan = {
-      companyId: localStorage.getItem('loggedCompanyId'),
+      companyId: sessionStorage.getItem('loggedCompanyId'),
       surveyId: this.PlanSurveyId,
       responseId: this.PlanResponseId,
       name: this.planName,
@@ -385,7 +385,7 @@ addPlan() {
 
 
 editPlan(plan: any) {
-  localStorage.setItem('planOnEdit', JSON.stringify(plan))
+  sessionStorage.setItem('planOnEdit', JSON.stringify(plan))
   this.EditPlanStatus = true;
   this.ListPlanStatus = false;
 }

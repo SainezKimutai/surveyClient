@@ -77,11 +77,11 @@ public myInterval;
 
   ngOnInit() {
 
-    if (localStorage.getItem('permissionStatus') === 'isAdmin') {
+    if (sessionStorage.getItem('permissionStatus') === 'isAdmin') {
       this.toAdmin = true;
-    } else if (localStorage.getItem('permissionStatus') === 'isCustomer') {
+    } else if (sessionStorage.getItem('permissionStatus') === 'isCustomer') {
         this.toCustomer = true;
-    } else if (localStorage.getItem('permissionStatus') === 'isThirdParty') {
+    } else if (sessionStorage.getItem('permissionStatus') === 'isThirdParty') {
         this.toThirdParty = true;
     }
 
@@ -113,18 +113,18 @@ CheckActiveNavBar() {
   this.marketRateBarActive = false;
   this.documentNavBarActive = false;
   this.salesNavBarActive = false;
-  if (localStorage.getItem('ActiveNav') === 'dashboard') {this.dashboardNavBarActive = true; }
-  if (localStorage.getItem('ActiveNav') === 'survey') {this.surveyNavBarActive = true; }
-  if (localStorage.getItem('ActiveNav') === 'profile') {this.profileNavBarActive = true; }
-  if (localStorage.getItem('ActiveNav') === 'editorial') {this.editorialNavBarActive = true; }
-  if (localStorage.getItem('ActiveNav') === 'reports') {this.reportsNavBarActive = true; }
-  if (localStorage.getItem('ActiveNav') === 'plan') {this.planNavBarActive = true; }
-  if (localStorage.getItem('ActiveNav') === 'tracker') {this.trackerNavBarActive = true; }
-  if (localStorage.getItem('ActiveNav') === 'users') {this.usersNavBarActive = true; }
-  if (localStorage.getItem('ActiveNav') === 'admin') {this.adminNavBarActive = true; }
-  if (localStorage.getItem('ActiveNav') === 'marketRates') {this.marketRateBarActive = true; }
-  if (localStorage.getItem('ActiveNav') === 'document') {this.documentNavBarActive = true; }
-  if (localStorage.getItem('ActiveNav') === 'sales') {this.salesNavBarActive = true; }
+  if (sessionStorage.getItem('ActiveNav') === 'dashboard') {this.dashboardNavBarActive = true; }
+  if (sessionStorage.getItem('ActiveNav') === 'survey') {this.surveyNavBarActive = true; }
+  if (sessionStorage.getItem('ActiveNav') === 'profile') {this.profileNavBarActive = true; }
+  if (sessionStorage.getItem('ActiveNav') === 'editorial') {this.editorialNavBarActive = true; }
+  if (sessionStorage.getItem('ActiveNav') === 'reports') {this.reportsNavBarActive = true; }
+  if (sessionStorage.getItem('ActiveNav') === 'plan') {this.planNavBarActive = true; }
+  if (sessionStorage.getItem('ActiveNav') === 'tracker') {this.trackerNavBarActive = true; }
+  if (sessionStorage.getItem('ActiveNav') === 'users') {this.usersNavBarActive = true; }
+  if (sessionStorage.getItem('ActiveNav') === 'admin') {this.adminNavBarActive = true; }
+  if (sessionStorage.getItem('ActiveNav') === 'marketRates') {this.marketRateBarActive = true; }
+  if (sessionStorage.getItem('ActiveNav') === 'document') {this.documentNavBarActive = true; }
+  if (sessionStorage.getItem('ActiveNav') === 'sales') {this.salesNavBarActive = true; }
 
 }
 
@@ -142,14 +142,14 @@ CheckActiveNavBar() {
 
 
   logout() {
-    localStorage.removeItem('loggedUserToken');
-    localStorage.removeItem('loggedUserName');
-    localStorage.removeItem('permissionStatus');
-    localStorage.removeItem('loggedUserID');
-    localStorage.removeItem('loggedCompanyId');
-    localStorage.removeItem('loggedUserName');
-    localStorage.removeItem('loggedUserEmail');
-    localStorage.removeItem('loggedUserInstitution');
+    sessionStorage.removeItem('loggedUserToken');
+    sessionStorage.removeItem('loggedUserName');
+    sessionStorage.removeItem('permissionStatus');
+    sessionStorage.removeItem('loggedUserID');
+    sessionStorage.removeItem('loggedCompanyId');
+    sessionStorage.removeItem('loggedUserName');
+    sessionStorage.removeItem('loggedUserEmail');
+    sessionStorage.removeItem('loggedUserInstitution');
     this.router.navigate(['/landing_page']);
   }
 

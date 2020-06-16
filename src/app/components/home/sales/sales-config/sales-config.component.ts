@@ -108,13 +108,13 @@ public serviceTobeDeleted: any;
 
   ngOnInit() {
 
-          if (localStorage.getItem('permissionStatus') === 'isAdmin') {
+          if (sessionStorage.getItem('permissionStatus') === 'isAdmin') {
             this.toAdmin = true;
           }
-          if (localStorage.getItem('permissionStatus') === 'isCustomer') {
+          if (sessionStorage.getItem('permissionStatus') === 'isCustomer') {
             this.toCustomer = true;
           }
-          localStorage.setItem('ActiveNav', 'sales');
+          sessionStorage.setItem('ActiveNav', 'sales');
           this.ImprintLoader = true;
 
 
@@ -179,28 +179,28 @@ defaultEdits() {
   let defaultSalesCategories = [
     {
     name : 'Target Clients',
-    companyId: this.toCustomer ? localStorage.getItem('loggedCompanyId') : localStorage.getItem('loggedUserID'),
+    companyId: this.toCustomer ? sessionStorage.getItem('loggedCompanyId') : sessionStorage.getItem('loggedUserID'),
     color: {name: 'turquoise', code: '#40E0D0'},
     totalLeads : 0,
     totalRevenue : 0
   },
   {
     name : 'Prospects',
-    companyId: this.toCustomer ? localStorage.getItem('loggedCompanyId') : localStorage.getItem('loggedUserID'),
+    companyId: this.toCustomer ? sessionStorage.getItem('loggedCompanyId') : sessionStorage.getItem('loggedUserID'),
     color: {name: 'lightseagreen', code: '#00CED1'},
     totalLeads : 0,
     totalRevenue : 0
   },
   {
     name : 'Qualified Leads',
-    companyId: this.toCustomer ? localStorage.getItem('loggedCompanyId') : localStorage.getItem('loggedUserID'),
+    companyId: this.toCustomer ? sessionStorage.getItem('loggedCompanyId') : sessionStorage.getItem('loggedUserID'),
     color: {name: 'darkturquoise', code: '	#20B2AA'},
     totalLeads : 0,
     totalRevenue : 0
   },
   {
     name : 'Customers',
-    companyId: this.toCustomer ? localStorage.getItem('loggedCompanyId') : localStorage.getItem('loggedUserID'),
+    companyId: this.toCustomer ? sessionStorage.getItem('loggedCompanyId') : sessionStorage.getItem('loggedUserID'),
     color: {name: 'teal', code: '#008080'},
     totalLeads : 0,
     totalRevenue : 0
@@ -293,7 +293,7 @@ addSalesCategory() {
 
   if (this.addSalesCategoryForm.value.name === '') { this.notifyService.showWarning('Please provide the name', 'Empty Field!'); } else {
   let convertedData = {
-                      companyId: this.toCustomer ? localStorage.getItem('loggedCompanyId') : localStorage.getItem('loggedUserID'),
+                      companyId: this.toCustomer ? sessionStorage.getItem('loggedCompanyId') : sessionStorage.getItem('loggedUserID'),
                       name: this.addSalesCategoryForm.value.name,
                       color: this.SalesStagesColor,
                       totalLeads: 0,

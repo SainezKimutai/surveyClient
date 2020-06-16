@@ -192,8 +192,8 @@ export class ProfileComponent implements OnInit {
 
 
   async ngOnInit() {
-    localStorage.setItem('ActiveNav', 'profile');
-    this.loggedUserEmail = localStorage.getItem('loggedUserEmail');
+    sessionStorage.setItem('ActiveNav', 'profile');
+    this.loggedUserEmail = sessionStorage.getItem('loggedUserEmail');
 
     this.plansService.getAllCompanyPlans().subscribe(
       dataPlan => {
@@ -343,7 +343,7 @@ export class ProfileComponent implements OnInit {
       dataUser => {
         this.AllUsers = dataUser;
         this.AllUsers.forEach((u) => {
-          if(u._id === localStorage.getItem('loggedUserID') ) {
+          if(u._id === sessionStorage.getItem('loggedUserID') ) {
             this.MyUserName = u.name;
           }
         })
@@ -352,7 +352,7 @@ export class ProfileComponent implements OnInit {
         this.companyProfileService.getAllCompanyProfiles().subscribe(
           dataComp => {
             this.AllCompanies = dataComp;
-            for (const comp of this.AllCompanies) { if (comp._id === localStorage.getItem('loggedCompanyId')) { this.myCompany = comp; break; }}
+            for (const comp of this.AllCompanies) { if (comp._id === sessionStorage.getItem('loggedCompanyId')) { this.myCompany = comp; break; }}
 
             this.chartsProgress = 20;
 
@@ -382,7 +382,7 @@ export class ProfileComponent implements OnInit {
                             data => {
                               this.AllIndustrys = data;
 
-                              this.responseService.getUsersResponses(localStorage.getItem('loggedUserID')).subscribe(
+                              this.responseService.getUsersResponses(sessionStorage.getItem('loggedUserID')).subscribe(
                                 data => {
                                   
                                   this.AllResponses = data; 
@@ -467,7 +467,7 @@ export class ProfileComponent implements OnInit {
 
   changeCompanyName() {
     this.ImprintLoader = true;
-    this.companyProfileService.updateCompanyProfile( localStorage.getItem('loggedCompanyId'), {companyName: this.companyNameInput}).subscribe(
+    this.companyProfileService.updateCompanyProfile( sessionStorage.getItem('loggedCompanyId'), {companyName: this.companyNameInput}).subscribe(
       data => {
         this.myCompany = data;
         this.ImprintLoader = false;
@@ -484,7 +484,7 @@ export class ProfileComponent implements OnInit {
 
   changeCompanyType() {
     this.ImprintLoader = true;
-    this.companyProfileService.updateCompanyProfile( localStorage.getItem('loggedCompanyId'), {companyType: this.companyTypeInput}).subscribe(
+    this.companyProfileService.updateCompanyProfile( sessionStorage.getItem('loggedCompanyId'), {companyType: this.companyTypeInput}).subscribe(
       data => {
         this.myCompany = data;
         this.ImprintLoader = false;
@@ -501,7 +501,7 @@ export class ProfileComponent implements OnInit {
 
   changeCompanyWebsite() {
     this.ImprintLoader = true;
-    this.companyProfileService.updateCompanyProfile( localStorage.getItem('loggedCompanyId'), {companyWebsite: this.companyWebsiteInput}).subscribe(
+    this.companyProfileService.updateCompanyProfile( sessionStorage.getItem('loggedCompanyId'), {companyWebsite: this.companyWebsiteInput}).subscribe(
       data => {
         this.myCompany = data;
         this.ImprintLoader = false;
@@ -517,7 +517,7 @@ export class ProfileComponent implements OnInit {
 
   changeNumberOfEmployees() {
     this.ImprintLoader = true;
-    this.companyProfileService.updateCompanyProfile( localStorage.getItem('loggedCompanyId'), {numberOfEmployees: this.numberOfEmployeesInput}).subscribe(
+    this.companyProfileService.updateCompanyProfile( sessionStorage.getItem('loggedCompanyId'), {numberOfEmployees: this.numberOfEmployeesInput}).subscribe(
       data => {
         this.myCompany = data;
         this.ImprintLoader = false;
@@ -532,7 +532,7 @@ export class ProfileComponent implements OnInit {
 
   changeMyUserName() {
     this.ImprintLoader = true;
-    this.userService.updateUsers( localStorage.getItem('loggedUserID'), {name: this.myUserNameInput}).subscribe(
+    this.userService.updateUsers( sessionStorage.getItem('loggedUserID'), {name: this.myUserNameInput}).subscribe(
       data => {
 
         this.ImprintLoader = false;
@@ -552,7 +552,7 @@ export class ProfileComponent implements OnInit {
     this.ImprintLoader = true;
     if ( this.userPasswordInput.toString().length < 4 ) {this.notifyService.showWarning('Should be more than 4 characters', 'Week Password'); } else {
 
-    this.userService.updateUsers( localStorage.getItem('loggedUserID'), {password: this.userPasswordInput}).subscribe(
+    this.userService.updateUsers( sessionStorage.getItem('loggedUserID'), {password: this.userPasswordInput}).subscribe(
       data => {
         this.userPasswordInput = '';
         this.ImprintLoader = false;

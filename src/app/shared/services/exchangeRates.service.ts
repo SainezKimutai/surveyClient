@@ -55,7 +55,7 @@ export class ExchangerateService {
     }
 
     getAllInstitutionExchangerates() {
-        const data = {institutionId: localStorage.getItem('loggedUserID')};
+        const data = {institutionId: sessionStorage.getItem('loggedUserID')};
         return this.http.post<any> (this.url + 'institution/', data, {headers: header});
     }
 

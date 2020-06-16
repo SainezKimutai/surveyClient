@@ -12,7 +12,7 @@ export class TokenGuard implements CanActivate {
 
   canActivate( next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
-      if (window.localStorage.getItem('loggedUserToken') != null) {
+      if (window.sessionStorage.getItem('loggedUserToken') != null) {
       return true;
       }
 

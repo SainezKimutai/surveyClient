@@ -176,7 +176,7 @@ public activityPlanThreatId = ''
 
 
   ngOnInit() {
-    localStorage.setItem('ActiveNav', 'editorial');
+    sessionStorage.setItem('ActiveNav', 'editorial');
     this.updatePage();
 
     // this.updater(); - updates threats to set an id
@@ -557,7 +557,7 @@ public activityPlanThreatId = ''
 
   saveSurveyTemplate() {
     this.ImprintLoader = true;
-    this.surveyService.createSurvey({surveyName: this.CurrentSurveyInput, institutionId: localStorage.getItem('loggedUserID')}).subscribe(
+    this.surveyService.createSurvey({surveyName: this.CurrentSurveyInput, institutionId: sessionStorage.getItem('loggedUserID')}).subscribe(
       dataSurvey => {
         this.createQuestions(dataSurvey);
       },
@@ -839,7 +839,7 @@ public activityPlanThreatId = ''
       name: this.threatName,
       type: this.threatType,
       category: this.threatCategory,
-      institutionId: localStorage.getItem('loggedUserID'),
+      institutionId: sessionStorage.getItem('loggedUserID'),
       categorization_inferences: this.threatLevels,
       level: this.threatLevel,
       recom: this.threatRecom,
@@ -872,7 +872,7 @@ public activityPlanThreatId = ''
 
 
   addTrackerReason() {
-    let dataResn: any = {reason: this.trackerReasonInput, institutionId: localStorage.getItem('loggedUserID')};
+    let dataResn: any = {reason: this.trackerReasonInput, institutionId: sessionStorage.getItem('loggedUserID')};
     this.trackerReasonService.createTrackerReason(dataResn).subscribe(
       data => {
         this.updatePage().then(() => {
@@ -899,7 +899,7 @@ public activityPlanThreatId = ''
 
   addIndustries() {
     this.ImprintLoader = true;
-    this.industryService.createIndustry({industryName: this.industryInput, institutionId: localStorage.getItem('loggedUserID')}).subscribe(
+    this.industryService.createIndustry({industryName: this.industryInput, institutionId: sessionStorage.getItem('loggedUserID')}).subscribe(
       data => {
         this.updatePage().then(() => {
           this.ImprintLoader = false;
@@ -928,7 +928,7 @@ public activityPlanThreatId = ''
     this.ImprintLoader = true;
     this.activityPlanService.createActivityPlan({
       activityPlan: this.activityPlan, 
-      institutionId: localStorage.getItem('loggedUserID'),
+      institutionId: sessionStorage.getItem('loggedUserID'),
       threatId: this.activityPlanThreatId
     }).subscribe(
       data => {
@@ -981,7 +981,7 @@ public activityPlanThreatId = ''
 
   addThreatCategory() {
     this.ImprintLoader = true;
-    this.threatCategoryService.createThreatCategory({threatCategoryName: this.threatCategoryInput, institutionId: localStorage.getItem('loggedUserID')}).subscribe(
+    this.threatCategoryService.createThreatCategory({threatCategoryName: this.threatCategoryInput, institutionId: sessionStorage.getItem('loggedUserID')}).subscribe(
       data => {
         this.updatePage().then(() => {
           this.ImprintLoader = false;
