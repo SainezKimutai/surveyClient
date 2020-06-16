@@ -1,10 +1,25 @@
 import { HttpHeaders } from '@angular/common/http';
- 
 
-// request header
-export const header = new HttpHeaders().set(
+
+// Define header
+export let header = new HttpHeaders().set(
     'token', `${window.sessionStorage.getItem('loggedUserToken')}`
   ).set( 'Access-Control-Allow-Origin', '*').set( 'user', `${window.sessionStorage.getItem('loggedUserID')}`);
+
+
+
+// Update Header
+export const updateHeader = () => {
+  return new Promise((resolve, reject) => {
+    header = new HttpHeaders().set(
+      'token', `${window.sessionStorage.getItem('loggedUserToken')}`
+    ).set( 'Access-Control-Allow-Origin', '*').set( 'user', `${window.sessionStorage.getItem('loggedUserID')}`);
+    resolve();
+  });
+};
+
+
+
 
 export const preauthheader = new HttpHeaders().set('secrete', 'IMPRINT@@2020');
 

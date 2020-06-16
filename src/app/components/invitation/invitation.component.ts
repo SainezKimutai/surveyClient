@@ -3,6 +3,7 @@ import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from 'src/app/shared/services/user.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { updateHeader } from 'src/app/shared/dev/dev';
 
 
 @Component({
@@ -123,7 +124,10 @@ export class InvitationComponent implements OnInit, OnDestroy {
       sessionStorage.setItem('loggedUserID', dataUser._id);
       sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
       sessionStorage.setItem('permissionStatus', 'isAdmin');
-      this.router.navigate(['/home/dashboard']);
+      updateHeader().then(() => {
+        this.router.navigate(['/home/admin']);
+      });
+
     }
 
     if ( this.InvitedUserType === 'thirdparty') {
@@ -134,7 +138,10 @@ export class InvitationComponent implements OnInit, OnDestroy {
       sessionStorage.setItem('loggedUserID', dataUser._id);
       sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
       sessionStorage.setItem('permissionStatus', 'isThirdParty');
-      this.router.navigate(['/home/dashboard']);
+      updateHeader().then(() => {
+        this.router.navigate(['/home/dashboard']);
+      });
+
     }
 
 
@@ -145,7 +152,10 @@ export class InvitationComponent implements OnInit, OnDestroy {
       sessionStorage.setItem('loggedUserID', dataUser._id);
       sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
       sessionStorage.setItem('permissionStatus', 'isCustomer');
-      this.router.navigate(['/home/profile']);
+      updateHeader().then(() => {
+        this.router.navigate(['/home/profile']);
+      });
+
     }
 
   }
