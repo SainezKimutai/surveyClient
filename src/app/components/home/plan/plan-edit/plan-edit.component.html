@@ -29,8 +29,10 @@
 
             <div class="list-item-wrap">
                 <li class="item" *ngFor="let item of PlanOnEdit.plan; let i = index" 
-                [ngClass]="ActivePlanEdit._id === item._id ? 'item active' : 'item'"
-                (click)="switchPlanThreat(item._id)">{{i+1}} . {{item.threat.threat}}</li>
+                [ngClass]="ActivePlanEdit._id === item._id ? 'item active d-flex' : 'item d-flex'"
+                (click)="switchPlanThreat(item._id)"> 
+                <!-- <div class="mr-2"> {{i+1}}.</div>  -->
+                <div>{{item.threat.threat}}</div></li>
             </div>
             <div class="btn-wrap w-100 mt-2 d-flex">
                 <button class="btn btn-sm btn-outline-danger mx-auto" (click)="deletePlan()">Delete Plan</button>
@@ -277,6 +279,9 @@
                         <input type="text" name="kpiUnit" [(ngModel)]="task.kpiUnit" >
                     </div>
 
+                    <!-- <div class="sale w-100 d-flex" *ngIf="SalesCategories[0]">
+                        <div class="add-new" (click)="addNewOppModal.show()">Add a client to CRM</div>
+                    </div> -->
 
                     <div class="form-group">
                         <label> Recurring Plan ?</label>
@@ -564,6 +569,139 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Adding new client Form -->
+
+<div bsModal #addNewOppModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog addNewOppModal" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title" *ngIf="SalesCategories[0]">New Opportunity To <span>{{SalesCategories[0].name}}</span></h4>
+          <button type="button" class="btn close" (click)="addNewOppModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+                      
+                <form id="myNewOppForm" #myNewOppForm='ngForm' [formGroup]="newOppForm" class="form">
+  
+                  <!-- Client Name -->
+                  <div class="form-group">
+                      <div class="input-group input-group-sm mb-3">
+  
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Client Name</span>
+                          </div>
+  
+                          <input #clientInput type="text" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                          formControlName="clientName" [class.is-invalid]="formNewOpp.clientName.invalid && formNewOpp.clientName.touched"
+                           required>
+  
+                    </div>
+  
+                  </div>
+  
+                  <!-- Projects Type -->
+                  <div class="form-group">
+                      <div class="input-group input-group-sm mb-3">
+  
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-sm">Project Type</span>
+                          </div>
+  
+  
+                          <input type="" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                          formControlName="projectName" class="form-control" [class.is-invalid]="formNewOpp.projectName.invalid && formNewOpp.projectName.touched" required>
+                          <!-- <select type="" aria-label="Small" aria-describedby="inputGroup-sizing-sm"
+                          formControlName="projectName" class="form-control" [class.is-invalid]="formNewOpp.projectName.invalid && formNewOpp.projectName.touched" required>
+                              <option value="" disabled selected hidden >Choose Project</option>
+                              <option *ngFor="let Project of Projects" value='{{Project.serviceName}}'>{{Project.serviceName}}</option>
+                              
+                          </select>  -->
+  
+                    </div>
+                  </div>
+  
+                  <!-- Client Name -->
+                  <div class="form-group">
+                    <div class="input-group input-group-sm mb-3">
+  
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroup-sizing-sm">Exp. Revenue</span>
+                        </div>
+  
+                        <input type="number" min="1" class="form-control" 
+                        formControlName="revenue" [class.is-invalid]="formNewOpp.revenue.invalid && formNewOpp.revenue.touched"
+                        required>
+  
+                  </div>
+  
+                  </div>
+  
+                  <div class="form-group">
+                    <div class="input-group input-group-sm mb-3">
+  
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" id="inputGroup-sizing-sm">Priority</span>
+                        </div>
+                    
+                    <div id="radio_wrap" >
+                        <!-- <label>Low</label> -->
+                        <fa name="star" style="cursor: pointer;"  [ngClass]="projPriority >= 1 ? 'text-primary' : 'text-secondary'" (click)="selectPriority(1)" ></fa> 
+                    </div>
+    
+                    <div id="radio_wrap">
+                        <!-- <label>Medium</label> -->
+                        <fa name="star" style="cursor: pointer;" [ngClass]="projPriority >= 2 ? 'text-primary' : 'text-secondary'" (click)="selectPriority(2)" ></fa>
+                    </div>
+    
+                    <div id="radio_wrap" >
+                        <!-- <label>High</label> -->
+                        <fa name="star" style="cursor: pointer;"  [ngClass]="projPriority >= 3 ? 'text-primary' : 'text-secondary'" (click)="selectPriority(3)" ></fa> 
+                    </div>         
+    
+                  </div>
+                </div>
+  
+  
+              </form>
+  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-cancel" (click)="addNewOppModal.hide()">Cancel</button>
+          <button type="button" [disabled]="!newOppForm.valid"class="btn btn-confirm" (click)="submitNewOppForm(); addNewOppModal.hide()">Save</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

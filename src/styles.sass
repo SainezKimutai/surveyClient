@@ -1,12 +1,16 @@
 // Global Color Themes
     // Original secondaryTheme : #F7B308
 @import "~bootstrap/dist/css/bootstrap.css"
+$vanillaThemes: (primaryTheme: #074BFB, secondaryTheme: #F28500, tertiaryTheme:#7D7D7D, titleTheme: #1a1a1a, textTheme: #303030,  nevyBlue: #030451, light: #f0f3f5, dark: #2f353a, primary: #0275d8, secondary: #c8ced3, success: #4dbd74, info: #02b0cc, warning: #ffc107, danger: #f86c6b)
 
 $colorThemes: (primaryTheme:#074BFB, secondaryTheme: #074BFB,  tertiaryTheme:#7D7D7D, nevyBlue: #030451, light: #f0f3f5, dark: #2f353a, primary: #02b0cc, secondary: #c8ced3, success: #4dbd74, info: #63c2de, warning: #ffc107, danger: #f86c6b)
 
 $grayColors: (g100: #f0f3f5, g200: #e4e7ea, g300: #c8ced3, g400: #acb4bc, g500: #8f9ba6, g600: #73818f, g700: #5c6873, g800: #2f353a, g900: #23282c)
 
 // Color function
+@function vanillaTheme($color-name) 
+    @return map-get($vanillaThemes , $color-name)
+
 @function colorTheme($color-name) 
     @return map-get($colorThemes , $color-name)
 
@@ -63,21 +67,31 @@ $bgThrough: rgba(0,0,0,0.2)
 #main_body
     background-color: grayColor(g100)
     font-family: Montserrat
+    -ms-overflow-style: none
+    scrollbar-width: none
 
-::-webkit-scrollbar 
-  width: .3em
+::-webkit-scrollbar
+    width: 0px
+    background: transparent
 
-::-webkit-scrollbar-track 
-  background-color: transparent
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3)
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3)
-  -moz-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3)
-  -ms-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3)
-  -o-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3)
+::-webkit-scrollbar-thumb 
+    background-color: brandColor(brandPrimary)
+    width: 1px
+
+// ::-webkit-scrollbar 
+//   width: .3em
+
+// ::-webkit-scrollbar-track 
+//   background-color: transparent
+//   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3)
+//   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3)
+//   -moz-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3)
+//   -ms-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3)
+//   -o-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3)
 
  
-::-webkit-scrollbar-thumb 
-  background-color: grayColor(g700)
+// ::-webkit-scrollbar-thumb 
+//   background-color: grayColor(g700)
 
 // TOASTR BUG FIX 
 

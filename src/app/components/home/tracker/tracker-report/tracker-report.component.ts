@@ -113,10 +113,12 @@ planDescriptionEditorConfig: AngularEditorConfig = {
       // console.log(this.PlanOnReport._id)
       this.AllPlans = this.PlanOnReport.plan.filter((p) => p.tasks.length > 0 ).map((e) => e)
      
-      // this.ImprintLoader = true;
+      this.ImprintLoader = true;
       this.updatePage().then(() => {
-        this.formatPlan().then(() => {  
+        this.formatPlan().then(() => { 
+           
           this.mergeWithTreats().then(() => {
+            this.TaskPlan =  this.TaskPlan.filter((tP) => tP.threatArr.length !== 0).map((e) => e);
             this.TaskPlanOnView = this.TaskPlan;
             this.ImprintLoader = false;  
           })
@@ -143,10 +145,7 @@ updatePage() {
               dataTask => {
                 this.TaskPlan = dataTask.filter((task) => task.reportingUser === localStorage.getItem('loggedUserEmail')).map(e => e);;
                 this.TaskPlan.forEach((tsk) => { delete tsk.__v})
-               
-              this.formatAtivity().then(() => {
-                 resolve();
-                 })
+                 this.formatAtivity().then(() => { resolve(); })
               }, error => console.log('Error getting task plan')
             )
 
@@ -164,8 +163,6 @@ formatAtivity () {
   this.TaskPlan.forEach((task, ind, arr) => {
     let getActivity = this.ActivityPlan.filter((a) => a._id === task.activityId).map((e) => e);
     task.activityName = getActivity[0].activityPlan;
-
-
     if (ind === arr.length - 1){ resolve() }
   })
   if(this.TaskPlan.length === 0) { resolve(); console.log('Here')}
@@ -399,7 +396,9 @@ mergeWithTreats() {
           t.threatArr.push(p.threat.threat);
         }
       })
-      if (ind = arr.length -1) { resolve(); }
+      if (ind === arr.length - 1) {
+         resolve(); 
+      }
     })
     if(this.TaskPlan.length === 0) { resolve() }
   })
@@ -696,6 +695,7 @@ calculateReportProgrress() {
 
           this.formatPlan().then(() => {
             this.mergeWithTreats().then(() => {
+              this.TaskPlan =  this.TaskPlan.filter((tP) => tP.threatArr.length !== 0).map((e) => e);
               this.updatedPlanThreats();   
             })
           });
@@ -717,7 +717,7 @@ calculateReportProgrress() {
 updatedPlanThreats(){
 
   this.AllPlans.forEach((plan, ind, arr) => {
-
+    let planIndex = this.PlanOnReport.plan.indexOf(plan);
     let averageTask = []
     plan.tasks.forEach(taskId => {
       this.TaskPlan.forEach((taskPlan) => {
@@ -729,28 +729,22 @@ updatedPlanThreats(){
 
     let getTheAverage = (averageTask.reduce((a, b) => a + b, 0) / averageTask.length)
 
-    console.log(getTheAverage);
- 
     if (getTheAverage < 30) { 
       plan.threat.level = 'High'
-      console.log('High')
     };
     if (getTheAverage > 29 && getTheAverage < 61 ) { 
       plan.threat.level = 'Medium'
-      console.log('Medium')
     };
     if (getTheAverage > 60) { 
       plan.threat.level = 'Low'
-      console.log('Low')
     };
-    console.log(plan.threat.level)
 
+ 
+    this.PlanOnReport.plan[planIndex] = plan;
   
     if (ind === arr.length - 1) {
-      this.PlanOnReport.plan = this.AllPlans;
-      console.log(this.PlanOnReport)
+      // this.PlanOnReport.plan = this.AllPlans;
       this.plansService.updatePlan(this.PlanOnReport._id, this.PlanOnReport).subscribe((data) => {
-        console.log(data);
         this.PlanOnReport === data;
         this.updateThreatLevels();
       }, error => {console.log('Error updating Plans')} )
@@ -766,7 +760,6 @@ updatedPlanThreats(){
 
 
 updateThreatLevels() {
-  console.log(this.PlanOnReport);
   this.responseService.getOneResponse(this.PlanOnReport.responseId).subscribe(
     passData=> {
       this.checkForAnyThreatChanges(passData).then((respData) => {

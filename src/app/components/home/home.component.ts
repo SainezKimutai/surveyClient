@@ -15,7 +15,7 @@ import { faBars, faArrowLeft, faChartLine, faEdit, faUser, faUsers, faListAlt, f
 
 export class HomeComponent implements OnInit, OnDestroy {
 
-  salesNavBarActive = false;
+
   ImprintLoader = false;
 
   constructor(
@@ -63,6 +63,7 @@ public usersNavBarActive = false;
 public adminNavBarActive = false;
 public marketRateBarActive = false;
 public documentNavBarActive = false;
+public salesNavBarActive = false;
 
 public myInterval;
 
@@ -111,6 +112,7 @@ CheckActiveNavBar() {
   this.adminNavBarActive = false;
   this.marketRateBarActive = false;
   this.documentNavBarActive = false;
+  this.salesNavBarActive = false;
   if (localStorage.getItem('ActiveNav') === 'dashboard') {this.dashboardNavBarActive = true; }
   if (localStorage.getItem('ActiveNav') === 'survey') {this.surveyNavBarActive = true; }
   if (localStorage.getItem('ActiveNav') === 'profile') {this.profileNavBarActive = true; }
@@ -122,6 +124,7 @@ CheckActiveNavBar() {
   if (localStorage.getItem('ActiveNav') === 'admin') {this.adminNavBarActive = true; }
   if (localStorage.getItem('ActiveNav') === 'marketRates') {this.marketRateBarActive = true; }
   if (localStorage.getItem('ActiveNav') === 'document') {this.documentNavBarActive = true; }
+  if (localStorage.getItem('ActiveNav') === 'sales') {this.salesNavBarActive = true; }
 
 }
 
