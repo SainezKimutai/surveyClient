@@ -111,7 +111,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
     this.ImprintLoader = true;
     this.userService.loginUser(this.loginForm).subscribe(
-     async dataUser =>  {
+    dataUser =>  {
         if (dataUser.userType === 'customer') {
         sessionStorage.setItem('loggedUserToken', dataUser.token);
         sessionStorage.setItem('loggedUserName', dataUser.name);

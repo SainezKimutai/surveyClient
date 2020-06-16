@@ -174,7 +174,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         };
 
         this.userService.registerUser(newUserData).subscribe(
-           async dataUser => {
+          dataUser => {
            sessionStorage.setItem('loggedUserToken', dataUser.token);
            sessionStorage.setItem('loggedUserName', dataUser.name);
            sessionStorage.setItem('loggedUserInstitution', dataUser.institutionId);
