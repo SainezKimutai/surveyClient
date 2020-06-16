@@ -14,11 +14,6 @@ export class SalesSentEmailService {
     url = `${dev.connect}api/salesSentEmail/`;
 
 
-    // header = new HttpHeaders().set(
-    //   'Authorization', `Bearer ${window.sessionStorage.getItem('loggedUserToken')}`
-    // );
-
-
     constructor( private http: HttpClient ) { }
 
 

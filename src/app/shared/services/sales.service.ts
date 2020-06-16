@@ -14,9 +14,6 @@ export class SalesService {
     url = `${dev.connect}api/opps/`;
 
 
-    // header = new HttpHeaders().set(
-    //   'Authorization', `Bearer ${window.sessionStorage.getItem('loggedUserToken')}`
-    // );
 
     constructor( private http: HttpClient ) {  }
 

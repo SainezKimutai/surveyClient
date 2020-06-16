@@ -14,11 +14,6 @@ export class SalesCategoryService {
     url = `${dev.connect}api/salesCategory/`;
 
 
-    // header = new HttpHeaders().set(
-    //   'Authorization', `Bearer ${window.sessionStorage.getItem('loggedUserToken')}`
-    // );
-
-
     constructor( private http: HttpClient ) { }
 
 

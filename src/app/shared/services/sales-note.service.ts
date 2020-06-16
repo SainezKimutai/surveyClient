@@ -14,11 +14,6 @@ export class SalesNoteService {
     url = `${dev.connect}api/salesNotes/`;
 
 
-    // header = new HttpHeaders().set(
-    //   'Authorization', `Bearer ${window.sessionStorage.getItem('loggedUserToken')}`
-    // );
-
-
     constructor( private http: HttpClient ) {  }
 
 
