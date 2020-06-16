@@ -41,7 +41,7 @@ export class TrackerReasonService {
         return this.http.delete<any>(this.url + 'delete/' + id, {headers : header});
     }
     getAllInstitutionTrackerReasons(){
-        const data = {institutionId: localStorage.getItem('loggedUserID')};
+        const data = {institutionId: sessionStorage.getItem('loggedUserID')};
         return this.http.post<any> (this.url + 'institution/', data, {headers: header});
     }
 

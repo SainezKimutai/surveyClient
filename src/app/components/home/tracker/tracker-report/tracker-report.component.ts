@@ -109,7 +109,7 @@ planDescriptionEditorConfig: AngularEditorConfig = {
 
 
     ngOnInit() {
-      this.PlanOnReport = JSON.parse(localStorage.getItem('planOnReport'));
+      this.PlanOnReport = JSON.parse(sessionStorage.getItem('planOnReport'));
       // console.log(this.PlanOnReport._id)
       this.AllPlans = this.PlanOnReport.plan.filter((p) => p.tasks.length > 0 ).map((e) => e)
      
@@ -143,7 +143,7 @@ updatePage() {
             
             this.taskPlanService.getAllTaskPlanByCompanyId().subscribe(
               dataTask => {
-                this.TaskPlan = dataTask.filter((task) => task.reportingUser === localStorage.getItem('loggedUserEmail')).map(e => e);;
+                this.TaskPlan = dataTask.filter((task) => task.reportingUser === sessionStorage.getItem('loggedUserEmail')).map(e => e);;
                 this.TaskPlan.forEach((tsk) => { delete tsk.__v})
                  this.formatAtivity().then(() => { resolve(); })
               }, error => console.log('Error getting task plan')
@@ -689,7 +689,7 @@ calculateReportProgrress() {
 
         // console.log(dataTask);
 
-        this.TaskPlan = dataTask.filter((task) => task.reportingUser === localStorage.getItem('loggedUserEmail')).map(e => e);
+        this.TaskPlan = dataTask.filter((task) => task.reportingUser === sessionStorage.getItem('loggedUserEmail')).map(e => e);
         this.TaskPlan.forEach((tsk) => { delete tsk.__v});
         this.formatAtivity().then(() => {
 
@@ -807,7 +807,7 @@ checkForAnyThreatChanges(dataResp) {
 
 
 ngOnDestroy() {
-  localStorage.removeItem('planOnReport')
+  sessionStorage.removeItem('planOnReport')
 }
 
 

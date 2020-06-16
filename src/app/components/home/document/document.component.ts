@@ -20,6 +20,6 @@ export class DocumentComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-      localStorage.setItem('ActiveNav', 'document');
+      sessionStorage.setItem('ActiveNav', 'document');
     }
 }

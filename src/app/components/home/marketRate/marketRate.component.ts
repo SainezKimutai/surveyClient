@@ -64,7 +64,7 @@ export class MarketRateComponent implements OnInit {
 
   ngOnInit() {
 
-    localStorage.setItem('ActiveNav', 'marketRates');
+    sessionStorage.setItem('ActiveNav', 'marketRates');
 
     this.gdpForm = {
       dateUpdated: Date,

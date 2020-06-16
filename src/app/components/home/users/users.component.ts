@@ -71,10 +71,10 @@ export class UsersComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
 
-    window.localStorage.setItem('ActiveNav', 'users');
-    if (localStorage.getItem('permissionStatus') === 'isAdmin') {
+    window.sessionStorage.setItem('ActiveNav', 'users');
+    if (sessionStorage.getItem('permissionStatus') === 'isAdmin') {
         this.toAdmin = true;
-    } else if (localStorage.getItem('permissionStatus') === 'isCustomer') {
+    } else if (sessionStorage.getItem('permissionStatus') === 'isCustomer') {
         this.toCustomer = true;
     }
 
@@ -87,8 +87,8 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.getUsersDepartments(this.Users);
 
 
-        // if (localStorage.getItem('permissionStatus') === 'isCustomer') {
-        //  this.Users = this.Users.filter((user) => user.companyId === localStorage.getItem('loggedCompanyId')).map(e => e);
+        // if (sessionStorage.getItem('permissionStatus') === 'isCustomer') {
+        //  this.Users = this.Users.filter((user) => user.companyId === sessionStorage.getItem('loggedCompanyId')).map(e => e);
         // }
       },
       error => {
@@ -104,7 +104,7 @@ export class UsersComponent implements OnInit, OnDestroy {
           return 0;
       });
         this.CustomerCompanies = this.AllCompanies;
-        for (const comp of this.AllCompanies) { if (comp._id === localStorage.getItem('loggedCompanyId')) { this.myCompany = comp; break; }}
+        for (const comp of this.AllCompanies) { if (comp._id === sessionStorage.getItem('loggedCompanyId')) { this.myCompany = comp; break; }}
       },
       error => console.log('Error geting all Companies')
     );
@@ -128,7 +128,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
     this.inviteForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      companyId: (this.toAdmin ? 'none' : localStorage.getItem('loggedCompanyId')),
+      companyId: (this.toAdmin ? 'none' : sessionStorage.getItem('loggedCompanyId')),
       userType: (this.toAdmin ? ['', [Validators.required]] : 'customer'),
       userRole: (this.toAdmin ? 'admin' : ['', [Validators.required]]),
       departmentId: (this.toAdmin ? 'none' : ['', [Validators.required]]),
@@ -157,8 +157,8 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.userService.getAllUsers().subscribe(
       data => {
         this.Users = data;
-        if (localStorage.getItem('permissionStatus') === 'isCustomer') {
-          this.Users = this.Users.filter((user) => user.companyId === localStorage.getItem('loggedCompanyId')).map(e => e);
+        if (sessionStorage.getItem('permissionStatus') === 'isCustomer') {
+          this.Users = this.Users.filter((user) => user.companyId === sessionStorage.getItem('loggedCompanyId')).map(e => e);
          }
       },
       error => {
@@ -201,7 +201,7 @@ export class UsersComponent implements OnInit, OnDestroy {
             this.filterUsers('super');
           }
           if (this.toCustomer) {
-            this.filterUsers(localStorage.getItem('loggedCompanyId'));
+            this.filterUsers(sessionStorage.getItem('loggedCompanyId'));
           }
         }
        } else {
@@ -214,7 +214,7 @@ export class UsersComponent implements OnInit, OnDestroy {
             this.filterUsers('super');
           }
           if (this.toCustomer) {
-            this.filterUsers(localStorage.getItem('loggedCompanyId'));
+            this.filterUsers(sessionStorage.getItem('loggedCompanyId'));
           }
         }
       }
@@ -315,7 +315,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
 
   // email: ['', [Validators.required, Validators.email]],
-  // companyId: (this.toAdmin ? '' : localStorage.getItem('loggedCompanyId')),
+  // companyId: (this.toAdmin ? '' : sessionStorage.getItem('loggedCompanyId')),
   // userType: (this.toAdmin ? ['', [Validators.required]] : 'customer'),
   // userRole: (this.toAdmin ? 'admin' : ['', [Validators.required]]),
   // departmentId: (this.toAdmin ? '' : ['', [Validators.required]]),
@@ -384,13 +384,13 @@ export class UsersComponent implements OnInit, OnDestroy {
 
 
     let dataToBeSent = {
-      sender: localStorage.getItem('loggedUserEmail'),
+      sender: sessionStorage.getItem('loggedUserEmail'),
       reciever: this.inviteForm.value.email,
       companyId: this.inviteForm.value.companyId,
       userType: this.inviteForm.value.userType,
       userRole: this.inviteForm.value.userRole,
       deptId: this.inviteForm.value.departmentId,
-      token: localStorage.getItem('loggedUserToken')
+      token: sessionStorage.getItem('loggedUserToken')
     };
     // console.log(dataToBeSent)
     this.userService.inviteUser(dataToBeSent).subscribe(

@@ -79,7 +79,7 @@ export class AnswerComponent implements OnInit {
 
 
   ngOnInit() {
-    localStorage.setItem('ActiveNav', 'survey');
+    sessionStorage.setItem('ActiveNav', 'survey');
     this.activeRoute.queryParams.subscribe(params => {
           this.surveyId = params.surveyId;
           this.surveyName = params.surveyName;
@@ -87,8 +87,8 @@ export class AnswerComponent implements OnInit {
 
     let dataToSend = {
       surveyId: this.surveyId,
-      companyId: localStorage.getItem('loggedCompanyId'),
-      userId: localStorage.getItem('loggedUserID')
+      companyId: sessionStorage.getItem('loggedCompanyId'),
+      userId: sessionStorage.getItem('loggedUserID')
     }
     
     this.questionService.getQuestionsInASurvey(this.surveyId).
@@ -611,8 +611,8 @@ async proceedToNext(id){
   structureQuestions() {
     this.answerStructure = {
       surveyId: this.surveyId,
-      userId: localStorage.getItem('loggedUserID'),
-      companyId: localStorage.getItem('loggedCompanyId')
+      userId: sessionStorage.getItem('loggedUserID'),
+      companyId: sessionStorage.getItem('loggedCompanyId')
     };
   }
 
@@ -630,9 +630,9 @@ async proceedToNext(id){
         // this.notification.showSuccess('Survey responses submited', 'Success');
         // this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
 
-        if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
-        if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
-        if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/reports']); }, 4000);  }
+        if ( sessionStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
+        if ( sessionStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
+        if ( sessionStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/reports']); }, 4000);  }
 
 
       }, err => {{this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }});
@@ -646,9 +646,9 @@ async proceedToNext(id){
           // this.notification.showSuccess('Survey responses submited', 'Success');
           // this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
 
-          if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
-          if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
-          if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 4000);  }
+          if ( sessionStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
+          if ( sessionStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
+          if ( sessionStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 4000);  }
 
         },
         error => {this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }
@@ -678,9 +678,9 @@ async proceedToNext(id){
           // this.notification.showSuccess('Survey responses submited', 'Success');
           // this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
 
-          if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
-          if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
-          if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 4000);  }
+          if ( sessionStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
+          if ( sessionStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
+          if ( sessionStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 4000);  }
 
         }, err => {{this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }});
       }
@@ -693,9 +693,9 @@ async proceedToNext(id){
             // this.notification.showSuccess('Survey responses submited', 'Success');
             // this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
 
-            if ( localStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
-            if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
-            if ( localStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 4000);  }
+            if ( sessionStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
+            if ( sessionStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
+            if ( sessionStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 4000);  }
 
           },
           error => {this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }
@@ -1045,9 +1045,9 @@ removeSkipedQuizOnEdit(id) {
 
 
   back(){
-    if ( localStorage.getItem('permissionStatus') === 'isThirdParty') {  this.router.navigate(['/home/dashboard']); }
-    if ( localStorage.getItem('permissionStatus') === 'isAdmin') {  this.router.navigate(['/home/dashboard']); }
-    if ( localStorage.getItem('permissionStatus') === 'isCustomer') { this.router.navigate(['/home/survey']); }
+    if ( sessionStorage.getItem('permissionStatus') === 'isThirdParty') {  this.router.navigate(['/home/dashboard']); }
+    if ( sessionStorage.getItem('permissionStatus') === 'isAdmin') {  this.router.navigate(['/home/dashboard']); }
+    if ( sessionStorage.getItem('permissionStatus') === 'isCustomer') { this.router.navigate(['/home/survey']); }
   }
 
 

@@ -14,7 +14,7 @@ export class CustomerGuard implements CanActivate {
 
     canActivate( next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
-        if (localStorage.getItem('permissionStatus') === 'isCustomer') {
+        if (sessionStorage.getItem('permissionStatus') === 'isCustomer') {
         return true;
         }
 

@@ -111,12 +111,12 @@ public taskOnEditId = '';
 ngOnInit() {
   this.ImprintLoader = true;
   // ckeck if project exists
-  if (window.localStorage.getItem('salesEditItemId')) {
+  if (window.sessionStorage.getItem('salesEditItemId')) {
 
-    localStorage.setItem('ActiveNav', 'sales');
+    sessionStorage.setItem('ActiveNav', 'sales');
 
         // Get The project For Editing
-    this.salesService.getOppProject(localStorage.getItem('salesEditItemId')).subscribe(
+    this.salesService.getOppProject(sessionStorage.getItem('salesEditItemId')).subscribe(
 
           data => {
             this.setData(data).then(() => {
@@ -367,7 +367,7 @@ saveProjectDurationDates() {
     projectEndDate: new Date(this.projectToDate.year, this.projectToDate.month - 1, this.projectToDate.day + 1)
   };
 
-  this.salesService.updateOppProject(window.localStorage.getItem('salesEditItemId'), dataToBeSent).subscribe(
+  this.salesService.updateOppProject(window.sessionStorage.getItem('salesEditItemId'), dataToBeSent).subscribe(
     data => {
 
       this.setData(data).then(() => {
@@ -396,7 +396,7 @@ submitProjectManager() {
   this.ImprintLoader = true;
 
   if (this.projectMangerInput === '') { this.ImprintLoader = false; this.notifyService.showWarning('Please select project manger', 'Blank field'); return; }
-  this.salesService.updateOppProject(localStorage.getItem('salesEditItemId'), { projectManager:  this.projectMangerInput}).subscribe(
+  this.salesService.updateOppProject(sessionStorage.getItem('salesEditItemId'), { projectManager:  this.projectMangerInput}).subscribe(
     data => {
       this.OpennedProject = data;
 
@@ -422,7 +422,7 @@ submitProjectRevenue() {
   this.ImprintLoader = true;
 
   if (this.projectRevenueInput === null) { this.ImprintLoader = false; this.notifyService.showWarning('Please type Revenue', 'Blank field'); return; }
-  this.salesService.updateOppProject(localStorage.getItem('salesEditItemId'), { revenue:  this.projectRevenueInput}).subscribe(
+  this.salesService.updateOppProject(sessionStorage.getItem('salesEditItemId'), { revenue:  this.projectRevenueInput}).subscribe(
     data => {
       this.OpennedProject = data;
 
@@ -459,7 +459,7 @@ selectPriority(num) {
 
 saveprojectPriority() {
   this.ImprintLoader = true;
-  this.salesService.updateOppProject(localStorage.getItem('salesEditItemId'), {priority: this.projectPriority} ).subscribe(
+  this.salesService.updateOppProject(sessionStorage.getItem('salesEditItemId'), {priority: this.projectPriority} ).subscribe(
     data => {
       this.OpennedProject = data;
       this.setData(data).then(() => {
@@ -546,7 +546,7 @@ addTask() {
     return true;
   }).map(e => e);
 
-  this.salesService.updateOppProject(window.localStorage.getItem('salesEditItemId'), {task: dataToBeUpdated}).subscribe(
+  this.salesService.updateOppProject(window.sessionStorage.getItem('salesEditItemId'), {task: dataToBeUpdated}).subscribe(
     data => {
       this.setData(data).then(() => {
         this.convertDatesToNgbDates(data).then(() => {
@@ -589,7 +589,7 @@ saveEditTask() {
     return true;
   }).map(e => e);
 
-  this.salesService.updateOppProject(localStorage.getItem('salesEditItemId'), {task: dataToBeUpdated}).subscribe(
+  this.salesService.updateOppProject(sessionStorage.getItem('salesEditItemId'), {task: dataToBeUpdated}).subscribe(
     data => {
       this.setData(data).then(() => {
         this.convertDatesToNgbDates(data).then(() => {
@@ -620,7 +620,7 @@ removeProjectTask(i) {
     return true;
   }).map(e => e);
 
-  this.salesService.updateOppProject(window.localStorage.getItem('salesEditItemId'), {task: dataToBeUpdated}).subscribe(
+  this.salesService.updateOppProject(window.sessionStorage.getItem('salesEditItemId'), {task: dataToBeUpdated}).subscribe(
     data => {
       this.setData(data).then(() => {
         this.convertDatesToNgbDates(data).then(() => {
@@ -645,11 +645,11 @@ removeProjectTask(i) {
 // // Loanchproject
 // lauchProject() {
 //   this.ImprintLoader = true;
-//   this.salesService.getOppProject(localStorage.getItem('salesEditItemId')).subscribe(
+//   this.salesService.getOppProject(sessionStorage.getItem('salesEditItemId')).subscribe(
 //     data => {
 
 //       let newProject = {
-//         companyId: localStorage.getItem('loggedCompanyId'),
+//         companyId: sessionStorage.getItem('loggedCompanyId'),
 //         clientName : data.clientName,
 //         projectName: data.projectName,
 //         projectManager: data.projectManager,
@@ -705,7 +705,7 @@ deleteProject() {
 submitDeleted() {
   this.ImprintLoader = true;
   let clientChecked = this.OpennedProject.clientName;
-  this.salesService.deleteOppProject(window.localStorage.getItem('salesEditItemId')).subscribe(
+  this.salesService.deleteOppProject(window.sessionStorage.getItem('salesEditItemId')).subscribe(
     data => {
       this.cleanUpTheClient(clientChecked);
 
@@ -772,7 +772,7 @@ cleanUpTheClient(clientChecked) {
 
 
 ngOnDestroy() {
-  window.localStorage.removeItem('salesEditItemId');
+  window.sessionStorage.removeItem('salesEditItemId');
 }
 
 

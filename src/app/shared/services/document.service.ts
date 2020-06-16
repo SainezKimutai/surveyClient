@@ -42,7 +42,7 @@ export class DocumentService {
     }
 
     getAllDocumentsByComponayId() {
-        const data = {companyId: localStorage.getItem('loggedCompanyId')};
+        const data = {companyId: sessionStorage.getItem('loggedCompanyId')};
         return this.http.post<any> (this.url + 'getByCompanyId/', data, {headers: header});
     }
 

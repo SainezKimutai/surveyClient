@@ -42,7 +42,7 @@ export class ActivityPlanService {
     }
 
     getAllActivityPlanByInstitutionId() {
-        const data = {institutionId: localStorage.getItem('loggedUserInstitution')};
+        const data = {institutionId: sessionStorage.getItem('loggedUserInstitution')};
         return this.http.post<any> (this.url + 'institution/', data, {headers: header});
     }
 

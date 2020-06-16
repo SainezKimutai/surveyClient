@@ -41,7 +41,7 @@ export class TrackerComponent implements OnInit {
 
 
     ngOnInit() {
-      localStorage.setItem('ActiveNav', 'tracker');
+      sessionStorage.setItem('ActiveNav', 'tracker');
       this.updatePage()
       
     }
@@ -66,7 +66,7 @@ export class TrackerComponent implements OnInit {
 
 
   editReport(plan: any) {
-    localStorage.setItem('planOnReport', JSON.stringify(plan))
+    sessionStorage.setItem('planOnReport', JSON.stringify(plan))
     this.PlanStatus = false;
     this.ReportStatus = true;
   }

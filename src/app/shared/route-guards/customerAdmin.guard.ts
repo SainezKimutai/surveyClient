@@ -14,7 +14,7 @@ export class CustomerAdminGuard implements CanActivate {
 
     canActivate( next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
 
-        if (localStorage.getItem('permissionStatus') === 'isCustomer' || localStorage.getItem('permissionStatus') === 'isAdmin') {
+        if (sessionStorage.getItem('permissionStatus') === 'isCustomer' || sessionStorage.getItem('permissionStatus') === 'isAdmin') {
         return true;
         }
 

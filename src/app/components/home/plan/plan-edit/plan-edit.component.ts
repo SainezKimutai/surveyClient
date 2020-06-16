@@ -133,9 +133,9 @@ planDescriptionEditorConfig: AngularEditorConfig = {
 
 ngOnInit() {
     this.ImprintLoader = true;
-    this.PlanOnEdit = JSON.parse(localStorage.getItem('planOnEdit'))
+    this.PlanOnEdit = JSON.parse(sessionStorage.getItem('planOnEdit'))
     this.task = {
-      companyId : localStorage.getItem('loggedCompanyId'),
+      companyId : sessionStorage.getItem('loggedCompanyId'),
       activityId: '',
       priority: '',
       kpi: null,
@@ -198,7 +198,7 @@ updatePage() {
   return new Promise((resolve, reject) => {
     this.userService.getAllUsers().subscribe(
       data => {
-        this.CompanyUsers = data.filter((user) => user.companyId === localStorage.getItem('loggedCompanyId')).map(e => e);
+        this.CompanyUsers = data.filter((user) => user.companyId === sessionStorage.getItem('loggedCompanyId')).map(e => e);
 
         this.activityPlanService.getAllActivityPlan().subscribe(
           dataActivity => {
@@ -332,7 +332,7 @@ openAddTaskModal() {
 closeTaskForm() {
   this.ActiveModel = 'edit';
   this.task = {
-    companyId : localStorage.getItem('loggedCompanyId'),
+    companyId : sessionStorage.getItem('loggedCompanyId'),
     activityId: '',
     priority: '',
     kpi: null,
@@ -470,7 +470,7 @@ saveThePlan() {
 
                      this.ActiveModel = 'edit';
                     this.task = {
-                      companyId : localStorage.getItem('loggedCompanyId'),
+                      companyId : sessionStorage.getItem('loggedCompanyId'),
                       activityId: '',
                       priority: '',
                       kpi: null,
@@ -689,7 +689,7 @@ addActivityPlan() {
   this.ImprintLoader = true;
   this.activityPlanService.createActivityPlan({
     activityPlan: this.activityPlan, 
-    institutionId: localStorage.getItem('loggedUserInstitution'),
+    institutionId: sessionStorage.getItem('loggedUserInstitution'),
     threatId: this.activityPlanThreatId
   }).subscribe(
     data => {
@@ -808,7 +808,7 @@ submitNewOppForm() {
   // });
 
   let structuredData = {
-    companyId:  localStorage.getItem('loggedCompanyId'),
+    companyId:  sessionStorage.getItem('loggedCompanyId'),
     projectName: this.newOppForm.value.projectName,
     clientName: this.newOppForm.value.clientName,
     projectManager: '',
@@ -819,7 +819,7 @@ submitNewOppForm() {
     projectDuration: null,
     projectStartDate: null,
     projectEndDate: null,
-    createdBy: localStorage.getItem('loggedUserEmail'),
+    createdBy: sessionStorage.getItem('loggedUserEmail'),
     createdOn: new Date()
   };
   this.ImprintLoader = true;
@@ -836,7 +836,7 @@ submitNewOppForm() {
 
 createNewClient(client) {
   let newClient = {
-    companyId:  localStorage.getItem('loggedCompanyId'),
+    companyId:  sessionStorage.getItem('loggedCompanyId'),
     companyName: client.clientName,
     managerName: '',
     primaryTelNumber: null,
@@ -867,7 +867,7 @@ createNewClient(client) {
 
 
 ngOnDestroy() {
-  localStorage.removeItem('planOnEdit')
+  sessionStorage.removeItem('planOnEdit')
 }
 
 

@@ -42,7 +42,7 @@ public thisYear = this.today.getFullYear();
   ) { }
 
  ngOnInit() {
-  localStorage.setItem('ActiveNav', 'dashboard');
+  sessionStorage.setItem('ActiveNav', 'dashboard');
  }
 
 
