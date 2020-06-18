@@ -11,17 +11,215 @@
 
 
 
-<main>
 
 
 
-    <div class="side-bg"></div>
+
+
+
+
+
+
+
+<main class="main-wrap">
+
+    <section class="top-section">
+        <div class="image-wrap">
+            <img src="../../../assets/images/logo1.png" alt="logo" >
+        </div>
+    </section>
+    
+    <section class="body-section">
+    
+    <div class="info-section">
+        <div class="info-wrap">
+            <div class="top-paragraph">
+                <p>
+                    As a business leader today, <span>identifying your risk</span> is the first and most crucial step 
+                    towards re-organizing or even rebuilding your market strategies to mitigate against revenue 
+                    losses and ensure business continuity when faced with disruptions in your business environment. 
+                </p>
+            </div>
+            <div class="line-wrap d-flex">
+                <hr class="line mr-auto">
+            </div>
+          
+            <div class="mid-paragraph">
+                <p>
+                    By completing a short survey, <span>our automated  Business Continuity Planning  platform,</span> will generate a risk assessment report 
+                    for your business. You will <span>immediately</span> receive recommendations on areas that require continuity 
+                    planning to ensure your business’s survival in this volatile environment.
+                </p>
+            </div>
+            <div class="bottom-paragraph">
+                <h6>
+                    Click on <span  routerLink="/landing_page">Login</span> to start the survey
+                </h6>
+                <h6 class="mt-3">
+                    or sign up if you do not have an account.
+                </h6>
+            </div>
+        </div>
+    </div>
     
     
+    <div class="form-section">
     
-    <section class="body-section d-flex">
-       
+        <div class="form-wrap">
+    
+            <form class="form">
+    
+                <div [ngClass]="formOne ? 'dynamic-wrapper' : 'dynamic-wrapper slide'">
+                    
+                    <div class="top-wrap">
+                        <div class="top-title">
+                            <h4>Sign Up</h4>
+                            <h5>By filling the form below to get instant access</h5>
+                        </div>
+                        <div class="icon-wrap">
+                            <fa-icon [icon]="faPen"></fa-icon>
+                        </div>
+                        
+                    </div>
+
+                    <div class="head">
+                        <h4>Company Info</h4>
+                    </div>
         
+                    <div class="form-group">
+                        <div class="wrap d-flex"> 
+                        <fa-icon [icon]="faBuilding"></fa-icon>
+                        <input type="text" name="companyName" [(ngModel)]="registrationForm.companyName" placeholder="Company Name">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="wrap d-flex"> 
+                        <fa-icon [icon]="faUsers"></fa-icon>
+                        <input type="number" name="numberOfEmployees" [(ngModel)]="registrationForm.numberOfEmployees" placeholder="Number of Employees">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="wrap d-flex"> 
+                        <fa-icon [icon]="faIndustry"></fa-icon>
+                        <select type="text" name="companyType" [(ngModel)]="registrationForm.companyType">
+                            <option value="" disabled selected hidden >Industry Type</option>
+                            <option *ngFor="let item of AllIndustrys"  [value]="item.industryName">{{item.industryName}}</option>
+                        </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="wrap d-flex"> 
+                        <fa-icon [icon]="faGlobe"></fa-icon>
+                        <input type="text" name="companyWebsite" [(ngModel)]="registrationForm.companyWebsite" placeholder="Company Website">
+                        </div>
+                    </div>
+
+                    
+                    <div class="btn-wrap d-flex">
+                        <button [disabled]="registrationForm.companyName === '' ||  registrationForm.numberOfEmployees === '' || registrationForm.companyType === '' || registrationForm.companyWebsite === ''" 
+                        class="btn btn-sm btn-next ml-auto" (click)="moveFormOne2Two()">Next</button>
+                    </div>
+
+                    <div class="text-muted">
+                        <h6>1 of 2</h6>
+                    </div>
+
+                </div>
+                
+
+                <div [ngClass]="formTwo ? 'dynamic-wrapper' : 'dynamic-wrapper slide'">
+
+                    <div class="head">
+                        <h4>Personal Info</h4>
+                    </div>
+
+                    <div *ngIf="!thirdParty" class="form-group">
+                        <div class="wrap d-flex"> 
+                        <fa-icon [icon]="faIndustry"></fa-icon>
+                        <select type="text" name="institution" [(ngModel)]="registrationForm.institutionId">
+                            <option value="" disabled selected hidden >Associate Institution</option>
+                            <option *ngFor="let item of AllInstitutions"  [value]="item._id">{{item.name}}</option>
+                        </select>
+                        </div>
+            
+                    </div>
+        
+                    <div class="form-group">
+                        <div class="wrap d-flex"> 
+                        <fa-icon [icon]="faEnvelope"></fa-icon>
+                        <input type="text"  name="email" [(ngModel)]="registrationForm.email" placeholder="Email Address">
+                        </div>
+                    </div>
+                    
+                   
+                    <div class="form-group">
+                        <div class="wrap d-flex"> 
+                        <fa-icon [icon]="faKey"></fa-icon>
+                        <input type="password" name="password" [(ngModel)]="registrationForm.password" placeholder="Password">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="wrap d-flex"> 
+                        <fa-icon [icon]="faKey"></fa-icon>
+                        <input type="password" name="password2" [(ngModel)]="registrationForm.password2" (keyup)="passwordConformation()"  placeholder="Confirm Password">
+                        </div>
+                    </div>
+        
+                    
+                    <div class="btn-wrap d-flex">
+                        <button class="btn btn-sm btn-back mr-auto " (click)="backToFormOne()">back</button>
+                        <button class="btn btn-sm btn-submit ml-auto"  [disabled]="registrationForm.email === '' || !passwordMatch || registrationForm.institutionId === '' || !registrationForm.institutionId "
+                         (click)="register()">Submit</button>
+                    </div>
+
+                    <div class="text-muted">
+                        <h6>2 of 2</h6>
+                    </div>
+
+                </div>
+
+                <div class="footer">
+                    <h4>Already have an account ?</h4>
+                    <a routerLink="/landing_page">Login</a>
+                </div>
+
+
+            </form>
+
+    </div>
+    
+    </div>
+    
+</section>
+    
+    
+</main>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<main hidden >
+
+
+
+<div class="side-bg"></div>
+    
+<section class="body-section d-flex">
+       
         <div class="form-section mx-auto">
     
     
@@ -41,6 +239,17 @@
             <form class="form">
     
                 <div [ngClass]="formOne ? 'dynamic-wrapper' : 'dynamic-wrapper slide'">
+
+                    <div class="top-wrap">
+                        <div class="top-title">
+                            <h4>Sign Up</h4>
+                            <h5>By filling the form below to get instant access</h5>
+                        </div>
+                        <div class="icon-wrap">
+                            <fa-icon [icon]="faPen"></fa-icon>
+                        </div>
+                        
+                    </div>
 
                     <div class="head">
                         <h4>Company Info</h4>
@@ -83,6 +292,17 @@
                 
 
                 <div [ngClass]="formTwo ? 'dynamic-wrapper' : 'dynamic-wrapper slide'">
+
+                    <div class="top-wrap">
+                        <div class="top-title">
+                            <h4>Sign Up</h4>
+                            <h5>By filling the form below to get instant access</h5>
+                        </div>
+                        <div class="icon-wrap">
+                            <fa-icon [icon]="faPen"></fa-icon>
+                        </div>
+                        
+                    </div>
 
                     <div class="head">
                         <h4>Personal Info</h4>
