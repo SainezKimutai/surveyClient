@@ -1,454 +1,180 @@
 @import 'src/styles.sass'
 
-main
+
+
+.main-wrap
     width: 100%
-    height: 100%
-
-
-main .side-bg
-    position: absolute
+    height: fit-content
+    min-height: 100%
+    background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+    background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+    -webkit-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+    -moz-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+    -ms-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+    -o-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+    background-size: cover
+    -webkit-background-size: cover
+    -moz-background-size: cover
+    -ms-background-size: cover
+    -o-background-size: cover
+.main-wrap .top-section
     width: 100%
-    height: 100%
-    clip-path: polygon(0 0, 50% 0, 50% 100%, 0% 100%)
-    background-color: colorTheme(primaryTheme)
-
-
+    display: grid 
+    grid-template-columns: repeat(2, 1fr)
+    grid-gap: 0
     @include desktop_md
-        clip-path: polygon(100% 0, 100% 55%, 0 55%, 0 0)
-
-    @include desktop_sm
-        clip-path: polygon(100% 0, 100% 90%, 0 90%, 0 0)
-
-    @include desktop_xm
-        clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 0)
-
-
-
-
-.body-section
-    position: absolute
-    padding: 3em 1em
-    width: 100%
-    height: 100%
-    display: flex
-    align-items: strecth
-
-    @include desktop_md
-        padding: 1em 1em
-
-    @include desktop_sm
-        padding: 3em 1em 3em 1em
-
-
-    @include desktop_xm
-        padding: 1em 1em 3em 1em
-
-
-
-
-
-
-
-
-
-.body-section .form-section
-    background-color: transparent
-    border-radius: 5px
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, .4)
-    width: 100%
-    max-width: 700px
-    height: 80%
-    margin: 3em
-    display: flex
-    align-items: stretch
-
-    @include desktop_md
-        display: flex
-        flex-direction: column
-        height: fit-content
-
-
-#img-wrap
-    margin: 0 auto
-    width: fit-content
-    height: 200px
-    display: flex
-    flex-direction: column
-    justify-content: center
-
-
-    img 
-        width: 150px 
-        height: 50px
-
-    
-.body-section .form-section .logo-section
-    margin: auto
-    width: 100%
-    height: 100%
-    padding: 1em
-    display: flex
-    align-items: stretch
-
-    .wrap
-        margin: auto
-        width: fit-content
-        height: 100%
-        display: flex
-        flex-direction: column
-        justify-content: center
-
-        h4
-            font-size: 22px
-            margin: 1em auto
-            color: white
-
+        display: grid 
+        grid-template-columns: repeat(1, 1fr)  
+    .image-wrap
+        width: 100%
+        display: flex 
         img 
-            width: 200px 
-            height: 150px
-
-.body-section .form-section .logo-section .wrap
+            margin: auto
+            width: 200px
+.main-wrap .body-section
+    width: 100%
+    display: grid 
+    grid-template-columns: repeat(2, 1fr)
+    grid-gap: 1em
+    @include desktop_md
+        display: grid 
+        grid-template-columns: repeat(1, 1fr)  
+.main-wrap .body-section .info-section
+    width: 100%
+    display: flex 
+    align-items: stretch
+.main-wrap .body-section .info-section .info-wrap
+    margin: auto
+    max-width: 500px
+    width: 100%
+    display: flex 
+    flex-direction: column
+    background-color: rgba(7, 75, 251, .4)
+    padding: 1em 
+    border-radius: 5px
     .top-paragraph
         width: 100%
-
         p 
             font-weight: 400 !important
             font-size: 15px
             color: whitesmoke
-
             span 
                 font-weight: bolder
-                color: #f7b307
-
+                color: colorTheme(secondaryTheme)
     .line-wrap
         width: 6em
-
         .line 
             margin: 1.5em 0 2.2em 0 !important
             width: 100%
-            border: solid 2px #f7b307
-        
-
+            border: solid 2px colorTheme(secondaryTheme)
     .mid-paragraph
         padding: 0 0 0 4em
-
         @include desktop_xm
             padding: 0
-
         p 
             color: whitesmoke 
             font-size: 15px
-
             span 
                 font-weight: bolder
-                color: #f7b307
-
-
+                color: colorTheme(secondaryTheme)
     .bottom-paragraph
         padding: 1em 0 0 4em
-        
         @include desktop_xm
             padding: 0
-
         h6 
             color: whitesmoke
             font-size: 15px
-
             span 
                 cursor: pointer
                 font-weight: bold
                 color: white
-
-        
-
-.body-section .form-section .form-wrap
+.main-wrap .body-section .form-section
     width: 100%
-    height: 100% 
-    display: flex
-    flex-direction: column
-    justify-content: center
-
-
-
-.body-section .form-section .form-wrap .form
+    display: flex 
+    align-items: stretch
+.main-wrap .body-section .form-section .form-wrap
     margin: auto
-    display: flex
-    flex-direction: column
-    justify-content: center
-    padding: 1em
-    border-radius: 1px
+    max-width: 500px
     width: 100%
-
-
-.body-section .form-section .form-wrap .form .dynamic-wrapper
+    background-color: rgba(7, 75, 251, .8)
+    padding: 1em 
+    border-radius: 5px
+    .form 
+        width: 100%
+.main-wrap .body-section .form-section .form-wrap .form .top-wrap
     width: 100%
-    display: block
-    transition: all 1s
-
-.body-section .form-section .form-wrap .form .dynamic-wrapper.slide
-    display: none
-
-.body-section .form-section .form-wrap .form .head
-    width: 100%
-    margin: 0 0 3em 0
     display: flex
     align-items: stretch
-
-    h4 
+    margin: 0 0 2em 0
+    .top-title 
+        margin-right: auto
+        h4 
+            font-size: 32px
+            font-weight: bold 
+            color: white 
+        h5 
+            font-size: 14px
+            color: white 
+    .icon-wrap
         margin-left: auto
-        font-size: 18px
-        font-weight: bold  
-        color: colorTheme(primaryTheme) 
-
-.body-section .form-section .form-wrap .form .form-group
+        fa-icon 
+            color: white 
+            font-size: 32px
+.main-wrap .body-section .form-section .form-wrap .form .form-group
     width: 100%
     margin: 0 0 2em 0
-    // display: flex
-    // align-items: stretch
-
     fa-icon
         width: 1em
         font-size: 14px
-        color: colorTheme(primaryTheme)
+        color: white
         margin: .5em 1em 0 0
-
     input, select
         padding: 0 .5em
         font-size: 14px
         width: 100%
         outline: none
         border: none
-        border-bottom: solid 1px colorTheme(primaryTheme)
+        border-bottom: solid 1px white
         background-color: transparent
-
+        &::placeholder
+            color: white
         &.error
             border-bottom: solid 1px colorTheme(danger) 
-
-
     .error-wrap
         width: 100%
         padding: 0 2.3em
         span 
             font-size: 12px
             color: colorTheme(danger)
-
-.body-section .form-section .form-wrap .form .btn-wrap
+.main-wrap .body-section .form-section .form-wrap .form .btn-wrap
     width: 100%
     margin: 0 0 1em 0
     display: flex
     align-items: stretch
-
-
     .btn
-        
         color: white
-
         &.btn-back
             background-color: grayColor(g200)
-
         &.btn-submit, &.btn-next
-            background-color: colorTheme(primaryTheme)
-
-
-.body-section .form-section .form-wrap .form .footer
+            color: white
+            background-color: colorTheme(secondaryTheme)
+.main-wrap .body-section .form-section .form-wrap .form .footer
     width: 100%
     margin: 0 0 1em 0
     display: flex
     align-items: stretch
-
     h4
         font-size: 12px
         margin: 0 1em 0 0
-
     a 
         font-size: 12px
+        color: white
 
 
 
 
 
 
-::-webkit-scrollbar
-    width: 0px
-    background: transparent
-
-::-webkit-scrollbar-thumb 
-    background-color: colorTheme(primaryTheme)
-    width: 1px
-.modal-backdrop.in 
-    background: transparent !important
-
-.infoModal
-    border: none
-    border-radius: 5px
-    width: 100%
-    max-width: 900px
-    height: 80%
-    overflow-y: scroll
-    margin: 3em auto
-    display: flex
-    align-items: stretch
-    -ms-overflow-style: none
-    background-color: transparent
-    scrollbar-width: none
-    padding: 0
-
-    &.modal-backdrop.in 
-        background: transparent !important
-
-
-    @include desktop_md
-        margin: 1em auto
-        display: flex
-        flex-direction: column
-        height: 600px
-
-
-    .modal-content 
-        border: none
-        background-color: transparent
-        padding: 0 !important
-
-
-
-        .modal-body
-            margin: auto
-            width: 100%
-            height: 100%
-            padding: 1em
-            display: flex
-            align-items: stretch  
-
-            @include desktop_md
-                display: flex 
-                flex-direction: column
-                
-                .wrap-one
-                    height: 300px
-            
-            .wrap-one
-                background: url("../../../assets/images/logo5.jpg") no-repeat
-                background-position: center center
-                background-size: cover
-                width: 50%
-                -webkit-transform: scaleX(-1)
-                -moz-transform: scaleX(-1)
-                transform: scaleX(-1)
-                display: flex
-                flex-direction: column
-                justify-content: flex-end
-                align-items: bottom
-
-
-                @include desktop_md
-                    width: 100%
-
-                .image-wrap
-                    margin: auto auto 0em auto
-                    width: fit-content
-                    height: fit-content
-                    display: flex
-                    flex-direction: column
-                    justify-content: center
-
-
-                    img 
-                        -webkit-transform: scaleX(-1)
-                        -moz-transform: scaleX(-1)
-                        transform: scaleX(-1)
-                        width: 170px 
-                        height: 55px
-
-
-            .wrap-two
-                background-color: colorTheme(primaryTheme)
-                padding: 1em
-                width: 50%
-                overflow-y: scroll
-
-                @include desktop_md
-                    width: 100%
-
-                .cancel-wrap
-                    width: 100%
-                    display: flex
-                    align-items: stretch  
-                    padding: 0 0 .7em 0
-                    div 
-                        background-color: white
-                        border-radius: 2px
-                        // width: 2em
-                        width: fit-content
-                        // height: 2em
-                        padding: .1em .5em
-                        margin-left: auto
-                        font-weight: 100 !important
-                        display: flex 
-                        align-items: center
-                        justify-content: center
-                        cursor: pointer
-                        &:hover                
-                            background-color: #f7b307 
-                            fa-icon
-                                color: white
-                        fa-icon
-                            font-size: 15px
-                            color: #f7b307
-                        span 
-                            font-size: 13px
-                .top-paragraph
-                    width: 100%
-
-                    p 
-                        font-weight: 400 !important
-                        font-size: 15px
-                        color: whitesmoke
-
-                        span 
-                            font-weight: bolder
-                            color: #f7b307
-
-                .line-wrap
-                    width: 6em
-
-                    .line 
-                        margin: 1.5em 0 2.2em 0 !important
-                        width: 100%
-                        border: solid 2px #f7b307
-                    
-
-                .mid-paragraph
-                    padding: 0 0 0 4em
-
-                    @include desktop_xm
-                        padding: 0
-
-                    p 
-                        color: whitesmoke 
-                        font-size: 15px
-
-                        span 
-                            font-weight: bolder
-                            color: #f7b307
-
-
-                .bottom-paragraph
-                    padding: 1em 0 0 4em
-                    
-                    @include desktop_xm
-                        padding: 0
-
-                    h6 
-                        color: whitesmoke
-                        font-size: 15px
-
-                        span 
-                            cursor: pointer
-                            font-weight: bold
-                            color: white
-
-                            &.hover
-                                color: #f7b307
 
 
 .passwordResetModal
@@ -467,17 +193,12 @@ main .side-bg
             h4 
                 font-size: 14px
                 color: white
-
-
         .modal-body
             width: 100%
             border: none
-
             .wrap
                 width: 100%
                 padding: .5em
-                // border-bottom: solid 1px grayColor(g100)
-
                 h4
                     width: 100%
                     font-size: 12px
@@ -486,7 +207,6 @@ main .side-bg
                     cursor: pointer
                     color: colorTheme(danger)
                     font-size: 12px
-
             input 
                 width: 100%
                 border-radius: 2px
@@ -496,18 +216,11 @@ main .side-bg
                 margin: 0 10px 10px 0
                 background-color: grayColor(g100)
                 font-size: 12px
-
         .modal-footer
             button 
                 font-size: 12px
                 background-color: colorTheme(primary)
                 color: white
-
-
-
-
-
-
 
 
 
