@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faKey, faUser } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from 'src/app/shared/services/user.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -26,6 +26,7 @@ export class InvitationComponent implements OnInit, OnDestroy {
   // icon
   public faEnvelope = faEnvelope;
   public faKey = faKey;
+  public faUser = faUser;
 
 
 
