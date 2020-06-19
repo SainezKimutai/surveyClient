@@ -10,13 +10,133 @@
 </article>
 
 
-<div class="page-title d-flex">
-    <h4>Plan</h4>  
-</div>
+<header class="header">
+    <div class="header-wrap">
+        <h4>PLAN</h4>
+        <button class="btn thm-danger btn-sm" (click)="logOut()" >
+            <fa-icon [icon]="faPowerOff"></fa-icon>Logout
+        </button>
+    </div>
+</header>
 
 
 
-<article *ngIf="ListPlanStatus">
+
+
+
+
+
+
+
+
+
+
+
+<article class="body-article">
+    <div *ngIf="pageProgress !== 100" class="progress-wrap">
+        <circle-progress [percent]="pageProgress" ></circle-progress>
+    </div>
+    
+
+    <div class="list-table" [hidden]="pageProgress !== 100">
+        <div class="search-wrap">
+            <div class="input-wrap">
+                <input type="text" (keyup)="filterSurveys()" name='FilterName' [(ngModel)]="FilterName" placeholder="Search here ..."> 
+                <fa-icon [icon]="faSearch"></fa-icon>
+            </div>
+        
+        </div>
+        <div class="list-table-header">
+            <div class="header-wrap">
+                <div class="head-item survey"> <span> Survey Name</span> </div>
+                <div class="head-item status"> Progress </div>
+                <div class="head-item create"> Create Plan </div>
+            </div>
+        </div>
+        <div class="list-table-body">
+            <div class="list-item-wrap-no-survey" *ngIf="ViewAllSurvey.length === 0">
+                <h4>No Surveys</h4>
+            </div>
+            <div class="list-item-wrap" *ngFor="let item of ViewAllSurvey">
+                <div class="list-item survey">{{item.surveyName}}</div>
+                <div *ngIf="item.done > 100 || item.done === 100" class="list-item status completed">
+                    <fa-icon *ngIf="item.done > 100 || item.done === 100" [icon]="faCheck"></fa-icon> <span>100%</span>&nbsp;&nbsp;<span>Completed</span>
+                </div>
+                <div *ngIf="item.done > 0 && 100 > item.done" class="list-item status done">
+                    <fa-icon  [icon]="faSpinner"></fa-icon> <span>{{item.done}}%</span> &nbsp;&nbsp;<span>In progress</span> 
+                </div>
+                <div *ngIf="item.done === 0" class="list-item status not-done">
+                    <fa-icon  [icon]="faBook"></fa-icon> <span>Not Done</span>
+                </div>
+                <div class="list-item create">
+                    <div *ngIf="100 > item.done" class="create-btn-disabled" >Awaiting</div>
+                    <div *ngIf="item.done > 100 || item.done === 100" class="create-btn" (click)="createPlan(item._id)">Create Plan</div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+    
+    <section class="list-table plan" [hidden]="pageProgress !== 100" >
+        <div class="search-wrap">
+            <div class="input-wrap">
+                <input type="text" (keyup)="filterPlans()" name='FilterName2' [(ngModel)]="FilterName2" placeholder="Search here ..."> 
+                <fa-icon [icon]="faSearch"></fa-icon>
+            </div>
+        
+        </div>
+        <div class="list-table-header">
+            <div class="header-wrap">
+                <div class="head-item survey"> <span> Plan Name</span> </div>
+                <div class="head-item view">View Plan </div>
+            </div>
+        </div>
+        <div class="list-table-body">
+            <div class="list-item-wrap-no-survey" *ngIf="ViewAllPlans.length === 0">
+                <h4>No Plans</h4>
+            </div>
+            <div class="list-item-wrap" *ngFor="let item of ViewAllPlans">
+                <div class="list-item survey">{{item.name}}</div>
+    
+                <div class="list-item view" >
+                    <div class="view-btn"  (click)="editPlan(plan)">View Plan</div>
+                </div>
+            </div>
+    
+        </div>
+    
+    
+    </section>
+    
+</article>
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<article hidden *ngIf="ListPlanStatus">
 
 <div  class="progress-wrap" *ngIf="pageProgress !== 100">
     <circle-progress [percent]="pageProgress" ></circle-progress>
