@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { Router } from '@angular/router';
-import { faCheck, faListAlt, faSpinner, faEraser, faPowerOff} from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faListAlt, faSpinner, faBook, faEraser, faPowerOff, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { ResponseService } from 'src/app/shared/services/responses.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
 import { ModalDirective } from 'ngx-bootstrap';
@@ -28,6 +28,7 @@ export class SurveyComponent implements OnInit {
 @ViewChild('deletePromptModal', {static: true}) deletePromptModal: ModalDirective;
 
   public AllSurveys = [];
+  public ViewAllSurvey = [];
   public AllQuestions = [];
   public AllResponses = [];
   public ImprintLoader = false;
@@ -38,15 +39,18 @@ export class SurveyComponent implements OnInit {
   public faSpinner = faSpinner;
   public faEraser = faEraser;
   public faPowerOff = faPowerOff;
+  public faSearch = faSearch;
+  public faBook = faBook;
 
   public surveyTobeErased = '';
 
+  public FilterName = '';
 
 
 
   ngOnInit() {
     sessionStorage.setItem('ActiveNav', 'survey');
-    this.updatePage().then(() => { this.checkForCompletedSurveys(); });
+    this.updatePage().then(() => { this.checkForCompletedSurveys().then(() => { this.ViewAllSurvey = this.AllSurveys; } ); });
   }
 
 
@@ -96,7 +100,7 @@ export class SurveyComponent implements OnInit {
 
 
   checkForCompletedSurveys() {
-
+    return new Promise((resolve, reject) => {
      this.AllSurveys =  this.AllSurveys.filter((surv, ind, arr) => {
         let myResponses = this.AllResponses.filter((r) => r.surveyId === surv._id).map(e => e);
         if (myResponses.length > 0) {
@@ -125,20 +129,21 @@ export class SurveyComponent implements OnInit {
             let myCompletionValue =  Number((( Number(allAnswersNumber) * 100 ) / Number(allQuizs2.length)).toFixed(0));
             surv.done = Number(myCompletionValue);
 
-            this.pageProgress = 100; }
+            this.pageProgress = 100; resolve(); }
 
         });
 
 
         } else {
           surv.done = 0;
-          if (ind === arr.length - 1) { this.pageProgress = 100; }
+          if (ind === arr.length - 1) { this.pageProgress = 100; resolve(); }
 
         }
         this.pageProgress = 100;
+        resolve();
         return true;
       }).map( e => e);
-
+    });
   }
 
 
@@ -162,7 +167,7 @@ export class SurveyComponent implements OnInit {
         this.responseService.deleteResponse(resp._id).subscribe(
           data => {
             this.updatePage().then(() => {
-              this.checkForCompletedSurveys();
+              this.checkForCompletedSurveys().then(() => { this.ViewAllSurvey = this.AllSurveys; } );
               this.ImprintLoader = false;
               this.notifyService.showSuccess('Survey Reset', 'Success');
             });
@@ -179,6 +184,15 @@ export class SurveyComponent implements OnInit {
 
 
 
+  filterSurveys() {
+
+      if (!this.FilterName || this.FilterName === null || this.FilterName === '' || this.FilterName.length  < 1) {
+        this.ViewAllSurvey = this.AllSurveys;
+        } else {
+          this.ViewAllSurvey = this.AllSurveys.filter(v => v.surveyName.toLowerCase().indexOf(this.FilterName.toLowerCase()) > -1).slice(0, 10);
+        }
+
+  }
 
 
 

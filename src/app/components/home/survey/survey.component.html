@@ -13,10 +13,13 @@
     <div class="header-wrap">
         <h4>SURVEY</h4>
 
-        <div class="logout-btn">
+        <!-- <div class="logout-btn">
             <fa-icon [icon]="faPowerOff"></fa-icon>
             <span>Logout</span>
-        </div>
+        </div> -->
+        <button class="btn thm-danger btn-sm" >
+            <fa-icon [icon]="faPowerOff"></fa-icon>Logout
+        </button>
     </div>
 </header>
 
@@ -31,35 +34,42 @@
     </div>
 
     <div class="list-table" [hidden]="pageProgress !== 100">
+        <div class="search-wrap">
+            <div class="input-wrap">
+                <input type="text" (keyup)="filterSurveys()" name='FilterName' [(ngModel)]="FilterName" placeholder="Search here ..."> 
+                <fa-icon [icon]="faSearch"></fa-icon>
+            </div>
+        
+        </div>
         <div class="list-table-header">
             <div class="header-wrap">
-                <div class="head-item survey"> Survey Name </div>
+                <div class="head-item survey"> <span> Survey Name</span> </div>
                 <div class="head-item status"> Progress </div>
                 <div class="head-item take"> Take </div>
                 <div class="head-item erase"> Erase Responses </div>
             </div>
         </div>
         <div class="list-table-body">
-            <div class="list-item-wrap-no-survey" *ngIf="AllSurveys.length === 0">
+            <div class="list-item-wrap-no-survey" *ngIf="ViewAllSurvey.length === 0">
                 <h4>No Surveys</h4>
             </div>
-            <div class="list-item-wrap" *ngFor="let item of AllSurveys">
+            <div class="list-item-wrap" *ngFor="let item of ViewAllSurvey">
                 <div class="list-item survey">{{item.surveyName}}</div>
-                <div *ngIf="item.done > 100 || item.done === 100" class="list-item status done">
+                <div *ngIf="item.done > 100 || item.done === 100" class="list-item status completed">
                     <fa-icon *ngIf="item.done > 100 || item.done === 100" [icon]="faCheck"></fa-icon> <span>100%</span>&nbsp;&nbsp;<span>Completed</span>
                 </div>
-                <div *ngIf="item.done > 0 && 100 > item.done" class="list-item status not-done">
+                <div *ngIf="item.done > 0 && 100 > item.done" class="list-item status done">
                     <fa-icon  [icon]="faSpinner"></fa-icon> <span>{{item.done}}%</span> &nbsp;&nbsp;<span>In progress</span> 
                 </div>
                 <div *ngIf="item.done === 0" class="list-item status not-done">
-                    <span>Not Done</span>
+                    <fa-icon  [icon]="faBook"></fa-icon> <span>Not Done</span>
                 </div>
                 <div class="list-item take" (click)="item.done > 100 || item.done === 100 ? '' : takeSurvey(item)">
                     <div *ngIf="100 > item.done" class="take-btn">Take Survey</div>
                     <div *ngIf="item.done > 100 || item.done === 100" class="take-btn-disabled">Closed</div>
                 </div>
                 <div class="list-item erase">
-                    <div  *ngIf="item.done === 0" class="erase-btn-disabled" (click)="deletePromptModal.show(); passSurveyToReset(item._id)"> No Responses</div>
+                    <div  *ngIf="item.done === 0" class="erase-btn-disabled"> No Responses</div>
                     <div *ngIf="item.done > 0 && 100 > item.done" class="erase-btn" (click)="deletePromptModal.show(); passSurveyToReset(item._id)"> Erase Responses</div>
                     <div *ngIf="item.done > 100 || item.done === 100" class="erase-btn-disabled">Closed</div>
                 </div>

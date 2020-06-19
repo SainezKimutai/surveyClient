@@ -174,7 +174,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
           if (this.AllCompanies.length === 0) {
             this.ImprintLoader = false;
             this.NoCompanies = true;
-            this.notifyService.showInfo('You have no companies within the system', 'No Companies')
+            this.notifyService.showInfo('You have no companies within the system', 'No Companies');
           } else {
             this.ActiveCompanyId = this.AllCompanies[0]._id;
             this.salesCategoryService.getAllSalesCategoriesByCompany(this.ActiveCompanyId).subscribe( data => {
@@ -201,7 +201,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
 
     sessionStorage.setItem('ActiveNav', 'sales');
 
-  
+
     this.userService.getAllUsers().subscribe(
       data => {
         this.Users = data;
@@ -432,7 +432,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
     if (!this.toCustomer) {
       this.UpdateSalesCategories2().then(() => { resolve(); } );
     }
-   })
+   });
   }
 
 
@@ -567,7 +567,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
       this.salesCategoryService.getAllSalesCategoriesByCompany(this.ActiveCompanyId).subscribe(
         data => {
           this.SalesCategorys = data;
-          
+
         },
         error => {
           console.log('Cannot get Sales Categories');
@@ -751,7 +751,7 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
         }).map((e) => e );
 
         category.totalLeads = OppInThisCategory.length,
-        category.totalRevenue = OppInThisCategory.reduce( (previous, current) => previous + current.revenue, 0)
+        category.totalRevenue = OppInThisCategory.reduce( (previous, current) => previous + current.revenue, 0);
         if (ind === dataCategoryArr.length - 1) { resolve(); }
 
     });
