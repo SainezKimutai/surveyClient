@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, ElementRef, OnDestroy, SecurityContext } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -8,12 +8,12 @@ import { SalesService } from 'src/app/shared/services/sales.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SalesCategoryService } from 'src/app/shared/services/sales-category.service';
-import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
+import { faLayerGroup, faPowerOff} from '@fortawesome/free-solid-svg-icons';
 import { ClientService } from 'src/app/shared/services/client.service';
 import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
 import { SalesNoteService } from 'src/app/shared/services/sales-note.service';
 import { SalesSentEmailService } from 'src/app/shared/services/sales-sent-email.service';
-import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { HomeComponent } from 'src/app/components/home/home.component';
 
 
@@ -78,7 +78,10 @@ export class SalesBoardComponent implements OnInit, OnDestroy {
   @Input() listIndex: number;
   @Input() cardIndex: number;
 
+
+  // Icons
   public faLayerGroup = faLayerGroup;
+  public faPowerOff = faPowerOff;
 
   // Status
   public FormStatus: boolean;
@@ -1447,6 +1450,10 @@ selectPriority(num) {
 
 
 
+
+  logOut() {
+    this.homeComponent.logout();
+  }
 
 
 

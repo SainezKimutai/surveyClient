@@ -14,9 +14,20 @@
 
 
 
+<header class="header">
+  <div class="header-wrap">
+      <h4>SALES</h4>
+      <button class="btn thm-danger btn-sm" (click)="logOut()" >
+          <fa-icon [icon]="faPowerOff"></fa-icon>Logout
+      </button>
+  </div>
+</header>
+
+
+
 
 <section class="topNavBard">
-  <div class="item d-flex">
+  <div class="item">
       
     <button *ngIf="toCustomer" class="btn thm-success btn-sm" (click)="openNoteModal()">
       <fa name="book"></fa>Notes
@@ -42,18 +53,10 @@
 
 
 
-<section id="title_section">
-    <h4>Sales</h4>
-</section>
-  
-
 
 
 <!-- Body Section -->
 <section class="body_section">
-<!-- <ngx-spinner></ngx-spinner> -->
-
-
 
 
 
