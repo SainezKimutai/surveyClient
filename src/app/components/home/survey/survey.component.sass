@@ -13,35 +13,58 @@
 .header .header-wrap h4 
     margin: auto auto auto 0
     color: colorTheme(primaryTheme)
-    font-size: 18px 
+    font-size: 32px 
     font-weight: bold
     text-transform: uppercase
-    text-shadow: 1px -1px 1px white
-    -moz-text-shadow: 1px -1px 1px white
-    -webkit-text-shadow: 1px -1px 1px white
+    // text-shadow: 1px -1px 1px white
+    // -moz-text-shadow: 1px -1px 1px white
+    // -webkit-text-shadow: 1px -1px 1px white
+    background: linear-gradient(to top, colorTheme(secondaryTheme) 0%, colorTheme(secondaryTheme) 32%, colorTheme(primaryTheme) 32%)
+    background-clip: text
+    -webkit-background-clip: text
+    -ms-background-clip: text
+    -moz-background-clip: text
+    -o-background-clip: text
+    text-fill-color: transparent
+    -webkit-text-fill-color: transparent
+    -moz-text-fill-color: transparent
+    -ms-text-fill-color: transparent
+    -o-text-fill-color: transparent
 .header .header-wrap .logout-btn
     margin: auto 0 auto auto 
     padding: .4em .7em
     border-radius: 5px
-    border: solid 1px colorTheme(danger)
+    border: none
     display: flex
     align-items: stretch
-    background-color: white
+    background-color: colorTheme(primaryTheme)
     cursor: pointer
     transition: all .5s
     fa-icon 
-        font-size: 14px
+        font-size: 12px
         margin: auto 1em auto auto
-        color: colorTheme(danger)
+        color: colorTheme(secondaryTheme)
     span 
-        font-size: 14px
+        font-size: 12px
         margin: auto
-        color: colorTheme(danger)
+        color: colorTheme(secondaryTheme)
     &:hover
-        border: solid 1px transparent
-        background-color: colorTheme(danger)
+        border: none
+        background-color: colorTheme(secondaryTheme)
         span, fa-icon
-            color: white
+            color: colorTheme(primaryTheme)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -50,7 +73,143 @@
     height: fit-content
     background-color: transparent
     padding: 1em
-    
+.body-article .progress-wrap
+    margin: 4em auto
+    background-color: white
+    border-radius: 5px
+    min-width: 15em
+    min-height: 10em
+    display: flex
+    justify-content: center
+    align-items: center
+.body-article .list-table
+    width: 100%
+    background-color: white
+    overflow-y: scroll
+    padding: 5px
+.body-article .list-table .list-table-header
+    width: 100%
+    min-width: $desktop_sm
+    padding: 5px
+.body-article .list-table .list-table-header .header-wrap
+    width: 100%
+    display: grid 
+    grid-template-columns: repeat(4, 1fr)
+    grid-gap: 0
+.body-article .list-table .list-table-header .header-wrap .head-item
+    padding: 1em .5em
+    font-size: 12px
+    font-weight: bold
+.body-article .list-table .list-table-body
+    width: 100%
+    min-width: $desktop_sm
+    padding: 5px
+    background-color: whitesmoke
+    display: grid 
+    grid-template-columns: repeat(1, 1fr)
+    grid-gap: 5px
+.body-article .list-table .list-table-body .list-item-wrap-no-survey
+    display: flex
+    align-items: stretch
+    background-color: white
+    padding: 1em
+    h4 
+        font-weight: bold
+        font-size: 18px
+        margin: auto
+        color: colorTheme(primaryTheme)
+.body-article .list-table .list-table-body .list-item-wrap
+    width: 100%
+    display: grid 
+    grid-template-columns: repeat(4, 1fr)
+    grid-gap: 0
+    background-color: white
+    border-radius: 2px
+    cursor: pointer
+    &:hover
+        box-shadow: 0 0 10px rgba(0,0,0,.1)
+        -webkit-box-shadow: 0 0 10px rgba(0,0,0,.1)
+        -moz-box-shadow: 0 0 10px rgba(0,0,0,.1)
+        -ms-box-shadow: 0 0 10px rgba(0,0,0,.1)
+        -o-box-shadow: 0 0 10px rgba(0,0,0,.1)
+.body-article .list-table .list-table-body .list-item-wrap .list-item
+    padding: 1em .5em
+    font-size: 12px
+    color: black
+    &.survey
+        font-weight: bold
+    &.status.done
+        fa-icon
+            color: colorTheme(success)
+            margin: 0 1em 0 0
+        span 
+            color: colorTheme(success)
+    &.status.not-done
+        fa-icon
+            margin: 0 1em 0 0
+            color: colorTheme(primaryTheme)
+        span 
+            color: colorTheme(primaryTheme)
+    &.take
+        .take-btn
+            width: fit-content
+            padding: .3em .5em
+            border-radius: 2px
+            cursor: pointer
+            background-color: colorTheme(primaryTheme)
+            color: colorTheme(secondaryTheme)
+            &:hover
+                background-color: colorTheme(secondaryTheme)
+                color: colorTheme(primaryTheme)
+        .take-btn-disabled
+            width: fit-content
+            padding: .3em .5em
+            border-radius: 2px
+            cursor: pointer
+            background-color: transparent
+            color: grayColor(g800)
+    &.erase
+        .erase-btn
+            width: fit-content
+            padding: .3em .5em
+            border-radius: 2px
+            cursor: pointer
+            background-color: colorTheme(secondaryTheme)
+            color: colorTheme(primaryTheme)
+            &:hover
+                background-color: colorTheme(primaryTheme)
+                color: colorTheme(secondaryTheme)
+        .erase-btn-disabled
+            width: fit-content
+            padding: .3em .5em
+            border-radius: 2px
+            cursor: pointer
+            background-color: transparent
+            color: grayColor(g800)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

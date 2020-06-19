@@ -21,7 +21,59 @@
 </header>
 
 
+
+
+
+
 <article class="body-article">
+    <div *ngIf="pageProgress !== 100" class="progress-wrap">
+        <circle-progress [percent]="pageProgress" ></circle-progress>
+    </div>
+
+    <div class="list-table" [hidden]="pageProgress !== 100">
+        <div class="list-table-header">
+            <div class="header-wrap">
+                <div class="head-item survey"> Survey Name </div>
+                <div class="head-item status"> Progress </div>
+                <div class="head-item take"> Take </div>
+                <div class="head-item erase"> Erase Responses </div>
+            </div>
+        </div>
+        <div class="list-table-body">
+            <div class="list-item-wrap-no-survey" *ngIf="AllSurveys.length === 0">
+                <h4>No Surveys</h4>
+            </div>
+            <div class="list-item-wrap" *ngFor="let item of AllSurveys">
+                <div class="list-item survey">{{item.surveyName}}</div>
+                <div *ngIf="item.done > 100 || item.done === 100" class="list-item status done">
+                    <fa-icon *ngIf="item.done > 100 || item.done === 100" [icon]="faCheck"></fa-icon> <span>100%</span>&nbsp;&nbsp;<span>Completed</span>
+                </div>
+                <div *ngIf="item.done > 0 && 100 > item.done" class="list-item status not-done">
+                    <fa-icon  [icon]="faSpinner"></fa-icon> <span>{{item.done}}%</span> &nbsp;&nbsp;<span>In progress</span> 
+                </div>
+                <div *ngIf="item.done === 0" class="list-item status not-done">
+                    <span>Not Done</span>
+                </div>
+                <div class="list-item take" (click)="item.done > 100 || item.done === 100 ? '' : takeSurvey(item)">
+                    <div *ngIf="100 > item.done" class="take-btn">Take Survey</div>
+                    <div *ngIf="item.done > 100 || item.done === 100" class="take-btn-disabled">Closed</div>
+                </div>
+                <div class="list-item erase">
+                    <div  *ngIf="item.done === 0" class="erase-btn-disabled" (click)="deletePromptModal.show(); passSurveyToReset(item._id)"> No Responses</div>
+                    <div *ngIf="item.done > 0 && 100 > item.done" class="erase-btn" (click)="deletePromptModal.show(); passSurveyToReset(item._id)"> Erase Responses</div>
+                    <div *ngIf="item.done > 100 || item.done === 100" class="erase-btn-disabled">Closed</div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</article>
+
+
+
+<article hidden class="body-article">
 
     <section class="templates-section">
         <div *ngIf="AllSurveys" class="card-group">
@@ -46,7 +98,7 @@
                 </div>
                 <div class="card-footer">
                     <h5 *ngIf="item.done > 100 || item.done === 100">
-                        <fa-icon [icon]="faCheck"></fa-icon> <span>100%</span> <p >Completed</p>
+                        <fa-icon  [icon]="faCheck"></fa-icon> <span>100%</span> <p >Completed</p>
                     </h5>
                     <h5 *ngIf="item.done > 0 && 100 > item.done">
                         <fa-icon [icon]="faSpinner"></fa-icon> <span>{{item.done}}%</span> <p >In progress</p>
