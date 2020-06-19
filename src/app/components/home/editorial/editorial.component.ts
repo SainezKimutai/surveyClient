@@ -120,7 +120,7 @@ export class EditorialComponent implements OnInit {
 // status
   public FormSectionStatus = false;
   public ThreatSectionStatus = false;
-  public TemeplateViewSectionStatus = true;
+  public TemplateViewSectionStatus = true;
   public QuestionsViewStatus = false;
   public SurveyFormStatus = true;
   public QuestionFormStatus = false;
@@ -295,7 +295,7 @@ public FilterThreatInput = '';
     this.CurrentQuestionArray = [];
 
     this.FormSectionStatus = true;
-    this.TemeplateViewSectionStatus = false;
+    this.TemplateViewSectionStatus = false;
     this.ThreatSectionStatus = false;
     this.QuestionsViewStatus = false;
     this.ThreatsViewSectionStatus = false;
@@ -306,7 +306,7 @@ public FilterThreatInput = '';
 
   viewSurveyTemplates() {
     this.FormSectionStatus = false;
-    this.TemeplateViewSectionStatus = true;
+    this.TemplateViewSectionStatus = true;
     this.ThreatSectionStatus = false;
     this.QuestionsViewStatus = false;
     this.ThreatsViewSectionStatus = false;
@@ -347,7 +347,7 @@ filterThreats() {
     let unSortedQuestions = this.AllQuestions.filter(( quiz) => quiz.surveyId === id ).map(e => e);
     this.TemplateQuestions = unSortedQuestions.sort((a, b) =>  a.position - b.position);
     this.FormSectionStatus = false;
-    this.TemeplateViewSectionStatus = false;
+    this.TemplateViewSectionStatus = false;
     this.QuestionsViewStatus = true;
 
   }
@@ -664,7 +664,7 @@ filterThreats() {
     this.skipInput = item.skip,
     this.linkedInput = item.linked,
     this.FormSectionStatus = true;
-    this.TemeplateViewSectionStatus = false;
+    this.TemplateViewSectionStatus = false;
     this.ThreatSectionStatus = false;
     this.QuestionsViewStatus = false;
     this.ThreatsViewSectionStatus = false;
@@ -726,7 +726,7 @@ filterThreats() {
     this.linkedInput = false;
     this.positionInput = this.TemplateQuestions.length + 1;
     this.FormSectionStatus = true;
-    this.TemeplateViewSectionStatus = false;
+    this.TemplateViewSectionStatus = false;
     this.ThreatSectionStatus = false;
     this.QuestionsViewStatus = false;
     this.ThreatsViewSectionStatus = false;
@@ -797,7 +797,7 @@ filterThreats() {
 
 
   getThreats() {
-    this.TemeplateViewSectionStatus = false;
+    this.TemplateViewSectionStatus = false;
     this.ThreatsViewSectionStatus = true;
     this.ThreatsViewSectionStatus = true;
     this.FormSectionStatus = false;
@@ -806,7 +806,7 @@ filterThreats() {
   clearThreat() {
     this.ThreatSectionStatus = true;
     this.FormSectionStatus = false;
-    this.TemeplateViewSectionStatus = false;
+    this.TemplateViewSectionStatus = false;
     this.ThreatsViewSectionStatus = true;
     this.threatName = '';
     this.threatRecom = '';

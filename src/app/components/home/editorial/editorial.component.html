@@ -24,12 +24,12 @@
 <section class="navigation-section">
     <div class="nav-wrapper">
         <div class="item"> 
-            <button  class="btn thm-primary btn-sm" (click)="viewSurveyTemplates()">
+            <button [ngClass]="FormSectionStatus || TemplateViewSectionStatus ? 'btn thm-primary btn-sm active' : 'btn thm-primary btn-sm'" (click)="viewSurveyTemplates()">
                 <fa-icon [icon]="faListAlt"></fa-icon> Survey
             </button>
         </div>
         <div class="item">
-          <button class="btn thm-warning btn-sm" (click)="getThreats()">
+          <button [ngClass]="ThreatsViewSectionStatus ? 'btn thm-primary btn-sm active' : 'btn thm-primary btn-sm'"  (click)="getThreats()">
             <fa-icon [icon]="faFire"></fa-icon>Threats
           </button>
         </div>
@@ -89,7 +89,7 @@
         </div>
     
         
-        <div [ngClass]="TemeplateViewSectionStatus ? 'surveys active' : 'surveys'" (click)="viewSurveyTemplates()">
+        <div [ngClass]="TemplateViewSectionStatus ? 'surveys active' : 'surveys'" (click)="viewSurveyTemplates()">
             <fa-icon [icon]="faListAlt"></fa-icon>
             <span>Surveys</span> 
         </div>
@@ -369,7 +369,7 @@
 
 
 
-<section class="templates-section" *ngIf="TemeplateViewSectionStatus">
+<section class="templates-section" *ngIf="TemplateViewSectionStatus">
     <div class="list-table" [hidden]="pageProgress !== 100">
         <div class="search-wrap">
             <div class="input-wrap">
@@ -406,7 +406,7 @@
 
 
 <section class="templates-section" *ngIf="ThreatsViewSectionStatus">
-    <div class="list-table" [hidden]="pageProgress !== 100">
+    <div class="list-table threat" [hidden]="pageProgress !== 100">
         <div class="search-wrap">
             <div class="input-wrap">
                 <input type="text" (keyup)="filterThreats()" name='FilterThreatInput' [(ngModel)]="FilterThreatInput" placeholder="Search here ..."> 
@@ -515,7 +515,7 @@
             Survey
         </div>
 
-        <div [ngClass]="TemeplateViewSectionStatus ? 'nav-tab active' : 'nav-tab'" (click)="viewSurveyTemplates()">
+        <div [ngClass]="TemplateViewSectionStatus ? 'nav-tab active' : 'nav-tab'" (click)="viewSurveyTemplates()">
             <fa-icon [icon]="faListAlt"></fa-icon>
             Surveys
         </div>

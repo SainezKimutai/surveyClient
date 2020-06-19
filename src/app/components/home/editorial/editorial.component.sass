@@ -20,30 +20,6 @@
     text-shadow: 1px -1px 1px white
     -moz-text-shadow: 1px -1px 1px white
     -webkit-text-shadow: 1px -1px 1px white
-.header .header-wrap .logout-btn
-    margin: auto 0 auto auto 
-    padding: .4em .7em
-    border-radius: 5px
-    border: none
-    display: flex
-    align-items: stretch
-    background-color: colorTheme(primaryTheme)
-    cursor: pointer
-    transition: all .5s
-    fa-icon 
-        font-size: 12px
-        margin: auto 1em auto auto
-        color: colorTheme(secondaryTheme)
-    span 
-        font-size: 12px
-        margin: auto
-        color: colorTheme(secondaryTheme)
-    &:hover
-        border: none
-        background-color: colorTheme(secondaryTheme)
-        span, fa-icon
-            color: colorTheme(primaryTheme)
-
 .header .header-wrap .btn
     width: fit-content
     height: 3em
@@ -61,9 +37,7 @@
     border-radius: 2px
     border-bottom: solid 2px colorTheme(secondaryTheme)
     @include desktop_md          
-        height: 6em
-        display: flex
-        align-items: center
+        display: none !important
     &:hover
         background-color: grayColor(g400)
     fa, fa-icon
@@ -72,120 +46,6 @@
     &.thm-danger
         fa, fa-icon
             color: colorTheme(secondaryTheme)
-
-
-
-
-.page-title #top_header
-    display: none
-    background-color: transparent
-
-    @include desktop_md
-        display: flex
-        align-items: stretch
-
-    @include desktop_sm
-        display: flex
-        flex-direction: column
-
-   
-    // height: 50%
-
-    .search-wrap
-        // width: 100%
-        padding: 1em
-        margin: 0
-        @include desktop_sm
-            padding: .5em 1em
-            display: none
-   
-        .input-wrap
-            border-radius: 1em
-            background-color: grayColor(g200)
-
-            fa-icon
-                margin: auto .5em
-
-
-            input
-                width: 100%
-                outline: none
-                padding: .5em
-                border: none
-                border-radius: 0px
-                background-color: transparent
-
-    .btn-wrap
-        width: 100%
-        display: flex
-        align-items: stretch
-        
-    
-        @include desktop_sm
-            padding: 0 1em
-
-        .create-new, .surveys, .nav-tab
-            margin: 0 1em
-            cursor: pointer
-            border-radius: 1em
-            width: 8em
-            padding-top: 2em
-            color: grayColor(g800)
-            text-align: center
-
-            @include desktop_md
-                border-radius: 0px
-                width: 100%
-                padding: .5em 0 0 0
-                margin: 1em 0
-
-            @include desktop_sm
-                padding: 0
-
-            &.active
-                background-color: colorTheme(light)
-                color: white
-
-            fa-icon
-                margin: 1em
-              
-                color: colorTheme(secondaryTheme)
-                
-
-            span 
-                
-                @include desktop_md
-                    display: none
-
-
-
-
-
-
-
-
-
-    
-.main-article
-    width: 100%
-    height: fit-content
-    padding: 1em
-.progress-wrap
-    width: 100%
-    margin: 4em auto
-    background-color: transparent
-    border-radius: 5px
-    min-width: 15em
-    min-height: 10em
-    display: flex
-    justify-content: center
-    align-items: center
-
-.body-section
-    width: 100%
-    display: flex
-    padding: 0
-    background-color: white
 
 
 
@@ -239,6 +99,12 @@
     &.thm-primary
         fa-icon
             color: colorTheme(primaryTheme)
+        &.active
+            background-color: colorTheme(primaryTheme)
+            border-bottom: solid 2px colorTheme(secondaryTheme)
+            color: colorTheme(secondaryTheme)
+            fa-icon
+                color: colorTheme(secondaryTheme)
     &.thm-info
         fa-icon
             color: colorTheme(info)                 
@@ -248,6 +114,36 @@
     &.thm-purple
         fa, fa-icon
             color: purple
+
+
+
+
+
+    
+.main-article
+    width: 100%
+    height: fit-content
+    padding: 1em
+.progress-wrap
+    width: 100%
+    margin: 4em auto
+    background-color: transparent
+    border-radius: 5px
+    min-width: 15em
+    min-height: 10em
+    display: flex
+    justify-content: center
+    align-items: center
+
+.body-section
+    width: 100%
+    display: flex
+    padding: 0
+    background-color: white
+
+
+
+
 
 
 
@@ -931,6 +827,8 @@
     text-shadow: 1px -1px 1px white
     -moz-text-shadow: 1px -1px 1px white
     -webkit-text-shadow: 1px -1px 1px white
+.templates-section .list-table.threat .list-table-header .header-wrap .head-item
+    color: colorTheme(secondaryTheme)
 .templates-section .list-table .search-wrap
     width: 100%
     padding: .5em 0
@@ -950,7 +848,9 @@
             background-color: transparent
             color: grayColor(g800)
             &::placeholder
-                color: colorTheme(secondaryTheme)
+                color: colorTheme(primaryTheme)
+.templates-section .list-table.threat .search-wrap .input-wrap input::placeholder
+    color: colorTheme(secondaryTheme)
 .templates-section .list-table .list-table-body
     width: 100%
     min-width: $desktop_sm
@@ -973,6 +873,8 @@
         font-size: 18px
         margin: auto
         color: colorTheme(primaryTheme)
+.templates-section .list-table.threat .list-table-body .list-item-wrap-no-survey h4
+    color: colorTheme(secondaryTheme) 
 .templates-section .list-table .list-table-body .list-item-wrap
     width: 100%
     display: grid 
@@ -1679,17 +1581,13 @@
         height: fit-content
         max-height: 500px
         overflow-x: scroll
-
         .modal-header
             width: 100%
             border: none
             background-color: orange
-
             h4 
                 font-size: 14px
                 color: white
-
-
         .modal-body
             width: 100%
             border: none
