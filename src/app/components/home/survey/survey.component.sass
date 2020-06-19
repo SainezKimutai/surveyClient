@@ -105,7 +105,7 @@
     min-height: 600px
     background-color: white
     overflow-y: scroll
-    padding: 5px
+    padding: 5px 5px 2em 5px
     border: none
 .body-article .list-table .list-table-header
     width: 100%
@@ -153,6 +153,9 @@
     display: grid 
     grid-template-columns: repeat(1, 1fr)
     grid-gap: 5px
+    height: fit-content
+    max-height: 500px
+    overflow-y: scroll
 
 .body-article .list-table .list-table-body .list-item-wrap-no-survey
     display: flex
@@ -204,18 +207,6 @@
         span 
             color: grayColor(g900)
     &.take
-        // .take-btn
-        //     width: fit-content
-        //     padding: .3em .5em
-        //     cursor: pointer
-        //     background-color: transparent
-        //     color: colorTheme(primaryTheme)
-        //     box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-        //     -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-        //     -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-        //     border-radius: 2px
-        //     &:hover
-        //         background-color: grayColor(g200)
         .take-btn
             width: fit-content
             padding: .3em .5em
@@ -234,18 +225,6 @@
             background-color: transparent
             color: grayColor(g900)
     &.erase
-        // .erase-btn
-            // width: fit-content
-            // padding: .3em .5em
-            // cursor: pointer
-            // background-color: transparent
-            // color: colorTheme(secondaryTheme)
-            // box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-            // -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-            // -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-            // border-radius: 2px
-            // &:hover
-            //     background-color: grayColor(g200)
         .erase-btn
             width: fit-content
             padding: .3em .5em
