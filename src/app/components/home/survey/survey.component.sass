@@ -10,6 +10,7 @@
     padding: 1em
     display: flex
     background-color: white
+    border: solid 1px grayColor(g200)
 .header .header-wrap h4 
     margin: auto auto auto 0
     color: colorTheme(primaryTheme)
@@ -105,6 +106,7 @@
     background-color: white
     overflow-y: scroll
     padding: 5px
+    border: none
 .body-article .list-table .list-table-header
     width: 100%
     min-width: $desktop_sm
@@ -251,161 +253,29 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.templates-section
-    width: 100%
-    height: 100%
-    background-color: white
-
-
-    .head
-        padding: 1em
-        color: grayColor(g800)
-
-        h4 
-            font-size: 20px
-            font-weight: bold
-
-    .card-group
-
-        margin: 1em auto auto 0
-        max-height: 500px
-        overflow-x: scroll
-
-        .progress-wrap
-            background-color: white
-            border-radius: 5px
-            min-width: 15em
-            min-height: 10em
-            display: flex
-            justify-content: center
-            align-items: center
-
-
-        .card
-           
-            border-radius: 8px
-            box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)
-            cursor: pointer
-            height: 400px
-            margin: 20px
-            padding: 0 20px
-            position: relative
-            -webkit-tap-highlight-color: rgba(0,0,0,0.025)
-            text-align: center
-            transition: height 1000ms
-            min-width: 15em
-            min-height: 220px
-            height: fit-content
-            max-width: 50%
-            margin: 0 .5em .5em 0
-            width: 260px
-            display: flex
-            flex-direction: column
-            transition: all 0.3s ease
-            
-            &:hover
-               transform: translateY(-5px)
-               box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
-
-            @include desktop_md
-                max-width: 100%
-                margin: 0 1em 1em 0
-
-            @include desktop_sm
-                width: 100%
-                margin: 0 0 1em 0
-
-
-            .card-body
-                display: flex
-                align-items: stretch
-                height: fit-content
-
-                fa-icon
-                    margin: 2em 1em 0 0
-                    font-size: 14px 
-                    color: colorTheme(secondaryTheme)
-
-                h4
-                    margin: 2em 0
-                    font-size: 14px 
-                    font-weight: bold
-                    color: grayColor(g800)
-
-                &:hover
-                    h4
-                        color: colorTheme(secondaryTheme)
-
-
-            .card-footer
-                h5
-                    width: 100%
-                    text-align: center
-                    font-size: 12px
-
-                    span
-                        color: colorTheme(success)
-                        font-weight: bold
-
-                    fa-icon
-                        margin: 0 1em 0 0
-                        color: colorTheme(success)
-                        font-weight: bold
-
-
-
-
-
 .deletePromptModal
     border: none
-
     .modal-content
         border: none
         width: 100%
-
         .modal-header
             width: 100%
             background-color: colorTheme(danger)
-
             .modal-title
                 font-size: 15px
                 font-weight: bold
                 color: white
-
             span 
                 color: white 
-
         .modal-body
-
             p 
                 font-size: 14px
                 font-weight: bold
-
         .modal-footer
-
             .btn 
                 font-size: 12px
-
                 &.cancel
                     background-color: colorTheme(secondary)
-
                 &.delete
                     background-color: colorTheme(success)
 

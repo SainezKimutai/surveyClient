@@ -83,58 +83,6 @@
 
 
 
-<article hidden class="body-article">
-
-    <section class="templates-section">
-        <div *ngIf="AllSurveys" class="card-group">
-            <div *ngIf="pageProgress !== 100" class="progress-wrap">
-                <circle-progress [percent]="pageProgress" ></circle-progress>
-            </div>
-    
-            <div [hidden]="pageProgress !== 100" class="card"  *ngFor="let item of AllSurveys" (click)="item.done > 100 || item.done === 100 ? '' : takeSurvey(item)">
-                <div class=""></div>
-                <div class="card-body d-flex">
-                    <fa-icon [icon]="faListAlt"></fa-icon>
-                    <h4 >{{item.surveyName}}</h4>
-
-                    <fa-icon *ngIf="item.done > 0 && 100 > item.done" style="cursor: pointer; height: 1em;"
-                    (mouseenter)="deletePromptModal.show(); passSurveyToReset(item._id)"
-                    class="text-info ml-auto" [icon]="faEraser"></fa-icon>
-<!-- 
-                    <fa-icon *ngIf="item.done > 0" style="cursor: pointer; height: 1em;"
-                    (mouseenter)="deletePromptModal.show(); passSurveyToReset(item._id)"
-                    class="text-info ml-auto" [icon]="faEraser"></fa-icon> -->
-                    
-                </div>
-                <div class="card-footer">
-                    <h5 *ngIf="item.done > 100 || item.done === 100">
-                        <fa-icon  [icon]="faCheck"></fa-icon> <span>100%</span> <p >Completed</p>
-                    </h5>
-                    <h5 *ngIf="item.done > 0 && 100 > item.done">
-                        <fa-icon [icon]="faSpinner"></fa-icon> <span>{{item.done}}%</span> <p >In progress</p>
-                    </h5>
-                    <h5 *ngIf="item.done === 0"> Not Done</h5>
-                </div>
-
-
-            </div>
-
-            <div [hidden]="pageProgress !== 100" class="card" *ngIf="AllSurveys.length === 0">
-                <div class="card-header"></div>
-                <div class="card-body">
-                    <h4>No Template</h4>
-                </div>
-                <div class="card-footer">
-
-                </div>
-
-            </div>
-        </div>
-
-    </section>
-
-</article>
-
 
 
 
