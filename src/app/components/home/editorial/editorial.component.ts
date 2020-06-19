@@ -65,8 +65,10 @@ export class EditorialComponent implements OnInit {
 
   //
   public AllSurveys = [];
+  public ViewAllSurvey = [];
   public AllQuestions = [];
   public AllThreats = [];
+  public ViewAllThreats = [];
   public AllTrackerReasons = [];
   public AllIndustrys = [];
   public AllThreatCategories = [];
@@ -169,6 +171,8 @@ export class EditorialComponent implements OnInit {
 public activityPlan = '';
 public activityPlanThreatId = ''
 
+public FilterName = '';
+public FilterThreatInput = '';
 
 
 
@@ -177,7 +181,7 @@ public activityPlanThreatId = ''
 
   ngOnInit() {
     sessionStorage.setItem('ActiveNav', 'editorial');
-    this.updatePage();
+    this.updatePage().then(() => { this.ViewAllSurvey = this.AllSurveys});
 
     // this.updater(); - updates threats to set an id
     // this.duplicateQuestionsForThirdParty(); -- duplicates all questions in one survey on another
@@ -202,6 +206,7 @@ public activityPlanThreatId = ''
           dataSurvey => {
             
             this.AllSurveys = dataSurvey;
+            this.ViewAllSurvey = this.AllSurveys
             this.pageProgress = 10;
 
             this.questionService.getAllQuestions().subscribe(
@@ -227,6 +232,7 @@ public activityPlanThreatId = ''
                             this.threatService.getAllInstitutionThreats().subscribe(
                               dataTrt=> {
                                 this.AllThreats = dataTrt;
+                                this.ViewAllThreats = this.AllThreats;
                                 this.pageProgress = 90;
                                 this.activityPlanService.getAllActivityPlanByInstitutionId().subscribe(
                                   dataPlanAct => {
@@ -305,6 +311,28 @@ public activityPlanThreatId = ''
     this.newSurveyStatus = false;
   }
 
+
+
+  filterSurveys() {
+
+    if (!this.FilterName || this.FilterName === null || this.FilterName === '' || this.FilterName.length  < 1) {
+      this.ViewAllSurvey = this.AllSurveys;
+      } else {
+        this.ViewAllSurvey = this.AllSurveys.filter(v => v.surveyName.toLowerCase().indexOf(this.FilterName.toLowerCase()) > -1).slice(0, 10);
+      }
+
+}
+
+
+filterThreats() {
+
+  if (!this.FilterThreatInput || this.FilterThreatInput === null || this.FilterThreatInput === '' || this.FilterThreatInput.length  < 1) {
+    this.ViewAllSurvey = this.AllSurveys;
+    } else {
+      this.ViewAllThreats = this.AllThreats.filter(v => v.name.toLowerCase().indexOf(this.FilterThreatInput.toLowerCase()) > -1).slice(0, 10);
+    }
+
+}
 
 
   viewSurvey(name, id) {

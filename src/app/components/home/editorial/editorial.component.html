@@ -84,13 +84,15 @@
 
 <article class="article">
 
+    <div *ngIf="pageProgress !== 100" class="progress-wrap">
+        <circle-progress [percent]="pageProgress" ></circle-progress>
+    </div>
 
 
 
 
 
 <section class="body-section">
-
 
 
 
@@ -308,7 +310,94 @@
 
 
 
+
+
+
+
+
+
+
+
 <section class="templates-section" *ngIf="TemeplateViewSectionStatus">
+    <div class="list-table" [hidden]="pageProgress !== 100">
+        <div class="search-wrap">
+            <div class="input-wrap">
+                <input type="text" (keyup)="filterSurveys()" name='FilterName' [(ngModel)]="FilterName" placeholder="Search here ..."> 
+                <fa-icon [icon]="faSearch"></fa-icon>
+            </div>
+        </div>
+        <div class="list-table-header">
+            <div class="header-wrap">
+                <div class="head-item survey"> <span> Survey Name</span> </div>
+                <div class="head-item edit"> Edit </div>
+                <div class="head-item delete"> Delete </div>
+            </div>
+        </div>
+        <div class="list-table-body">
+            <div class="list-item-wrap-no-survey" *ngIf="ViewAllSurvey.length === 0">
+                <h4>No Surveys</h4>
+            </div>
+            <div class="list-item-wrap" *ngFor="let item of ViewAllSurvey">
+                <div class="list-item survey">{{item.surveyName}}</div>
+                <div class="list-item edit">
+                    <div class="edit-btn" (click)="viewSurvey(item.surveyName, item._id)">Edit</div>   
+                </div>
+                <div class="list-item delete">
+                    <div class="delete-btn"(click)="prompSurveyDelete(item._id)">Delete</div>   
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+
+<section class="templates-section" *ngIf="ThreatsViewSectionStatus">
+    <div class="list-table" [hidden]="pageProgress !== 100">
+        <div class="search-wrap">
+            <div class="input-wrap">
+                <input type="text" (keyup)="filterThreats()" name='FilterThreatInput' [(ngModel)]="FilterThreatInput" placeholder="Search here ..."> 
+                <fa-icon [icon]="faSearch"></fa-icon>
+            </div>
+        </div>
+        <div class="list-table-header">
+            <div class="header-wrap">
+                <div class="head-item"> <span>Threat Name</span> </div>
+                <div class="head-item"> Edit </div>
+                <div class="head-item"> Delete </div>
+            </div>
+        </div>
+        <div class="list-table-body">
+            <div class="list-item-wrap-no-survey" *ngIf="ViewAllThreats.length === 0">
+                <h4>No Surveys</h4>
+            </div>
+            <div class="list-item-wrap" *ngFor="let item of ViewAllThreats">
+                <div class="list-item survey">{{item.name}}</div>
+                <div class="list-item edit">
+                    <div class="edit-btn" (click)="viewThreat(item.name, item._id)">Edit</div>   
+                </div>
+                <div class="list-item delete">
+                    <div class="delete-btn"(click)="prompThreatDelete(item._id)">Delete</div>   
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+<section hidden class="templates-section" *ngIf="TemeplateViewSectionStatus">
 
     <div class="card-group">
         <div *ngIf="pageProgress !== 100" class="progress-wrap">
@@ -353,7 +442,7 @@
 
 
 
-<section class="templates-section" *ngIf="ThreatsViewSectionStatus">
+<section hidden class="templates-section" *ngIf="ThreatsViewSectionStatus">
 
     <div class="card-group">
         <div class="card" *ngFor="let item of AllThreats">  
@@ -587,8 +676,8 @@
         </div>
         <div class="modal-footer">
      
-            <button *ngIf="!isEditThreatModal" [disabled]="threatName === '' || threatLevels.length === 0" type="button" class="btn btn-sm btn-confirm" (click)="addThreat()">Add</button>
-            <button *ngIf="isEditThreatModal"  [disabled]="threatName === '' || threatLevels.length === 0" type="button" class="btn btn-sm btn-confirm"  (click)="editThreat()">Edit</button>
+            <button *ngIf="!isEditThreatModal" [disabled]="threatName === ''" type="button" class="btn btn-sm btn-confirm" (click)="addThreat()">Add</button>
+            <button *ngIf="isEditThreatModal"  [disabled]="threatName === ''" type="button" class="btn btn-sm btn-confirm"  (click)="editThreat()">Edit</button>
         </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
