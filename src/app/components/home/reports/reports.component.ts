@@ -24,7 +24,6 @@ declare let html2canvas: any;
 })
 export class ReportsComponent implements OnInit {
     constructor(
-        private notifyService: NotificationService,
         private homeComponent: HomeComponent,
         private surveyService: SurveyService,
         private responseService: ResponseService,
