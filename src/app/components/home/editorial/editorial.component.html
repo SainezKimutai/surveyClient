@@ -24,7 +24,7 @@
 <section class="navigation-section">
     <div class="nav-wrapper">
         <div class="item"> 
-            <button [ngClass]="FormSectionStatus || TemplateViewSectionStatus ? 'btn thm-primary btn-sm active' : 'btn thm-primary btn-sm'" (click)="viewSurveyTemplates()">
+            <button [ngClass]="TemplateViewSectionStatus ? 'btn thm-primary btn-sm active' : 'btn thm-primary btn-sm'" (click)="viewSurveyTemplates()">
                 <fa-icon [icon]="faListAlt"></fa-icon> Survey
             </button>
         </div>
@@ -371,11 +371,13 @@
 
 <section class="templates-section" *ngIf="TemplateViewSectionStatus">
     <div class="list-table" [hidden]="pageProgress !== 100">
-        <div class="search-wrap">
-            <div class="input-wrap">
+        <div class="search-wrap d-flex">
+            <div class="input-wrap mr-auto">
                 <input type="text" (keyup)="filterSurveys()" name='FilterName' [(ngModel)]="FilterName" placeholder="Search here ..."> 
                 <fa-icon [icon]="faSearch"></fa-icon>
             </div>
+
+            <button class="btn btn-sm btn-new" (click)="createNewSurveyTemplate()">Add New Survey</button>
         </div>
         <div class="list-table-header">
             <div class="header-wrap">
@@ -407,11 +409,12 @@
 
 <section class="templates-section" *ngIf="ThreatsViewSectionStatus">
     <div class="list-table threat" [hidden]="pageProgress !== 100">
-        <div class="search-wrap">
-            <div class="input-wrap">
+        <div class="search-wrap d-flex">
+            <div class="input-wrap mr-auto">
                 <input type="text" (keyup)="filterThreats()" name='FilterThreatInput' [(ngModel)]="FilterThreatInput" placeholder="Search here ..."> 
                 <fa-icon [icon]="faSearch"></fa-icon>
             </div>
+            <button class="btn btn-sm btn-new" (click)="clearThreat(); addThreatModal.show()">Add New Threat</button>
         </div>
         <div class="list-table-header">
             <div class="header-wrap">

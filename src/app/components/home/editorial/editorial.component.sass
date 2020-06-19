@@ -59,6 +59,8 @@
     display: grid 
     grid-template-columns: repeat(6, 1fr)
     grid-gap: 1em
+    @include desktop_xl
+        grid-template-columns: repeat(5, 1fr)
     @include desktop_md
         grid-template-columns: repeat(4, 1fr)
     @include desktop_sm
@@ -81,7 +83,8 @@
     -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
     border-radius: 2px
     border-bottom: solid 2px colorTheme(primaryTheme)
-    @include desktop_md          
+    @include desktop_lg
+        width: 100%       
         height: 6em
         display: flex
         align-items: center
@@ -89,7 +92,7 @@
         background-color: grayColor(g400)
     fa-icon
         font-size: 12px
-        margin: 0 2em 0 0
+        margin: 0 1em 0 0
     &.thm-success
         fa-icon
             color: colorTheme(success)
@@ -832,23 +835,28 @@
 .templates-section .list-table .search-wrap
     width: 100%
     padding: .5em 0
-    .input-wrap
-        width: fit-content
-        background-color: whitesmoke
-        fa-icon
-            color: grayColor(g800)
-            font-size: 14px
-            margin: auto .5em auto auto
-        input 
-            border: none
-            outline: none
-            border-radius: 2px
-            font-size: 14px
-            padding: .5em
-            background-color: transparent
-            color: grayColor(g800)
-            &::placeholder
-                color: colorTheme(primaryTheme)
+.templates-section .list-table .search-wrap .input-wrap
+    width: fit-content
+    background-color: whitesmoke
+    fa-icon
+        color: grayColor(g800)
+        font-size: 14px
+        margin: auto .5em auto auto
+    input 
+        border: none
+        outline: none
+        border-radius: 2px
+        font-size: 14px
+        padding: .5em
+        background-color: transparent
+        color: grayColor(g800)
+        &::placeholder
+            color: colorTheme(primaryTheme)
+.templates-section .list-table .search-wrap .btn-new
+    background-color: colorTheme(success)
+    color: white
+    font-size: 12px
+    margin: auto 0 auto auto
 .templates-section .list-table.threat .search-wrap .input-wrap input::placeholder
     color: colorTheme(secondaryTheme)
 .templates-section .list-table .list-table-body
