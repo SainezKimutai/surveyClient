@@ -59,7 +59,7 @@
     -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
     -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
     border-radius: 2px
-    border-bottom: solid 2px vanillaTheme(danger)
+    border-bottom: solid 2px colorTheme(secondaryTheme)
     @include desktop_md          
         height: 6em
         display: flex
@@ -71,7 +71,7 @@
         margin: 0 2em 0 0
     &.thm-danger
         fa, fa-icon
-            color: vanillaTheme(danger)
+            color: colorTheme(secondaryTheme)
 
 
 
@@ -204,16 +204,26 @@
         span 
             color: grayColor(g900)
     &.take
+        // .take-btn
+        //     width: fit-content
+        //     padding: .3em .5em
+        //     cursor: pointer
+        //     background-color: transparent
+        //     color: colorTheme(primaryTheme)
+        //     box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+        //     -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+        //     -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+        //     border-radius: 2px
+        //     &:hover
+        //         background-color: grayColor(g200)
         .take-btn
             width: fit-content
             padding: .3em .5em
             cursor: pointer
             background-color: transparent
             color: colorTheme(primaryTheme)
-            box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-            -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-            -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-            border-radius: 2px
+            border-radius: .8em
+            border: solid 1px colorTheme(primaryTheme)
             &:hover
                 background-color: grayColor(g200)
         .take-btn-disabled
@@ -224,16 +234,26 @@
             background-color: transparent
             color: grayColor(g900)
     &.erase
+        // .erase-btn
+            // width: fit-content
+            // padding: .3em .5em
+            // cursor: pointer
+            // background-color: transparent
+            // color: colorTheme(secondaryTheme)
+            // box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+            // -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+            // -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+            // border-radius: 2px
+            // &:hover
+            //     background-color: grayColor(g200)
         .erase-btn
             width: fit-content
             padding: .3em .5em
             cursor: pointer
             background-color: transparent
             color: colorTheme(secondaryTheme)
-            box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-            -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-            -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-            border-radius: 2px
+            border-radius: .8em
+            border: solid 1px colorTheme(secondaryTheme)
             &:hover
                 background-color: grayColor(g200)
         .erase-btn-disabled
