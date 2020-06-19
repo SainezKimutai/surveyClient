@@ -3,7 +3,7 @@ import { faBuilding, faFire, faComment, faEnvelope, faKey , faGlobe , faAddressB
   faEdit, faCheck, faListAlt, faBookReader, faTrash, faChartLine, faChartBar, faChartPie,
   faArrowCircleRight, faArrowCircleLeft, faPlus,
   faFileAlt, faCommentAlt, faImage, faVideo, faFileWord, faFileExcel,
-  faFilePowerpoint, faFilePdf } from '@fortawesome/free-solid-svg-icons';
+  faFilePowerpoint, faFilePdf, faPowerOff} from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
@@ -20,6 +20,7 @@ import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { PlansService } from 'src/app/shared/services/plan.service';
 import { TaskPlanService } from 'src/app/shared/services/taskPlan.service';
 import { ActivityPlanService } from 'src/app/shared/services/activityPlan.service';
+import { HomeComponent } from '../home.component';
 
 @Component({
   selector: 'app-profile',
@@ -37,7 +38,7 @@ export class ProfileComponent implements OnInit {
     private questionService: QuestionService,
     private companyProfileService: CompanyProfileService,
     private responseService: ResponseService,
-    private fileUploadServcie: FileUploadService,
+    private homeComponent: HomeComponent,
     private threatService: ThreatService,
     private threatCategoryService: ThreatCategoryService,
     private industryService: IndustryService,
@@ -84,6 +85,7 @@ export class ProfileComponent implements OnInit {
     public faFileExcel = faFileExcel;
     public faFilePowerpoint = faFilePowerpoint;
     public faFilePdf = faFilePdf;
+    public faPowerOff = faPowerOff;
     // Icons
     public faChartLine = faChartLine;
     public faChartBar = faChartBar;
@@ -1867,24 +1869,13 @@ export class ProfileComponent implements OnInit {
     }
     };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   }
 
 
 
-
+  logOut() {
+    this.homeComponent.logout();
+  }
 
 
 

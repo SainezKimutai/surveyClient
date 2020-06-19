@@ -16,13 +16,14 @@
 
 
 
-
-<section class="title-section">
-    <h4>Users</h4>
-    <p>View, Edit, and Invite Users</p>
-  </section>
-  
-  
+<header class="header">
+  <div class="header-wrap">
+      <h4>USERS</h4>
+      <button class="btn thm-danger btn-sm" (click)="logOut()" >
+          <fa-icon [icon]="faPowerOff"></fa-icon>Logout
+      </button>
+  </div>
+</header>
   
   
   
@@ -40,10 +41,6 @@
 
 
 
-<div class="title-div">
-    <h4 *ngIf="toAdmin">Select Company Name To View List Of Users</h4>
-    <h4 *ngIf="toCustomer">List Of Users</h4>
-</div>
 
 <div *ngIf="toAdmin" class="search-wrap">
   <div class="input-wrap">
