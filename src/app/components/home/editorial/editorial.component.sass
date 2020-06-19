@@ -1,44 +1,78 @@
 @import "src/styles.sass"
 
-
-
-
-.page-title
+.header
     width: 100%
-    // padding: 1em 2em
-    display: flex
-    flex-direction: column
-
-
-    h4 
-        padding: .5em 1em
-        font-size: 18px
-        font-weight: bold
-        text-transform: uppercase
-        text-shadow: 1px -1px 1px white
-        -moz-text-shadow: 1px -1px 1px white
-        -webkit-text-shadow: 1px -1px 1px white
-
-
-
-
-
-
-
-    
-.article
-    width: 100%
-    height: fit-content
-
-.progress-wrap
-    margin: 4em auto
+    padding: 0 1em
     background-color: transparent
-    border-radius: 5px
-    min-width: 15em
-    min-height: 10em
+.header .header-wrap
+    width: 100%
+    height: 100%
+    padding: 1em
     display: flex
-    justify-content: center
-    align-items: center
+    background-color: white
+    border: solid 1px grayColor(g200)
+.header .header-wrap h4 
+    margin: auto auto auto 0
+    color: colorTheme(primaryTheme)
+    font-size: 18px 
+    font-weight: bold
+    text-transform: uppercase
+    text-shadow: 1px -1px 1px white
+    -moz-text-shadow: 1px -1px 1px white
+    -webkit-text-shadow: 1px -1px 1px white
+.header .header-wrap .logout-btn
+    margin: auto 0 auto auto 
+    padding: .4em .7em
+    border-radius: 5px
+    border: none
+    display: flex
+    align-items: stretch
+    background-color: colorTheme(primaryTheme)
+    cursor: pointer
+    transition: all .5s
+    fa-icon 
+        font-size: 12px
+        margin: auto 1em auto auto
+        color: colorTheme(secondaryTheme)
+    span 
+        font-size: 12px
+        margin: auto
+        color: colorTheme(secondaryTheme)
+    &:hover
+        border: none
+        background-color: colorTheme(secondaryTheme)
+        span, fa-icon
+            color: colorTheme(primaryTheme)
+
+.header .header-wrap .btn
+    width: fit-content
+    height: 3em
+    color: vanillaTheme(titleTheme)
+    margin: auto 0 auto auto
+    border: none
+    font-size: 12px
+    font-family: Montserrat
+    text-transform: capitalize
+    text-align: left
+    background-color: transparent
+    box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    border-radius: 2px
+    border-bottom: solid 2px colorTheme(secondaryTheme)
+    @include desktop_md          
+        height: 6em
+        display: flex
+        align-items: center
+    &:hover
+        background-color: grayColor(g400)
+    fa, fa-icon
+        font-size: 12px
+        margin: 0 2em 0 0
+    &.thm-danger
+        fa, fa-icon
+            color: colorTheme(secondaryTheme)
+
 
 
 
@@ -131,23 +165,27 @@
 
 
 
-
-
-
-
-
+    
+.main-article
+    width: 100%
+    height: fit-content
+    padding: 1em
+.progress-wrap
+    width: 100%
+    margin: 4em auto
+    background-color: transparent
+    border-radius: 5px
+    min-width: 15em
+    min-height: 10em
+    display: flex
+    justify-content: center
+    align-items: center
 
 .body-section
     width: 100%
     display: flex
-    padding: 0 210px 0 3em
-
-    @include desktop_lg
-        padding: 0 200px 0 3em
-
-    @include desktop_md
-        padding: 1em
-
+    padding: 0
+    background-color: white
 
 
 

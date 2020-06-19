@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { faPlus, faSearch, faListAlt, faTrashAlt, faExclamationTriangle, faEye,
   faBackward, faEdit, faTrash, faBuilding, faComments, faFire,
-  faBusinessTime } from '@fortawesome/free-solid-svg-icons';
+  faBusinessTime, faPowerOff} from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
@@ -14,6 +14,7 @@ import { createUrlResolverWithoutPackagePrefix } from '@angular/compiler';
 import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
 import { async } from '@angular/core/testing';
 import {ActivityPlanService } from 'src/app/shared/services/activityPlan.service';
+import { HomeComponent } from '../home.component';
 @Component({
   selector: 'app-editorial',
   templateUrl: './editorial.component.html',
@@ -24,11 +25,11 @@ export class EditorialComponent implements OnInit {
 
   constructor(
     private notifyService: NotificationService,
+    private homeComponent: HomeComponent,
     private surveyService: SurveyService,
     private questionService: QuestionService,
     private threatService: ThreatService,
     private industryService: IndustryService,
-    private _formBuilder: FormBuilder,
     private trackerReasonService: TrackerReasonService,
     private threatCategoryService: ThreatCategoryService,
     private activityPlanService: ActivityPlanService
@@ -61,6 +62,7 @@ export class EditorialComponent implements OnInit {
   public faEye = faEye;
   public faWarning = faExclamationTriangle;
   public faBusinessTime = faBusinessTime;
+  public faPowerOff = faPowerOff;
 
 
   //
@@ -1032,6 +1034,31 @@ filterThreats() {
       error => this.notifyService.showError('Could not delete threat category', 'Failed')
     );
   }
+
+
+
+
+
+
+  logOut() {
+    this.homeComponent.logout();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   //Do not remove, may be needed in future
 

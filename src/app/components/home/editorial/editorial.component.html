@@ -11,6 +11,14 @@
 
 
 
+<header class="header">
+    <div class="header-wrap">
+        <h4>EDITORIAL</h4>
+        <button class="btn thm-danger btn-sm" (click)="logOut()" >
+            <fa-icon [icon]="faPowerOff"></fa-icon>Logout
+        </button>
+    </div>
+</header>
 
 
 
@@ -24,9 +32,8 @@
 
 
 
-<div class="page-title d-flex">
+<!-- <div  class="page-title d-flex">
 
-    <h4>Editorial</h4>
 
     <section id="top_header" class="top-header">
     
@@ -64,35 +71,34 @@
 
     </div>
     </section>   
+</div> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<article class="main-article">
+
+
+
+<div *ngIf="pageProgress !== 100" class="progress-wrap">
+    <circle-progress [percent]="pageProgress" ></circle-progress>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<article class="article">
-
-    <div *ngIf="pageProgress !== 100" class="progress-wrap">
-        <circle-progress [percent]="pageProgress" ></circle-progress>
-    </div>
-
-
-
-
-
+    
 <section class="body-section">
+
 
 
 
@@ -397,93 +403,6 @@
 
 
 
-<section hidden class="templates-section" *ngIf="TemeplateViewSectionStatus">
-
-    <div class="card-group">
-        <div *ngIf="pageProgress !== 100" class="progress-wrap">
-            <circle-progress [percent]="pageProgress" ></circle-progress>
-        </div>
-        <div [hidden]="pageProgress !== 100" class="card"  *ngFor="let item of AllSurveys">  
-          
-            <div class="card-body">
-                <fa-icon [icon]="faListAlt"></fa-icon>
-                <h4>{{item.surveyName}}</h4>
-            </div>
-            <div>
-                <fa-icon class="editIcon" [icon]="faEye" (click)="viewSurvey(item.surveyName, item._id)"></fa-icon>
-                <fa-icon class="deleteIcon" [icon]="faDelete" (click)="prompSurveyDelete(item._id)"></fa-icon>
-            </div>
-
-        </div>
-
-        <div [hidden]="pageProgress !== 100" class="card" *ngIf="AllSurveys.length === 0">
-            <div class="card-header">
-
-            </div>
-            <div class="card-body">
-                <fa-icon [icon]="faListAlt"></fa-icon>
-                <h4>No Template</h4>
-            </div>
-           
-        </div>
-    </div>
-
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<section hidden class="templates-section" *ngIf="ThreatsViewSectionStatus">
-
-    <div class="card-group">
-        <div class="card" *ngFor="let item of AllThreats">  
-            <div class="card-header">
-
-            </div>
-            <div class="card-body">
-                <fa-icon [icon]="faListAlt"></fa-icon>
-                <h4>{{item.name}}</h4>
-            </div>
-            <div [ngClass] = "item.level">
-                <p>{{item.level}}</p>
-            </div>
-            <div>
-                <fa-icon class="editIcon" [icon]="faEye" (click)="viewThreat(item)"></fa-icon>
-                <fa-icon class="deleteIcon" [icon]="faDelete" (click)="prompThreatDelete(item._id)"></fa-icon>
-            </div>
-
-        </div>
-
-        <div class="card" *ngIf="AllThreats.length === 0">
-            <div class="card-header">
-
-            </div>
-            <div class="card-body">
-                <fa-icon [icon]="faListAlt"></fa-icon>
-                <h4>No Threats</h4>
-            </div>
-           
-        </div>
-    </div>
-
-</section>
-
-
-
-
-
-
-
-
 
 
 
@@ -511,9 +430,30 @@
      
  </section>
 
+
+
+
+
+
+
+
+
+
+
+
 </section> 
 
-<section class="navigation-section">
+
+
+
+
+
+
+
+
+
+
+<section hidden class="navigation-section">
 
     <div class="body">
 
