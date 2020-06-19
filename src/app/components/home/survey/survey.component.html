@@ -9,14 +9,19 @@
     </div>
 </article>
 
-<div class="page-title">
+<header class="header">
+    <div class="header-wrap">
+        <h4>SURVEY</h4>
 
-    <h4>Survey</h4>
+        <div class="logout-btn">
+            <fa-icon [icon]="faPowerOff"></fa-icon>
+            <span>Logout</span>
+        </div>
+    </div>
+</header>
 
-</div>
 
-
-<article class="article">
+<article class="body-article">
 
     <section class="templates-section">
         <div *ngIf="AllSurveys" class="card-group">

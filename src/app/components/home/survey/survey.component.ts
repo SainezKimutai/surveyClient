@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { Router } from '@angular/router';
-import { faCheck, faListAlt, faSpinner, faEraser} from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faListAlt, faSpinner, faEraser, faPowerOff} from '@fortawesome/free-solid-svg-icons';
 import { ResponseService } from 'src/app/shared/services/responses.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
 import { ModalDirective } from 'ngx-bootstrap';
@@ -37,6 +37,7 @@ export class SurveyComponent implements OnInit {
   public faListAlt = faListAlt;
   public faSpinner = faSpinner;
   public faEraser = faEraser;
+  public faPowerOff = faPowerOff;
 
   public surveyTobeErased = '';
 
