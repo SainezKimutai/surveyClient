@@ -6,6 +6,7 @@ import { ResponseService } from 'src/app/shared/services/responses.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
 import { ModalDirective } from 'ngx-bootstrap';
 import { NotificationService } from 'src/app/shared/services/notification.service';
+import { HomeComponent } from '../home.component';
 
 @Component({
   selector: 'app-survey',
@@ -19,6 +20,7 @@ export class SurveyComponent implements OnInit {
 
 
   constructor(
+    private homeComponent: HomeComponent,
     private surveyService: SurveyService,
     private responseService: ResponseService,
     private questionService: QuestionService,
@@ -214,6 +216,9 @@ export class SurveyComponent implements OnInit {
 
 
 
+  logOut() {
+    this.homeComponent.logout();
+  }
 
 
 
