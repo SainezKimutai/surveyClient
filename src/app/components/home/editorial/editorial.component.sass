@@ -192,9 +192,62 @@
 
 
 
-
-
-
+.navigation-section
+    width: 100%
+    padding: 1em
+.navigation-section .nav-wrapper
+    display: grid 
+    grid-template-columns: repeat(6, 1fr)
+    grid-gap: 1em
+    @include desktop_md
+        grid-template-columns: repeat(4, 1fr)
+    @include desktop_sm
+        grid-template-columns: repeat(2, 1fr)
+    @include desktop_xm
+        grid-template-columns: repeat(1, 1fr)
+.navigation-section .nav-wrapper .item .btn
+    width: fit-content
+    height: 3em
+    color: vanillaTheme(titleTheme)
+    margin: auto
+    border: none
+    font-size: 12px
+    font-family: Montserrat
+    text-transform: capitalize
+    text-align: left
+    background-color: transparent
+    box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    border-radius: 2px
+    border-bottom: solid 2px colorTheme(primaryTheme)
+    @include desktop_md          
+        height: 6em
+        display: flex
+        align-items: center
+    &:hover
+        background-color: grayColor(g400)
+    fa-icon
+        font-size: 12px
+        margin: 0 2em 0 0
+    &.thm-success
+        fa-icon
+            color: colorTheme(success)
+    &.thm-warning          
+        fa-icon
+            color: colorTheme(secondaryTheme)
+    &.thm-primary
+        fa-icon
+            color: colorTheme(primaryTheme)
+    &.thm-info
+        fa-icon
+            color: colorTheme(info)                 
+    &.thm-danger
+        fa, fa-icon
+            color: colorTheme(danger)
+    &.thm-purple
+        fa, fa-icon
+            color: purple
 
 
 
@@ -1041,86 +1094,86 @@
 
 
 
-.navigation-section
-    margin-left: auto
-    position: absolute
-    top: 0
-    right: 0
-    height: 100%
-    // width: 310px
-    width: 200px
-    background-color: #202239
-    padding: 0
-    display: flex
-    flex-direction: column
+// .navigation-section
+//     margin-left: auto
+//     position: absolute
+//     top: 0
+//     right: 0
+//     height: 100%
+//     // width: 310px
+//     width: 200px
+//     background-color: #202239
+//     padding: 0
+//     display: flex
+//     flex-direction: column
 
-    @include desktop_lg
-        width: 190px
+//     @include desktop_lg
+//         width: 190px
 
-    @include desktop_md
-        display: none
+//     @include desktop_md
+//         display: none
 
 
 
-.navigation-section .body
-    background-color: white
-    min-height: 50%
-    height: fit-content
-    padding: 0 1em
+// .navigation-section .body
+//     background-color: white
+//     min-height: 50%
+//     height: fit-content
+//     padding: 0 1em
 
-    .search-wrap
-        width: 100%
-        padding: 1em
-        margin: 2em 0
+//     .search-wrap
+//         width: 100%
+//         padding: 1em
+//         margin: 2em 0
    
-        .input-wrap
-            border-radius: 1em
-            background-color: grayColor(g200)
+//         .input-wrap
+//             border-radius: 1em
+//             background-color: grayColor(g200)
 
-            fa-icon
-                margin: auto .5em
+//             fa-icon
+//                 margin: auto .5em
 
 
-            input
-                width: 100%
-                outline: none
-                padding: .5em
-                border: none
-                border-radius: 0px
-                background-color: transparent
+//             input
+//                 width: 100%
+//                 outline: none
+//                 padding: .5em
+//                 border: none
+//                 border-radius: 0px
+//                 background-color: transparent
                 
-    .nav-tab
-        cursor: pointer
-        border-radius: 1em
-        width: 100%
-        padding: .5em 1em
-        box-shadow: 0 0 10px rgba(0, 0, 0, .3)
-        color: grayColor(g800)
-        margin: 0 auto 2em auto
-        text-align: left
-        font-size: 12px
+//     .nav-tab
+//         cursor: pointer
+//         border-radius: 1em
+//         width: 100%
+//         padding: .5em 1em
+//         box-shadow: 0 0 10px rgba(0, 0, 0, .3)
+//         color: grayColor(g800)
+//         margin: 0 auto 2em auto
+//         text-align: left
+//         font-size: 12px
 
-        &.active
-            background-color: colorTheme(primaryTheme)
-            color: colorTheme(light)
+//         &.active
+//             background-color: colorTheme(primaryTheme)
+//             color: colorTheme(light)
 
-            fa-icon
-                margin-right: .5em
-                color: colorTheme(light)
+//             fa-icon
+//                 margin-right: .5em
+//                 color: colorTheme(light)
 
-        fa-icon
-            margin-right: .5em
-            color: colorTheme(secondaryTheme)
+//         fa-icon
+//             margin-right: .5em
+//             color: colorTheme(secondaryTheme)
 
         
 
 
 
-.navigation-section .footer
-    background-color: grayColor(g800)
-    position: relative
-    bottom: 0
-    width: 100%
+// .navigation-section .footer
+//     background-color: grayColor(g800)
+//     position: relative
+//     bottom: 0
+//     width: 100%
 
 
 

@@ -21,10 +21,55 @@
 </header>
 
 
+<section class="navigation-section">
+    <div class="nav-wrapper">
+        <div class="item"> 
+            <button  class="btn thm-primary btn-sm" (click)="viewSurveyTemplates()">
+                <fa-icon [icon]="faListAlt"></fa-icon> Survey
+            </button>
+        </div>
+        <div class="item">
+          <button class="btn thm-warning btn-sm" (click)="getThreats()">
+            <fa-icon [icon]="faFire"></fa-icon>Threats
+          </button>
+        </div>
+        <div class="item">
+            <button class="btn thm-info btn-sm" (click)="addThreatCategoryModal.show()">
+                <fa-icon [icon]="faFire"></fa-icon>Threat Categories
+            </button>
+        </div>
+        <div class="item">
+          <button class="btn thm-warning btn-sm" (click)="addTrackerReasonModal.show()">
+            <fa-icon [icon]="faComments"></fa-icon> Tracker Reasons
+          </button>
+        </div>
+        <div class="item">
+            <button class="btn thm-purple btn-sm" (click)="addIndustriesModal.show()" >
+                <fa-icon [icon]="faBuilding"></fa-icon> Industries
+            </button>
+          </div>
+          <div class="item">
+            <button class="btn thm-primary btn-sm" (click)="addPlanModal.show()">
+            <fa-icon [icon]="faBusinessTime"></fa-icon>Activity Plan
+            </button>
+          </div>
+    </div>
+
+</section>
 
 
 
+<!-- <div [ngClass]="FormSectionStatus ? 'nav-tab active' : 'nav-tab'" (click)="createNewSurveyTemplate()">
+    <fa-icon [icon]="faPlus"></fa-icon>
+    Survey
+</div>
 
+
+
+<div [ngClass]="ThreatSectionStatus ? 'nav-tab active' : 'nav-tab'" (click)="clearThreat(); addThreatModal.show()">
+    <fa-icon [icon]="faPlus"></fa-icon>
+    Add Threat
+</div> -->
 
 
 
@@ -377,7 +422,7 @@
         </div>
         <div class="list-table-body">
             <div class="list-item-wrap-no-survey" *ngIf="ViewAllThreats.length === 0">
-                <h4>No Surveys</h4>
+                <h4>No Threats</h4>
             </div>
             <div class="list-item-wrap" *ngFor="let item of ViewAllThreats">
                 <div class="list-item survey">{{item.name}}</div>
