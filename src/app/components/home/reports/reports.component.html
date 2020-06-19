@@ -10,15 +10,170 @@
 </article>
 
 
+<header class="header">
+    <div class="header-wrap">
+        <h4>REPORTS</h4>
+        <button class="btn thm-danger btn-sm" (click)="logOut()" >
+            <fa-icon [icon]="faPowerOff"></fa-icon>Logout
+        </button>
+    </div>
+</header>
 
-<div class="page-title d-flex">
-    <h4>Survey Reports</h4>  
+
+
+
+
+
+<article class="body-article">
+<div *ngIf="pageProgress !== 100" class="progress-wrap">
+    <circle-progress [percent]="pageProgress" ></circle-progress>
 </div>
 
+<section class="list-table" [hidden]="pageProgress !== 100" *ngIf="TemeplateViewSectionStatus">
+    <div class="search-wrap">
+        <div class="input-wrap">
+            <input type="text" (keyup)="filterSurveys()" name='FilterName' [(ngModel)]="FilterName" placeholder="Search here ..."> 
+            <fa-icon [icon]="faSearch"></fa-icon>
+        </div>
+    
+    </div>
+    <div class="list-table-header">
+        <div class="header-wrap">
+            <div class="head-item survey"> <span> Survey Name</span> </div>
+            <div class="head-item view">View Report </div>
+        </div>
+    </div>
+    <div class="list-table-body">
+        <div class="list-item-wrap-no-survey" *ngIf="ViewAllSurvey.length === 0">
+            <h4>No Reports</h4>
+        </div>
+        <div class="list-item-wrap" *ngFor="let item of ViewAllSurvey">
+            <div class="list-item survey">{{item.surveyName}}</div>
+
+            <div class="list-item view" >
+                <div class="view-btn"  (click)="viewSurvey(item.surveyName, item._id)">View Report</div>
+            </div>
+        </div>
+
+    </div>
+
+
+</section>
 
 
 
-<article class="article">
+
+
+
+
+
+
+<section class="Questions-listing" [hidden]="!QuestionsViewStatus">
+
+    <div class="head d-flex">
+        <button class="btn btn-sm mr-auto" (click)="viewSurveyTemplates()"> <fa-icon style="color: white;" [icon]="faBackward"></fa-icon> </button>
+        <h4 class="mr-auto">{{TemplateNameOnView}}</h4>
+        <button class="btn btn-sm ml-auto btn-success" (click)="downloadPdf(); ImprintLoader = true"> <fa-icon [icon]="faDownload"></fa-icon></button>
+    </div>
+
+
+    <div id="top-header" class="top-header">
+
+        <h2>Risk Analysis Report</h2>
+
+    </div>
+
+    
+    <section id=summaryGraph class="risk-graph-section">
+        
+        <div class="title d-flex"> <span>Your risk representations</span>
+            <div class=" graph-switch d-flex ml-auto">
+                <span (click)="chart3graphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="chart3Type === 'line' ? 'active' : ''" ></fa-icon></span> 
+                <span (click)="chart3graphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="chart3Type === 'bar' ? 'active' : ''" ></fa-icon></span>
+                <!-- <span (click)="chart3graphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="chart3Type === 'pie' ? 'active' : ''" ></fa-icon> </span> -->
+            </div>
+        </div>
+
+        <div class="body-wrapper">
+            <canvas *ngIf="chart3Type" baseChart class="chart" [chartType]="chart3Type" [labels]="chart3Labels"
+            [datasets]="chart3Datasets" [options]="chart3ChartOptions" [plugins]="pluginDataLabels"></canvas>
+        </div>
+
+</section>
+
+
+
+   
+    <div #reportTemplate id="reportTemplate">
+    <div  *ngFor="let item of TemplateQuestions; let i = index" id="quiz{{i}}" [ngClass]="(i + 1 ) % 5 === 0 ? 'question-wrap interval' : 'question-wrap'">
+        <div class="question d-flex w-100">{{i+1}}. {{item.question}}</div>
+        <div class="choices-wrapper">
+        <div class="choices answer">
+            <span>{{item.answer}}</span>
+        </div>
+        <div class="choices recom" *ngIf="item.level">
+            <span>Mapped Risk: <span class="span-inner">{{item.threat}}</span> </span>
+        </div>
+        <div class="choices threat" *ngIf="item.level">
+            <span>Threat Level: <span class="{{item.level}}">{{item.level}}</span> </span>
+        </div>
+        <div class="choices recom" *ngIf="item.recom">
+            <span>Recommendation: <span class="span-inner">{{item.recom}}</span> </span>
+        </div>
+        </div>
+    </div>
+    </div>
+     
+
+
+
+ </section>
+
+
+
+
+</article>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<article hidden class="article">
 
 <section class="body-section">
     

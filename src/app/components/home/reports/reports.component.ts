@@ -5,12 +5,13 @@ import { SurveyService } from 'src/app/shared/services/survey.service';
 import { ResponseService } from 'src/app/shared/services/responses.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
 import { ThreatService } from 'src/app/shared/services/threats.service';
-import { faListAlt, faDownload, faChartLine, faChartBar, faChartPie } from '@fortawesome/free-solid-svg-icons';
+import { faListAlt, faDownload, faChartLine, faChartBar, faChartPie, faPowerOff, faSearch } from '@fortawesome/free-solid-svg-icons';
 import * as jspdf from 'jspdf';
 import 'jspdf-autotable';
 import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
 import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import { HomeComponent } from '../home.component';
 
 declare let html2canvas: any;
 
@@ -24,6 +25,7 @@ declare let html2canvas: any;
 export class ReportsComponent implements OnInit {
     constructor(
         private notifyService: NotificationService,
+        private homeComponent: HomeComponent,
         private surveyService: SurveyService,
         private responseService: ResponseService,
         private questionService: QuestionService,
@@ -50,9 +52,12 @@ export class ReportsComponent implements OnInit {
       public faChartLine = faChartLine;
       public faChartBar = faChartBar;
       public faChartPie = faChartPie;
+      public faPowerOff = faPowerOff;
+      public faSearch = faSearch;
 
       //
       public AllSurveys: any;//keep and rename..
+      public ViewAllSurvey = [];
       public AllResponses =[];
       public AllThreats = [];
       public AllThreatCategorys;
@@ -82,6 +87,8 @@ export class ReportsComponent implements OnInit {
       public onResizeStatus = false;
       public myInterval: any;
 
+      public FilterName = '';
+
 
 
 
@@ -91,7 +98,7 @@ export class ReportsComponent implements OnInit {
 
       ngOnInit() {
         sessionStorage.setItem('ActiveNav', 'reports');
-          this.updatePage().then(() => { this.getMoreData().then(() => { }) });
+          this.updatePage().then(() => { this.getMoreData().then(() => { this.ViewAllSurvey = this.AllSurveys }) });
       }
 
 
@@ -271,6 +278,33 @@ export class ReportsComponent implements OnInit {
 
 
 
+
+    filterSurveys() {
+      if (!this.FilterName || this.FilterName === null || this.FilterName === '' || this.FilterName.length  < 1) {
+        this.ViewAllSurvey = this.AllSurveys;
+        } else {
+          this.ViewAllSurvey = this.AllSurveys.filter(v => v.surveyName.toLowerCase().indexOf(this.FilterName.toLowerCase()) > -1).slice(0, 10);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     downloadPdf(){
       this.ImprintLoader = true;
       setTimeout(() => {
@@ -325,7 +359,6 @@ export class ReportsComponent implements OnInit {
           })
       });
       });
-
 
     }, 100);
 };
@@ -676,6 +709,9 @@ this.chart3BgColors = []
 
 
 
+  logOut() {
+    this.homeComponent.logout();
+  }
 
 
 
