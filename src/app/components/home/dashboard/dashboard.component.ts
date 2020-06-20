@@ -1,14 +1,7 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
-import { faChartLine, faChartBar, faChartPie, faListAlt, faBuilding, faFire } from '@fortawesome/free-solid-svg-icons';
-import { SurveyService } from 'src/app/shared/services/survey.service';
-import { QuestionService } from 'src/app/shared/services/questions.service';
-import { UserService } from 'src/app/shared/services/user.service';
-import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
-import { ResponseService } from 'src/app/shared/services/responses.service';
-import { ModalDirective } from 'ngx-bootstrap';
-import { ThreatService } from 'src/app/shared/services/threats.service';
-import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
-import { NotificationService } from 'src/app/shared/services/notification.service';
+import { faPowerOff} from '@fortawesome/free-solid-svg-icons';
+
+import { HomeComponent } from '../home.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,15 +24,12 @@ public thisYear = this.today.getFullYear();
 
 
   constructor(
-    private userService: UserService,
-    private companyProfileService: CompanyProfileService,
-    private surveyService: SurveyService,
-    private questionService: QuestionService,
-    private responseService: ResponseService,
-    private threatService: ThreatService,
-    private threatCategoryService: ThreatCategoryService,
-    private notification: NotificationService
+    private homeComponent: HomeComponent
   ) { }
+
+
+
+  public faPowerOff = faPowerOff;
 
  ngOnInit() {
   sessionStorage.setItem('ActiveNav', 'dashboard');
@@ -56,6 +46,13 @@ public thisYear = this.today.getFullYear();
   this.OperationDashboardStatus = false;
   this.MarketDashboardStatus = true;
  }
+
+
+
+ logOut() {
+  this.homeComponent.logout();
+}
+
 
 
 }
