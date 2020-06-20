@@ -14,11 +14,6 @@ export class ClientService {
     url = `${dev.connect}api/clients/`;
 
 
-    header = new HttpHeaders().set(
-      'Authorization', `Bearer ${window.sessionStorage.getItem('loggedUserToken')}`
-    );
-
-
     constructor( private http: HttpClient ) {}
 
 

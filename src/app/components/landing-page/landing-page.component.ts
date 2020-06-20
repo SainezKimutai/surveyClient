@@ -5,6 +5,8 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import { Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap';
 import { async } from '@angular/core/testing';
+import { updateHeader } from 'src/app/shared/dev/dev';
+
 
 
 @Component({
@@ -39,7 +41,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   public emailError = false;
   public passwordError = false;
   public PasswordType = 'password';
-  public resetEmail ='';
+  public resetEmail = '';
   public emailVerify = false;
 
 
@@ -109,37 +111,48 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
     this.ImprintLoader = true;
     this.userService.loginUser(this.loginForm).subscribe(
-     async dataUser =>  {
+    dataUser =>  {
         if (dataUser.userType === 'customer') {
-         await sessionStorage.setItem('loggedUserToken', dataUser.token);
-         await sessionStorage.setItem('loggedUserName', dataUser.name);
-         await sessionStorage.setItem('loggedUserEmail', dataUser.email);
-         await sessionStorage.setItem('loggedUserInstitution', dataUser.institutionId);
-         await sessionStorage.setItem('loggedUserID', dataUser._id);
-         await sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
-         await sessionStorage.setItem('permissionStatus', 'isCustomer');
+        sessionStorage.setItem('loggedUserToken', dataUser.token);
+        sessionStorage.setItem('loggedUserName', dataUser.name);
+        sessionStorage.setItem('loggedUserEmail', dataUser.email);
+        sessionStorage.setItem('loggedUserInstitution', dataUser.institutionId);
+        sessionStorage.setItem('loggedUserID', dataUser._id);
+        sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
+        sessionStorage.setItem('permissionStatus', 'isCustomer');
+        updateHeader().then(() => {
           this.router.navigate(['/home/survey']);
+         });
+
         }
 
 
         if (dataUser.userType === 'admin') {
-         await sessionStorage.setItem('loggedUserInstitution', dataUser._id);
-         await sessionStorage.setItem('loggedUserToken', dataUser.token);
-         await sessionStorage.setItem('loggedUserName', dataUser.name);
-         await sessionStorage.setItem('loggedUserEmail', dataUser.email);
-         await sessionStorage.setItem('loggedUserID', dataUser._id);
-         await sessionStorage.setItem('permissionStatus', 'isAdmin');
+         sessionStorage.setItem('loggedUserInstitution', dataUser._id);
+         sessionStorage.setItem('loggedUserToken', dataUser.token);
+         sessionStorage.setItem('loggedUserName', dataUser.name);
+         sessionStorage.setItem('loggedUserEmail', dataUser.email);
+         sessionStorage.setItem('loggedUserID', dataUser._id);
+         sessionStorage.setItem('permissionStatus', 'isAdmin');
+
+         updateHeader().then(() => {
           this.router.navigate(['/home/admin']);
+         });
+
         }
 
         if (dataUser.userType === 'thirdparty') {
-         await sessionStorage.setItem('loggedUserInstitution', dataUser._id);
-         await sessionStorage.setItem('loggedUserToken', dataUser.token);
-         await sessionStorage.setItem('loggedUserName', dataUser.name);
-         await sessionStorage.setItem('loggedUserEmail', dataUser.email);
-         await sessionStorage.setItem('loggedUserID', dataUser._id);
-         await sessionStorage.setItem('permissionStatus', 'isThirdParty');
+         sessionStorage.setItem('loggedUserInstitution', dataUser._id);
+         sessionStorage.setItem('loggedUserToken', dataUser.token);
+         sessionStorage.setItem('loggedUserName', dataUser.name);
+         sessionStorage.setItem('loggedUserEmail', dataUser.email);
+         sessionStorage.setItem('loggedUserID', dataUser._id);
+         sessionStorage.setItem('permissionStatus', 'isThirdParty');
+         updateHeader().then(() => {
           this.router.navigate(['/home/dashboard']);
+         });
+
+
         }
 
 
@@ -160,31 +173,31 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.ImprintLoader = false;
   }
 
-  passwordReset(){
+  passwordReset() {
     this.resetModal.show();
   }
 
-  sendResetEmail(){
+  sendResetEmail() {
     this.ImprintLoader = true;
-    const user ={
+    const user = {
       email: this.resetEmail
-    }
+    };
 
     this.userService.sendResetEmail(user).subscribe(
-      user=>{
+      userData => {
         this.resetModal.hide();
-        this.notifyService.showSuccess("Check your email, password reset instructions were sent", "Success!")
+        this.notifyService.showSuccess('Check your email, password reset instructions were sent', 'Success!');
         this.ImprintLoader = false;
-      },err=>{
+      }, err => {
         this.ImprintLoader = false;
-        this.notifyService.showError("An error occured, are you sure you used the right email?", "Failed")
+        this.notifyService.showError('An error occured, are you sure you used the right email?', 'Failed');
       }
-    )
+    );
   }
 
-  checkEmail(){
-    
-    if(this.resetEmail.includes('@') && this.resetEmail.includes('.')){
+  checkEmail() {
+
+    if (this.resetEmail.includes('@') && this.resetEmail.includes('.')) {
       this.emailVerify  = true;
     }
   }

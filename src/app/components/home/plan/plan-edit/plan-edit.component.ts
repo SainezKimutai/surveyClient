@@ -208,11 +208,11 @@ updatePage() {
               dataTask => {
                 this.TaskPlan = dataTask;
                
-                // this.salesCategoryService.getAllSalesCategories().subscribe( 
-                  // dataSalesCat => {
-                    // this.SalesCategories = dataSalesCat;
+                this.salesCategoryService.getAllSalesCategories().subscribe( 
+                  dataSalesCat => {
+                    this.SalesCategories = dataSalesCat;
                     this.formatAtivity().then(() => resolve())
-                // }, error => console.log('Error getting sales cat'));
+                }, error => console.log('Error getting sales cat'));
                               
               }, error => console.log('Error getting task plan')
             )

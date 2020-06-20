@@ -6,6 +6,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { Router , ActivatedRoute, ParamMap} from '@angular/router';
 import { IndustryService } from 'src/app/shared/services/industry.service';
 import { ModalDirective, ModalOptions, ModalModule } from 'ngx-bootstrap';
+import { updateHeader } from 'src/app/shared/dev/dev';
 
 @Component({
   selector: 'app-register',
@@ -173,15 +174,18 @@ export class RegisterComponent implements OnInit, OnDestroy {
         };
 
         this.userService.registerUser(newUserData).subscribe(
-           async dataUser => {
-           await sessionStorage.setItem('loggedUserToken', dataUser.token);
-           await sessionStorage.setItem('loggedUserName', dataUser.name);
-           await sessionStorage.setItem('loggedUserInstitution', dataUser.institutionId);
-           await sessionStorage.setItem('loggedUserEmail', dataUser.email);
-           await sessionStorage.setItem('loggedUserID', dataUser._id);
-           await sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
-           await sessionStorage.setItem('permissionStatus', 'isCustomer');
+          dataUser => {
+           sessionStorage.setItem('loggedUserToken', dataUser.token);
+           sessionStorage.setItem('loggedUserName', dataUser.name);
+           sessionStorage.setItem('loggedUserInstitution', dataUser.institutionId);
+           sessionStorage.setItem('loggedUserEmail', dataUser.email);
+           sessionStorage.setItem('loggedUserID', dataUser._id);
+           sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
+           sessionStorage.setItem('permissionStatus', 'isCustomer');
+
+           updateHeader().then(() => {
             this.router.navigate(['/home/profile']);
+           });
           },
           error => {this.notifyService.showWarning('Could not submit', 'Failled');  this.ImprintLoader = false; }
         );
