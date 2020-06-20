@@ -5,49 +5,51 @@
 </section>
 
 
-<section [hidden]="NoDataOnDasboard" class="body-section">
 
+
+
+
+
+
+
+
+
+
+<section [hidden]="NoDataOnDasboard" class="body-section">
 
 
     <section id="top_cards_section" class="card-group">
 
-        <div class="card first">
+        <div class="my-card">
             <div class="card-title">
-                <h4>No of Industries</h4>
                 <fa-icon [icon]="faListAlt"></fa-icon>
+                <h4>No of Industries</h4>
+           
             </div>
             <div class="card-info">
                 <h4 *ngIf="chartsProgress === 100">{{AllIndustries.length}}</h4>
             </div>
-            <div class="card-body">
-                
-            </div>
+        
         </div>
     
-        <div class="card second">
+        <div class="my-card">
             <div class="card-title">
-                <h4>No of Companies</h4>
-                <fa-icon class="mr-2" (mouseenter)="shareModal.show()" [icon]="faLink"></fa-icon>
+                <fa-icon class="mr-2 text-primary" (mouseenter)="shareModal.show()" [icon]="faLink"></fa-icon>
                 <fa-icon [icon]="faBuilding"></fa-icon>
+                <h4>No of Companies</h4>
             </div>
             <div class="card-info">
                 <h4 *ngIf="chartsProgress === 100">{{AllCompanies.length}}</h4>
             </div>
-            <div class="card-body">
-                
-            </div>
         </div>
     
-        <div class="card third">
+        <div class="my-card">
             <div class="card-title">
-                <h4>No of Surveys</h4>
                 <fa-icon [icon]="faBuilding"></fa-icon>
+                <h4>No of Surveys</h4>
             </div>
             <div class="card-info">
                 <h4 *ngIf="chartsProgress === 100">{{AllSurveys.length}}</h4>
-            </div>
-            <div class="card-body">
-            
             </div>
         </div>
     

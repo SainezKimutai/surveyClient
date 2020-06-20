@@ -1,13 +1,31 @@
-<div class="page-header">
 
-    <h4>Dashboard</h4>
 
-    <div class="btn-wrap">
-        <button [ngClass]="OperationDashboardStatus ? 'active' : ''" (click)="toOperationDashboard()">Operations <span>Analytics</span> </button>
-        <button [ngClass]="MarketDashboardStatus ? 'active' : ''"  (click)="toMarketDashboard()">Market <span>Analytics</span> </button>
+
+<header class="header">
+    <div class="header-wrap">
+        <h4>ADMIN DASHBOARD</h4>
+        <button class="btn thm-danger btn-sm" (click)="logOut()" >
+            <fa-icon [icon]="faPowerOff"></fa-icon>Logout
+        </button>
     </div>
+</header>
 
+
+
+
+
+
+
+<div class="page-switch">
+
+    <div class="switch-wrap">
+        <div class="btn-wrap">
+            <button [ngClass]="OperationDashboardStatus ? 'btn active' : 'btn'" (click)="toOperationDashboard()">Operations <span>Analytics</span> </button>
+            <button [ngClass]="MarketDashboardStatus ? 'btn active' : 'btn'"  (click)="toMarketDashboard()">Market <span>Analytics</span> </button>
+        </div>
+    </div>
 </div>
+
 
 
 
