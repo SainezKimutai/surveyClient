@@ -82,23 +82,6 @@
 </div>
 
 
-<div class="overal-risk-rating-chart-section">
-    <div class="model">
-        <div class="model-title">
-            <span class="title">Overall Average Risk Rating</span>
-            <div class=" graph-switch d-flex ml-auto">
-                <!-- <span ><fa-icon [icon]="faChartBar" [ngClass]="listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> 
-                <span ><fa-icon [icon]="faListAlt" [ngClass]="!listTirdPartyIsGraph ? 'active' : ''" ></fa-icon></span> -->
-            </div>
-        </div>
-
-        <div class="model-body">
-            <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
-            <canvas *ngIf="chartsProgress === 100 && overallRiskRatingChartType" baseChart class="chart" [chartType]="overallRiskRatingChartType" [labels]="overallRiskRatingChartLabels"
-                [datasets]="overallRiskRatingChartDatasets" [options]="overallRiskRatingChartOptions" [plugins]="pluginDataLabels"></canvas>
-        </div>
-    </div>
-</div>
 
 
 
@@ -116,6 +99,22 @@
             <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
             <canvas *ngIf="chartsProgress === 100 && riskPerIndustryChartType" baseChart class="chart" [chartType]="riskPerIndustryChartType" [labels]="riskPerIndustryChartLabels"
                 [datasets]="riskPerIndustryChartDatasets" [options]="riskPerIndustryChartOptions" [plugins]="pluginDataLabels"></canvas>
+        </div>
+    </div>
+    <div class="model">
+        <div class="model-title">
+            <span class="title">Traffic Monitor</span>
+            <div class=" graph-switch d-flex ml-auto">
+                <span (click)="trafficGraphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="trafficType === 'line' ? 'active' : ''" ></fa-icon></span> 
+                <span (click)="trafficGraphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="trafficType === 'bar' ? 'active' : ''" ></fa-icon></span>
+                <span (click)="trafficGraphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="trafficType === 'pie' ? 'active' : ''" ></fa-icon> </span>
+            </div>
+        </div>
+
+        <div class="model-body">
+            <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
+            <canvas *ngIf="trafficType" baseChart class="chart" [chartType]="trafficType" [labels]="trafficLabels"
+            [datasets]="trafficDatasets" [options]="trafficChartOptions"></canvas>
         </div>
     </div>
 </div>
@@ -282,12 +281,11 @@
 
 
 
-<section id="traffic_section" class="card-group">
+<section hidden id="traffic_section" class="card-group">
     
     <div class="card">
         <div class="title d-flex"> <span>Traffic Monitor</span>
             <div class=" graph-switch d-flex ml-auto">
-                
                 <span (click)="trafficGraphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="trafficType === 'line' ? 'active' : ''" ></fa-icon></span> 
                 <span (click)="trafficGraphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="trafficType === 'bar' ? 'active' : ''" ></fa-icon></span>
                 <span (click)="trafficGraphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="trafficType === 'pie' ? 'active' : ''" ></fa-icon> </span>

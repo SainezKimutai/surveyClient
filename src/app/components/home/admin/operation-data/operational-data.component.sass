@@ -196,10 +196,11 @@ circle-progress
     width: 100%
     display: flex
     align-items: stretch
+    border-bottom: solid 1px grayColor(g300)
 
     .title
         width: 100%
-        padding: .5em 1em 2em 1em
+        padding: .5em 1em 1em 1em
         font-size: 12px
         color: grayColor(g600)
         font-weight: bold
@@ -217,6 +218,54 @@ circle-progress
 
 
 
+
+
+
+
+.overal-risk-per-industry-chart-section
+    display: grid 
+    grid-template-columns: repeat(2, 1fr)
+    grid-gap: 1em
+    width: 100%
+    height: 100%
+    margin: 0 0 1em 0
+    @include desktop_md
+        grid-template-columns: repeat(1, 1fr)
+.overal-risk-per-industry-chart-section .model
+    width: 100%
+    border: none
+    border-radius: 5px
+    margin: 0
+    padding: 1em 2em 
+    transition: all 0.3s ease
+    background-color: white
+    &:hover
+      transform: translateY(-5px)
+      box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
+    @include desktop_md
+        max-width: 100%
+    @include desktop_sm
+        width: 100%
+.overal-risk-per-industry-chart-section .model .model-title
+    width: 100%
+    display: flex
+    align-items: stretch
+    border-bottom: solid 1px grayColor(g300)
+    .title
+        width: 100%
+        padding: .5em 1em 1em 1em
+        font-size: 12px
+        color: grayColor(g600)
+        font-weight: bold
+.overal-risk-per-industry-chart-section .model .model-body
+    width: 100%
+    display: flex
+    align-items: stretch
+    height: 300px
+    padding: 1em
+    canvas
+        max-width: 100%
+        height: 100%
 
 
 
@@ -295,61 +344,6 @@ circle-progress
 
 
 
-// Overall Average Risk ratin chart
-.overal-risk-per-industry-chart-section
-
-    display: flex
-    align-items: stretch
-    width: 100%
-    height: 100%
-    
-    @include desktop_sm
-        display: flex
-        flex-direction: column
-
-.overal-risk-per-industry-chart-section .model
-    width: 100%
-    border: none
-    border-radius: 5px
-    margin: 0 0 1em 0
-    padding: 1em 2em 
-    transition: all 0.3s ease
-    background-color: white
-   
-    &:hover
-      transform: translateY(-5px)
-      box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
-
-    @include desktop_md
-        max-width: 100%
-    
-    @include desktop_sm
-        width: 100%
-
-.overal-risk-per-industry-chart-section .model .model-title
-    width: 100%
-    display: flex
-    align-items: stretch
-
-    .title
-        width: 100%
-        padding: .5em 1em 2em 1em
-        font-size: 12px
-        color: grayColor(g600)
-        font-weight: bold
-
-.overal-risk-per-industry-chart-section .model .model-body
-    width: 100%
-    display: flex
-    align-items: stretch
-    height: 400px
-    padding: 1em
-
-    canvas
-        max-width: 100%
-        margin: auto
-        height: 100%
-
 
 
 
@@ -395,42 +389,34 @@ circle-progress
     width: 100%
     display: flex
     align-items: stretch
-
+    border-bottom: solid 1px grayColor(g300)
     .title
         width: 100%
-        padding: .5em 1em 2em 1em
+        padding: .5em 1em  1em 1em
         font-size: 12px
         color: grayColor(g600)
         font-weight: bold
-
 .risk-exposure-section .model .model-body
     width: 100%
     display: flex
     align-items: stretch
     height: 500px
     padding: 1em
-
 .risk-exposure-section .model .model-body .main-wrap  
     width: 100%
-
 .risk-exposure-section .model .model-body .main-wrap .search-wrap
     width: 100%
     display: flex 
     align-items: stretch
     margin-bottom: .5em
-
     .input-wrap
         background-color: grayColor(g100)
         margin-right: auto 
         padding: .5em
         width: 200px
-
-
-
         span 
             font-size: 12px
             font-weight: bold
-
         input
             background-color: transparent
             border: none
@@ -438,7 +424,6 @@ circle-progress
             width: 100%
             padding: 0 1em
             font-size: 12px
-    
     .average-wrap
         margin-left: auto
         font-size: 12px
@@ -454,14 +439,10 @@ circle-progress
             &.low
                 color: colorTheme(success)
 
-
 .risk-exposure-section .model .model-body .main-wrap .content-wrap
     width: 100%
-
 .risk-exposure-section .model .model-body .main-wrap .content-wrap .title-wrap
     width: 100%
-
-
     .third-party
         min-width: 200px
         max-width: 200px
@@ -518,8 +499,6 @@ circle-progress
             &.active 
                 background-image: linear-gradient(to right, lighten( #F7B308, 30)  , lighten( #F7B308, 65) )
                 border-left: solid 4px colorTheme(primaryTheme)
-
-
     .model-company
         min-width: 200px
         max-width: 200px
@@ -542,8 +521,6 @@ circle-progress
             &.active 
                 background-image: linear-gradient(to right, lighten( black, 70)  , lighten( black, 95) )
                 border-left: solid 4px colorTheme(primaryTheme)
-
-
     .model-risk-wrap 
         width: 100%
         height: 350px
@@ -604,7 +581,6 @@ circle-progress
     @include desktop_sm
         display: flex
         flex-direction: column
-
 .survey-average-section .model
     width: 100%
     border: none
@@ -634,14 +610,13 @@ circle-progress
     width: 100%
     display: flex
     align-items: stretch
-
+    border-bottom: solid 1px grayColor(g300)
     .title
         width: 100%
-        padding: .5em 1em 2em 1em
+        padding: .5em 1em 1em 1em
         font-size: 12px
         color: grayColor(g600)
         font-weight: bold
-
 .survey-average-section .model .model-body
     width: 100%
     display: flex
@@ -657,15 +632,11 @@ circle-progress
     display: flex 
     align-items: stretch
     margin-bottom: .5em
-
     .input-wrap
         background-color: grayColor(g100)
         margin-right: auto 
         padding: .5em
         width: 200px
-
-
-
         span 
             font-size: 12px
             font-weight: bold
@@ -680,13 +651,10 @@ circle-progress
 .survey-average-section .model .model-body .main-wrap .content-wrap
     width: 100%
     overflow-y: scroll
-
-
 .survey-average-section .model .model-body .main-wrap .content-wrap .title-wrap
     width: 100%
     min-width: 600px
     // overflow-x: scroll
-
     .company
         min-width: 200px
         max-width: 200px
@@ -706,17 +674,14 @@ circle-progress
         color: white
         border-right: solid 1px grayColor(g100)
 
-
 .survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap
     width: 100%
     min-width: 600px
     // overflow-x: scroll
     height: 400px
-
     .item
         width: 100%
         border-bottom: solid 1px grayColor(g100)
-
         .company
             min-width: 200px
             max-width: 200px
@@ -731,7 +696,6 @@ circle-progress
             
         .item-rate-rate
             width: 100%
-
             .riskRate
                 min-width: 200px
                 width: 100%
@@ -742,7 +706,6 @@ circle-progress
                 cursor: pointer
                 height: fit-content
                 min-height: 3em
-
                 &:hover
                     background-color: whitesmoke
                     
