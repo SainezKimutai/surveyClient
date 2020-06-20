@@ -87,7 +87,7 @@ circle-progress
         grid-template-columns: repeat(1, 1fr)
 #top_cards_section .my-card
     border: none
-    border-radius: 5px
+    border-radius: 3em
     width: 100%
     display: flex
     align-items: stretch
@@ -95,6 +95,7 @@ circle-progress
     box-shadow: 0 0 10px rgba(0, 0, 0, .2)
     -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
     -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
+    background-color: white
     @include desktop_md
         max-width: 100%
     @include desktop_sm
@@ -125,27 +126,28 @@ circle-progress
         margin: auto 0
         font-family: Montserrat
         font-size: 14px
-        color: white
+        color: grayColor(g600)
         font-weight: bold
     fa-icon
         margin: auto 1em auto 0
         font-family: Montserrat
         font-size: 14px
-        color: white
+        color: grayColor(g600)
         cursor: pointer
 #top_cards_section .my-card .card-info
     text-align: left
     margin: auto 0
     padding: .5em 1em
-    border-radius: .5em
+    border-radius: 3em
     width: fit-content
     display: flex
+    background-color: grayColor(g100)
     h4
         margin: auto
         font-family: Montserrat
         font-size: 28px
         font-weight: bold
-        color: white
+        color: grayColor(g600)
         text-transform: capitalize
 
 
