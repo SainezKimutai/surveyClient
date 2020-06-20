@@ -11,7 +11,168 @@
 
 
 
-<main>
+
+
+
+
+<main class="main-wrapper">
+
+
+<section class="side-section">
+
+
+<div class="top-wrap">
+
+</div>
+
+<div class="action-wrap">
+    <!-- <h4>{{surveyName}}</h4> -->
+</div>
+
+
+
+</section>  
+
+
+
+<section class="body-section">
+    <div class="body-section-wrapper">
+        <!-- <div class="header">
+           <h4>Survey Questions</h4>
+        </div> -->
+        <div class="body-template">
+            <div class="body-template-wrap">
+            <form id="the_form" class="form">
+
+                <div *ngIf="pageProgress !== 100" class="progress-wrap">
+                    <circle-progress [percent]="pageProgress" ></circle-progress>
+                </div>
+
+
+                <div *ngIf="notificationForm" class="notificationForm">
+                    <div class="wrap-success"> <h5>Success !!</h5>
+                       <p> Survey responses submited</p>
+                    </div>
+                    <div class="wrap-thank-you"> <h5>Thank you</h5>
+                        <p>for choosing to answer our survey</p>
+                    </div>
+                </div>
+    
+                <div *ngIf="questions.length > 0 && pageProgress === 100 && !notificationForm" [ngClass]="'dynamic-wrapper'">
+                    <div class="form-group">
+                        <p class="questionTag">{{questionTag}}</p>
+                    </div>
+                    
+                    <div class="form-group" *ngIf="open">
+                        <input id="typeInput" type="{{type}}" [(ngModel)]="response" (keyup)="captureResponse(); detectChangeOnAnswer();" name="response" placeholder="">
+                    </div>
+
+
+                    <div class="multy-choice-wrap w-100"  *ngIf="!open && multiple">
+                        <div class="form-group" *ngFor="let option of options">
+                            <input type="checkbox"
+                            [checked]="multiAnswers.indexOf(option.answer) > -1 || option.answer === response"
+                            (click)="captureMultipleResponses(option); detectChangeOnAnswer();" name="response" value="{{option.answer}}">
+                            <label for="response">{{option.answer}}</label>
+                        </div>
+                    </div>
+                    <div class="multy-choice-wrap w-100"  *ngIf="!open && !multiple">
+                        <div class="form-group" *ngFor="let option of options">
+                            <input type="radio" [(ngModel)]="response" name="response" (change)="captureSingleResponse(option); detectChangeOnAnswer();" value="{{option.answer}}">
+                            <label for="response">{{option.answer}}</label>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+
+            <div class="action-section">
+
+                <div class="top-wrap">
+                    <div class="progress-wrap">
+                        <h4>{{(((pageNumber-1) / totalPages)*100)}} %</h4>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" 
+                            [style.width.%]="((pageNumber-1) / totalPages)*100"></div>              
+                        </div>
+                    </div>
+
+                    <div *ngIf="skip && previousSteps === 0" class="btn-wrap d-flex">
+                        <button *ngIf="(response==='' || responseArray.length ===0)"
+                        [disabled]="response || responseArray.length !== 0"
+                        class="btn btn-sm btn-next ml-auto" (click)="next(pageNumber)">Skip</button>
+                        <button *ngIf="!isLast && (response || responseArray.length !==0)"
+                        [disabled]="(response === '' || !response) && responseArray.length === 0"
+                        class="btn btn-sm btn-next ml-auto" (click)="next(pageNumber)">Next</button>
+                        <button *ngIf="isLast && (response || response !== '' || responseArray.length !==0)" [disabled]="(!response || response === '') && responseArray.length === 0"
+                        class="btn btn-sm btn-next ml-auto" (click)="Process(pageNumber)">Submit</button>
+                    </div>
+
+                    <div *ngIf="!skip && !isLast && previousSteps === 0" class="btn-wrap d-flex">
+                        <button [disabled]="(response === '' || !response) && responseArray.length === 0"
+                        class="btn btn-sm btn-next ml-auto" (click)="next(pageNumber)">Next</button>
+                    </div>
+                    <div *ngIf="previousSteps > 0" class="btn-wrap d-flex">
+                        <button [disabled]="(response === '' || !response) && responseArray.length === 0"
+                        class="btn btn-sm btn-next ml-auto" (click)="updatePreviousAnswers()">Update & Next</button>
+                    </div>
+
+                    <div *ngIf="isLast && !skip && previousSteps === 0" class="btn-wrap d-flex">
+                        <button [disabled]="(!response || response === '') && responseArray.length === 0"
+                        class="btn btn-sm btn-next ml-auto" (click)="Process(pageNumber)">Submit</button>
+                    </div>
+
+               
+
+                </div>
+                <div class="bottom-wrap">
+                    <button *ngIf="pageNumber === 1" class="btn btn-sm btn-back" (click)="back()">Back</button>
+                    <button *ngIf="pageNumber > 1" class="btn btn-sm btn-previous" (click)="moveToPreviousQuestion()" >Move to previous question</button>
+                    <button *ngIf="pageNumber > 1" class="btn btn-sm btn-continue" (click)="saveAndExit()">Save & continue later</button>
+                </div>
+
+                    
+            </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+
+</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<main hidden>
 
 
 
