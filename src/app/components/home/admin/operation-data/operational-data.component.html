@@ -287,32 +287,6 @@
 
 
 
-<section hidden id="traffic_section" class="card-group">
-    
-    <div class="card">
-        <div class="title d-flex"> <span>Traffic Monitor</span>
-            <div class=" graph-switch d-flex ml-auto">
-                <span (click)="trafficGraphToLine()"><fa-icon [icon]="faChartLine" [ngClass]="trafficType === 'line' ? 'active' : ''" ></fa-icon></span> 
-                <span (click)="trafficGraphToBar()"><fa-icon [icon]="faChartBar" [ngClass]="trafficType === 'bar' ? 'active' : ''" ></fa-icon></span>
-                <span (click)="trafficGraphToPie()"> <fa-icon [icon]="faChartPie" [ngClass]="trafficType === 'pie' ? 'active' : ''" ></fa-icon> </span>
-            </div>
-        </div>
-        <div class="body">
-            <circle-progress [hidden]="chartsProgress === 100" [percent]="chartsProgress" ></circle-progress>
-            <canvas *ngIf="trafficType" baseChart class="chart" [chartType]="trafficType" [labels]="trafficLabels"
-            [datasets]="trafficDatasets" [options]="trafficChartOptions"></canvas>
-        </div>
-
-    </div>
-
-
-    <div style="background-color: transparent;" class="card"></div>
-
-
-</section><!-- traffic_section -->
-
-
-
 
 
 
