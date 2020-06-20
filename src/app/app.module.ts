@@ -34,7 +34,6 @@ import { PlansService } from './shared/services/plan.service';
 @NgModule({
   declarations: [
     AppComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -61,4 +60,5 @@ import { PlansService } from './shared/services/plan.service';
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
