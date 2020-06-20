@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { faBuilding, faUsers, faGlobe, faIndustry, faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faUsers, faGlobe, faIndustry, faEnvelope, faKey, faPen} from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { Router , ActivatedRoute, ParamMap} from '@angular/router';
@@ -25,6 +25,7 @@ import { Router , ActivatedRoute, ParamMap} from '@angular/router';
     public faGlobe = faGlobe;
     public faEnvelope = faEnvelope;
     public faKey = faKey;
+    public faPen = faPen;
     
 
     //ef212516dhj267162718h87126782 

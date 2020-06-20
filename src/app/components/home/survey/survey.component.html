@@ -9,64 +9,78 @@
     </div>
 </article>
 
-<div class="page-title">
-
-    <h4>Survey</h4>
-
-</div>
 
 
-<article class="article">
 
-    <section class="templates-section">
-        <div *ngIf="AllSurveys" class="card-group">
-            <div *ngIf="pageProgress !== 100" class="progress-wrap">
-                <circle-progress [percent]="pageProgress" ></circle-progress>
+<header class="header">
+    <div class="header-wrap">
+        <h4>SURVEY</h4>
+        <button class="btn thm-danger btn-sm" (click)="logOut()" >
+            <fa-icon [icon]="faPowerOff"></fa-icon>Logout
+        </button>
+    </div>
+</header>
+
+
+
+
+
+
+<article class="body-article">
+    <div *ngIf="pageProgress !== 100" class="progress-wrap">
+        <circle-progress [percent]="pageProgress" ></circle-progress>
+    </div>
+
+    <div class="list-table" [hidden]="pageProgress !== 100">
+        <div class="search-wrap">
+            <div class="input-wrap">
+                <input type="text" (keyup)="filterSurveys()" name='FilterName' [(ngModel)]="FilterName" placeholder="Search here ..."> 
+                <fa-icon [icon]="faSearch"></fa-icon>
             </div>
-    
-            <div [hidden]="pageProgress !== 100" class="card"  *ngFor="let item of AllSurveys" (click)="item.done > 100 || item.done === 100 ? '' : takeSurvey(item)">
-                <div class=""></div>
-                <div class="card-body d-flex">
-                    <fa-icon [icon]="faListAlt"></fa-icon>
-                    <h4 >{{item.surveyName}}</h4>
-
-                    <fa-icon *ngIf="item.done > 0 && 100 > item.done" style="cursor: pointer; height: 1em;"
-                    (mouseenter)="deletePromptModal.show(); passSurveyToReset(item._id)"
-                    class="text-info ml-auto" [icon]="faEraser"></fa-icon>
-<!-- 
-                    <fa-icon *ngIf="item.done > 0" style="cursor: pointer; height: 1em;"
-                    (mouseenter)="deletePromptModal.show(); passSurveyToReset(item._id)"
-                    class="text-info ml-auto" [icon]="faEraser"></fa-icon> -->
-                    
-                </div>
-                <div class="card-footer">
-                    <h5 *ngIf="item.done > 100 || item.done === 100">
-                        <fa-icon [icon]="faCheck"></fa-icon> <span>100%</span> <p >Completed</p>
-                    </h5>
-                    <h5 *ngIf="item.done > 0 && 100 > item.done">
-                        <fa-icon [icon]="faSpinner"></fa-icon> <span>{{item.done}}%</span> <p >In progress</p>
-                    </h5>
-                    <h5 *ngIf="item.done === 0"> Not Done</h5>
-                </div>
-
-
-            </div>
-
-            <div [hidden]="pageProgress !== 100" class="card" *ngIf="AllSurveys.length === 0">
-                <div class="card-header"></div>
-                <div class="card-body">
-                    <h4>No Template</h4>
-                </div>
-                <div class="card-footer">
-
-                </div>
-
+        
+        </div>
+        <div class="list-table-header">
+            <div class="header-wrap">
+                <div class="head-item survey"> <span> Survey Name</span> </div>
+                <div class="head-item status"> Progress </div>
+                <div class="head-item take"> Take Survey </div>
+                <div class="head-item erase"> Erase Responses </div>
             </div>
         </div>
+        <div class="list-table-body">
+            <div class="list-item-wrap-no-survey" *ngIf="ViewAllSurvey.length === 0">
+                <h4>No Surveys</h4>
+            </div>
+            <div class="list-item-wrap" *ngFor="let item of ViewAllSurvey">
+                <div class="list-item survey">{{item.surveyName}}</div>
+                <div *ngIf="item.done > 100 || item.done === 100" class="list-item status completed">
+                    <fa-icon *ngIf="item.done > 100 || item.done === 100" [icon]="faCheck"></fa-icon> <span>100%</span>&nbsp;&nbsp;<span>Completed</span>
+                </div>
+                <div *ngIf="item.done > 0 && 100 > item.done" class="list-item status done">
+                    <fa-icon  [icon]="faSpinner"></fa-icon> <span>{{item.done}}%</span> &nbsp;&nbsp;<span>In progress</span> 
+                </div>
+                <div *ngIf="item.done === 0" class="list-item status not-done">
+                    <fa-icon  [icon]="faBook"></fa-icon> <span>Not Done</span>
+                </div>
+                <div class="list-item take">
+                    <div *ngIf="100 > item.done" class="take-btn" (click)="takeSurvey(item)">Take Survey</div>
+                    <div *ngIf="item.done > 100 || item.done === 100" class="take-btn-disabled">Closed</div>
+                </div>
+                <div class="list-item erase">
+                    <div  *ngIf="item.done === 0" class="erase-btn-disabled"> No Responses</div>
+                    <div *ngIf="item.done > 0 && 100 > item.done" class="erase-btn" (click)="deletePromptModal.show(); passSurveyToReset(item._id)"> Erase Responses</div>
+                    <div *ngIf="item.done > 100 || item.done === 100"  class="erase-btn-disabled">Closed</div>
+                </div>
+            </div>
 
-    </section>
+        </div>
+
+
+    </div>
 
 </article>
+
+
 
 
 

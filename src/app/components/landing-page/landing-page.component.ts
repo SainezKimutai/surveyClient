@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { faEnvelope, faKey, faTimes, faEyeSlash, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faKey, faTimes, faEyeSlash, faEye, faPen} from '@fortawesome/free-solid-svg-icons';
 import { UserService } from 'src/app/shared/services/user.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { Router } from '@angular/router';
@@ -22,7 +22,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     private notifyService: NotificationService
   ) { }
 
-  @ViewChild('infoModal', {static: true}) infoModal: ModalDirective;
   @ViewChild('resetModal', {static: true}) resetModal: ModalDirective;
   // loader
   public ImprintLoader = false;
@@ -33,6 +32,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   public faTimes = faTimes;
   public faEyeSlash = faEyeSlash;
   public faEye = faEye;
+  public faPen = faPen;
 
   public loginForm;
   public resetForm;
@@ -56,11 +56,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       email: ''
     };
 
-
-
-    setTimeout(() => {
-      this.infoModal.show();
-    }, 50);
 
   }
 
@@ -163,10 +158,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
 
-
-  toLogin() {
-    this.infoModal.hide();
-  }
 
 
   ngOnDestroy() {

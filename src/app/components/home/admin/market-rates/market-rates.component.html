@@ -5,44 +5,8 @@
 
 
 
-
-    <section hidden id="top_cards_section" class="card-group">
-
-        <div class="card first">
-
-        </div>
-
-        <div class="card second">
-
-        </div>
-
-        <div class="card third">
-
-        </div>
-
-        <div class="card forth">
-
-        </div>
-
-
-    </section><!-- top_cards_section -->
-
    
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   <section id="market_rates_cards_section" class="card-group">
+   <section id="market_rates_cards_section" class="cards_section card-group">
         <div class="card">
             <div class="title"> 
                 <span>GDP Growth Rate ( Annually )</span>
@@ -79,8 +43,7 @@
      
      
      
-     
-     
+
         <div class="card">
             <div class="title"> 
                 <span>GDP Growth Rate ( Quarterly )</span>
@@ -99,57 +62,40 @@
         </div>
 
      
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-     
-        <div class="card">
-            <div class="title">
-                 <span class="mb-2">Exchange Rates ( <span class="text-primary"> {{activeCountryCode }}</span> against US dollar )</span>
-                <div class="ml-auto mb-2 month-switch d-flex">
-                    <fa-icon [icon]="faArrowAltCircleLeft" (click)="swithToPrevMonth()"></fa-icon> 
-                    <h4>{{monthsArray[activeMonth]}}, {{activeYear}}</h4>
-                    <fa-icon [icon]="faArrowAltCircleRight" (click)="swithToNextMonth()"></fa-icon>
-                </div>
-            </div>
 
-            <div class="body-wrapper">
-                <circle-progress [hidden]="exchangeProgress === 100" [percent]="exchangeProgress" ></circle-progress>
-                <div *ngIf="exchangeProgress === 100 && ExchangeRates.length === 0" class="no-data d-flex">
-                    <h6>No Exchange Rates data yet</h6>
-                </div>
-
-                <div *ngIf="exchangeProgress === 100 && exchangeDatasets[0].data.length === 0 && exchangeType" class="no-data">
-                    <h4>No Data </h4>
-                </div>
-                <canvas *ngIf="exchangeProgress === 100 && exchangeDatasets[0].data.length > 0 && exchangeType" baseChart class="chart" [chartType]="exchangeType" [labels]="exchangeLabels"
-                [datasets]="exchangeDatasets" [options]="exchangeChartOptions" [plugins]="pluginDataLabels"></canvas>
-            </div>
-            <div *ngIf="exchangeType" class="footer-label">
-                <div *ngFor="let code of exchangeRatesCountryCodes" [ngClass]="code === activeCountryCode ? 'item active' : 'item' " (click)="switchExchangeRateCountry(code)">{{code}}</div>
-            </div>
-
-        </div>
     </section><!-- second_cards_section -->
 
 
+
+<section id="exchange_rates_section" class="cards_section card-group">
+    <div class="card">
+        <div class="title">
+             <span class="mb-2">Exchange Rates ( <span class="text-primary"> {{activeCountryCode }}</span> against US dollar )</span>
+            <div class="ml-auto mb-2 month-switch d-flex">
+                <fa-icon [icon]="faArrowAltCircleLeft" (click)="swithToPrevMonth()"></fa-icon> 
+                <h4>{{monthsArray[activeMonth]}}, {{activeYear}}</h4>
+                <fa-icon [icon]="faArrowAltCircleRight" (click)="swithToNextMonth()"></fa-icon>
+            </div>
+        </div>
+
+        <div class="body-wrapper">
+            <circle-progress [hidden]="exchangeProgress === 100" [percent]="exchangeProgress" ></circle-progress>
+            <div *ngIf="exchangeProgress === 100 && ExchangeRates.length === 0" class="no-data d-flex">
+                <h6>No Exchange Rates data yet</h6>
+            </div>
+
+            <div *ngIf="exchangeProgress === 100 && exchangeDatasets[0].data.length === 0 && exchangeType" class="no-data">
+                <h4>No Data </h4>
+            </div>
+            <canvas *ngIf="exchangeProgress === 100 && exchangeDatasets[0].data.length > 0 && exchangeType" baseChart class="chart" [chartType]="exchangeType" [labels]="exchangeLabels"
+            [datasets]="exchangeDatasets" [options]="exchangeChartOptions" [plugins]="pluginDataLabels"></canvas>
+        </div>
+        <div *ngIf="exchangeType" class="footer-label">
+            <div *ngFor="let code of exchangeRatesCountryCodes" [ngClass]="code === activeCountryCode ? 'item active' : 'item' " (click)="switchExchangeRateCountry(code)">{{code}}</div>
+        </div>
+
+    </div>
+</section>
 
 
 

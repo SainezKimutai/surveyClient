@@ -4,43 +4,35 @@
 
 
 .body-section
-    margin: 1em
+    // margin: 1em
+    padding: 0 1em 1em 1em
     background-color: transparent
 
     
-.spinner-div
-    margin: auto
-    color: grayColor(g100)
 
 
 .graph-switch
     display: flex
     align-items: center
     justify-content: center
-
     span 
         border: none
         padding: 5px
-
         &.toggle-legend
             background-color: transparent
             color: black
             font-size: 12px
-
         &:hover
             background-color: grayColor(g600)
 
             fa-icon 
                 color: white
-
-
         fa-icon
             margin: auto
             font-size: 14px
             margin: 5px
             cursor: pointer
             color: grayColor(g400)
-
             &.active 
                 color: colorTheme(primaryTheme)
                 font-size: 16px
@@ -62,125 +54,26 @@
 
 
 
-#top_cards_section
-    display: flex
-    align-items: stretch
-    
-    @include desktop_sm
-        display: flex
-        flex-direction: column
-
-
-#top_cards_section .card
-    border: none
-    border-radius: 5px
-    min-width: 200px
-    max-width: 50%
-    height: 150px
-    // height: fit-content
-    margin: 0 1.5em 1em 0
-    padding: 1em 2em 0 2em
-    box-shadow: 0 0 10px rgba(0, 0, 0, .2)
-    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
-    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
-   
-
-    @include desktop_md
-        max-width: 100%
-    
-    @include desktop_sm
-        width: 100%
-
-
-    &.first
-        background-color: colorTheme(primary)
-        
-
-    &.second
-        background-color: colorTheme(primaryTheme)
- 
-
-    &.third
-        background-color: colorTheme(warning)
- 
-
-    &.forth
-        background-color: colorTheme(danger)
-
-    
-
-
-
-#top_cards_section .card .card-title
-    display: flex
-    align-items: stretch
-    margin: 0 0 .5em 0
-    padding: 0
-        
-    h4
-        margin: 0 auto 0 0
-        font-family: Montserrat
-        font-size: 18px
-        color: white
-        font-weight: bold
-
-    fa-icon
-        margin-left: 0 0 0 auto
-        font-family: Montserrat
-        font-size: 14px
-        color: white
-        cursor: pointer
-
-    .dropdown-menu
-        left: 50%
-        right: auto
-        text-align: center
-        transform: translate(-50%, 0)
-        a 
-            font-family: Montserrat
-            font-size: 10px
-            color: black
-
-#top_cards_section .card .card-info
-    text-align: left
-    margin: 0
-    padding: 0
-    h4
-        font-family: Montserrat
-        font-size: 14px
-        color: white
-        text-transform: capitalize
-        
-#top_cards_section .card .card-body
-    height: 90px
-    padding: 0
-    margin: 0
-
-    canvas
-        max-width: 100%
-        max-height: 100%
-        margin: 0
-        background-color: transparent
-
-
-
-
-
-
-
-
 
 
 
 #market_rates_cards_section
-    display: flex
-    flex-direction: column
+    display: grid 
+    grid-template-columns: repeat(2, 1fr)
+    grid-gap: 1em
     width: 100%
     height: 100%
-
-
-
-#market_rates_cards_section .card
+    margin: 0 0 1em 0
+    @include desktop_lg
+        grid-template-columns: repeat(1, 1fr)
+#exchange_rates_section
+    display: grid 
+    grid-template-columns: repeat(1, 1fr)
+    grid-gap: 1em
+    width: 100%
+    height: 100%
+    margin: 0 0 1em 0
+.cards_section .card
     border: none
     border-radius: 5px
     width: 100%
@@ -191,30 +84,21 @@
     padding: 1em 2em 0 2em
     transition: all 0.3s ease
     cursor: pointer
-
-   
-    
     &:hover
-      transform: translateY(-5px)
-      box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
-
-
-
-
+        transform: translateY(-5px)
+        box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
     .title
         width: 100%
-        padding: .5em 1em 2em 1em
+        padding: .5em 1em 1em 1em
         font-size: 12px
         color: grayColor(g600)
         font-weight: bold
         display: flex
         align-items: stretch
-
+        border-bottom: solid 1px grayColor(g300)
         @include desktop_sm
             display: flex
             flex-direction: column
-
-
     .body-wrapper
         width: 100%
         min-height: 250px
@@ -223,23 +107,20 @@
         flex-direction: column
         align-items: center
         justify-content: center
-
         .no-data
             h6 
                 font-size: 22px
                 font-weight: bold
                 color: grayColor(g600)
-
         canvas
+            max-width: 100%
             height: 250px
-
     .footer-label
         width: 100%
         overflow-x: scroll
         display: flex
         align-items: stretch
         margin: .5em 0 1em 0
-
         .item 
             cursor: pointer
             width: fit-content

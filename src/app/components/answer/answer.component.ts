@@ -4,7 +4,7 @@ import { ResponseService } from 'src/app/shared/services/responses.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ThreatService } from 'src/app/shared/services/threats.service';
-import { async } from '@angular/core/testing';
+import { faArrowLeft, faArrowRight, faSave} from '@fortawesome/free-solid-svg-icons';
 import { ModalDirective, ModalOptions, ModalModule } from 'ngx-bootstrap';
 @Component({
   selector: 'app-answer',
@@ -26,6 +26,7 @@ export class AnswerComponent implements OnInit {
 
 @ViewChild('termsModal', {static: true}) addTermsModal: ModalDirective;
 
+
     public pageProgress = 0;
     public notificationForm = false; 
     public AllResponses = [];
@@ -33,6 +34,12 @@ export class AnswerComponent implements OnInit {
     public myPreviousAnswers = [];
     public myPreviousResponseId = '';
     public questionsLength:number;
+
+
+    // icon
+    public faArrowLeft = faArrowLeft;
+    public faArrowRight = faArrowRight;
+    public faSave = faSave
 
     surveyId: any;
     surveyName: any;

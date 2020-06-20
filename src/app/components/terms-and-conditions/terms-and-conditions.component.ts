@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 
 @Component({
@@ -19,6 +20,9 @@ export class TermsAndConditionsComponent implements OnInit {
 public ImprintLoader = false;         
 public today = new Date();
 public thisYear = this.today.getFullYear();
+
+
+public faArrowLeft = faArrowLeft
 
   ngOnInit() {
 

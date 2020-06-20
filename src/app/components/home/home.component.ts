@@ -142,14 +142,18 @@ CheckActiveNavBar() {
 
 
   logout() {
-    sessionStorage.removeItem('loggedUserToken');
-    sessionStorage.removeItem('loggedUserName');
-    sessionStorage.removeItem('permissionStatus');
-    sessionStorage.removeItem('loggedUserID');
-    sessionStorage.removeItem('loggedCompanyId');
-    sessionStorage.removeItem('loggedUserName');
-    sessionStorage.removeItem('loggedUserEmail');
-    sessionStorage.removeItem('loggedUserInstitution');
+    // sessionStorage.removeItem('loggedUserToken');
+    // sessionStorage.removeItem('loggedUserName');
+    // sessionStorage.removeItem('permissionStatus');
+    // sessionStorage.removeItem('loggedUserID');
+    // sessionStorage.removeItem('loggedCompanyId');
+    // sessionStorage.removeItem('loggedUserName');
+    // sessionStorage.removeItem('loggedUserEmail');
+    // sessionStorage.removeItem('loggedUserInstitution');
+
+    //consider this instead..
+    sessionStorage.clear();
+
     this.router.navigate(['/landing_page']);
   }
 

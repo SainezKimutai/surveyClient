@@ -1,9 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NotificationService } from 'src/app/shared/services/notification.service';
-import { faListAlt, faCheck, faSpinner, faBusinessTime } from '@fortawesome/free-solid-svg-icons';
+import { Component, OnInit } from '@angular/core';
+import { faListAlt, faCheck, faSpinner, faBusinessTime, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { PlansService } from 'src/app/shared/services/plan.service';
-import {ResponseService} from 'src/app/shared/services/responses.service';
-import { UserService } from 'src/app/shared/services/user.service';
+import { HomeComponent } from '../home.component';
 
 @Component({
   selector: 'app-tracker',
@@ -14,10 +12,8 @@ export class TrackerComponent implements OnInit {
  // tslint:disable
 
     constructor(
-      private notifyService: NotificationService,
       private plansService: PlansService,
-      private responseService : ResponseService,
-      private userService: UserService
+      private homeComponent: HomeComponent
     ) {  }
 
 
@@ -31,9 +27,11 @@ export class TrackerComponent implements OnInit {
   public faListAlt = faListAlt;
   public faSpinner = faSpinner;
   public faBusinessTime = faBusinessTime;
+  public faPowerOff = faPowerOff;
   
   public AllPlans = [];
-
+  public ViewAllPlans = [];
+  public FilterName = '';
 
 
 
@@ -42,7 +40,7 @@ export class TrackerComponent implements OnInit {
 
     ngOnInit() {
       sessionStorage.setItem('ActiveNav', 'tracker');
-      this.updatePage()
+      this.updatePage().then(() => this.ViewAllPlans = this.AllPlans)
       
     }
 
@@ -65,6 +63,18 @@ export class TrackerComponent implements OnInit {
 
 
 
+
+
+  filterPlans() {
+    if (!this.FilterName || this.FilterName === null || this.FilterName === '' || this.FilterName.length  < 1) {
+      this.ViewAllPlans = this.AllPlans;
+      } else {
+        this.ViewAllPlans = this.AllPlans.filter(v => v.name.toLowerCase().indexOf(this.FilterName.toLowerCase()) > -1).slice(0, 10);
+      }
+  }
+  
+
+
   editReport(plan: any) {
     sessionStorage.setItem('planOnReport', JSON.stringify(plan))
     this.PlanStatus = false;
@@ -75,10 +85,15 @@ export class TrackerComponent implements OnInit {
   toListsPage() {
     this.PlanStatus = true;
     this.ReportStatus = false;
-    this.updatePage().then(() => {});
+    this.updatePage().then(() => {this.ViewAllPlans = this.AllPlans});
   }
 
   
+  
+logOut() {
+  this.homeComponent.logout();
+}
+
   
 
 } // End of main class

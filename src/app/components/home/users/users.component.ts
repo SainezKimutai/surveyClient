@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-import {FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from 'src/app/shared/services/user.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
+import { HomeComponent } from '../home.component';
 
 
 
@@ -19,7 +21,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
 
   constructor(
-    private router: Router,
+    private homeComponent: HomeComponent,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private notifyService: NotificationService,
@@ -38,6 +40,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   // loader
   public ImprintLoader = false;
   public pageProgress = 0;
+
+  // ICON
+  public faPowerOff = faPowerOff;
 
   // permission
   public toAdmin = false;
@@ -409,6 +414,12 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
 
+
+
+
+  logOut() {
+    this.homeComponent.logout();
+  }
 
   ngOnDestroy() {
     clearInterval(this.myInterval);

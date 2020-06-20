@@ -95,102 +95,79 @@ circle-progress
 
 
 #top_cards_section
+    display: grid
+    grid-template-columns: repeat(3, 1fr)
+    grid-gap: 1em
+    margin: 0 0 1em 0
+    @include desktop_lg
+        grid-template-columns: repeat(2, 1fr)
+    @include desktop_md
+        grid-template-columns: repeat(1, 1fr)
+#top_cards_section .my-card
+    border: none
+    border-radius: 3em
+    width: 100%
     display: flex
     align-items: stretch
-    
-    @include desktop_sm
-        display: flex
-        flex-direction: column
-
-
-#top_cards_section .card
-    border: none
-    border-radius: 5px
-    min-width: 200px
-    max-width: 50%
-    height: 150px
-    // height: fit-content
-    margin: 0 1.5em 1em 0
-    padding: 1em 2em 0 2em
+    padding: 1em 2em 1em 2em
     box-shadow: 0 0 10px rgba(0, 0, 0, .2)
     -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
     -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
-   
-
+    background-color: white
     @include desktop_md
         max-width: 100%
-    
     @include desktop_sm
         width: 100%
-
-
     &.first
         background-color: colorTheme(primaryTheme)
-        
-
+        .card-info
+            background-color: darken(colorTheme(primaryTheme), 10)
     &.second
         background-color: colorTheme(warning)
-    
-
+        .card-info
+            background-color: darken(colorTheme(warning), 10)
     &.third
         background-color: colorTheme(primary)
- 
-
+        .card-info
+            background-color: darken(colorTheme(primary), 10)
     &.forth
         background-color: colorTheme(danger)
-
-
-#top_cards_section .card .card-title
+        .card-info
+            background-color: darken(colorTheme(danger), 10)
+#top_cards_section .my-card .card-title
     display: flex
     align-items: stretch
-    margin: 0 0 .5em 0
+    margin: auto 0
     padding: 0
-
+    width: 100%
     h4
-        margin: 0 auto 0 0
+        margin: auto 0
         font-family: Montserrat
         font-size: 14px
-        color: white
+        color: grayColor(g600)
         font-weight: bold
-
     fa-icon
-        margin-left: 0 0 0 auto
+        margin: auto 1em auto 0
         font-family: Montserrat
         font-size: 14px
-        color: white
+        color: grayColor(g600)
         cursor: pointer
-
-    .dropdown-menu
-        left: 50%
-        right: auto
-        text-align: center
-        transform: translate(-50%, 0)
-        a 
-            font-family: Montserrat
-            font-size: 10px
-            color: black
-
-#top_cards_section .card .card-info
+#top_cards_section .my-card .card-info
     text-align: left
-    margin: 0
-    padding: 0
+    margin: auto 0
+    padding: .5em 1em
+    border-radius: 3em
+    width: fit-content
+    display: flex
+    background-color: grayColor(g100)
     h4
+        margin: auto
         font-family: Montserrat
         font-size: 28px
         font-weight: bold
-        color: white
+        color: grayColor(g600)
         text-transform: capitalize
-        
-#top_cards_section .card .card-body
-    height: 90px
-    padding: 0
-    margin: 0
 
-    canvas
-        max-width: 100%
-        max-height: 100%
-        margin: 0
-        background-color: transparent
 
 
 
@@ -207,20 +184,20 @@ circle-progress
 
 // Risk categories chart
 .risk-categories-chart-section
-    display: flex
-    align-items: stretch
+    display: grid 
+    grid-template-columns: repeat(2, 1fr)
+    grid-gap: 1em
     width: 100%
     height: 100%
-    
-    @include desktop_sm
-        display: flex
-        flex-direction: column
+    margin: 0 0 1em 0
+    @include desktop_md
+        grid-template-columns: repeat(1, 1fr)
 
 .risk-categories-chart-section .model
     width: 100%
     border: none
     border-radius: 5px
-    margin: 0 0 1em 0
+    margin: 0
     padding: 1em 2em 
     transition: all 0.3s ease
     background-color: white
@@ -239,10 +216,11 @@ circle-progress
     width: 100%
     display: flex
     align-items: stretch
+    border-bottom: solid 1px grayColor(g300)
 
     .title
         width: 100%
-        padding: .5em 1em 2em 1em
+        padding: .5em 1em 1em 1em
         font-size: 12px
         color: grayColor(g600)
         font-weight: bold
@@ -253,9 +231,8 @@ circle-progress
     align-items: stretch
     height: 300px
     padding: 1em
-
     canvas
-        width: 100%
+        max-width: 100%
         height: 100%
 
 
@@ -324,8 +301,7 @@ circle-progress
     padding: 1em
 
     canvas
-        width: 100%
-        max-width: $desktop_md
+        max-width: 100%
         margin: auto
         height: 100%
 
@@ -340,62 +316,53 @@ circle-progress
 
 
 
-// Overall Average Risk ratin chart
-.overal-risk-per-industry-chart-section
 
-    display: flex
-    align-items: stretch
+.overal-risk-per-industry-chart-section
+    display: grid 
+    grid-template-columns: repeat(1, 1fr)
+    grid-gap: 1em
     width: 100%
     height: 100%
-    
-    @include desktop_sm
-        display: flex
-        flex-direction: column
-
+    margin: 0 0 1em 0
+    @include desktop_md
+        grid-template-columns: repeat(1, 1fr)
 .overal-risk-per-industry-chart-section .model
     width: 100%
     border: none
     border-radius: 5px
-    margin: 0 0 1em 0
+    margin: 0
     padding: 1em 2em 
     transition: all 0.3s ease
     background-color: white
-   
     &:hover
       transform: translateY(-5px)
       box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
-
     @include desktop_md
         max-width: 100%
-    
     @include desktop_sm
         width: 100%
-
 .overal-risk-per-industry-chart-section .model .model-title
     width: 100%
     display: flex
     align-items: stretch
-
+    border-bottom: solid 1px grayColor(g300)
     .title
         width: 100%
-        padding: .5em 1em 2em 1em
+        padding: .5em 1em 1em 1em
         font-size: 12px
         color: grayColor(g600)
         font-weight: bold
-
 .overal-risk-per-industry-chart-section .model .model-body
     width: 100%
+    max-width: 700px
+    margin: 0 auto
     display: flex
     align-items: stretch
-    height: 400px
+    height: 300px
     padding: 1em
-
     canvas
-        width: 100%
-        max-width: $desktop_md
-        margin: auto
+        max-width: 100%
         height: 100%
-
 
 
 
@@ -411,11 +378,9 @@ circle-progress
     align-items: stretch
     width: 100%
     height: 100%
-    
     @include desktop_sm
         display: flex
         flex-direction: column
-
 .risk-exposure-section .model
     width: 100%
     border: none
@@ -424,55 +389,44 @@ circle-progress
     padding: 1em 2em 
     transition: all 0.3s ease
     background-color: white
-   
     &:hover
       transform: translateY(-5px)
       -webkit-transform: translateY(-5px)
       -moz-transform: translateY(-5px)
       box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
-
     @include desktop_md
         max-width: 100%
-    
     @include desktop_sm
         width: 100%
-
 .risk-exposure-section .model .model-title
     width: 100%
     display: flex
     align-items: stretch
-
+    border-bottom: solid 1px grayColor(g300)
     .title
         width: 100%
-        padding: .5em 1em 2em 1em
+        padding: .5em 1em 1em 1em
         font-size: 12px
         color: grayColor(g600)
         font-weight: bold
-
 .risk-exposure-section .model .model-body
     width: 100%
     display: flex
     align-items: stretch
     height: 500px
     padding: 1em
-
 .risk-exposure-section .model .model-body .main-wrap  
     width: 100%
-
 .risk-exposure-section .model .model-body .main-wrap .search-wrap
     width: 100%
     display: flex 
     align-items: stretch
     margin-bottom: .5em
-
     .input-wrap
         background-color: grayColor(g100)
         margin-right: auto 
         padding: .5em
         width: 200px
-
-
-
         span 
             font-size: 12px
             font-weight: bold
@@ -499,15 +453,11 @@ circle-progress
                 color: colorTheme(warning)
             &.low
                 color: colorTheme(success)
-
-
 .risk-exposure-section .model .model-body .main-wrap .content-wrap
     width: 100%
 
 .risk-exposure-section .model .model-body .main-wrap .content-wrap .title-wrap
     width: 100%
-
-
     .third-party
         min-width: 200px
         max-width: 200px
@@ -517,8 +467,6 @@ circle-progress
         margin-right: .5em
         font-weight: bold
         color: white
-
-
     .company
         min-width: 200px
         max-width: 200px
@@ -542,7 +490,6 @@ circle-progress
 
 .risk-exposure-section .model .model-body .main-wrap .content-wrap .medel-item-wrap
     width: 100%
-
     .model-third
         min-width: 200px
         max-width: 200px
@@ -572,7 +519,6 @@ circle-progress
         height: 350px
         overflow-y: scroll
         margin-right: .5em
-        
         h4 
             text-transform: capitalize
             padding: .5em
@@ -588,8 +534,6 @@ circle-progress
             &.active 
                 background-image: linear-gradient(to right, lighten( black, 70)  , lighten( black, 95) )
                 border-left: solid 4px colorTheme(primaryTheme)
-
-
     .model-risk-wrap 
         width: 100%
         height: 350px
@@ -650,7 +594,6 @@ circle-progress
     @include desktop_sm
         display: flex
         flex-direction: column
-
 .survey-average-section .model
     width: 100%
     border: none
@@ -680,14 +623,13 @@ circle-progress
     width: 100%
     display: flex
     align-items: stretch
-
+    border-bottom: solid 1px grayColor(g300)
     .title
         width: 100%
-        padding: .5em 1em 2em 1em
+        padding: .5em 1em 1em 1em
         font-size: 12px
         color: grayColor(g600)
         font-weight: bold
-
 .survey-average-section .model .model-body
     width: 100%
     display: flex
@@ -703,15 +645,11 @@ circle-progress
     display: flex 
     align-items: stretch
     margin-bottom: .5em
-
     .input-wrap
         background-color: grayColor(g100)
         margin-right: auto 
         padding: .5em
         width: 200px
-
-
-
         span 
             font-size: 12px
             font-weight: bold
@@ -726,205 +664,84 @@ circle-progress
 .survey-average-section .model .model-body .main-wrap .content-wrap
     width: 100%
     overflow-y: scroll
-
-
 .survey-average-section .model .model-body .main-wrap .content-wrap .title-wrap
     width: 100%
     min-width: 600px
     // overflow-x: scroll
-
     .company
         min-width: 200px
         max-width: 200px
         padding: .5em
         font-size: 12px
         background-color: grayColor(g100)
-        margin-right: .5em
         background-color: lighten(colorTheme(primaryTheme), 10)
         color: white
-
+        border: none
     .survey
         min-width: 200px
         width: 100%
-        padding: .5em
+        padding: .5em .5em .5em 1em
         font-size: 12px
         background-color: lighten(colorTheme(primaryTheme), 10)
         color: white
-        border-right: solid 1px grayColor(g100)
-
+        border: none
+        border-left: solid 1px white 
 
 .survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap
     width: 100%
     min-width: 600px
-    // overflow-x: scroll
     height: 400px
-
-    .item
-        width: 100%
-        border-bottom: solid 1px grayColor(g100)
-
-        .company
-            min-width: 200px
-            max-width: 200px
-            padding: .5em
-            font-size: 12px
-            background-color: grayColor(g100)
-            margin-right: .5em
-            color: grayColor(g800)
-            height: fit-content
-            min-height: 3em
-            text-transform: capitalize
-            
-        .item-rate-rate
-            width: 100%
-
-            .riskRate
-                min-width: 200px
-                width: 100%
-                padding: .5em
-                font-size: 12px
-                font-weight: bold
-                border-right: solid 1px white
-                cursor: pointer
-                height: fit-content
-                min-height: 3em
-
-                &:hover
-                    background-color: whitesmoke
-                    
-        
-                &.low 
-                    color: colorTheme(success)
-
-                &.medium
-                    color: colorTheme(warning)
-
-                &.high
-                    color: colorTheme(danger)
-
-
-
-
-
-#traffic_section
-    display: flex
-    align-items: stretch
+.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item
     width: 100%
-    height: 100%
-    
-    @include desktop_sm
-        display: flex
-        flex-direction: column
-
-
-#traffic_section .card
-    border: none
-    border-radius: 5px
-    max-width: 50%
-    height: 400px
-    margin: 0 1.5em 1em 0
-    padding: 1em 2em 0 2em
-    // box-shadow: 0 0 10px rgba(0, 0, 0, .2)
-    // -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
-    // -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
-    transition: all 0.3s ease
+    background-color: transparent
+    border: solid 1px grayColor(g200)
+    &.even
+        background-color: grayColor(g100)
+.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item .company
+    min-width: 200px
+    max-width: 200px
+    padding: .5em
+    font-size: 12px
+    background-color: transparent
+    color: grayColor(g800)
+    height: fit-content
+    min-height: 3em
+    text-transform: capitalize
+.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item .item-rate-rate
+    width: 100%
+    background-color: transparent
+.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item .item-rate-rate .riskRate
+    min-width: 200px
+    width: 100%
+    padding: .5em
+    font-size: 12px
+    font-weight: bold
+    border-right: solid 1px white
     cursor: pointer
-   
-    
-    &:hover
-      transform: translateY(-5px)
-      box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
-
-    @include desktop_md
-        max-width: 100%
-    
-    @include desktop_sm
-        width: 100%
-
-
+    height: 100%
+    min-height: 3em
+    border-left: solid 1px grayColor(g200)
+    &.low 
+        color: colorTheme(success)
+    &.medium
+        color: colorTheme(warning)
+    &.high
+        color: colorTheme(danger)
+.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item .item-rate-rate .btn 
+    font-size: 12px
 
 
-    .title
-        width: 100%
-        padding: .5em 1em 2em 1em
-        font-size: 12px
-        color: grayColor(g600)
-        font-weight: bold
 
 
-    .body-wrapper
-        width: 100%
-        height: 300px
-        overflow-y: scroll
-        padding: 0 0 1em 0
-        display: flex
-        flex-direction: column
-        align-items: center
-        justify-content: center
 
-        .body-title
-            width: 100%
-            padding: .5em
-            height: fit-content
-            max-height: 100px
-            min-width: 400px  
-            
-            .body-item 
-                height: 100%         
-                width: 100%
-                padding: .5em
-                margin: 0 0 .5em 0
-                cursor: pointer
-                background-color: grayColor(g100)
 
-                div
-                    height: 100%
-                    font-size: 11px
-                    font-weight: 500px
-                    text-align: left
-                    padding: 0 0 0 1em
-                    width: 100%
-                    
 
-        .body   
-            width: 100%
-            padding: .5em
-            height: 300px
-            min-width: 400px
 
-            .body-item 
-               
-                width: 100%
-                padding: .5em
-                margin: 0 0 .5em 0
-                cursor: pointer
-                background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
-                -moz-background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
-                -webkit-background: linear-gradient( white 0%, lighten(colorTheme(primaryTheme), 35%) 90%), linear-gradient(to right, lighten(colorTheme(primaryTheme), 35%) 0%, white 90%)
-                -moz-background-blend-mode: screen, difference, lighten
-                -webkit-background-blend-mode: screen, difference, lighten
-                background-blend-mode: screen, difference, lighten
 
-                &:hover
-                    box-shadow: 1px 2px 3px rgba(0, 0, 0, .2)
 
-                div
-                    font-size: 11px
-                    font-weight: 500px
-                    text-align: left
-                    width: 100%
-                    padding: 0 0 0 1em
 
-                    &.riskRate
-                        background-color: grayColor(g100)
-                        color: white
 
-                    &.low 
-                        background-color: colorTheme(success)
-                    &.medium
-                        background-color: colorTheme(warning)
-                    &.high
-                        background-color: colorTheme(danger)
+
 
 
 

@@ -1,99 +1,186 @@
-@import 'src/styles.sass'
+@import "src/styles.sass"
 
-
-.page-title
+.header
     width: 100%
-    // padding: 1em 2em
-
-
-    h4 
-        padding: 1em 2em
-        font-size: 18px
-        font-weight: bold
-        text-transform: uppercase
-        text-shadow: 1px -1px 1px white
-        -moz-text-shadow: 1px -1px 1px white
-        -webkit-text-shadow: 1px -1px 1px white
-
-
-.spinner-div
-    margin: auto
-    color: grayColor(g100)
-
-.progress-wrap
+    padding: 0 1em
+    background-color: transparent
+.header .header-wrap
+    width: 100%
+    height: 100%
+    padding: 1em
+    display: flex
     background-color: white
+    border: solid 1px grayColor(g200)
+.header .header-wrap h4 
+    margin: auto auto auto 0
+    color: colorTheme(primaryTheme)
+    font-size: 18px 
+    font-weight: bold
+    text-transform: uppercase
+    text-shadow: 1px -1px 1px white
+    -moz-text-shadow: 1px -1px 1px white
+    -webkit-text-shadow: 1px -1px 1px white
+.header .header-wrap .btn
+    width: fit-content
+    height: 3em
+    color: vanillaTheme(titleTheme)
+    margin: auto 0 auto auto
+    border: none
+    font-size: 12px
+    font-family: Montserrat
+    text-transform: capitalize
+    text-align: left
+    background-color: transparent
+    box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    border-radius: 2px
+    border-bottom: solid 2px colorTheme(secondaryTheme)
+    @include desktop_md          
+        display: none !important
+    &:hover
+        background-color: grayColor(g400)
+    fa, fa-icon
+        font-size: 12px
+        margin: 0 2em 0 0
+    &.thm-danger
+        fa, fa-icon
+            color: colorTheme(secondaryTheme)
+
+
+
+
+
+
+
+
+
+
+
+
+
+.body-article
+    width: 100%
+    height: fit-content
+    background-color: transparent
+    padding: 1em 1em 4em 1em
+.body-article .progress-wrap
+    margin: 4em auto
+    background-color: transparent
     border-radius: 5px
     min-width: 15em
     min-height: 10em
     display: flex
     justify-content: center
     align-items: center
-article
+.body-article .list-table
     width: 100%
-    padding: 0 1em
-
-    &.article2
-        overflow-y: scroll
-
-
-
-.plan-section
-    width: 100%
-    height: 100%
-    padding: 1em
-    margin: 0 0 2em 0
+    height: fit-content
+    min-height: 600px
     background-color: white
-    .head
-        padding: 1em
-        color: grayColor(g700)
-
-        h4 
-            font-size: 14px
-            font-weight: bold 
-.plan-section .card-model
-    display: grid
-    grid-template-columns: repeat(3, 1fr)
-    grid-gap: 1em
-
-    @include desktop_md
-        grid-template-columns: repeat(2, 1fr)
-
-    @include desktop_sm
-        grid-template-columns: repeat(1, 1fr)  
-.plan-section .card-model .card-model-item
-    // height: 10em
-    padding: 1em
-    border: solid 1px grayColor(g100)
-    box-shadow: 0 0 5px rgba(0, 0, 0, .3)
-    cursor: pointer
-    transition: all .3s
-    -moz-transition: all .3s
-    -webkit-transition: all .3s
-    &:hover
-        transform: translateY(-.3em)
-        -moz-transform: translateY(-.3em)
-        -webkit-transform: translateY(-.3em)
-
-    .title-wrap
-        width: 100%
-        text-align: center
-        padding: 1em
-
-        h4 
-            font-weight: bold
-            font-size: 12px
-
-    .icon-wrap
-        width: 100%
-        text-align: center
-
+    overflow-y: scroll
+    padding: 5px 5px 2em 5px
+    border: none
+.body-article .list-table .list-table-header
+    width: 100%
+    min-width: $desktop_sm
+    padding: 5px
+    background-color: grayColor(g100)
+.body-article .list-table .list-table-header .header-wrap
+    width: 100%
+    display: grid 
+    grid-template-columns: repeat(2, 1fr)
+    grid-gap: 0
+.body-article .list-table .list-table-header .header-wrap .head-item
+    padding: 1em .5em
+    font-size: 14px
+    font-weight: bold
+    color: colorTheme(primaryTheme)
+    text-shadow: 1px -1px 1px white
+    -moz-text-shadow: 1px -1px 1px white
+    -webkit-text-shadow: 1px -1px 1px white
+.body-article .list-table .search-wrap
+    width: 100%
+    padding: .5em 0
+    .input-wrap
+        width: fit-content
+        background-color: whitesmoke
         fa-icon
-            font-size: 22px
-            color: orange
+            color: grayColor(g800)
+            font-size: 14px
+            margin: auto .5em auto auto
+        input 
+            border: none
+            outline: none
+            border-radius: 2px
+            font-size: 14px
+            padding: .5em
+            background-color: transparent
+            color: grayColor(g800)
+            &::placeholder
+                color: colorTheme(primaryTheme)
+.body-article .list-table .list-table-body
+    width: 100%
+    min-width: $desktop_sm
+    padding: 5px
+    background-color: whitesmoke
+    display: grid 
+    grid-template-columns: repeat(1, 1fr)
+    grid-gap: 5px
+    height: fit-content
+    max-height: 500px
+    overflow-y: scroll
+
+.body-article .list-table .list-table-body .list-item-wrap-no-survey
+    display: flex
+    align-items: stretch
+    background-color: white
+    padding: 1.5em .5em
+    h4 
+        font-weight: bold
+        font-size: 18px
+        margin: auto
+        color: colorTheme(primaryTheme)
+
+.body-article .list-table .list-table-body .list-item-wrap
+    width: 100%
+    display: grid 
+    grid-template-columns: repeat(2, 1fr)
+    grid-gap: 0
+    background-color: white
+    border-radius: 2px
+    cursor: pointer
+    &:hover
+        box-shadow: 0 0 10px rgba(0,0,0,.1)
+        -webkit-box-shadow: 0 0 10px rgba(0,0,0,.1)
+        -moz-box-shadow: 0 0 10px rgba(0,0,0,.1)
+        -ms-box-shadow: 0 0 10px rgba(0,0,0,.1)
+        -o-box-shadow: 0 0 10px rgba(0,0,0,.1)
+.body-article .list-table .list-table-body .list-item-wrap .list-item
+    padding: 1.5em .5em
+    font-size: 12px
+    color: black
+    &.survey
+        color: grayColor(g900)
+    &.view
+        .view-btn
+            width: fit-content
+            padding: .3em .5em
+            cursor: pointer
+            background-color: transparent
+            color: colorTheme(primaryTheme)
+            border-radius: .8em
+            border: solid 1px colorTheme(primaryTheme)
+            &:hover
+                background-color: grayColor(g200)
 
 
 
 
+.article2
+    width: 100%
+    padding: 1em
+    overflow-y: scroll
 
 
 

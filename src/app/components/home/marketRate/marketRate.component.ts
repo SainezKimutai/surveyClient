@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NotificationService } from 'src/app/shared/services/notification.service';
-
 import { ExchangerateService } from 'src/app/shared/services/exchangeRates.service';
 import { GDPGrowthRateService } from 'src/app/shared/services/gdpGrowthRate.service';
 import { InterestRateService } from 'src/app/shared/services/interetRates.service';
 import { ModalDirective } from 'ngx-bootstrap';
-import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTrash, faPowerOff } from '@fortawesome/free-solid-svg-icons';
+import { HomeComponent } from '../home.component';
 
 
 @Component({
@@ -18,6 +18,7 @@ export class MarketRateComponent implements OnInit {
 // tslint:disable: prefer-const
 
   constructor(
+    private homeComponent: HomeComponent,
     private notifyService: NotificationService,
     private exchangerateService: ExchangerateService,
     private gdpGrowthRateService: GDPGrowthRateService,
@@ -44,6 +45,7 @@ export class MarketRateComponent implements OnInit {
 
   public faPlus = faPlus;
   public faTrash = faTrash;
+  public faPowerOff = faPowerOff;
 
   public gdpForm;
   public countryRateObj;
@@ -419,6 +421,14 @@ export class MarketRateComponent implements OnInit {
       },
       error => this.notifyService.showError('could not delete', 'Failed')
     )
+  }
+
+
+
+
+  
+  logOut() {
+    this.homeComponent.logout();
   }
 
 

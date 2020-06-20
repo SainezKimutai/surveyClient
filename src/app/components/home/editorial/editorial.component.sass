@@ -1,150 +1,148 @@
 @import "src/styles.sass"
 
-
-
-
-.page-title
+.header
     width: 100%
-    // padding: 1em 2em
+    padding: 0 1em
+    background-color: transparent
+.header .header-wrap
+    width: 100%
+    height: 100%
+    padding: 1em
     display: flex
-    flex-direction: column
+    background-color: white
+    border: solid 1px grayColor(g200)
+.header .header-wrap h4 
+    margin: auto auto auto 0
+    color: colorTheme(primaryTheme)
+    font-size: 18px 
+    font-weight: bold
+    text-transform: uppercase
+    text-shadow: 1px -1px 1px white
+    -moz-text-shadow: 1px -1px 1px white
+    -webkit-text-shadow: 1px -1px 1px white
+.header .header-wrap .btn
+    width: fit-content
+    height: 3em
+    color: vanillaTheme(titleTheme)
+    margin: auto 0 auto auto
+    border: none
+    font-size: 12px
+    font-family: Montserrat
+    text-transform: capitalize
+    text-align: left
+    background-color: transparent
+    box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    border-radius: 2px
+    border-bottom: solid 2px colorTheme(secondaryTheme)
+    @include desktop_md          
+        display: none !important
+    &:hover
+        background-color: grayColor(g400)
+    fa, fa-icon
+        font-size: 12px
+        margin: 0 2em 0 0
+    &.thm-danger
+        fa, fa-icon
+            color: colorTheme(secondaryTheme)
 
 
-    h4 
-        padding: .5em 1em
-        font-size: 18px
-        font-weight: bold
-        text-transform: uppercase
-        text-shadow: 1px -1px 1px white
-        -moz-text-shadow: 1px -1px 1px white
-        -webkit-text-shadow: 1px -1px 1px white
 
 
+
+
+.navigation-section
+    width: 100%
+    padding: 1em
+.navigation-section .nav-wrapper
+    display: grid 
+    grid-template-columns: repeat(6, 1fr)
+    grid-gap: 1em
+    @include desktop_xl
+        grid-template-columns: repeat(5, 1fr)
+    @include desktop_md
+        grid-template-columns: repeat(4, 1fr)
+    @include desktop_sm
+        grid-template-columns: repeat(2, 1fr)
+    @include desktop_xm
+        grid-template-columns: repeat(1, 1fr)
+.navigation-section .nav-wrapper .item .btn
+    width: fit-content
+    height: 3em
+    color: vanillaTheme(titleTheme)
+    margin: auto
+    border: none
+    font-size: 12px
+    font-family: Montserrat
+    text-transform: capitalize
+    text-align: left
+    background-color: transparent
+    box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    border-radius: 2px
+    border-bottom: solid 2px colorTheme(primaryTheme)
+    @include desktop_lg
+        width: 100%       
+        height: 6em
+        display: flex
+        align-items: center
+    &:hover
+        background-color: grayColor(g400)
+    fa-icon
+        font-size: 12px
+        margin: 0 1em 0 0
+    &.thm-success
+        fa-icon
+            color: colorTheme(success)
+    &.thm-warning          
+        fa-icon
+            color: colorTheme(secondaryTheme)
+    &.thm-primary
+        fa-icon
+            color: colorTheme(primaryTheme)
+        &.active
+            background-color: colorTheme(primaryTheme)
+            border-bottom: solid 2px colorTheme(secondaryTheme)
+            color: colorTheme(secondaryTheme)
+            fa-icon
+                color: colorTheme(secondaryTheme)
+    &.thm-info
+        fa-icon
+            color: colorTheme(info)                 
+    &.thm-danger
+        fa, fa-icon
+            color: colorTheme(danger)
+    &.thm-purple
+        fa, fa-icon
+            color: purple
 
 
 
 
 
     
-.article
+.main-article
     width: 100%
     height: fit-content
-
-
-
-
-
-.page-title #top_header
-    display: none
+    padding: 1em
+.progress-wrap
+    width: 100%
+    margin: 4em auto
     background-color: transparent
-
-    @include desktop_md
-        display: flex
-        align-items: stretch
-
-    @include desktop_sm
-        display: flex
-        flex-direction: column
-
-   
-    // height: 50%
-
-    .search-wrap
-        // width: 100%
-        padding: 1em
-        margin: 0
-        @include desktop_sm
-            padding: .5em 1em
-            display: none
-   
-        .input-wrap
-            border-radius: 1em
-            background-color: grayColor(g200)
-
-            fa-icon
-                margin: auto .5em
-
-
-            input
-                width: 100%
-                outline: none
-                padding: .5em
-                border: none
-                border-radius: 0px
-                background-color: transparent
-
-    .btn-wrap
-        width: 100%
-        display: flex
-        align-items: stretch
-        
-    
-        @include desktop_sm
-            padding: 0 1em
-
-        .create-new, .surveys, .nav-tab
-            margin: 0 1em
-            cursor: pointer
-            border-radius: 1em
-            width: 8em
-            padding-top: 2em
-            color: grayColor(g800)
-            text-align: center
-
-            @include desktop_md
-                border-radius: 0px
-                width: 100%
-                padding: .5em 0 0 0
-                margin: 1em 0
-
-            @include desktop_sm
-                padding: 0
-
-            &.active
-                background-color: colorTheme(light)
-                color: white
-
-            fa-icon
-                margin: 1em
-              
-                color: colorTheme(secondaryTheme)
-                
-
-            span 
-                
-                @include desktop_md
-                    display: none
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    border-radius: 5px
+    min-width: 15em
+    min-height: 10em
+    display: flex
+    justify-content: center
+    align-items: center
 
 .body-section
     width: 100%
     display: flex
-    padding: 0 210px 0 3em
-
-    @include desktop_lg
-        padding: 0 200px 0 3em
-
-    @include desktop_md
-        padding: 1em
-
-
-
-
-
-
+    padding: 0
+    background-color: white
 
 
 
@@ -708,100 +706,151 @@
 .templates-section
     width: 100%
     height: 100%
-
-    .head
-        padding: 1em
+.templates-section .list-table
+    width: 100%
+    height: fit-content
+    min-height: 600px
+    background-color: white
+    overflow-y: scroll
+    padding: 5px 5px 2em 5px
+    border: none
+.templates-section .list-table .list-table-header
+    width: 100%
+    min-width: $desktop_sm
+    padding: 5px
+    background-color: grayColor(g100)
+.templates-section .list-table .list-table-header .header-wrap
+    width: 100%
+    display: grid 
+    grid-template-columns: repeat(3, 1fr)
+    grid-gap: 0
+.templates-section .list-table .list-table-header .header-wrap .head-item
+    padding: 1em .5em
+    font-size: 14px
+    font-weight: bold
+    color: colorTheme(primaryTheme)
+    text-shadow: 1px -1px 1px white
+    -moz-text-shadow: 1px -1px 1px white
+    -webkit-text-shadow: 1px -1px 1px white
+.templates-section .list-table.threat .list-table-header .header-wrap .head-item
+    color: colorTheme(secondaryTheme)
+.templates-section .list-table .search-wrap
+    width: 100%
+    padding: .5em 0
+.templates-section .list-table .search-wrap .input-wrap
+    width: fit-content
+    background-color: whitesmoke
+    fa-icon
         color: grayColor(g800)
+        font-size: 14px
+        margin: auto .5em auto auto
+    input 
+        border: none
+        outline: none
+        border-radius: 2px
+        font-size: 14px
+        padding: .5em
+        background-color: transparent
+        color: grayColor(g800)
+        &::placeholder
+            color: colorTheme(primaryTheme)
+.templates-section .list-table .search-wrap .btn-new
+    background-color: colorTheme(success)
+    color: white
+    font-size: 12px
+    margin: auto 0 auto auto
+.templates-section .list-table.threat .search-wrap .input-wrap input::placeholder
+    color: colorTheme(secondaryTheme)
+.templates-section .list-table .list-table-body
+    width: 100%
+    min-width: $desktop_sm
+    padding: 5px
+    background-color: whitesmoke
+    display: grid 
+    grid-template-columns: repeat(1, 1fr)
+    grid-gap: 5px
+    height: fit-content
+    max-height: 500px
+    overflow-y: scroll
 
-        h4 
-            font-size: 20px
-            font-weight: bold
-
-    .card-group
-
-        margin: 1em auto auto 0
-        max-height: 500px
-        overflow-x: scroll
-
-        .progress-wrap
-            background-color: white
-            border-radius: 5px
-            min-width: 15em
-            min-height: 10em
-            display: flex
-            justify-content: center
-            align-items: center
-
-
-        .card
-    
-            border-radius: 8px
-            box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)
+.templates-section .list-table .list-table-body .list-item-wrap-no-survey
+    display: flex
+    align-items: stretch
+    background-color: white
+    padding: 1.5em .5em
+    h4 
+        font-weight: bold
+        font-size: 18px
+        margin: auto
+        color: colorTheme(primaryTheme)
+.templates-section .list-table.threat .list-table-body .list-item-wrap-no-survey h4
+    color: colorTheme(secondaryTheme) 
+.templates-section .list-table .list-table-body .list-item-wrap
+    width: 100%
+    display: grid 
+    grid-template-columns: repeat(3, 1fr)
+    grid-gap: 0
+    background-color: white
+    border-radius: 2px
+    cursor: pointer
+    &:hover
+        box-shadow: 0 0 10px rgba(0,0,0,.1)
+        -webkit-box-shadow: 0 0 10px rgba(0,0,0,.1)
+        -moz-box-shadow: 0 0 10px rgba(0,0,0,.1)
+        -ms-box-shadow: 0 0 10px rgba(0,0,0,.1)
+        -o-box-shadow: 0 0 10px rgba(0,0,0,.1)
+.templates-section .list-table .list-table-body .list-item-wrap .list-item
+    padding: 1.5em .5em
+    font-size: 12px
+    color: black
+    &.survey
+        color: grayColor(g900)
+    &.edit
+        width: 100%
+        .edit-btn
+            width: fit-content
+            padding: .3em .5em
             cursor: pointer
-            height: 100px
-            margin: 20px
-            padding: 0 20px
-            position: relative
-            -webkit-tap-highlight-color: rgba(0,0,0,0.025)
-            text-align: center
-            transition: height 1000ms
-            min-width: 15em
-            // min-height: 13em
-            height: 180px
-            max-width: 50%
-            margin: 0 .5em .5em 0
-            width: 260px
-            display: flex
-            flex-direction: column
-            transition: all 0.3s ease
-            
+            background-color: transparent
+            color: colorTheme(primaryTheme)
+            border-radius: .8em
+            border: solid 1px colorTheme(primaryTheme)
             &:hover
-               transform: translateY(-5px)
-               box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
+                background-color: grayColor(g200)
+    &.delete
+        width: 100%
+        .delete-btn
+            width: fit-content
+            padding: .3em .5em
+            cursor: pointer
+            background-color: transparent
+            color: colorTheme(danger)
+            border-radius: .8em
+            border: solid 1px colorTheme(danger)
+            &:hover
+                background-color: grayColor(g200)
 
-            @include desktop_md
-                max-width: 100%
-                margin: 0 1em 1em 0
-
-            @include desktop_sm
-                width: 100%
-                margin: 0 0 1em 0
 
 
-            .card-body
-                display: flex
-                align-items: stretch
 
-                fa-icon
-                    margin: 2em 1em 0 0
-                    font-size: 14px 
-                    color: colorTheme(secondaryTheme)
-                
 
-                h4
-                    margin: 2em 0
-                    font-size: 14px 
-                    font-weight: bold
-                    color: grayColor(g800)
-                &:hover
-                    h4
-                        color: colorTheme(secondaryTheme)
-            .Low
-                color: green
-            .Medium
-                color: orange
-            .High
-                color: red
-            .editIcon
-                float: left
-                margin-left: 20px
-                margin-bottom: 10px
-                color: green
-            .deleteIcon
-                float: right
-                margin-right: 20px
-                margin-bottom: 10px
-                color: red
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -856,87 +905,6 @@
 
 
 
-
-.navigation-section
-    margin-left: auto
-    position: absolute
-    top: 0
-    right: 0
-    height: 100%
-    // width: 310px
-    width: 200px
-    background-color: #202239
-    padding: 0
-    display: flex
-    flex-direction: column
-
-    @include desktop_lg
-        width: 190px
-
-    @include desktop_md
-        display: none
-
-
-
-.navigation-section .body
-    background-color: white
-    min-height: 50%
-    height: fit-content
-    padding: 0 1em
-
-    .search-wrap
-        width: 100%
-        padding: 1em
-        margin: 2em 0
-   
-        .input-wrap
-            border-radius: 1em
-            background-color: grayColor(g200)
-
-            fa-icon
-                margin: auto .5em
-
-
-            input
-                width: 100%
-                outline: none
-                padding: .5em
-                border: none
-                border-radius: 0px
-                background-color: transparent
-                
-    .nav-tab
-        cursor: pointer
-        border-radius: 1em
-        width: 100%
-        padding: .5em 1em
-        box-shadow: 0 0 10px rgba(0, 0, 0, .3)
-        color: grayColor(g800)
-        margin: 0 auto 2em auto
-        text-align: left
-        font-size: 12px
-
-        &.active
-            background-color: colorTheme(primaryTheme)
-            color: colorTheme(light)
-
-            fa-icon
-                margin-right: .5em
-                color: colorTheme(light)
-
-        fa-icon
-            margin-right: .5em
-            color: colorTheme(secondaryTheme)
-
-        
-
-
-
-.navigation-section .footer
-    background-color: grayColor(g800)
-    position: relative
-    bottom: 0
-    width: 100%
 
 
 
@@ -1442,17 +1410,13 @@
         height: fit-content
         max-height: 500px
         overflow-x: scroll
-
         .modal-header
             width: 100%
             border: none
             background-color: orange
-
             h4 
                 font-size: 14px
                 color: white
-
-
         .modal-body
             width: 100%
             border: none

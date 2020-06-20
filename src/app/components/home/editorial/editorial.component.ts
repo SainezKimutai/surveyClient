@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { faPlus, faSearch, faListAlt, faTrashAlt, faExclamationTriangle, faEye,
   faBackward, faEdit, faTrash, faBuilding, faComments, faFire,
-  faBusinessTime } from '@fortawesome/free-solid-svg-icons';
+  faBusinessTime, faPowerOff} from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { SurveyService } from 'src/app/shared/services/survey.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
@@ -14,6 +14,7 @@ import { createUrlResolverWithoutPackagePrefix } from '@angular/compiler';
 import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
 import { async } from '@angular/core/testing';
 import {ActivityPlanService } from 'src/app/shared/services/activityPlan.service';
+import { HomeComponent } from '../home.component';
 @Component({
   selector: 'app-editorial',
   templateUrl: './editorial.component.html',
@@ -24,11 +25,11 @@ export class EditorialComponent implements OnInit {
 
   constructor(
     private notifyService: NotificationService,
+    private homeComponent: HomeComponent,
     private surveyService: SurveyService,
     private questionService: QuestionService,
     private threatService: ThreatService,
     private industryService: IndustryService,
-    private _formBuilder: FormBuilder,
     private trackerReasonService: TrackerReasonService,
     private threatCategoryService: ThreatCategoryService,
     private activityPlanService: ActivityPlanService
@@ -61,12 +62,15 @@ export class EditorialComponent implements OnInit {
   public faEye = faEye;
   public faWarning = faExclamationTriangle;
   public faBusinessTime = faBusinessTime;
+  public faPowerOff = faPowerOff;
 
 
   //
   public AllSurveys = [];
+  public ViewAllSurvey = [];
   public AllQuestions = [];
   public AllThreats = [];
+  public ViewAllThreats = [];
   public AllTrackerReasons = [];
   public AllIndustrys = [];
   public AllThreatCategories = [];
@@ -116,7 +120,7 @@ export class EditorialComponent implements OnInit {
 // status
   public FormSectionStatus = false;
   public ThreatSectionStatus = false;
-  public TemeplateViewSectionStatus = true;
+  public TemplateViewSectionStatus = true;
   public QuestionsViewStatus = false;
   public SurveyFormStatus = true;
   public QuestionFormStatus = false;
@@ -169,6 +173,8 @@ export class EditorialComponent implements OnInit {
 public activityPlan = '';
 public activityPlanThreatId = ''
 
+public FilterName = '';
+public FilterThreatInput = '';
 
 
 
@@ -177,7 +183,7 @@ public activityPlanThreatId = ''
 
   ngOnInit() {
     sessionStorage.setItem('ActiveNav', 'editorial');
-    this.updatePage();
+    this.updatePage().then(() => { this.ViewAllSurvey = this.AllSurveys});
 
     // this.updater(); - updates threats to set an id
     // this.duplicateQuestionsForThirdParty(); -- duplicates all questions in one survey on another
@@ -202,6 +208,7 @@ public activityPlanThreatId = ''
           dataSurvey => {
             
             this.AllSurveys = dataSurvey;
+            this.ViewAllSurvey = this.AllSurveys
             this.pageProgress = 10;
 
             this.questionService.getAllQuestions().subscribe(
@@ -227,6 +234,7 @@ public activityPlanThreatId = ''
                             this.threatService.getAllInstitutionThreats().subscribe(
                               dataTrt=> {
                                 this.AllThreats = dataTrt;
+                                this.ViewAllThreats = this.AllThreats;
                                 this.pageProgress = 90;
                                 this.activityPlanService.getAllActivityPlanByInstitutionId().subscribe(
                                   dataPlanAct => {
@@ -287,7 +295,7 @@ public activityPlanThreatId = ''
     this.CurrentQuestionArray = [];
 
     this.FormSectionStatus = true;
-    this.TemeplateViewSectionStatus = false;
+    this.TemplateViewSectionStatus = false;
     this.ThreatSectionStatus = false;
     this.QuestionsViewStatus = false;
     this.ThreatsViewSectionStatus = false;
@@ -298,13 +306,35 @@ public activityPlanThreatId = ''
 
   viewSurveyTemplates() {
     this.FormSectionStatus = false;
-    this.TemeplateViewSectionStatus = true;
+    this.TemplateViewSectionStatus = true;
     this.ThreatSectionStatus = false;
     this.QuestionsViewStatus = false;
     this.ThreatsViewSectionStatus = false;
     this.newSurveyStatus = false;
   }
 
+
+
+  filterSurveys() {
+
+    if (!this.FilterName || this.FilterName === null || this.FilterName === '' || this.FilterName.length  < 1) {
+      this.ViewAllSurvey = this.AllSurveys;
+      } else {
+        this.ViewAllSurvey = this.AllSurveys.filter(v => v.surveyName.toLowerCase().indexOf(this.FilterName.toLowerCase()) > -1).slice(0, 10);
+      }
+
+}
+
+
+filterThreats() {
+
+  if (!this.FilterThreatInput || this.FilterThreatInput === null || this.FilterThreatInput === '' || this.FilterThreatInput.length  < 1) {
+    this.ViewAllSurvey = this.AllSurveys;
+    } else {
+      this.ViewAllThreats = this.AllThreats.filter(v => v.name.toLowerCase().indexOf(this.FilterThreatInput.toLowerCase()) > -1).slice(0, 10);
+    }
+
+}
 
 
   viewSurvey(name, id) {
@@ -317,7 +347,7 @@ public activityPlanThreatId = ''
     let unSortedQuestions = this.AllQuestions.filter(( quiz) => quiz.surveyId === id ).map(e => e);
     this.TemplateQuestions = unSortedQuestions.sort((a, b) =>  a.position - b.position);
     this.FormSectionStatus = false;
-    this.TemeplateViewSectionStatus = false;
+    this.TemplateViewSectionStatus = false;
     this.QuestionsViewStatus = true;
 
   }
@@ -634,7 +664,7 @@ public activityPlanThreatId = ''
     this.skipInput = item.skip,
     this.linkedInput = item.linked,
     this.FormSectionStatus = true;
-    this.TemeplateViewSectionStatus = false;
+    this.TemplateViewSectionStatus = false;
     this.ThreatSectionStatus = false;
     this.QuestionsViewStatus = false;
     this.ThreatsViewSectionStatus = false;
@@ -696,7 +726,7 @@ public activityPlanThreatId = ''
     this.linkedInput = false;
     this.positionInput = this.TemplateQuestions.length + 1;
     this.FormSectionStatus = true;
-    this.TemeplateViewSectionStatus = false;
+    this.TemplateViewSectionStatus = false;
     this.ThreatSectionStatus = false;
     this.QuestionsViewStatus = false;
     this.ThreatsViewSectionStatus = false;
@@ -767,7 +797,7 @@ public activityPlanThreatId = ''
 
 
   getThreats() {
-    this.TemeplateViewSectionStatus = false;
+    this.TemplateViewSectionStatus = false;
     this.ThreatsViewSectionStatus = true;
     this.ThreatsViewSectionStatus = true;
     this.FormSectionStatus = false;
@@ -776,7 +806,7 @@ public activityPlanThreatId = ''
   clearThreat() {
     this.ThreatSectionStatus = true;
     this.FormSectionStatus = false;
-    this.TemeplateViewSectionStatus = false;
+    this.TemplateViewSectionStatus = false;
     this.ThreatsViewSectionStatus = true;
     this.threatName = '';
     this.threatRecom = '';
@@ -1004,6 +1034,31 @@ public activityPlanThreatId = ''
       error => this.notifyService.showError('Could not delete threat category', 'Failed')
     );
   }
+
+
+
+
+
+
+  logOut() {
+    this.homeComponent.logout();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   //Do not remove, may be needed in future
 

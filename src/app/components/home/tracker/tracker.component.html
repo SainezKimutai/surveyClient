@@ -10,13 +10,101 @@
 </article>
 
 
-<div class="page-title d-flex">
-    <h4>Tracker</h4>  
-</div>
+
+<header class="header">
+    <div class="header-wrap">
+        <h4>TRACKER</h4>
+        <button class="btn thm-danger btn-sm" (click)="logOut()" >
+            <fa-icon [icon]="faPowerOff"></fa-icon>Logout
+        </button>
+    </div>
+</header>
 
 
 
-<article *ngIf="PlanStatus">
+
+
+
+
+
+
+
+
+
+
+
+<article class="body-article" *ngIf="PlanStatus">
+    <div *ngIf="pageProgress !== 100" class="progress-wrap">
+        <circle-progress [percent]="pageProgress" ></circle-progress>
+    </div>
+    
+
+    
+    <section class="list-table" [hidden]="pageProgress !== 100" >
+        <div class="search-wrap">
+            <div class="input-wrap">
+                <input type="text" (keyup)="filterPlans()" name='FilterName' [(ngModel)]="FilterName" placeholder="Search here ..."> 
+                <fa-icon [icon]="faSearch"></fa-icon>
+            </div>
+        
+        </div>
+        <div class="list-table-header">
+            <div class="header-wrap">
+                <div class="head-item survey"> <span> Plan Name</span> </div>
+                <div class="head-item view">Report on Plan </div>
+            </div>
+        </div>
+        <div class="list-table-body">
+            <div class="list-item-wrap-no-survey" *ngIf="ViewAllPlans.length === 0">
+                <h4>No Plans</h4>
+            </div>
+            <div class="list-item-wrap" *ngFor="let item of ViewAllPlans">
+                <div class="list-item survey">{{item.name}}</div>
+    
+                <div class="list-item view" >
+                    <div class="view-btn"  (click)="editReport(item)">Report on Plan</div>
+                </div>
+            </div>
+    
+        </div>
+    
+    
+    </section>
+    
+</article>
+    
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<article hidden *ngIf="PlanStatus">
 
 <div  class="progress-wrap" *ngIf="pageProgress !== 100">
     <circle-progress [percent]="pageProgress" ></circle-progress>

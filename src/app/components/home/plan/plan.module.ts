@@ -36,8 +36,8 @@ import { SanitizeHtmlPipe } from 'src/app/shared/pipe/safePipe';
       radius: 50,
       outerStrokeWidth: 8,
       innerStrokeWidth: 8,
-      outerStrokeColor: '#acb4bc',
-      innerStrokeColor: '#e4e7ea',
+      outerStrokeColor: '#074BFB',
+      innerStrokeColor: '#f7b307',
       animation: false,
       animationDuration: 300
     }),

@@ -10,57 +10,75 @@
     </article>
       
     
-    
-    
-    <main>
-    
-    
-    <div class="side-bg"></div>
-    
-    
-    
-    <section class="body-section d-flex">
-       
-        
-        <div class="form-section mx-auto">
-    
-    
-            <div class="logo-section">
-                <div class="wrap">
-                    <h4 class="title">Tactive Consulting BCP</h4>
-                    <img src="../../../assets/images/logo1.png" alt="" >
-                </div>
-    
+
+
+
+
+
+
+
+<main class="main-wrap">
+
+        <section class="top-section">
+            <div class="image-wrap">
+                <img src="../../../assets/images/logo1.png" alt="logo" >
             </div>
-    
-    
+        </section>
+        
+        <section class="body-section">
+        
+        <div class="info-section">
+            <div class="info-wrap">
+                <h4 class="head">OnBoarding</h4>
+                <h5 class="text">Create and account with us and explore our services</h5>
+            </div>
+        </div>
+        
+        
+        <div class="form-section">
+        
             <div class="form-wrap">
-    
-    
+        
             <form class="form">
-    
-                <div class="head">
-                    <h4>Sign Up</h4>
+               
+                <div class="top-wrap">
+                    <div class="top-title">
+                        <h4>Sign Up</h4>
+                        <h5>By filling the form below to get instant access</h5>
+                    </div>
+                    <div class="icon-wrap">
+                        <fa-icon [icon]="faPen"></fa-icon>
+                    </div>
+                    
                 </div>
+    
     
                 <div class="form-group">
+                    <div class="wrap d-flex"> 
                     <fa-icon [icon]="faEnvelope"></fa-icon>
                     <input type="text" name="email" readonly [(ngModel)]="InvitedEmail" placeholder="Email Address">
+                    </div>
                 </div>
 
-                <div *ngIf="InvitedUserType==='thirdparty'" class="form-group">
-                    <fa-icon [icon]="faEnvelope"></fa-icon>
+                <div class="form-group">
+                    <div class="wrap d-flex"> 
+                    <fa-icon [icon]="faUser"></fa-icon>
                     <input type="text" name="name" [(ngModel)]="registrationForm.name" placeholder="Name">
+                    </div>
                 </div>
                 
                 <div class="form-group">
+                    <div class="wrap d-flex"> 
                     <fa-icon [icon]="faKey"></fa-icon>
                     <input type="password" name="password" [(ngModel)]="registrationForm.password" placeholder="Password">
+                    </div>
                 </div>
 
                 <div class="form-group">
+                    <div class="wrap d-flex"> 
                     <fa-icon [icon]="faKey"></fa-icon>
                     <input type="password" name="password2" [(ngModel)]="registrationForm.password2" (keyup)="passwordConformation()"  placeholder="Confirm Password">
+                    </div>
                 </div>
     
                 
@@ -68,19 +86,23 @@
                     <button class="btn btn-sm btn-submit ml-auto"  [disabled]="registrationForm.email === '' || !passwordMatch "
                      (click)="register()">Submit</button>
                 </div>
-                
+    
+            
             </form>
     
-            </div>
+  
+    
     
         </div>
-    
-    
+        
+        
+        </div>
+        
+        
     </section>
-    
-    
-    
-    </main>
-    
-    
+        
+        
+</main>
+        
+   
     

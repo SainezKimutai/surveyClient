@@ -1,101 +1,133 @@
 @import 'src/styles.sass'
 
 
-main
-    width: 100%
-    height: 100%
+.main-wrapper
+  // position: absolute
+  width: 100%
+  min-height: 100%
+  height: fit-content
+  display: grid 
+  grid-template-columns: 1fr 4fr
+  grid-gap: 0
+  @include desktop_md
+      display: flex 
+      flex-direction: column
+.main-wrapper .side-section
+  background-color: #c8c9bb
+  padding: 1em
+  @include desktop_md
+      width: 100%
+      min-height: 250px
+      height: fit-content
 
-
-main .side-bg
-    position: absolute
-    width: 100%
-    height: 100%
-    clip-path: polygon(0 0, 50% 0, 50% 100%, 0% 100%)
-    background-color: colorTheme(primaryTheme)
-
-    @include desktop_md
-        clip-path: polygon(100% 0, 100% 50%, 0 50%, 0 0)
-
-.logo
-    width: 100px
-    
-
-
-
-.body-section
-    position: absolute
-    padding: 3em 1em
-    width: 100%
-    height: 100%
-    display: flex
-    align-items: strecth
-
-    @include desktop_md
-        padding: 1em
-        align-items: center
-        justify-content: top
-
-.body-section .form-section
+.main-wrapper .side-section .wrap
+  width: 100%
+  display: flex
+  flex-direction: column
+  padding: 0 0 0 1em
+.main-wrapper .side-section .wrap .btn 
     background-color: transparent
-    border-radius: 5px
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, .4)
-    width: 100%
-    max-width: 700px
-    height: 80%
-    margin: 3em
-    display: flex
-    align-items: stretch
-
+    border: none
+    outline: none
+    color: grayColor(g900) 
+    font-weight: bold
+    width: fit-content
+    border: solid 1px transparent
     @include desktop_md
-        display: flex
-        flex-direction: column
-        height: fit-content
-
-    
-.body-section .form-section .logo-section
-    margin: auto
-    width: 100%
-    height: 100%
-    padding: 1em
-    display: flex
-    align-items: stretch
-
-    .wrap
         margin: auto
-        width: fit-content
-        height: 100%
-        display: flex
-        flex-direction: column
-        justify-content: center
+    fa-icon
+        margin: 0 0 1em 0
+    &:hover
+        border: solid 1px grayColor(g900)
+.main-wrapper .side-section .wrap .survey 
+    padding: 2em 0 1em 0 
+    font-size: 22px
+    font-weight: bold
+    color: colorTheme(primaryTheme)
+    @include desktop_md
+        text-align: center
+.main-wrapper .side-section .wrap .action
+    width: 100%
+    padding: 2em 0 1em 0 
+    @include desktop_md
+        text-align: center
+    .btn 
+        margin: auto
+        font-size: 14px
+        border: none
+        outline: none
+        color: white
+        background-color: colorTheme(success)
 
-        h4
-            font-size: 22px
-            margin: 1em auto
-            color: white
 
-        img 
-            width: 200px 
-            height: 150px
 
-.body-section .form-section .form-wrap
+
+
+
+
+
+
+
+.main-wrapper .body-section
+  width: 100%
+  height: 100%
+  display: flex 
+  align-items: stretch
+  padding: 1em 3em
+  background:  url("../../../assets/images/surveybackground.jpg") no-repeat
+  -webkit-background:  url("../../../assets/images/surveybackground.jpg") no-repeat
+  -moz-background:  url("../../../assets/images/surveybackground.jpg") no-repeat
+  -ms-background:  url("../../../assets/images/surveybackground.jpg") no-repeat
+  -o-background:  url("../../../assets/images/surveybackground.jpg") no-repeat
+  background-size: cover
+  -webkit-background-size: cover
+  -moz-background-size: cover
+  -ms-background-size: cover
+  -o-background-size: cover
+.main-wrapper .body-section .body-section-wrapper
+  width: 100%
+  min-height: 80%
+  height: fit-content
+  margin: auto
+
+.main-wrapper .body-section .body-section-wrapper .header
+  width: 100%
+  padding: 1em
+  h4 
+    font-size: 24px
+    color: black
+.main-wrapper .body-section .body-section-wrapper .body-template
     width: 100%
     height: 100% 
-    max-height: 520px
-    overflow-y: scroll
+    display: flex
+    padding:  1em 
+    background-color: rgba(255, 255, 224, .9)
+    background-size: cover
+    -webkit-background-size: cover
+    -moz-background-size: cover
+    -ms-background-size: cover
+    -o-background-size: cover
+    box-shadow: 0 0 10px rgba(0, 0, 0, .5)
+    border-radius: 5px
+.main-wrapper .body-section .body-section-wrapper .body-template .body-template-wrap
+    margin: auto
+    width: 100%
+    max-width: 800px
 
 
-.body-section .form-section .form-wrap .form
-    margin-left: auto
+
+// the_form
+#the_form
     display: flex
     flex-direction: column
-    justify-content: center
+    justify-content: top
     align-items: left
     padding: 1em
-    border-radius: red solid 1px
     width: 100%
-    height: fit-content
 
-.body-section .form-section .form-wrap .form .progress-wrap
+    height: 350px
+    overflow-y: scroll
+#the_form .progress-wrap
     background-color: transparent
     border-radius: 5px
     width: 100%
@@ -103,8 +135,7 @@ main .side-bg
     display: flex
     justify-content: center
     align-items: center
-
-.body-section .form-section .form-wrap .form .notificationForm
+#the_form .notificationForm
     background-color: white
     border-radius: 5px
     width: 100%
@@ -113,155 +144,165 @@ main .side-bg
     flex-direction: column
     justify-content: center
     align-items: left
-
     .wrap-success
       display: flex
       flex-direction: column
       padding: 1em
-
       h5 
         font-size: 20px
         color: colorTheme(success)
         font-weight: bold
-
       p 
         font-size: 15px
         color: grayColor(g800)  
         padding-left: 1em
-
     .wrap-thank-you
       display: flex
       flex-direction: column
       padding: 1em
-
       h5 
         font-size: 20px
         color: orange
         font-weight: bold
         text-transform: uppercase
-
       p 
         font-size: 15px
         color: grayColor(g800) 
         padding-left: 1em
-
-
-.body-section .form-section .form-wrap .form .dynamic-wrapper
+#the_form .dynamic-wrapper
     width: 100%
     display: block
     transition: all 1s
-
-.body-section .form-section .form-wrap .form .dynamic-wrapper.slide
+#the_form .dynamic-wrapper.slide
     display: none
-
-
-
-.body-section .form-section .form-wrap .form .head
+#the_form .head
     padding-top: 20px
     width: 100%
     margin: 0 0 3em 0
     display: flex
     align-items: stretch
-
+    border: solid 1px red
     h4 
         margin-left: auto
         font-size: 18px
         font-weight: bold  
         color: colorTheme(primaryTheme) 
-
-.body-section .form-section .form-wrap .form .form-group
+#the_form .form-group
     width: 100%
     margin: 0 0 2em 0
     display: flex
     align-items: stretch
-
+    .questionTag
+      font-size: 22px
+      color: black
+      font-family: Montserrat
     fa-icon
         font-size: 14px
         color: colorTheme(primaryTheme)
         margin: .5em 0 0 0
-
     #typeInput
-        padding: 0 .5em
+        padding: .5em
         font-size: 14px
         width: 100%
         outline: none
         border: none
         border-bottom: solid 1px colorTheme(primaryTheme)
         background-color: transparent
-
-.body-section .form-section .form-wrap .form .multy-choice-wrap
+        color: black
+    input 
+        color: black
+    label 
+        color: black
+#the_form .form-group.quiz-wrap
+    min-height: 7em
+#the_form .multy-choice-wrap
     width: 100%
     display: grid
-    grid-template-columns: repeat(1, 1fr)
+    grid-template-columns: repeat(3, 1fr)
     grid-gap: 10px
-
+    @include desktop_md
+      grid-template-columns: repeat(2, 1fr)
+    @include desktop_sm
+      grid-template-columns: repeat(1, 1fr)
     .form-group
-
         width: 100%
         overflow: hidden
         text-overflow: ellipsis
         display: block
         padding: 2px
-      
+        input 
+          color: black
+        label 
+          color: black
 
-.body-section .form-section .form-wrap .form .btn-wrap
-    width: 100%
-    margin: 0 0 1em 0
-    display: flex
-    align-items: stretch
-
-
-    .btn
-        
-        color: white
-
-        &.btn-back
-            background-color: grayColor(g200)
-
-        &.btn-submit, &.btn-next
-            background-color: colorTheme(primaryTheme)
-
-
-.body-section .form-section .form-wrap .form .footer
-    width: 100%
-    margin: 0 0 1em 0
-    display: flex
-    align-items: stretch
-
-    h4
-        font-size: 12px
-        margin: 0 1em 0 0
-
-    a 
-        font-size: 12px
     
-.termsModal
-    .modal-header
-        border: none
-        background-color: colorTheme(secondaryTheme) !important
-        .modal-title
-            font-size: 15px
-            font-family: Montserrat
-            color: white
 
-    .modal-body 
-        background-color: grayColor(g100)
+.main-wrapper .body-section .body-section-wrapper .body-template .action-section
+  width: 100%
+  padding: 1em
+.main-wrapper .body-section .body-section-wrapper .body-template .action-section .top-wrap
+  width: 100%
+  display: flex 
+  align-items: stretch
+  padding: 1em 0
+  @include desktop_md
+    flex-direction: column-reverse
+.main-wrapper .body-section .body-section-wrapper .body-template .action-section  .prev-wrap
+  width: 100%
+  background-color: transparent
+  margin-bottom: 1em
+  .btn 
+      margin: auto
+      font-size: 14px
+      border: none
+      outline: none
+      color: white
+      background-color:  colorTheme(primary)
+.main-wrapper .body-section .body-section-wrapper .body-template .action-section .top-wrap .progress-wrap
+  width: 100%
+  background-color: transparent
+  margin-bottom: 1em
+  h4 
+    width: 100%
+    text-align: right 
+    font-size: 14px
+    font-weight: bold
+    color: teal
+  .progress
+      font-size: 12px
+      height: .5em
+      .progress-bar            
+          font-size: 12px
+          background-color: teal
+.main-wrapper .body-section .body-section-wrapper .body-template .action-section .top-wrap .btn-wrap
+  width: 100%
+  margin-bottom: 1em
+  .btn
+      background-color: colorTheme(success)
+      color: white
 
-        .text
-            font-size: 14px
-            color: grayColor(g800)
 
-    .modal-footer
-        .btn-cancel
-            background-color: colorTheme(secondary)
-            font-size: 13px
-            font-family: Montserrat
-        .btn-confirm
-            color: white
-            background-color: colorTheme(success)
-            font-size: 13px
-            font-family: Montserrat
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     

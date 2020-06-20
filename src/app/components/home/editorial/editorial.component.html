@@ -11,84 +11,64 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="page-title d-flex">
-
-    <h4>Editorial</h4>
-
-    <section id="top_header" class="top-header">
-    
-        <div class="btn-wrap">
-        <div [ngClass]="FormSectionStatus ? 'create-new active' : 'create-new'" (click)="createNewSurveyTemplate()">
-            <fa-icon class="addicon" [icon]="faPlus"></fa-icon>
-            <span>Survey</span> 
-        </div>
-    
-        
-        <div [ngClass]="TemeplateViewSectionStatus ? 'surveys active' : 'surveys'" (click)="viewSurveyTemplates()">
-            <fa-icon [icon]="faListAlt"></fa-icon>
-            <span>Surveys</span> 
-        </div>
-
-        <div [ngClass]="FormSectionStatus ? 'create-new active' : 'create-new'" (click)="clearThreat();addThreatModal.show()">
-            <fa-icon class="addicon" [icon]="faPlus"></fa-icon>
-            <span>Threat</span> 
-        </div>
-
-        <div class="nav-tab" (click)="getThreats();">
-            <fa-icon [icon]="faFire"></fa-icon>
-            <span>Threats</span> 
-        </div>
-        
-        <div class="nav-tab" (click)="addTrackerReasonModal.show()">
-            <fa-icon [icon]="faComments"></fa-icon>
-            <span>Tracker Reasons</span> 
-            
-        </div>
-        <div class="nav-tab" (click)="addIndustriesModal.show()">
-            <fa-icon [icon]="faBuilding"></fa-icon>
-             <span>Industries</span> 
-        </div>
-
+<header class="header">
+    <div class="header-wrap">
+        <h4>EDITORIAL</h4>
+        <button class="btn thm-danger btn-sm" (click)="logOut()" >
+            <fa-icon [icon]="faPowerOff"></fa-icon>Logout
+        </button>
     </div>
-    </section>   
+</header>
+
+
+<section class="navigation-section">
+    <div class="nav-wrapper">
+        <div class="item"> 
+            <button [ngClass]="TemplateViewSectionStatus ? 'btn thm-primary btn-sm active' : 'btn thm-primary btn-sm'" (click)="viewSurveyTemplates()">
+                <fa-icon [icon]="faListAlt"></fa-icon> Survey
+            </button>
+        </div>
+        <div class="item">
+          <button [ngClass]="ThreatsViewSectionStatus ? 'btn thm-primary btn-sm active' : 'btn thm-primary btn-sm'"  (click)="getThreats()">
+            <fa-icon [icon]="faFire"></fa-icon>Threats
+          </button>
+        </div>
+        <div class="item">
+            <button class="btn thm-info btn-sm" (click)="addThreatCategoryModal.show()">
+                <fa-icon [icon]="faFire"></fa-icon>Threat Categories
+            </button>
+        </div>
+        <div class="item">
+          <button class="btn thm-warning btn-sm" (click)="addTrackerReasonModal.show()">
+            <fa-icon [icon]="faComments"></fa-icon> Tracker Reasons
+          </button>
+        </div>
+        <div class="item">
+            <button class="btn thm-purple btn-sm" (click)="addIndustriesModal.show()" >
+                <fa-icon [icon]="faBuilding"></fa-icon> Industries
+            </button>
+          </div>
+          <div class="item">
+            <button class="btn thm-primary btn-sm" (click)="addPlanModal.show()">
+            <fa-icon [icon]="faBusinessTime"></fa-icon>Activity Plan
+            </button>
+          </div>
+    </div>
+
+</section>
+
+
+
+
+
+<article class="main-article">
+
+
+
+<div *ngIf="pageProgress !== 100" class="progress-wrap">
+    <circle-progress [percent]="pageProgress" ></circle-progress>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<article class="article">
-
-
-
-
-
-
+    
 <section class="body-section">
 
 
@@ -308,85 +288,88 @@
 
 
 
-<section class="templates-section" *ngIf="TemeplateViewSectionStatus">
 
-    <div class="card-group">
-        <div *ngIf="pageProgress !== 100" class="progress-wrap">
-            <circle-progress [percent]="pageProgress" ></circle-progress>
+
+
+
+
+
+
+
+<section class="templates-section" *ngIf="TemplateViewSectionStatus">
+    <div class="list-table" [hidden]="pageProgress !== 100">
+        <div class="search-wrap d-flex">
+            <div class="input-wrap mr-auto">
+                <input type="text" (keyup)="filterSurveys()" name='FilterName' [(ngModel)]="FilterName" placeholder="Search here ..."> 
+                <fa-icon [icon]="faSearch"></fa-icon>
+            </div>
+
+            <button class="btn btn-sm btn-new" (click)="createNewSurveyTemplate()">Add New Survey</button>
         </div>
-        <div [hidden]="pageProgress !== 100" class="card"  *ngFor="let item of AllSurveys">  
-          
-            <div class="card-body">
-                <fa-icon [icon]="faListAlt"></fa-icon>
-                <h4>{{item.surveyName}}</h4>
+        <div class="list-table-header">
+            <div class="header-wrap">
+                <div class="head-item survey"> <span> Survey Name</span> </div>
+                <div class="head-item edit"> Edit </div>
+                <div class="head-item delete"> Delete </div>
             </div>
-            <div>
-                <fa-icon class="editIcon" [icon]="faEye" (click)="viewSurvey(item.surveyName, item._id)"></fa-icon>
-                <fa-icon class="deleteIcon" [icon]="faDelete" (click)="prompSurveyDelete(item._id)"></fa-icon>
+        </div>
+        <div class="list-table-body">
+            <div class="list-item-wrap-no-survey" *ngIf="ViewAllSurvey.length === 0">
+                <h4>No Surveys</h4>
+            </div>
+            <div class="list-item-wrap" *ngFor="let item of ViewAllSurvey">
+                <div class="list-item survey">{{item.surveyName}}</div>
+                <div class="list-item edit">
+                    <div class="edit-btn" (click)="viewSurvey(item.surveyName, item._id)">Edit</div>   
+                </div>
+                <div class="list-item delete">
+                    <div class="delete-btn"(click)="prompSurveyDelete(item._id)">Delete</div>   
+                </div>
             </div>
 
         </div>
 
-        <div [hidden]="pageProgress !== 100" class="card" *ngIf="AllSurveys.length === 0">
-            <div class="card-header">
-
-            </div>
-            <div class="card-body">
-                <fa-icon [icon]="faListAlt"></fa-icon>
-                <h4>No Template</h4>
-            </div>
-           
-        </div>
     </div>
-
 </section>
-
-
-
-
-
-
-
-
-
-
 
 
 
 <section class="templates-section" *ngIf="ThreatsViewSectionStatus">
-
-    <div class="card-group">
-        <div class="card" *ngFor="let item of AllThreats">  
-            <div class="card-header">
-
+    <div class="list-table threat" [hidden]="pageProgress !== 100">
+        <div class="search-wrap d-flex">
+            <div class="input-wrap mr-auto">
+                <input type="text" (keyup)="filterThreats()" name='FilterThreatInput' [(ngModel)]="FilterThreatInput" placeholder="Search here ..."> 
+                <fa-icon [icon]="faSearch"></fa-icon>
             </div>
-            <div class="card-body">
-                <fa-icon [icon]="faListAlt"></fa-icon>
-                <h4>{{item.name}}</h4>
-            </div>
-            <div [ngClass] = "item.level">
-                <p>{{item.level}}</p>
-            </div>
-            <div>
-                <fa-icon class="editIcon" [icon]="faEye" (click)="viewThreat(item)"></fa-icon>
-                <fa-icon class="deleteIcon" [icon]="faDelete" (click)="prompThreatDelete(item._id)"></fa-icon>
-            </div>
-
+            <button class="btn btn-sm btn-new" (click)="clearThreat(); addThreatModal.show()">Add New Threat</button>
         </div>
-
-        <div class="card" *ngIf="AllThreats.length === 0">
-            <div class="card-header">
-
+        <div class="list-table-header">
+            <div class="header-wrap">
+                <div class="head-item"> <span>Threat Name</span> </div>
+                <div class="head-item"> Edit </div>
+                <div class="head-item"> Delete </div>
             </div>
-            <div class="card-body">
-                <fa-icon [icon]="faListAlt"></fa-icon>
+        </div>
+        <div class="list-table-body">
+            <div class="list-item-wrap-no-survey" *ngIf="ViewAllThreats.length === 0">
                 <h4>No Threats</h4>
             </div>
-           
-        </div>
-    </div>
+            <div class="list-item-wrap" *ngFor="let item of ViewAllThreats">
+                <div class="list-item survey">{{item.name}}</div>
+                <div class="list-item edit">
+                    <div class="edit-btn" (click)="viewThreat(item.name, item._id)">Edit</div>   
+                </div>
+                <div class="list-item delete">
+                    <div class="delete-btn"(click)="prompThreatDelete(item._id)">Delete</div>   
+                </div>
+            </div>
 
+        </div>
+
+    </div>
 </section>
+
+
 
 
 
@@ -422,71 +405,18 @@
      
  </section>
 
+
+
+
+
+
+
+
+
+
+
+
 </section> 
-
-<section class="navigation-section">
-
-    <div class="body">
-
-        <div class="search-wrap">
-            <div class="input-wrap d-flex">
-                <fa-icon [icon]="faSearch"></fa-icon>
-                <input type="text">
-            </div>
-           
-        </div>
-
-        <div [ngClass]="FormSectionStatus ? 'nav-tab active' : 'nav-tab'" (click)="createNewSurveyTemplate()">
-            <fa-icon [icon]="faPlus"></fa-icon>
-            Survey
-        </div>
-
-        <div [ngClass]="TemeplateViewSectionStatus ? 'nav-tab active' : 'nav-tab'" (click)="viewSurveyTemplates()">
-            <fa-icon [icon]="faListAlt"></fa-icon>
-            Surveys
-        </div>
-        
-        <div [ngClass]="ThreatSectionStatus ? 'nav-tab active' : 'nav-tab'" (click)="clearThreat(); addThreatModal.show()">
-            <fa-icon [icon]="faPlus"></fa-icon>
-            Add Threat
-        </div>
-
-        <div [ngClass]="ThreatsViewSectionStatus ? 'nav-tab active' : 'nav-tab'" class="nav-tab" (click)="getThreats()">
-            <fa-icon [icon]="faFire"></fa-icon>
-            View Threats
-        </div>
-
-        <div class="nav-tab" (click)="addThreatCategoryModal.show()">
-            <fa-icon [icon]="faFire"></fa-icon>
-            Threat Category
-        </div>
-        
-        <div class="nav-tab" (click)="addTrackerReasonModal.show()">
-            <fa-icon [icon]="faComments"></fa-icon>
-            Tracker Reasons
-        </div>
-        <div class="nav-tab" (click)="addIndustriesModal.show()">
-            <fa-icon [icon]="faBuilding"></fa-icon>
-            Industries
-        </div>
-        <div class="nav-tab" (click)="addPlanModal.show()">
-            <fa-icon [icon]="faBusinessTime"></fa-icon>
-            Activity Plan
-        </div>
-
-    </div>
-
-    <div>
-
-    </div>
-
-</section>
-
-
-
-
-
-
 
 
 
@@ -587,8 +517,8 @@
         </div>
         <div class="modal-footer">
      
-            <button *ngIf="!isEditThreatModal" [disabled]="threatName === '' || threatLevels.length === 0" type="button" class="btn btn-sm btn-confirm" (click)="addThreat()">Add</button>
-            <button *ngIf="isEditThreatModal"  [disabled]="threatName === '' || threatLevels.length === 0" type="button" class="btn btn-sm btn-confirm"  (click)="editThreat()">Edit</button>
+            <button *ngIf="!isEditThreatModal" [disabled]="threatName === ''" type="button" class="btn btn-sm btn-confirm" (click)="addThreat()">Add</button>
+            <button *ngIf="isEditThreatModal"  [disabled]="threatName === ''" type="button" class="btn btn-sm btn-confirm"  (click)="editThreat()">Edit</button>
         </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
