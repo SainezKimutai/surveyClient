@@ -661,63 +661,75 @@ circle-progress
         padding: .5em
         font-size: 12px
         background-color: grayColor(g100)
-        margin-right: .5em
         background-color: lighten(colorTheme(primaryTheme), 10)
         color: white
-
+        border: none
     .survey
         min-width: 200px
         width: 100%
-        padding: .5em
+        padding: .5em .5em .5em 1em
         font-size: 12px
         background-color: lighten(colorTheme(primaryTheme), 10)
         color: white
-        border-right: solid 1px grayColor(g100)
+        border: none
+        border-left: solid 1px white 
 
 .survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap
     width: 100%
     min-width: 600px
-    // overflow-x: scroll
     height: 400px
-    .item
-        width: 100%
-        border-bottom: solid 1px grayColor(g100)
-        .company
-            min-width: 200px
-            max-width: 200px
-            padding: .5em
-            font-size: 12px
-            background-color: grayColor(g100)
-            margin-right: .5em
-            color: grayColor(g800)
-            height: fit-content
-            min-height: 3em
-            text-transform: capitalize
-            
-        .item-rate-rate
-            width: 100%
-            .riskRate
-                min-width: 200px
-                width: 100%
-                padding: .5em
-                font-size: 12px
-                font-weight: bold
-                border-right: solid 1px white
-                cursor: pointer
-                height: fit-content
-                min-height: 3em
-                &:hover
-                    background-color: whitesmoke
-                    
-        
-                &.low 
-                    color: colorTheme(success)
+.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item
+    width: 100%
+    background-color: transparent
+    border: solid 1px grayColor(g200)
+    &.even
+        background-color: grayColor(g100)
+.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item .company
+    min-width: 200px
+    max-width: 200px
+    padding: .5em
+    font-size: 12px
+    background-color: transparent
+    color: grayColor(g800)
+    height: fit-content
+    min-height: 3em
+    text-transform: capitalize
+.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item .item-rate-rate
+    width: 100%
+    background-color: transparent
+.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item .item-rate-rate .riskRate
+    min-width: 200px
+    width: 100%
+    padding: .5em
+    font-size: 12px
+    font-weight: bold
+    border-right: solid 1px white
+    cursor: pointer
+    height: 100%
+    min-height: 3em
+    border-left: solid 1px grayColor(g200)
+    &.low 
+        color: colorTheme(success)
+    &.medium
+        color: colorTheme(warning)
+    &.high
+        color: colorTheme(danger)
+.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item .item-rate-rate .btn 
+    font-size: 12px
 
-                &.medium
-                    color: colorTheme(warning)
 
-                &.high
-                    color: colorTheme(danger)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
