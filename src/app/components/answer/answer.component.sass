@@ -14,13 +14,38 @@
       flex-direction: column
 .main-wrapper .side-section
   background-color: #c8c9bb
+  padding: 1em
   @include desktop_md
       width: 100%
       min-height: 250px
       height: fit-content
 
+.main-wrapper .side-section .wrap
+  width: 100%
+  display: flex
+  flex-direction: column
+  .btn 
+    margin: auto
+    background-color: grayColor(g800)
+    color: white 
+    width: fit-content
+    fa-icon
+      margin: 0 0 1em 0
+  
+
+
+
+
+
+
+
+
+
+
+
+
 .main-wrapper .body-section
-  background-color: #707070
+  background-color: #FFFFE0
   width: 100%
   height: 100%
   display: flex 
@@ -45,18 +70,19 @@
     height: 100% 
     display: flex
     padding:  1em 
-    background:  url("../../../assets/images/temp.jpeg") no-repeat
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url("../../../assets/images/temp.jpeg") no-repeat
     background-size: cover
     -webkit-background-size: cover
     -moz-background-size: cover
     -ms-background-size: cover
     -o-background-size: cover
+    box-shadow: 0 0 10px rgba(0, 0, 0, .5)
+    border-radius: 5px
 
 .main-wrapper .body-section .body-section-wrapper .body-template .body-template-wrap
     margin: auto
     width: 100%
     max-width: 800px
-    background-color: rgba(255, 255, 255, 0.8)
 
 
 
@@ -193,16 +219,19 @@
     flex-direction: column-reverse
 .main-wrapper .body-section .body-section-wrapper .body-template .action-section .top-wrap .progress-wrap
   width: 100%
+  background-color: transparent
   h4 
     width: 100%
     text-align: right 
     font-size: 14px
+    font-weight: bold
+    color: teal
   .progress
       font-size: 12px
       height: .5em
       .progress-bar            
           font-size: 12px
-          background-color: colorTheme(primary)
+          background-color: teal
 .main-wrapper .body-section .body-section-wrapper .body-template .action-section .top-wrap .btn-wrap
   width: 100%
   .btn
