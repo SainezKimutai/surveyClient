@@ -76,7 +76,7 @@ circle-progress
 
 
 
-#top_cards_section_design
+#top_cards_section
     display: grid
     grid-template-columns: repeat(3, 1fr)
     grid-gap: 1em
@@ -85,13 +85,12 @@ circle-progress
         grid-template-columns: repeat(2, 1fr)
     @include desktop_md
         grid-template-columns: repeat(1, 1fr)
-#top_cards_section_design .my-card
+#top_cards_section .my-card
     border: none
     border-radius: 5px
     width: 100%
     display: flex
     align-items: stretch
-    // margin: 0 1.5em 1em 0
     padding: 1em 2em 1em 2em
     box-shadow: 0 0 10px rgba(0, 0, 0, .2)
     -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
@@ -116,7 +115,7 @@ circle-progress
         background-color: colorTheme(danger)
         .card-info
             background-color: darken(colorTheme(danger), 10)
-#top_cards_section_design .my-card .card-title
+#top_cards_section .my-card .card-title
     display: flex
     align-items: stretch
     margin: auto 0
@@ -134,7 +133,7 @@ circle-progress
         font-size: 14px
         color: white
         cursor: pointer
-#top_cards_section_design .my-card .card-info
+#top_cards_section .my-card .card-info
     text-align: left
     margin: auto 0
     padding: .5em 1em
@@ -163,95 +162,22 @@ circle-progress
 
 
 
-
-#top_cards_section
-    display: flex
-    align-items: stretch
-    @include desktop_sm
-        display: flex
-        flex-direction: column
-#top_cards_section .card
-    border: none
-    border-radius: 5px
-    min-width: 200px
-    max-width: 50%
-    height: 150px
-    // height: fit-content
-    margin: 0 1.5em 1em 0
-    padding: 1em 2em 0 2em
-    box-shadow: 0 0 10px rgba(0, 0, 0, .2)
-    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
-    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2)
-    @include desktop_md
-        max-width: 100%
-    @include desktop_sm
-        width: 100%
-    &.first
-        background-color: colorTheme(primaryTheme)
-    &.second
-        background-color: colorTheme(warning)
-    &.third
-        background-color: colorTheme(primary)
-    &.forth
-        background-color: colorTheme(danger)
-#top_cards_section .card .card-title
-    display: flex
-    align-items: stretch
-    margin: 0 0 .5em 0
-    padding: 0
-    h4
-        margin: 0 auto 0 0
-        font-family: Montserrat
-        font-size: 14px
-        color: white
-        font-weight: bold
-    fa-icon
-        margin-left: 0 0 0 auto
-        font-family: Montserrat
-        font-size: 14px
-        color: white
-        cursor: pointer
-#top_cards_section .card .card-info
-    text-align: left
-    margin: 0
-    padding: 0
-    h4
-        font-family: Montserrat
-        font-size: 28px
-        font-weight: bold
-        color: white
-        text-transform: capitalize
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Risk categories chart
 .risk-categories-chart-section
-    display: flex
-    align-items: stretch
+    display: grid 
+    grid-template-columns: repeat(2, 1fr)
+    grid-gap: 1em
     width: 100%
     height: 100%
-    
-    @include desktop_sm
-        display: flex
-        flex-direction: column
+    margin: 0 0 1em 0
+    @include desktop_md
+        grid-template-columns: repeat(1, 1fr)
 
 .risk-categories-chart-section .model
     width: 100%
     border: none
     border-radius: 5px
-    margin: 0 0 1em 0
+    margin: 0
     padding: 1em 2em 
     transition: all 0.3s ease
     background-color: white
@@ -284,9 +210,8 @@ circle-progress
     align-items: stretch
     height: 300px
     padding: 1em
-
     canvas
-        width: 100%
+        max-width: 100%
         height: 100%
 
 
@@ -355,8 +280,7 @@ circle-progress
     padding: 1em
 
     canvas
-        width: 100%
-        max-width: $desktop_md
+        max-width: 100%
         margin: auto
         height: 100%
 
@@ -422,8 +346,7 @@ circle-progress
     padding: 1em
 
     canvas
-        width: 100%
-        max-width: $desktop_md
+        max-width: 100%
         margin: auto
         height: 100%
 
