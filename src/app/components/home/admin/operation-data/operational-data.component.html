@@ -3,19 +3,52 @@
 
 
 
+<section id="top_cards_section_design" class="card-group">
 
-<section id="top_cards_section" class="card-group">
-
-    <div class="card first">
+    <div class="my-card first">
         <div class="card-title">
+            <fa-icon [icon]="faBuilding"></fa-icon>
             <h4>No of Third Party Companies</h4>
-            <fa-icon [icon]="faListAlt"></fa-icon>
         </div>
         <div class="card-info">
             <h4>{{AllThirdParties.length}}</h4>
         </div>
-        <div class="card-body">
-            
+    </div>
+
+    <div class="my-card second">
+        <div class="card-title">
+            <fa-icon [icon]="faBuilding"></fa-icon>
+            <h4>No of Companies</h4>
+        </div>
+        <div class="card-info">
+            <h4>{{AllCompanies.length}}</h4>
+        </div>
+    </div>
+
+    <div class="my-card third">
+        <div class="card-title">
+            <fa-icon [icon]="faListAlt"></fa-icon>
+            <h4>No of Surveys</h4>
+        </div>
+        <div class="card-info">
+            <h4>{{AllSurveys.length}}</h4>
+        </div>
+    </div>
+
+
+</section><!-- top_cards_section -->
+
+
+
+<section hidden id="top_cards_section" class="card-group">
+
+    <div class="card first">
+        <div class="card-title">
+            <h4>No of Third Party Companies</h4>
+            <fa-icon [icon]="faBuilding"></fa-icon>
+        </div>
+        <div class="card-info">
+            <h4>{{AllThirdParties.length}}</h4>
         </div>
     </div>
 
@@ -27,21 +60,15 @@
         <div class="card-info">
             <h4>{{AllCompanies.length}}</h4>
         </div>
-        <div class="card-body">
-            
-        </div>
     </div>
 
     <div class="card third">
         <div class="card-title">
             <h4>No of Surveys</h4>
-            <fa-icon [icon]="faBuilding"></fa-icon>
+            <fa-icon [icon]="faListAlt"></fa-icon>
         </div>
         <div class="card-info">
             <h4>{{AllSurveys.length}}</h4>
-        </div>
-        <div class="card-body">
-        
         </div>
     </div>
 
