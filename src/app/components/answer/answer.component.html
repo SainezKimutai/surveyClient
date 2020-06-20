@@ -23,8 +23,15 @@
 
 <div class="wrap">
     <button  class="btn btn-sm btn-back" (click)="back()">
-        <fa-icon [icon]="faArrowLeft"></fa-icon> Back
+        <fa-icon [icon]="faArrowLeft"></fa-icon> Back to Surveys
     </button>
+    <div class="survey">
+        {{surveyName}}
+    </div>
+    <div class="action">
+        <button *ngIf="pageNumber > 1" class="btn btn-sm btn-continue" (click)="saveAndExit()">
+            <fa-icon [icon]="faSave" class="mr-2"></fa-icon>Save & continue later</button>
+    </div>
 </div>
 
 
@@ -57,12 +64,12 @@
                 </div>
     
                 <div *ngIf="questions.length > 0 && pageProgress === 100 && !notificationForm" [ngClass]="'dynamic-wrapper'">
-                    <div class="form-group">
+                    <div class="form-group quiz-wrap">
                         <p class="questionTag">{{questionTag}}</p>
                     </div>
                     
                     <div class="form-group" *ngIf="open">
-                        <input id="typeInput" type="{{type}}" [(ngModel)]="response" (keyup)="captureResponse(); detectChangeOnAnswer();" name="response" placeholder="">
+                        <input id="typeInput" type="{{type}}" [(ngModel)]="response" (keyup)="captureResponse(); detectChangeOnAnswer();" name="response" placeholder="Type here ...">
                     </div>
 
 
@@ -88,6 +95,10 @@
             <div class="action-section">
 
                 <div class="top-wrap">
+                    <div class="prev-wrap">
+                        <button *ngIf="pageNumber > 1" class="btn btn-sm btn-previous" (click)="moveToPreviousQuestion()" >
+                        <fa-icon [icon]="faArrowLeft" class="mr-2"></fa-icon>Move to previous question</button>
+                    </div>
                     <div class="progress-wrap">
                         <h4>{{(((pageNumber-1) / totalPages)*100)}} %</h4>
                         <div class="progress">
@@ -129,12 +140,12 @@
                
 
                 </div>
-                <div class="bottom-wrap">
+                <!-- <div class="bottom-wrap">
                     <button *ngIf="pageNumber > 1" class="btn btn-sm btn-previous" (click)="moveToPreviousQuestion()" >
                         <fa-icon [icon]="faArrowLeft" class="mr-2"></fa-icon>Move to previous question</button>
                     <button *ngIf="pageNumber > 1" class="btn btn-sm btn-continue" (click)="saveAndExit()">
                         <fa-icon [icon]="faSave" class="mr-2"></fa-icon>Save & continue later</button>
-                </div>
+                </div> -->
 
                     
             </div>

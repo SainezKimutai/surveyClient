@@ -24,16 +24,34 @@
   width: 100%
   display: flex
   flex-direction: column
-  .btn 
-    margin: auto
-    background-color: grayColor(g800)
-    color: white 
+  padding: 0 0 0 1em
+.main-wrapper .side-section .wrap .btn 
+    background-color: transparent
+    border: none
+    outline: none
+    color: grayColor(g900) 
+    font-weight: bold
     width: fit-content
+    border: solid 1px transparent
     fa-icon
-      margin: 0 0 1em 0
-  
-
-
+        margin: 0 0 1em 0
+    &:hover
+        border: solid 1px grayColor(g900)
+.main-wrapper .side-section .wrap .survey 
+    padding: 2em 0 1em 0 
+    font-size: 22px
+    font-weight: bold
+    color: colorTheme(primaryTheme)
+.main-wrapper .side-section .wrap .action
+    width: 100%
+    padding: 2em 0 1em 0 
+    .btn 
+        margin: auto
+        font-size: 14px
+        border: none
+        outline: none
+        color: white
+        background-color: colorTheme(success)
 
 
 
@@ -45,14 +63,19 @@
 
 
 .main-wrapper .body-section
-  background-color: #FFFFE0
+  // background-color: #FFFFE0
   width: 100%
   height: 100%
   display: flex 
   align-items: stretch
   padding: 1em 3em
-  // @include desktop_md
-  //     height: 800px
+  background:  url("../../../assets/images/temp.jpeg") no-repeat
+  // background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url("../../../assets/images/temp.jpeg") no-repeat
+  background-size: cover
+  -webkit-background-size: cover
+  -moz-background-size: cover
+  -ms-background-size: cover
+  -o-background-size: cover
 .main-wrapper .body-section .body-section-wrapper
   width: 100%
   min-height: 80%
@@ -70,7 +93,9 @@
     height: 100% 
     display: flex
     padding:  1em 
-    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url("../../../assets/images/temp.jpeg") no-repeat
+    background-color: rgba(255, 255, 224, .9)
+    // background:  url("../../../assets/images/temp.jpeg") no-repeat
+    // background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url("../../../assets/images/temp.jpeg") no-repeat
     background-size: cover
     -webkit-background-size: cover
     -moz-background-size: cover
@@ -166,12 +191,13 @@
     .questionTag
       font-size: 22px
       color: black
+      font-family: Montserrat
     fa-icon
         font-size: 14px
         color: colorTheme(primaryTheme)
         margin: .5em 0 0 0
     #typeInput
-        padding: 0 .5em
+        padding: .5em
         font-size: 14px
         width: 100%
         outline: none
@@ -183,6 +209,8 @@
         color: black
     label 
         color: black
+#the_form .form-group.quiz-wrap
+    min-height: 7em
 #the_form .multy-choice-wrap
     width: 100%
     display: grid
@@ -217,6 +245,16 @@
   padding: 1em 0
   @include desktop_md
     flex-direction: column-reverse
+.main-wrapper .body-section .body-section-wrapper .body-template .action-section  .prev-wrap
+  width: 100%
+  background-color: transparent
+  .btn 
+      margin: auto
+      font-size: 14px
+      border: none
+      outline: none
+      color: white
+      background-color:  colorTheme(primary)
 .main-wrapper .body-section .body-section-wrapper .body-template .action-section .top-wrap .progress-wrap
   width: 100%
   background-color: transparent
@@ -235,8 +273,8 @@
 .main-wrapper .body-section .body-section-wrapper .body-template .action-section .top-wrap .btn-wrap
   width: 100%
   .btn
-      background-color: colorTheme(primaryTheme)
-      color: colorTheme(secondaryTheme)
+      background-color: colorTheme(success)
+      color: white
 .main-wrapper .body-section .body-section-wrapper .body-template .action-section .bottom-wrap
     width: 100%
     display: flex 
@@ -246,7 +284,7 @@
         flex-direction: column-reverse
     .btn 
         margin: auto
-        font-size: 13px
+        font-size: 14px
         border: none
         outline: none
         color: white
