@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faListAlt, faCheck, faSpinner, faBusinessTime, faPowerOff } from '@fortawesome/free-solid-svg-icons';
+import { faListAlt, faCheck, faSpinner, faBusinessTime, faPowerOff, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { PlansService } from 'src/app/shared/services/plan.service';
 import { HomeComponent } from '../home.component';
 
@@ -28,6 +28,7 @@ export class TrackerComponent implements OnInit {
   public faSpinner = faSpinner;
   public faBusinessTime = faBusinessTime;
   public faPowerOff = faPowerOff;
+  public faSearch = faSearch;
   
   public AllPlans = [];
   public ViewAllPlans = [];

@@ -357,7 +357,7 @@
             <div class="list-item-wrap" *ngFor="let item of ViewAllThreats">
                 <div class="list-item survey">{{item.name}}</div>
                 <div class="list-item edit">
-                    <div class="edit-btn" (click)="viewThreat(item.name, item._id)">Edit</div>   
+                    <div class="edit-btn" (click)="viewThreat(item)">Edit</div>   
                 </div>
                 <div class="list-item delete">
                     <div class="delete-btn"(click)="prompThreatDelete(item._id)">Delete</div>   
