@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { faBars, faArrowLeft, faChartLine, faEdit, faUser, faUsers, faListAlt, faPowerOff,
   faProjectDiagram, faFileAlt, faBusinessTime, faNewspaper, faFolderPlus, faCrosshairs,
-  faFax} from '@fortawesome/free-solid-svg-icons';
+  faFax, faQuestionCircle} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -41,6 +41,7 @@ public faNewspaper = faNewspaper;
 public faFolderPlus = faFolderPlus;
 public faCrosshairs = faCrosshairs;
 public faFax = faFax;
+public faQuestionCircle = faQuestionCircle;
 
 // permisions
 public toAdmin = false;
@@ -64,6 +65,7 @@ public adminNavBarActive = false;
 public marketRateBarActive = false;
 public documentNavBarActive = false;
 public salesNavBarActive = false;
+public faqNavBarActive = false;
 
 public myInterval;
 
@@ -113,6 +115,7 @@ CheckActiveNavBar() {
   this.marketRateBarActive = false;
   this.documentNavBarActive = false;
   this.salesNavBarActive = false;
+  this.faqNavBarActive = false;
   if (sessionStorage.getItem('ActiveNav') === 'dashboard') {this.dashboardNavBarActive = true; }
   if (sessionStorage.getItem('ActiveNav') === 'survey') {this.surveyNavBarActive = true; }
   if (sessionStorage.getItem('ActiveNav') === 'profile') {this.profileNavBarActive = true; }
@@ -125,6 +128,7 @@ CheckActiveNavBar() {
   if (sessionStorage.getItem('ActiveNav') === 'marketRates') {this.marketRateBarActive = true; }
   if (sessionStorage.getItem('ActiveNav') === 'document') {this.documentNavBarActive = true; }
   if (sessionStorage.getItem('ActiveNav') === 'sales') {this.salesNavBarActive = true; }
+  if (sessionStorage.getItem('ActiveNav') === 'faq') {this.faqNavBarActive = true; }
 
 }
 
@@ -151,7 +155,7 @@ CheckActiveNavBar() {
     // sessionStorage.removeItem('loggedUserEmail');
     // sessionStorage.removeItem('loggedUserInstitution');
 
-    //consider this instead..
+    // consider this instead..
     sessionStorage.clear();
 
     this.router.navigate(['/landing_page']);
