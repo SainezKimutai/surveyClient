@@ -81,7 +81,7 @@
 <section class="main-section-wrapper">
 
 <section class="top-section">
-    <div class="blank-wrap d-lg-flex"> <fa-icon style="font-size: 72px; color: white; margin: auto;" [icon]="faQuestionCircle"></fa-icon></div>
+    <div class="icon-wrap"> <fa-icon [icon]="faQuestionCircle"></fa-icon></div>
     <div class="info-wrap">
         <h4 class="head">Frequently Asked Questions</h4>
 
@@ -110,6 +110,12 @@
 
 
 <section class="body-section">
+
+    <div class="body-wrapper">
+
+        navigation
+
+    </div>
 
 </section>
 
@@ -217,24 +223,54 @@
 
 
 
-<div bsModal  #faqModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog faqModal modal-md" role="document">
+<div bsModal  #addFaqModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog addFaqModal modal-lg" role="document">
         <div class="modal-content">
         <div class="modal-header ">
-            <h4 class="modal-title"> FAQ</h4>
-            <button type="button" class="btn close" (click)="faqModal.hide()" aria-label="Close">
+            <h4 class="modal-title">Add FAQ</h4>
+            <button type="button" class="btn close" (click)="addFaqModal.hide()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body" >
+            <form *ngIf="faqForm">
+                <div class="form-group">
+                    <label for="">Question Catrgory</label>
+                    <select name="categoryId" [(ngModel)]="faqForm.categoryId">
+                        <option value="" selected hidden disabled>---</option>
+                        <option *ngFor="let item of AllCategories" [value]="item._id">{{item.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Question</label>
+                    <input type="text" name="question" [(ngModel)]="faqForm.question">
+                </div>
+                <div class="form-group">
+                    <label for="">Answer</label>
+                    <angular-editor id="te-basic-tools" name="answer" [(ngModel)]="faqForm.answer" [config]="editorConfig"></angular-editor>
+                </div>
+            </form>
             
         </div>
-        <div class="modal-footer">
-            <button [disabled]="industryInput === ''"  type="button" class="btn btn-confirm" (click)="addIndustries()">Add</button>
+        <div class="modal-footer" *ngIf="faqForm">
+            <button [disabled]="faqForm.categoryId === '' || faqForm.question === '' || faqForm.answer === ''" 
+            type="button" class="btn btn-confirm" (click)="addNewFaq()">Save</button>
         </div>
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

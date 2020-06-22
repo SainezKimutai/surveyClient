@@ -158,14 +158,20 @@
 .main-section-wrapper .top-section
     width: 100%
     height: fit-content
-    padding: 3em 2em
-    // min-height: 600px
+    // padding: 3em 2em 23em 3em
+    padding: 30px 10px 500px 10px
     background-color: colorTheme(primaryTheme)
-.main-section-wrapper .top-section
     display: grid 
     grid-template-columns: repeat(3, 1fr)
     @include desktop_md
        grid-template-columns: repeat(1, 1fr) 
+.main-section-wrapper .top-section .icon-wrap
+    display: flex
+    width: 100%
+    fa-icon
+        margin: auto
+        color: white
+        font-size: 72px
 .main-section-wrapper .top-section .info-wrap
     display: flex
     flex-direction: column
@@ -188,7 +194,7 @@
         padding: 1em
         border-radius: 2px
         background-color: whitesmoke
-        width: 400px
+        width: 100%
         border-radius: 2em
         &::placeholder
             color: black
@@ -200,6 +206,8 @@
 .main-section-wrapper .top-section .action-wrap
     display: flex 
     flex-direction: column
+    @include desktop_md
+       padding: 2em 0 0 0
 .main-section-wrapper .top-section .action-wrap .item 
     margin: auto auto 1em auto
     width: 10em
@@ -258,6 +266,31 @@
             color: purple
   
 
+
+
+
+.body-section
+    width: 100%
+    height: fit-content
+    background-color: grayColor(g200)
+    display: flex
+
+.body-wrapper
+    background-color: white
+    transform: translateY(-400px)
+    -webkit-transform: translateY(-400px)
+    -moz-transform: translateY(-400px)
+    -ms-transform: translateY(-400px)
+    -o-transform: translateY(-400px)
+    height: fit-content
+    min-height: 800px
+    margin: auto
+    width: 100%
+    max-width: $desktop_lg
+    border-radius: 2px
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, .4)
+    -moz-box-shadow: 2px 4px 10px rgba(0, 0, 0, .4)
+    -webkit-box-shadow: 2px 4px 10px rgba(0, 0, 0, .4)
 
 
 
@@ -354,7 +387,6 @@
                 background-color: colorTheme(danger)
                 fa-icon
                     color: white
-        
 .listCategoryModal .modal-content .modal-footer
     border: none
     .btn 
@@ -392,6 +424,63 @@
         background-color: colorTheme(primary)
         font-size: 12px
         color: grayColor(g900)
+
+
+
+
+
+
+
+
+
+
+
+.addFaqModal
+    width: 100%
+    border: none
+.addFaqModal .modal-content
+    width: 100%
+    border: none
+.addFaqModal .modal-content .modal-header
+    background-color: colorTheme(secondaryTheme)
+.addFaqModal .modal-content .modal-title
+    color: white
+    font-size: 14px
+.addFaqModal .modal-content .modal-body
+    border: none
+.addFaqModal .modal-content .modal-body form 
+        width: 100%
+.addFaqModal .modal-content .modal-body form .form-group
+    width: 100%
+    padding: 0
+    label 
+        font-size: 12px
+        font-weight: bold
+        color: grayColor(g700)
+    input, select
+        border: none
+        outline: none
+        background-color: grayColor(g100) 
+        border: 2px
+        padding: .5em
+        width: 100%
+        font-size: 12px
+.addFaqModal .modal-content .modal-footer
+    border: none
+    .btn 
+        background-color: colorTheme(secondaryTheme)
+        font-size: 12px
+        color: white
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -12,6 +12,7 @@ import { MatFormFieldModule} from '@angular/material/form-field';
 import { NgCircleProgressModule } from 'ng-circle-progress';
 import { FaqComponent } from './faq.component';
 import { FaqRoutingModule } from './faq-routing.module';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 @NgModule({
 
   declarations: [
@@ -42,7 +43,8 @@ import { FaqRoutingModule } from './faq-routing.module';
         innerStrokeColor: '#f7b307',
         animation: false,
         animationDuration: 300
-      })
+      }),
+      AngularEditorModule
 
     ]
 
