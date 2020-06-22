@@ -86,7 +86,7 @@
         <h4 class="head">Frequently Asked Questions</h4>
 
         <h4 class="text">How can we help you ?</h4>
-        <input type="text" placeholder="Type Key words to find answers">
+        <input type="text" placeholder="Type key words to find answers">
     </div>
     <div class="action-wrap">
         <div class="item"> 
@@ -103,7 +103,7 @@
             <button class="btn thm-success btn-sm" (click)="openInquiryModal()">
               <fa-icon [icon]="faQuestion"></fa-icon> Ask
             </button>
-          </div>
+        </div>
   
     </div>
 </section>
@@ -113,8 +113,19 @@
 
     <div class="body-wrapper">
 
-        navigation
+        <div class="no-faqs" *ngIf="FormatedFAQs.length === 0">
+            <h4>No FAQs</h4>
+        </div>
+        <div class="faq-main" *ngFor="let item of FormatedFAQs" [hidden]="item.faqs.length === 0">
+            <h4 class="category">{{item.name}}</h4>
 
+            <div class="faq-item" *ngFor="let faq of item.faqs">
+                <h6 class="question">{{faq.question}}</h6> 
+                <div class="answer"  [innerHtml]="faq.answer | sanitizeHtml3"></div>
+            </div>
+
+
+        </div>
     </div>
 
 </section>

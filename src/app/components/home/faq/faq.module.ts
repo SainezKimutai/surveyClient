@@ -13,10 +13,11 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
 import { FaqComponent } from './faq.component';
 import { FaqRoutingModule } from './faq-routing.module';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { SanitizeHtmlPipe3 } from 'src/app/shared/pipe/safePipe3';
 @NgModule({
 
   declarations: [
-      FaqComponent
+      FaqComponent, SanitizeHtmlPipe3
           ],
 
     imports: [

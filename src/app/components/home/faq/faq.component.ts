@@ -45,6 +45,7 @@ public faPlus = faPlus;
 public AllCategories = [];
 public AllInquiries = [];
 public AllFAQs = [];
+public FormatedFAQs = [];
 
 editorConfig: AngularEditorConfig = {
   editable: true,
@@ -119,7 +120,13 @@ updatePage() {
 
 formatData() {
   return new Promise((resolve, reject) => {
-    resolve()
+  this.FormatedFAQs = [];
+  this.AllCategories.forEach((catItem, i, arr) => {
+    catItem.faqs  = this.AllFAQs.filter((f) => f.categoryId === catItem._id).map(e => e);
+    this.FormatedFAQs.push(catItem);
+    if (i === arr.length - 1) { resolve(); }
+  })
+  if (this.AllCategories.length === 0) {resolve()}
   })
 }
 
