@@ -9,7 +9,7 @@ const routes: Routes = [
 
   { path: 'landing_page', loadChildren: 'src/app/components/landing-page/landing-page.module#LandingPageModule',  data: {preload: true}},
 
-  // { path: 'invitation/:companyId/:userType/:userRole/:deptId/:email/:token', loadChildren: 'src/app/components/invitation/invitation.module#InvitationModule',  data: {preload: false}},
+  // { path: 'invitation/:institutionId/:companyId/:userType/:userRole/:deptId/:email/:token', loadChildren: 'src/app/components/invitation/invitation.module#InvitationModule',  data: {preload: false}},
 
   { path: 'invitation', loadChildren: 'src/app/components/invitation/invitation.module#InvitationModule',  data: {preload: false}},
 

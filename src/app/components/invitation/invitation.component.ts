@@ -17,6 +17,7 @@ export class InvitationComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private activeRoute: ActivatedRoute,
     private userService: UserService,
     private notifyService: NotificationService
   ) { }
@@ -54,16 +55,17 @@ export class InvitationComponent implements OnInit, OnDestroy {
       password2: ''
     };
 
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      this.InvitedInstitutionId = params.get('institutionId');
-      this.InvitedCompanyId = params.get('companyId');
-      this.InvitedUserType = params.get('userType');
-      this.InvitedUserRole = params.get('userRole');
-      this.InvitedDeptId = params.get('deptId');
-      this.InvitedEmail = params.get('email');
-      this.InvitedToken = params.get('token');
-      sessionStorage.setItem('invitedUserToken', params.get('token'));
-    });
+    this.activeRoute.queryParams.subscribe(params => {
+      console.log(params)
+      this.InvitedInstitutionId = params.institutionId;
+      this.InvitedCompanyId = params.companyId;
+      this.InvitedUserType = params.userType;
+      this.InvitedUserRole = params.userRole;
+      this.InvitedDeptId = params.deptId;
+      this.InvitedEmail = params.email;
+      this.InvitedToken = params.token;
+      sessionStorage.setItem('invitedUserToken', params.token);
+  });
 
   }
 
@@ -97,6 +99,7 @@ export class InvitationComponent implements OnInit, OnDestroy {
       userRole: this.InvitedUserRole,
       departmentId: this.InvitedDeptId,
     };
+    this.submitUser(myData);
   }
 
 
