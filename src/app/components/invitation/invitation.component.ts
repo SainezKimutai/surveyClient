@@ -4,6 +4,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { updateHeader } from 'src/app/shared/dev/dev';
+import { LandingPageComponent } from '../landing-page/landing-page.component';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class InvitationComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private landingPage: LandingPageComponent,
     private userService: UserService,
     private notifyService: NotificationService
   ) { }
@@ -106,8 +108,7 @@ export class InvitationComponent implements OnInit, OnDestroy {
 
     this.userService.registerUser(myCredentials).subscribe(
       dataUser => {
-        console.log(dataUser);
-        this.redirect(dataUser);
+        this.landingPage.login(myCredentials.email, myCredentials.password);
       },
       error => {this.notifyService.showWarning('Could not submit', 'Failled');  this.ImprintLoader = false; }
     );
@@ -117,50 +118,50 @@ export class InvitationComponent implements OnInit, OnDestroy {
 
 
 
-  redirect(dataUser) {
+  // redirect(dataUser) {
 
-    if ( this.InvitedUserType === 'admin') {
-      sessionStorage.setItem('loggedUserToken', dataUser.token);
-      sessionStorage.setItem('loggedUserName', dataUser.name);
-      sessionStorage.setItem('loggedUserEmail', dataUser.email);
-      sessionStorage.setItem('loggedUserID', dataUser._id);
-      sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
-      sessionStorage.setItem('permissionStatus', 'isAdmin');
-      updateHeader().then(() => {
-        this.router.navigate(['/home/admin']);
-      });
+  //   if ( this.InvitedUserType === 'admin') {
+  //     sessionStorage.setItem('loggedUserToken', dataUser.token);
+  //     sessionStorage.setItem('loggedUserName', dataUser.name);
+  //     sessionStorage.setItem('loggedUserEmail', dataUser.email);
+  //     sessionStorage.setItem('loggedUserID', dataUser._id);
+  //     sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
+  //     sessionStorage.setItem('permissionStatus', 'isAdmin');
+  //     updateHeader().then(() => {
+  //       this.router.navigate(['/home/admin']);
+  //     });
 
-    }
+  //   }
 
-    if ( this.InvitedUserType === 'thirdparty') {
+  //   if ( this.InvitedUserType === 'thirdparty') {
 
-      sessionStorage.setItem('loggedUserToken', dataUser.token);
-      sessionStorage.setItem('loggedUserName', dataUser.name);
-      sessionStorage.setItem('loggedUserEmail', dataUser.email);
-      sessionStorage.setItem('loggedUserID', dataUser._id);
-      sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
-      sessionStorage.setItem('permissionStatus', 'isThirdParty');
-      updateHeader().then(() => {
-        this.router.navigate(['/home/dashboard']);
-      });
+  //     sessionStorage.setItem('loggedUserToken', dataUser.token);
+  //     sessionStorage.setItem('loggedUserName', dataUser.name);
+  //     sessionStorage.setItem('loggedUserEmail', dataUser.email);
+  //     sessionStorage.setItem('loggedUserID', dataUser._id);
+  //     sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
+  //     sessionStorage.setItem('permissionStatus', 'isThirdParty');
+  //     updateHeader().then(() => {
+  //       this.router.navigate(['/home/dashboard']);
+  //     });
 
-    }
+  //   }
 
 
-    if ( this.InvitedUserType === 'customer') {
-      sessionStorage.setItem('loggedUserToken', dataUser.token);
-      sessionStorage.setItem('loggedUserName', dataUser.name);
-      sessionStorage.setItem('loggedUserEmail', dataUser.email);
-      sessionStorage.setItem('loggedUserID', dataUser._id);
-      sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
-      sessionStorage.setItem('permissionStatus', 'isCustomer');
-      updateHeader().then(() => {
-        this.router.navigate(['/home/profile']);
-      });
+  //   if ( this.InvitedUserType === 'customer') {
+  //     sessionStorage.setItem('loggedUserToken', dataUser.token);
+  //     sessionStorage.setItem('loggedUserName', dataUser.name);
+  //     sessionStorage.setItem('loggedUserEmail', dataUser.email);
+  //     sessionStorage.setItem('loggedUserID', dataUser._id);
+  //     sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
+  //     sessionStorage.setItem('permissionStatus', 'isCustomer');
+  //     updateHeader().then(() => {
+  //       this.router.navigate(['/home/profile']);
+  //     });
 
-    }
+  //   }
 
-  }
+  // }
 
 
 

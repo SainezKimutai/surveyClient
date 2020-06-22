@@ -7,6 +7,7 @@ import { Router , ActivatedRoute, ParamMap} from '@angular/router';
 import { IndustryService } from 'src/app/shared/services/industry.service';
 import { ModalDirective, ModalOptions, ModalModule } from 'ngx-bootstrap';
 import { updateHeader } from 'src/app/shared/dev/dev';
+import { LandingPageComponent } from '../landing-page/landing-page.component';
 
 @Component({
   selector: 'app-register',
@@ -17,6 +18,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private landingPage: LandingPageComponent,
     private route: ActivatedRoute,
     private userService: UserService,
     private companyProfileService: CompanyProfileService,
@@ -178,17 +180,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
         this.userService.registerUser(newUserData).subscribe(
           dataUser => {
-           sessionStorage.setItem('loggedUserToken', dataUser.token);
-           sessionStorage.setItem('loggedUserName', dataUser.name);
-           sessionStorage.setItem('loggedUserInstitution', dataUser.institutionId);
-           sessionStorage.setItem('loggedUserEmail', dataUser.email);
-           sessionStorage.setItem('loggedUserID', dataUser._id);
-           sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
-           sessionStorage.setItem('permissionStatus', 'isCustomer');
-
-           updateHeader().then(() => {
-            this.router.navigate(['/home/profile']);
-           });
+            this.landingPage.login(newUserData.email, newUserData.password);
           },
           error => {this.notifyService.showWarning('Could not submit', 'Failled');  this.ImprintLoader = false; }
         );
