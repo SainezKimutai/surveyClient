@@ -83,14 +83,14 @@
 <section class="top-section">
     <div class="blank-wrap d-lg-flex"> <fa-icon style="font-size: 72px; color: white; margin: auto;" [icon]="faQuestionCircle"></fa-icon></div>
     <div class="info-wrap">
-        <h4 class="head">Frequently Asked Question</h4>
+        <h4 class="head">Frequently Asked Questions</h4>
 
         <h4 class="text">How can we help you ?</h4>
         <input type="text" placeholder="Type Key words to find answers">
     </div>
     <div class="action-wrap">
         <div class="item"> 
-            <button class="btn thm-primary btn-sm" (click)="openAddCategoryModal()">
+            <button class="btn thm-primary btn-sm" (click)="openListCategoryModal()">
                 <fa-icon [icon]="faLayerGroup"></fa-icon> Category
             </button>
         </div>
@@ -151,20 +151,69 @@
     <div class="modal-dialog addCategoryModal modal-md" role="document">
         <div class="modal-content">
         <div class="modal-header ">
-            <h4 class="modal-title"> Question Catrgories</h4>
+            <h4 class="modal-title">Add Question Categories</h4>
             <button type="button" class="btn close" (click)="addCategoryModal.hide()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body" >
-           
+            <input type="text" name="categoryInput" [(ngModel)]="categoryInput" placeholder="Type here ...">
         </div>
         <div class="modal-footer">
-            <button [disabled]="industryInput === ''"  type="button" class="btn btn-confirm" (click)="addIndustries()">Add</button>
+            <button [disabled]="categoryInput === ''"  type="button" class="btn" (click)="addNewCategory()">Add</button>
         </div>
         </div>
     </div>
 </div>
+
+
+<div bsModal #listCategoryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog listCategoryModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title">List of Question Categories</h4>
+            <button type="button" class="btn close" (click)="listCategoryModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <div class="item" *ngFor="let item of AllCategories">
+                <h4>{{item.name}}</h4>
+                <span class="edit" (click)="openEditCategoryModal(item)"> <fa-icon [icon]="faPen"></fa-icon> </span>
+                <span class="delete" (click)="deleteCategory(item)"> <fa-icon [icon]="faTrash"></fa-icon> </span>
+            </div>
+            <div class="item" *ngIf="AllCategories.length === 0">
+                <h4>No Category</h4>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn" (click)="openAddCategoryModal()">Add New Category</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div bsModal #editCategoryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog editCategoryModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title">Edit Question Category</h4>
+            <button type="button" class="btn close" (click)="editCategoryModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" *ngIf="categoryOnEdit" >
+            <input type="text" name="categoryOnEdit" [(ngModel)]="categoryOnEdit.name" placeholder="Type here ...">
+        </div>
+        <div class="modal-footer">
+            <button *ngIf="categoryOnEdit" [disabled]="categoryOnEdit.name === ''"  type="button" class="btn" (click)="submitEditCategory()">Add</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 
 
