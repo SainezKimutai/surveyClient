@@ -18,7 +18,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private landingPage: LandingPageComponent,
     private route: ActivatedRoute,
     private userService: UserService,
     private companyProfileService: CompanyProfileService,
@@ -180,7 +179,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
         this.userService.registerUser(newUserData).subscribe(
           dataUser => {
-            this.landingPage.login(newUserData.email, newUserData.password);
+            this.login(newUserData.email, newUserData.password);
           },
           error => {this.notifyService.showWarning('Could not submit', 'Failled');  this.ImprintLoader = false; }
         );
@@ -189,6 +188,60 @@ export class RegisterComponent implements OnInit, OnDestroy {
       error => {this.notifyService.showWarning('Could not submit', 'Failled');  this.ImprintLoader = false; }
     );
 
+  }
+
+
+
+
+  login(emailParam: any, passwordParam: any) {
+    this.userService.loginUser({email: emailParam, password: passwordParam}).subscribe(
+      dataUser =>  {
+          if (dataUser.userType === 'customer') {
+          sessionStorage.setItem('loggedUserToken', dataUser.token);
+          sessionStorage.setItem('loggedUserName', dataUser.name);
+          sessionStorage.setItem('loggedUserEmail', dataUser.email);
+          sessionStorage.setItem('loggedUserInstitution', dataUser.institutionId);
+          sessionStorage.setItem('loggedUserID', dataUser._id);
+          sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
+          sessionStorage.setItem('permissionStatus', 'isCustomer');
+          updateHeader().then(() => {
+            this.router.navigate(['/home/survey']);
+           });
+
+          }
+
+
+          if (dataUser.userType === 'admin') {
+           sessionStorage.setItem('loggedUserInstitution', dataUser._id);
+           sessionStorage.setItem('loggedUserToken', dataUser.token);
+           sessionStorage.setItem('loggedUserName', dataUser.name);
+           sessionStorage.setItem('loggedUserEmail', dataUser.email);
+           sessionStorage.setItem('loggedUserID', dataUser._id);
+           sessionStorage.setItem('permissionStatus', 'isAdmin');
+
+           updateHeader().then(() => {
+            this.router.navigate(['/home/admin']);
+           });
+
+          }
+
+          if (dataUser.userType === 'thirdparty') {
+           sessionStorage.setItem('loggedUserInstitution', dataUser._id);
+           sessionStorage.setItem('loggedUserToken', dataUser.token);
+           sessionStorage.setItem('loggedUserName', dataUser.name);
+           sessionStorage.setItem('loggedUserEmail', dataUser.email);
+           sessionStorage.setItem('loggedUserID', dataUser._id);
+           sessionStorage.setItem('permissionStatus', 'isThirdParty');
+           updateHeader().then(() => {
+            this.router.navigate(['/home/dashboard']);
+           });
+
+
+          }
+
+        },
+        error => {this.notifyService.showError(error.error.message, 'Access denied'); this.ImprintLoader = false; }
+      );
   }
 
 

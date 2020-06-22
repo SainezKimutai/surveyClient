@@ -17,7 +17,6 @@ export class InvitationComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private landingPage: LandingPageComponent,
     private userService: UserService,
     private notifyService: NotificationService
   ) { }
@@ -90,7 +89,7 @@ export class InvitationComponent implements OnInit, OnDestroy {
       companyId: this.InvitedCompanyId,
       password: this.registrationForm.password,
       email: this.InvitedEmail,
-      name: this.InvitedUserType === 'thirdparty' ? this.registrationForm.name : '',
+      name: this.registrationForm.name,
       userType: this.InvitedUserType,
       userRole: this.InvitedUserRole,
       departmentId: this.InvitedDeptId,
@@ -108,7 +107,7 @@ export class InvitationComponent implements OnInit, OnDestroy {
 
     this.userService.registerUser(myCredentials).subscribe(
       dataUser => {
-        this.landingPage.login(myCredentials.email, myCredentials.password);
+        this.login(myCredentials.email, myCredentials.password);
       },
       error => {this.notifyService.showWarning('Could not submit', 'Failled');  this.ImprintLoader = false; }
     );
@@ -118,51 +117,56 @@ export class InvitationComponent implements OnInit, OnDestroy {
 
 
 
-  // redirect(dataUser) {
+  login(emailParam: any, passwordParam: any) {
+    this.userService.loginUser({email: emailParam, password: passwordParam}).subscribe(
+      dataUser =>  {
+          if (dataUser.userType === 'customer') {
+          sessionStorage.setItem('loggedUserToken', dataUser.token);
+          sessionStorage.setItem('loggedUserName', dataUser.name);
+          sessionStorage.setItem('loggedUserEmail', dataUser.email);
+          sessionStorage.setItem('loggedUserInstitution', dataUser.institutionId);
+          sessionStorage.setItem('loggedUserID', dataUser._id);
+          sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
+          sessionStorage.setItem('permissionStatus', 'isCustomer');
+          updateHeader().then(() => {
+            this.router.navigate(['/home/survey']);
+           });
 
-  //   if ( this.InvitedUserType === 'admin') {
-  //     sessionStorage.setItem('loggedUserToken', dataUser.token);
-  //     sessionStorage.setItem('loggedUserName', dataUser.name);
-  //     sessionStorage.setItem('loggedUserEmail', dataUser.email);
-  //     sessionStorage.setItem('loggedUserID', dataUser._id);
-  //     sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
-  //     sessionStorage.setItem('permissionStatus', 'isAdmin');
-  //     updateHeader().then(() => {
-  //       this.router.navigate(['/home/admin']);
-  //     });
-
-  //   }
-
-  //   if ( this.InvitedUserType === 'thirdparty') {
-
-  //     sessionStorage.setItem('loggedUserToken', dataUser.token);
-  //     sessionStorage.setItem('loggedUserName', dataUser.name);
-  //     sessionStorage.setItem('loggedUserEmail', dataUser.email);
-  //     sessionStorage.setItem('loggedUserID', dataUser._id);
-  //     sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
-  //     sessionStorage.setItem('permissionStatus', 'isThirdParty');
-  //     updateHeader().then(() => {
-  //       this.router.navigate(['/home/dashboard']);
-  //     });
-
-  //   }
+          }
 
 
-  //   if ( this.InvitedUserType === 'customer') {
-  //     sessionStorage.setItem('loggedUserToken', dataUser.token);
-  //     sessionStorage.setItem('loggedUserName', dataUser.name);
-  //     sessionStorage.setItem('loggedUserEmail', dataUser.email);
-  //     sessionStorage.setItem('loggedUserID', dataUser._id);
-  //     sessionStorage.setItem('loggedCompanyId', dataUser.companyId);
-  //     sessionStorage.setItem('permissionStatus', 'isCustomer');
-  //     updateHeader().then(() => {
-  //       this.router.navigate(['/home/profile']);
-  //     });
+          if (dataUser.userType === 'admin') {
+           sessionStorage.setItem('loggedUserInstitution', dataUser._id);
+           sessionStorage.setItem('loggedUserToken', dataUser.token);
+           sessionStorage.setItem('loggedUserName', dataUser.name);
+           sessionStorage.setItem('loggedUserEmail', dataUser.email);
+           sessionStorage.setItem('loggedUserID', dataUser._id);
+           sessionStorage.setItem('permissionStatus', 'isAdmin');
 
-  //   }
+           updateHeader().then(() => {
+            this.router.navigate(['/home/admin']);
+           });
 
-  // }
+          }
 
+          if (dataUser.userType === 'thirdparty') {
+           sessionStorage.setItem('loggedUserInstitution', dataUser._id);
+           sessionStorage.setItem('loggedUserToken', dataUser.token);
+           sessionStorage.setItem('loggedUserName', dataUser.name);
+           sessionStorage.setItem('loggedUserEmail', dataUser.email);
+           sessionStorage.setItem('loggedUserID', dataUser._id);
+           sessionStorage.setItem('permissionStatus', 'isThirdParty');
+           updateHeader().then(() => {
+            this.router.navigate(['/home/dashboard']);
+           });
+
+
+          }
+
+        },
+        error => {this.notifyService.showError(error.error.message, 'Access denied'); this.ImprintLoader = false; }
+      );
+  }
 
 
 

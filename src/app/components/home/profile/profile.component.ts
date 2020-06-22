@@ -346,6 +346,7 @@ export class ProfileComponent implements OnInit {
         this.AllUsers = dataUser;
         this.AllUsers.forEach((u) => {
           if(u._id === sessionStorage.getItem('loggedUserID') ) {
+            console.log(u)
             this.MyUserName = u.name;
           }
         })
