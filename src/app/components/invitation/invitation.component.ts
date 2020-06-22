@@ -43,6 +43,7 @@ export class InvitationComponent implements OnInit, OnDestroy {
   public InvitedUserRole: any;
   public InvitedDeptId: any;
   public InvitedCompanyId: any;
+  public InvitedInstitutionId: any;
 
 
   ngOnInit() {
@@ -54,6 +55,7 @@ export class InvitationComponent implements OnInit, OnDestroy {
     };
 
     this.route.paramMap.subscribe((params: ParamMap) => {
+      this.InvitedInstitutionId = params.get('institutionId');
       this.InvitedCompanyId = params.get('companyId');
       this.InvitedUserType = params.get('userType');
       this.InvitedUserRole = params.get('userRole');
@@ -88,15 +90,13 @@ export class InvitationComponent implements OnInit, OnDestroy {
     const myData = {
       companyId: this.InvitedCompanyId,
       password: this.registrationForm.password,
+      institutionId: this.InvitedInstitutionId,
       email: this.InvitedEmail,
       name: this.registrationForm.name,
       userType: this.InvitedUserType,
       userRole: this.InvitedUserRole,
       departmentId: this.InvitedDeptId,
     };
-
-    this.submitUser(myData);
-
   }
 
 

@@ -391,6 +391,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     let dataToBeSent = {
       sender: sessionStorage.getItem('loggedUserEmail'),
       reciever: this.inviteForm.value.email,
+      institutionId: sessionStorage.getItem('loggedUserInstitution'),
       companyId: this.inviteForm.value.companyId,
       userType: this.inviteForm.value.userType,
       userRole: this.inviteForm.value.userRole,
