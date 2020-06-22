@@ -46,3 +46,219 @@
     &.thm-danger
         fa, fa-icon
             color: colorTheme(secondaryTheme)
+
+
+
+
+
+
+
+
+
+
+
+
+.navigation-section
+    width: 100%
+    padding: 1em
+.navigation-section .nav-wrapper
+    display: flex
+    align-items: stretch
+    @include desktop_sm
+        flex-direction: column
+.navigation-section .nav-wrapper .item 
+    margin: auto
+    width: 10em
+    @include desktop_sm
+        width: 100%   
+        margin-bottom: 1em
+.navigation-section .nav-wrapper .item .btn
+    width: 100%
+    height: 3em
+    color: vanillaTheme(titleTheme)
+    margin: auto
+    border: none
+    font-size: 12px
+    font-family: Montserrat
+    text-transform: capitalize
+    text-align: left
+    background-color: transparent
+    box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    border-radius: 2px
+    &:hover
+        background-color: grayColor(g400)
+    fa-icon
+        font-size: 12px
+        margin: 0 1em 0 0
+    &.thm-success
+        border-bottom: solid 2px colorTheme(success)
+        fa-icon
+            color: colorTheme(success)
+    &.thm-warning  
+        border-bottom: solid 2px colorTheme(secondaryTheme)        
+        fa-icon
+            color: colorTheme(secondaryTheme)
+    &.thm-primary
+        border-bottom: solid 2px colorTheme(primaryTheme)    
+        fa-icon
+            color: colorTheme(primaryTheme)
+        &.active
+            background-color: colorTheme(primaryTheme)
+            border-bottom: solid 2px colorTheme(secondaryTheme)
+            color: colorTheme(secondaryTheme)
+            fa-icon
+                color: colorTheme(secondaryTheme)
+    &.thm-info
+        border-bottom: solid 2px colorTheme(info)  
+        fa-icon
+            color: colorTheme(info)                 
+    &.thm-danger
+        border-bottom: solid 2px colorTheme(danger)  
+        fa, fa-icon
+            color: colorTheme(danger)
+    &.thm-purple
+        border-bottom: solid 2px colorTheme(purple) 
+        fa, fa-icon
+            color: purple
+
+
+
+.body-section
+    padding: 0 1em 
+.body-section .body-wrapper
+    padding: 1em
+    background-color: white
+.body-section .body-wrapper .search-wrap
+    padding: 1em
+    background-color: white
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+.body-section .body-wrapper .search-wrap h4 
+    font-size: 18px
+.body-section .body-wrapper .search-wrap input 
+    border: none
+    outline: none
+    font-size: 12px
+    padding: .5em
+    border-radius: 2px
+    background-color: whitesmoke
+    width: 400px
+
+
+
+
+
+.main-section-wrapper
+    width: 100%
+    height: 100%
+.main-section-wrapper .top-section
+    width: 100%
+    height: fit-content
+    padding: 3em 2em
+    // min-height: 600px
+    background-color: colorTheme(primaryTheme)
+.main-section-wrapper .top-section
+    display: grid 
+    grid-template-columns: repeat(3, 1fr)
+    @include desktop_md
+       grid-template-columns: repeat(1, 1fr) 
+.main-section-wrapper .top-section .info-wrap
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    .head
+        color: white 
+        font-size: 28px
+        font-weight: bold
+        text-align: center
+        margin: 0 0 3em 0
+    .text
+        color: white 
+        font-size: 14px
+        text-align: center
+    input 
+        border: none
+        outline: none
+        font-size: 12px
+        padding: 1em
+        border-radius: 2px
+        background-color: whitesmoke
+        width: 400px
+        border-radius: 2em
+        &::placeholder
+            color: black
+      
+
+
+
+    
+.main-section-wrapper .top-section .action-wrap
+    display: flex 
+    flex-direction: column
+.main-section-wrapper .top-section .action-wrap .item 
+    margin: auto auto 1em auto
+    width: 10em
+    @include desktop_sm
+        width: 100%   
+
+.main-section-wrapper .top-section .action-wrap .item .btn
+    width: 100%
+    height: 3em
+    color: vanillaTheme(titleTheme)
+    margin: auto
+    border: none
+    font-size: 12px
+    font-family: Montserrat
+    text-transform: capitalize
+    text-align: left
+    background-color: white
+    box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
+    border-radius: 2px
+    &:hover
+        background-color: grayColor(g400)
+    fa-icon
+        font-size: 12px
+        margin: 0 1em 0 0
+    &.thm-success
+        border-bottom: solid 2px colorTheme(success)
+        fa-icon
+            color: colorTheme(success)
+    &.thm-warning  
+        border-bottom: solid 2px colorTheme(secondaryTheme)        
+        fa-icon
+            color: colorTheme(secondaryTheme)
+    &.thm-primary
+        border-bottom: solid 2px colorTheme(primaryTheme)    
+        fa-icon
+            color: colorTheme(primaryTheme)
+        &.active
+            background-color: colorTheme(primaryTheme)
+            border-bottom: solid 2px colorTheme(secondaryTheme)
+            color: colorTheme(secondaryTheme)
+            fa-icon
+                color: colorTheme(secondaryTheme)
+    &.thm-info
+        border-bottom: solid 2px colorTheme(info)  
+        fa-icon
+            color: colorTheme(info)                 
+    &.thm-danger
+        border-bottom: solid 2px colorTheme(danger)  
+        fa, fa-icon
+            color: colorTheme(danger)
+    &.thm-purple
+        border-bottom: solid 2px colorTheme(purple) 
+        fa, fa-icon
+            color: purple
+  
+
+
+
+
+

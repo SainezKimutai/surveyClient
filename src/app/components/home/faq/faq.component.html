@@ -10,15 +10,204 @@
 </article>
 
 
-
+<!-- 
 <header class="header">
     <div class="header-wrap">
-        <h4>FAQ</h4>
+        <h4>Frequently Asked Questions</h4>
         <button class="btn thm-danger btn-sm" (click)="logOut()" >
             <fa-icon [icon]="faPowerOff"></fa-icon>Logout
         </button>
     </div>
 </header>
+
+
+
+<section class="navigation-section">
+    <div class="nav-wrapper">
+        <div class="item"> 
+            <button class="btn thm-primary btn-sm" (click)="openAddCategoryModal()">
+                <fa-icon [icon]="faLayerGroup"></fa-icon> Category
+            </button>
+        </div>
+        <div class="item">
+          <button class="btn thm-warning btn-sm" (click)="openFaqModal()">
+            <fa-icon [icon]="faQuestionCircle"></fa-icon> FAQ
+          </button>
+        </div>
+        <div class="item">
+            <button class="btn thm-success btn-sm" (click)="openInquiryModal()">
+              <fa-icon [icon]="faQuestion"></fa-icon> Ask
+            </button>
+          </div>
+  
+    </div>
+
+</section>
+
+
+
+
+<section class="body-section">
+<div class="body-wrapper">
+
+<div class="search-wrap">
+    <h4>How can we help you ?</h4>
+    <input type="text" placeholder="Type Key words to find answers">
+</div>
+
+<div class="head-wrap">
+    <h4>
+        Frequently Asked Questions
+    </h4>
+</div>
+
+<div class="wrapper">
+
+    <div class="">
+        
+    </div>
+
+</div>
+
+
+
+</div>
+</section> -->
+
+
+
+
+
+<section class="main-section-wrapper">
+
+<section class="top-section">
+    <div class="blank-wrap d-lg-flex"> <fa-icon style="font-size: 72px; color: white; margin: auto;" [icon]="faQuestionCircle"></fa-icon></div>
+    <div class="info-wrap">
+        <h4 class="head">Frequently Asked Question</h4>
+
+        <h4 class="text">How can we help you ?</h4>
+        <input type="text" placeholder="Type Key words to find answers">
+    </div>
+    <div class="action-wrap">
+        <div class="item"> 
+            <button class="btn thm-primary btn-sm" (click)="openAddCategoryModal()">
+                <fa-icon [icon]="faLayerGroup"></fa-icon> Category
+            </button>
+        </div>
+        <div class="item">
+          <button class="btn thm-warning btn-sm" (click)="openFaqModal()">
+            <fa-icon [icon]="faQuestionCircle"></fa-icon> FAQ
+          </button>
+        </div>
+        <div class="item">
+            <button class="btn thm-success btn-sm" (click)="openInquiryModal()">
+              <fa-icon [icon]="faQuestion"></fa-icon> Ask
+            </button>
+          </div>
+  
+    </div>
+</section>
+
+
+<section class="body-section">
+
+</section>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div bsModal #addCategoryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog addCategoryModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title"> Question Catrgories</h4>
+            <button type="button" class="btn close" (click)="addCategoryModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+           
+        </div>
+        <div class="modal-footer">
+            <button [disabled]="industryInput === ''"  type="button" class="btn btn-confirm" (click)="addIndustries()">Add</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div bsModal  #faqModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog faqModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title"> FAQ</h4>
+            <button type="button" class="btn close" (click)="faqModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            
+        </div>
+        <div class="modal-footer">
+            <button [disabled]="industryInput === ''"  type="button" class="btn btn-confirm" (click)="addIndustries()">Add</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div bsModal  #inquiryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog inquiryModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title">  </h4>
+            <button type="button" class="btn close" (click)="inquiryModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            
+        </div>
+        <div class="modal-footer">
+            <button [disabled]="industryInput === ''"  type="button" class="btn btn-confirm" (click)="addIndustries()">Add</button>
+        </div>
+        </div>
+    </div>
+</div>
+
 
 
 
