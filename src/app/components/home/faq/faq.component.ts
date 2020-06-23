@@ -36,7 +36,8 @@ export class FaqComponent implements OnInit {
 
 public ImprintLoader = false;
 public pageProgress = 0;
-
+public contentNumber = 0;
+public contentMsg = '';
 public faPowerOff = faPowerOff;
 public faSearch = faSearch;
 public faLayerGroup = faLayerGroup
@@ -80,6 +81,7 @@ public categoryOnEdit: any;
 public faqForm: any;
 public faqOnEdit: any;
 public inquiryForm: any;
+public filterName = '';
 
 
 
@@ -140,8 +142,11 @@ updatePage() {
 formatData() {
   return new Promise((resolve, reject) => {
   this.FormatedFAQs = [];
+  this.contentNumber = 0
+  this.contentMsg = 'No FAQs';
   this.AllCategories.forEach((catItem, i, arr) => {
     catItem.faqs  = this.AllFAQs.filter((f) => f.categoryId === catItem._id).map(e => e);
+    this.contentNumber = this.contentNumber + catItem.faqs.length
     this.FormatedFAQs.push(catItem);
     if (i === arr.length - 1) { resolve(); }
   })
@@ -312,6 +317,51 @@ markInquiryAsAnswered(item: any) {
     }, error => this.notifyService.showError('Could not update inquiry', 'Failed')
   )
 }
+
+
+
+searchFunction() {
+  if (this.filterName === '' ) {
+    this.notifyService.showInfo('Please type a key word to search', 'Info')
+    } else {
+      this.ImprintLoader = true;
+      let myFAQs = this.AllFAQs.filter(v => v.question.toLowerCase().indexOf(this.filterName.toLowerCase()) > -1).slice(0, 10);
+      this.filterFormatData(myFAQs).then(() => {
+        this.ImprintLoader = false;
+        this.notifyService.showInfo('Search complete', 'Info')
+      })
+  }
+
+}
+
+filterFormatData(myFAQs: any) {
+  return new Promise((resolve, reject) => {
+  this.FormatedFAQs = [];
+  this.contentNumber = 0;
+  this.contentMsg = 'Your search did not match any faqs, please use one key word and search again';
+  this.AllCategories.forEach((catItem, i, arr) => {
+    catItem.faqs  = myFAQs.filter((f) => f.categoryId === catItem._id).map(e => e);
+    this.contentNumber = this.contentNumber + catItem.faqs.length
+    this.FormatedFAQs.push(catItem);
+    if (i === arr.length - 1) { resolve(); }
+  })
+  if (this.AllCategories.length === 0) {resolve()}
+  })
+}
+
+
+clearSearch() {
+  if (this.filterName === '' ) {
+    this.ImprintLoader = true;
+    this.FormatedFAQs = this.FormatedFAQs;
+    this.formatData().then(() => {
+      this.ImprintLoader = false;
+      this.notifyService.showInfo('Search cleared', 'Info')
+    })
+    }
+}
+
+
 
 logOut() {
   this.homeComponent.logout();

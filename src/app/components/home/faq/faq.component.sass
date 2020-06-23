@@ -47,19 +47,37 @@
         color: white 
         font-size: 14px
         text-align: center
+.main-section-wrapper .top-section  .input-search   
+    display: flex
+    align-items: stretch
+    width: 100%
+    border-radius: 2px
+    background-color: white
     input 
+        padding: 1em
+        border-radius: 2px
         border: none
         outline: none
         font-size: 12px
-        padding: 1em
-        border-radius: 2px
-        background-color: whitesmoke
+        background-color: transparent
         width: 100%
         border-radius: 2em
         &::placeholder
             color: black
-      
-
+    span 
+        cursor: pointer
+        border-radius: 2px
+        display: flex
+        align-items: center
+        background-color: grayColor(g100)
+        font-size: 12px
+        font-weight: bold
+        padding: 0 1em
+        fa-icon 
+            margin: auto 1em auto auto
+        &:hover
+            background-color: colorTheme(secondaryTheme)
+            color: colorTheme(primaryTheme)
 
 
     

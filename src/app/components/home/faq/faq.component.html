@@ -23,7 +23,10 @@
         <h4 class="head">Frequently Asked Questions</h4>
 
         <h4 class="text">How can we help you ?</h4>
-        <input type="text" placeholder="Type key words to find answers">
+        <div class="input-search">
+            <input type="text" name="filterName" [(ngModel)]="filterName" (keyup)="clearSearch()" placeholder="Type key words to find answers">
+            <span (click)="searchFunction()"> <fa-icon [icon]="faSearch"></fa-icon> Search</span>
+        </div>
     </div>
     <div class="action-wrap">
         <div class="item"> 
@@ -58,8 +61,8 @@
             <circle-progress [percent]="pageProgress" ></circle-progress>
         </div>
             
-        <div class="no-faqs" *ngIf="pageProgress === 100 && AllFAQs.length === 0">
-            <h4>No FAQs</h4>
+        <div class="no-faqs" *ngIf="pageProgress === 100 && contentNumber === 0">
+            <h4>{{contentMsg}}</h4>
         </div>
         <div class="faq-main" *ngFor="let item of FormatedFAQs" [hidden]="item.faqs.length === 0">
             <h4 class="category">{{item.name}}</h4>
