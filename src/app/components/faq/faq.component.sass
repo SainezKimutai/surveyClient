@@ -20,7 +20,20 @@
     width: 100%
     height: fit-content
     padding: 30px 10px 500px 10px
-    background-color: colorTheme(primaryTheme)
+    // background-color: colorTheme(primaryTheme)
+
+    background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/faq_2.jpg") no-repeat
+    // background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+    // -webkit-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+    // -moz-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+    // -ms-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+    // -o-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+    background-size: cover
+    background-position: center
+    -webkit-background-size: cover
+    -moz-background-size: cover
+    -ms-background-size: cover
+    -o-background-size: cover
     display: grid 
     grid-template-columns: repeat(3, 1fr)
     @include desktop_md
@@ -184,7 +197,7 @@
     background-color: grayColor(g200)
     display: flex
 .body-section .body-wrapper
-    background-color: white
+    background-color: rgba(255, 255, 255, .9)
     transform: translateY(-400px)
     -webkit-transform: translateY(-400px)
     -moz-transform: translateY(-400px)
