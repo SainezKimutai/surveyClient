@@ -499,7 +499,7 @@ this.overallRiskRatingChartLabels = myDatasets2.filter(() => true).map(e => e.la
 this.overallRiskRatingChartDatasets = [{
   label: 'Risk',
   data: myDatasets2.filter(() => true).map(e => e.data),
-  backgroundColor: 'rgba(7, 75, 251, .9)',
+  backgroundColor: '#2980B9',
   borderColor: 'white',
   borderWidth: 1.5,
   pointBackgroundColor: 'transparent',
@@ -561,8 +561,8 @@ this.overallRiskRatingChartOptions = {
       datalabels: {
         clamp: true,
         anchor: 'center',
-        align: 'center',
-        color: 'white',
+        align: 'right',
+        color: 'black',
         formatter: function(value, context) {
           return value + '%';
         },
@@ -682,7 +682,7 @@ this.riskPerIndustryChartLabels = myDatasets3.filter(() => true).map(e => e.labe
 this.riskPerIndustryChartDatasets = [{
   label: 'Risk rate',
   data: myDatasets3.filter(() => true).map(e => e.data),
-  backgroundColor: '#F7B308',
+  backgroundColor: '#2980B9',
   borderColor: 'white',
   borderWidth: 1.5,
   pointBackgroundColor: 'transparent',
@@ -744,7 +744,7 @@ this.riskPerIndustryChartOptions = {
       datalabels: {
         clamp: true,
         anchor: 'center',
-        align: 'center',
+        align: 'right',
         color: 'black',
         formatter: function(value, context) {
           return value + '%';
