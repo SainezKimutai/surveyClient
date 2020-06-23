@@ -87,7 +87,7 @@
     @include desktop_md
        padding: 2em 0 0 0
 .main-section-wrapper .top-section .action-wrap .item 
-    margin: auto auto 1em auto
+    margin: auto
     width: 10em
     @include desktop_sm
         width: 100%   
@@ -107,6 +107,8 @@
     -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
     -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
     border-radius: 2px
+    display: flex
+    align-items: center
     &:hover
         background-color: grayColor(g400)
     fa-icon
@@ -116,11 +118,19 @@
         border-bottom: solid 2px colorTheme(success)
         fa-icon
             color: colorTheme(success)
-        span 
-            font-size: 14px
+        .num 
+            font-size: 10px
             font-weight: bold
             margin: 0 0 0 1em
-            color: colorTheme(success)
+            color: white
+            border-radius: 50%
+            width: 1.5em
+            height: 1.5em
+            background-color: colorTheme(success)
+            display: flex
+            flex-direction: column
+            align-items: center
+
     &.thm-warning  
         border-bottom: solid 2px colorTheme(secondaryTheme)        
         fa-icon

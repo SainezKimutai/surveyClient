@@ -29,24 +29,24 @@
         </div>
     </div>
     <div class="action-wrap">
-        <div class="item"> 
+        <div *ngIf="toAdmin" class="item"> 
             <button class="btn thm-primary btn-sm" (click)="openListCategoryModal()">
                 <fa-icon [icon]="faLayerGroup"></fa-icon> Category
             </button>
         </div>
-        <div class="item">
+        <div *ngIf="toAdmin" class="item">
           <button class="btn thm-warning btn-sm" (click)="openFaqModal()">
             <fa-icon [icon]="faQuestionCircle"></fa-icon> FAQ
           </button>
         </div>
-        <div class="item">
+        <div *ngIf="!toAdmin" class="item">
             <button class="btn thm-success btn-sm" (click)="openAddInquiryModal()">
               <fa-icon [icon]="faQuestion"></fa-icon> Ask
             </button>
         </div>
-        <div class="item">
+        <div *ngIf="toAdmin" class="item">
             <button class="btn thm-success btn-sm" (click)="openListInquiryModal()">
-              <fa-icon [icon]="faQuestion"></fa-icon> Inquiries <span *ngIf="AllInquiries.length > 0" class="num">{{AllInquiries.length}}</span>
+              <fa-icon [icon]="faQuestion"></fa-icon> Inquiries <div *ngIf="AllInquiries.length > 0" class="num">{{AllInquiries.length}}</div>
             </button>
         </div>
     </div>

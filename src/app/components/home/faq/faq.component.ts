@@ -38,6 +38,10 @@ public ImprintLoader = false;
 public pageProgress = 0;
 public contentNumber = 0;
 public contentMsg = '';
+
+// permission
+public toAdmin = false;
+
 public faPowerOff = faPowerOff;
 public faSearch = faSearch;
 public faLayerGroup = faLayerGroup
@@ -91,6 +95,9 @@ public filterName = '';
 
 
 ngOnInit() {
+  if (sessionStorage.getItem('permissionStatus') === 'isAdmin') {
+    this.toAdmin = true;
+  }
   sessionStorage.setItem('ActiveNav', 'faq');
   this.faqForm = {
     categoryId: '',
