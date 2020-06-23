@@ -27,6 +27,7 @@ export class FaqComponent implements OnInit {
 @ViewChild('addCategoryModal', { static: true }) addCategoryModal: ModalDirective;
 @ViewChild('listCategoryModal', { static: true }) listCategoryModal: ModalDirective;
 @ViewChild('editCategoryModal', { static: true }) editCategoryModal: ModalDirective;
+@ViewChild('deleteCatModal', { static: true }) deleteCatModal: ModalDirective;
 
 @ViewChild('addFaqModal', {static: true}) addFaqModal: ModalDirective;
 @ViewChild('editFaqModal', {static: true}) editFaqModal: ModalDirective;
@@ -84,6 +85,7 @@ editorConfig: AngularEditorConfig = {
 // 
 public categoryInput = '';
 public categoryOnEdit: any;
+public faqCatOnDelete: any;
 public faqForm: any;
 public faqOnEdit: any;
 public faqIdOnDelete: any;
@@ -125,6 +127,7 @@ ngOnInit() {
 
 updatePage() {
   return new Promise((resolve, reject) => {
+    this.FormatedFAQs = [];
     this.faqCategoryService.getAll().subscribe(
       dataCat => {
         this.pageProgress = 25;
@@ -151,7 +154,6 @@ updatePage() {
 
 formatData() {
   return new Promise((resolve, reject) => {
-  this.FormatedFAQs = [];
   this.contentNumber = 0
   this.contentMsg = 'No FAQs';
   this.AllCategories.forEach((catItem, i, arr) => {
@@ -219,13 +221,20 @@ submitEditCategory() {
   )
 }
 
-deleteCategory(item: any) {
+openDeleteCatModal(item: any) {
+  this.faqCatOnDelete = item;
+  this.deleteCatModal.show();
+  this.listCategoryModal.hide();
+}
+
+
+deleteCategory() {
   this.ImprintLoader = true;
-  this.faqCategoryService.delete(item._id).subscribe(
+  this.faqCategoryService.delete(this.faqCatOnDelete._id).subscribe(
     data => {
       this.updatePage().then(() => {
         this.ImprintLoader = false;
-        this.editCategoryModal.hide();
+        this.deleteCatModal.hide();
         this.listCategoryModal.show();
         this.notifyService.showSuccess('Category Delete', 'Success')
       })

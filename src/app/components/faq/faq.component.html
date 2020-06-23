@@ -155,7 +155,7 @@
             <div class="item" *ngFor="let item of AllCategories">
                 <h4>{{item.name}}</h4>
                 <span class="edit" (click)="openEditCategoryModal(item)"> <fa-icon [icon]="faPen"></fa-icon> </span>
-                <span class="delete" (click)="deleteCategory(item)"> <fa-icon [icon]="faTrash"></fa-icon> </span>
+                <span class="delete" (click)="openDeleteCatModal(item)"> <fa-icon [icon]="faTrash"></fa-icon> </span>
             </div>
             <div class="item" *ngIf="AllCategories.length === 0">
                 <h4>No Category</h4>
@@ -354,10 +354,28 @@
             <h4>Are your sure you want to delete ?</h4>
         </div>
         <div class="modal-footer">
-            <button  type="button" class="btn btn-confirm" (click)="deleteFAQ()">Submit</button>
+            <button  type="button" class="btn btn-confirm" (click)="deleteFAQ()">Yes</button>
         </div>
         </div>
     </div>
 </div>
 
+<div bsModal #deleteCatModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog deleteCatModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title"> Delete </h4>
+            <button type="button" class="btn close" (click)="deleteCatModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <h4>Are your sure you want to delete ?</h4>
+        </div>
+        <div class="modal-footer">
+            <button  type="button" class="btn btn-confirm" (click)="deleteCategory()">Yes</button>
+        </div>
+        </div>
+    </div>
+</div>
 
