@@ -217,7 +217,7 @@
         </div>
         <div class="modal-footer" *ngIf="faqForm">
             <button [disabled]="faqForm.categoryId === '' || faqForm.question === '' || faqForm.answer === ''" 
-            type="button" class="btn btn-confirm" (click)="addNewFaq()">Save</button>
+            type="button" class="btn btn-confirm" (click)="addNewFaq()">Add</button>
         </div>
         </div>
     </div>
@@ -228,7 +228,7 @@
     <div class="modal-dialog editFaqModal modal-lg" role="document">
         <div class="modal-content">
         <div class="modal-header ">
-            <h4 class="modal-title">Add FAQ</h4>
+            <h4 class="modal-title">Edit FAQ</h4>
             <button type="button" class="btn close" (click)="editFaqModal.hide()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
