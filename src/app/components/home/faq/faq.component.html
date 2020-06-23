@@ -18,7 +18,10 @@
 <section class="main-section-wrapper">
 
 <section class="top-section">
-    <div class="icon-wrap"> <fa-icon [icon]="faQuestionCircle"></fa-icon></div>
+    <div class="icon-wrap"> 
+        <fa-icon class="icon" [icon]="faQuestionCircle"></fa-icon>
+        <button class="btn sm btn-back" (click)="goBack()"> <fa-icon [icon]="faArrowLeft"></fa-icon>Go Back</button>
+    </div>
     <div class="info-wrap">
         <h4 class="head">Frequently Asked Questions</h4>
 

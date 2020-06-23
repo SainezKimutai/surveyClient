@@ -140,21 +140,16 @@ CheckActiveNavBar() {
  }
 
 
+ toFAQ() {
+   sessionStorage.setItem('faqReturnRouer', this.router.url);
+   this.router.navigate(['/home/faq']);
+ }
 
 
 
 
 
   logout() {
-    // sessionStorage.removeItem('loggedUserToken');
-    // sessionStorage.removeItem('loggedUserName');
-    // sessionStorage.removeItem('permissionStatus');
-    // sessionStorage.removeItem('loggedUserID');
-    // sessionStorage.removeItem('loggedCompanyId');
-    // sessionStorage.removeItem('loggedUserName');
-    // sessionStorage.removeItem('loggedUserEmail');
-    // sessionStorage.removeItem('loggedUserInstitution');
-
     // consider this instead..
     sessionStorage.clear();
 

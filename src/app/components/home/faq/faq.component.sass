@@ -27,11 +27,26 @@
        grid-template-columns: repeat(1, 1fr) 
 .main-section-wrapper .top-section .icon-wrap
     display: flex
+    flex-direction: column
+    align-items: center
     width: 100%
-    fa-icon
+    .icon
         margin: auto
         color: white
         font-size: 72px
+    .btn 
+        margin: auto
+        width: fit-content
+        background-color: transparent
+        border: solid 1px grayColor(g900)
+        color: grayColor(g900)
+        font-size: 12px
+        &:hover
+            background-color: grayColor(g900)
+            border: solid 1px transparent
+            color: white            
+        fa-icon
+            margin: auto 1em auto auto
 .main-section-wrapper .top-section .info-wrap
     display: flex
     flex-direction: column

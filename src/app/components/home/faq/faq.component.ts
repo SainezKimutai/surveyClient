@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { faSearch, faPowerOff, faLayerGroup, faQuestionCircle, faQuestion,
-        faTrash, faPen, faPlus } from '@fortawesome/free-solid-svg-icons';
+        faTrash, faPen, faPlus, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ModalDirective } from 'ngx-bootstrap';
 import { HomeComponent } from '../home.component';
@@ -8,6 +8,7 @@ import { FaqCategoryService } from 'src/app/shared/services/faqCategory.service'
 import { FaqService } from 'src/app/shared/services/faq.service';
 import { InquiryService } from 'src/app/shared/services/inquiry.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-faq',
   templateUrl: './faq.component.html',
@@ -17,6 +18,7 @@ export class FaqComponent implements OnInit {
 // tslint:disable
 
   constructor(
+    private router: Router,
     private notifyService: NotificationService,
     private homeComponent: HomeComponent ,
     private faqCategoryService: FaqCategoryService,
@@ -50,6 +52,7 @@ public faQuestion = faQuestion;
 public faPen = faPen;
 public faTrash = faTrash;
 public faPlus = faPlus;
+public faArrowLeft = faArrowLeft;
 
 public AllCategories = [];
 public AllInquiries = [];
@@ -159,6 +162,12 @@ formatData() {
   })
   if (this.AllCategories.length === 0) {resolve()}
   })
+}
+
+
+
+goBack(){
+    this.router.navigate([`${sessionStorage.getItem('faqReturnRouer')}`]);
 }
 
 

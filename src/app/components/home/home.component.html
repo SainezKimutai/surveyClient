@@ -92,7 +92,7 @@
       </li>
 
       <li  [ngClass]="faqNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent">
-        <a routerLink="/home/faq" [ngClass]=" faqNavBarActive ? 'nav-link active' : 'nav-link'">
+        <a (click)="toFAQ()" [ngClass]=" faqNavBarActive ? 'nav-link active' : 'nav-link'">
           <fa-icon [icon]="faQuestionCircle"></fa-icon> <span>FAQ</span>
         </a>
       </li>
@@ -203,7 +203,7 @@
 
 
         <li  [ngClass]="faqNavBarActive ? 'nav-item active' : 'nav-item'" >
-          <a routerLink="/home/faq" [ngClass]=" faqNavBarActive ? 'nav-link active' : 'nav-link'">
+          <a (click)="toFAQ()" [ngClass]=" faqNavBarActive ? 'nav-link active' : 'nav-link'">
             <fa-icon [icon]="faQuestionCircle"></fa-icon> <span>FAQ</span>
           </a>
         </li>
