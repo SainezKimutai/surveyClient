@@ -73,7 +73,7 @@
             <div class="faq-item" *ngFor="let faq of item.faqs">
                 <h6 class="question">{{faq.question}}</h6> 
                 <div class="answer"  [innerHtml]="faq.answer | sanitizeHtml3"></div>
-                <div hidden class="action">
+                <div *ngIf="toAdmin" class="action">
                     <div class="wrap">
                         <span class="edit" (click)="editFAQ(faq)"><fa-icon [icon]="faPen"></fa-icon></span>
                         <span class="delete" (click)="deleteFAQ(faq._id)"><fa-icon [icon]="faTrash"></fa-icon></span>
