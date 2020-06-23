@@ -289,20 +289,20 @@
 
 <div bsModal  #addInquiryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog addInquiryModal modal-md" role="document">
-        <div class="modal-content">
+        <div class="modal-content"> 
         <div class="modal-header ">
             <h4 class="modal-title">  </h4>
             <button type="button" class="btn close" (click)="addInquiryModal.hide()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
-        <div class="modal-body" >
+        <div class="modal-body" *ngIf="inquiryForm">
             <h4>Send an inquiry and we will respond as soon as possible.</h4>
             <textarea name="question" [(ngModel)]="inquiryForm.question"></textarea>
             
         </div>
-        <div class="modal-footer">
-            <button [disabled]="industryInput === ''"  type="button" class="btn btn-confirm" (click)="addNewInquiry()">Submit</button>
+        <div class="modal-footer" *ngIf="inquiryForm">
+            <button [disabled]="inquiryForm.question === ''"  type="button" class="btn btn-confirm" (click)="addNewInquiry()">Submit</button>
         </div>
         </div>
     </div>
