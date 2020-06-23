@@ -1604,19 +1604,24 @@ export class ProfileComponent implements OnInit {
 
 
 
-  random_rgba() {
-      let o = Math.round, r = Math.random, s = 255;
-      let p = o(r()*s);
-      let pp = o(r()*s);
-      let ppp = o(r()*s);
+  random_rgba(i: number) {
+    let maxIndex = MixedColors.length;
+    if (maxIndex > i) {
       let color = {
-        light:  'rgba(' + p + ',' + pp + ',' + ppp + ',' + .3 + ')',
-        mild:  'rgba(' + p + ',' + pp + ',' + ppp + ',' + .7 + ')',
-        dark:  'rgba(' + p + ',' + pp + ',' + ppp + ',' + 1 + ')'
+        light:  MixedColors[i],
+        mild:  MixedColors[i],
+        dark: MixedColors[i],
       }
-      
-     
-      return color
+      return color;
+    } else {
+      let remainder = i % maxIndex;
+      let color = {
+        light:  MixedColors[remainder],
+        mild:  MixedColors[remainder],
+        dark: MixedColors[remainder],
+      }
+      return color;
+    }
   }
   
 
@@ -1675,7 +1680,7 @@ export class ProfileComponent implements OnInit {
     // this.comparisonChartType = 'line';
     // this.comparisonChartLabels = RiskInvolved;
     // this.comparisonChartDatasets = [];
-    // this.MyComparisonDataSet.forEach((dataElem) => {
+    // this.MyComparisonDataSet.forEach((dataElem, i, arr) => {
 
     // this.comparisonChartBGColors = []
 
@@ -1686,7 +1691,7 @@ export class ProfileComponent implements OnInit {
     //   })
 
     //   let bgColors = []
-    //   let color = this.random_rgba();
+    //   let color = this.random_rgba(i);
 
     //     bgColors.push(color.light);
 
@@ -1763,7 +1768,7 @@ export class ProfileComponent implements OnInit {
     })
 
     let bgColors = []
-    let color = this.random_rgba();
+    let color = this.random_rgba(0);
 
       bgColors.push(color.light);
 
