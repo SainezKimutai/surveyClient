@@ -36,6 +36,9 @@ export class FaqComponent implements OnInit {
 @ViewChild('addInquiryModal', { static: true }) addInquiryModal: ModalDirective;
 @ViewChild('listInquiryModal', { static: true }) listInquiryModal: ModalDirective;
 
+public today = new Date();
+public thisYear = this.today.getFullYear();
+
 public ImprintLoader = false;
 public pageProgress = 0;
 public contentNumber = 0;
