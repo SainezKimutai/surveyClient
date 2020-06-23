@@ -5,6 +5,7 @@ import { ExchangerateService } from 'src/app/shared/services/exchangeRates.servi
 import { GDPGrowthRateService } from 'src/app/shared/services/gdpGrowthRate.service';
 import { InterestRateService } from 'src/app/shared/services/interetRates.service';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import { MixedColors } from 'src/app/shared/colors/color';
 
 @Component({
   selector: 'app-market-rates',
@@ -285,11 +286,14 @@ public activeYear = this.currentYear;
 
 
 
-  getRandomColor() {
-    let letters = '0123456789ABCDEF'.split('');
-    let color = '#';
-    for (let i = 0; i < 6; i++ ) {color += letters[Math.floor(Math.random() * 16)]; }
-    return color;
+  getRandomColor(i: number) {
+    let maxIndex = MixedColors.length;
+    if (maxIndex > i) {
+      return MixedColors[i];
+    } else {
+      let remainder = i % maxIndex;
+      return MixedColors[remainder];
+    }
   }
 
 
@@ -352,8 +356,8 @@ public activeYear = this.currentYear;
     this.gdpCountrys = this.MyFormatedGDP.filter(() => true).map(e => e.code);
     this.gdpLabels =  ['First Quarter', 'Second Quarter', 'Third Quarter', 'Fourth Quarter'];
     let gdpData = this.MyFormatedGDP.filter((c) => c.code === 'KEN').map(e => e);
-    this.gdpLabels.forEach((e) => {
-      this.gdpBgColors.push(this.getRandomColor());
+    this.gdpLabels.forEach((e, i, arr) => {
+      this.gdpBgColors.push(this.getRandomColor(i));
     });
     this.gdpDatasets = [
       {
@@ -709,8 +713,8 @@ public activeYear = this.currentYear;
     })
 
     this.exchangeBgColors = [];
-    this.exchangeLabels.forEach((e) => {
-      this.exchangeBgColors.push(this.getRandomColor());
+    this.exchangeLabels.forEach((e, i, arr) => {
+      this.exchangeBgColors.push(this.getRandomColor(i));
     });
     this.exchangeDatasets = [
       {

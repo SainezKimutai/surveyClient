@@ -21,6 +21,7 @@ import { PlansService } from 'src/app/shared/services/plan.service';
 import { TaskPlanService } from 'src/app/shared/services/taskPlan.service';
 import { ActivityPlanService } from 'src/app/shared/services/activityPlan.service';
 import { HomeComponent } from '../home.component';
+import { MixedColors } from 'src/app/shared/colors/color';
 
 @Component({
   selector: 'app-profile',
@@ -346,7 +347,6 @@ export class ProfileComponent implements OnInit {
         this.AllUsers = dataUser;
         this.AllUsers.forEach((u) => {
           if(u._id === sessionStorage.getItem('loggedUserID') ) {
-            console.log(u)
             this.MyUserName = u.name;
           }
         })
@@ -983,11 +983,14 @@ export class ProfileComponent implements OnInit {
   }
 
 
-  getRandomColor() {
-    let letters = '0123456789ABCDEF'.split('');
-    let color = '#';
-    for (let i = 0; i < 6; i++ ) {color += letters[Math.floor(Math.random() * 16)]; }
-    return color;
+  getRandomColor(i: number) {
+    let maxIndex = MixedColors.length;
+    if (maxIndex > i) {
+      return MixedColors[i];
+    } else {
+      let remainder = i % maxIndex;
+      return MixedColors[remainder];
+    }
   }
 
 
@@ -1031,9 +1034,9 @@ export class ProfileComponent implements OnInit {
 
     let dateSet1 = [];
     this.chart1BgColors = [];
-    newThreatCatArray.forEach((trtCat) => {
+    newThreatCatArray.forEach((trtCat, i, arr) => {
       let y = ThreatRiskAndCat.filter((c) => c.category === trtCat).map(e => e)
-      this.chart1BgColors.push(this.getRandomColor());
+      this.chart1BgColors.push(this.getRandomColor(i));
       dateSet1.push(y.length);
     })
   

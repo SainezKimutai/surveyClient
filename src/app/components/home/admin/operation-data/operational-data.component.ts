@@ -8,7 +8,7 @@ import { ResponseService } from 'src/app/shared/services/responses.service';
 import { ModalDirective } from 'ngx-bootstrap';
 import { ThreatService } from 'src/app/shared/services/threats.service';
 import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
-import { NotificationService } from 'src/app/shared/services/notification.service';
+import { MixedColors } from 'src/app/shared/colors/color';
 import { TrafficService } from 'src/app/shared/services/traffic.service';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 
@@ -35,7 +35,6 @@ constructor(
   private responseService: ResponseService,
   private threatService: ThreatService,
   private threatCategoryService: ThreatCategoryService,
-  private notification: NotificationService,
   private trafficService: TrafficService
 ) { }
 
@@ -153,10 +152,7 @@ public Filter2Name = '';
 
 
   ngOnInit() {
-    
     this.updatePage().then(() => { this.riskIssuesFunction(); this.trafficFunction(); } );
-
-  
   }
 
 
@@ -262,13 +258,17 @@ public Filter2Name = '';
   
 
 
-  getRandomColor() {
-    let letters = '0123456789ABCDEF'.split('');
-    let color = '#';
-    for (let i = 0; i < 6; i++ ) {color += letters[Math.floor(Math.random() * 16)]; }
-    return color;
-  }
+
   
+  getRandomColor(i: number) {
+    let maxIndex = MixedColors.length;
+    if (maxIndex > i) {
+      return MixedColors[i];
+    } else {
+      let remainder = i % maxIndex;
+      return MixedColors[remainder];
+    }
+  }
   
 
 
@@ -313,9 +313,9 @@ riskCategoriesFunction() {
 
   let dateSet1 = [];
   this.riskCategoryChartColors = [];
-  newThreatCatArray.forEach((trtCat) => {
+  newThreatCatArray.forEach((trtCat, ind, arr) => {
     let y = ThreatRiskAndCat.filter((c) => c.category === trtCat).map(e => e)
-    this.riskCategoryChartColors.push(this.getRandomColor());
+    this.riskCategoryChartColors.push(this.getRandomColor(ind));
     dateSet1.push(y.length);
   })
 
@@ -449,8 +449,8 @@ OverallRiskRatingFunction() {
   let myDatasets = [];
   this.overallRiskRatingChartColors = [];
   let sumRisksData = 0
-  label1.forEach((riskEl) => {
-    this.overallRiskRatingChartColors.push(this.getRandomColor());
+  label1.forEach((riskEl, ind, arr) => {
+    this.overallRiskRatingChartColors.push(this.getRandomColor(ind));
     let myArr2 = this.riskIssueArray.filter((rsk) => rsk.risk === riskEl ).map(e => e);
     sumRisksData = sumRisksData + myArr2.length;
     myDatasets.push({label: riskEl, data: myArr2.length});
@@ -606,7 +606,7 @@ RiskPerIndustryChartfunction() {
   this.riskPerIndustryChartColors = []
   let myDataSet1 = [];
 
-  myLabels.forEach((ind) => {
+  myLabels.forEach((ind, i, arr) => {
     let value = 0;
     let num = 0;
     myCompanyArr.forEach((dataElm) => {
@@ -617,7 +617,7 @@ RiskPerIndustryChartfunction() {
         } 
       })
     })
-    this.riskPerIndustryChartColors.push(this.getRandomColor())
+    this.riskPerIndustryChartColors.push(this.getRandomColor(i))
 
     if(num !== 0 && value !== 0) {
       let x = Number(Number(value) / Number(num)).toFixed(0)
@@ -1297,8 +1297,8 @@ RiskPerIndustryChartfunction() {
     this.trafficLabels = Array.from( new Set(filterAllTrafics));
     this.trafficBgColors = [];
     let trafficData = [];
-    this.trafficLabels.forEach((e) => {
-      this.trafficBgColors.push(this.getRandomColor());
+    this.trafficLabels.forEach((e, i, arr) => {
+      this.trafficBgColors.push(this.getRandomColor(i));
       let myTraf = this.AllTraffic.filter((t) => t.source === e ).map(e => e);
       trafficData.push(myTraf.length);
     });

@@ -160,14 +160,14 @@ export const Color = [
     {name: 'brown', code: '#A52A2A'},
     {name: 'maroon', code: '#800000'},
 
-
-
-
-
 ];
 
 
 
+export const MixedColors = [
+    '#C0392B', '#9B59B6', '#2980B9', '#1ABC9C', '#F1C40F', '#27AE60', '#E67E22', '#95A5A6',
+    '#E74C3C', '#8E44AD', '#3498DB', '#16A085', '#F39C12', '#2ECC71', '#D35400', '#7F8C8D'
+];
 
 
 
