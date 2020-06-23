@@ -30,6 +30,7 @@ export class FaqComponent implements OnInit {
 
 @ViewChild('addFaqModal', {static: true}) addFaqModal: ModalDirective;
 @ViewChild('editFaqModal', {static: true}) editFaqModal: ModalDirective;
+@ViewChild('deleteFAQModal', {static: true}) deleteFAQModal: ModalDirective;
 
 @ViewChild('addInquiryModal', { static: true }) addInquiryModal: ModalDirective;
 @ViewChild('listInquiryModal', { static: true }) listInquiryModal: ModalDirective;
@@ -85,6 +86,7 @@ public categoryInput = '';
 public categoryOnEdit: any;
 public faqForm: any;
 public faqOnEdit: any;
+public faqIdOnDelete: any;
 public inquiryForm: any;
 public filterName = '';
 
@@ -280,13 +282,18 @@ saveFaqOnEdit() {
   )
 }
 
+openDeleteFAQModal(id: any) {
+  this.faqIdOnDelete = id
+  this.deleteFAQModal.show();
+}
 
-deleteFAQ(id: any) {
+deleteFAQ() {
   this.ImprintLoader = true;
-  this.faqService.delete(id).subscribe(
+  this.faqService.delete(this.faqIdOnDelete).subscribe(
     data => {
       this.updatePage().then(() => {
         this.ImprintLoader = false;
+        this.deleteFAQModal.hide();
         this.notifyService.showSuccess('FAQ deleted', 'Success')
       })
     }, error => this.notifyService.showError('Could not delete faq', 'Failed')

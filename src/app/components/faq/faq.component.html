@@ -76,7 +76,7 @@
                 <div *ngIf="toAdmin" class="action">
                     <div class="wrap">
                         <span class="edit" (click)="editFAQ(faq)"><fa-icon [icon]="faPen"></fa-icon></span>
-                        <span class="delete" (click)="deleteFAQ(faq._id)"><fa-icon [icon]="faTrash"></fa-icon></span>
+                        <span class="delete" (click)="openDeleteFAQModal(faq._id)"><fa-icon [icon]="faTrash"></fa-icon></span>
                     </div>
                 </div>
     
@@ -335,6 +335,26 @@
                 </div>
             </div>
             
+        </div>
+        </div>
+    </div>
+</div>
+
+
+<div bsModal #deleteFAQModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog deleteFAQModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title"> Delete </h4>
+            <button type="button" class="btn close" (click)="deleteFAQModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <h4>Are your sure you want to delete ?</h4>
+        </div>
+        <div class="modal-footer">
+            <button  type="button" class="btn btn-confirm" (click)="deleteFAQ()">Submit</button>
         </div>
         </div>
     </div>
