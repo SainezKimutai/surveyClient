@@ -31,7 +31,8 @@ export class FaqComponent implements OnInit {
 @ViewChild('addFaqModal', {static: true}) addFaqModal: ModalDirective;
 @ViewChild('editFaqModal', {static: true}) editFaqModal: ModalDirective;
 
-@ViewChild('inquiryModal', { static: true }) inquiryModal: ModalDirective;
+@ViewChild('addInquiryModal', { static: true }) addInquiryModal: ModalDirective;
+@ViewChild('listInquiryModal', { static: true }) listInquiryModal: ModalDirective;
 
 public ImprintLoader = false;
 public pageProgress = 0;
@@ -78,6 +79,7 @@ public categoryInput = '';
 public categoryOnEdit: any;
 public faqForm: any;
 public faqOnEdit: any;
+public inquiryForm: any;
 
 
 
@@ -93,6 +95,12 @@ ngOnInit() {
     question: '',
     answer: '',
     position: 1
+  }
+  this.inquiryForm = {
+    inquirer: sessionStorage.getItem('loggedUserEmail'),
+    question: '',
+    answered: false,
+    createdAt: new Date(),
   }
   this.pageProgress = 10;
   this.updatePage().then(() => { 
@@ -113,7 +121,7 @@ updatePage() {
           dataFAQ => {
             this.AllFAQs = dataFAQ.sort((a, b) => a.position - b.position);
             this.pageProgress = 50;
-            this.inquiryService.getAll().subscribe(
+            this.inquiryService.getUnAnswered().subscribe(
              dataInq => {
                 this.AllInquiries = dataInq;
                 this.pageProgress = 75;
@@ -267,11 +275,43 @@ deleteFAQ(id: any) {
 }
 
 
-openInquiryModal() {
-  this.inquiryModal.show();
+openAddInquiryModal() {
+  this.inquiryForm.question = '';
+  this.addInquiryModal.show();
 }
 
 
+addNewInquiry() {
+  this.ImprintLoader = true;
+  this.inquiryService.create(this.inquiryForm).subscribe(
+    data => {
+        this.AllInquiries.push(data);
+        this.ImprintLoader = false;
+        this.addInquiryModal.hide();
+        this.notifyService.showSuccess('Inquiry Sent', 'Success')
+    }, error => this.notifyService.showError('Could not create inquiry', 'Failed')
+  )
+}
+
+
+
+openListInquiryModal() {
+  this.listInquiryModal.show();
+}
+
+
+markInquiryAsAnswered(item: any) {
+  item.answered = true;
+  this.ImprintLoader = true;
+  this.inquiryService.update(item._id, item).subscribe(
+    data => {
+        this.AllInquiries = this.AllInquiries.filter((q) => q._id !== item._id).map(e => e);
+        this.ImprintLoader = false;
+        this.notifyService.showSuccess('Marked as Answered', 'Success')
+
+    }, error => this.notifyService.showError('Could not update inquiry', 'Failed')
+  )
+}
 
 logOut() {
   this.homeComponent.logout();

@@ -37,11 +37,15 @@
           </button>
         </div>
         <div class="item">
-            <button class="btn thm-success btn-sm" (click)="openInquiryModal()">
+            <button class="btn thm-success btn-sm" (click)="openAddInquiryModal()">
               <fa-icon [icon]="faQuestion"></fa-icon> Ask
             </button>
         </div>
-  
+        <div class="item">
+            <button class="btn thm-success btn-sm" (click)="openListInquiryModal()">
+              <fa-icon [icon]="faQuestion"></fa-icon> Inquiries <span *ngIf="AllInquiries.length > 0" class="num">{{AllInquiries.length}}</span>
+            </button>
+        </div>
     </div>
 </section>
 
@@ -63,7 +67,7 @@
             <div class="faq-item" *ngFor="let faq of item.faqs">
                 <h6 class="question">{{faq.question}}</h6> 
                 <div class="answer"  [innerHtml]="faq.answer | sanitizeHtml3"></div>
-                <div class="action">
+                <div hidden class="action">
                     <div class="wrap">
                         <span class="edit" (click)="editFAQ(faq)"><fa-icon [icon]="faPen"></fa-icon></span>
                         <span class="delete" (click)="deleteFAQ(faq._id)"><fa-icon [icon]="faTrash"></fa-icon></span>
@@ -277,25 +281,57 @@
 
 
 
-<div bsModal  #inquiryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog inquiryModal modal-md" role="document">
+<div bsModal  #addInquiryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog addInquiryModal modal-md" role="document">
         <div class="modal-content">
         <div class="modal-header ">
             <h4 class="modal-title">  </h4>
-            <button type="button" class="btn close" (click)="inquiryModal.hide()" aria-label="Close">
+            <button type="button" class="btn close" (click)="addInquiryModal.hide()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
         </div>
         <div class="modal-body" >
+            <h4>Send an inquiry and we will respond as soon as possible.</h4>
+            <textarea name="question" [(ngModel)]="inquiryForm.question"></textarea>
             
         </div>
         <div class="modal-footer">
-            <button [disabled]="industryInput === ''"  type="button" class="btn btn-confirm" (click)="addIndustries()">Add</button>
+            <button [disabled]="industryInput === ''"  type="button" class="btn btn-confirm" (click)="addNewInquiry()">Submit</button>
         </div>
         </div>
     </div>
 </div>
 
 
+
+
+<div bsModal  #listInquiryModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog listInquiryModal modal-md" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title"> INQUIRIES </h4>
+            <button type="button" class="btn close" (click)="listInquiryModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <div class="no-inq" *ngIf="AllInquiries.length === 0">
+                <h4>No Pending Inquiry</h4>
+            </div>
+            <div class="inq-item" *ngFor="let item of AllInquiries">
+                <pre class="question">{{item.question}}</pre>
+                <div class="action">
+                    <div class="mark-as-answered" (click)="markInquiryAsAnswered(item)">Mark as answered</div>
+                </div>
+                <div class="info-wrap">
+                    <h4 class="inquirer">_by: <span>{{item.inquirer}}</span> </h4>
+                    <h4 class="date">_On: <span>{{item.createdAt | date}}</span> </h4>
+                </div>
+            </div>
+            
+        </div>
+        </div>
+    </div>
+</div>
 
 

@@ -98,6 +98,11 @@
         border-bottom: solid 2px colorTheme(success)
         fa-icon
             color: colorTheme(success)
+        span 
+            font-size: 14px
+            font-weight: bold
+            margin: 0 0 0 1em
+            color: colorTheme(success)
     &.thm-warning  
         border-bottom: solid 2px colorTheme(secondaryTheme)        
         fa-icon
@@ -172,6 +177,7 @@
     background-color: transparent
     padding: 1em 
     border-radius: 2px
+    margin: 0 0 2em 0
 .body-section .body-wrapper .faq-main .faq-item .question
     font-size: 13px
     font-weight: bold
@@ -449,6 +455,148 @@
         background-color: colorTheme(primary)
         font-size: 12px
         color: grayColor(g900)
+
+
+
+
+
+
+
+.addInquiryModal
+    width: 100%
+    border: none
+.addInquiryModal .modal-content
+    width: 100%
+    border: none
+.addInquiryModal .modal-content .modal-header
+    background-color: colorTheme(success)
+.addInquiryModal .modal-content .modal-title
+    color: white
+    font-size: 14px
+.addInquiryModal .modal-content .modal-body
+    border: none
+    h4
+        font-size: 14px
+        font-weight: bold
+        color: grayColor(g700)
+    textarea 
+        border: none
+        outline: none
+        background-color: grayColor(g100) 
+        border: 2px
+        padding: .5em
+        width: 100%
+        font-size: 12px
+        height: 8em
+.addInquiryModal .modal-content .modal-footer
+    border: none
+    .btn 
+        background-color: colorTheme(success)
+        font-size: 12px
+        color: white
+
+
+
+
+
+
+
+
+
+
+.listInquiryModal
+    width: 100%
+    border: none
+.listInquiryModal .modal-content
+    width: 100%
+    border: none
+.listInquiryModal .modal-content .modal-header
+    background-color: colorTheme(success)
+.listInquiryModal .modal-content .modal-title
+    color: white
+    font-size: 14px
+.listInquiryModal .modal-content .modal-body
+    border: none
+    width: 100%
+    max-height: 400px
+    overflow-y: scroll
+.listInquiryModal .modal-content .modal-body .no-inq
+    width: 100%
+    h4
+        color: black
+        font-size: 18px
+        padding: 2em 
+        text-align: center
+        font-weight: bold
+.listInquiryModal .modal-content .modal-body .inq-item
+    width: 100%
+    border: solid 1px grayColor(g200)
+    border-radius: 4px
+    margin: 0 0 1em 0
+.listInquiryModal .modal-content .modal-body .action
+    width: 100%
+    padding: 0
+    display: flex
+    align-items: stretch
+    .mark-as-answered
+        cursor: pointer
+        width: fit-content
+        padding: .3em .5em
+        margin: auto 0 auto auto
+        font-size: 11px
+        border: solid 1px orange
+        border-radius: 3px
+        color: orange
+        background-color: transparent
+        &:hover
+            border: solid 1px transparent
+            background-color: orange
+            color: white
+.listInquiryModal .modal-content .modal-body .inq-item .question
+    width: 100%
+    padding: 1em
+    white-space: pre-wrap
+    white-space: -moz-pre-wrap
+    white-space: -pre-wrap
+    white-space: -o-pre-wrap
+    word-wrap: break-word
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+    font-weight: 400 
+    height: fit-content
+    word-wrap: break-word
+    display: block
+.listInquiryModal .modal-content .modal-body .inq-item .info-wrap
+    width: 100%
+    padding: .5em 1em
+    display: flex 
+    align-items: stretch
+    background-color: grayColor(g100)
+    .inquirer
+        margin: auto auto auto 0
+        font-size: 12px
+        color: teal
+        font-style: italic
+        span 
+            margin: auto auto auto 1em
+    .date
+        margin: auto 0 auto 0
+        font-size: 12px
+        color: teal
+        font-style: italic
+        span 
+            margin: auto auto auto 1em
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
