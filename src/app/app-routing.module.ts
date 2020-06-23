@@ -25,6 +25,8 @@ const routes: Routes = [
 
   { path: 'home', loadChildren: 'src/app/components/home/home.module#HomeModule', canActivate: [TokenGuard], data: { preload: false } },
 
+  { path: 'faq', loadChildren: 'src/app/components/faq/faq.module#FaqModule', canActivate: [TokenGuard], data: {preload: false} },
+
   { path: '**', loadChildren: 'src/app/components/notFound/notFound.module#NotFoundModule', }
 
 

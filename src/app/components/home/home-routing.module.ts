@@ -6,7 +6,6 @@ import { CustomerGuard } from 'src/app/shared/route-guards/customer.guard';
 import { ThirdPartyGuard } from 'src/app/shared/route-guards/thirdParty.guard';
 import { CustomerAdminGuard } from 'src/app/shared/route-guards/customerAdmin.guard';
 import { CustomerThirdPartyGuard } from 'src/app/shared/route-guards/customerThirdParty.guard';
-import { TokenGuard } from 'src/app/shared/route-guards/token.guard';
 // Plugins
 
 
@@ -31,8 +30,7 @@ const routes: Routes = [
         { path: 'market_rate', loadChildren: 'src/app/components/home/marketRate/marketRate.module#MarketRateModule', canActivate: [AdminGuard],  data: {preload: true}},
         { path: 'editorial', loadChildren: 'src/app/components/home/editorial/editorial.module#EditorialModule', canActivate: [ThirdPartyGuard], data: {preload: true}},
         { path: 'users', loadChildren: 'src/app/components/home/users/users.module#UsersModule', canActivate: [CustomerAdminGuard], data: {preload: true}},
-        { path: 'crm', loadChildren: 'src/app/components/home/sales/sales.module#SalesModule', canActivate: [CustomerThirdPartyGuard], data: {preload: true}},
-        { path: 'faq', loadChildren: 'src/app/components/home/faq/faq.module#FaqModule', canActivate: [TokenGuard], data: {preload: true}},
+        { path: 'crm', loadChildren: 'src/app/components/home/sales/sales.module#SalesModule', canActivate: [CustomerThirdPartyGuard], data: {preload: true}}
       ]
   }
 

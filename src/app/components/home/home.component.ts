@@ -142,7 +142,7 @@ CheckActiveNavBar() {
 
  toFAQ() {
    sessionStorage.setItem('faqReturnRouer', this.router.url);
-   this.router.navigate(['/home/faq']);
+   this.router.navigate(['/faq']);
  }
 
 

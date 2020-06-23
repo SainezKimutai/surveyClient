@@ -3,7 +3,6 @@ import { faSearch, faPowerOff, faLayerGroup, faQuestionCircle, faQuestion,
         faTrash, faPen, faPlus, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ModalDirective } from 'ngx-bootstrap';
-import { HomeComponent } from '../home.component';
 import { FaqCategoryService } from 'src/app/shared/services/faqCategory.service';
 import { FaqService } from 'src/app/shared/services/faq.service';
 import { InquiryService } from 'src/app/shared/services/inquiry.service';
@@ -20,7 +19,6 @@ export class FaqComponent implements OnInit {
   constructor(
     private router: Router,
     private notifyService: NotificationService,
-    private homeComponent: HomeComponent ,
     private faqCategoryService: FaqCategoryService,
     private faqService: FaqService,
     private inquiryService: InquiryService
@@ -378,10 +376,6 @@ clearSearch() {
 }
 
 
-
-logOut() {
-  this.homeComponent.logout();
-}
 
 
 
