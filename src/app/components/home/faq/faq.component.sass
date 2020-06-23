@@ -1,155 +1,16 @@
 @import "src/styles.sass"
 
-.header
+
+.progress-wrap
     width: 100%
-    padding: 0 1em
+    margin: 4em auto
     background-color: transparent
-.header .header-wrap
-    width: 100%
-    height: 100%
-    padding: 1em
+    border-radius: 5px
+    min-width: 15em
+    min-height: 10em
     display: flex
-    background-color: white
-    border: solid 1px grayColor(g200)
-.header .header-wrap h4 
-    margin: auto auto auto 0
-    color: colorTheme(primaryTheme)
-    font-size: 18px 
-    font-weight: bold
-    text-transform: uppercase
-    text-shadow: 1px -1px 1px white
-    -moz-text-shadow: 1px -1px 1px white
-    -webkit-text-shadow: 1px -1px 1px white
-.header .header-wrap .btn
-    width: fit-content
-    height: 3em
-    color: vanillaTheme(titleTheme)
-    margin: auto 0 auto auto
-    border: none
-    font-size: 12px
-    font-family: Montserrat
-    text-transform: capitalize
-    text-align: left
-    background-color: transparent
-    box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-    -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-    -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-    border-radius: 2px
-    border-bottom: solid 2px colorTheme(secondaryTheme)
-    @include desktop_md          
-        display: none !important
-    &:hover
-        background-color: grayColor(g400)
-    fa, fa-icon
-        font-size: 12px
-        margin: 0 2em 0 0
-    &.thm-danger
-        fa, fa-icon
-            color: colorTheme(secondaryTheme)
-
-
-
-
-
-
-
-
-
-
-
-
-.navigation-section
-    width: 100%
-    padding: 1em
-.navigation-section .nav-wrapper
-    display: flex
-    align-items: stretch
-    @include desktop_sm
-        flex-direction: column
-.navigation-section .nav-wrapper .item 
-    margin: auto
-    width: 10em
-    @include desktop_sm
-        width: 100%   
-        margin-bottom: 1em
-.navigation-section .nav-wrapper .item .btn
-    width: 100%
-    height: 3em
-    color: vanillaTheme(titleTheme)
-    margin: auto
-    border: none
-    font-size: 12px
-    font-family: Montserrat
-    text-transform: capitalize
-    text-align: left
-    background-color: transparent
-    box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-    -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-    -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-    border-radius: 2px
-    &:hover
-        background-color: grayColor(g400)
-    fa-icon
-        font-size: 12px
-        margin: 0 1em 0 0
-    &.thm-success
-        border-bottom: solid 2px colorTheme(success)
-        fa-icon
-            color: colorTheme(success)
-    &.thm-warning  
-        border-bottom: solid 2px colorTheme(secondaryTheme)        
-        fa-icon
-            color: colorTheme(secondaryTheme)
-    &.thm-primary
-        border-bottom: solid 2px colorTheme(primaryTheme)    
-        fa-icon
-            color: colorTheme(primaryTheme)
-        &.active
-            background-color: colorTheme(primaryTheme)
-            border-bottom: solid 2px colorTheme(secondaryTheme)
-            color: colorTheme(secondaryTheme)
-            fa-icon
-                color: colorTheme(secondaryTheme)
-    &.thm-info
-        border-bottom: solid 2px colorTheme(info)  
-        fa-icon
-            color: colorTheme(info)                 
-    &.thm-danger
-        border-bottom: solid 2px colorTheme(danger)  
-        fa, fa-icon
-            color: colorTheme(danger)
-    &.thm-purple
-        border-bottom: solid 2px colorTheme(purple) 
-        fa, fa-icon
-            color: purple
-
-
-
-.body-section
-    padding: 0 1em 
-.body-section .body-wrapper
-    padding: 1em
-    background-color: white
-.body-section .body-wrapper .search-wrap
-    padding: 1em
-    background-color: white
-    display: flex
-    flex-direction: column
-    align-items: center
     justify-content: center
-.body-section .body-wrapper .search-wrap h4 
-    font-size: 18px
-.body-section .body-wrapper .search-wrap input 
-    border: none
-    outline: none
-    font-size: 12px
-    padding: .5em
-    border-radius: 2px
-    background-color: whitesmoke
-    width: 400px
-
-
-
+    align-items: center
 
 
 .main-section-wrapper
@@ -158,7 +19,6 @@
 .main-section-wrapper .top-section
     width: 100%
     height: fit-content
-    // padding: 3em 2em 23em 3em
     padding: 30px 10px 500px 10px
     background-color: colorTheme(primaryTheme)
     display: grid 
@@ -301,6 +161,68 @@
         padding: 4em
         border-radius: 2px
         background-color: colorTheme(secondaryTheme)
+.body-section .body-wrapper .faq-main
+    border-radius: 2px
+    width: 100%
+    margin: 0 0 4em 0
+.body-section .body-wrapper .faq-main .category
+    font-size: 24px
+    color: colorTheme(primaryTheme)
+.body-section .body-wrapper .faq-main .faq-item
+    background-color: transparent
+    padding: 1em 
+    border-radius: 2px
+.body-section .body-wrapper .faq-main .faq-item .question
+    font-size: 13px
+    font-weight: bold
+    color: grayColor(g900)
+.body-section .body-wrapper .faq-main .faq-item .answer 
+    padding: 0 1em
+    font-size: 12px !important
+.body-section .body-wrapper .faq-main .faq-item .action
+    width: 100%
+    display: flex
+.body-section .body-wrapper .faq-main .faq-item .action .wrap 
+    margin-left: auto
+    display: flex
+    align-items: stretch
+    .edit
+        width: 1.5em
+        height: 1.5em
+        margin-right: 2em
+        border-radius: 50%
+        display: flex
+        background-color: grayColor(g200)
+        cursor: pointer
+        fa-icon
+            margin: auto 
+            color: colorTheme(primary)
+            font-size: 10px
+        &:hover
+            background-color: colorTheme(primary)
+            fa-icon
+                color: white
+    .delete
+        width: 1.5em
+        height: 1.5em
+        border-radius: 50%
+        display: flex
+        background-color: grayColor(g200)    
+        cursor: pointer
+        fa-icon
+            margin: auto 
+            color: colorTheme(danger)
+            font-size: 10px
+        &:hover
+            background-color: colorTheme(danger)
+            fa-icon
+                color: white
+
+
+
+
+
+
 
 
 
@@ -458,6 +380,8 @@
     font-size: 14px
 .addFaqModal .modal-content .modal-body
     border: none
+    max-height: 400px
+    overflow-y: scroll
 .addFaqModal .modal-content .modal-body form 
         width: 100%
 .addFaqModal .modal-content .modal-body form .form-group
@@ -487,7 +411,44 @@
 
 
 
-
+.editFaqModal
+    width: 100%
+    border: none
+.editFaqModal .modal-content
+    width: 100%
+    border: none
+.editFaqModal .modal-content .modal-header
+    background-color: colorTheme(primary)
+.editFaqModal .modal-content .modal-title
+    color: grayColor(g900)
+    font-size: 14px
+.editFaqModal .modal-content .modal-body
+    border: none
+    max-height: 400px
+    overflow-y: scroll
+.editFaqModal .modal-content .modal-body form 
+        width: 100%
+.editFaqModal .modal-content .modal-body form .form-group
+    width: 100%
+    padding: 0
+    label 
+        font-size: 12px
+        font-weight: bold
+        color: grayColor(g700)
+    input, select
+        border: none
+        outline: none
+        background-color: grayColor(g100) 
+        border: 2px
+        padding: .5em
+        width: 100%
+        font-size: 12px
+.editFaqModal .modal-content .modal-footer
+    border: none
+    .btn 
+        background-color: colorTheme(primary)
+        font-size: 12px
+        color: grayColor(g900)
 
 
 

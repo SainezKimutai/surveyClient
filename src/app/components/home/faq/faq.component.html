@@ -10,69 +10,6 @@
 </article>
 
 
-<!-- 
-<header class="header">
-    <div class="header-wrap">
-        <h4>Frequently Asked Questions</h4>
-        <button class="btn thm-danger btn-sm" (click)="logOut()" >
-            <fa-icon [icon]="faPowerOff"></fa-icon>Logout
-        </button>
-    </div>
-</header>
-
-
-
-<section class="navigation-section">
-    <div class="nav-wrapper">
-        <div class="item"> 
-            <button class="btn thm-primary btn-sm" (click)="openAddCategoryModal()">
-                <fa-icon [icon]="faLayerGroup"></fa-icon> Category
-            </button>
-        </div>
-        <div class="item">
-          <button class="btn thm-warning btn-sm" (click)="openFaqModal()">
-            <fa-icon [icon]="faQuestionCircle"></fa-icon> FAQ
-          </button>
-        </div>
-        <div class="item">
-            <button class="btn thm-success btn-sm" (click)="openInquiryModal()">
-              <fa-icon [icon]="faQuestion"></fa-icon> Ask
-            </button>
-          </div>
-  
-    </div>
-
-</section>
-
-
-
-
-<section class="body-section">
-<div class="body-wrapper">
-
-<div class="search-wrap">
-    <h4>How can we help you ?</h4>
-    <input type="text" placeholder="Type Key words to find answers">
-</div>
-
-<div class="head-wrap">
-    <h4>
-        Frequently Asked Questions
-    </h4>
-</div>
-
-<div class="wrapper">
-
-    <div class="">
-        
-    </div>
-
-</div>
-
-
-
-</div>
-</section> -->
 
 
 
@@ -112,8 +49,12 @@
 <section class="body-section">
 
     <div class="body-wrapper">
-
-        <div class="no-faqs" *ngIf="FormatedFAQs.length === 0">
+        
+        <div *ngIf="pageProgress !== 100" class="progress-wrap">
+            <circle-progress [percent]="pageProgress" ></circle-progress>
+        </div>
+            
+        <div class="no-faqs" *ngIf="pageProgress === 100 && AllFAQs.length === 0">
             <h4>No FAQs</h4>
         </div>
         <div class="faq-main" *ngFor="let item of FormatedFAQs" [hidden]="item.faqs.length === 0">
@@ -122,8 +63,15 @@
             <div class="faq-item" *ngFor="let faq of item.faqs">
                 <h6 class="question">{{faq.question}}</h6> 
                 <div class="answer"  [innerHtml]="faq.answer | sanitizeHtml3"></div>
+                <div class="action">
+                    <div class="wrap">
+                        <span class="edit" (click)="editFAQ(faq)"><fa-icon [icon]="faPen"></fa-icon></span>
+                        <span class="delete" (click)="deleteFAQ(faq._id)"><fa-icon [icon]="faTrash"></fa-icon></span>
+                    </div>
+                </div>
+    
             </div>
-
+         
 
         </div>
     </div>
@@ -257,8 +205,12 @@
                     <input type="text" name="question" [(ngModel)]="faqForm.question">
                 </div>
                 <div class="form-group">
+                    <label for="">Position</label>
+                    <input type="number" name="position" [(ngModel)]="faqForm.position">
+                </div>
+                <div class="form-group">
                     <label for="">Answer</label>
-                    <angular-editor id="te-basic-tools" name="answer" [(ngModel)]="faqForm.answer" [config]="editorConfig"></angular-editor>
+                    <angular-editor name="answer" [(ngModel)]="faqForm.answer" [config]="editorConfig"></angular-editor>
                 </div>
             </form>
             
@@ -272,6 +224,46 @@
 </div>
 
 
+<div bsModal  #editFaqModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog editFaqModal modal-lg" role="document">
+        <div class="modal-content">
+        <div class="modal-header ">
+            <h4 class="modal-title">Add FAQ</h4>
+            <button type="button" class="btn close" (click)="editFaqModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body" >
+            <form *ngIf="faqOnEdit">
+                <div class="form-group">
+                    <label for="">Question Catrgory</label>
+                    <select name="categoryId" [(ngModel)]="faqOnEdit.categoryId">
+                        <option value="" selected hidden disabled>---</option>
+                        <option *ngFor="let item of AllCategories" [value]="item._id">{{item.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Question</label>
+                    <input type="text" name="question" [(ngModel)]="faqOnEdit.question">
+                </div>
+                <div class="form-group">
+                    <label for="">Position</label>
+                    <input type="number" name="position" [(ngModel)]="faqOnEdit.position">
+                </div>
+                <div class="form-group">
+                    <label for="">Answer</label>
+                    <angular-editor name="answer" [(ngModel)]="faqOnEdit.answer" [config]="editorConfig"></angular-editor>
+                </div>
+            </form>
+            
+        </div>
+        <div class="modal-footer" *ngIf="faqOnEdit">
+            <button [disabled]="faqOnEdit.categoryId === '' || faqOnEdit.question === '' || faqOnEdit.answer === ''" 
+            type="button" class="btn btn-confirm" (click)="saveFaqOnEdit()">Save</button>
+        </div>
+        </div>
+    </div>
+</div>
 
 
 

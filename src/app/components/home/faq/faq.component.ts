@@ -29,9 +29,12 @@ export class FaqComponent implements OnInit {
 @ViewChild('editCategoryModal', { static: true }) editCategoryModal: ModalDirective;
 
 @ViewChild('addFaqModal', {static: true}) addFaqModal: ModalDirective;
+@ViewChild('editFaqModal', {static: true}) editFaqModal: ModalDirective;
+
 @ViewChild('inquiryModal', { static: true }) inquiryModal: ModalDirective;
 
 public ImprintLoader = false;
+public pageProgress = 0;
 
 public faPowerOff = faPowerOff;
 public faSearch = faSearch;
@@ -74,6 +77,7 @@ editorConfig: AngularEditorConfig = {
 public categoryInput = '';
 public categoryOnEdit: any;
 public faqForm: any;
+public faqOnEdit: any;
 
 
 
@@ -87,9 +91,13 @@ ngOnInit() {
   this.faqForm = {
     categoryId: '',
     question: '',
-    answer: ''
+    answer: '',
+    position: 1
   }
-  this.updatePage().then(() => {});
+  this.pageProgress = 10;
+  this.updatePage().then(() => { 
+
+  });
 
 }
 
@@ -99,14 +107,17 @@ updatePage() {
   return new Promise((resolve, reject) => {
     this.faqCategoryService.getAll().subscribe(
       dataCat => {
+        this.pageProgress = 25;
         this.AllCategories = dataCat;
         this.faqService.getAll().subscribe(
           dataFAQ => {
-            this.AllFAQs = dataFAQ;
+            this.AllFAQs = dataFAQ.sort((a, b) => a.position - b.position);
+            this.pageProgress = 50;
             this.inquiryService.getAll().subscribe(
              dataInq => {
                 this.AllInquiries = dataInq;
-                this.formatData().then(() => { resolve(); })
+                this.pageProgress = 75;
+                this.formatData().then(() => { this.pageProgress = 100; resolve(); })
              }, error => console.log('Error getting Inq')
             )
           }, error => console.log('Error getting FAQ')
@@ -147,6 +158,7 @@ addNewCategory() {
   this.faqCategoryService.create({name: this.categoryInput}).subscribe(
     data => {
       this.updatePage().then(() => {
+        this.categoryInput = '';
         this.ImprintLoader = false;
         this.addCategoryModal.hide();
         this.listCategoryModal.show();
@@ -194,13 +206,19 @@ deleteCategory(item: any) {
 
 
 openFaqModal() {
+  this.faqForm = {
+    categoryId: '',
+    question: '',
+    answer: '',
+    position: this.AllFAQs.length + 1
+  }
   this.addFaqModal.show();
 }
 
 
 
 addNewFaq() {
-  this.ImprintLoader = false;
+  this.ImprintLoader = true;
   this.faqService.create(this.faqForm).subscribe(
     data => {
       this.updatePage().then(() => {
@@ -215,8 +233,38 @@ addNewFaq() {
 
 
 
+editFAQ(item: any) {
+  this.faqOnEdit = item;
+  this.editFaqModal.show();
+
+}
 
 
+saveFaqOnEdit() {
+  this.ImprintLoader = true;
+  this.faqService.update(this.faqOnEdit._id, this.faqOnEdit).subscribe(
+    data => {
+      this.updatePage().then(() => {
+        this.ImprintLoader = false;
+        this.editFaqModal.hide();
+        this.notifyService.showSuccess('FAQ updated', 'Success')
+      })
+    }, error => this.notifyService.showError('Could not update faq', 'Failed')
+  )
+}
+
+
+deleteFAQ(id: any) {
+  this.ImprintLoader = true;
+  this.faqService.delete(id).subscribe(
+    data => {
+      this.updatePage().then(() => {
+        this.ImprintLoader = false;
+        this.notifyService.showSuccess('FAQ deleted', 'Success')
+      })
+    }, error => this.notifyService.showError('Could not delete faq', 'Failed')
+  )
+}
 
 
 openInquiryModal() {
