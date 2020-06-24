@@ -99,6 +99,11 @@ public activeYear = this.currentYear;
 
 
 
+public color1 = '#1F618D';
+public color2 = '#2471A3';
+public color3 = '#2980B9';
+public color4 = '#5499C7';
+
 
   ngOnInit() {
 
@@ -319,7 +324,7 @@ public activeYear = this.currentYear;
     this.gdpChartOptions.legend.display = false;
     this.gdpChartOptions.scales.xAxes[0].display = true;
     this.gdpChartOptions.scales.yAxes[0].display = false;
-    this.gdpDatasets[0].backgroundColor = ['#02b0cc','#074BFB', '#ffc107', '#f86c6b'];
+    this.gdpDatasets[0].backgroundColor = [this.color1,this.color2,this.color3,this.color4];
     this.gdpDatasets[0].borderColor = 'transparent';
     this.gdpDatasets[0].pointBorderColor = 'white';
     this.gdpChartOptions.plugins.datalabels.anchor = 'center';
@@ -330,7 +335,7 @@ public activeYear = this.currentYear;
     this.gdpChartOptions.legend.display = true;
     this.gdpChartOptions.scales.xAxes[0].display = false;
     this.gdpChartOptions.scales.yAxes[0].display = false;
-    this.gdpDatasets[0].backgroundColor = ['#02b0cc','#074BFB', '#ffc107', '#f86c6b'];
+    this.gdpDatasets[0].backgroundColor = [this.color1,this.color2,this.color3,this.color4];
     this.gdpDatasets[0].borderColor = 'white';
     this.gdpDatasets[0].pointBorderColor = 'white';
     this.gdpChartOptions.plugins.datalabels.anchor = 'center';
@@ -492,7 +497,7 @@ public activeYear = this.currentYear;
       {
         label: `${this.YearRange[3]}`,
         data: [year3[0].firstQ, year3[0].secondQ, year3[0].thirdQ, year3[0].fourthQ],
-        backgroundColor: ['#f86c6b', '#f86c6b', '#f86c6b', '#f86c6b', '#f86c6b'],
+        backgroundColor: [MixedColors[0], MixedColors[0], MixedColors[0], MixedColors[0]],
         borderColor: 'transparent',
         borderWidth: 1.5,
         pointBackgroundColor: 'transparent',
@@ -503,7 +508,7 @@ public activeYear = this.currentYear;
       {
         label: `${this.YearRange[2]}`,
         data: [year2[0].firstQ, year2[0].secondQ, year2[0].thirdQ, year2[0].fourthQ],
-        backgroundColor: ['#ffc107', '#ffc107', '#ffc107', '#ffc107', '#ffc107'],
+        backgroundColor: [MixedColors[1], MixedColors[1], MixedColors[1], MixedColors[1]],
         borderColor: 'transparent',
         borderWidth: 1.5,
         pointBackgroundColor: 'transparent',
@@ -514,7 +519,7 @@ public activeYear = this.currentYear;
       {
         label: `${this.YearRange[1]}`,
         data: [year1[0].firstQ, year1[0].secondQ, year1[0].thirdQ, year1[0].fourthQ],
-        backgroundColor: ['#074BFB', '#074BFB', '#074BFB', '#074BFB', '#074BFB'],
+        backgroundColor: [MixedColors[2], MixedColors[2], MixedColors[2], MixedColors[2]],
         borderColor: 'transparent',
         borderWidth: 1.5,
         pointBackgroundColor: 'transparent',
@@ -525,7 +530,7 @@ public activeYear = this.currentYear;
       {
         label: `${this.YearRange[0]}`,
         data: [year0[0].firstQ, year0[0].secondQ, year0[0].thirdQ, year0[0].fourthQ],
-        backgroundColor: ['#02b0cc', '#02b0cc', '#02b0cc', '#02b0cc', '#02b0cc'],
+        backgroundColor: [MixedColors[3], MixedColors[3], MixedColors[3], MixedColors[3]],
         borderColor: 'transparent',
         borderWidth: 1.5,
         pointBackgroundColor: 'transparent',
@@ -719,7 +724,7 @@ public activeYear = this.currentYear;
     this.exchangeDatasets = [
       {
         data: exchangeDatasetsArr,
-        backgroundColor: 'rgba(2, 176, 204, .5)',
+        backgroundColor: this.color3,
         borderColor: 'rgb(2, 176, 204)',
         borderWidth: 1.5,
         pointBackgroundColor: 'transparent',

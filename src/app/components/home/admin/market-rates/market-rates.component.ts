@@ -496,7 +496,7 @@ public activeYear = this.currentYear;
       {
         label: `${this.YearRange[3]}`,
         data: [year3[0].firstQ, year3[0].secondQ, year3[0].thirdQ, year3[0].fourthQ],
-        backgroundColor: [this.color1, this.color1, this.color1, this.color1, this.color1],
+        backgroundColor: [MixedColors[0], MixedColors[0], MixedColors[0], MixedColors[0]],
         borderColor: 'transparent',
         borderWidth: 1.5,
         pointBackgroundColor: 'transparent',
@@ -507,7 +507,7 @@ public activeYear = this.currentYear;
       {
         label: `${this.YearRange[2]}`,
         data: [year2[0].firstQ, year2[0].secondQ, year2[0].thirdQ, year2[0].fourthQ],
-        backgroundColor: [this.color2, this.color2, this.color3, this.color2, this.color2],
+        backgroundColor: [MixedColors[1], MixedColors[1], MixedColors[1], MixedColors[1]],
         borderColor: 'transparent',
         borderWidth: 1.5,
         pointBackgroundColor: 'transparent',
@@ -518,7 +518,7 @@ public activeYear = this.currentYear;
       {
         label: `${this.YearRange[1]}`,
         data: [year1[0].firstQ, year1[0].secondQ, year1[0].thirdQ, year1[0].fourthQ],
-        backgroundColor: [this.color3, this.color3, this.color3, this.color3, this.color3],
+        backgroundColor: [MixedColors[2], MixedColors[2], MixedColors[2], MixedColors[2]],
         borderColor: 'transparent',
         borderWidth: 1.5,
         pointBackgroundColor: 'transparent',
@@ -529,7 +529,7 @@ public activeYear = this.currentYear;
       {
         label: `${this.YearRange[0]}`,
         data: [year0[0].firstQ, year0[0].secondQ, year0[0].thirdQ, year0[0].fourthQ],
-        backgroundColor: [this.color4, this.color4, this.color4, this.color4, this.color4],
+        backgroundColor: [MixedColors[3], MixedColors[3], MixedColors[3], MixedColors[3]],
         borderColor: 'transparent',
         borderWidth: 1.5,
         pointBackgroundColor: 'transparent',
