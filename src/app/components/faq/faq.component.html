@@ -72,7 +72,7 @@
 
             <div class="faq-item" *ngFor="let faq of item.faqs">
                 <div class="question">{{faq.question}}              
-                    <span *ngIf="OpenFAQs.indexOf(faq._id) === -1" class="down" (click)="openFAQ(faq._id)"> <fa-icon [icon]="faArrowDown"></fa-icon> </span> 
+                    <span *ngIf="OpenFAQs.indexOf(faq._id) === -1" class="down" (click)="openFAQ(faq._id)"> <fa-icon [icon]="faSortDown"></fa-icon> </span> 
                     <span *ngIf="OpenFAQs.indexOf(faq._id) > -1"  class="up" (click)="closeFAQ(faq._id)"> <fa-icon [icon]="faArrowUp"></fa-icon> </span> 
                  
                 </div> 
