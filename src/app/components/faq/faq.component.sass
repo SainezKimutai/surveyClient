@@ -234,11 +234,44 @@
     background-color: transparent
     padding: 1em 
     border-radius: 2px
-    margin: 0 0 2em 0
 .body-section .body-wrapper .faq-main .faq-item .question
     font-size: 13px
     font-weight: bold
     color: grayColor(g900)
+    display: flex
+    span
+        margin: auto 0 auto auto
+        width: 2em
+        height: 2em
+        display: flex
+        flex-direction: column
+        align-items: center
+        border-radius: 50%
+        cursor: pointer
+        fa-icon
+            margin: auto
+            font-size: 13px
+            font-weight: bold
+        &.up
+            background-color: colorTheme(primaryTheme)
+            fa-icon
+                color: white    
+            &:hover
+                background-color: colorTheme(secondaryTheme)
+                fa-icon
+                    color: black 
+        &.down
+            background-color: grayColor(g100)
+            fa-icon
+                color: grayColor(g600)
+            &:hover
+                background-color: colorTheme(secondaryTheme)
+                fa-icon
+                    color: black 
+
+.body-section .body-wrapper .faq-main .faq-item .answer-wrap
+    width: 100%
+    margin: 0 0 2em 0
 .body-section .body-wrapper .faq-main .faq-item .answer 
     padding: 0 1em
     font-size: 13px !important

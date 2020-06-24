@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { faSearch, faPowerOff, faLayerGroup, faQuestionCircle, faQuestion,
-        faTrash, faPen, faPlus, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+        faTrash, faPen, faPlus, faArrowLeft, faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ModalDirective } from 'ngx-bootstrap';
 import { FaqCategoryService } from 'src/app/shared/services/faqCategory.service';
@@ -56,6 +56,8 @@ public faPen = faPen;
 public faTrash = faTrash;
 public faPlus = faPlus;
 public faArrowLeft = faArrowLeft;
+public faArrowUp = faArrowUp
+public faArrowDown = faArrowDown;
 
 public AllCategories = [];
 public AllInquiries = [];
@@ -95,6 +97,7 @@ public faqIdOnDelete: any;
 public inquiryForm: any;
 public filterName = '';
 
+public OpenFAQs = [];
 
 
 
@@ -394,6 +397,15 @@ clearSearch() {
     }
 }
 
+
+
+openFAQ(id: any) {
+  this.OpenFAQs.push(id);
+}
+
+closeFAQ(id: any) {
+  this.OpenFAQs.splice(this.OpenFAQs.indexOf(id), 1);
+}
 
 
 
