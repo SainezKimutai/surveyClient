@@ -560,7 +560,7 @@ this.overallRiskRatingChartOptions = {
   plugins: {
       datalabels: {
         clamp: true,
-        anchor: 'center',
+        anchor: 'end',
         align: 'right',
         color: 'black',
         formatter: function(value, context) {
@@ -743,7 +743,7 @@ this.riskPerIndustryChartOptions = {
   plugins: {
       datalabels: {
         clamp: true,
-        anchor: 'center',
+        anchor: 'end',
         align: 'right',
         color: 'black',
         formatter: function(value, context) {
