@@ -349,7 +349,7 @@ riskCategoriesFunction() {
       fontSize: 25
     },
     legend: {
-      display: false,
+      display: true,
       position: 'bottom',
       labels: {
             fontColor: '#73818f'
@@ -398,6 +398,7 @@ riskCategoriesFunction() {
     responsive: true,
     plugins: {
         datalabels: {
+          display: false,
           clamp: false,
           anchor: 'top',
           align: 'end',

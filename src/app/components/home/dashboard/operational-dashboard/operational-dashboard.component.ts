@@ -373,7 +373,7 @@ this.riskCategoryChartOptions = {
     fontSize: 25
   },
   legend: {
-    display: false,
+    display: true,
     position: 'right',
     labels: {
           fontColor: '#73818f'
@@ -422,6 +422,7 @@ this.riskCategoryChartOptions = {
   responsive: true,
   plugins: {
       datalabels: {
+        display: false,
         clamp: false,
         anchor: 'top',
         align: 'end',
