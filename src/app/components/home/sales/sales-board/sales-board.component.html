@@ -364,9 +364,11 @@
             </form>
 
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-cancel" (click)="addNewOppModal.hide()">Cancel</button>
-        <button type="button" [disabled]="!newOppForm.valid"class="btn btn-confirm" (click)="submitNewOppForm(); addNewOppModal.hide()">Save</button>
+      <div class="modal-footer d-flex">
+        <button type="button" class="btn btn-cancel mr-auto " (click)="addNewOppModal.hide()">Cancel</button>
+        <button type="button" 
+        *ngFor="let cat of SalesCategorys" [hidden]="ProjectStatusToNewOpp !== cat._id" [style.background-color]="cat.color.code"
+        [disabled]="!newOppForm.valid"class="btn btn-confirm ml-auto" (click)="submitNewOppForm(); addNewOppModal.hide()">Save</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
