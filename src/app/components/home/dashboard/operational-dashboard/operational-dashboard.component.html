@@ -390,7 +390,7 @@
                                             ]"
                                      > 
                                      <span class="mr-auto"><span *ngIf="dataItem.riskRate !== 0"> {{dataItem.riskRate}} % </span>  <span *ngIf="dataItem.riskRate === 0">---</span> </span> 
-                                     <button *ngIf="dataItem.riskRate !== 0" class="btn btn-sm btn-outline-info ml-auto"
+                                     <button *ngIf="dataItem.riskRate !== 0" class="btn btn-sm ml-auto"
                                      (click)="openAnswersModal(comp.companyName, dataItem.surveyName, dataItem.responseId); checkSurveyProgress(dataItem.surveyId, dataItem.responseId)">View Responses</button>
                                      </h4>
                                 </div>
