@@ -572,6 +572,247 @@ circle-progress
 
 
 
+
+
+
+
+// Risk Exposure 2 Section
+.risk-exposure-section2
+    display: flex
+    align-items: stretch
+    width: 100%
+    height: 100%
+    
+    @include desktop_sm
+        display: flex
+        flex-direction: column
+
+.risk-exposure-section2 .model
+    width: 100%
+    border: none
+    border-radius: 5px
+    margin: 0 0 1em 0
+    padding: 1em 2em 
+    transition: all 0.3s ease
+    background-color: white
+   
+    &:hover
+      transform: translateY(-5px)
+      -webkit-transform: translateY(-5px)
+      -moz-transform: translateY(-5px)
+      box-shadow: 0 20px 20px -15px rgba(0, 0, 0, 0.3)
+
+    @include desktop_md
+        max-width: 100%
+    
+    @include desktop_sm
+        width: 100%
+
+.risk-exposure-section2 .model .model-title
+    width: 100%
+    display: flex
+    align-items: stretch
+    border-bottom: solid 1px grayColor(g300)
+    .average-wrap
+        margin-left: auto
+        font-size: 12px
+        span 
+            font-size: 16px
+            font-weight: bold 
+            color: black
+            &.high
+                color: colorTheme(danger)
+            &.medium
+                color: colorTheme(warning)
+            &.low
+                color: colorTheme(success)
+.risk-exposure-section2 .model .model-body
+    width: 100%
+    display: flex
+    align-items: stretch
+    height: 500px
+    padding: 1em
+.risk-exposure-section2 .model .model-body .main-wrap  
+    width: 100%
+    .title
+        width: 100%
+        padding: .5em 1em  1em 1em
+        font-size: 12px
+        color: grayColor(g600)
+        font-weight: bold
+.risk-exposure-section2 .model .model-body .main-wrap .search-wrap
+    width: fit-content
+    display: flex 
+    align-items: stretch
+    margin: auto 0 .5em auto
+    .input-wrap
+        background-color: grayColor(g100)
+        margin-right: auto 
+        padding: .5em
+        width: 200px
+        border-radius: 1em
+        span 
+            font-size: 12px
+            font-weight: bold
+        input
+            background-color: transparent
+            border: none
+            outline: none
+            width: 100%
+            padding: 0 1em
+            font-size: 12px
+
+.risk-exposure-section2 .model .model-body .main-wrap .content-wrap
+    width: 100%
+    background-color: grayColor(g100)
+.risk-exposure-section2 .model .model-body .main-wrap .content-wrap .title-wrap
+    width: 100%
+    padding: .5em 0
+    .third-party
+        min-width: 200px
+        max-width: 200px
+        padding: .5em
+        font-size: 12px
+        background-color: transparent
+        // margin-right: .5em
+        text-align: left
+        border-right: solid 1px grayColor(g300)
+        span 
+            background-color: white 
+            border-radius: 1em
+            padding: .5em 3em
+            font-weight: bold
+            color: grayColor(g900)
+
+
+    .company
+        min-width: 200px
+        max-width: 200px
+        padding: .5em
+        font-size: 12px
+        background-color: grayColor(g100)
+        // margin-right: .5em
+        background-color: transparent
+        text-align: left
+        span  
+            border-radius: 1em
+            border: solid 1px grayColor(g200)
+            padding: .5em 3em
+            font-weight: bold
+            color: grayColor(g900)
+
+    .risk-name, .risk-level, .risk-recom
+        min-width: 200px
+        width: 100%
+        padding: .5em
+        font-size: 12px
+        background-color: transparent
+        text-align: left
+        span  
+            border-radius: 1em
+            border: solid 1px grayColor(g200)
+            padding: .5em 3em
+            font-weight: bold
+            color: grayColor(g900)
+
+
+
+.risk-exposure-section2 .model .model-body .main-wrap .content-wrap .medel-item-wrap
+    width: 100%
+    .model-third
+        min-width: 200px
+        max-width: 200px
+        height: 350px
+        overflow-y: scroll
+        // margin-right: .5em
+        border-right: solid 1px grayColor(g300)
+
+        h4 
+            // margin-right: .5em
+            padding: .5em
+            font-weight: bold
+            color: grayColor(g900)
+            font-size: 12px
+            border-bottom: solid 1px grayColor(g100)
+            height: fit-content
+            min-height: 3em
+            cursor: pointer
+            border-left: solid 4px transparent
+            border-bottom: solid 1px grayColor(g300)
+              
+            &.active 
+                background-color: grayColor(g300)
+                border-left: solid 4px colorTheme(danger)
+    .model-company
+        min-width: 200px
+        max-width: 200px
+        height: 350px
+        overflow-y: scroll
+        // margin-right: .5em
+        
+        h4 
+            text-transform: capitalize
+            padding: .5em
+            font-size: 12px
+            // margin-right: .5em
+            font-weight: bold
+            color: grayColor(g900)
+            border-bottom: solid 1px grayColor(g100)
+            cursor: pointer
+            height: fit-content
+            min-height: 3em
+            border-bottom: solid 1px grayColor(g300)
+            &.active 
+                background-color: grayColor(g300)
+    .model-risk-wrap 
+        width: 100%
+        height: 350px
+        overflow-y: scroll
+        display: flex
+        flex-direction: column
+        background-color: white
+        .model-risk-item
+            width: 100%
+            background-color: whitesmoke 
+            &.even
+                background-color: white
+            // border-bottom: solid 1px grayColor(g100)
+            h4
+                min-width: 200px
+                width: 100%
+                padding: .5em
+                font-size: 12px
+                margin-right: .5em
+                color: grayColor(g900)
+                overflow: hidden
+                word-wrap: break-word
+                display: block
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Risk Exposure Section
 .survey-average-section
     display: flex
