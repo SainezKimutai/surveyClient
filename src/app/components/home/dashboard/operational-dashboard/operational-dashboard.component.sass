@@ -319,7 +319,7 @@ circle-progress
 
 .overal-risk-per-industry-chart-section
     display: grid 
-    grid-template-columns: repeat(1, 1fr)
+    grid-template-columns: repeat(2, 1fr)
     grid-gap: 1em
     width: 100%
     height: 100%
@@ -681,7 +681,36 @@ circle-progress
             padding: .5em 3em
             font-weight: bold
             color: grayColor(g900)
-    .risk-name, .risk-level, .risk-recom
+    .risk-name 
+        min-width: 200px
+        max-width: 200px
+        width: 100%
+        padding: .5em
+        font-size: 12px
+        background-color: transparent
+        text-align: left
+        span  
+            border-radius: 1em
+            border: solid 1px grayColor(g300)
+            padding: .5em 3em
+            font-weight: bold
+            color: grayColor(g900)
+        
+    .risk-level
+        min-width: 70px
+        max-width: 70px
+        width: 100%
+        padding: .5em
+        font-size: 12px
+        background-color: transparent
+        text-align: left
+        span  
+            border-radius: 1em
+            border: solid 1px grayColor(g300)
+            padding: .5em
+            font-weight: bold
+            color: grayColor(g900)   
+    .risk-recom
         min-width: 200px
         width: 100%
         padding: .5em
@@ -694,6 +723,7 @@ circle-progress
             padding: .5em 3em
             font-weight: bold
             color: grayColor(g900)
+
 .risk-exposure-section2 .model .model-body .main-wrap .content-wrap .medel-item-wrap
     width: 100%
     border-right: solid 1px grayColor(g100)
@@ -739,7 +769,12 @@ circle-progress
                 overflow: hidden
                 word-wrap: break-word
                 display: block
-
+                &.name 
+                    min-width: 200px
+                    max-width: 200px
+                &.level 
+                    min-width: 70px
+                    max-width: 70px
 
 
 
@@ -807,7 +842,8 @@ circle-progress
     @include desktop_sm
         width: 100%
 
-.survey-average-section .model .model-title
+.survey-average-section .model .model-title, 
+#survey_average_section_model .model-title
     width: 100%
     display: flex
     align-items: stretch
@@ -818,17 +854,20 @@ circle-progress
         font-size: 12px
         color: grayColor(g600)
         font-weight: bold
-.survey-average-section .model .model-body
+.survey-average-section .model .model-body, 
+#survey_average_section_model .model-body
     width: 100%
     display: flex
     align-items: stretch
     height: 500px
     padding: 1em
 
-.survey-average-section .model .model-body .main-wrap  
+.survey-average-section .model .model-body .main-wrap, 
+#survey_average_section_model .model-body .main-wrap
     width: 100%
 
-.survey-average-section .model .model-body .main-wrap .search-wrap
+.survey-average-section .model .model-body .main-wrap .search-wrap,  
+#survey_average_section_model .model-body .main-wrap .search-wrap
     width: 100%
     display: flex 
     align-items: stretch
@@ -849,12 +888,14 @@ circle-progress
             width: 100%
             padding: 0 1em
             font-size: 12px
-.survey-average-section .model .model-body .main-wrap .content-wrap
+.survey-average-section .model .model-body .main-wrap .content-wrap,  
+#survey_average_section_model .model-body .main-wrap .content-wrap
     width: 100%
     overflow-y: scroll
-.survey-average-section .model .model-body .main-wrap .content-wrap .title-wrap
+.survey-average-section .model .model-body .main-wrap .content-wrap .title-wrap,  
+#survey_average_section_model .model-body .main-wrap .content-wrap .title-wrap
     width: 100%
-    min-width: 600px
+    // min-width: 600px
     // overflow-x: scroll
     .company
         min-width: 200px
@@ -875,17 +916,20 @@ circle-progress
         border: none
         border-left: solid 1px white 
 
-.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap
+.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap,  
+#survey_average_section_model .model-body .main-wrap .content-wrap .item-wrap
     width: 100%
-    min-width: 600px
+    // min-width: 600px
     height: 400px
-.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item
+.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item,  
+#survey_average_section_model .model-body .main-wrap .content-wrap .item-wrap .item
     width: 100%
     background-color: transparent
     border: solid 1px grayColor(g200)
     &.even
         background-color: grayColor(g100)
-.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item .company
+.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item .company,  
+#survey_average_section_model .model-body .main-wrap .content-wrap .item-wrap .item .company
     min-width: 200px
     max-width: 200px
     padding: .5em
@@ -895,10 +939,12 @@ circle-progress
     height: fit-content
     min-height: 3em
     text-transform: capitalize
-.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item .item-rate-rate
+.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item .item-rate-rate,  
+#survey_average_section_model .model-body .main-wrap .content-wrap .item-wrap .item .item-rate-rate
     width: 100%
     background-color: transparent
-.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item .item-rate-rate .riskRate
+.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item .item-rate-rate .riskRate,  
+#survey_average_section_model .model-body .main-wrap .content-wrap .item-wrap .item .item-rate-rate .riskRate
     min-width: 200px
     width: 100%
     padding: .5em
@@ -910,13 +956,9 @@ circle-progress
     min-height: 3em
     border-left: solid 1px grayColor(g200)
     color: grayColor(g800)
-    // &.low 
-    //     color: colorTheme(success)
-    // &.medium
-    //     color: colorTheme(warning)
-    // &.high
-    //     color: colorTheme(danger)
-.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item .item-rate-rate .btn 
+
+.survey-average-section .model .model-body .main-wrap .content-wrap .item-wrap .item .item-rate-rate .btn,  
+#survey_average_section_model .model-body .main-wrap .content-wrap .item-wrap .item .item-rate-rate .btn
     font-size: 12px
     color: colorTheme(primaryTheme)
     border: solid 1px transparent
