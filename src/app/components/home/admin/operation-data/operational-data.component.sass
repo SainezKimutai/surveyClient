@@ -689,7 +689,36 @@ circle-progress
             padding: .5em 3em
             font-weight: bold
             color: grayColor(g900)
-    .risk-name, .risk-level, .risk-recom
+    .risk-name 
+        min-width: 200px
+        max-width: 200px
+        width: 100%
+        padding: .5em
+        font-size: 12px
+        background-color: transparent
+        text-align: left
+        span  
+            border-radius: 1em
+            border: solid 1px grayColor(g300)
+            padding: .5em 3em
+            font-weight: bold
+            color: grayColor(g900)
+        
+    .risk-level
+        min-width: 70px
+        max-width: 70px
+        width: 100%
+        padding: .5em
+        font-size: 12px
+        background-color: transparent
+        text-align: left
+        span  
+            border-radius: 1em
+            border: solid 1px grayColor(g300)
+            padding: .5em
+            font-weight: bold
+            color: grayColor(g900)   
+    .risk-recom
         min-width: 200px
         width: 100%
         padding: .5em
@@ -764,7 +793,12 @@ circle-progress
                 overflow: hidden
                 word-wrap: break-word
                 display: block
-
+                &.name 
+                    min-width: 200px
+                    max-width: 200px
+                &.level 
+                    min-width: 70px
+                    max-width: 70px
 
 
 

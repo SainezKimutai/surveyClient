@@ -259,7 +259,7 @@
                         <div class="third-party"> <span>Third Party</span></div>
                         <div class="company"><span>Company Name</span> </div>
                         <div class="risk-name"> <span>Risk Name</span></div>
-                        <div class="risk-level"> <span>Risk Level</span></div>
+                        <div class="risk-level"> <span>Level</span></div>
                         <div class="risk-recom"> <span>Recommendation</span></div> 
                     </div>
                     <div class="medel-item-wrap d-flex">
@@ -355,7 +355,7 @@
                                         ]"
                                  > 
                                  <span class="mr-auto"><span *ngIf="dataItem.riskRate !== 0"> {{dataItem.riskRate}} % </span>  <span *ngIf="dataItem.riskRate === 0">---</span> </span> 
-                                 <button *ngIf="dataItem.riskRate !== 0" class="btn btn-sm ml-auto"
+                                 <button *ngIf="dataItem.riskRate !== 0" class="btn btn-sm mr-auto"
                                  (click)="openAnswersModal(comp.companyName, dataItem.surveyName, dataItem.responseId); checkSurveyProgress(dataItem.surveyId, dataItem.responseId)">View Responses</button>
                                  </h4>
                             </div>
