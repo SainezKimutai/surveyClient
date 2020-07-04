@@ -56,22 +56,19 @@
     width: 100%
     padding: 1em
 .navigation-section .nav-wrapper
-    display: grid 
-    grid-template-columns: repeat(6, 1fr)
-    grid-gap: 1em
-    @include desktop_xl
-        grid-template-columns: repeat(5, 1fr)
-    @include desktop_md
-        grid-template-columns: repeat(4, 1fr)
-    @include desktop_sm
-        grid-template-columns: repeat(2, 1fr)
-    @include desktop_xm
-        grid-template-columns: repeat(1, 1fr)
+    display: -ms-flexbox
+    display: flex
+    -ms-flex-flow: row wrap
+    flex-flow: row wrap
+    justify-content: center
+
+
 .navigation-section .nav-wrapper .item .btn
-    width: fit-content
+    min-width: 15em
+    max-width: 15em
     height: 3em
     color: vanillaTheme(titleTheme)
-    margin: auto
+    margin: 0 2px 2px
     border: none
     font-size: 12px
     font-family: Montserrat
@@ -85,7 +82,6 @@
     border-bottom: solid 2px colorTheme(primaryTheme)
     @include desktop_lg
         width: 100%       
-        height: 6em
         display: flex
         align-items: center
     &:hover
