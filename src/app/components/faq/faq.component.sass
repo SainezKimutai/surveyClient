@@ -234,6 +234,8 @@
     display: grid 
     grid-template-columns: repeat(2, 1fr)
     grid-gap: 1em
+    @include desktop_md
+        grid-template-columns: repeat(1, 1fr)
 .body-section .body-wrapper .faq-main .faq-item
     background-color: transparent
     padding: 1em 
@@ -244,7 +246,7 @@
     color: grayColor(g900)
     display: flex
     span
-        margin: auto 0 auto auto
+        margin: auto 2em auto auto
         width: 2em
         height: 2em
         display: flex
@@ -265,9 +267,10 @@
                 fa-icon
                     color: black 
         &.down
-            background-color: whitesmoke
+            background-color: white
+            border: solid 1px grayColor(g300)
             fa-icon
-                color: grayColor(g600)
+                color: grayColor(g300)
                 font-size: 16px
             &:hover
                 background-color: colorTheme(secondaryTheme)
