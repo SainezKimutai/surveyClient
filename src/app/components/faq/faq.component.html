@@ -70,6 +70,7 @@
         <div class="faq-main" *ngFor="let item of FormatedFAQs" [hidden]="item.faqs.length === 0">
             <h4 class="category">{{item.name}} </h4>
 
+            <div class="my-grid">
             <div class="faq-item" *ngFor="let faq of item.faqs">
                 <div class="question">{{faq.question}}              
                     <span *ngIf="OpenFAQs.indexOf(faq._id) === -1" class="down" (click)="openFAQ(faq._id)"> <fa-icon [icon]="faSortDown"></fa-icon> </span> 
@@ -88,7 +89,7 @@
 
     
             </div>
-         
+            </div>
 
         </div>
 
