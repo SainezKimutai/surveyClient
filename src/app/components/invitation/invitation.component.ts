@@ -15,7 +15,6 @@ import { LandingPageComponent } from '../landing-page/landing-page.component';
 export class InvitationComponent implements OnInit, OnDestroy {
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private activeRoute: ActivatedRoute,
     private userService: UserService,
@@ -56,7 +55,6 @@ export class InvitationComponent implements OnInit, OnDestroy {
     };
 
     this.activeRoute.queryParams.subscribe(params => {
-      console.log(params)
       this.InvitedInstitutionId = params.institutionId;
       this.InvitedCompanyId = params.companyId;
       this.InvitedUserType = params.userType;
