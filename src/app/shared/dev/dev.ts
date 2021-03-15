@@ -1,3 +1,4 @@
+
 import { HttpHeaders } from '@angular/common/http';
 
 
@@ -14,7 +15,7 @@ export const updateHeader = () => {
     header = new HttpHeaders().set(
       'token', `${window.sessionStorage.getItem('loggedUserToken')}`
     ).set( 'Access-Control-Allow-Origin', '*').set( 'user', `${window.sessionStorage.getItem('loggedUserID')}`);
-    resolve({});
+    resolve();
   });
 };
 
@@ -30,6 +31,9 @@ export const dev = {
     connect: 'https://zuriserver.imprintafrica.co.ke/',
 };
 
+// export const dev = {
+//   connect: 'http://167.172.26.3:4120/',
+// } ;
 
 
 

@@ -116,11 +116,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
   //   const superAdmin = {
   //     companyId: '',
   //     password: 'admin',
-  //     email: 'super@admin.com',
-  //     userType: 'admin'
+  //     email: 'surveys@zuriawards.com',
+  //     institutionId: "604f035ef7c7225528bd52ca",
+  //     userRole: "admin",
+  //     userType: 'thirdparty'
   //   };
   //   this.userService.registerUser(superAdmin).subscribe(
-  //     data => this.notifyService.showSuccess('User admin created', 'Success'),
+  //     data => this.notifyService.showSuccess('User admin creates', 'Success'),
   //     error => this.notifyService.showError('could not create super admin', 'Failed.')
   //   );
   // }
@@ -251,3 +253,4 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
 }
+
