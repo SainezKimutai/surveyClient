@@ -116,11 +116,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   //   const superAdmin = {
   //     companyId: '',
   //     password: 'admin',
-  //     email: 'kim@admin.com',
+  //     email: 'super@admin.com',
   //     userType: 'admin'
   //   };
   //   this.userService.registerUser(superAdmin).subscribe(
-  //     data => this.notifyService.showSuccess('User admin creates', 'Success'),
+  //     data => this.notifyService.showSuccess('User admin created', 'Success'),
   //     error => this.notifyService.showError('could not create super admin', 'Failed.')
   //   );
   // }

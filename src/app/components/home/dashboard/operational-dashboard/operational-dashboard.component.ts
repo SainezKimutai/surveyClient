@@ -1077,8 +1077,17 @@ riskIssuesFunction() {
       this.NoDataOnDasboard = true;
     }
 
-
   });
+
+  if (this.AllThreats.length === 0) {
+    this.chartsProgress = 100;
+    this.calculateActiveCompanyTotalRiskRate();
+    this.computeCompanyRiskRates();
+    this.riskCategoriesFunction(); 
+    this.OverallRiskRatingFunction()
+    this.RiskPerIndustryChartfunction();
+    this.switchActiveThirdCompany(1);
+  }
 
 
 }
