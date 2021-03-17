@@ -229,7 +229,7 @@ public Filter2Name = '';
                       this.chartsProgress = 65
 
                       this.threatCategoryService.getAllThreatCategorys().subscribe ( dataThreatCat => {
-                        this.AllThreatCategorys = dataThreatCat; resolve();
+                        this.AllThreatCategorys = dataThreatCat; resolve({});
                         this.chartsProgress = 70
                       }, error => console.log('Error getting all threat Categories'));
       

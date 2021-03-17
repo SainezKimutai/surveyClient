@@ -207,15 +207,11 @@ updatePage() {
         this.surveyService.getAllInstitutionSurveys().subscribe( dataSurvey => {
 
            
-          // this.AllSurveys = dataSurvey;
-          // Get only Bcp Final Survey
-          if(dataSurvey.length > 1){
-          const id = dataSurvey[0]._id;
-          this.AllSurveys.push(dataSurvey[0])
-          
+          this.AllSurveys = dataSurvey;
 
-          this.chartsProgress = 30
-          }
+          // Get only Bcp Final Survey
+          // if(dataSurvey.length > 1){ const id = dataSurvey[0]._id; this.AllSurveys.push(dataSurvey[0]); this.chartsProgress = 30 }
+
           this.questionService.getAllQuestions().subscribe( dataQuestion => {
             this.AllQuestions = dataQuestion;
             this.chartsProgress = 40
@@ -227,6 +223,7 @@ updatePage() {
 
               this.responseService.getAllResponses().subscribe( dataResponse => {
                 this.AllResponses = dataResponse;
+                console.log(this.AllResponses);
                 
                 this.chartsProgress = 60
 
