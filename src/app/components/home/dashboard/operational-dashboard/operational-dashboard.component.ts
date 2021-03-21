@@ -12,6 +12,7 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { IndustryService } from 'src/app/shared/services/industry.service';
 import { MixedColors } from 'src/app/shared/colors/color';
+import { promise } from 'protractor';
 
 
 
@@ -184,7 +185,7 @@ constructor(
 
 updatePage() {
 
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
 
     this.userService.getAllUsers().subscribe( datauser => {
       this.AllUsers = datauser;
@@ -208,12 +209,13 @@ updatePage() {
            
           // this.AllSurveys = dataSurvey;
           // Get only Bcp Final Survey
+          if(dataSurvey.length > 1){
           const id = dataSurvey[0]._id;
           this.AllSurveys.push(dataSurvey[0])
           
 
           this.chartsProgress = 30
-
+          }
           this.questionService.getAllQuestions().subscribe( dataQuestion => {
             this.AllQuestions = dataQuestion;
             this.chartsProgress = 40
@@ -241,7 +243,6 @@ updatePage() {
                       resolve();
                     },error => console.log('Error getting all industries')
                   )
-  
 
                 }, error => console.log('Error getting all threat Categories'));
 
@@ -1009,6 +1010,7 @@ computeCompanyRiskRates() {
 
 riskIssuesFunction() {
   this.chartsProgress = 80;
+  if(this.AllThreats.length > 1) {
   this.AllThreats.forEach((threat,idx1, arr1 ) => {
     for (let trtCategory of this.AllThreatCategorys) {
       if (trtCategory._id === threat.category) {
@@ -1079,6 +1081,10 @@ riskIssuesFunction() {
 
 
   });
+}else{
+  this.NoDataOnDasboard = true;
+  this.chartsProgress = 100;
+}
 
 
 }
@@ -1100,7 +1106,7 @@ openAnswersModal(companyName, surveyName, responseId) {
   this.companyNameOnView = companyName;
   this.surveyNameOnView = surveyName;
   this.QuestionsOnView = []
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
 
         this.AllResponses.forEach((responseObj, ind1, arr1) => {
           if(responseObj._id === responseId ) {
