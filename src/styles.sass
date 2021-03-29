@@ -70,13 +70,22 @@ $bgThrough: rgba(0,0,0,0.2)
     -ms-overflow-style: none
     scrollbar-width: none
 
-::-webkit-scrollbar
-    width: 0px
-    background: transparent
+// ::-webkit-scrollbar
+//     width: 0px
+//     background: transparent
 
-::-webkit-scrollbar-thumb 
-    background-color: brandColor(brandPrimary)
-    width: 1px
+// ::-webkit-scrollbar-thumb 
+//     background-color: brandColor(brandPrimary)
+//     width: 1px
+    ::-webkit-scrollbar
+            width: .3em
+            background: transparent
+    ::-webkit-scrollbar-thumb 
+            background-color: transparent
+            width: .7em
+            &:hover
+                ::-webkit-scrollbar-thumb 
+                    background-color: gray
 
 // ::-webkit-scrollbar 
 //   width: .3em
