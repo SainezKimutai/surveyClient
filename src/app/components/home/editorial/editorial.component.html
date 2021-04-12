@@ -79,7 +79,7 @@
 
 
 
-<section *ngIf="FormSectionStatus" class="survey-create-section">
+<section *ngIf="FormSectionStatus && pageProgress === 100" class="survey-create-section">
 
 
     <div class="heading">
@@ -392,13 +392,15 @@
     </div>
    
     <div class="question-wrap"  *ngFor="let item of TemplateQuestions; let i = index">
-        <div class="question d-flex w-100">{{item.question}} 
+        <div class="question d-flex w-100">
+            <span style="color: gray; margin-right: 1em;">{{item.position}} )</span>
+            {{item.question}} 
             <div class="ml-auto d-flex">
                 <fa-icon style="cursor: pointer;" [icon]="faEdit" class="ml-3" (click)="editQuestion(item)"></fa-icon>
                 <fa-icon style="cursor: pointer;"  [icon]="faTrash" class="ml-3" (click)="deleteQuestion(item)"></fa-icon>
             </div>
         </div>
-        <div class="choices">
+        <div class="choices pl-3">
             <span *ngFor="let ans of item.choices; let x = index">{{x + 1 }}. {{ans.answer}}</span>
         </div>
     </div>

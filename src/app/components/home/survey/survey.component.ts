@@ -130,19 +130,20 @@ export class SurveyComponent implements OnInit {
 
             let myCompletionValue =  Number((( Number(allAnswersNumber) * 100 ) / Number(allQuizs2.length)).toFixed(0));
             surv.done = Number(myCompletionValue);
+            console.log(surv.done);
 
-            this.pageProgress = 100; resolve(); }
+            this.pageProgress = 100; resolve({}); }
 
         });
 
 
         } else {
           surv.done = 0;
-          if (ind === arr.length - 1) { this.pageProgress = 100; resolve(); }
+          if (ind === arr.length - 1) { this.pageProgress = 100; resolve({}); }
 
         }
         this.pageProgress = 100;
-        resolve();
+        resolve({});
         return true;
       }).map( e => e);
     });

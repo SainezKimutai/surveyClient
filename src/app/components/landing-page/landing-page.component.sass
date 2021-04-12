@@ -7,12 +7,12 @@
     width: 100%
     height: fit-content
     min-height: 100%
-    background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
-    background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
-    -webkit-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
-    -moz-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
-    -ms-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
-    -o-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+    background: linear-gradient(rgba(7, 75, 251, 0.0),rgba(7, 75, 251, 0.0)), url("../../../assets/images/zuri_4.jpeg") no-repeat
+    // background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+    // -webkit-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+    // -moz-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+    // -ms-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+    // -o-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
     -webkit-background-size: cover
     -moz-background-size: cover
     -ms-background-size: cover
@@ -52,7 +52,8 @@
     width: 100%
     display: flex 
     flex-direction: column
-    background-color: rgba(7, 75, 251, .0)
+    // background-color: rgba(7, 75, 251, .3)
+    background-color: rgba(223, 223, 223, 0.8)
     padding: 1em 
     border-radius: 5px
     .top-paragraph
@@ -60,47 +61,48 @@
         p 
             font-weight: 400 !important
             font-size: 15px
-            color: whitesmoke
+            color: black
             span 
                 font-weight: bolder
                 color: colorTheme(secondaryTheme)
         h4 
             font-size: 22px
-            color: whitesmoke 
+            color: black 
             text-transform: capitalize
     .line-wrap
         width: 6em
         .line 
             margin: 1.5em 0 2.2em 0 !important
             width: 100%
-            border: solid 2px colorTheme(secondaryTheme)
+            border: solid 2px colorTheme(primaryTheme)
     .mid-paragraph
         padding: 0
         @include desktop_xm
             padding: 0
         p 
-            color: whitesmoke 
+            color: black
             font-size: 15px
             span 
                 font-weight: bolder
-                color: colorTheme(secondaryTheme)
+                color: black
         h5 
-            color: whitesmoke
+            color: black
         ol 
             padding: 0 0 0 2em
             li 
-                color: white
+                font-size: 15px
+                color: black
     .bottom-paragraph
         padding: 1em 0 0 0
         @include desktop_xm
             padding: 0
         h6 
-            color: whitesmoke
+            color: black
             font-size: 15px
             span 
                 cursor: pointer
                 font-weight: bold
-                color: white
+                color: black
 .main-wrap .body-section .form-section
     width: 100%
     display: flex 

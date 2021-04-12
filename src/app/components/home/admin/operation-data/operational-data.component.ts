@@ -985,17 +985,23 @@ RiskPerIndustryChartfunction() {
   
   riskIssuesFunction() {
     this.chartsProgress = 80;
+ 
     this.AllThreats.forEach((threat) => {
+   
       for (let trtCategory of this.AllThreatCategorys) {
         if (trtCategory._id === threat.category) {
+        
           this.AllCompanies.forEach( (comp) => {
             for (let response of this.AllResponses) {
               if (response.companyId === comp._id) {
+              
                 for (let survey of this.AllSurveys) {
                   if ((survey._id === response.surveyId)) {
-  
+                  
                       response.answers.forEach( (respAns, idx2, array2) => {
+
                         if (respAns.answer[0].threatId === threat._id && respAns.answer[0].level) {
+                    
                           let myRiskIssueObject = {
                             risk: threat.name,
                             riskCategory: trtCategory.threatCategoryName,
@@ -1004,7 +1010,7 @@ RiskPerIndustryChartfunction() {
                             surveyName: survey.surveyName,
                             company: comp.companyName,
                           };
-  
+                      
                           this.riskIssueArrayUnsorted.push(myRiskIssueObject);
                           this.riskIssueArray = this.riskIssueArrayUnsorted.sort((a, b) => a.risk.localeCompare(b.risk));
                           let newRiskArrayPerRisk = this.riskIssueArray.filter(() => true ).map(e => e.risk);

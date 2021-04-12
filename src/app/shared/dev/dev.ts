@@ -15,7 +15,7 @@ export const updateHeader = () => {
     header = new HttpHeaders().set(
       'token', `${window.sessionStorage.getItem('loggedUserToken')}`
     ).set( 'Access-Control-Allow-Origin', '*').set( 'user', `${window.sessionStorage.getItem('loggedUserID')}`);
-    resolve();
+    resolve({});
   });
 };
 
