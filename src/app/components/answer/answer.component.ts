@@ -273,32 +273,64 @@ export class AnswerComponent implements OnInit {
     this.responseArray.push(ans);
   }
 
+  // captureMultipleResponses(ans) {
+  
+  //    if(this.multiAnswers.length > 0){
+  //      if(this.multiAnswers.indexOf(ans.answer) > -1){
+  //        this.multiAnswers.splice(this.multiAnswers.indexOf(ans.answer), 1);
+  //      }else{
+
+  //        this.multiAnswers.push(ans.answer);
+  //      }
+  //    }else{
+  //      this.multiAnswers.push(ans.answer);
+  //    }
+
+
+  //    let value = this.multiAnswers[0];
+  //    if(this.multiAnswers.length>1){
+  //      for(var i = 1; i<this.multiAnswers.length; i++){
+  //        value = value + " , "+ this.multiAnswers[i]
+  //      }
+  //    this.responseArray[0] = value;
+  //   }else if(this.multiAnswers.length === 1){
+  //     this.responseArray[0] = this.multiAnswers[0];
+  //   }else{
+  //     this.responseArray = [];
+  //   }
+
+  // }
+
+
   captureMultipleResponses(ans) {
-     if(this.multiAnswers.length > 0){
-       if(this.multiAnswers.indexOf(ans.answer) > -1){
-         this.multiAnswers.splice(this.multiAnswers.indexOf(ans.answer), 1);
-       }else{
-         this.multiAnswers.push(ans.answer);
-       }
-     }else{
-       this.multiAnswers.push(ans.answer);
-     }
+  
+    if(this.multiAnswers.length > 0){
+      const multiAnswersId = this.multiAnswers.map(e => e._id)
+      if(multiAnswersId.indexOf(ans._id) > -1){
+        this.multiAnswers =  this.multiAnswers.filter((a) => a._id !== ans._id).map(e => e)
+      }else{
 
-
-     let value = this.multiAnswers[0];
-     if(this.multiAnswers.length>1){
-       for(var i = 1; i<this.multiAnswers.length; i++){
-         value = value + " , "+ this.multiAnswers[i]
-       }
-     this.responseArray[0] = value;
-    }else if(this.multiAnswers.length === 1){
-      this.responseArray[0] = this.multiAnswers[0];
+        this.multiAnswers.push(ans);
+      }
     }else{
-      this.responseArray = [];
+      this.multiAnswers.push(ans);
     }
-    console.log(this.multiAnswers);
-     
-  }
+
+    let valueArray = Object.assign({}, this.multiAnswers[0]) ;
+    if(this.multiAnswers.length>1){
+      for(var i = 1; i<this.multiAnswers.length; i++){
+        valueArray.answer = valueArray.answer + " , "+ this.multiAnswers[i].answer
+        if (!this.multiAnswers[i].skipNext) {valueArray.skipNext = false }
+      }
+    this.responseArray[0] = Object.assign({}, valueArray);
+   }else if(this.multiAnswers.length === 1){
+     this.responseArray[0] = this.multiAnswers[0];
+   }else{
+     this.responseArray = [];
+   }
+
+ }
+
 
   async getThreat(id){
     await this.threatService.getOneThreat(id).subscribe(async data => {this.threat = data;  await this.getThreatInference();}, error =>console.log("ERROR"));
@@ -374,6 +406,7 @@ async proceedToNext(id){
     
 
     if(this.questions[id-1].linked){
+      console.log('Here !!')
 
       let skipNext = responseArray[0].skipNext ? true : false; 
 

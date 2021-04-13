@@ -68,8 +68,9 @@
                 </div>
                 <div class="list-item erase">
                     <div  *ngIf="item.done === 0" class="erase-btn-disabled"> No Responses</div>
-                    <div *ngIf="item.done > 0 && 100 > item.done" class="erase-btn" (click)="deletePromptModal.show(); passSurveyToReset(item._id)"> Erase Responses</div>
-                    <div *ngIf="item.done > 100 || item.done === 100"  class="erase-btn-disabled">Closed</div>
+                    <!-- <div *ngIf="item.done > 0 && 100 > item.done" class="erase-btn" (click)="deletePromptModal.show(); passSurveyToReset(item._id)"> Erase Responses</div>
+                    <div *ngIf="item.done > 100 || item.done === 100"  class="erase-btn-disabled">Closed</div> -->
+                    <div *ngIf="item.done > 0" class="erase-btn" (click)="deletePromptModal.show(); passSurveyToReset(item._id)"> Erase Responses</div>
                 </div>
             </div>
 

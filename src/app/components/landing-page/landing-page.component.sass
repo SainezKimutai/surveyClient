@@ -6,12 +6,12 @@
     width: 100%
     height: fit-content
     min-height: 100%
-    background: linear-gradient(rgba(0, 0, 0, 0.4),rgba(0, 0, 0, 0.4)), url("../../../assets/images/bg_4.jpeg") no-repeat
-    background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_4.jpeg") no-repeat
-    -webkit-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_4.jpeg") no-repeat
-    -moz-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_4.jpeg") no-repeat
-    -ms-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_4.jpeg") no-repeat
-    -o-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_4.jpeg") no-repeat
+    background: linear-gradient(rgba(0, 0, 0, 0.4),rgba(0, 0, 0, 0.4)), url("../../../assets/images/new_1.JPG") no-repeat
+    // background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_4.jpeg") no-repeat
+    // -webkit-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_4.jpeg") no-repeat
+    // -moz-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_4.jpeg") no-repeat
+    // -ms-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_4.jpeg") no-repeat
+    // -o-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_4.jpeg") no-repeat
     -webkit-background-size: cover
     -moz-background-size: cover
     -ms-background-size: cover
@@ -30,12 +30,12 @@
         width: 100%
         display: flex 
         img 
-            margin: auto
+            margin: auto auto auto 0
             width: 200px
 .main-wrap .body-section
     width: 100%
     display: grid 
-    grid-template-columns: repeat(2, 1fr)
+    grid-template-columns: 2fr 3fr
     grid-gap: 1em
     @include desktop_md
         display: grid 
@@ -45,13 +45,14 @@
     display: flex 
     align-items: stretch
 .main-wrap .body-section .info-section .info-wrap
-    margin: auto
+    margin: auto auto auto 0
+
     max-width: 500px
     width: 100%
     display: flex 
     flex-direction: column
     background-color: rgba(7, 75, 251, .0)
-    padding: 1em 
+    padding: 1em 2.5em
     border-radius: 5px
     .top-paragraph
         width: 100%
@@ -94,7 +95,7 @@
     display: flex 
     align-items: stretch
 .main-wrap .body-section .form-section .form-wrap
-    margin: auto
+    margin: auto auto auto 0
     max-width: 500px
     width: 100%
     background-color: rgba(7, 75, 251, .8)

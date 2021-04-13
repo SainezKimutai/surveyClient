@@ -74,7 +74,7 @@
                     <div class="multy-choice-wrap w-100"  *ngIf="!open && multiple">
                         <div class="form-group" *ngFor="let option of options">
                             <input type="checkbox"
-                            [checked]="multiAnswers.indexOf(option.answer) > -1 || option.answer === response"
+                            [checked]="multiAnswers.indexOf(option) > -1 || option.answer === response"
                             (click)="captureMultipleResponses(option); detectChangeOnAnswer();" name="response" value="{{option.answer}}">
                             <label for="response">{{option.answer}}</label>
                         </div>
@@ -90,7 +90,7 @@
 
             </form>
 
-            <div class="action-section">
+            <div *ngIf="questions.length > 0 && pageProgress === 100 && !notificationForm" class="action-section">
 
                 <div class="top-wrap">
                     <div class="prev-wrap">
