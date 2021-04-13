@@ -73,7 +73,7 @@
   height: 100%
   display: flex 
   align-items: stretch
-  padding: 1em 3em
+  padding: 2em 3em
   background:  url("../../../assets/images/surveybackground.jpg") no-repeat
   -webkit-background:  url("../../../assets/images/surveybackground.jpg") no-repeat
   -moz-background:  url("../../../assets/images/surveybackground.jpg") no-repeat
@@ -84,6 +84,9 @@
   -moz-background-size: cover
   -ms-background-size: cover
   -o-background-size: cover
+  max-height: 100vh
+  overflow-y: scroll
+
 .main-wrapper .body-section .body-section-wrapper
   width: 100%
   min-height: 80%
@@ -124,9 +127,9 @@
     align-items: left
     padding: 1em
     width: 100%
+    // height: 350px
+    // overflow-y: scroll
 
-    height: 350px
-    overflow-y: scroll
 #the_form .progress-wrap
     background-color: transparent
     border-radius: 5px
@@ -173,6 +176,8 @@
     width: 100%
     display: block
     transition: all 1s
+    // height: 350px
+    // overflow-y: scroll
 #the_form .dynamic-wrapper.slide
     display: none
 #the_form .head

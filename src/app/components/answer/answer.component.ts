@@ -146,36 +146,15 @@ export class AnswerComponent implements OnInit {
          
           this.DoneQuestions = Number(this.myPreviousAnswers.length);
 
-          // Check if there is any skipped questions that had been done
-          let nextQuiz = 0
-          this.questions.forEach((quiz, ind2, arr2) => {
-            
-            if (nextQuiz === 1) {
-           
-              let isAnswerPresent = this.myPreviousAnswers.filter((ans) => ans.questionId === quiz._id).map(e => e)
-              if (isAnswerPresent.length === 0) {this.DoneQuestions = this.DoneQuestions + 1;}
-              nextQuiz = 0;
-            }
-            if (quiz.linked === true) {
-              nextQuiz = nextQuiz + 1
-            }
-            if (ind2 === arr2.length - 1 ) {   
-              // this.structureQuestions();
-              this.pageProgress = 50
-              this.formatQuestions2(this.DoneQuestions); 
-              this.structureAnswers2(this.DoneQuestions);
-              this.structureQuestions();
-            
-              // this.continuationFromBefore(this.DoneQuestions);
+          this.pageProgress = 50
+          this.formatQuestions2(this.DoneQuestions); 
+          this.structureAnswers2(this.DoneQuestions);
+          this.structureQuestions();
+        
 
-            }
+        } 
 
-          })
-
-
-        } // if (idx1 === arr1.length - 1) {
-
-      }); // end of  myResponses[0].answers.forEach((answer, idx1, arr1) => {
+      });
 
     } else {
        
@@ -188,10 +167,6 @@ export class AnswerComponent implements OnInit {
   }
 
 
-  // async getAndSetQuestions() {
-  //   await this.questionService.getQuestionsInASurvey(this.surveyId).
-  //    subscribe(data => {this.questions = data.sort((a, b) =>  a.position - b.position); this.formatQuestions(); }, err => console.log(err));
-  // }
 
 
   async formatQuestions() {
