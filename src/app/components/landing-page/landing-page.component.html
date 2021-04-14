@@ -21,11 +21,142 @@
 </article>
 
 
+<main class="main-wrapper">
+
+<section class="info-section">
+    <div class="overlay">
+        <div class="custom-container">
+            <div class="logo-wrap">
+                <div class="image-wrap">
+                    <img src="../../../assets/images/logo4.png" alt="logo" >
+                </div>
+            </div>
+
+            <div class="content-wrap">
+                <div class="wrap">
+                    <p class="title">
+                        Using Gig work to drive growth for your Business
+                    </p>
+                    <p class="text">
+                        Our gig worker network provides access to the professional services you need to implement your business processes. We free up your time to focus on your business strategy, and free up your team’s time to focus on their core areas of expertise in order to increase efficiencies in your business. 
+                    </p>
+                </div>
+            </div>
+
+            <div class="footer-wrap">
+                <div class="wrap">
+                    <img src="../../../assets/images/assek.jpg" alt="">
+                    <img src="../../../assets/images/b_lab.jpg" alt="">
+                    <img src="../../../assets/images/iso.png" alt="">
+                    <img src="../../../assets/images/kepsa.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="form-section">
+    <div class="form-section-wrap">
+        <form class="form">
+            <div class="top-wrap">
+                <div class="top-title">
+                    <h4>Sign In</h4>
+                </div>
+    
+            </div>
+    
+            <div class="form-group">
+                <label>Email</label>
+                <div [ngClass]="emailError ? 'wrap d-flex error' : 'wrap d-flex'">
+                    <!-- <fa-icon [icon]="faEnvelope"></fa-icon> -->
+                    <input type="email" (keyup)="emailCheck()"  name="email" [(ngModel)]="loginForm.email"  required>
+                </div>
+                <div  *ngIf="emailError" class="error-wrap wrap">
+                    <span>Please enter your email</span>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Password</label>
+                <div class="wrap d-flex"  [ngClass]="passwordError ? 'wrap d-flex error' : 'wrap d-flex'">
+                    <!-- <fa-icon [icon]="faKey"></fa-icon> -->
+                    <input [type]="PasswordType" (keyup)="passwordCheck()" name="password" [(ngModel)]="loginForm.password" >
+                    <fa-icon style="cursor: pointer;" *ngIf="PasswordType === 'password'" [icon]="faEye" (click)="showPassword()"></fa-icon>
+                    <fa-icon style="cursor: pointer;" *ngIf="PasswordType === 'text'"  [icon]="faEyeSlash" (click)="hidePassword()"></fa-icon>
+                </div>
+                <div *ngIf="passwordError" class="error-wrap">
+                    <span>Please enter your password</span>
+                </div>
+    
+            </div>
+    
+    
+    
+            
+            <div class="btn-wrap d-flex">
+                <button class="btn ml-auto btn-sm btn-submit" (click)="validateLoginCredentials()">Login</button>
+            </div>
+    
+      
+    
+            <div class="footer">
+                <h4>Don't have an account ?</h4>
+                <a routerLink="/register">Register</a>
+            </div>
+            
+            <div class="footer">
+                <h4>Forgot password ?</h4>
+                
+                <a href="javascript:void(0);" (click)="passwordReset()">Reset</a>
+            </div>
+    
+    
+        </form>
+    </div>
+</section>
+
+</main>
 
 
 
 
-<main class="main-wrap">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<main hidden class="main-wrap">
 
 <section class="top-section">
     <div class="image-wrap">
@@ -35,45 +166,14 @@
 
 <section class="body-section">
 
-<!-- <div class="info-section">
-    <div class="info-wrap">
-    <div class="top-paragraph">
-        <p>
-            As a business leader today, <span>identifying your risk</span> is the first and most crucial step 
-            towards re-organizing or even rebuilding your market strategies to mitigate against revenue 
-            losses and ensure business continuity when faced with disruptions in your business environment. 
-        </p>
-    </div>
-    <div class="line-wrap d-flex">
-        <hr class="line mr-auto">
-    </div>
-  
-    <div class="mid-paragraph">
-        <p>
-            By completing a short survey, <span>our automated  Business Continuity Planning  platform,</span> will generate a risk assessment report 
-            for your business. You will <span>immediately</span> receive recommendations on areas that require continuity 
-            planning to ensure your business’s survival in this volatile environment.
-        </p>
-    </div>
-    <div class="bottom-paragraph">
-        <h6>
-            Click on <span  routerLink="/register" >Register</span> to start the survey
-        </h6>
-        <h6 class="mt-3">
-            or login if you have an account.
-        </h6>
-    </div>
-   </div>
-</div> -->
-
-
 
 <div class="info-section">
     <div class="info-wrap">
     <div class="top-paragraph">
         <p>
-            By completing a short survey, our <span>Business Process Outsourcing (BPO)</span> team will get in touch with you to 
-            discuss how Tactive can support your business with BPO.
+            By subscribing to Tactives BPO offering, you contribute to the development of women lead businesses, fast growing SME and skilled gigwork.
+            BPO benefits include: Flexibility, Right Price, Quality Work and Great Customers Service.
+            Upon completing a short survey, our <span>Business Process Outsourcing</span> (BPO) team will get in touch with you to discuss how Tactive can support your business with BPO. 
         </p>
     </div>
     <div class="line-wrap d-flex">
@@ -163,6 +263,17 @@
 
 </section>
 
+
+
+
+<section class="section-footer">
+    <div class="wrap">
+        <img src="../../../assets/images/assek.jpg" alt="">
+        <img src="../../../assets/images/b_lab.jpg" alt="">
+        <img src="../../../assets/images/iso.png" alt="">
+        <img src="../../../assets/images/kepsa.png" alt="">
+    </div>
+</section>
 
 </main>
 

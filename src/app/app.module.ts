@@ -33,7 +33,7 @@ import { PlansService } from './shared/services/plan.service';
 // tslint:disable: max-line-length
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,

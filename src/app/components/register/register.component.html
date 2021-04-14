@@ -17,11 +17,216 @@
 
 
 
+<main class="main-wrapper">
+
+    <section class="info-section">
+        <div class="overlay">
+            <div class="custom-container">
+                <div class="logo-wrap">
+                    <div class="image-wrap">
+                        <img src="../../../assets/images/logo4.png" alt="logo" >
+                    </div>
+                </div>
+    
+                <div class="content-wrap">
+                    <div class="wrap">
+                        <p class="title">
+                            Using Gig work to drive growth for your Business
+                        </p>
+                        <p class="text">
+                            Our gig worker network provides access to the professional services you need to implement your business processes. We free up your time to focus on your business strategy, and free up your team’s time to focus on their core areas of expertise in order to increase efficiencies in your business. 
+                        </p>
+                    </div>
+                </div>
+    
+                <div class="footer-wrap">
+                    <div class="wrap">
+                        <img src="../../../assets/images/assek.jpg" alt="">
+                        <img src="../../../assets/images/b_lab.jpg" alt="">
+                        <img src="../../../assets/images/iso.png" alt="">
+                        <img src="../../../assets/images/kepsa.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    <section class="form-section">
+        <div class="form-section-wrap">
+            <form class="form">
+    
+                <div [ngClass]="formOne ? 'dynamic-wrapper' : 'dynamic-wrapper slide'">
+                    
+                    <div class="top-wrap">
+                        <div class="top-title">
+                            <h4>Sign Up</h4>
+                            <!-- <h5>By filling the form below to get instant access</h5> -->
+                        </div>
+                        <!-- <div class="icon-wrap">
+                            <fa-icon [icon]="faPen"></fa-icon>
+                        </div> -->
+                        
+                    </div>
+
+                    <div class="head">
+                        <h4>Company Info</h4>
+                    </div>
+        
+                    <div class="form-group">
+                        <label>Company Name</label>
+                        <div class="wrap d-flex"> 
+                        <!-- <fa-icon [icon]="faBuilding"></fa-icon> -->
+                        <input type="text" name="companyName" [(ngModel)]="registrationForm.companyName" >
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Number of Employees</label>
+                        <div class="wrap d-flex"> 
+                        <!-- <fa-icon [icon]="faUsers"></fa-icon> -->
+                        <input type="number" name="numberOfEmployees" [(ngModel)]="registrationForm.numberOfEmployees">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Company Name</label>
+                        <div class="wrap d-flex"> 
+                        <!-- <fa-icon [icon]="faIndustry"></fa-icon> -->
+                        <select type="text" name="companyType" [(ngModel)]="registrationForm.companyType">
+                            <!-- <option value="" disabled selected hidden >Industry Type</option> -->
+                            <option *ngFor="let item of AllIndustrys"  [value]="item.industryName">{{item.industryName}}</option>
+                        </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">Company Website</label>
+                        <div class="wrap d-flex"> 
+                        <!-- <fa-icon [icon]="faGlobe"></fa-icon> -->
+                        <input type="text" name="companyWebsite" [(ngModel)]="registrationForm.companyWebsite">
+                        </div>
+                    </div>
+
+                    
+                    <div class="btn-wrap d-flex">
+                        <button [disabled]="registrationForm.companyName === '' ||  registrationForm.numberOfEmployees === '' || registrationForm.companyType === '' || registrationForm.companyWebsite === ''" 
+                        class="btn btn-sm btn-next ml-auto" (click)="moveFormOne2Two()">Next</button>
+                    </div>
+
+                    <div class="text-muted">
+                        <h6>1 of 2</h6>
+                    </div>
+
+                </div>
+                
+
+                <div [ngClass]="formTwo ? 'dynamic-wrapper' : 'dynamic-wrapper slide'">
+
+                    <div class="head">
+                        <h4>Personal Info</h4>
+                    </div>
+
+                    <div *ngIf="!thirdParty" class="form-group">
+                        <label>Associate Institution</label>
+                        <div class="wrap d-flex"> 
+                        <!-- <fa-icon [icon]="faIndustry"></fa-icon> -->
+                        <select type="text" name="institution" [(ngModel)]="registrationForm.institutionId">
+                            <option value="" disabled selected hidden ></option>
+                            <option *ngFor="let item of AllInstitutions"  [value]="item._id">{{item.name}}</option>
+                        </select>
+                        </div>
+            
+                    </div>
+        
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <div class="wrap d-flex"> 
+                        <!-- <fa-icon [icon]="faEnvelope"></fa-icon> -->
+                        <input type="text"  name="email" [(ngModel)]="registrationForm.email">
+                        </div>
+                    </div>
+                    
+                   
+                    <div class="form-group">
+                        <label>Password</label>
+                        <div class="wrap d-flex"> 
+                        <!-- <fa-icon [icon]="faKey"></fa-icon> -->
+                        <input type="password" name="password" [(ngModel)]="registrationForm.password">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label >Confirm Password</label>
+                        <div class="wrap d-flex"> 
+                        <!-- <fa-icon [icon]="faKey"></fa-icon> -->
+                        <input type="password" name="password2" [(ngModel)]="registrationForm.password2" (keyup)="passwordConformation()">
+                        </div>
+                    </div>
+        
+                    
+                    <div class="btn-wrap d-flex">
+                        <button class="btn btn-sm btn-back mr-auto " (click)="backToFormOne()">back</button>
+                        <button class="btn btn-sm btn-submit ml-auto"  [disabled]="registrationForm.email === '' || !passwordMatch || registrationForm.institutionId === '' || !registrationForm.institutionId "
+                         (click)="register()">Submit</button>
+                    </div>
+
+                    <div class="text-muted">
+                        <h6>2 of 2</h6>
+                    </div>
+
+                </div>
+
+                <div class="footer">
+                    <h4>Already have an account ?</h4>
+                    <a routerLink="/landing_page">Login</a>
+                </div>
+
+
+            </form>
+
+        </div>
+    </section>
+    
+    </main>
+    
+    
 
 
 
 
-<main class="main-wrap">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<main hidden class="main-wrap">
 
     <section class="top-section">
         <div class="image-wrap">
@@ -36,8 +241,9 @@
         <div class="info-wrap">
         <div class="top-paragraph">
             <p>
-                By completing a short survey, our <span>Business Process Outsourcing (BPO)</span> team will get in touch with you to 
-                discuss how Tactive can support your business with BPO.
+                By subscribing to Tactives BPO offering, you contribute to the development of women lead businesses, fast growing SME and skilled gigwork.
+                BPO benefits include: Flexibility, Right Price, Quality Work and Great Customers Service.
+                Upon completing a short survey, our <span>Business Process Outsourcing</span> (BPO) team will get in touch with you to discuss how Tactive can support your business with BPO. 
             </p>
         </div>
         <div class="line-wrap d-flex">
@@ -186,6 +392,17 @@
     
     </div>
     
+</section>
+
+
+
+<section class="section-footer container">
+    <div class="wrap">
+        <img src="../../../assets/images/assek.jpg" alt="">
+        <img src="../../../assets/images/b_lab.jpg" alt="">
+        <img src="../../../assets/images/iso.png" alt="">
+        <img src="../../../assets/images/kepsa.png" alt="">
+    </div>
 </section>
     
     

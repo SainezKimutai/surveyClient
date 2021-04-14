@@ -66,12 +66,12 @@
         </a>
       </li> -->
 
-      <!-- <li *ngIf="toCustomer"  [ngClass]="profileNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
+     <li *ngIf="toCustomer"  [ngClass]="profileNavBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent" >
         <a routerLink="/home/profile" [ngClass]=" profileNavBarActive ? 'nav-link active' : 'nav-link'">
           <fa-icon [icon]="faUser"></fa-icon> <span>Profile</span>
         </a>
       </li>
-
+      <!-- 
       <li  *ngIf="toAdmin" [ngClass]="marketRateBarActive ? 'nav-item active' : 'nav-item'" data-toggle="collapse" data-target="#navbarSupportedContent"  >
         <a routerLink="/home/market_rate" [ngClass]=" marketRateBarActive ? 'nav-link active' : 'nav-link'">
           <fa-icon [icon]="faEdit"></fa-icon> <span>Market Rates</span>
@@ -176,13 +176,13 @@
           </a>
         </li> -->
 
-        <!-- <li *ngIf="toCustomer"  [ngClass]="profileNavBarActive ? 'nav-item active' : 'nav-item'" >
+         <li *ngIf="toCustomer"  [ngClass]="profileNavBarActive ? 'nav-item active' : 'nav-item'" >
           <a routerLink="/home/profile" [ngClass]=" profileNavBarActive ? 'nav-link active' : 'nav-link'">
             <fa-icon [icon]="faUser"></fa-icon> <span>Profile</span>
           </a>
         </li>
     
-        <li  *ngIf="toAdmin" [ngClass]="marketRateBarActive ? 'nav-item active' : 'nav-item'" >
+        <!-- <li  *ngIf="toAdmin" [ngClass]="marketRateBarActive ? 'nav-item active' : 'nav-item'" >
           <a routerLink="/home/market_rate" [ngClass]=" marketRateBarActive ? 'nav-link active' : 'nav-link'">
             <fa-icon [icon]="faEdit"></fa-icon> <span>Market Rates</span>
           </a>
@@ -219,8 +219,9 @@
 <!--  Main Section -->
 
 <main id="main" class="" [ngClass]="sideBarStatus ? '' : 'expand'">
-
     <router-outlet></router-outlet>
+
+    <app-footer></app-footer>
 
 </main>
 

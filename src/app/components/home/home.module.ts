@@ -7,11 +7,13 @@ import { FormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from './home-routing.module';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
 
   declarations: [
       HomeComponent,
+      FooterComponent,
           ],
 
     imports: [

@@ -1,26 +1,41 @@
 @import 'src/styles.sass'
 
 
+.main-wrapper
+    width: 100%
+    height: 100%
+    display: grid 
+    grid-template-columns: 4fr 2fr
+    grid-gap: 0
+    @include desktop_md
+        grid-template-columns: 1fr
+
+.main-wrapper .info-section
+    width: 100%
+    height: 100%
+    .overlay
+        width: 100%
+        height: 100%
+        background: linear-gradient(rgba(0, 0, 0, 0.651),rgba(26, 25, 25, 0.616)), url("../../../assets/images/new_5.jpg") no-repeat
+        -webkit-background-size: cover
+        -moz-background-size: cover
+        -ms-background-size: cover
+        -o-background-size: cover
+        background-position: center
+
+        .custom-container
+            display: flex
+            flex-direction: column
+            justify-content: space-between
+            width: 100%
+            height: 100%
+            max-width: 800px
+            margin: auto
 
 
-
-.main-wrap
+.main-wrapper .info-section .overlay .logo-wrap
     width: 100%
     height: fit-content
-    min-height: 100%
-    background: linear-gradient(rgba(7, 75, 251, 0.0),rgba(7, 75, 251, 0.0)), url("../../../assets/images/new_2.jpeg") no-repeat
-    // background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
-    // -webkit-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
-    // -moz-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
-    // -ms-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
-    // -o-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
-    background-size: cover
-    -webkit-background-size: cover
-    -moz-background-size: cover
-    -ms-background-size: cover
-    -o-background-size: cover
-.main-wrap .top-section
-    width: 100%
     display: grid 
     grid-template-columns: repeat(2, 1fr)
     grid-gap: 0
@@ -30,97 +45,82 @@
     .image-wrap
         width: 100%
         display: flex 
+        padding: 2em 2em
         img 
-            margin: auto
-            width: 200px
-.main-wrap .body-section
+            margin: auto auto auto 0
+            width: 150px
+
+.main-wrapper .info-section .overlay .content-wrap
     width: 100%
-    display: grid 
-    grid-template-columns: repeat(2, 1fr)
-    grid-gap: 1em
-    @include desktop_md
-        display: grid 
-        grid-template-columns: repeat(1, 1fr)  
-.main-wrap .body-section .info-section
-    width: 100%
-    display: flex 
-    align-items: stretch
-.main-wrap .body-section .info-section .info-wrap
-    margin: auto
-    max-width: 500px
-    width: 100%
-    display: flex 
-    flex-direction: column
-    background-color: rgba(7, 75, 251, .0)
-    padding: 1em 
-    border-radius: 5px
-    .top-paragraph
-        width: 100%
-        p 
+    height: 100%
+    .wrap 
+        padding: 3em 2em 0 2em
+        max-width: 600px
+        .title  
             font-weight: 400 !important
-            font-size: 15px
-            color: black
+            font-size: 32px
+            color: whitesmoke
             span 
                 font-weight: bolder
-                color: colorTheme(primaryTheme)
-    .line-wrap
-        width: 6em
-        .line 
-            margin: 1.5em 0 2.2em 0 !important
-            width: 100%
-            border: solid 2px colorTheme(primaryTheme)
-    .mid-paragraph
-        padding: 0 0 0 4em
-        @include desktop_xm
-            padding: 0
-        p 
-            color: black 
-            font-size: 15px
-            span 
-                font-weight: bolder
-                color: colorTheme(primaryTheme)
-    .bottom-paragraph
-        padding: 1em 0 0 4em
-        @include desktop_xm
-            padding: 0
-        h6 
-            color: black
-            font-size: 15px
-            span 
-                cursor: pointer
-                font-weight: bold
-                color: black
-.main-wrap .body-section .form-section
+                color: colorTheme(secondaryTheme)
+        .text 
+            font-size: 14px 
+            color: whitesmoke
+
+
+.main-wrapper .info-section .overlay .footer-wrap
+    // margin: auto auto 0 0
+    height: fit-content
     width: 100%
-    display: flex 
-    align-items: stretch
-    padding-bottom: 50px
-.main-wrap .body-section .form-section .form-wrap
-    margin: auto
-    max-width: 500px
-    width: 100%
-    background-color: rgba(7, 75, 251, .8)
-    padding: 1em 
-    border-radius: 5px
-    .form 
+    .wrap 
         width: 100%
-.main-wrap .body-section .form-section .form-wrap .form .dynamic-wrapper
+        display: -ms-flexbox
+        display: flex
+        -ms-flex-flow: row wrap
+        flex-flow: row wrap
+        padding: 1em 2.5em
+        @include desktop_sm
+            padding: 1em
+        img 
+            margin: 0 .5em
+            min-width: 25px
+            max-height: 70px
+            height: fit-content
+            max-height: 35px
+            min-height: 35px
+
+.main-wrapper .form-section
+    width: 100%
+    height: 100%
+    background-color: white
+    .form-section-wrap
+        width: 100%
+        height: 100%
+        padding: 1em
+        display: flex
+        flex-direction: column
+
+
+.form 
+    width: 100%
+    max-width: 400px
+    margin: auto
+.form .dynamic-wrapper
     width: 100%
     display: block
     transition: all 1s
-.main-wrap .body-section .form-section .form-wrap .form .dynamic-wrapper.slide
+.form .dynamic-wrapper.slide
     display: none
-.main-wrap .body-section .form-section .form-wrap .form  .head
+.form  .head
     width: 100%
     margin: 0 0 2em 0
     display: flex
     align-items: stretch
     h4 
-        margin-left: auto
         font-size: 18px
-        font-weight: bold  
-        color: white
-.main-wrap .body-section .form-section .form-wrap .form .top-wrap
+        // font-weight: bold  
+        color: black
+.form .top-wrap
     width: 100%
     display: flex
     align-items: stretch
@@ -130,55 +130,66 @@
         h4 
             font-size: 20px
             font-weight: bold 
-            color: white 
+            color: black 
         h5 
             font-size: 14px
-            color: white 
+            color: black 
     .icon-wrap
         margin-left: auto
         fa-icon 
-            color: white 
+            color: black 
             font-size: 20px
-.main-wrap .body-section .form-section .form-wrap .form .form-group
+.form .form-group
     width: 100%
-    margin: 0 0 2em 0
-    fa-icon
-        width: 1em
+    margin: 0 0 1em 0
+    label 
         font-size: 14px
-        color: white
-        margin: .5em 1em 0 0
-    input, select
-        padding: 0 .5em
-        font-size: 14px
-        width: 100%
-        outline: none
-        border: none
-        border-bottom: solid 1px white
-        background-color: transparent
-        &::placeholder
-            color: white
+        font-weight: bold
+        color: grayColor(g700)
+    .wrap
+        border: solid 1px grayColor(g400)
+        padding: .4em .5em
+        border-radius: 3px
+        fa-icon
+            width: 1em
+            font-size: 14px
+            color: black
+            margin: .5em 1em 0 0
+        input, select
+            padding: 0 .5em
+            font-size: 14px
+            width: 100%
+            outline: none
+            border: none
+            border-bottom: solid 1px white
+            background-color: transparent
+            &::placeholder
+                color: black
         &.error
-            border-bottom: solid 1px colorTheme(danger) 
+            border: solid 1px colorTheme(danger) 
     .error-wrap
         width: 100%
-        padding: 0 2.3em
+        // padding: 0 2.3em
+        border: none
         span 
             font-size: 12px
             color: colorTheme(danger)
-.main-wrap .body-section .form-section .form-wrap .form .btn-wrap
+.form .btn-wrap
     width: 100%
     margin: 0 0 1em 0
     display: flex
     align-items: stretch
     .btn
-        color: white
+        width: 100%
+        color: black
         &.btn-back
             background-color: grayColor(g200)
             color: grayColor(g900)
         &.btn-submit, &.btn-next
             color: white
-            background-color: colorTheme(secondaryTheme)
-.main-wrap .body-section .form-section .form-wrap .form .footer
+            padding: .5em
+            background-color: colorTheme(primaryTheme)
+.form .footer
     width: 100%
     margin: 0 0 1em 0
     display: flex
@@ -188,18 +199,262 @@
         margin: 0 1em 0 0
     a 
         font-size: 12px
-        color: white
-.main-wrap .body-section .form-section .form-wrap .form .wrapper-two
+        color: colorTheme(primaryTheme)
+.form .wrapper-two
     background-color: colorTheme(warning)
     border-radius: 5px
     padding: .5em
     p, a
         font-size: 13px 
-
-.main-wrap .body-section .form-section .form-wrap .form .text-muted
+.form .text-muted
     width: 100%
     h6 
         color: grayColor(g800)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .main-wrap
+//     width: 100%
+//     height: fit-content
+//     min-height: 100%
+//     display: flex 
+//     flex-direction: column
+//     background: linear-gradient(rgba(7, 75, 251, 0.0),rgba(7, 75, 251, 0.0)), url("../../../assets/images/new_3.jpg") no-repeat
+//     // background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+//     // -webkit-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+//     // -moz-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+//     // -ms-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+//     // -o-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
+//     background-size: cover
+//     -webkit-background-size: cover
+//     -moz-background-size: cover
+//     -ms-background-size: cover
+//     -o-background-size: cover
+// .main-wrap .top-section
+//     width: 100%
+//     display: grid 
+//     grid-template-columns: repeat(2, 1fr)
+//     grid-gap: 0
+//     @include desktop_md
+//         display: grid 
+//         grid-template-columns: repeat(1, 1fr)  
+//     .image-wrap
+//         width: 100%
+//         display: flex 
+//         img 
+//             margin: auto
+//             width: 200px
+// .main-wrap .body-section
+//     width: 100%
+//     display: grid 
+//     grid-template-columns: repeat(2, 1fr)
+//     grid-gap: 1em
+//     @include desktop_md
+//         display: grid 
+//         grid-template-columns: repeat(1, 1fr)  
+// .main-wrap .body-section .info-section
+//     width: 100%
+//     display: flex 
+//     align-items: stretch
+// .main-wrap .body-section .info-section .info-wrap
+//     margin: auto
+//     max-width: 500px
+//     width: 100%
+//     display: flex 
+//     flex-direction: column
+//     background-color: rgba(7, 75, 251, .0)
+//     padding: 1em 
+//     border-radius: 5px
+//     .top-paragraph
+//         width: 100%
+//         p 
+//             font-weight: 400 !important
+//             font-size: 15px
+//             color: black
+//             span 
+//                 font-weight: bolder
+//                 color: colorTheme(primaryTheme)
+//     .line-wrap
+//         width: 6em
+//         .line 
+//             margin: 1.5em 0 2.2em 0 !important
+//             width: 100%
+//             border: solid 2px colorTheme(primaryTheme)
+//     .mid-paragraph
+//         padding: 0 0 0 4em
+//         @include desktop_xm
+//             padding: 0
+//         p 
+//             color: black 
+//             font-size: 15px
+//             span 
+//                 font-weight: bolder
+//                 color: colorTheme(primaryTheme)
+//     .bottom-paragraph
+//         padding: 1em 0 0 4em
+//         @include desktop_xm
+//             padding: 0
+//         h6 
+//             color: black
+//             font-size: 15px
+//             span 
+//                 cursor: pointer
+//                 font-weight: bold
+//                 color: black
+// .main-wrap .body-section .form-section
+//     width: 100%
+//     display: flex 
+//     align-items: stretch
+//     padding-bottom: 50px
+// .main-wrap .body-section .form-section .form-wrap
+//     margin: auto
+//     max-width: 500px
+//     width: 100%
+//     background-color: rgba(7, 75, 251, .8)
+//     padding: 1em 
+//     border-radius: 5px
+//     .form 
+//         width: 100%
+// .main-wrap .body-section .form-section .form-wrap .form .dynamic-wrapper
+//     width: 100%
+//     display: block
+//     transition: all 1s
+// .main-wrap .body-section .form-section .form-wrap .form .dynamic-wrapper.slide
+//     display: none
+// .main-wrap .body-section .form-section .form-wrap .form  .head
+//     width: 100%
+//     margin: 0 0 2em 0
+//     display: flex
+//     align-items: stretch
+//     h4 
+//         margin-left: auto
+//         font-size: 18px
+//         font-weight: bold  
+//         color: white
+// .main-wrap .body-section .form-section .form-wrap .form .top-wrap
+//     width: 100%
+//     display: flex
+//     align-items: stretch
+//     margin: 0 0 2em 0
+//     .top-title 
+//         margin-right: auto
+//         h4 
+//             font-size: 20px
+//             font-weight: bold 
+//             color: white 
+//         h5 
+//             font-size: 14px
+//             color: white 
+//     .icon-wrap
+//         margin-left: auto
+//         fa-icon 
+//             color: white 
+//             font-size: 20px
+// .main-wrap .body-section .form-section .form-wrap .form .form-group
+//     width: 100%
+//     margin: 0 0 2em 0
+//     fa-icon
+//         width: 1em
+//         font-size: 14px
+//         color: white
+//         margin: .5em 1em 0 0
+//     input, select
+//         padding: 0 .5em
+//         font-size: 14px
+//         width: 100%
+//         outline: none
+//         border: none
+//         border-bottom: solid 1px white
+//         background-color: transparent
+//         &::placeholder
+//             color: white
+//         &.error
+//             border-bottom: solid 1px colorTheme(danger) 
+//     .error-wrap
+//         width: 100%
+//         padding: 0 2.3em
+//         span 
+//             font-size: 12px
+//             color: colorTheme(danger)
+// .main-wrap .body-section .form-section .form-wrap .form .btn-wrap
+//     width: 100%
+//     margin: 0 0 1em 0
+//     display: flex
+//     align-items: stretch
+//     .btn
+//         color: white
+//         &.btn-back
+//             background-color: grayColor(g200)
+//             color: grayColor(g900)
+//         &.btn-submit, &.btn-next
+//             color: white
+//             background-color: colorTheme(secondaryTheme)
+// .main-wrap .body-section .form-section .form-wrap .form .footer
+//     width: 100%
+//     margin: 0 0 1em 0
+//     display: flex
+//     align-items: stretch
+//     h4
+//         font-size: 12px
+//         margin: 0 1em 0 0
+//     a 
+//         font-size: 12px
+//         color: white
+// .main-wrap .body-section .form-section .form-wrap .form .wrapper-two
+//     background-color: colorTheme(warning)
+//     border-radius: 5px
+//     padding: .5em
+//     p, a
+//         font-size: 13px 
+
+// .main-wrap .body-section .form-section .form-wrap .form .text-muted
+//     width: 100%
+//     h6 
+//         color: grayColor(g800)
 
 
 
@@ -253,3 +508,25 @@
             background-color: colorTheme(primaryTheme)
             font-size: 13px
             font-family: Montserrat
+
+
+
+.section-footer
+    margin: auto auto 0 0
+    width: 100%
+    .wrap 
+        width: 100%
+        display: -ms-flexbox
+        display: flex
+        -ms-flex-flow: row wrap
+        flex-flow: row wrap
+        padding: 1em 2.5em
+        @include desktop_sm
+            padding: 1em
+        img 
+            margin: 0 .5em
+            min-width: 25px
+            max-height: 70px
+            height: fit-content
+            max-height: 35px
+            min-height: 35px
