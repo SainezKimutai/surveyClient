@@ -75,19 +75,11 @@
   flex-direction: column
   align-items: stretch
   padding: 2em 3em
-  background:  url("../../../assets/images/survey_bg_3.png") no-repeat
-  // -webkit-background:  url("../../../assets/images/surveybackground.jpg") no-repeat
-  // -moz-background:  url("../../../assets/images/surveybackground.jpg") no-repeat
-  // -ms-background:  url("../../../assets/images/surveybackground.jpg") no-repeat
-  // -o-background:  url("../../../assets/images/surveybackground.jpg") no-repeat
-  background-size: cover
-  background-position: center bottom
-  -webkit-background-size: cover
-  -moz-background-size: cover
-  -ms-background-size: cover
-  -o-background-size: cover
+  background-color: #211A1D
   max-height: 100vh
   overflow-y: scroll
+  @include desktop_md 
+      max-height: none
 
 .main-wrapper .body-section .body-section-wrapper
   width: 100%
@@ -95,18 +87,34 @@
   max-height: 100%
   height: fit-content
   margin: auto
-
-.main-wrapper .body-section .body-section-wrapper .header
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: space-evenly
+.main-wrapper .body-section .body-section-wrapper .hash-tag-title
   width: 100%
-  padding: 1em
+  display: flex
+  padding: 0 0 1.7em 0
   h4 
-    font-size: 24px
-    color: black
+      margin: auto
+      font-size: 32px
+      font-weight: 900 
+      color: whitesmoke
+.main-wrapper .body-section .body-section-wrapper .logo-wrap
+  width: 100%
+  display: flex
+  padding: 0
+  img 
+      margin: auto
+      width: 160px
+      max-width: 160px
 .main-wrapper .body-section .body-section-wrapper .body-template
-    width: 100%
-    height: 100% 
+    width: fit-content
+    // min-height: 1200px
+    height: fit-content
     display: flex
     padding:  1em 
+    margin: 0 auto auto auto
     background-color: rgba(255, 255, 224, .9)
     background-size: cover
     -webkit-background-size: cover
@@ -118,7 +126,15 @@
 .main-wrapper .body-section .body-section-wrapper .body-template .body-template-wrap
     margin: auto
     width: 100%
-    max-width: 800px
+    // max-width: 800px
+    min-height: 400px
+    height: 100%
+    min-width: 400px
+    display: flex
+    flex-direction: column
+    justify-content: space-between
+    @include desktop_sm
+      min-width: 0
 
 
 
@@ -130,9 +146,7 @@
     align-items: left
     padding: 1em
     width: 100%
-    // height: 350px
-    // overflow-y: scroll
-
+    margin: 0 auto auto auto
 #the_form .progress-wrap
     background-color: transparent
     border-radius: 5px
@@ -197,7 +211,7 @@
         color: colorTheme(primaryTheme) 
 #the_form .form-group
     width: 100%
-    margin: 0 0 2em 0
+    margin: 0 0 0 0
     display: flex
     align-items: stretch
     .questionTag
@@ -222,12 +236,13 @@
     label 
         color: black
 #the_form .form-group.quiz-wrap
-    min-height: 7em
+    // min-height: em
+    padding: 1em
 #the_form .multy-choice-wrap
     width: 100%
     display: grid
-    grid-template-columns: repeat(3, 1fr)
-    grid-gap: 10px
+    grid-template-columns: repeat(4, 1fr)
+    grid-gap: 1em
     @include desktop_md
       grid-template-columns: repeat(2, 1fr)
     @include desktop_sm
@@ -247,12 +262,13 @@
 
 .main-wrapper .body-section .body-section-wrapper .body-template .action-section
   width: 100%
-  padding: 1em
+  margin: auto auto 0 auto
+  // padding: 1em
 .main-wrapper .body-section .body-section-wrapper .body-template .action-section .top-wrap
   width: 100%
   display: flex 
   align-items: stretch
-  padding: 1em 0
+  // padding: 1em 0
   @include desktop_md
     flex-direction: column-reverse
 .main-wrapper .body-section .body-section-wrapper .body-template .action-section  .prev-wrap
