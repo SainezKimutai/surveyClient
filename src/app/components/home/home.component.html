@@ -219,10 +219,11 @@
 <!--  Main Section -->
 
 <main id="main" class="" [ngClass]="sideBarStatus ? '' : 'expand'">
-    <router-outlet></router-outlet>
+    <main class="router-wrapper">
+      <router-outlet></router-outlet>
+    </main>
 
     <app-footer></app-footer>
-
 </main>
 
 

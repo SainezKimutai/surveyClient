@@ -53,11 +53,16 @@
 .main-wrapper .info-section .overlay .content-wrap
     width: 100%
     height: 100%
+    display: flex 
+    flex-direction: column
+    justify-content: center
+    align-items: flex-start
     .wrap 
-        padding: 3em 2em 0 2em
+        margin: auto 0
+        padding: 0 2em 
         max-width: 600px
         .title  
-            font-weight: 400 !important
+            font-weight: 900
             font-size: 32px
             color: whitesmoke
             span 
@@ -66,10 +71,12 @@
         .text 
             font-size: 14px 
             color: whitesmoke
+            span 
+                font-weight: bolder
+                color: colorTheme(secondaryTheme)
 
 
 .main-wrapper .info-section .overlay .footer-wrap
-    // margin: auto auto 0 0
     height: fit-content
     width: 100%
     .wrap 
@@ -83,11 +90,11 @@
             padding: 1em
         img 
             margin: 0 .5em
-            min-width: 25px
-            max-height: 70px
+            min-width: 40px
+            max-height: 85px
             height: fit-content
-            max-height: 35px
-            min-height: 35px
+            max-height: 50px
+            min-height: 50px
 
 .main-wrapper .form-section
     width: 100%
