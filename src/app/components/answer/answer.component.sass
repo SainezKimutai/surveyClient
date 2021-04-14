@@ -72,6 +72,7 @@
   width: 100%
   height: 100%
   display: flex 
+  flex-direction: column
   align-items: stretch
   padding: 2em 3em
   background:  url("../../../assets/images/survey_bg_3.png") no-repeat
@@ -91,6 +92,7 @@
 .main-wrapper .body-section .body-section-wrapper
   width: 100%
   min-height: 80%
+  max-height: 100%
   height: fit-content
   margin: auto
 
@@ -298,6 +300,41 @@
 
 
 
+.section-footer
+    margin-top: 1em
+    width: 100%
+    min-width: 100%
+    background-color: transparent
+    @include desktop_lg
+        display: none
+    .wrap
+        width: 100%
+        min-width: 100%
+        .title
+            width: 100%
+            text-align: center
+            font-size: 18px 
+            font-weight: bold
+            padding: 0 0 2em 0
+        .list 
+            width: 100%
+            justify-content: center
+            align-items: center
+            img 
+                margin: 0 2em 2em 0
+                min-width: 35px
+                max-height: 80px
+                height: fit-content
+                max-height: 45px
+                min-height: 45px
+
+
+.carousel
+    width: 100% !important
+    .carousel-inner
+        width: 100%
+        .carousel-item 
+            width: 100%
 
 
 
