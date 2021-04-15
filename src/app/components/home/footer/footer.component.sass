@@ -15,7 +15,7 @@
             text-align: center
             font-size: 18px 
             font-weight: bold
-            padding: 0 0 2em 0
+            padding: 0 0 1em 0
         .list 
             width: 100%
             justify-content: center
@@ -35,3 +35,18 @@
         width: 100%
         .carousel-item 
             width: 100%
+
+.carousel .carousel-control-prev, 
+.carousel .carousel-control-next
+    color: transparent 
+    background-color: transparent
+    .carousel-control-next-icon, .carousel-control-prev-icon
+        color: black
+        background-color: grayColor(g500)
+        padding: .8em
+        border-radius: 50%
+        .sr-only
+            color: black
+    .carousel-indicators
+        li 
+            color: colorTheme(primaryTheme)
