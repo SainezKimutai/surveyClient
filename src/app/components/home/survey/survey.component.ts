@@ -7,6 +7,8 @@ import { QuestionService } from 'src/app/shared/services/questions.service';
 import { ModalDirective } from 'ngx-bootstrap';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { HomeComponent } from '../home.component';
+import { Location } from '@angular/common';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-survey',
@@ -26,6 +28,8 @@ export class SurveyComponent implements OnInit {
     private questionService: QuestionService,
     private router: Router,
     private notifyService: NotificationService,
+    private userService: UserService,
+    private location: Location
     ) { }
 @ViewChild('deletePromptModal', {static: true}) deletePromptModal: ModalDirective;
 
@@ -227,6 +231,26 @@ export class SurveyComponent implements OnInit {
 
 
 
+
+  // func() {
+  //   this.userService.getAllUsers().subscribe(
+  //     (data) => {
+  
+  //       let alluser = data.filter(u => u.userType !== 'thirdparty').map(e => e);
+  
+  //       alluser.forEach(User => {
+  //         this.userService.updateUsers(User._id, { institutionId: "5e7531b76879a6354e179ddf" }).subscribe(
+  //           () => {console.log('Update')}, ()=> console.log('Error'));
+  //       });
+  
+  //       // let ids = alluser.map(e => e.institutionId);
+  //       // let newids = Array.from( new Set(ids));
+  //       // console.log(newids);
+  //     }, (err) => {
+  //       console.log(err);
+  //     }
+  //   );
+  // }
 
 
 

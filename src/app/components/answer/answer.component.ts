@@ -406,7 +406,6 @@ async proceedToNext(id){
     
 
     if(this.questions[id-1].linked){
-      console.log('Here !!')
 
       let skipNext = responseArray[0].skipNext ? true : false; 
 
@@ -644,11 +643,7 @@ async proceedToNext(id){
         this.notificationForm = true;
         // this.notification.showSuccess('Survey responses submited', 'Success');
         // this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
-
-        if ( sessionStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
-        if ( sessionStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
-        if ( sessionStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/reports']); }, 4000);  }
-
+        this.redirectBack();
 
       }, err => {{this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }});
     }
@@ -661,10 +656,7 @@ async proceedToNext(id){
           // this.notification.showSuccess('Survey responses submited', 'Success');
           // this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
 
-          if ( sessionStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
-          if ( sessionStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
-          if ( sessionStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 4000);  }
-
+          this.redirectBack();
         },
         error => {this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }
       );
@@ -690,13 +682,7 @@ async proceedToNext(id){
         data => {
           this.ImprintLoader = false;
           this.notificationForm = true;
-          // this.notification.showSuccess('Survey responses submited', 'Success');
-          // this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
-
-          if ( sessionStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
-          if ( sessionStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
-          if ( sessionStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 4000);  }
-
+          this.redirectBack();
         }, err => {{this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }});
       }
 
@@ -705,25 +691,35 @@ async proceedToNext(id){
           data => {
             this.ImprintLoader = false;
             this.notificationForm = true;
-            // this.notification.showSuccess('Survey responses submited', 'Success');
-            // this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
-
-            if ( sessionStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
-            if ( sessionStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
-            if ( sessionStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 4000);  }
-
+            this.redirectBack();
           },
           error => {this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }
         );
       }
 
-
-
   }
 
 
+redirectBack() {
+
+  // if ( sessionStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
+  // if ( sessionStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
+  // if ( sessionStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 4000);  }
+
+  setTimeout(() => { 
+    this.router.navigate(['/home/survey']); 
+
+    this.openTactive_BPO_Rate_Card()
+  
+  }, 4000); 
+
+}
 
 
+openTactive_BPO_Rate_Card() {
+  const url = location.origin + '/assets/docs/Tactive_BPO_Rate_Card.pdf';
+  window.open(url, '_blank');
+}
 
 
 
@@ -979,7 +975,6 @@ async proceedToNext(id){
 moveTotheNextQustionOnEdit(a, b) {
   let id = a + b;
   this.previousSteps = this.previousSteps - (b + 1);
-  console.log(this.previousSteps)
 
   this.questionTag = this.questions[id].question;
   this.skip = (this.questions[id].skip ? true: false);
@@ -997,14 +992,14 @@ moveTotheNextQustionOnEdit(a, b) {
     this.answers.forEach((ans, ind, arr) => {
       if (ans.questionId === this.quizIdOfAnswerOnEdit) { 
           isAnserThere = true;
-          console.log('There')
+          
           this.response = ans.answer[0].answer ? 
                           ans.answer[0].answer.answer ? ans.answer[0].answer.answer : ans.answer[0].answer
                           : ans.answer[0] 
        
       }
       if (ind === arr.length - 1 && !isAnserThere) {
-        this.response = ''; console.log('Here!!!')
+        this.response = ''; 
       }
     })
   }
