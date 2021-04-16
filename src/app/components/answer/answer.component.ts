@@ -4,7 +4,7 @@ import { ResponseService } from 'src/app/shared/services/responses.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 import { ThreatService } from 'src/app/shared/services/threats.service';
-import { faArrowLeft, faArrowRight, faSave} from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight, faSave, faFilePdf, faBookOpen, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { ModalDirective, ModalOptions, ModalModule } from 'ngx-bootstrap';
 @Component({
   selector: 'app-answer',
@@ -29,6 +29,8 @@ export class AnswerComponent implements OnInit {
 
     public pageProgress = 0;
     public notificationForm = false; 
+    public pdfActionStatus = false;
+    public SurveyCompleted = false;
     public AllResponses = [];
     public DoneQuestions = null;
     public myPreviousAnswers = [];
@@ -40,6 +42,9 @@ export class AnswerComponent implements OnInit {
     public faArrowLeft = faArrowLeft;
     public faArrowRight = faArrowRight;
     public faSave = faSave
+    public faFilePdf = faFilePdf;
+    public faBookOpen = faBookOpen;
+    public faDownload = faDownload;
 
     surveyId: any;
     surveyName: any;
@@ -641,8 +646,8 @@ async proceedToNext(id){
       data => {
         this.ImprintLoader = false;
         this.notificationForm = true;
-        // this.notification.showSuccess('Survey responses submited', 'Success');
-        // this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
+   
+        this.SurveyCompleted = true;
         this.redirectBack();
 
       }, err => {{this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }});
@@ -653,9 +658,7 @@ async proceedToNext(id){
         data => {
           this.ImprintLoader = false;
           this.notificationForm = true;
-          // this.notification.showSuccess('Survey responses submited', 'Success');
-          // this.notification.showInfo('..for choosing to answer ours survey', 'Thank you');
-
+          this.SurveyCompleted = true;
           this.redirectBack();
         },
         error => {this.ImprintLoader = false; this.notification.showWarning('Could not submit', 'Failled'); }
@@ -706,20 +709,19 @@ redirectBack() {
   // if ( sessionStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
   // if ( sessionStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 4000);  }
 
-  setTimeout(() => { 
-    this.router.navigate(['/home/survey']); 
 
-    this.openTactive_BPO_Rate_Card()
-  
+
+  setTimeout(() => { 
+    if (this.SurveyCompleted) {
+      this.notificationForm = false;
+      this.pdfActionStatus = true;
+    } else {
+      this.router.navigate(['/home/survey']); 
+    }  
   }, 4000); 
 
 }
 
-
-openTactive_BPO_Rate_Card() {
-  const url = location.origin + '/assets/docs/Tactive_BPO_Rate_Card.pdf';
-  window.open(url, '_blank');
-}
 
 
 
