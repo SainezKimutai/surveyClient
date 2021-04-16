@@ -65,32 +65,8 @@
                 </div>
 
 
-                <div *ngIf="pdfActionStatus" class="tactive-pdf-action-wrap">
-                    <div class="wrap-title"> 
-                        <fa-icon [icon]="faFilePdf"></fa-icon>
-                        <h5>Tactive BPO Rate Card</h5>
-                     </div>
-                    <div class="wrap-btn">
-                        <a class="btn btn-sm btn-download btn-primary" href="/assets/docs/Tactive_BPO_Rate_Card.pdf" download>
-                            <fa-icon [icon]="faDownload"></fa-icon>
-                            Download
-                        </a>
-                        <a class="btn btn-sm btn-open btn-warning" href="/assets/docs/Tactive_BPO_Rate_Card.pdf" target="_blank" rel="noopener noreferrer">
-                            <fa-icon [icon]="faBookOpen"></fa-icon>
-                            View
-                        </a>
-                  
-                    </div>
-                    <div class="wrap-btn">
-                        <button class="btn btn-sm btn-back btn-outline-secondary" (click)="back()">
-                            <fa-icon [icon]="faArrowLeft"></fa-icon>
-                            Back to Survey
-                        </button>
-                   
-                    </div>
-                </div>
     
-                <div *ngIf="questions.length > 0 && pageProgress === 100 && !notificationForm && !pdfActionStatus" [ngClass]="'dynamic-wrapper'">
+                <div *ngIf="questions.length > 0 && pageProgress === 100 && !notificationForm " [ngClass]="'dynamic-wrapper'">
                     <div class="form-group quiz-wrap">
                         <p class="questionTag">{{questionTag}}</p>
                     </div>
@@ -119,12 +95,12 @@
 
             </form>
 
-            <div *ngIf="questions.length > 0 && pageProgress === 100 && !notificationForm && !pdfActionStatus" class="action-section">
+            <div *ngIf="questions.length > 0 && pageProgress === 100 && !notificationForm " class="action-section">
 
                 <div class="top-wrap">
                     <div class="prev-wrap">
                         <button *ngIf="pageNumber > 1" class="btn btn-sm btn-previous" (click)="moveToPreviousQuestion()" >
-                        <fa-icon [icon]="faArrowLeft" class="mr-2"></fa-icon>Move to previous question</button>
+                        <fa-icon [icon]="faArrowLeft" class="mr-2"></fa-icon>Previous&nbsp;&nbsp;question</button>
                     </div>
                     <div class="progress-wrap">
                         <h4>{{(((pageNumber-1) / totalPages)*100).toFixed(0)}} %</h4>

@@ -29,7 +29,6 @@ export class AnswerComponent implements OnInit {
 
     public pageProgress = 0;
     public notificationForm = false; 
-    public pdfActionStatus = false;
     public SurveyCompleted = false;
     public AllResponses = [];
     public DoneQuestions = null;
@@ -705,16 +704,9 @@ async proceedToNext(id){
 
 redirectBack() {
 
-  // if ( sessionStorage.getItem('permissionStatus') === 'isThirdParty') { setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
-  // if ( sessionStorage.getItem('permissionStatus') === 'isAdmin') {  setTimeout(() => { this.router.navigate(['/home/dashboard']); }, 4000);  }
-  // if ( sessionStorage.getItem('permissionStatus') === 'isCustomer') {  setTimeout(() => { this.router.navigate(['/home/survey']); }, 4000);  }
-
-
-
   setTimeout(() => { 
     if (this.SurveyCompleted) {
-      this.notificationForm = false;
-      this.pdfActionStatus = true;
+      this.router.navigate(['/survey-completed']); 
     } else {
       this.router.navigate(['/home/survey']); 
     }  
@@ -765,11 +757,11 @@ redirectBack() {
             let x = this.response.split(' , ');
            if(x[1]){this.multiAnswers = x;}
            ansPresent = true;
-           resolve();
+          resolve({});
             
         }
         if (ind === arr.length - 1 && ans.questionId !== this.quizIdOfAnswerOnEdit) {
-          resolve();
+          resolve({});
         }
   
       })
@@ -839,11 +831,11 @@ redirectBack() {
               let x = this.response.split(' , ');
              if(x[1]){this.multiAnswers = x;}
              ansPresent = true;
-             resolve();
+             resolve({});
               
           }
           if (ind === arr.length - 1 && ans.questionId !== this.questions[id]._id) {
-            resolve();
+            resolve({});
           }
     
         })

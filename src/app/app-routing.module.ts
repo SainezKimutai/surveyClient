@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AppCustomPreloader } from './app-preload.module';
+import { SurveyCompletedComponent } from './components/survey-completed/survey-completed.component';
 import { TokenGuard } from './shared/route-guards/token.guard';
   // tslint:disable: max-line-length
 
@@ -20,6 +21,8 @@ const routes: Routes = [
   { path: 'traffic', loadChildren: 'src/app/components/traffic/traffic.module#TrafficModule'},
 
   { path: 'answer', loadChildren: 'src/app/components/answer/answer.module#AnswerModule', canActivate: [TokenGuard]  },
+
+  { path: 'survey-completed', component: SurveyCompletedComponent,  canActivate: [TokenGuard]  },
 
   { path: 'terms-and-conditions', loadChildren: 'src/app/components/terms-and-conditions/terms-and-conditions.module#TermsAndConditionsModule' },
 

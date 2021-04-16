@@ -29,11 +29,13 @@ import { IndustryService } from './shared/services/industry.service';
 import { ThreatCategoryService } from './shared/services/threatCategory.service';
 import { TrafficService } from './shared/services/traffic.service';
 import { PlansService } from './shared/services/plan.service';
+import { SurveyCompletedComponent } from './components/survey-completed/survey-completed.component';
 
 // tslint:disable: max-line-length
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SurveyCompletedComponent
   ],
   imports: [
     BrowserModule,
