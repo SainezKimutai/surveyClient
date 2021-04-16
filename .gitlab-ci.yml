@@ -1,0 +1,58 @@
+image: node:latest
+
+before_script:
+  - npm install
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build 
+  script:
+    - npm run-script build 
+  artifacts: 
+    paths:
+      - dist/
+    expire_in: 1 hour
+  only:
+    - master
+
+deploy:
+  image: ubuntu:latest
+  before_script: #checks if ssh installed and if not, attempts to install it
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - ls ~/.ssh/
+  
+  stage: deploy
+  script:
+    - ssh -tt root@$SERVER_IP_ADDRESS ls /var/www/
+    # Delete existing folder
+    - ssh -tt root@$SERVER_IP_ADDRESS " cd /var/www/surveyClient/ && sudo rm -r survey"
+
+    - apt-get update
+    - apt-get --yes --force-yes install rsync
+      # copy and paste dist file
+    - rsync -a -e "ssh" --delete --rsync-path="sudo rsync" $PWD/dist/survey/* root@$SERVER_IP_ADDRESS:/var/www/surveyClient/survey
+      # reload nginx
+    - ssh -tt root@$SERVER_IP_ADDRESS " sudo systemctl reload nginx"
+
+  only:
+    # Trigger deployments only from master branch
+    - master
+  dependencies:
+   - build #dependency on creating a docker image with latest changes
+
+
+
+
+
+
+
+
+
