@@ -1,4 +1,15 @@
 
+<article *ngIf="ImprintLoader" class="imprint-loader home">
+    <div class="imprint-loader-wrap">
+        <div class="imprint-loader-main">
+            <div class="imprint-loader-ball ball-one"></div>
+            <div class="imprint-loader-ball ball-two"></div>
+            <div class="imprint-loader-ball ball-three"></div>
+            <div class="imprint-loader-ball ball-four"></div>
+        </div>
+    </div>
+</article>
+
 
 
 <header class="header">
@@ -11,37 +22,71 @@
 </header>
 
 
-
-
-
-
-
-<div class="page-switch">
-
-    <div class="switch-wrap">
-        <div class="btn-wrap">
-            <button [ngClass]="OperationDashboardStatus ? 'btn active' : 'btn'" (click)="toOperationDashboard()">Operations <span>Analytics</span> </button>
-            <button [ngClass]="MarketDashboardStatus ? 'btn active' : 'btn'"  (click)="toMarketDashboard()">Market <span>Analytics</span> </button>
-        </div>
+<div style="height: 300px; display: flex; justify-content: center; align-items: center;"*ngIf="pageProgress !== 100">
+    <div class="mx-auto progress-wrap">
+        <circle-progress [percent]="pageProgress" ></circle-progress>
     </div>
 </div>
 
 
+<article class="list-survey"  *ngIf="pageProgress === 100 && SurveySectionStatus">
+    <div class="wrapper">
+        <div class="title">List of Surveys</div>
+
+        <div class="list">
+            <div class="item" *ngFor="let survey of AllSurveys" (click)="fetchData(survey)">{{survey.surveyName}}</div>
+        </div>
+    </div>
+</article>
 
 
+<article class="body-article" *ngIf="pageProgress === 100 && ResponsesSectionStatus">
 
 
+    <div class="list-table" >
+        <div class="search-wrap w-100 d-flex">
+            <button class="btn btn-sm btn-secondary mr-auto" (click)="back()">Back</button>
+            <div class="input-wrap ml-auto">
+                <input type="text" (keyup)="filterSurveys()" name='FilterName' [(ngModel)]="FilterName" placeholder="Search here ..."> 
+                <fa-icon [icon]="faSearch"></fa-icon>
+            </div>
+        </div>
+        <div class="list-table-header">
+            <div class="header-wrap">
+                <div class="head-item "> Client Email </div>
+                <div class="head-item survey"> <span> Survey Name</span> </div>
+                <div class="head-item status"> Progress </div>
+                <div class="head-item take"> Actions </div>
+            </div>
+        </div>
+        <div class="list-table-body">
+            <div class="list-item-wrap-no-survey" *ngIf="ViewDashboardData.length === 0">
+                <h4>No User Has done this Survey</h4>
+            </div>
+            <div class="list-item-wrap" *ngFor="let item of ViewDashboardData">
+                <div class="list-item survey">{{item.userEmail}}</div>
+                <div class="list-item survey">{{item.surveyName}}</div>
+                <div *ngIf="item.done > 100 || item.done === 100" class="list-item status completed">
+                    <fa-icon *ngIf="item.done > 100 || item.done === 100" [icon]="faCheck"></fa-icon> <span>100%</span>&nbsp;&nbsp;<span>Completed</span>
+                </div>
+                <div *ngIf="item.done > 0 && 100 > item.done" class="list-item status done">
+                    <fa-icon  [icon]="faSpinner"></fa-icon> <span>{{item.done}}%</span> &nbsp;&nbsp;<span>In progress</span> 
+                </div>
+                <div *ngIf="item.done === 0" class="list-item status not-done">
+                    <fa-icon  [icon]="faBook"></fa-icon> <span>Not Done</span>
+                </div>
+                <div class="list-item take">
+                    <!-- <div *ngIf="100 > item.done" class="btn btn-sm btn-info" >---</div> -->
+                    <div class="btn btn-sm btn-success" (click)="viewReport(item)">View Responses</div>
+                </div>
+         
+            </div>
+
+        </div>
 
 
-<app-operational-dashboard *ngIf="OperationDashboardStatus"></app-operational-dashboard>
+    </div>
 
-<app-market-dashboard *ngIf="MarketDashboardStatus"></app-market-dashboard>
+</article>
 
 
-<div class="page-footer">
-
-    <h5>Survey System &copy; {{thisYear}} <span>Tactive</span></h5>
-
-    <h6>Powered by <span>Imprint Africa</span></h6>
-
-</div>

@@ -63,14 +63,14 @@
                     <fa-icon  [icon]="faBook"></fa-icon> <span>Not Done</span>
                 </div>
                 <div class="list-item take">
-                    <div *ngIf="100 > item.done" class="take-btn" (click)="takeSurvey(item)">Take Survey</div>
-                    <div *ngIf="item.done > 100 || item.done === 100" class="take-btn-disabled">Closed</div>
+                    <div *ngIf="100 > item.done" class="btn btn-sm btn-info" (click)="takeSurvey(item)">Take Survey</div>
+                    <div *ngIf="item.done > 100 || item.done === 100" class="btn btn-sm btn-success" (click)="viewReport(item.surveyName, item._id)">View Responses</div>
                 </div>
                 <div class="list-item erase">
                     <div  *ngIf="item.done === 0" class="erase-btn-disabled"> No Responses</div>
                     <!-- <div *ngIf="item.done > 0 && 100 > item.done" class="erase-btn" (click)="deletePromptModal.show(); passSurveyToReset(item._id)"> Erase Responses</div>
                     <div *ngIf="item.done > 100 || item.done === 100"  class="erase-btn-disabled">Closed</div> -->
-                    <div *ngIf="item.done > 0" class="erase-btn" (click)="deletePromptModal.show(); passSurveyToReset(item._id)"> Erase Responses</div>
+                    <div *ngIf="item.done > 0" class="btn btn-sm btn-outline-danger" (click)="deletePromptModal.show(); passSurveyToReset(item._id)"> Erase Responses</div>
                 </div>
             </div>
 

@@ -109,13 +109,13 @@ this.plansService.getAllCompanyPlans().subscribe(
               this.pageProgress = 50;
 
 
-              this.responseService.getUsersResponses(sessionStorage.getItem('loggedUserID')).subscribe(
+              this.responseService.getUsersResponses().subscribe(
                 dataRsp => {
 
                 this.AllResponses = dataRsp;
                 this.pageProgress = 75;
                 if (this.AllResponses.length === 0) { this.pageProgress = 100; }
-                this.checkIfPlanExists().then(() => resolve())
+                this.checkIfPlanExists().then(() => resolve({}))
               
 
                 },
@@ -148,7 +148,7 @@ checkIfPlanExists() {
       if ( x === -1 ) { return true }
       if ( x !== -1 ) { return false }
     }).map((e => e));
-    resolve();
+    resolve({});
   })
 }
 
@@ -184,21 +184,21 @@ checkForCompletedSurveys() {
           let myCompletionValue =  Number((( Number(allAnswersNumber) * 100 ) / Number(allQuizs2.length)).toFixed(0));
           surv.done = Number(myCompletionValue);
 
-          this.pageProgress = 100;  resolve()}
+          this.pageProgress = 100;  resolve({})}
 
       });
 
 
       } else {
         surv.done = 0;
-        if (ind === arr.length - 1) { this.pageProgress = 100; resolve()}
+        if (ind === arr.length - 1) { this.pageProgress = 100; resolve({})}
 
       }
-      this.pageProgress = 100; resolve()
+      this.pageProgress = 100; resolve({})
      
       return true;
     }).map( e => e);
-    if (this.AllSurveys.length === 0) { this.pageProgress = 100; resolve()}
+    if (this.AllSurveys.length === 0) { this.pageProgress = 100; resolve({})}
   })
 }
 
@@ -213,7 +213,7 @@ checkForCompletedSurveys() {
 formatQuestions() {
   return new Promise((resolve, reject) => {
     this.AllQuestions2 = [];
-    this.responseService.getUsersResponses(sessionStorage.getItem('loggedUserID')).subscribe(
+    this.responseService.getUsersResponses().subscribe(
       data => { 
   
         data.forEach((responseObj, ind1, arr1) => {
@@ -286,7 +286,7 @@ formatQuestions() {
                           // check for last loop
                           if ((ind1 === arr1.length - 1) && (ind2 === arr2.length - 1)){
                            
-                            resolve();
+                            resolve({});
                           }
                     })
               

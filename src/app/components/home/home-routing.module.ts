@@ -6,6 +6,7 @@ import { CustomerGuard } from 'src/app/shared/route-guards/customer.guard';
 import { ThirdPartyGuard } from 'src/app/shared/route-guards/thirdParty.guard';
 import { CustomerAdminGuard } from 'src/app/shared/route-guards/customerAdmin.guard';
 import { CustomerThirdPartyGuard } from 'src/app/shared/route-guards/customerThirdParty.guard';
+
 // Plugins
 
 
@@ -19,10 +20,9 @@ const routes: Routes = [
 
         { path: '', redirectTo: '/landing_page', pathMatch: 'full' },
 
-        { path: 'dashboard', loadChildren: 'src/app/components/home/dashboard/dashboard.module#DashboardModule', canActivate: [ThirdPartyGuard], data: {preload: true}},
-        { path: 'admin', loadChildren: 'src/app/components/home/admin/admin.module#AdminModule', canActivate: [AdminGuard], data: {preload: true}},
+        { path: 'dashboard', loadChildren: 'src/app/components/home/dashboard/dashboard.module#DashboardModule', data: {preload: true}},
         { path: 'survey', loadChildren: 'src/app/components/home/survey/survey.module#SurveyModule', data: {preload: true}},
-        { path: 'reports', loadChildren: 'src/app/components/home/reports/reports.module#ReportsModule', canActivate: [CustomerGuard], data: {preload: true}},
+        { path: 'reports', loadChildren: 'src/app/components/home/reports/reports.module#ReportsModule', data: {preload: true}},
         { path: 'document', loadChildren: 'src/app/components/home/document/document.module#DocumentModule', canActivate: [CustomerGuard],  data: {preload: true}},
         { path: 'plan', loadChildren: 'src/app/components/home/plan/plan.module#PlanModule', canActivate: [CustomerGuard],  data: {preload: true}},
         { path: 'tracker', loadChildren: 'src/app/components/home/tracker/tracker.module#TrackerModule', canActivate: [CustomerGuard], data: {preload: true}},

@@ -48,78 +48,200 @@
             color: colorTheme(secondaryTheme)
 
 
-
-
-
-.page-switch
-    padding: 0 1em
+.list-survey
     width: 100%
-.page-switch .switch-wrap
-    width: 100%
-    display: flex
-    background-color: transparent
-    padding: .5em 1em
-.page-switch .switch-wrap .btn-wrap
-    margin: auto 0 auto auto
-    width: fit-content
-    height: 100%
-    display: flex
-    align-items: stretch
-    @include desktop_sm
-        flex-direction: column
-.page-switch .switch-wrap .btn-wrap .btn
-    width: fit-content
-    height: 3em
-    color: colorTheme(primaryTheme)
-    margin: auto 1em auto auto
-    border: none
-    font-size: 12px
-    font-family: Montserrat
-    text-transform: capitalize
-    text-align: left
-    background-color: transparent
-    box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-    -moz-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-    -webkit-box-shadow: 3px -3px 3px rgba(0, 0, 0, .1)
-    border-radius: 2px
-    border-bottom: solid 2px colorTheme(primaryTheme)
-    transition: all .5s
-    @include desktop_sm
+    display: flex 
+    .wrapper
+        background-color: white 
+        margin: auto
         width: 100%
-    &:hover
-        background-color: grayColor(g200)
-    &.active
-        color: #ffffff
-        background-color: colorTheme(primaryTheme)
-        border-bottom: solid 2px colorTheme(secondaryTheme)
+        max-width: 600px
+        padding: 1em
+        border-radius: 3px
+        .title 
+            font-size: 16px
+            font-weight: bold 
+
+        .list 
+            padding: 1em
+            background-color: grayColor(g100)
+            .item 
+                width: 100%
+                margin-bottom: 2px
+                cursor: pointer
+                font-size: 15px
+                text-align: left
+                padding: 1em .5em
+                background-color: white 
+                color: balck
+                border-radius: 2px
+                &:hover
+                    background-color: colorTheme(primaryTheme)
+                    color: white
 
 
 
-
-
-
-
-.page-footer
+.body-article
     width: 100%
-    padding: .5em 1em
+    height: fit-content
+    background-color: transparent
+    padding: 1em
+.body-article .progress-wrap
+    margin: 4em auto
+    background-color: transparent
+    border-radius: 5px
+    min-width: 15em
+    min-height: 10em
+    display: flex
+    justify-content: center
+    align-items: center
+.body-article .list-table
+    width: 100%
+    height: fit-content
+    min-height: 600px
+    background-color: white
+    overflow-y: scroll
+    padding: 5px 5px 2em 5px
+    border: none
+.body-article .list-table .list-table-header
+    width: 100%
+    min-width: $desktop_sm
+    padding: 5px
     background-color: grayColor(g100)
+.body-article .list-table .list-table-header .header-wrap
+    width: 100%
+    display: grid 
+    grid-template-columns: repeat(4, 1fr)
+    grid-gap: 0
+.body-article .list-table .list-table-header .header-wrap .head-item
+    padding: 1em .5em
+    font-size: 14px
+    font-weight: bold
+    color: colorTheme(primaryTheme)
+    text-shadow: 1px -1px 1px white
+    -moz-text-shadow: 1px -1px 1px white
+    -webkit-text-shadow: 1px -1px 1px white
+.body-article .list-table .search-wrap
+    width: 100%
+    padding: .5em 0
+    .input-wrap
+        width: fit-content
+        background-color: whitesmoke
+        fa-icon
+            color: grayColor(g400)
+            font-size: 14px
+            margin: auto .5em auto auto
+        input 
+            border: none
+            outline: none
+            border-radius: 2px
+            font-size: 14px
+            padding: .5em
+            background-color: transparent
+            color: grayColor(g900)
+            &::placeholder
+                color: grayColor(g400)
+.body-article .list-table .list-table-body
+    width: 100%
+    min-width: $desktop_sm
+    padding: 5px
+    background-color: whitesmoke
+    display: grid 
+    grid-template-columns: repeat(1, 1fr)
+    grid-gap: 5px
+    height: fit-content
+    max-height: 500px
+    overflow-y: scroll
+
+.body-article .list-table .list-table-body .list-item-wrap-no-survey
     display: flex
     align-items: stretch
-    border: none
-    border-top: solid 1px grayColor(g300)
+    background-color: white
+    padding: 1.5em .5em
+    h4 
+        font-weight: bold
+        font-size: 18px
+        margin: auto
+        color: colorTheme(primaryTheme)
+.body-article .list-table .list-table-body .list-item-wrap
+    width: 100%
+    display: grid 
+    grid-template-columns: repeat(4, 1fr)
+    grid-gap: 0
+    background-color: white
+    border-radius: 2px
+    cursor: pointer
+    &:hover
+        box-shadow: 0 0 10px rgba(0,0,0,.1)
+        -webkit-box-shadow: 0 0 10px rgba(0,0,0,.1)
+        -moz-box-shadow: 0 0 10px rgba(0,0,0,.1)
+        -ms-box-shadow: 0 0 10px rgba(0,0,0,.1)
+        -o-box-shadow: 0 0 10px rgba(0,0,0,.1)
+.body-article .list-table .list-table-body .list-item-wrap .list-item
+    padding: 1.5em .5em
+    font-size: 12px
+    color: black
+    &.survey
+        color: grayColor(g900)
+    &.status.completed
+        fa-icon
+            color: colorTheme(success)
+            margin: 0 1em 0 0
+        span 
+            font-weight: bold
+            color: colorTheme(success)
+    &.status.done
+        fa-icon
+            margin: 0 1em 0 0
+            color: colorTheme(primaryTheme)
+        span 
+            color: colorTheme(primaryTheme)
+    &.status.not-done
+        fa-icon
+            margin: 0 1em 0 0
+            color: grayColor(g900)
+        span 
+            color: grayColor(g900)
+    &.take
+        .take-btn
+            width: fit-content
+            padding: .3em .5em
+            cursor: pointer
+            background-color: transparent
+            color: colorTheme(primaryTheme)
+            border-radius: .8em
+            border: none
+            &:hover
+                background-color: grayColor(g200)
+        .take-btn-disabled
+            width: fit-content
+            padding: .3em .5em
+            border-radius: 2px
+            cursor: pointer
+            background-color: transparent
+            color: grayColor(g900)
+    &.erase
+        .erase-btn
+            width: fit-content
+            padding: .3em .5em
+            cursor: pointer
+            background-color: transparent
+            color: colorTheme(secondaryTheme)
+            border-radius: .8em
+            border: none
+            &:hover
+                background-color: grayColor(g200)
+        .erase-btn-disabled
+            width: fit-content
+            padding: .3em .5em
+            border-radius: 2px
+            cursor: pointer
+            background-color: transparent
+            color: grayColor(g900)
 
-    h5
-        margin-right: auto
-        font-size: 12px
-        color: grayColor(g700)
 
-        span
-            color: black
 
-    h6
-        margin-left: auto
-        font-size: 12px
-        color: grayColor(g700)
 
-        span
-            color: black
+
+
+

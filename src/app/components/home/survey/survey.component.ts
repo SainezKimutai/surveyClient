@@ -68,13 +68,14 @@ export class SurveyComponent implements OnInit {
   async updatePage() {
     return new Promise((resolve, reject) => {
 
+    // tslint:disable: deprecation
     this.surveyService.getAllInstitutionSurveys().subscribe(
       dataSurvey => {
 
         // this.AllSurveys = dataSurvey;
 
         // Filter to get BOP Survey alone
-        this.AllSurveys = dataSurvey.filter((suv) => suv._id === '60758166de90cb7fc7a536af').map(e => e)
+        this.AllSurveys = dataSurvey.filter((suv) => suv._id === '60758166de90cb7fc7a536af').map(e => e);
 
         this.pageProgress = 25;
 
@@ -85,13 +86,13 @@ export class SurveyComponent implements OnInit {
             this.pageProgress = 50;
 
 
-            this.responseService.getUsersResponses(sessionStorage.getItem('loggedUserID')).subscribe(
+            this.responseService.getUsersResponses().subscribe(
               dataRsp => {
 
               this.AllResponses = dataRsp;
               this.pageProgress = 75;
               if (this.AllResponses.length === 0) { this.pageProgress = 100; }
-              resolve();
+              resolve({});
 
               },
               error => console.log('Error geting all Responses')
@@ -139,18 +140,18 @@ export class SurveyComponent implements OnInit {
             let myCompletionValue =  Number((( Number(allAnswersNumber) * 100 ) / Number(allQuizs2.length)).toFixed(0));
             surv.done = Number(myCompletionValue);
 
-            this.pageProgress = 100; resolve(); }
+            this.pageProgress = 100; resolve({}); }
 
         });
 
 
         } else {
           surv.done = 0;
-          if (ind === arr.length - 1) { this.pageProgress = 100; resolve(); }
+          if (ind === arr.length - 1) { this.pageProgress = 100; resolve({}); }
 
         }
         this.pageProgress = 100;
-        resolve();
+        resolve({});
         return true;
       }).map( e => e);
     });
@@ -235,22 +236,28 @@ export class SurveyComponent implements OnInit {
   // func() {
   //   this.userService.getAllUsers().subscribe(
   //     (data) => {
-  
+
   //       let alluser = data.filter(u => u.userType !== 'thirdparty').map(e => e);
-  
-  //       alluser.forEach(User => {
-  //         this.userService.updateUsers(User._id, { institutionId: "5e7531b76879a6354e179ddf" }).subscribe(
-  //           () => {console.log('Update')}, ()=> console.log('Error'));
-  //       });
-  
-  //       // let ids = alluser.map(e => e.institutionId);
-  //       // let newids = Array.from( new Set(ids));
-  //       // console.log(newids);
+
+  //       const newUser = alluser.splice(97, 1);
+  //       console.log(newUser);
   //     }, (err) => {
   //       console.log(err);
   //     }
   //   );
   // }
+
+
+
+  viewReport(name, id) {
+    this.router.navigate(['/home/reports'], { queryParams: {
+      surveyName: name,
+      surveyId: id,
+      companyId: sessionStorage.getItem('loggedCompanyId'),
+      userId: sessionStorage.getItem('loggedUserID')
+    }});
+
+}
 
 
 

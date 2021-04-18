@@ -21,7 +21,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private notifyService: NotificationService
   ) { }
-
+   // tslint:disable: deprecation
   @ViewChild('resetModal', {static: true}) resetModal: ModalDirective;
   // loader
   public ImprintLoader = false;
@@ -111,6 +111,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
 
   login(emailParam: any, passwordParam: any) {
+
     this.userService.loginUser({email: emailParam, password: passwordParam}).subscribe(
       dataUser =>  {
           if (dataUser.userType === 'customer') {
