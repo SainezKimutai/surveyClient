@@ -122,7 +122,7 @@ formatData(): any {
       let question_name = this.Questions[quiz_index].question
       if (responseObject.answer[0].answer.answer) {
         let my_answers = responseObject.answer[0].answer.answer.split(',')
-        this.FinalResponses.push({question: question_name, answers: my_answers})
+        this.FinalResponses.push({question: question_name, answers: my_answers.filter((ans)=> ans.replace(/ /g,'') !== 'undefined').map(e => e)})
       } else {
         let my_answers = [responseObject.answer[0].answer]
         this.FinalResponses.push({question: question_name, answers: my_answers})
