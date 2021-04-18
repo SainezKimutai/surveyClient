@@ -31,7 +31,7 @@
 
 <article class="list-survey"  *ngIf="pageProgress === 100 && SurveySectionStatus">
     <div class="wrapper">
-        <div class="title">List of Surveys</div>
+        <div class="title">Choose Survey</div>
 
         <div class="list">
             <div class="item" *ngFor="let survey of AllSurveys" (click)="fetchData(survey)">{{survey.surveyName}}</div>
