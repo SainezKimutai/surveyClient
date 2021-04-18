@@ -71,7 +71,7 @@ export class ProfileComponent implements OnInit {
     public AllUsers = [];
     public loggedUserEmail = '';
     public myCompany;
-    public MyUserName = '---';
+    public MyUserName = sessionStorage.getItem('loggedUserName')
 
     public companyNameInputStatus = false;
     public companyNameInput = '';
@@ -241,6 +241,7 @@ export class ProfileComponent implements OnInit {
         this.myUserNameInput = '';
         this.myUserNameInputStatus = false;
         this.MyUserName = data.name;
+      
         this.notifyService.showSuccess('Saved', 'Success');
 
       },
