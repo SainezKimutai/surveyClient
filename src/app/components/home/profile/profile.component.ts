@@ -1,27 +1,13 @@
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { faBuilding, faFire, faComment, faEnvelope, faKey , faGlobe , faAddressBook,
-  faEdit, faCheck, faListAlt, faBookReader, faTrash, faChartLine, faChartBar, faChartPie,
-  faArrowCircleRight, faArrowCircleLeft, faPlus,
+  faEdit, faCheck, faListAlt, faBookReader, faTrash, faArrowCircleRight, faArrowCircleLeft, faPlus,
   faFileAlt, faCommentAlt, faImage, faVideo, faFileWord, faFileExcel,
   faFilePowerpoint, faFilePdf, faPowerOff} from '@fortawesome/free-solid-svg-icons';
 import { NotificationService } from 'src/app/shared/services/notification.service';
-import { SurveyService } from 'src/app/shared/services/survey.service';
-import { QuestionService } from 'src/app/shared/services/questions.service';
 import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
 import { UserService } from 'src/app/shared/services/user.service';
-import { ResponseService } from 'src/app/shared/services/responses.service';
-import { FileUploadService } from 'src/app/shared/services/fileUpload.service';
-import { dev } from 'src/app/shared/dev/dev';
 import { ModalDirective } from 'ngx-bootstrap';
-import { ThreatService } from 'src/app/shared/services/threats.service';
-import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
-import { IndustryService } from 'src/app/shared/services/industry.service';
-import * as pluginDataLabels from 'chartjs-plugin-datalabels';
-import { PlansService } from 'src/app/shared/services/plan.service';
-import { TaskPlanService } from 'src/app/shared/services/taskPlan.service';
-import { ActivityPlanService } from 'src/app/shared/services/activityPlan.service';
 import { HomeComponent } from '../home.component';
-import { MixedColors } from 'src/app/shared/colors/color';
 
 @Component({
   selector: 'app-profile',
@@ -35,24 +21,14 @@ export class ProfileComponent implements OnInit {
   constructor(
     private notifyService: NotificationService,
     private userService: UserService,
-    private surveyService: SurveyService,
-    private questionService: QuestionService,
     private companyProfileService: CompanyProfileService,
-    private responseService: ResponseService,
     private homeComponent: HomeComponent,
-    private threatService: ThreatService,
-    private threatCategoryService: ThreatCategoryService,
-    private industryService: IndustryService,
-    private plansService: PlansService,
-    private taskPlanService: TaskPlanService,
-    private activityPlanService: ActivityPlanService
+  
 
   ) { }
-  @ViewChild('viewAnswersModal', {static: true, }) viewAnswersModal: ModalDirective;
+
   @ViewChild('departmentModal', {static: true}) departmentModal: ModalDirective;
   @ViewChild('departmentFormModal', {static: true}) departmentFormModal: ModalDirective;
-  @ViewChild('planDocsModal', {static: true}) planDocsModal: ModalDirective;
-  @ViewChild('viewDescriptionModal', {static: true}) viewDescriptionModal: ModalDirective;
 
 
   public ImprintLoader = false;

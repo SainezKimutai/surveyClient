@@ -1,15 +1,10 @@
-import { Component, ViewChild, OnInit, HostListener, ElementRef } from '@angular/core';
-import { NotificationService } from 'src/app/shared/services/notification.service';
-import { SurveyService } from 'src/app/shared/services/survey.service';
+import { Component, ViewChild, OnInit, ElementRef } from '@angular/core';
 import { ResponseService } from 'src/app/shared/services/responses.service';
 import { QuestionService } from 'src/app/shared/services/questions.service';
-import { ThreatService } from 'src/app/shared/services/threats.service';
 import { faListAlt, faDownload, faArrowLeft, faPowerOff, faSearch } from '@fortawesome/free-solid-svg-icons';
 import * as jspdf from 'jspdf';
 import 'jspdf-autotable';
-import { ThreatCategoryService } from 'src/app/shared/services/threatCategory.service';
 import { CompanyProfileService } from 'src/app/shared/services/companyProfile.service';
-import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import { HomeComponent } from '../home.component';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -26,7 +21,6 @@ declare let html2canvas: any;
 export class ReportsComponent implements OnInit {
     constructor(
         private homeComponent: HomeComponent,
-        private surveyService: SurveyService,
         private responseService: ResponseService,
         private questionService: QuestionService,
         private activatedRoute: ActivatedRoute,
