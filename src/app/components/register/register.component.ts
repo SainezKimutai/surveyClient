@@ -224,7 +224,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
            sessionStorage.setItem('permissionStatus', 'isAdmin');
 
            updateHeader().then(() => {
-            this.router.navigate(['/home/admin']);
+            this.router.navigate(['/home/dashboard']);
            });
 
           }
