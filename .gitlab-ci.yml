@@ -33,12 +33,12 @@ deploy:
   script:
     - ssh -tt root@$SERVER_IP_ADDRESS ls /var/www/
     # Delete existing folder
-    - ssh -tt root@$SERVER_IP_ADDRESS " cd /var/www/surveyClient/ && sudo rm -r survey"
+    - ssh -tt root@$SERVER_IP_ADDRESS " cd /var/www/ && sudo rm -r poweredbypeople"
 
     - apt-get update
     - apt-get --yes --force-yes install rsync
       # copy and paste dist file
-    - rsync -a -e "ssh" --delete --rsync-path="sudo rsync" $PWD/dist/survey/* root@$SERVER_IP_ADDRESS:/var/www/surveyClient/survey
+    - rsync -a -e "ssh" --delete --rsync-path="sudo rsync" $PWD/dist/survey/* root@$SERVER_IP_ADDRESS:/var/www/poweredbypeople
       # reload nginx
     - ssh -tt root@$SERVER_IP_ADDRESS " sudo systemctl reload nginx"
 
