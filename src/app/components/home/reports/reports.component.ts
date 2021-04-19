@@ -114,23 +114,29 @@ updatePage() {
 }
 
 
+
 formatData(): any {
   this.FinalResponses = [];
   return new Promise((resolve, reject)=> {
     this.MyResponse.forEach((responseObject, i, arr) => {
       let quiz_index = this.QuestionsIds.indexOf(responseObject.questionId)
-      let question_name = this.Questions[quiz_index].question
-      if (responseObject.answer[0].answer.answer) {
-        let my_answers = responseObject.answer[0].answer.answer.split(',')
-        this.FinalResponses.push({question: question_name, answers: my_answers.filter((ans)=> ans.replace(/ /g,'') !== 'undefined').map(e => e)})
-      } else {
-        let my_answers = [responseObject.answer[0].answer]
-        this.FinalResponses.push({question: question_name, answers: my_answers})
+      if (quiz_index !== -1 ) {
+        let question_name = this.Questions[quiz_index].question
+        if (responseObject.answer[0].answer.answer) {
+          let my_answers = responseObject.answer[0].answer.answer.split(',')
+          this.FinalResponses.push({question: question_name, answers: my_answers.filter((ans)=> ans.replace(/ /g,'') !== 'undefined').map(e => e)})
+        } else {
+          let my_answers = [responseObject.answer[0].answer]
+          this.FinalResponses.push({question: question_name, answers: my_answers})
+        }
+        if (i === arr.length -1 ) { resolve({}) }
       }
-      if (i === arr.length -1 ) { resolve({}) }
     });
   })
 }
+
+
+
 
 
 
