@@ -16,7 +16,7 @@ build:
       - dist/
     expire_in: 1 hour
   only:
-    - master
+    - poweredbypeople
 
 deploy:
   image: ubuntu:latest
@@ -43,8 +43,8 @@ deploy:
     - ssh -tt root@$SERVER_IP_ADDRESS " sudo systemctl reload nginx"
 
   only:
-    # Trigger deployments only from master branch
-    - master
+    # Trigger deployments only from poweredbypeople branch
+    - poweredbypeople
   dependencies:
    - build #dependency on creating a docker image with latest changes
 
