@@ -72,10 +72,7 @@ export class SurveyComponent implements OnInit {
     this.surveyService.getAllInstitutionSurveys().subscribe(
       dataSurvey => {
 
-        // this.AllSurveys = dataSurvey;
-
-        // Filter to get BOP Survey alone
-        this.AllSurveys = dataSurvey.filter((suv) => suv._id === '60758166de90cb7fc7a536af').map(e => e);
+        this.AllSurveys = dataSurvey;
 
         this.pageProgress = 25;
 

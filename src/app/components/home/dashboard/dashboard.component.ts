@@ -76,10 +76,7 @@ updatePage(): any {
     this.pageProgress = 20;
     this.surveyService.getAllSurveys().subscribe(
       dataSurvey => {
-        // this.AllSurveys = dataSurvey.reverse()
-
-        // Filter to get BOP Survey alone
-        this.AllSurveys = dataSurvey.filter((suv) => suv._id === '60758166de90cb7fc7a536af').map(e => e);
+        this.AllSurveys = dataSurvey.reverse()
 
         this.pageProgress = 40;
         this.responseService.getAllResponses().subscribe(
