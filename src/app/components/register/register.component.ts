@@ -89,7 +89,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     );
 
     this.industryService.getAllIndustrys().subscribe(
-      data => this.AllIndustrys = data,
+      data => this.AllIndustrys = data.sort((a, b) => a.industryName > b.industryName ? 1 : -1),
       error => console.log('Error getting all industries')
     );
 

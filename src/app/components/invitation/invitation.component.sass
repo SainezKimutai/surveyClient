@@ -4,63 +4,21 @@
 
 .main-wrap
     width: 100%
-    height: fit-content
-    min-height: 100%
-    background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
-    background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
-    -webkit-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
-    -moz-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
-    -ms-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
-    -o-background: linear-gradient(rgba(7, 75, 251, 0.4),rgba(7, 75, 251, 0.4)), url("../../../assets/images/bg_2.jpg") no-repeat
-    background-size: cover
-    -webkit-background-size: cover
-    -moz-background-size: cover
-    -ms-background-size: cover
-    -o-background-size: cover
-.main-wrap .top-section
-    width: 100%
-    display: grid 
-    grid-template-columns: repeat(2, 1fr)
-    grid-gap: 0
-    @include desktop_md
-        display: grid 
-        grid-template-columns: repeat(1, 1fr)  
-    .image-wrap
-        width: 100%
-        display: flex 
-        img 
-            margin: auto
-            width: 200px
+    height: 100vh
+    background-color: grayColor(g700)
+
 .main-wrap .body-section
     width: 100%
-    display: grid 
-    grid-template-columns: repeat(2, 1fr)
-    grid-gap: 1em
-    @include desktop_md
-        display: grid 
-        grid-template-columns: repeat(1, 1fr)  
+    height: 100%
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
 .main-wrap .body-section .info-section
     width: 100%
     display: flex 
     align-items: stretch
-.main-wrap .body-section .info-section .info-wrap
-    margin: auto
-    max-width: 500px
-    width: 100%
-    display: flex 
-    flex-direction: column
-    background-color: rgba(7, 75, 251, .0)
-    padding: 1em 
-    border-radius: 5px
-    .head
-        margin: auto
-        font-size: 32px
-        font-weight: bold
-        color: white 
-    .text 
-        margin: 2em auto auto auto
-        font-size: 16px
-        color: white
+
 .main-wrap .body-section .form-section
     width: 100%
     display: flex 
