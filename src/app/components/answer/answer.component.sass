@@ -223,8 +223,8 @@
 #the_form .multy-choice-wrap
     width: 100%
     display: grid
-    grid-template-columns: repeat(3, 1fr)
-    grid-gap: 10px
+    grid-template-columns: repeat(4, 1fr)
+    grid-gap: 1em
     @include desktop_md
       grid-template-columns: repeat(2, 1fr)
     @include desktop_sm
@@ -233,12 +233,16 @@
         width: 100%
         overflow: hidden
         text-overflow: ellipsis
-        display: block
+        // display: block
+        display: grid 
+        grid-template-columns: 1fr 9fr
         padding: 2px
+        height: 100%
         input 
           color: black
         label 
           color: black
+
 
     
 
