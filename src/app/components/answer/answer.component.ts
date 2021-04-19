@@ -706,7 +706,8 @@ redirectBack() {
 
   setTimeout(() => { 
     if (this.SurveyCompleted) {
-      this.router.navigate(['/survey-completed']); 
+      // this.router.navigate(['/survey-completed']); 
+      this.router.navigate(['/home/survey']); 
     } else {
       this.router.navigate(['/home/survey']); 
     }  

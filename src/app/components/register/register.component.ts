@@ -80,9 +80,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         const allUsers = data;
         allUsers.forEach(user => {
 
-          // remove && user._id === '5e7531b76879a6354e179ddf'
-          // if you need to fetch all third parties. Right now it only gets Tactive consulting
-          if (user.userType === 'thirdparty' && user._id === '5e7531b76879a6354e179ddf') {
+          if (user.userType === 'thirdparty') {
             this.AllInstitutions.push(user);
 
           }

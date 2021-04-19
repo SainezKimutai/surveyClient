@@ -10,7 +10,7 @@
 </article>
 
 <nav id="topNavBar" class="navbar navbar-expand-lg navbar-light ">
-  <a class="navbar-brand" ><img src="/../../../assets/images/logo1.png"></a>
+  <!-- <a class="navbar-brand" ><img src="/../../../assets/images/pbp.png"></a> -->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -117,7 +117,8 @@
 
     <div class="header-nav-item" >
       <fa-icon id="sideBarToggler"  (click)="toggleSideBar()" [icon]="faBars"></fa-icon>
-      <img src="/../../../assets/images/logo6.png">
+      <!-- <img src="/../../../assets/images/pbp.png"> -->
+      <!-- <span class="companyName">Powered By People</span> -->
     </div>
 
 
@@ -210,11 +211,7 @@
 <!--  Main Section -->
 
 <main id="main" class="" [ngClass]="sideBarStatus ? '' : 'expand'">
-    <main class="router-wrapper">
-      <router-outlet></router-outlet>
-    </main>
-
-    <app-footer></app-footer>
+  <router-outlet></router-outlet>
 </main>
 
 
