@@ -187,6 +187,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
         this.notifyService.showError('An error occured, are you sure you used the right email?', 'Failed');
       }
     );
+    this.resetEmail = "";
+    this.emailVerify = false;
   }
 
   checkEmail() {
